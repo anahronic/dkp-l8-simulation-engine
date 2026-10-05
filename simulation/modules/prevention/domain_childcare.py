@@ -24,7 +24,7 @@ def create_oracles(zone: Zone, rng: DeterministicRNG, cfg: Dict[str, Any]) -> Or
     pool = OraclePool()
     for i, cls in enumerate(orc["classes"]):
         orng = rng.fork(f"oracle-{cls}")
-        bias = orng.uniform_range(lo, hi) if (lo, hi) != (0, 0) else 0.0
+        bias = orng.fork("bias").uniform_range(lo, hi) if (lo, hi) != (0, 0) else 0.0
         attack_bias: Dict[str, float] = {}
         if attack is not None and cls in attack["classes"]:
             phases = ("ta", "se") if attack["phase"] == "both" else (attack["phase"],)
@@ -44,22 +44,24 @@ def create_oracles(zone: Zone, rng: DeterministicRNG, cfg: Dict[str, Any]) -> Or
 
 
 def create_actors(zone: Zone, rng: DeterministicRNG, cfg: Dict[str, Any]) -> List[Actor]:
-    """Actors in declared profile order; ids are unique across zones."""
+    """Actors sorted by name; ids are unique across zones; ``order`` = position in
+    domain.actor_order, the only place where actor order has a meaning (list_order)."""
     include_adv = cfg["domain"]["include_adversarial"]
+    order = {name: i for i, name in enumerate(cfg["domain"]["actor_order"])}
     actors = []
-    for name, spec in cfg["domain"]["actors"].items():
-        profile = ActorProfile.from_config(name, spec)
+    for name in sorted(cfg["domain"]["actors"]):
+        profile = ActorProfile.from_config(name, cfg["domain"]["actors"][name])
         if profile.strategy == ActorStrategy.ADVERSARIAL and not include_adv:
             continue
         actor_id = f"{zone.zone_id}/{name}"
-        actors.append(Actor(actor_id, profile, rng.fork(f"actor-{name}")))
+        actors.append(Actor(actor_id, profile, rng.fork(f"actor-{name}"), order[name]))
     return actors
 
 
 def create_zone(zone_gen: ZoneGenerator, label: str, cfg: Dict[str, Any]) -> Tuple[Zone, OraclePool, List[Actor]]:
     zone = zone_gen.create(
         label=label,
-        risk_channels=list(cfg["domain"]["channels"]),
+        risk_channels=sorted(cfg["domain"]["channels"]),
         oracle_ids=list(cfg["oracles"]["classes"]),
         metadata={"domain": cfg["domain"]["name"]},
     )

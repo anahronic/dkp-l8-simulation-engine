@@ -24,22 +24,32 @@ Guarantees tested in tests/simulation/test_compare_candidates.py:
     and run once; adding a candidate does not change any other candidate's row;
     the baseline is always present; a joint violation of an invariant is detected
     even when each candidate alone passes (r = a·b example).
+
+Provenance (audit item R1): every evaluated configuration is stored in full
+(``config``; replay a seed by setting simulation.seed), each seed's run has
+its input_id and result_id, ``package`` names the engine code and the spec
+digests, and ``content_sha256`` seals the document (SHA-256 of canonical JSON
+without that field).  Machine, git commit, time and paths go to
+comparison_provenance.json.
 """
 
 from __future__ import annotations
 
 import argparse
+import datetime
 import itertools
 import math
 import os
 import sys
+import time
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from simulation.core.config import (
-    canonical_json, config_digest, deep_merge, load_config, overlay_paths, sha256_text,
+    canonical_json, config_digest, deep_merge, load_config, overlay_paths, run_inputs, sha256_text,
 )
+from simulation.core.manifest import engine_identity, platform_provenance, seal
 from simulation.modules.prevention.protocol_adapter import POSITIVE
 from simulation.modules.prevention.reporting import dumps, write_text
 
@@ -97,14 +107,17 @@ def _evaluate(cfg: Dict[str, Any], seeds: List[int], run_fn: Callable[[Dict[str,
     per_seed = {}
     for seed in seeds:
         res = run_fn(deep_merge(cfg, {"simulation": {"seed": seed}}))
+        manifest = getattr(res, "manifest", None)
         per_seed[str(seed)] = {
+            "input_id": None if manifest is None else manifest["input_id"],
+            "result_id": None if manifest is None else manifest["result_id"],
             "metrics": {m: float(fn(res)) for m, (fn, _, _) in sorted(metrics.items())},
             "invariants": {i: bool(fn(res)) for i, fn in sorted(invariants.items())},
         }
     mean = {m: _mean([per_seed[str(s)]["metrics"][m] for s in seeds]) for m in sorted(metrics)}
     inv = {i: all(per_seed[str(s)]["invariants"][i] for s in seeds) for i in sorted(invariants)}
-    return {"config_digest": config_digest(cfg), "mean": mean, "invariants_hold": inv,
-            "per_seed": per_seed}
+    return {"config": run_inputs(cfg), "config_digest": config_digest(cfg), "mean": mean,
+            "invariants_hold": inv, "per_seed": per_seed}
 
 
 def _delta(row: Dict[str, Any], base: Dict[str, Any]) -> Dict[str, float]:
@@ -176,8 +189,9 @@ def compare(baseline_cfg: Dict[str, Any], candidates: Dict[str, Dict[str, Any]],
     pairs = [joint(list(p)) for p in itertools.combinations(digests, 2)]
     all_joint = joint(digests) if len(digests) > 2 else None
 
-    return {
-        "schema": "dkp-l8-comparison/1",
+    return seal({
+        "schema": "dkp-l8-comparison/2",
+        "package": {**engine_identity(), "generator": "simulation.compare_candidates"},
         "baseline": base,
         "seeds": seeds,
         "candidates": rows,
@@ -188,7 +202,7 @@ def compare(baseline_cfg: Dict[str, Any], candidates: Dict[str, Dict[str, Any]],
         "directions_status": DIRECTIONS_STATUS,
         "selection": None,
         "selection_note": "No candidate is selected: the selection rule is the open S1 decision.",
-    }
+    })
 
 
 def report_text(rep: Dict[str, Any]) -> str:
@@ -228,9 +242,18 @@ def main(argv: Optional[List[str]] = None) -> int:
     if not os.path.isabs(base_path):
         base_path = os.path.join(os.path.dirname(os.path.abspath(args.spec)), base_path)
     baseline = deep_merge(load_config(base_path), spec["baseline_overlay"])
+    t0 = time.time()
     rep = compare(baseline, spec["candidates"], spec["scenario_seeds"])
     os.makedirs(args.output_dir, exist_ok=True)
     write_text(os.path.join(args.output_dir, "comparison.json"), dumps(rep))
+    write_text(os.path.join(args.output_dir, "comparison_provenance.json"), dumps({
+        **platform_provenance(),
+        "elapsed_seconds": time.time() - t0,
+        "output_dir": os.path.abspath(args.output_dir),
+        "finished_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "argv": sys.argv,
+        "comparison_content_sha256": rep["content_sha256"],
+    }))
     write_text(os.path.join(args.output_dir, "comparison.txt"), report_text(rep))
     print(report_text(rep))
     return 0

@@ -11,20 +11,22 @@ result digest.
 from __future__ import annotations
 
 import csv
+import io
 import json
 import math
-import os
 from collections import Counter, defaultdict
 from typing import Any, Dict, Iterable, List
 
 from simulation.modules.prevention.protocol_adapter import (
-    INFORMATIONAL, NO_ATTRIBUTION, POSITIVE, STATUSES, ZERO_MERIT,
+    INFORMATIONAL, NO_ATTRIBUTION, POSITIVE, STATUSES, ZERO_MERIT, NonFiniteResultError,
 )
+
+RESULT_CORE_FILES = ("metrics.jsonl", "metrics.csv", "cbf_baselines.json", "summary.json")
 
 CSV_COLUMNS = [
     "event_id", "zone_id", "risk_channel", "actor_id", "tick", "dti_day",
     "status", "reason", "SPD", "W", "S", "A", "C", "T", "claim", "linkage_observed",
-    "intervention_time", "ta_time", "se_time", "validity_state", "confidence_state",
+    "intervention_time", "ta_time", "se_time", "decision_at", "validity_state", "confidence_state",
     "consistency_state", "truth_self_induced", "truth_own_threat",
 ]
 
@@ -36,6 +38,28 @@ def dumps(obj: Any, indent: int = 2) -> str:
 def write_text(path: str, text: str) -> None:
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
+
+
+def _fsum(values: Iterable[float], what: str) -> float:
+    try:
+        total = math.fsum(values)
+    except OverflowError as exc:
+        raise NonFiniteResultError(f"{what}: {exc}") from None
+    if not math.isfinite(total):
+        raise NonFiniteResultError(f"{what}: non-finite total {total!r}")
+    return total
+
+
+def assert_all_finite(obj: Any, path: str = "summary") -> None:
+    """Every float in a report must be finite (audit item U4)."""
+    if isinstance(obj, float) and not math.isfinite(obj):
+        raise NonFiniteResultError(f"{path} = {obj!r}")
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            assert_all_finite(v, f"{path}.{k}")
+    elif isinstance(obj, (list, tuple)):
+        for i, v in enumerate(obj):
+            assert_all_finite(v, f"{path}[{i}]")
 
 
 def summarize(records: List[Dict[str, Any]], event_stats: Dict[str, int], scenario_id: str) -> Dict[str, Any]:
@@ -59,22 +83,22 @@ def summarize(records: List[Dict[str, Any]], event_stats: Dict[str, int], scenar
     def frac(a: int, b: int) -> float:
         return a / b if b else 0.0
 
-    return {
-        "schema": "dkp-l8-summary/2",
+    summary = {
+        "schema": "dkp-l8-summary/3",
         "scenario_id": scenario_id,
         "events": dict(sorted(event_stats.items())),
         "records_total": len(records),
         "by_status": {s: by_status.get(s, 0) for s in STATUSES},
         "by_reason": dict(sorted(by_reason.items())),
-        "total_spd": math.fsum(r["SPD"] for r in records),
+        "total_spd": _fsum((r["SPD"] for r in records), "total_spd"),
         "subject_count": len(subject_totals),
-        "subject_totals": {k: math.fsum(v) for k, v in sorted(subject_totals.items())},
+        "subject_totals": {k: _fsum(v, f"subject_totals.{k}") for k, v in sorted(subject_totals.items())},
         "evaluation": {
             "self_induced_records_by_creator": len(own),
-            "self_induced_spd_to_creator": math.fsum(r["SPD"] for r in own),
+            "self_induced_spd_to_creator": _fsum((r["SPD"] for r in own), "self_induced_spd"),
             "self_induced_positive_records": sum(1 for r in own if r["status"] == POSITIVE),
             "honest_records": len(honest),
-            "honest_spd": math.fsum(r["SPD"] for r in honest),
+            "honest_spd": _fsum((r["SPD"] for r in honest), "honest_spd"),
             "honest_eligible_records": len(honest_eligible),
             "honest_decayed_records": len(honest_decayed),
             "honest_decayed_fraction": frac(len(honest_decayed), len(honest_eligible)),
@@ -83,10 +107,12 @@ def summarize(records: List[Dict[str, Any]], event_stats: Dict[str, int], scenar
             "ambiguity_fraction": frac(len(ambiguity), len(evaluated)),
             "informational_fraction": frac(by_status.get(INFORMATIONAL, 0), len(records)),
             "positive_records": len(positive),
-            "mean_spd_per_positive_record": frac(math.fsum(r["SPD"] for r in positive), len(positive)),
-            "max_sum_A_per_event": max((math.fsum(v) for v in sum_a.values()), default=0.0),
+            "mean_spd_per_positive_record": frac(_fsum((r["SPD"] for r in positive), "positive_spd"), len(positive)),
+            "max_sum_A_per_event": max((_fsum(v, "sum_A") for v in sum_a.values()), default=0.0),
         },
     }
+    assert_all_finite(summary)
+    return summary
 
 
 def csv_row(r: Dict[str, Any]) -> List[Any]:
@@ -95,7 +121,7 @@ def csv_row(r: Dict[str, Any]) -> List[Any]:
     return [
         r["event_id"], r["zone_id"], r["risk_channel"], r["actor_id"], r["tick"], r["dti_day"],
         r["status"], r["reason"], r["SPD"], f["W"], f["S"], f["A"], f["C"], f["T"], r["claim"],
-        r["linkage_observed"], r["intervention_time"], r["ta"]["time"], se_time,
+        r["linkage_observed"], r["intervention_time"], r["ta"]["time"], se_time, r["decision_at"],
         ep["validity_state"], ep["confidence_state"], ep["consistency_state"],
         r["truth"]["self_induced"], r["truth"]["own_threat"],
     ]
@@ -111,18 +137,24 @@ def _cell(v: Any) -> str:
     return str(v)
 
 
-def write_records(output_dir: str, records: Iterable[Dict[str, Any]]) -> None:
-    records = list(records)
-    with open(os.path.join(output_dir, "metrics.jsonl"), "w", encoding="utf-8", newline="\n") as f:
-        for r in records:
-            f.write(json.dumps(r, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
-                               allow_nan=False))
-            f.write("\n")
-    with open(os.path.join(output_dir, "metrics.csv"), "w", encoding="utf-8", newline="") as f:
-        w = csv.writer(f, lineterminator="\n")
-        w.writerow(CSV_COLUMNS)
-        for r in records:
-            w.writerow([_cell(v) for v in csv_row(r)])
+def serialize_result_core(records: List[Dict[str, Any]], cbf: List[Dict[str, Any]],
+                          summary: Dict[str, Any]) -> Dict[str, bytes]:
+    """The exact bytes of the result core; digested for result_id and written as files."""
+    jl = io.StringIO()
+    for r in records:
+        jl.write(json.dumps(r, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False))
+        jl.write("\n")
+    cs = io.StringIO()
+    w = csv.writer(cs, lineterminator="\n")
+    w.writerow(CSV_COLUMNS)
+    for r in records:
+        w.writerow([_cell(v) for v in csv_row(r)])
+    return {
+        "metrics.jsonl": jl.getvalue().encode("utf-8"),
+        "metrics.csv": cs.getvalue().encode("utf-8"),
+        "cbf_baselines.json": dumps(cbf).encode("utf-8"),
+        "summary.json": dumps(summary).encode("utf-8"),
+    }
 
 
 def summary_text(summary: Dict[str, Any]) -> str:

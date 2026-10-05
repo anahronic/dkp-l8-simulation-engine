@@ -6,10 +6,14 @@ actor is fixed in code.  Actor ids are unique across zones
 (``<zone_id>/<profile>``), so recurrence counters and subject totals never
 merge different subjects.
 
+Each decision draws from a stream addressed by the actor and the event
+(``response/<event_id>``), so an actor's behaviour on one event does not
+depend on how many other events it saw (audit item U5).
+
 Adversarial actors with ``self_induce_rate > 0`` *create* threats in their
-own zone and then suppress them (risk farming).  Whether the evaluator
-detects this linkage is decided by the observation model in the runner; the
-actor itself never reports a linkage score.
+own zone (see EventEngine.induced) and then suppress them (risk farming).
+Whether the evaluator detects this linkage is decided by the observation
+model in the runner; the actor itself never reports a linkage score.
 """
 
 from __future__ import annotations
@@ -64,11 +68,15 @@ class Intervention:
 
 
 class Actor:
-    def __init__(self, actor_id: str, profile: ActorProfile, rng: DeterministicRNG) -> None:
+    def __init__(self, actor_id: str, profile: ActorProfile, rng: DeterministicRNG, order: int) -> None:
         self.actor_id = actor_id
         self.profile = profile
-        self._rng_response = rng.fork("response")
-        self._rng_create = rng.fork("create")
+        self.order = order            # position in domain.actor_order (used only by list_order)
+        self._rng = rng
+
+    @property
+    def name(self) -> str:
+        return self.profile.name
 
     @property
     def strategy(self) -> ActorStrategy:
@@ -78,22 +86,21 @@ class Actor:
     def attribution_claim(self) -> float:
         return self.profile.attribution_claim
 
-    def creates_threat(self) -> bool:
-        """Risk farming: does this actor create a threat on a channel this tick?"""
-        if self.profile.strategy != ActorStrategy.ADVERSARIAL or self.profile.self_induce_rate <= 0.0:
-            return False
-        return self._rng_create.uniform() < self.profile.self_induce_rate
+    @property
+    def induces_threats(self) -> bool:
+        return self.profile.strategy == ActorStrategy.ADVERSARIAL and self.profile.self_induce_rate > 0.0
 
-    def decide(self, event_time: float, own_threat: bool) -> Optional[Intervention]:
+    def decide(self, event_id: str, event_time: float, own_threat: bool) -> Optional[Intervention]:
         """Decide whether and when to intervene on a threat that began at event_time."""
         p = self.profile
         if p.strategy == ActorStrategy.PASSIVE:
             return None
-        if not own_threat and self._rng_response.uniform() >= p.response_rate:
+        draws = self._rng.fork(f"response/{event_id}")
+        if not own_threat and draws.uniform() >= p.response_rate:
             return None
-        delay = self._rng_response.uniform_range(*p.response_delay_seconds)
+        delay = draws.uniform_range(*p.response_delay_seconds)
         eff = p.effectiveness
         if p.effectiveness_range is not None:
-            eff *= self._rng_response.uniform_range(*p.effectiveness_range)
+            eff *= draws.uniform_range(*p.effectiveness_range)
         return Intervention(actor_id=self.actor_id, time=event_time + delay,
                             effectiveness=max(0.0, min(1.0, eff)))

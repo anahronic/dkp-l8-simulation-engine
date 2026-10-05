@@ -49,7 +49,7 @@ def test_staleness_can_invalidate_the_signal():
                 make_reading("access", 0.6, 0.0, 0.5)]
     ta = a.assess_ta(readings)
     assert not ta.valid and ta.reason == "stale_data"
-    rec = a.evaluate_event("e", "zone-0001", "intrusion", ta, None, [iv("patrol_worker")])[0]
+    rec = a.evaluate_event("e", "zone-0001", "intrusion", readings, None, [iv("patrol_worker")])[0]
     assert rec["status"] == "INVALID" and rec["reason"] == "ta_stale_data"
 
 

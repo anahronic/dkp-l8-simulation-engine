@@ -17,8 +17,9 @@ What it is not:
   manifest, time base, oracle model), but events, actors and reporting are shaped
   around threats and their suppression.
 
-Version 2.0.0 (2026-10-05) reworks v1 (commit `a9d3cdf`, tag `v1.0-a9d3cdf`) after
-the audit exchange of 2026-10-04/05. See [CHANGELOG.md](CHANGELOG.md) and
+Version 2.1.0 (2026-10-05) is a technical release after the independent review of 2.0.0
+(tag `v2.0.0`), which itself reworked v1 (tag `v1.0-a9d3cdf`). See
+[CHANGELOG.md](CHANGELOG.md) and
 [AUDIT_REPORT_PREVENTION_L8_PHASE_3.md](AUDIT_REPORT_PREVENTION_L8_PHASE_3.md).
 
 ## Pipeline
@@ -34,9 +35,10 @@ adapter (PREVENTION):
   TA  = TTL filter (ORACLE §9) → ≥ 2 classes (§9.5) → Δ_oracle ≤ ε ? min : informational (§3.3)
   SI  = interventions with tᵢ ≤ t₀ + Δt_int                                   [H-SI-1]
   SE  = readings after the last SI → TTL → ≥ 2 classes → aggregation          [H-SE-1..3]
+  ttl_reference=decision: TTL re-applied at the decision, everything recomputed [H-TTL-2]
   0 < t₁ − t₀ ≤ Δt_int  (seconds)                                             (§3.6)
   Sₖ  = clamp(0, 1, (TA − SE) / TA)                                           (§3.6)
-  Tₖ  = 0 if linkage > θ (§9.1), else recurrence decay                         [H-T-1]
+  Tₖ  = 0 if linkage > θ (§9.1), else recurrence decay (second pass)          [H-T-1..3]
   eligibility first, then Aₖ with Σ Aₖ ≤ 1                                    (§6, §12) [H-A-2]
   SPDₖ = Wₖ × Sₖ × Aₖ × Cₖ × Tₖ                                              (§5)
 ```
@@ -57,6 +59,7 @@ Full text: [`simulation/modules/prevention/hypotheses.py`](simulation/modules/pr
 | H-TIME-2 | t₀/t₁ from earliest measurement or from registration | `protocol.ta_time_basis` |
 | H-TIME-3 | event, measurement and arrival times differ | `oracles.*_delay_seconds` |
 | H-TTL | TTL per oracle class (scenario values) | `oracles.ttl_seconds` |
+| H-TTL-2 | TTL applied per signal (`signal`) or re-applied at the decision (`decision`) | `protocol.ttl_reference` |
 | H-SE-1..3 | SE = measured residual; aggregation; needs 2 classes | `protocol.se_aggregation` |
 | H-SI-1 | which interventions count as SI | `protocol.delta_t_int_seconds` |
 | H-SUP | interventions act jointly on the true intensity | actor effectiveness |
@@ -64,6 +67,8 @@ Full text: [`simulation/modules/prevention/hypotheses.py`](simulation/modules/pr
 | H-A-1 | share claims are scenario inputs; no causal inference | actor `attribution_claim` |
 | H-A-2 | Σ claims > 1 ⇒ ambiguity ⇒ SPD = 0 (§12), or comparison rules | `protocol.attribution_rule` |
 | H-T-1/2 | recurrence key, threshold, decay, window; one run only | `protocol.recurrence.*` |
+| H-T-3 | clock t₀; previous = other events with t₀−W ≤ t₀' < t₀; known at decision or retrospective | `protocol.recurrence.history` |
+| H-RNG | every random draw addressed by purpose, never by a shared counter | `simulation.seed` |
 | H-L | observed linkage score model | `oracles.linkage_detection.*` |
 | H-TA0, H-NUM, H-CBF | TA ≤ 0 invalid; binary64 full precision; CBF estimator | — |
 
@@ -79,7 +84,12 @@ python -m simulation.compare_candidates --spec simulation/configs/comparison/exa
 python -m pytest -q tests/
 ```
 
-Configs use schema version 2: every key is required and unknown keys are rejected.
+Configs use schema version 3: every key is required, unknown keys are rejected, numbers
+must be finite. Mapping order carries no meaning (the engine iterates sorted keys); the one
+order that matters, for `attribution_rule: list_order`, is the explicit list
+`domain.actor_order`. A run replayed from its `config_resolved.json`
+(`--config .../config_resolved.json`) reproduces both ids. Schema 2 configs run with tag
+`v2.0.0`.
 
 ## Outputs and identity
 
@@ -87,11 +97,17 @@ Configs use schema version 2: every key is required and unknown keys are rejecte
 |---|---|
 | `metrics.jsonl`, `metrics.csv`, `cbf_baselines.json`, `summary.json` | result core → `result_id` |
 | `config_resolved.json` | the configuration without the output path |
-| `run_manifest.json` | `input_id` (config digest, seed, engine code digest, spec digests), `result_id`, provenance, hypotheses, unverified items |
+| `run_manifest.json` | `input_id` (config digest, seed, engine code digest, actual spec digests), `result_id`, provenance, hypotheses, unverified items |
 | `summary.txt`, `run_log.json` | for humans / diagnostics (elapsed time, paths); never digested |
 
 Two executors that obtain the same `result_id` from the same `input_id` have
-reproduced the computation. Files are written with LF and canonical JSON; Gaussian
+reproduced the computation. The manifest is built from the exact bytes of the result
+core, so a run without writing files (`write=False`, used by Phase 3 and the comparison)
+has the same ids. A run on altered spec snapshots is refused before anything is computed.
+`phase3_results.json` and `comparison.json` store the full input and both ids of every
+run, name the engine code and spec digests in `package`, and are sealed by
+`content_sha256` = SHA-256 of their canonical JSON without that field; machine data and
+timings go to separate `*_provenance.json` files. Files are written with LF and canonical JSON; Gaussian
 noise and decay powers use [`core/detmath.py`](simulation/core/detmath.py) instead of
 the C library, because v2's first runs showed last-bit differences between Windows
 and Linux.
@@ -102,9 +118,9 @@ The smoke `result_id` is pinned in `tests/simulation/test_golden.py`.
 
 | Environment | Tests | Smoke result_id |
 |---|---|---|
-| Windows 10 Pro 19045, CPython 3.12.10 | pass | pinned value |
-| WSL2 Ubuntu 22.04, CPython 3.10.12, glibc 2.35 | pass | pinned value |
-| GitHub Actions: ubuntu-latest, windows-latest, macos-latest × CPython 3.10 / 3.12 / 3.13 | 9 of 9 jobs pass (run 37302642989, commit `f090c9e`) | pinned value (golden test) |
+| Windows 10 Pro 19045, CPython 3.12.10 | pass (2.1.0) | pinned value |
+| WSL2 Ubuntu 22.04, CPython 3.10.12, glibc 2.35 | pass (2.1.0) | pinned value |
+| GitHub Actions: ubuntu-latest, windows-latest, macos-latest × CPython 3.10 / 3.12 / 3.13 | see the `tests` workflow for the release commit; 2.0.0: 9 of 9 (run 37302799298) | pinned value (golden test) |
 
 Other environments are unverified.
 
@@ -124,4 +140,4 @@ them. Changes to PREVENTION itself go through DKP-4-UPGRADE-001, not through thi
 
 ## Rollback
 
-v1 is commit `a9d3cdf`, tagged `v1.0-a9d3cdf`.
+2.0.0 is tag `v2.0.0` (commit `f3c48e4`); v1 is tag `v1.0-a9d3cdf`.

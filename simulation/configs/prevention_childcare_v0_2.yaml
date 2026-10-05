@@ -1,11 +1,11 @@
-# DKP-1-PREVENTION-001 — synthetic childcare scenario, schema version 2.
+# DKP-1-PREVENTION-001 — synthetic childcare scenario, schema version 3.
 #
 # Every key is required; unknown keys are rejected.  Values marked [H-...]
 # are hypotheses listed in simulation/modules/prevention/hypotheses.py and
 # copied into each run_manifest.json.  None of them is a normative reading
 # of the protocol.
 
-schema_version: 2
+schema_version: 3
 
 scenario:
   id: childcare_v0_2
@@ -30,6 +30,7 @@ protocol:
   theta_self_induced: 0.5      # §9.1
   coverage_floor: 0.1          # §9.4
   ta_time_basis: measurement   # [H-TIME-2]
+  ttl_reference: signal        # [H-TTL-2] TTL at each signal's own time; 'decision' = re-apply at decision
   se_aggregation: max          # [H-SE-2] conservative
   confidence_rule: class_coverage      # [H-C]
   attribution_rule: ambiguity_zero     # [H-A-2] reading of §12 "attribution ambiguity -> SPD = 0"
@@ -38,10 +39,12 @@ protocol:
     threshold: 3
     decay: 0.9
     window_seconds: null
+    history: as_of_decision      # [H-T-3] count only occurrences known at decision time
 
 domain:
   name: childcare
   include_adversarial: false
+  actor_order: [patrol_worker, weak_worker, passive_bystander, adversarial_actor, optimizer_actor]   # used only by attribution_rule list_order
   channels:                    # weight: §3.7 non-negative scalar (no upper bound)
     unauthorized_adult_proximity: {weight: 0.9, activation_rate: 0.25, intensity_range: [0.3, 0.8]}
     intrusion:                    {weight: 1.0, activation_rate: 0.10, intensity_range: [0.5, 1.0]}

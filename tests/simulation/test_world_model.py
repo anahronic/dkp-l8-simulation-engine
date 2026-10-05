@@ -53,16 +53,17 @@ def test_adapter_interfaces_take_no_truth():
     fields = {f.name for f in dataclasses.fields(ObservedIntervention)}
     assert fields == {"actor_id", "order", "time", "claim", "linkage_observed"}
     params = set(inspect.signature(PreventionProtocolAdapter.evaluate_event).parameters)
-    assert params == {"self", "event_id", "zone_id", "channel", "ta", "se", "interventions"}
+    assert params == {"self", "event_id", "zone_id", "channel", "ta_readings", "se_readings", "interventions"}
+    params = set(inspect.signature(PreventionProtocolAdapter.prepare).parameters)
+    assert params == {"self", "event_id", "zone_id", "channel", "ta_readings", "se_readings", "interventions"}
 
 
 def test_same_observations_same_output_whatever_the_truth():
     """Whether the threat was self-induced is invisible unless the observed linkage shows it."""
     def run():
         a = adapter_for()
-        ta = a.assess_ta(ta_readings([0.8] * 4))
-        se = a.assess_se(ta_readings([0.2] * 4, t=5.0))
-        return a.evaluate_event("e", "zone-0001", "intrusion", ta, se, [iv("adversarial_actor", linkage=0.1)])
+        return a.evaluate_event("e", "zone-0001", "intrusion", ta_readings([0.8] * 4),
+                                ta_readings([0.2] * 4, t=5.0), [iv("adversarial_actor", linkage=0.1)])
     assert run() == run()
 
 

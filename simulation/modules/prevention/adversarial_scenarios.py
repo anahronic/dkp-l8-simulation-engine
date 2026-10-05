@@ -1,5 +1,5 @@
 """
-Adversarial scenarios — Phase 3 (2026-10-05), replacing the Phase 2 set.
+Adversarial scenarios — Phase 3 (2026-10-05, revised for 2.1.0), replacing the Phase 2 set.
 
 Every scenario is an overlay on the main scenario config
 (configs/prevention_childcare_v0_2.yaml), so the world is declared once.
@@ -18,6 +18,8 @@ controls, because the Phase 2 scenarios did not (see AUDIT_REPORT Phase 3):
     S8  oracle_oscillation  low vs high noise
     S9  linkage_threshold   adapter-level sweep through θ (a real step)
     S10 se_ta_continuity    adapter-level sweep of SE/TA through 1 (continuous)
+    S11 ttl_reference       TTL applied per signal vs re-applied at the decision instant
+    S12 channel_isolation   one channel's activation rate changed; other channels compared
 """
 
 from __future__ import annotations
@@ -64,6 +66,12 @@ def risk_farming(seed: int = 3001, num_days: int = 10) -> Dict[str, Dict[str, An
                             "detect_0.0"),
         "detect_1.0": _with(farm, {"oracles": {"linkage_detection": {"detection_probability": 1.0}}},
                             "detect_1.0"),
+        "detect_0.0_decay_1.0": _with(farm, {
+            "oracles": {"linkage_detection": {"detection_probability": 0.0}},
+            "protocol": {"recurrence": {"decay": 1.0}}}, "detect_0.0_decay_1.0"),
+        "detect_0.0_retrospective": _with(farm, {
+            "oracles": {"linkage_detection": {"detection_probability": 0.0}},
+            "protocol": {"recurrence": {"history": "retrospective"}}}, "detect_0.0_retrospective"),
         "detect_0.0_window_1d": _with(farm, {
             "oracles": {"linkage_detection": {"detection_probability": 0.0}},
             "protocol": {"recurrence": {"key": ["actor", "zone", "channel"], "window_seconds": 86400}}},
@@ -110,8 +118,9 @@ def timing_window(seed: int = 3004, num_days: int = 10) -> Dict[str, Dict[str, A
 # ── S5 attribution rules ────────────────────────────────────────────────
 
 def _reversed_actors(cfg: Dict[str, Any]) -> Dict[str, Any]:
+    """Reverse the declared actor order (the only order the engine uses)."""
     out = copy.deepcopy(cfg)
-    out["domain"]["actors"] = dict(reversed(list(cfg["domain"]["actors"].items())))
+    out["domain"]["actor_order"] = list(reversed(cfg["domain"]["actor_order"]))
     return out
 
 
@@ -167,6 +176,35 @@ def oracle_oscillation(seed: int = 3008, num_days: int = 10) -> Dict[str, Dict[s
     }
 
 
+# ── S11 TTL reference ───────────────────────────────────────────────────
+
+def ttl_reference(seed: int = 3011, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s11_ttl_reference")
+    tight = {"oracles": {"ttl_seconds": {c: 5 for c in base["oracles"]["classes"]}}}
+    return {
+        "signal": _with(base, {"protocol": {"ttl_reference": "signal"}}, "signal"),
+        "decision": _with(base, {"protocol": {"ttl_reference": "decision"}}, "decision"),
+        "signal_ttl_5s": _with(base, deep_merge(tight, {"protocol": {"ttl_reference": "signal"}}),
+                               "signal_ttl_5s"),
+        "decision_ttl_5s": _with(base, deep_merge(tight, {"protocol": {"ttl_reference": "decision"}}),
+                                 "decision_ttl_5s"),
+    }
+
+
+# ── S12 channel isolation ───────────────────────────────────────────────
+
+ISOLATION_CHANNEL = "unauthorized_adult_proximity"
+
+
+def channel_isolation(seed: int = 3012, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s12_channel_isolation")
+    return {
+        "baseline": _with(base, {}, "baseline"),
+        "one_channel_rate_x3": _with(base, {"domain": {"channels": {ISOLATION_CHANNEL: {"activation_rate": 0.75}}}},
+                                     "one_channel_rate_x3"),
+    }
+
+
 SIMULATED: Dict[str, Any] = {
     "S1_risk_farming": risk_farming,
     "S2_ta_inflation": ta_inflation,
@@ -176,6 +214,8 @@ SIMULATED: Dict[str, Any] = {
     "S6_early_prevention": early_prevention,
     "S7_oracle_degradation": oracle_degradation,
     "S8_oracle_oscillation": oracle_oscillation,
+    "S11_ttl_reference": ttl_reference,
+    "S12_channel_isolation": channel_isolation,
 }
 
 # S9 and S10 are adapter-level sweeps; see simulation/phase3_report.py.

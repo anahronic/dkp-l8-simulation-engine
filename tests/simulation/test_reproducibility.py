@@ -3,7 +3,8 @@
 import json
 import os
 
-from simulation.core.manifest import RESULT_CORE_FILES, engine_code_digest, spec_snapshots
+from simulation.core.manifest import engine_code_digest, spec_snapshots
+from simulation.modules.prevention.reporting import RESULT_CORE_FILES
 from simulation.run_prevention_simulation import run_simulation
 from tests.simulation.helpers import main_config
 

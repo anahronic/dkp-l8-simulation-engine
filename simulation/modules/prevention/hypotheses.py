@@ -44,9 +44,23 @@ HYPOTHESES: Dict[str, Dict[str, Any]] = {
         "kind": "scenario",
         "config": ["oracles.ttl_seconds"],
         "protocol_ref": "ORACLE §9",
-        "statement": "Each oracle class has a TTL; a reading older than its TTL at "
-                     "evaluation time has weight zero and is excluded. Values are "
-                     "scenario hypotheses, not borrowed from other channels.",
+        "statement": "Each oracle class has a TTL; a reading whose age at the TTL "
+                     "reference instant exceeds its TTL has weight zero and is excluded "
+                     "(age equal to TTL is fresh). Values are scenario hypotheses, not "
+                     "borrowed from other channels.",
+    },
+    "H-TTL-2": {
+        "kind": "engine",
+        "config": ["protocol.ttl_reference"],
+        "protocol_ref": "ORACLE §4.6, §9; PREVENTION §3.6; EPISTEMIC-BOUNDARIES §9",
+        "statement": "The instant at which TTL is applied. 'signal': each signal (TA, SE) "
+                     "at the arrival of its own last reading; a TA fresh then is used as a "
+                     "measurement of the state at t0 (historical-fact reading). 'decision': "
+                     "TTL is re-applied to TA and SE at the decision instant = max of the "
+                     "two signals' original availability times, and TA, SE, consistency, "
+                     "coverage, t0/t1, the window, S and all dependent results are "
+                     "recomputed from the readings still fresh. Neither is an accepted "
+                     "reading of ORACLE; the corpus does not relate TTL to Δt_int.",
     },
     "H-SE-1": {
         "kind": "engine",
@@ -118,7 +132,7 @@ HYPOTHESES: Dict[str, Dict[str, Any]] = {
         "statement": "'repeat(TAₖ pattern)' is counted per declared key over the declared "
                      "window; one occurrence = one recognized intervention (it reached the "
                      "Tₖ stage); Tₖ = decay^max(0, n − threshold) with n including the "
-                     "current occurrence. The v1 rule (key actor+channel, whole run) also "
+                     "current occurrence (see H-T-3 for what counts as previous). The v1 rule (key actor+channel, whole run) also "
                      "decays honest repeated work; the protocol does not say whose pattern "
                      "counts.",
     },
@@ -128,6 +142,27 @@ HYPOTHESES: Dict[str, Dict[str, Any]] = {
         "protocol_ref": "PREVENTION §9.3",
         "statement": "Recurrence history lives in memory for one run only; a new id, a new "
                      "channel or a restart starts a new series.",
+    },
+    "H-T-3": {
+        "kind": "engine",
+        "config": ["protocol.recurrence.history", "protocol.recurrence.window_seconds"],
+        "protocol_ref": "PREVENTION §9.3",
+        "statement": "Clock = t0 of each event. Previous occurrences of a key are those of "
+                     "other events with t0 - W <= t0' < t0 (equal t0 is not earlier). One "
+                     "occurrence per (event, key). 'as_of_decision': only occurrences whose "
+                     "decision time is not later than the current decision time (what the "
+                     "evaluator could know); 'retrospective': every recognized occurrence of "
+                     "the run. Evaluation is two-pass, so results do not depend on "
+                     "processing order.",
+    },
+    "H-RNG": {
+        "kind": "engine",
+        "config": ["simulation.seed"],
+        "protocol_ref": "PREVENTION §11 (deterministic and auditable)",
+        "statement": "Every random draw comes from a stream addressed by seed, zone and "
+                     "purpose (channel and tick; actor and event; sensor, event and phase), "
+                     "never from a shared counter: changing one channel or actor leaves "
+                     "the draws of all others unchanged.",
     },
     "H-L": {
         "kind": "scenario",
@@ -172,13 +207,17 @@ def active_hypotheses(cfg: Dict[str, Any]) -> List[Dict[str, Any]]:
         "H-TIME-3": {"measurement_delay_seconds": cfg["oracles"]["measurement_delay_seconds"],
                      "arrival_delay_seconds": cfg["oracles"]["arrival_delay_seconds"]},
         "H-TTL": {"ttl_seconds": cfg["oracles"]["ttl_seconds"]},
+        "H-TTL-2": {"ttl_reference": proto["ttl_reference"]},
         "H-SE-2": {"se_aggregation": proto["se_aggregation"]},
         "H-SI-1": {"delta_t_int_seconds": proto["delta_t_int_seconds"]},
         "H-C": {"confidence_rule": proto["confidence_rule"],
                 "coverage_floor": proto["coverage_floor"]},
         "H-A-1": {"claims": {k: v["attribution_claim"] for k, v in cfg["domain"]["actors"].items()}},
-        "H-A-2": {"attribution_rule": proto["attribution_rule"]},
-        "H-T-1": dict(proto["recurrence"]),
+        "H-A-2": {"attribution_rule": proto["attribution_rule"],
+                  "actor_order": cfg["domain"]["actor_order"]},
+        "H-T-1": {k: v for k, v in proto["recurrence"].items() if k != "history"},
+        "H-T-3": {"history": proto["recurrence"]["history"],
+                  "window_seconds": proto["recurrence"]["window_seconds"]},
         "H-L": dict(cfg["oracles"]["linkage_detection"],
                     theta_self_induced=proto["theta_self_induced"]),
     }

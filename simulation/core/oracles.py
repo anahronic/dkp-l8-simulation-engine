@@ -11,6 +11,10 @@ A sensor samples the true intensity *at measured_at*, so an intervention
 that happens before the sample is already visible in the measurement.
 The evaluator applies the per-class TTL (ORACLE §9) to the age of each
 reading; it never sees the true intensity.
+
+Each observation draws from a stream addressed by sensor, event and phase
+(``<event_id>/<phase>``): a dropout or an extra event never shifts the
+noise of another measurement (audit item U5).
 """
 
 from __future__ import annotations
@@ -59,13 +63,15 @@ class Oracle:
         # attack_bias: {"ta": x, "se": y} — added only for the given phase
         self.attack_bias = dict(attack_bias or {})
 
-    def observe(self, intensity_at: IntensityAt, after: float, phase: str) -> Optional[OracleReading]:
+    def observe(self, intensity_at: IntensityAt, after: float, phase: str,
+                event_id: str) -> Optional[OracleReading]:
         """Sample the state after time ``after``; None if the sensor drops out."""
-        if self._rng.uniform() < self.dropout_rate:
+        draws = self._rng.fork(f"{event_id}/{phase}")
+        if draws.uniform() < self.dropout_rate:
             return None
-        measured_at = after + self._rng.uniform_range(*self.measurement_delay)
-        received_at = measured_at + self._rng.uniform_range(*self.arrival_delay)
-        noise = self._rng.gauss(0.0, self.noise_sigma)
+        measured_at = after + draws.uniform_range(*self.measurement_delay)
+        received_at = measured_at + draws.uniform_range(*self.arrival_delay)
+        noise = draws.gauss(0.0, self.noise_sigma)
         value = intensity_at(measured_at) + self.bias + self.attack_bias.get(phase, 0.0) + noise
         conf = max(0.0, min(1.0, 1.0 - self.dropout_rate - abs(self.bias)))
         return OracleReading(
@@ -87,10 +93,11 @@ class OraclePool:
     def add(self, oracle: Oracle) -> None:
         self._oracles[oracle.oracle_id] = oracle
 
-    def observe_all(self, intensity_at: IntensityAt, after: float, phase: str) -> List[OracleReading]:
+    def observe_all(self, intensity_at: IntensityAt, after: float, phase: str,
+                    event_id: str) -> List[OracleReading]:
         readings = []
         for oracle in self._oracles.values():
-            r = oracle.observe(intensity_at, after, phase)
+            r = oracle.observe(intensity_at, after, phase, event_id)
             if r is not None:
                 readings.append(r)
         return readings

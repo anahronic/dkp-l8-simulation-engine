@@ -22,9 +22,8 @@ def test_basic_spd():
 def test_basic_spd_through_adapter():
     """Same vector end to end: W=0.9 (unauthorized_adult_proximity), full coverage C=1."""
     a = adapter_for()
-    ta = a.assess_ta(ta_readings([0.8, 0.8, 0.8, 0.8]))
-    se = a.assess_se(ta_readings([0.2, 0.2, 0.2, 0.2], t=5.0))
-    rec = a.evaluate_event("e", "zone-0001", "unauthorized_adult_proximity", ta, se, [iv("patrol_worker")])[0]
+    rec = a.evaluate_event("e", "zone-0001", "unauthorized_adult_proximity", ta_readings([0.8] * 4),
+                           ta_readings([0.2] * 4, t=5.0), [iv("patrol_worker")])[0]
     assert rec["status"] == "POSITIVE"
     assert rec["factors"] == pytest.approx({"W": 0.9, "S": 0.75, "A": 1.0, "C": 1.0, "T": 1.0})
     assert rec["SPD"] == pytest.approx(0.9 * 0.75)
@@ -64,15 +63,13 @@ def test_no_coverage():
     a = adapter_for()
     ta = a.assess_ta([])
     assert not ta.valid and ta.reason == NO_COVERAGE.expected["reason"]
-    rec = a.evaluate_event("e", "zone-0001", "intrusion", ta, None, [iv("patrol_worker")])[0]
+    rec = a.evaluate_event("e", "zone-0001", "intrusion", [], None, [iv("patrol_worker")])[0]
     assert rec["status"] == "INVALID" and rec["SPD"] == 0.0 and rec["reason"] == "ta_no_data"
 
 
 def test_self_induced_linkage():
     a = adapter_for()
-    ta = a.assess_ta(ta_readings([0.8] * 4))
-    se = a.assess_se(ta_readings([0.2] * 4, t=5.0))
-    rec = a.evaluate_event("e", "zone-0001", "intrusion", ta, se,
+    rec = a.evaluate_event("e", "zone-0001", "intrusion", ta_readings([0.8] * 4), ta_readings([0.2] * 4, t=5.0),
                            [iv("adversarial_actor", linkage=SELF_INDUCED_RISK.inputs["linkage_observed"])])[0]
     assert rec["factors"]["T"] == SELF_INDUCED_RISK.expected["T_k"]
     assert rec["status"] == SELF_INDUCED_RISK.expected["status"]

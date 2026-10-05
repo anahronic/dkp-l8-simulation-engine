@@ -13,9 +13,8 @@ CLAIMS = [("a", 0.7), ("b", 0.6), ("c", 0.3)]
 
 
 def _event(adapter, interventions):
-    ta = adapter.assess_ta(ta_readings([0.8] * 4))
-    se = adapter.assess_se(ta_readings([0.2] * 4, t=5.0))
-    recs = adapter.evaluate_event("e", "zone-0001", "intrusion", ta, se, interventions)
+    recs = adapter.evaluate_event("e", "zone-0001", "intrusion", ta_readings([0.8] * 4),
+                                  ta_readings([0.2] * 4, t=5.0), interventions)
     return {r["actor_id"].split("/")[1]: r for r in recs}
 
 
@@ -90,13 +89,11 @@ def test_sum_of_shares_per_event_at_most_one_in_runs(rule):
 
 
 def test_actor_order_changes_nothing_under_order_invariant_rules():
+    """actor_order is used only by list_order: other rules give the same result bytes."""
     for rule in ("ambiguity_zero", "proportional"):
         cfg = main_config({"protocol": {"attribution_rule": rule}}, days=3)
         rev = main_config({"protocol": {"attribution_rule": rule}}, days=3)
-        rev["domain"]["actors"] = dict(reversed(list(cfg["domain"]["actors"].items())))
-        a = run_simulation(cfg, write=False).summary["subject_totals"]
-        b = run_simulation(rev, write=False).summary["subject_totals"]
-        assert a.keys() == b.keys()
-        # actor RNG streams are forked by profile name, so totals match up to float summation order
-        for k in a:
-            assert a[k] == pytest.approx(b[k], rel=1e-12, abs=1e-15)
+        rev["domain"]["actor_order"] = list(reversed(cfg["domain"]["actor_order"]))
+        a, b = run_simulation(cfg, write=False), run_simulation(rev, write=False)
+        assert a.manifest["input_id"] != b.manifest["input_id"]
+        assert a.manifest["result_id"] == b.manifest["result_id"]

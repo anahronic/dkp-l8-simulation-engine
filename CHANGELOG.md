@@ -1,5 +1,56 @@
 # Changelog
 
+## 2.1.0 — 2026-10-05
+
+Technical release after the independent review of 2.0.0 (GPT reply 7, items U1–U4,
+Q1, D1, R1; Claude's addition U5; GPT reply 8 refinements). 2.0.0 remains at tag
+`v2.0.0`; its results are not comparable with 2.1.0 (random draws and the recurrence
+history changed). No protocol text was changed.
+
+### Fixed
+
+- **U1 — order carried no identity.** Canonical JSON sorts keys, but 2.0.0 iterated
+  channels and actors in YAML order, so one `input_id` could name different computations
+  and a run replayed from `config_resolved.json` differed (main run: 7034 → 7059 records).
+  Now mappings are iterated in sorted key order, and the only meaningful order is the
+  explicit list `domain.actor_order` (used by `list_order` only). Replay from
+  `config_resolved.json` (now accepted by `--config`) reproduces both ids.
+- **U2 — spec identity.** `input_id` used the pinned digests even when the snapshot bytes
+  differed. Now it uses the actual digests, and a run on altered snapshots is refused
+  before anything is computed (`SpecSnapshotError`), with or without writing files.
+- **U3 — recurrence window counted the future.** The history is now built in a second
+  pass from all events: previous occurrences are those of other events with
+  t₀ − W ≤ t₀' < t₀ (equal t₀ is not earlier), one per (event, key), and by default only
+  those known at the decision time (`recurrence.history: as_of_decision`;
+  `retrospective` available). The result does not depend on processing order.
+- **U4 — non-finite numbers.** The validator rejects NaN, ±inf and booleans (no upper
+  bound on W is introduced). A non-finite factor, SPD or aggregate stops the run with
+  `NonFiniteResultError` instead of becoming a status.
+- **U5 — shared random streams.** Every draw is now addressed by purpose: threats by zone,
+  channel and tick; subjects' actions and linkage observations by actor and event; sensor
+  readings by sensor, event and phase. Changing one channel or actor leaves all other
+  draws unchanged (tested; Phase 3 S12).
+- **R1 — self-contained reports.** `run_simulation(write=False)` builds the same manifest
+  as a written run. `phase3_results.json` and `comparison.json` store each run's full
+  input, `input_id` and `result_id`, a `package` with engine and spec digests, and a
+  `content_sha256` seal; machine data and timings go to `*_provenance.json`.
+
+### Added
+
+- **H-TTL-2, `protocol.ttl_reference`.** `signal` (default, the 2.0.0 behaviour, now
+  declared): TTL per signal at its own last arrival. `decision`: TTL re-applied at the
+  decision instant (the later original availability of TA and SE), with TA, SE,
+  consistency, coverage, times, window, S and all dependent results recomputed. Neither is
+  an accepted reading of ORACLE.
+- **H-T-3** (recurrence clock and history) and **H-RNG** (addressed draws) in the
+  hypothesis registry.
+- Phase 3: S1 decay control and retrospective-history variants, S11 TTL reference,
+  S12 channel isolation. The 2.0.0 reading of S1 ("decay does not limit farming") is
+  corrected in the Phase 3 report.
+- Schema version 3 (`domain.actor_order`, `protocol.ttl_reference`,
+  `protocol.recurrence.history`); schema 2 is refused with an explanation.
+
+
 ## 2.0.0 — 2026-10-05
 
 Rework after the audit exchange of 2026-10-04/05 (Claude check of v1, GPT reply 6,

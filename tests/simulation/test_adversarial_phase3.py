@@ -73,3 +73,22 @@ def test_s10_suppression_is_continuous_at_se_equals_ta():
     assert s["0.999"] == pytest.approx(0.001)
     assert s["0.9999"] == pytest.approx(0.0001)
     assert s["1.0"] == 0.0
+
+
+def test_s12_unchanged_channels_are_identical():
+    """U5: tripling one channel's activation rate leaves the other channels' records unchanged."""
+    from simulation.modules.prevention.adversarial_scenarios import ISOLATION_CHANNEL, channel_isolation
+    from simulation.phase3_report import isolation_check
+    v = channel_isolation(num_days=DAYS)
+    a, b = (run_simulation(v[k], write=False) for k in ("baseline", "one_channel_rate_x3"))
+    check = isolation_check(a.records, b.records, ISOLATION_CHANNEL)
+    assert check["identical"] and check["unchanged_channel_records_a"] > 0
+
+
+def test_s1_decay_control_changes_only_t():
+    """GPT 7 D1: decay 1.0 vs 0.9 on the same world; only Tₖ-dependent outputs move."""
+    v = risk_farming(num_days=DAYS)
+    base, flat = (run_simulation(v[k], write=False) for k in ("detect_0.0", "detect_0.0_decay_1.0"))
+    keys = ("event_id", "actor_id", "truth", "ta", "se", "intervention_time", "claim", "linkage_observed")
+    assert [{k: r[k] for k in keys} for r in base.records] == [{k: r[k] for k in keys} for r in flat.records]
+    assert flat.summary["evaluation"]["honest_decayed_fraction"] == 0.0

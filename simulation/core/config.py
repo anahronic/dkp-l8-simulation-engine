@@ -1,13 +1,19 @@
 """
 Config loader and schema — every run is fully declared.
 
-Schema version 2 rules:
+Schema version 3 rules:
     - every key listed in SCHEMA is required (no silent defaults);
     - unknown keys are rejected (no declared-but-ignored settings);
-    - cross-field constraints are checked (time partition, TTL per class, ranges).
+    - numbers must be finite (no NaN, no infinity, no booleans);
+    - cross-field constraints are checked (time partition, TTL per class, ranges);
+    - the order of mapping keys carries no meaning: the engine iterates mappings in
+      sorted key order; the one order that matters (attribution under list_order)
+      is the explicit list ``domain.actor_order``.
 
 The resolved configuration minus the ``output`` section is the run input
-that the manifest digests (see simulation.core.manifest).
+that the manifest digests (see simulation.core.manifest).  Because no
+meaning is carried by mapping order, canonical JSON (sorted keys) loses
+nothing: a run replayed from config_resolved.json is the same run.
 """
 
 from __future__ import annotations
@@ -15,11 +21,12 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import math
 from typing import Any, Dict, List, Optional
 
 import yaml
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 SECONDS_PER_DAY = 86400
 
 STRATEGIES = ("patrol", "weak", "passive", "adversarial", "optimizer")
@@ -62,6 +69,7 @@ SCHEMA: Dict[str, Any] = {
         "theta_self_induced": NUM,
         "coverage_floor": NUM,
         "ta_time_basis": ENUM("measurement", "registration"),
+        "ttl_reference": ENUM("signal", "decision"),
         "se_aggregation": ENUM("max", "min"),
         "confidence_rule": ENUM("class_coverage", "mean_reported_confidence"),
         "attribution_rule": ENUM("ambiguity_zero", "proportional", "list_order"),
@@ -70,11 +78,13 @@ SCHEMA: Dict[str, Any] = {
             "threshold": INT,
             "decay": NUM,
             "window_seconds": OPT_NUM,
+            "history": ENUM("as_of_decision", "retrospective"),
         },
     },
     "domain": {
         "name": STR,
         "include_adversarial": BOOL,
+        "actor_order": STR_LIST,
         "channels": MAPPING({"weight": NUM, "activation_rate": NUM, "intensity_range": PAIR}),
         "actors": MAPPING({
             "strategy": ENUM(*STRATEGIES),
@@ -129,7 +139,8 @@ def load_config(path: str) -> Dict[str, Any]:
 # ── validation ──────────────────────────────────────────────────────────
 
 def _is_num(v: Any) -> bool:
-    return isinstance(v, (int, float)) and not isinstance(v, bool)
+    """A finite real number (bool, NaN and ±inf are rejected)."""
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
 
 
 def _check(value: Any, schema: Any, path: str, errors: List[str]) -> None:
@@ -173,7 +184,7 @@ def _check(value: Any, schema: Any, path: str, errors: List[str]) -> None:
 
     if schema == NUM:
         if not _is_num(value):
-            errors.append(f"{path}: expected number")
+            errors.append(f"{path}: expected finite number")
     elif schema == INT:
         if not isinstance(value, int) or isinstance(value, bool):
             errors.append(f"{path}: expected integer")
@@ -188,10 +199,10 @@ def _check(value: Any, schema: Any, path: str, errors: List[str]) -> None:
             return
         if (not isinstance(value, list) or len(value) != 2
                 or not all(_is_num(x) for x in value) or value[0] > value[1]):
-            errors.append(f"{path}: expected [lo, hi] with lo <= hi")
+            errors.append(f"{path}: expected [lo, hi] of finite numbers with lo <= hi")
     elif schema == OPT_NUM:
         if value is not None and not _is_num(value):
-            errors.append(f"{path}: expected number or null")
+            errors.append(f"{path}: expected finite number or null")
     elif schema == STR_LIST:
         if (not isinstance(value, list) or not value
                 or not all(isinstance(x, str) and x for x in value)
@@ -208,6 +219,10 @@ def _in_unit(v: float) -> bool:
 def _cross_checks(cfg: Dict[str, Any], errors: List[str]) -> None:
     if cfg["schema_version"] != SCHEMA_VERSION:
         errors.append(f"schema_version: expected {SCHEMA_VERSION}")
+
+    actors = set(cfg["domain"]["actors"])
+    if sorted(cfg["domain"]["actor_order"]) != sorted(actors):
+        errors.append("domain.actor_order: must list every key of domain.actors exactly once")
 
     sim, time_cfg, proto = cfg["simulation"], cfg["time"], cfg["protocol"]
     for key in ("num_zones", "num_days", "ticks_per_day"):
@@ -285,6 +300,11 @@ def _cross_checks(cfg: Dict[str, Any], errors: List[str]) -> None:
 
 def validate_config(cfg: Dict[str, Any]) -> Dict[str, Any]:
     """Validate a configuration; raise ConfigError listing every problem."""
+    if isinstance(cfg, dict) and cfg.get("schema_version") == 2:
+        raise ConfigError(
+            "schema_version 2 is not accepted by engine 2.1: add domain.actor_order, "
+            "protocol.ttl_reference and protocol.recurrence.history, set schema_version: 3; "
+            "or run schema 2 configs with tag v2.0.0")
     errors: List[str] = []
     _check(cfg, SCHEMA, "config", errors)
     if not errors:
