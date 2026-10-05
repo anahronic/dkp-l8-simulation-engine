@@ -1,343 +1,246 @@
 #!/usr/bin/env python3
 """
-DKP L8 Simulation Engine — CLI entry point.
-
-Runs a complete DKP-1-PREVENTION-001 v1.0 simulation using the
-childcare domain sandbox (or any configured domain).
+DKP L8 research bench for DKP-1-PREVENTION-001 — CLI entry point.
 
 Usage:
-    python -m simulation.run_prevention_simulation --config CONFIG
+    python -m simulation.run_prevention_simulation --config CONFIG [--output-dir DIR]
     python -m simulation.run_prevention_simulation --smoke
     python -m simulation.run_prevention_simulation --config CONFIG --seed 123 --zones 5 --days 60
 
-Arguments:
-    --config PATH     YAML config file
-    --smoke           Run fast smoke test (ignores --config)
-    --seed INT        Override simulation seed
-    --zones INT       Override number of zones
-    --days INT        Override number of simulated days
-    --output-dir DIR  Override output directory
-    --verbose         Print tick-level progress
+Every key of the config is required (schema version 2).  Output files:
+    metrics.jsonl, metrics.csv, cbf_baselines.json, summary.json   result core
+    config_resolved.json, run_manifest.json                        identity
+    summary.txt, run_log.json                                      for humans / diagnostics
 """
 
 from __future__ import annotations
 
 import argparse
-import json
+import datetime
 import os
 import sys
 import time
-from typing import Any, Dict, List
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
 
-# Ensure package root is importable when run as script
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from simulation.core.rng import DeterministicRNG
-from simulation.core.zones import ZoneGenerator
-from simulation.core.events import EventEngine, EventType, SimEvent
-from simulation.core.metrics import MetricsCollector, MetricRecord
-from simulation.core.config import load_config, save_config_snapshot, merge_cli_overrides
-from simulation.modules.prevention.protocol_adapter import PreventionProtocolAdapter
-from simulation.modules.prevention.domain_childcare import (
-    CHILDCARE_THREATS,
-    create_childcare_zone,
-    get_threat_weights,
-)
-from simulation.modules.prevention.scenarios import ThreatProfile
 from simulation.core.cbf import CBFRegistry
+from simulation.core.config import (
+    apply_cli_overrides, load_config, run_inputs, validate_config,
+)
+from simulation.core.events import EventEngine, ThreatEvent
+from simulation.core.manifest import build_manifest
+from simulation.core.rng import DeterministicRNG
+from simulation.core.timebase import TimeBase
+from simulation.core.zones import ZoneGenerator
+from simulation.modules.prevention.domain_childcare import create_zone
+from simulation.modules.prevention.hypotheses import active_hypotheses
+from simulation.modules.prevention.protocol_adapter import (
+    ObservedIntervention, PreventionProtocolAdapter, ProtocolParams,
+)
+from simulation.modules.prevention.reporting import (
+    dumps, summarize, summary_text, write_records, write_text,
+)
 
+SMOKE_CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "configs", "prevention_childcare_fast_smoke.yaml")
+
+
+@dataclass
+class RunResult:
+    records: List[Dict[str, Any]]
+    summary: Dict[str, Any]
+    cbf: List[Dict[str, Any]]
+    recurrence: Dict[str, int]
+    manifest: Optional[Dict[str, Any]] = None
+    output_dir: Optional[str] = None
+
+
+def _intensity_at(event: ThreatEvent, interventions: List[Any]):
+    """Truth: intensity over time, reduced by each intervention from its time on (H-SUP)."""
+    steps = sorted((iv.time, iv.effectiveness) for iv in interventions)
+
+    def at(t: float) -> float:
+        value = event.true_intensity
+        for t_i, eff in steps:
+            if t_i <= t:
+                value *= (1.0 - eff)
+        return value
+    return at
+
+
+def run_simulation(cfg: Dict[str, Any], write: bool = True,
+                   cli_overrides: Optional[Dict[str, Any]] = None) -> RunResult:
+    """Validate the config, run the scenario, optionally write the output files."""
+    validate_config(cfg)
+    tb = TimeBase.from_config(cfg)
+    sim = cfg["simulation"]
+    channels = cfg["domain"]["channels"]
+    linkage = cfg["oracles"]["linkage_detection"]
+    total_ticks = sim["num_days"] * sim["ticks_per_day"]
+
+    master = DeterministicRNG(sim["seed"])
+    params = ProtocolParams.from_config(cfg)
+    adapter = PreventionProtocolAdapter(params)
+
+    zone_gen = ZoneGenerator(master)
+    zones = []
+    for z in range(sim["num_zones"]):
+        zone, pool, actors = create_zone(zone_gen, f"{cfg['domain']['name']}-facility-{z + 1:03d}", cfg)
+        zones.append((zone, pool, actors, EventEngine(zone.zone_id, zone.rng.fork("events")),
+                      zone.rng.fork("linkage-observation")))
+
+    cbf = CBFRegistry()
+    records: List[Dict[str, Any]] = []
+    stats = {"threats_total": 0, "threats_natural": 0, "threats_induced": 0,
+             "ta_valid_consistent": 0, "ta_informational": 0, "ta_invalid": 0,
+             "with_responders": 0}
+
+    t_start = time.time()
+    for tick in range(total_ticks):
+        tick_start = tb.tick_start(tick)
+        for zone, pool, actors, engine, link_rng in zones:
+            events: List[ThreatEvent] = []
+            for ch, spec in channels.items():
+                rng_range = (float(spec["intensity_range"][0]), float(spec["intensity_range"][1]))
+                ev = engine.natural(ch, tick, tick_start, tb.tick_seconds,
+                                    float(spec["activation_rate"]), rng_range)
+                if ev is not None:
+                    events.append(ev)
+                for actor in actors:
+                    if actor.creates_threat():
+                        events.append(engine.induced(ch, tick, tick_start, tb.tick_seconds,
+                                                     rng_range, actor.actor_id))
+
+            for ev in events:
+                stats["threats_total"] += 1
+                stats["threats_induced" if ev.induced_by else "threats_natural"] += 1
+
+                # physics: who acts, when, how strongly (truth)
+                ivs = []
+                for order, actor in enumerate(actors):
+                    iv = actor.decide(ev.event_time, own_threat=(ev.induced_by == actor.actor_id))
+                    if iv is not None:
+                        ivs.append((order, actor, iv))
+                truth_at = _intensity_at(ev, [iv for _, _, iv in ivs])
+
+                # observation: TA readings
+                ta = adapter.assess_ta(pool.observe_all(truth_at, ev.event_time, "ta"))
+                if ta.valid and ta.consistent:
+                    stats["ta_valid_consistent"] += 1
+                    cbf.update(zone.zone_id, ev.risk_channel, ta.intensity)
+                elif ta.valid:
+                    stats["ta_informational"] += 1
+                else:
+                    stats["ta_invalid"] += 1
+                if not ivs:
+                    continue
+                stats["with_responders"] += 1
+
+                # observation: linkage score per responder (H-L)
+                observed = []
+                for order, actor, iv in ivs:
+                    if ev.induced_by == actor.actor_id and link_rng.uniform() < linkage["detection_probability"]:
+                        score = link_rng.uniform_range(*linkage["detected_score_range"])
+                    else:
+                        score = link_rng.uniform_range(*linkage["undetected_score_range"])
+                    observed.append(ObservedIntervention(actor.actor_id, order, iv.time,
+                                                         actor.attribution_claim, score))
+
+                # observation: SE readings after the last in-window intervention
+                se_start = adapter.se_measurement_start(ta, observed)
+                se = None
+                if se_start is not None:
+                    se = adapter.assess_se(pool.observe_all(truth_at, se_start, "se"))
+
+                truth_eff = {actor.actor_id: iv.effectiveness for _, actor, iv in ivs}
+                for rec in adapter.evaluate_event(ev.event_id, zone.zone_id, ev.risk_channel,
+                                                  ta, se, observed):
+                    rec["tick"] = tick
+                    rec["dti_day"] = tb.dti_day(tick_start)
+                    rec["truth"] = {
+                        "event_time": ev.event_time,
+                        "true_intensity": ev.true_intensity,
+                        "self_induced": ev.induced_by is not None,
+                        "own_threat": ev.induced_by == rec["actor_id"],
+                        "effectiveness": truth_eff[rec["actor_id"]],
+                    }
+                    records.append(rec)
+    elapsed = time.time() - t_start
+
+    summary = summarize(records, stats, cfg["scenario"]["id"])
+    result = RunResult(records=records, summary=summary, cbf=cbf.all_records(),
+                       recurrence=adapter.recurrence.snapshot())
+    if write:
+        out = cfg["output"]["directory"]
+        os.makedirs(out, exist_ok=True)
+        write_records(out, records)
+        write_text(os.path.join(out, "cbf_baselines.json"), dumps(result.cbf))
+        write_text(os.path.join(out, "summary.json"), dumps(summary))
+        write_text(os.path.join(out, "summary.txt"), summary_text(summary))
+        write_text(os.path.join(out, "config_resolved.json"), dumps(run_inputs(cfg)))
+        manifest = build_manifest(cfg, out, active_hypotheses(cfg), cli_overrides or {})
+        write_text(os.path.join(out, "run_manifest.json"), dumps(manifest))
+        write_text(os.path.join(out, "run_log.json"), dumps({
+            "elapsed_seconds": elapsed,
+            "output_dir": os.path.abspath(out),
+            "finished_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "argv": sys.argv,
+        }))
+        result.manifest = manifest
+        result.output_dir = out
+    return result
+
+
+# ── CLI ─────────────────────────────────────────────────────────────────
 
 def build_cli() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(
-        description="DKP L8 Prevention Simulation Engine",
-    )
+    p = argparse.ArgumentParser(description="DKP L8 research bench for DKP-1-PREVENTION-001")
     p.add_argument("--config", type=str, help="Path to YAML config file")
     p.add_argument("--smoke", action="store_true", help="Fast smoke test")
     p.add_argument("--seed", type=int, default=None, help="Override seed")
     p.add_argument("--zones", type=int, default=None, help="Override zone count")
     p.add_argument("--days", type=int, default=None, help="Override day count")
     p.add_argument("--output-dir", type=str, default=None, help="Override output dir")
-    p.add_argument("--verbose", action="store_true", help="Tick-level logging")
     return p
 
 
-def resolve_config(args) -> Dict[str, Any]:
-    """Load config from file or use smoke defaults."""
+def _safe_stdout() -> None:
+    """Never fail at the end of a run because the console cannot print a character."""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    _safe_stdout()
+    args = build_cli().parse_args(argv)
     if args.smoke:
-        smoke_path = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            "configs", "prevention_childcare_fast_smoke.yaml",
-        )
-        cfg = load_config(smoke_path)
+        path = SMOKE_CONFIG
     elif args.config:
-        cfg = load_config(args.config)
+        path = args.config
     else:
-        print("ERROR: Provide --config or --smoke", file=sys.stderr)
-        sys.exit(1)
-
-    # Apply CLI overrides
-    overrides = {}
-    if args.seed is not None:
-        overrides["simulation"] = {**cfg.get("simulation", {}), "seed": args.seed}
-    if args.zones is not None:
-        sim = overrides.get("simulation", dict(cfg.get("simulation", {})))
-        sim["num_zones"] = args.zones
-        overrides["simulation"] = sim
-    if args.days is not None:
-        sim = overrides.get("simulation", dict(cfg.get("simulation", {})))
-        sim["num_days"] = args.days
-        overrides["simulation"] = sim
-    if args.output_dir is not None:
-        overrides["output"] = {**cfg.get("output", {}), "directory": args.output_dir}
-
-    for key, val in overrides.items():
-        cfg[key] = val
-
-    return cfg
-
-
-def run_simulation(cfg: Dict[str, Any], verbose: bool = False) -> Dict[str, Any]:
-    """
-    Execute the full simulation loop.
-
-    Returns the summary dict.
-    """
-    sim_cfg = cfg["simulation"]
-    proto_cfg = cfg["protocol"]
-    domain_cfg = cfg["domain"]
-    oracle_cfg = cfg.get("oracles", {})
-    output_cfg = cfg.get("output", {})
-
-    seed = sim_cfg["seed"]
-    num_zones = sim_cfg["num_zones"]
-    num_days = sim_cfg["num_days"]
-    ticks_per_day = sim_cfg["ticks_per_day"]
-    total_ticks = num_days * ticks_per_day
-
-    # 1. Deterministic RNG
-    master_rng = DeterministicRNG(seed)
-
-    # 2. Protocol adapter
-    adapter = PreventionProtocolAdapter(
-        epsilon_consistency=proto_cfg["epsilon_consistency"],
-        delta_t_int=proto_cfg["delta_t_int"],
-        theta_self_induced=proto_cfg["theta_self_induced"],
-        recurrence_decay=proto_cfg["recurrence_decay"],
-        coverage_floor=proto_cfg["coverage_floor"],
-        recurrence_threshold=proto_cfg.get("recurrence_threshold", 3),
-        threat_weights=domain_cfg.get("threat_weights", {}),
-    )
-
-    # 3. Zone generator
-    zone_gen = ZoneGenerator(master_rng)
-    zones_data = []
-    for z in range(num_zones):
-        zone, oracle_pool, actors = create_childcare_zone(
-            zone_gen=zone_gen,
-            label=f"childcare-facility-{z+1:03d}",
-            rng=master_rng.fork(f"zone-setup-{z}"),
-            include_adversarial=domain_cfg.get("include_adversarial", False),
-            noise_sigma=oracle_cfg.get("noise_sigma", 0.05),
-            dropout_rate=oracle_cfg.get("dropout_rate", 0.0),
-        )
-        zones_data.append((zone, oracle_pool, actors))
-
-    # 4. Event engine
-    event_engine = EventEngine(master_rng.fork("events"))
-
-    # 5. Metrics
-    metrics = MetricsCollector()
-
-    # 6. Threat profiles from config
-    threat_profiles: Dict[str, Dict] = domain_cfg.get("threat_profiles", {})
-
-    # 7. CBF registry — §3.11 / §9.2 audit-only baseline (F-09)
-    cbf_registry = CBFRegistry()
-
-    # 8. Failure-path probabilities (F-04, F-05) — default 0 preserves normal behavior
-    se_ge_ta_probability = sim_cfg.get("se_ge_ta_probability", 0.0)
-    temporal_invalid_probability = sim_cfg.get("temporal_invalid_probability", 0.0)
-    se_delay_min = sim_cfg.get("se_delay_min", 1.0)  # F-06
-
-    # ── Main simulation loop ────────────────────────────────────────────
-    t_start = time.time()
-
-    for tick in range(total_ticks):
-        timestamp = float(tick)
-
-        for zone, oracle_pool, actors in zones_data:
-            # Generate threats per risk channel
-            for channel in zone.risk_channels:
-                tp = threat_profiles.get(channel, {})
-                act_rate = tp.get("activation_rate", 0.25)
-                int_range = tuple(tp.get("intensity_range", [0.2, 0.8]))
-
-                threats = event_engine.generate_threats(
-                    zone_id=zone.zone_id,
-                    risk_channels=[channel],
-                    timestamp=timestamp,
-                    threat_rate=act_rate,
-                    intensity_range=int_range,
-                )
-
-                for threat_event in threats:
-                    true_intensity = threat_event.payload["true_intensity"]
-
-                    # §3.11 / §9.2: Update CBF baseline (audit-only)
-                    cbf_registry.update(zone.zone_id, channel, true_intensity)
-
-                    # Oracle readings
-                    readings = oracle_pool.read_all(true_intensity, timestamp)
-
-                    # Validate TAₖ
-                    ta = adapter.validate_threat_activation(
-                        event_id=threat_event.event_id,
-                        risk_channel=channel,
-                        timestamp=timestamp,
-                        readings=readings,
-                    )
-
-                    # §6: Per-event attribution budget — Σ Aₖ ≤ 1
-                    remaining_attribution = 1.0
-
-                    # Each actor may respond
-                    for actor in actors:
-                        intervention = actor.decide_intervention(
-                            threat_intensity=ta.intensity,
-                            timestamp=timestamp,
-                        )
-
-                        if not intervention.responded:
-                            continue
-
-                        # §6: Clamp attribution to remaining budget
-                        proposed_share = actor.attribution_share
-                        actual_share = min(proposed_share, remaining_attribution)
-                        remaining_attribution -= actual_share
-
-                        if actual_share <= 0.0:
-                            continue  # budget exhausted for this event
-
-                        # F-04: SE ≥ TA path — configurable escalation
-                        if se_ge_ta_probability > 0.0 and zone.rng.uniform() < se_ge_ta_probability:
-                            se_intensity = ta.intensity * zone.rng.uniform_range(1.0, 1.5)
-                        else:
-                            se_intensity = max(
-                                0.0,
-                                ta.intensity - intervention.suppression_intensity,
-                            )
-
-                        # F-05: Temporal invalidity path — configurable
-                        if temporal_invalid_probability > 0.0 and zone.rng.uniform() < temporal_invalid_probability:
-                            se_time = timestamp + zone.rng.uniform_range(
-                                proto_cfg["delta_t_int"] + 1.0,
-                                proto_cfg["delta_t_int"] * 2.0,
-                            )
-                        else:
-                            se_time = timestamp + zone.rng.uniform_range(
-                                se_delay_min,
-                                proto_cfg["delta_t_int"],
-                            )
-
-                        # Compute SPDₖ
-                        spd = adapter.compute_spd(
-                            event_id=threat_event.event_id,
-                            zone_id=zone.zone_id,
-                            ta=ta,
-                            se_intensity=se_intensity,
-                            se_time=se_time,
-                            actor_id=actor.actor_id,
-                            attribution_share=actual_share,
-                            linkage_score=intervention.linkage_score,
-                        )
-
-                        # Record metrics
-                        metric_name = "SPD_informational" if spd.informational else "SPD"
-                        metrics.record(MetricRecord(
-                            timestamp=timestamp,
-                            zone_id=zone.zone_id,
-                            event_id=threat_event.event_id,
-                            metric_name=metric_name,
-                            value=spd.SPD_k,
-                            details={
-                                "W_k": spd.W_k,
-                                "S_k": spd.S_k,
-                                "A_k": spd.A_k,
-                                "C_k": spd.C_k,
-                                "T_k": spd.T_k,
-                                "actor_id": spd.actor_id,
-                                "risk_channel": spd.risk_channel,
-                                "informational": spd.informational,
-                                **spd.details,
-                            },
-                        ))
-
-                        if spd.SPD_k > 0:
-                            metrics.add_subject_contribution(actor.actor_id, spd.SPD_k)
-
-        if verbose and tick % ticks_per_day == 0:
-            day = tick // ticks_per_day + 1
-            print(f"  Day {day}/{num_days} — {len(metrics.records)} records", flush=True)
-
-    elapsed = time.time() - t_start
-
-    # ── Output ──────────────────────────────────────────────────────────
-    output_dir = output_cfg.get("directory", "simulation/outputs/default")
-    metrics.write_outputs(output_dir)
-    save_config_snapshot(cfg, output_dir)
-
-    # §3.11: Write CBF audit records (non-reward)
-    cbf_path = os.path.join(output_dir, "cbf_baselines.json")
-    with open(cbf_path, "w") as f:
-        json.dump(cbf_registry.all_records(), f, indent=2)
-
-    summary = metrics.summary()
-    summary["elapsed_seconds"] = round(elapsed, 3)
-    summary["seed"] = seed
-    summary["total_ticks"] = total_ticks
-    summary["num_zones"] = num_zones
-
-    # Write summary JSON
-    with open(os.path.join(output_dir, "summary.json"), "w") as f:
-        json.dump(summary, f, indent=2)
-
-    return summary
-
-
-def main() -> None:
-    parser = build_cli()
-    args = parser.parse_args()
-    cfg = resolve_config(args)
-
-    print("=" * 60)
-    print("DKP L8 Simulation Engine — DKP-1-PREVENTION-001 v1.0")
-    print("=" * 60)
-
-    sim = cfg["simulation"]
-    print(f"  Seed:   {sim['seed']}")
-    print(f"  Zones:  {sim['num_zones']}")
-    print(f"  Days:   {sim['num_days']}")
-    print(f"  Ticks:  {sim['num_days'] * sim['ticks_per_day']}")
-    print()
-
-    summary = run_simulation(cfg, verbose=args.verbose)
-
-    print()
-    print("─" * 60)
-    print("Run complete.")
-    print(f"  Total metric records: {summary['total_metric_records']}")
-    print(f"  SPD events (positive): {summary['positive_spd_events']}")
-    print(f"  SPD events (zero):     {summary['zero_spd_events']}")
-    print(f"  Informational events:  {summary['informational_events']}")
-    print(f"  Total SPD value:       {summary['total_spd_value']}")
-    print(f"  Subject count:         {summary['subject_count']}")
-    print(f"  Elapsed:               {summary['elapsed_seconds']}s")
-    print()
-
-    output_dir = cfg.get("output", {}).get("directory", "simulation/outputs/default")
-    print(f"  Output: {output_dir}/")
-    print("─" * 60)
+        print("ERROR: provide --config or --smoke", file=sys.stderr)
+        return 1
+    overrides = {k: v for k, v in (("seed", args.seed), ("zones", args.zones),
+                                   ("days", args.days), ("output_dir", args.output_dir))
+                 if v is not None}
+    cfg = apply_cli_overrides(load_config(path), **overrides)
+    result = run_simulation(cfg, write=True, cli_overrides=overrides)
+    s, m = result.summary, result.manifest
+    print("DKP L8 research bench - DKP-1-PREVENTION-001")
+    print(f"  scenario:  {s['scenario_id']}  seed {cfg['simulation']['seed']}")
+    print(f"  records:   {s['records_total']}  " +
+          "  ".join(f"{k}={v}" for k, v in s["by_status"].items()))
+    print(f"  total SPD: {s['total_spd']:.6f}")
+    print(f"  input_id:  {m['input_id']}")
+    print(f"  result_id: {m['result_id']}")
+    print(f"  output:    {result.output_dir}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

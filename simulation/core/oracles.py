@@ -1,26 +1,36 @@
 """
-Oracle models — simulated PTL sensor sources (§3.3).
+Oracle models — simulated PTL sensor sources (PREVENTION §3.3, ORACLE §9).
 
-Oracles produce intensity readings for threat activations.  Each oracle
-belongs to one *class* (optical, thermal, lidar, access, …).  The protocol
-requires ≥ 2 independent classes for a valid TAₖ.
+Each reading carries three times (hypothesis H-TIME-3):
+
+    event time      when the physical state existed (truth; never in a reading)
+    measured_at     when the sensor sampled the state
+    received_at     when the record reached the evaluator
+
+A sensor samples the true intensity *at measured_at*, so an intervention
+that happens before the sample is already visible in the measurement.
+The evaluator applies the per-class TTL (ORACLE §9) to the age of each
+reading; it never sees the true intensity.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
 from simulation.core.rng import DeterministicRNG
 
+IntensityAt = Callable[[float], float]
 
-@dataclass
+
+@dataclass(frozen=True)
 class OracleReading:
     oracle_id: str
     oracle_class: str
     intensity: float
-    timestamp: float
-    confidence: float  # [0,1] — coverage quality
+    measured_at: float
+    received_at: float
+    confidence: float  # sensor self-reported quality in [0, 1]
 
 
 class Oracle:
@@ -31,9 +41,12 @@ class Oracle:
         oracle_id: str,
         oracle_class: str,
         rng: DeterministicRNG,
-        noise_sigma: float = 0.05,
-        bias: float = 0.0,
-        dropout_rate: float = 0.0,
+        noise_sigma: float,
+        bias: float,
+        dropout_rate: float,
+        measurement_delay: Tuple[float, float],
+        arrival_delay: Tuple[float, float],
+        attack_bias: Optional[Dict[str, float]] = None,
     ) -> None:
         self.oracle_id = oracle_id
         self.oracle_class = oracle_class
@@ -41,25 +54,32 @@ class Oracle:
         self.noise_sigma = noise_sigma
         self.bias = bias
         self.dropout_rate = dropout_rate
+        self.measurement_delay = tuple(measurement_delay)
+        self.arrival_delay = tuple(arrival_delay)
+        # attack_bias: {"ta": x, "se": y} — added only for the given phase
+        self.attack_bias = dict(attack_bias or {})
 
-    def read(self, true_intensity: float, timestamp: float) -> Optional[OracleReading]:
-        """Produce a noisy reading, or None if sensor drops out."""
+    def observe(self, intensity_at: IntensityAt, after: float, phase: str) -> Optional[OracleReading]:
+        """Sample the state after time ``after``; None if the sensor drops out."""
         if self._rng.uniform() < self.dropout_rate:
-            return None  # sensor degradation
-        noisy = true_intensity + self.bias + self._rng.gauss(0, self.noise_sigma)
-        noisy = max(0.0, noisy)  # intensities non-negative
+            return None
+        measured_at = after + self._rng.uniform_range(*self.measurement_delay)
+        received_at = measured_at + self._rng.uniform_range(*self.arrival_delay)
+        noise = self._rng.gauss(0.0, self.noise_sigma)
+        value = intensity_at(measured_at) + self.bias + self.attack_bias.get(phase, 0.0) + noise
         conf = max(0.0, min(1.0, 1.0 - self.dropout_rate - abs(self.bias)))
         return OracleReading(
             oracle_id=self.oracle_id,
             oracle_class=self.oracle_class,
-            intensity=noisy,
-            timestamp=timestamp,
+            intensity=max(0.0, value),
+            measured_at=measured_at,
+            received_at=received_at,
             confidence=conf,
         )
 
 
 class OraclePool:
-    """Manages a set of oracles for a zone."""
+    """The sensors of one zone, in declared class order."""
 
     def __init__(self) -> None:
         self._oracles: Dict[str, Oracle] = {}
@@ -67,10 +87,10 @@ class OraclePool:
     def add(self, oracle: Oracle) -> None:
         self._oracles[oracle.oracle_id] = oracle
 
-    def read_all(self, true_intensity: float, timestamp: float) -> List[OracleReading]:
+    def observe_all(self, intensity_at: IntensityAt, after: float, phase: str) -> List[OracleReading]:
         readings = []
         for oracle in self._oracles.values():
-            r = oracle.read(true_intensity, timestamp)
+            r = oracle.observe(intensity_at, after, phase)
             if r is not None:
                 readings.append(r)
         return readings
@@ -79,5 +99,28 @@ class OraclePool:
     def oracles(self) -> Dict[str, Oracle]:
         return dict(self._oracles)
 
-    def classes(self) -> set:
-        return {o.oracle_class for o in self._oracles.values()}
+    def classes(self) -> List[str]:
+        return [o.oracle_class for o in self._oracles.values()]
+
+
+def constant(value: float) -> IntensityAt:
+    """Helper for tests: a state that does not change over time."""
+    return lambda _t: value
+
+
+def make_reading(oracle_class: str, intensity: float, measured_at: float = 0.0,
+                 received_at: Optional[float] = None, confidence: float = 1.0,
+                 oracle_id: Optional[str] = None) -> OracleReading:
+    """Helper for tests and hand vectors."""
+    return OracleReading(
+        oracle_id=oracle_id or f"oracle-{oracle_class}",
+        oracle_class=oracle_class,
+        intensity=intensity,
+        measured_at=measured_at,
+        received_at=measured_at if received_at is None else received_at,
+        confidence=confidence,
+    )
+
+
+def readings_from(pairs: Sequence[Tuple[str, float]], measured_at: float = 0.0) -> List[OracleReading]:
+    return [make_reading(c, v, measured_at) for c, v in pairs]

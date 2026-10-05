@@ -1,5 +1,5 @@
 """
-Zone generator — creates and manages Protected Zones (§3.1).
+Zone generator — creates Protected Zones (PREVENTION §3.1).
 
 A zone is a physically bounded evaluation domain with its own RNG fork,
 oracle set, risk channels, and actor population.
@@ -26,7 +26,7 @@ class Zone:
 
 class ZoneGenerator:
     """
-    Protocol-agnostic zone factory.
+    Zone factory.
 
     Each zone gets a deterministic RNG fork keyed by its id, so zone
     ordering does not affect randomness of peer zones.

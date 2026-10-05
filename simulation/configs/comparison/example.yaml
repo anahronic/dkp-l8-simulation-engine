@@ -1,0 +1,33 @@
+# Example comparison: the configuration in force vs four candidate overlays.
+# The bench reports metric vectors and invariants; it selects nothing.
+#
+# conservative/permissive reproduce the v1 calibration presets (calibration.py,
+# removed in v2) as overlays; they set the same keys differently, so their
+# joint activation is reported as a conflict and not evaluated.
+
+baseline: ../prevention_childcare_v0_2.yaml
+baseline_overlay:
+  simulation: {num_zones: 1, num_days: 10}
+  output: {directory: simulation/outputs/comparison/baseline}
+scenario_seeds: [42, 43, 44]
+
+candidates:
+  conservative_v1_preset:
+    protocol:
+      epsilon_consistency: 0.10
+      delta_t_int_seconds: 20
+      theta_self_induced: 0.3
+      coverage_floor: 0.15
+      recurrence: {decay: 0.85}
+  permissive_v1_preset:
+    protocol:
+      epsilon_consistency: 0.25
+      delta_t_int_seconds: 60
+      theta_self_induced: 0.7
+      coverage_floor: 0.05
+      recurrence: {decay: 0.95}
+  proportional_attribution:
+    protocol: {attribution_rule: proportional}
+  recurrence_per_zone_daily_window:
+    protocol:
+      recurrence: {key: [actor, zone, channel], window_seconds: 86400}

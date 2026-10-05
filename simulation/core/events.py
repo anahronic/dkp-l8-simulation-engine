@@ -1,74 +1,57 @@
 """
-Event engine — generates and processes threat activation events.
+Event engine — generates threat activations.
 
-Protocol-agnostic: produces timestamped events, delegates interpretation
-to the protocol adapter.
+Each zone owns its own engine (RNG fork), so adding a zone never changes
+the events of another zone.  Event time is drawn uniformly inside the tick;
+it is ground truth and is never passed to the protocol adapter.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Optional, Tuple
 
 from simulation.core.rng import DeterministicRNG
 
 
-class EventType(str, Enum):
-    THREAT_ACTIVATION = "threat_activation"
-    INTERVENTION = "intervention"
-    SUPPRESSION = "suppression"
-    ORACLE_READING = "oracle_reading"
-    TICK = "tick"
-
-
-@dataclass
-class SimEvent:
-    event_id: int
-    event_type: EventType
-    timestamp: float
+@dataclass(frozen=True)
+class ThreatEvent:
+    event_id: str
     zone_id: str
-    payload: Dict[str, Any] = field(default_factory=dict)
+    risk_channel: str
+    tick: int
+    event_time: float           # truth: physical activation time (s)
+    true_intensity: float       # truth
+    induced_by: Optional[str]   # truth: actor that created the threat, if any
 
 
 class EventEngine:
-    """
-    Generates threat activation events at configurable rates.
-
-    Each tick, for each zone, the engine probabilistically activates
-    threats on configured risk channels.
-    """
-
-    def __init__(self, rng: DeterministicRNG) -> None:
+    def __init__(self, zone_id: str, rng: DeterministicRNG) -> None:
+        self._zone_id = zone_id
         self._rng = rng
-        self._event_counter = 0
+        self._counter = 0
 
-    def generate_threats(
-        self,
-        zone_id: str,
-        risk_channels: List[str],
-        timestamp: float,
-        threat_rate: float = 0.3,
-        intensity_range: tuple = (0.1, 1.0),
-    ) -> List[SimEvent]:
-        """Generate threat activations for one tick in one zone."""
-        events = []
-        for channel in risk_channels:
-            if self._rng.uniform() < threat_rate:
-                self._event_counter += 1
-                intensity = self._rng.uniform_range(*intensity_range)
-                events.append(SimEvent(
-                    event_id=self._event_counter,
-                    event_type=EventType.THREAT_ACTIVATION,
-                    timestamp=timestamp,
-                    zone_id=zone_id,
-                    payload={
-                        "risk_channel": channel,
-                        "true_intensity": intensity,
-                    },
-                ))
-        return events
+    def _new(self, channel: str, tick: int, tick_start: float, tick_seconds: float,
+             intensity_range: Tuple[float, float], induced_by: Optional[str]) -> ThreatEvent:
+        self._counter += 1
+        return ThreatEvent(
+            event_id=f"{self._zone_id}:{self._counter:06d}",
+            zone_id=self._zone_id,
+            risk_channel=channel,
+            tick=tick,
+            event_time=tick_start + self._rng.uniform() * tick_seconds,
+            true_intensity=self._rng.uniform_range(*intensity_range),
+            induced_by=induced_by,
+        )
 
-    def next_id(self) -> int:
-        self._event_counter += 1
-        return self._event_counter
+    def natural(self, channel: str, tick: int, tick_start: float, tick_seconds: float,
+                activation_rate: float, intensity_range: Tuple[float, float]) -> Optional[ThreatEvent]:
+        """One activation draw for a channel in this tick."""
+        if self._rng.uniform() < activation_rate:
+            return self._new(channel, tick, tick_start, tick_seconds, intensity_range, None)
+        return None
+
+    def induced(self, channel: str, tick: int, tick_start: float, tick_seconds: float,
+                intensity_range: Tuple[float, float], actor_id: str) -> ThreatEvent:
+        """A threat created by an actor (risk farming)."""
+        return self._new(channel, tick, tick_start, tick_seconds, intensity_range, actor_id)

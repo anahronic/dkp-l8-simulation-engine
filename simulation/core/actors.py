@@ -1,93 +1,99 @@
 """
-Actor models — simulated subjects that intervene in zones (§3.4).
+Actor models — simulated subjects that intervene in zones (PREVENTION §3.4).
 
-Each actor has a *strategy* that determines how (and whether) they respond
-to threat activations.  The protocol requires Subject-linked Interventions.
+Profiles come from the scenario config (domain.actors); nothing about an
+actor is fixed in code.  Actor ids are unique across zones
+(``<zone_id>/<profile>``), so recurrence counters and subject totals never
+merge different subjects.
+
+Adversarial actors with ``self_induce_rate > 0`` *create* threats in their
+own zone and then suppress them (risk farming).  Whether the evaluator
+detects this linkage is decided by the observation model in the runner; the
+actor itself never reports a linkage score.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import Any, Dict, Optional, Tuple
 
 from simulation.core.rng import DeterministicRNG
 
 
 class ActorStrategy(str, Enum):
-    PATROL = "patrol"          # always responds, moderate effectiveness
-    WEAK = "weak"              # sometimes responds, low effectiveness
-    PASSIVE = "passive"        # never responds
-    ADVERSARIAL = "adversarial"  # may induce threats
-    OPTIMIZER = "optimizer"    # responds strategically for max SPD
+    PATROL = "patrol"            # responds often, moderate effectiveness
+    WEAK = "weak"                # responds sometimes, low effectiveness
+    PASSIVE = "passive"          # never responds
+    ADVERSARIAL = "adversarial"  # may create threats and suppress them
+    OPTIMIZER = "optimizer"      # fast and effective responder
 
 
-@dataclass
-class InterventionResult:
-    actor_id: str
-    responded: bool
-    suppression_intensity: float  # how much risk was reduced
-    timestamp: float
-    linkage_score: float = 0.0   # §9.1: continuous linkage [0,1], compared against θ
-
-
-@dataclass
-class Actor:
-    actor_id: str
+@dataclass(frozen=True)
+class ActorProfile:
+    name: str
     strategy: ActorStrategy
-    rng: DeterministicRNG
-    effectiveness: float = 0.7     # base suppression capability [0,1]
-    response_rate: float = 0.9     # probability of responding
-    self_induce_rate: float = 0.0  # probability of self-inducing threat
-    attribution_share: float = 1.0 # Aₖ for this actor
-    effectiveness_range: tuple = None  # F-08: per-strategy (lo, hi) multiplier
+    effectiveness: float
+    effectiveness_range: Optional[Tuple[float, float]]
+    response_rate: float
+    response_delay_seconds: Tuple[float, float]
+    attribution_claim: float
+    self_induce_rate: float
 
-    def decide_intervention(
-        self,
-        threat_intensity: float,
-        timestamp: float,
-    ) -> InterventionResult:
-        """Decide whether to intervene and how effectively."""
-
-        if self.strategy == ActorStrategy.PASSIVE:
-            return InterventionResult(
-                actor_id=self.actor_id,
-                responded=False,
-                suppression_intensity=0.0,
-                timestamp=timestamp,
-            )
-
-        if self.strategy == ActorStrategy.ADVERSARIAL:
-            # Adversarial actors sometimes induce threats (flagged)
-            if self.rng.uniform() < self.self_induce_rate:
-                return InterventionResult(
-                    actor_id=self.actor_id,
-                    responded=True,
-                    suppression_intensity=threat_intensity * self.effectiveness * 0.5,
-                    timestamp=timestamp,
-                    linkage_score=1.0,  # §9.1: high linkage → T_k = 0
-                )
-
-        # For patrol, weak, optimizer, adversarial (non-inducing)
-        if self.rng.uniform() > self.response_rate:
-            return InterventionResult(
-                actor_id=self.actor_id,
-                responded=False,
-                suppression_intensity=0.0,
-                timestamp=timestamp,
-            )
-
-        # Effectiveness varies by strategy — configurable via effectiveness_range
-        eff = self.effectiveness
-        if self.effectiveness_range is not None:
-            eff *= self.rng.uniform_range(*self.effectiveness_range)
-
-        suppression = threat_intensity * min(1.0, eff)
-
-        return InterventionResult(
-            actor_id=self.actor_id,
-            responded=True,
-            suppression_intensity=suppression,
-            timestamp=timestamp,
-            linkage_score=0.0,
+    @classmethod
+    def from_config(cls, name: str, spec: Dict[str, Any]) -> "ActorProfile":
+        rng_range = spec["effectiveness_range"]
+        return cls(
+            name=name,
+            strategy=ActorStrategy(spec["strategy"]),
+            effectiveness=float(spec["effectiveness"]),
+            effectiveness_range=None if rng_range is None else (float(rng_range[0]), float(rng_range[1])),
+            response_rate=float(spec["response_rate"]),
+            response_delay_seconds=(float(spec["response_delay_seconds"][0]),
+                                    float(spec["response_delay_seconds"][1])),
+            attribution_claim=float(spec["attribution_claim"]),
+            self_induce_rate=float(spec["self_induce_rate"]),
         )
+
+
+@dataclass(frozen=True)
+class Intervention:
+    actor_id: str
+    time: float           # simulation seconds
+    effectiveness: float  # fraction of the current intensity removed, [0, 1]
+
+
+class Actor:
+    def __init__(self, actor_id: str, profile: ActorProfile, rng: DeterministicRNG) -> None:
+        self.actor_id = actor_id
+        self.profile = profile
+        self._rng_response = rng.fork("response")
+        self._rng_create = rng.fork("create")
+
+    @property
+    def strategy(self) -> ActorStrategy:
+        return self.profile.strategy
+
+    @property
+    def attribution_claim(self) -> float:
+        return self.profile.attribution_claim
+
+    def creates_threat(self) -> bool:
+        """Risk farming: does this actor create a threat on a channel this tick?"""
+        if self.profile.strategy != ActorStrategy.ADVERSARIAL or self.profile.self_induce_rate <= 0.0:
+            return False
+        return self._rng_create.uniform() < self.profile.self_induce_rate
+
+    def decide(self, event_time: float, own_threat: bool) -> Optional[Intervention]:
+        """Decide whether and when to intervene on a threat that began at event_time."""
+        p = self.profile
+        if p.strategy == ActorStrategy.PASSIVE:
+            return None
+        if not own_threat and self._rng_response.uniform() >= p.response_rate:
+            return None
+        delay = self._rng_response.uniform_range(*p.response_delay_seconds)
+        eff = p.effectiveness
+        if p.effectiveness_range is not None:
+            eff *= self._rng_response.uniform_range(*p.effectiveness_range)
+        return Intervention(actor_id=self.actor_id, time=event_time + delay,
+                            effectiveness=max(0.0, min(1.0, eff)))

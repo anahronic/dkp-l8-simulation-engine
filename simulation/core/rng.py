@@ -8,8 +8,11 @@ module.  A single seed controls the entire run → full reproducibility.
 from __future__ import annotations
 
 import hashlib
+import math
 import struct
 from typing import List, Sequence, Tuple
+
+from simulation.core.detmath import det_cos_2pi, det_log
 
 
 class DeterministicRNG:
@@ -19,7 +22,7 @@ class DeterministicRNG:
     Why not stdlib ``random``?  Because we need:
     * explicit fork/child streams (zone-level isolation)
     * no hidden global state
-    * identical cross-platform output
+    * identical cross-platform output (no C-library transcendental functions)
     """
 
     def __init__(self, seed: int) -> None:
@@ -65,11 +68,14 @@ class DeterministicRNG:
         return lo + int(self.uniform() * span) % span
 
     def gauss(self, mu: float = 0.0, sigma: float = 1.0) -> float:
-        """Box-Muller transform — deterministic Gaussian."""
-        import math
+        """Box-Muller transform with platform-independent log/cos (core.detmath).
+
+        v1 used math.log / math.cos, whose last bits depend on the C library;
+        sqrt is correctly rounded by IEEE-754 and is safe.
+        """
         u1 = max(1e-300, self.uniform())  # avoid log(0)
         u2 = self.uniform()
-        z = math.sqrt(-2.0 * math.log(u1)) * math.cos(2.0 * math.pi * u2)
+        z = math.sqrt(-2.0 * det_log(u1)) * det_cos_2pi(u2)
         return mu + sigma * z
 
     def choice(self, seq: Sequence):

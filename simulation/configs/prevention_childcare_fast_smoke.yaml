@@ -1,60 +1,97 @@
-# DKP-1-PREVENTION-001 v1.0 — Fast Smoke Test
-# Minimal config for CI / quick validation
+# DKP-1-PREVENTION-001 — fast smoke run (schema version 2).
+# Same world as prevention_childcare_v0_2.yaml, one zone, two days, 4 ticks/day.
+
+schema_version: 2
+
+scenario:
+  id: childcare_smoke_v0_2
+  description: Minimal run for CI and quick checks.
+  synthetic: true
 
 simulation:
   seed: 42
   num_zones: 1
   num_days: 2
   ticks_per_day: 4
-  se_ge_ta_probability: 0.0
-  temporal_invalid_probability: 0.0
-  se_delay_min: 1.0
+
+time:
+  tick_seconds: 21600
+  start_dti_day: 2461042
 
 protocol:
   epsilon_consistency: 0.15
-  delta_t_int: 30.0
+  delta_t_int_seconds: 30
   theta_self_induced: 0.5
-  recurrence_decay: 0.9
-  recurrence_threshold: 3
   coverage_floor: 0.1
+  ta_time_basis: measurement
+  se_aggregation: max
+  confidence_rule: class_coverage
+  attribution_rule: ambiguity_zero
+  recurrence:
+    key: [actor, channel]
+    threshold: 3
+    decay: 0.9
+    window_seconds: null
 
 domain:
   name: childcare
   include_adversarial: false
-  threat_weights:
-    unauthorized_adult_proximity: 0.9
-    intrusion: 1.0
-    unattended_child_exit: 0.95
-    hazardous_trajectory: 0.7
-    dangerous_object: 0.8
-    congestion_escalation: 0.5
-  threat_profiles:
-    unauthorized_adult_proximity:
-      activation_rate: 0.5
-      intensity_range: [0.3, 0.7]
-    intrusion:
-      activation_rate: 0.5
-      intensity_range: [0.3, 0.7]
-    unattended_child_exit:
-      activation_rate: 0.5
-      intensity_range: [0.3, 0.7]
-    hazardous_trajectory:
-      activation_rate: 0.5
-      intensity_range: [0.3, 0.7]
-    dangerous_object:
-      activation_rate: 0.5
-      intensity_range: [0.3, 0.7]
-    congestion_escalation:
-      activation_rate: 0.5
-      intensity_range: [0.3, 0.7]
+  channels:
+    unauthorized_adult_proximity: {weight: 0.9, activation_rate: 0.5, intensity_range: [0.3, 0.7]}
+    intrusion:                    {weight: 1.0, activation_rate: 0.5, intensity_range: [0.3, 0.7]}
+    unattended_child_exit:        {weight: 0.95, activation_rate: 0.5, intensity_range: [0.3, 0.7]}
+    hazardous_trajectory:         {weight: 0.7, activation_rate: 0.5, intensity_range: [0.3, 0.7]}
+    dangerous_object:             {weight: 0.8, activation_rate: 0.5, intensity_range: [0.3, 0.7]}
+    congestion_escalation:        {weight: 0.5, activation_rate: 0.5, intensity_range: [0.3, 0.7]}
+  actors:
+    patrol_worker:
+      strategy: patrol
+      effectiveness: 0.75
+      effectiveness_range: [0.5, 0.9]
+      response_rate: 0.95
+      response_delay_seconds: [3, 40]
+      attribution_claim: 1.0
+      self_induce_rate: 0.0
+    weak_worker:
+      strategy: weak
+      effectiveness: 0.4
+      effectiveness_range: [0.2, 0.6]
+      response_rate: 0.6
+      response_delay_seconds: [10, 120]
+      attribution_claim: 1.0
+      self_induce_rate: 0.0
+    passive_bystander:
+      strategy: passive
+      effectiveness: 0.0
+      effectiveness_range: null
+      response_rate: 0.0
+      response_delay_seconds: [0, 0]
+      attribution_claim: 0.0
+      self_induce_rate: 0.0
+    optimizer_actor:
+      strategy: optimizer
+      effectiveness: 0.85
+      effectiveness_range: [0.8, 1.0]
+      response_rate: 0.9
+      response_delay_seconds: [2, 20]
+      attribution_claim: 1.0
+      self_induce_rate: 0.0
 
 oracles:
+  classes: [optical, thermal, lidar, access]
   noise_sigma: 0.05
   dropout_rate: 0.0
   bias_range: [0.0, 0.0]
+  measurement_delay_seconds: [0.2, 2.0]
+  arrival_delay_seconds: [0.1, 3.0]
+  ttl_seconds: {optical: 10, thermal: 10, lidar: 5, access: 30}
+  linkage_detection:
+    detection_probability: 0.8
+    detected_score_range: [0.6, 1.0]
+    undetected_score_range: [0.0, 0.3]
+
+attack:
+  oracle_bias: null
 
 output:
   directory: simulation/outputs/smoke
-  write_csv: true
-  write_json: true
-  write_summary: true

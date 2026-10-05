@@ -1,350 +1,183 @@
 """
-Adversarial Incentive Scenarios — DKP-1-PREVENTION-001 v1.0 Audit Phase 2.
+Adversarial scenarios — Phase 3 (2026-10-05), replacing the Phase 2 set.
 
-Defines 10 scenario configuration generators that probe rational-exploit
-vectors in the prevention protocol.  Each scenario targets a specific
-incentive vulnerability.
+Every scenario is an overlay on the main scenario config
+(configs/prevention_childcare_v0_2.yaml), so the world is declared once.
+Each one states what is varied *independently* and what the attacker
+controls, because the Phase 2 scenarios did not (see AUDIT_REPORT Phase 3):
 
-All configs explicitly define all protocol parameters (no implicit defaults).
-Use-case: imported by tests and the Phase 2 audit reporting layer.
+    S1  risk_farming        an adversarial subject creates threats and suppresses them;
+                            the evaluator sees only an observed linkage score
+    S2  ta_inflation        (a) truth scaled  (b) biased TA measurement only
+                            (c) biased TA and SE measurements
+    S3  joint_suppression   several subjects on one threat; one event-level S, Σ A ≤ 1
+    S4  timing_window       Δt_int swept; the window now binds
+    S5  attribution_rules   ambiguity_zero / proportional / list_order; actor order reversed
+    S6  early_prevention    fast subject vs slow sensors; t₀ by measurement vs registration
+    S7  oracle_degradation  bias (now applied), noise, dropout; TTL stress
+    S8  oracle_oscillation  low vs high noise
+    S9  linkage_threshold   adapter-level sweep through θ (a real step)
+    S10 se_ta_continuity    adapter-level sweep of SE/TA through 1 (continuous)
 """
 
 from __future__ import annotations
 
-from typing import Any, Dict
+import copy
+import os
+from typing import Any, Dict, List
+
+from simulation.core.config import deep_merge, load_config
+
+MAIN_CONFIG = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                           "configs", "prevention_childcare_v0_2.yaml")
 
 
-# ── Invariant thresholds ────────────────────────────────────────────────
-
-# Scenario 1 — Risk Farming
-# SPD in last quarter of run must be < this multiplier × first quarter mean
-SPD_GROWTH_RATE_THRESHOLD: float = 1.0   # monotonic decay expected
-
-# Scenario 4 — Timing Arbitrage
-# Ratio of max-SPD to min-SPD across all timing variants must be bounded
-MAX_TIMING_SPD_RATIO: float = 10.0       # SPD is timing-flat inside window
-
-# Scenario 9 — Linkage Threshold Sensitivity
-# SPD must drop to 0 at linkage_score > theta — the step IS the invariant
-LINKAGE_JUMP_IS_CLIFF: bool = True       # cliff at θ is correct protocol behaviour
-
-# Scenario 10 — SE ≥ TA Boundary
-# Discontinuity at SE=TA is a known protocol property — must be flagged
-BOUNDARY_DISCONTINUITY_EXPECTED: bool = True
-
-# Scenarios 7/8 — Oracle
-ORACLE_MIN_SPD: float = 0.0              # SPD must never go negative
+def base_config(seed: int, num_days: int = 10, num_zones: int = 1, tag: str = "scenario") -> Dict[str, Any]:
+    cfg = load_config(MAIN_CONFIG)
+    return deep_merge(cfg, {
+        "scenario": {"id": f"childcare_v0_2.{tag}"},
+        "simulation": {"seed": seed, "num_days": num_days, "num_zones": num_zones},
+        "output": {"directory": f"simulation/outputs/phase3/{tag}"},
+    })
 
 
-# ── Internal helpers ────────────────────────────────────────────────────
+def _with(cfg: Dict[str, Any], overlay: Dict[str, Any], tag: str) -> Dict[str, Any]:
+    out = deep_merge(cfg, overlay)
+    out["scenario"]["id"] = f"{cfg['scenario']['id']}.{tag}"
+    out["output"]["directory"] = f"{cfg['output']['directory']}/{tag}"
+    return out
 
-_THREAT_CHANNELS: list[str] = [
-    "unauthorized_adult_proximity",
-    "intrusion",
-    "unattended_child_exit",
-    "hazardous_trajectory",
-    "dangerous_object",
-    "congestion_escalation",
-]
 
-_THREAT_WEIGHTS: Dict[str, float] = {
-    "unauthorized_adult_proximity": 0.9,
-    "intrusion": 1.0,
-    "unattended_child_exit": 0.95,
-    "hazardous_trajectory": 0.7,
-    "dangerous_object": 0.8,
-    "congestion_escalation": 0.5,
+def _all_actors(cfg: Dict[str, Any], **fields: Any) -> Dict[str, Any]:
+    return {"domain": {"actors": {name: dict(fields) for name in cfg["domain"]["actors"]}}}
+
+
+# ── S1 risk farming ─────────────────────────────────────────────────────
+
+def risk_farming(seed: int = 3001, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s1_risk_farming")
+    farm = deep_merge(base, {"domain": {"include_adversarial": True,
+                                        "actors": {"adversarial_actor": {"self_induce_rate": 0.1}}}})
+    return {
+        "detect_0.8": _with(farm, {}, "detect_0.8"),
+        "detect_0.0": _with(farm, {"oracles": {"linkage_detection": {"detection_probability": 0.0}}},
+                            "detect_0.0"),
+        "detect_1.0": _with(farm, {"oracles": {"linkage_detection": {"detection_probability": 1.0}}},
+                            "detect_1.0"),
+        "detect_0.0_window_1d": _with(farm, {
+            "oracles": {"linkage_detection": {"detection_probability": 0.0}},
+            "protocol": {"recurrence": {"key": ["actor", "zone", "channel"], "window_seconds": 86400}}},
+            "detect_0.0_window_1d"),
+    }
+
+
+# ── S2 TA inflation ─────────────────────────────────────────────────────
+
+def ta_inflation(seed: int = 3002, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s2_ta_inflation")
+    classes = base["oracles"]["classes"]
+    scaled = {"domain": {"channels": {ch: {"intensity_range": [0.8, 1.0]} for ch in base["domain"]["channels"]}}}
+    return {
+        "baseline": _with(base, {}, "baseline"),
+        "a_truth_scaled": _with(base, scaled, "a_truth_scaled"),
+        "b_ta_bias_2_classes": _with(base, {"attack": {"oracle_bias": {
+            "classes": classes[:2], "bias": 0.1, "phase": "ta"}}}, "b_ta_bias_2_classes"),
+        "b_ta_bias_all_classes": _with(base, {"attack": {"oracle_bias": {
+            "classes": list(classes), "bias": 0.1, "phase": "ta"}}}, "b_ta_bias_all_classes"),
+        "c_both_bias_all_classes": _with(base, {"attack": {"oracle_bias": {
+            "classes": list(classes), "bias": 0.1, "phase": "both"}}}, "c_both_bias_all_classes"),
+    }
+
+
+# ── S3 joint suppression ────────────────────────────────────────────────
+
+def joint_suppression(seed: int = 3003, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s3_joint_suppression")
+    return {
+        "claims_1.0": _with(base, {}, "claims_1.0"),
+        "claims_0.4": _with(base, _all_actors(base, attribution_claim=0.4), "claims_0.4"),
+    }
+
+
+# ── S4 timing window ────────────────────────────────────────────────────
+
+def timing_window(seed: int = 3004, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s4_timing_window")
+    return {f"dt_{int(dt)}s": _with(base, {"protocol": {"delta_t_int_seconds": dt}}, f"dt_{int(dt)}s")
+            for dt in (10.0, 30.0, 60.0, 120.0, 600.0)}
+
+
+# ── S5 attribution rules ────────────────────────────────────────────────
+
+def _reversed_actors(cfg: Dict[str, Any]) -> Dict[str, Any]:
+    out = copy.deepcopy(cfg)
+    out["domain"]["actors"] = dict(reversed(list(cfg["domain"]["actors"].items())))
+    return out
+
+
+def attribution_rules(seed: int = 3005, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s5_attribution_rules")
+    out = {}
+    for rule in ("ambiguity_zero", "proportional", "list_order"):
+        cfg = _with(base, {"protocol": {"attribution_rule": rule}}, rule)
+        out[rule] = cfg
+        rev = _reversed_actors(cfg)
+        rev["scenario"]["id"] += ".reversed"
+        rev["output"]["directory"] += "_reversed"
+        out[f"{rule}_reversed"] = rev
+    return out
+
+
+# ── S6 early prevention ─────────────────────────────────────────────────
+
+def early_prevention(seed: int = 3006, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s6_early_prevention")
+    slow = {"oracles": {"measurement_delay_seconds": [2.0, 6.0], "arrival_delay_seconds": [5.0, 15.0],
+                        "ttl_seconds": {c: 60 for c in base["oracles"]["classes"]}},
+            "domain": {"actors": {"optimizer_actor": {"response_delay_seconds": [0.0, 3.0]}}}}
+    return {
+        "basis_measurement": _with(base, deep_merge(slow, {"protocol": {"ta_time_basis": "measurement"}}),
+                                   "basis_measurement"),
+        "basis_registration": _with(base, deep_merge(slow, {"protocol": {"ta_time_basis": "registration"}}),
+                                    "basis_registration"),
+    }
+
+
+# ── S7 oracle degradation ───────────────────────────────────────────────
+
+def oracle_degradation(seed: int = 3007, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s7_oracle_degradation")
+    return {
+        "clean": _with(base, {}, "clean"),
+        "bias_only": _with(base, {"oracles": {"bias_range": [-0.15, 0.15]}}, "bias_only"),
+        "degraded": _with(base, {"oracles": {"bias_range": [-0.15, 0.15], "noise_sigma": 0.25,
+                                             "dropout_rate": 0.2}}, "degraded"),
+        "slow_arrival_ttl": _with(base, {"oracles": {"arrival_delay_seconds": [0.1, 20.0]}},
+                                  "slow_arrival_ttl"),
+    }
+
+
+# ── S8 oracle oscillation ───────────────────────────────────────────────
+
+def oracle_oscillation(seed: int = 3008, num_days: int = 10) -> Dict[str, Dict[str, Any]]:
+    base = base_config(seed, num_days, tag="s8_oracle_oscillation")
+    return {
+        "noise_0.02": _with(base, {"oracles": {"noise_sigma": 0.02}}, "noise_0.02"),
+        "noise_0.25": _with(base, {"oracles": {"noise_sigma": 0.25}}, "noise_0.25"),
+    }
+
+
+SIMULATED: Dict[str, Any] = {
+    "S1_risk_farming": risk_farming,
+    "S2_ta_inflation": ta_inflation,
+    "S3_joint_suppression": joint_suppression,
+    "S4_timing_window": timing_window,
+    "S5_attribution_rules": attribution_rules,
+    "S6_early_prevention": early_prevention,
+    "S7_oracle_degradation": oracle_degradation,
+    "S8_oracle_oscillation": oracle_oscillation,
 }
 
-
-def _threat_profiles(activation_rate: float = 0.5,
-                     intensity_lo: float = 0.3,
-                     intensity_hi: float = 0.7) -> Dict[str, Any]:
-    return {
-        ch: {"activation_rate": activation_rate,
-             "intensity_range": [intensity_lo, intensity_hi]}
-        for ch in _THREAT_CHANNELS
-    }
-
-
-def _proto(*, recurrence_threshold: int = 3, recurrence_decay: float = 0.9,
-           theta: float = 0.5, epsilon: float = 0.15,
-           delta_t_int: float = 30.0, coverage_floor: float = 0.1
-           ) -> Dict[str, Any]:
-    return {
-        "epsilon_consistency": epsilon,
-        "delta_t_int": delta_t_int,
-        "theta_self_induced": theta,
-        "recurrence_decay": recurrence_decay,
-        "recurrence_threshold": recurrence_threshold,
-        "coverage_floor": coverage_floor,
-    }
-
-
-def _sim(seed: int, num_days: int = 10, ticks_per_day: int = 8,
-         se_ge_ta: float = 0.0, temporal_invalid: float = 0.0,
-         se_delay_min: float = 1.0) -> Dict[str, Any]:
-    return {
-        "seed": seed,
-        "num_zones": 1,
-        "num_days": num_days,
-        "ticks_per_day": ticks_per_day,
-        "se_ge_ta_probability": se_ge_ta,
-        "temporal_invalid_probability": temporal_invalid,
-        "se_delay_min": se_delay_min,
-    }
-
-
-def _oracles(noise_sigma: float = 0.05, dropout_rate: float = 0.0,
-             bias_lo: float = 0.0, bias_hi: float = 0.0) -> Dict[str, Any]:
-    return {"noise_sigma": noise_sigma, "dropout_rate": dropout_rate,
-            "bias_range": [bias_lo, bias_hi]}
-
-
-def _domain(threat_profiles: Dict[str, Any],
-            include_adversarial: bool = False) -> Dict[str, Any]:
-    return {
-        "name": "childcare",
-        "include_adversarial": include_adversarial,
-        "threat_weights": _THREAT_WEIGHTS,
-        "threat_profiles": threat_profiles,
-    }
-
-
-def _output(tag: str) -> Dict[str, Any]:
-    return {"directory": f"/tmp/dkp-l8-{tag}"}
-
-
-# ── Scenario 1: Risk Farming ────────────────────────────────────────────
-
-def risk_farming_config(seed: int = 1001, num_days: int = 30) -> Dict[str, Any]:
-    """
-    Actor creates controlled threats at high frequency (activation_rate=0.95),
-    partially suppressing each one.
-
-    Exploit vector: accumulating SPD indefinitely through repeated cycles.
-
-    Expected protection (§9.3): recurrence decay drives T_k toward 0.
-    INVARIANT: mean SPD per event in the last quarter of the run must be
-               strictly less than in the first quarter (decay observable).
-    """
-    return {
-        "simulation": _sim(seed, num_days=num_days, ticks_per_day=8),
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.95,
-                                           intensity_lo=0.5, intensity_hi=0.8)),
-        "oracles": _oracles(),
-        "output": _output("risk-farming"),
-    }
-
-
-# ── Scenario 2: TA Inflation ─────────────────────────────────────────────
-
-def ta_inflation_config(seed: int = 1002, intensity_lo: float = 0.8,
-                        intensity_hi: float = 1.0) -> Dict[str, Any]:
-    """
-    Actor inflates TA intensity before partially suppressing.
-
-    Exploit vector: higher TA → higher SPD if formula is linear in raw TA.
-
-    Expected protection: S_k = (TA-SE)/TA is a ratio — inflation cancels.
-    INVARIANT: all S_k values read from metrics must be in [0, 1].
-    """
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8),
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.6,
-                                           intensity_lo=intensity_lo,
-                                           intensity_hi=intensity_hi)),
-        "oracles": _oracles(),
-        "output": _output("ta-inflation"),
-    }
-
-
-# ── Scenario 3: Partial Suppression Loop ────────────────────────────────
-
-def partial_suppression_config(seed: int = 1003) -> Dict[str, Any]:
-    """
-    Multiple actors each partially suppress the same threat independently.
-
-    Structure: each actor computes SE against the original TA, not the residual.
-    Combined implied suppression can exceed TA, yet each actor receives
-    positive SPD.
-
-    INVARIANT: detect events where Σ(TA-SE_k) > TA AND SPD_k > 0 for some k.
-    (System-level over-attribution is a KNOWN structural property; test flags it.)
-    """
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8,
-                           se_ge_ta=0.0, temporal_invalid=0.0),
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.7,
-                                           intensity_lo=0.4, intensity_hi=0.8)),
-        "oracles": _oracles(),
-        "output": _output("partial-suppression"),
-    }
-
-
-# ── Scenario 4: Timing Arbitrage ────────────────────────────────────────
-
-def timing_arbitrage_config(seed: int = 1004, se_delay_min: float = 1.0) -> Dict[str, Any]:
-    """
-    Actor optimises around the Δt_int time boundary.
-
-    Exploit vector: place SE just inside the window (t+Δt-ε) vs. just outside.
-
-    INVARIANT: within the valid window [se_delay_min, Δt_int], timing alone
-    does not drive SPD (S_k is intensity-based, not time-based).
-    The cliff at Δt_int is expected and must be flagged.
-    """
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8,
-                           se_delay_min=se_delay_min),
-        "protocol": _proto(delta_t_int=30.0),
-        "domain": _domain(_threat_profiles(activation_rate=0.6)),
-        "oracles": _oracles(),
-        "output": _output("timing-arbitrage"),
-    }
-
-
-# ── Scenario 5: Attribution Splitting ───────────────────────────────────
-
-def attribution_split_config(seed: int = 1005) -> Dict[str, Any]:
-    """
-    Tests whether 100 actors with 0.01 attribution each yield same
-    total Σ A_k as 1 actor with full attribution.
-
-    Expected: per-event budget enforcement (F-01) guarantees Σ A_k ≤ 1.
-    INVARIANT: Σ A_k per event ≤ 1.0 always.
-    """
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8),
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.6)),
-        "oracles": _oracles(),
-        "output": _output("attribution-split"),
-    }
-
-
-# ── Scenario 6: Early Prevention ────────────────────────────────────────
-
-def early_prevention_config(seed: int = 1006) -> Dict[str, Any]:
-    """
-    Prevention action occurs BEFORE TA timestamp (se_time < ta_time).
-
-    Exploit vector: if pre-TA prevention earns reward, actor can game timing.
-
-    Expected protection: temporal_valid requires dt = se_time - ta_time > 0.
-    INVARIANT: Reward(pre-TA) = 0 AND Reward(post-TA) > 0 → flag incentive gap.
-    """
-    return {
-        "simulation": _sim(seed, num_days=5, ticks_per_day=4),
-        "protocol": _proto(delta_t_int=30.0),
-        "domain": _domain(_threat_profiles(activation_rate=0.6)),
-        "oracles": _oracles(),
-        "output": _output("early-prevention"),
-    }
-
-
-# ── Scenario 7: Oracle Degradation ──────────────────────────────────────
-
-def oracle_degradation_config(seed: int = 1007,
-                               noise_sigma: float = 0.25,
-                               dropout_rate: float = 0.20,
-                               bias_hi: float = 0.15) -> Dict[str, Any]:
-    """
-    One oracle class biased/noisy downward — tests oracle sensitivity.
-
-    Expected behavior: delta_oracle rises, more events become informational.
-    INVARIANT: TA_intensity must not collapse disproportionately; SPD ≥ 0.
-    """
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8),
-        "protocol": _proto(epsilon=0.15),
-        "domain": _domain(_threat_profiles(activation_rate=0.6,
-                                           intensity_lo=0.3, intensity_hi=0.8)),
-        "oracles": _oracles(noise_sigma=noise_sigma,
-                            dropout_rate=dropout_rate,
-                            bias_lo=-bias_hi, bias_hi=bias_hi),
-        "output": _output("oracle-degradation"),
-    }
-
-
-# ── Scenario 8: Oracle Oscillation ──────────────────────────────────────
-
-def oracle_oscillation_stable_config(seed: int = 1008) -> Dict[str, Any]:
-    """Stable oracle regime (low noise) for oscillation baseline."""
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8),
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.6)),
-        "oracles": _oracles(noise_sigma=0.02),
-        "output": _output("oracle-oscillation-stable"),
-    }
-
-
-def oracle_oscillation_noisy_config(seed: int = 1008) -> Dict[str, Any]:
-    """Noisy oracle regime (informational) for oscillation comparison."""
-    return {
-        "simulation": _sim(seed, num_days=10, ticks_per_day=8),
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.6)),
-        "oracles": _oracles(noise_sigma=0.25),
-        "output": _output("oracle-oscillation-noisy"),
-    }
-
-
-# ── Scenario 9: Linkage Threshold Sensitivity ───────────────────────────
-
-def linkage_sweep_config(seed: int = 1009) -> Dict[str, Any]:
-    """
-    Sweep linkage_score ∈ [0.45, 0.55] through the theta=0.5 boundary.
-
-    Expected: T_k = 0 for linkage_score > theta (step function — §9.1).
-    INVARIANT: no continuous gradient across theta — this IS a cliff,
-    must be flagged as discontinuity risk.
-    """
-    return {
-        "simulation": _sim(seed, num_days=5, ticks_per_day=4),
-        "protocol": _proto(theta=0.5),
-        "domain": _domain(_threat_profiles(activation_rate=0.6)),
-        "oracles": _oracles(),
-        "output": _output("linkage-sweep"),
-    }
-
-
-# ── Scenario 10: SE ≥ TA Boundary ───────────────────────────────────────
-
-def boundary_se_ta_config(seed: int = 1010) -> Dict[str, Any]:
-    """
-    Sweep SE ∈ [0.95 TA, 1.05 TA] across the SE=TA threshold.
-
-    Expected: at SE=TA, S_k=0, SPD=0 (§3.6).
-    INVARIANT: transition must be flagged as a discontinuity risk
-    (SPD drops to 0 the moment SE crosses TA).
-    """
-    return {
-        "simulation": _sim(seed, num_days=5, ticks_per_day=4,
-                           se_ge_ta=1.0),   # 100 % of events trigger SE≥TA
-        "protocol": _proto(),
-        "domain": _domain(_threat_profiles(activation_rate=0.7,
-                                           intensity_lo=0.4, intensity_hi=0.6)),
-        "oracles": _oracles(),
-        "output": _output("boundary-se-ta"),
-    }
-
-
-# ── Convenience: all scenario configs as a registry ─────────────────────
-
-SCENARIO_REGISTRY: Dict[str, Any] = {
-    "risk_farming":          risk_farming_config,
-    "ta_inflation":          ta_inflation_config,
-    "partial_suppression":   partial_suppression_config,
-    "timing_arbitrage":      timing_arbitrage_config,
-    "attribution_split":     attribution_split_config,
-    "early_prevention":      early_prevention_config,
-    "oracle_degradation":    oracle_degradation_config,
-    "oracle_oscillation":    oracle_oscillation_stable_config,
-    "linkage_sweep":         linkage_sweep_config,
-    "boundary_se_ta":        boundary_se_ta_config,
-}
+# S9 and S10 are adapter-level sweeps; see simulation/phase3_report.py.
+LINKAGE_SWEEP: List[float] = [0.45, 0.49, 0.5, 0.500001, 0.51, 0.55]
+SE_TA_FRACTIONS: List[float] = [0.9, 0.99, 0.999, 0.9999, 1.0, 1.0001, 1.01]

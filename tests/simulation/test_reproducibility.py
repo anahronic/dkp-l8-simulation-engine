@@ -1,91 +1,76 @@
-"""
-Test: Reproducibility — same seed must produce identical output.
-"""
+"""Reproducibility and run identity (L3, B7): input_id, result_id, diagnostics kept apart."""
 
-import pytest
+import json
+import os
 
-from simulation.core.config import load_config
+from simulation.core.manifest import RESULT_CORE_FILES, engine_code_digest, spec_snapshots
 from simulation.run_prevention_simulation import run_simulation
+from tests.simulation.helpers import main_config
 
 
-def _make_smoke_config():
-    """Inline minimal config for reproducibility test."""
-    return {
-        "simulation": {
-            "seed": 12345,
-            "num_zones": 1,
-            "num_days": 2,
-            "ticks_per_day": 4,
-            "se_ge_ta_probability": 0.0,
-            "temporal_invalid_probability": 0.0,
-            "se_delay_min": 1.0,
-        },
-        "protocol": {
-            "epsilon_consistency": 0.15,
-            "delta_t_int": 30.0,
-            "theta_self_induced": 0.5,
-            "recurrence_decay": 0.9,
-            "recurrence_threshold": 3,
-            "coverage_floor": 0.1,
-        },
-        "domain": {
-            "name": "childcare",
-            "include_adversarial": False,
-            "threat_weights": {
-                "unauthorized_adult_proximity": 0.9,
-                "intrusion": 1.0,
-                "unattended_child_exit": 0.95,
-                "hazardous_trajectory": 0.7,
-                "dangerous_object": 0.8,
-                "congestion_escalation": 0.5,
-            },
-            "threat_profiles": {
-                "unauthorized_adult_proximity": {"activation_rate": 0.5, "intensity_range": [0.3, 0.7]},
-                "intrusion": {"activation_rate": 0.5, "intensity_range": [0.3, 0.7]},
-                "unattended_child_exit": {"activation_rate": 0.5, "intensity_range": [0.3, 0.7]},
-                "hazardous_trajectory": {"activation_rate": 0.5, "intensity_range": [0.3, 0.7]},
-                "dangerous_object": {"activation_rate": 0.5, "intensity_range": [0.3, 0.7]},
-                "congestion_escalation": {"activation_rate": 0.5, "intensity_range": [0.3, 0.7]},
-            },
-        },
-        "oracles": {
-            "noise_sigma": 0.05,
-            "dropout_rate": 0.0,
-            "bias_range": [0.0, 0.0],
-        },
-        "output": {
-            "directory": "/tmp/dkp-l8-repro-test",
-            "write_csv": True,
-            "write_json": True,
-            "write_summary": True,
-        },
-    }
+def _run(tmp_path, name, **kw):
+    cfg = main_config(out=str(tmp_path / name), **kw)
+    return run_simulation(cfg, write=True)
 
 
-class TestReproducibility:
-    """Same seed → identical output across runs."""
+def test_same_inputs_same_result_id_different_paths(tmp_path):
+    a = _run(tmp_path, "a", days=2)
+    b = _run(tmp_path, "b", days=2)
+    assert a.manifest["input_id"] == b.manifest["input_id"]
+    assert a.manifest["result_id"] == b.manifest["result_id"]
+    for name in RESULT_CORE_FILES:
+        assert (tmp_path / "a" / name).read_bytes() == (tmp_path / "b" / name).read_bytes()
 
-    def test_identical_seeds_same_output(self):
-        cfg1 = _make_smoke_config()
-        cfg2 = _make_smoke_config()
 
-        summary1 = run_simulation(cfg1)
-        summary2 = run_simulation(cfg2)
+def test_different_seed_different_ids(tmp_path):
+    a = _run(tmp_path, "a", days=2, seed=1)
+    b = _run(tmp_path, "b", days=2, seed=2)
+    assert a.manifest["input_id"] != b.manifest["input_id"]
+    assert a.manifest["result_id"] != b.manifest["result_id"]
 
-        assert summary1["total_spd_value"] == summary2["total_spd_value"]
-        assert summary1["total_spd_events"] == summary2["total_spd_events"]
-        assert summary1["positive_spd_events"] == summary2["positive_spd_events"]
-        assert summary1["zero_spd_events"] == summary2["zero_spd_events"]
-        assert summary1["informational_events"] == summary2["informational_events"]
-        assert summary1["subject_totals"] == summary2["subject_totals"]
 
-    def test_different_seeds_different_output(self):
-        cfg1 = _make_smoke_config()
-        cfg2 = _make_smoke_config()
-        cfg2["simulation"]["seed"] = 99999
+def test_diagnostics_are_outside_the_result_core(tmp_path):
+    a = _run(tmp_path, "a", days=1)
+    summary = json.loads((tmp_path / "a" / "summary.json").read_text())
+    assert "elapsed_seconds" not in summary
+    resolved = json.loads((tmp_path / "a" / "config_resolved.json").read_text())
+    assert "output" not in resolved
+    log = json.loads((tmp_path / "a" / "run_log.json").read_text())
+    assert "elapsed_seconds" in log and "output_dir" in log
+    assert "run_log.json" not in a.manifest["result_core"]
 
-        summary1 = run_simulation(cfg1)
-        summary2 = run_simulation(cfg2)
 
-        # Not strictly guaranteed but overwhelmingly likely
-        assert summary1["total_spd_value"] != summary2["total_spd_value"]
+def test_output_files_use_lf(tmp_path):
+    _run(tmp_path, "a", days=1)
+    for name in RESULT_CORE_FILES + ("run_manifest.json", "summary.txt"):
+        assert b"\r\n" not in (tmp_path / "a" / name).read_bytes()
+
+
+def test_manifest_inputs_and_hypotheses(tmp_path):
+    m = _run(tmp_path, "a", days=1).manifest
+    assert set(m["inputs"]) == {"scenario_id", "seed", "config_digest", "engine_version",
+                                "engine_code_digest", "spec_digests"}
+    assert m["provenance"]["spec_snapshots_verified"] is True
+    assert {h["id"] for h in m["hypotheses"]} >= {"H-A-2", "H-T-1", "H-TIME-1", "H-TTL", "H-C"}
+    assert m["epistemic"]["operational_use"] is False
+    assert m["unverified"]
+
+
+def test_zone_events_independent_of_zone_count():
+    one = run_simulation(main_config(days=2, zones=1), write=False)
+    three = run_simulation(main_config(days=2, zones=3), write=False)
+    z1_one = [r for r in one.records if r["zone_id"] == "zone-0001"]
+    z1_three = [r for r in three.records if r["zone_id"] == "zone-0001"]
+    assert z1_one == z1_three
+
+
+def test_engine_code_digest_is_newline_normalized(tmp_path, monkeypatch):
+    d = engine_code_digest()
+    assert d["files"] > 10 and len(d["sha256"]) == 64
+
+
+def test_spec_snapshots_match_manifest():
+    specs = spec_snapshots()
+    assert specs["source"]["repository"] == "https://github.com/anahronic/World"
+    assert all(v["verified"] for v in specs["files"].values())
+    assert "DKP-1-PREVENTION-001.md" in specs["files"]
