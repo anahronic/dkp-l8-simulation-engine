@@ -1,3 +1,5 @@
+> **Historical (v1, commit `a9d3cdf`, 2026-03).** Kept unchanged below. Several findings marked fixed in v1 were incomplete (budget spent before eligibility, hidden defaults, CBF estimator, Δt_int units). See CHANGELOG.md (2.0.0) and AUDIT_REPORT_PREVENTION_L8_PHASE_3.md.
+
 # Audit Report — DKP-L8-SIMULATION-ENGINE
 
 **Protocol Under Audit:** DKP-1-PREVENTION-001 v1.0 (Frozen)

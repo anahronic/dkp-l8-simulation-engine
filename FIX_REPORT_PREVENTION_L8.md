@@ -1,3 +1,5 @@
+> **Historical (v1, commit `a9d3cdf`, 2026-03).** Kept unchanged below. F-01 (budget) consumed shares before eligibility; F-09 (CBF) used a non-standard estimator over the generator's truth; F-11 (defaults) fixed only the adapter constructor. All three are reworked in 2.0.0; see CHANGELOG.md.
+
 # Fix Report — DKP-L8-SIMULATION-ENGINE
 
 **Protocol:** DKP-1-PREVENTION-001 v1.0 (Frozen)

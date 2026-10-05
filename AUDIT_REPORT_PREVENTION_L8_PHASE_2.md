@@ -1,3 +1,5 @@
+> **Superseded (v1, commit `a9d3cdf`, 2026-03).** Kept unchanged below. The verdicts for S1, S2, S6 and S7 did not test what their names state, D-01 is not a discontinuity, and the 'dominant strategy' conclusion is withdrawn. See AUDIT_REPORT_PREVENTION_L8_PHASE_3.md §1.
+
 # Audit Report — DKP-L8-SIMULATION-ENGINE — Phase 2
 ## Adversarial Incentive Audit
 
