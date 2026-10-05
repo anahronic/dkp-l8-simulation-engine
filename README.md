@@ -104,7 +104,7 @@ The smoke `result_id` is pinned in `tests/simulation/test_golden.py`.
 |---|---|---|
 | Windows 10 Pro 19045, CPython 3.12.10 | pass | pinned value |
 | WSL2 Ubuntu 22.04, CPython 3.10.12, glibc 2.35 | pass | pinned value |
-| GitHub Actions: ubuntu / windows / macos × 3.10 / 3.12 / 3.13 | see the `tests` workflow | checked by the golden test |
+| GitHub Actions: ubuntu-latest, windows-latest, macos-latest × CPython 3.10 / 3.12 / 3.13 | 9 of 9 jobs pass (run 37302642989, commit `f090c9e`) | pinned value (golden test) |
 
 Other environments are unverified.
 

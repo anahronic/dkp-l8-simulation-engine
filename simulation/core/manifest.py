@@ -96,7 +96,8 @@ def git_provenance() -> Dict[str, Optional[Any]]:
         return res.stdout.strip() if res.returncode == 0 else None
 
     commit = git("rev-parse", "HEAD")
-    status = git("status", "--porcelain", "--", "simulation", "tests")
+    # file-mode bits are not content: on a Windows checkout seen from WSL every file looks modified
+    status = git("-c", "core.fileMode=false", "status", "--porcelain", "--", "simulation", "tests")
     return {"git_commit": commit, "git_dirty": None if status is None else bool(status)}
 
 

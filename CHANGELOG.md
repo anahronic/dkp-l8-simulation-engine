@@ -64,6 +64,8 @@ Results of v1 and v2 are not comparable: the world model and several rules chang
   (PREVENTION, ORACLE, TIME, IDENTITY, IMPACT, EPISTEMIC-BOUNDARIES, SIMULATION),
   pinned in `MANIFEST.json` and re-verified on every run.
 - CI on Linux, Windows and macOS; pinned smoke `result_id`.
+- Provenance: `git_dirty` ignores file-mode bits (a Windows checkout seen from WSL
+  looked modified).
 
 ### Removed
 
