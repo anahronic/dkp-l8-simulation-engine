@@ -18,7 +18,10 @@ Protocol Lab, stage A–B of the lab specification (`audit rt/ТЗ_Клоду_л
 - Modules: `prevention` (wraps the bench; independent re-checks of 19 provisions),
   `time` (DTI conversions; §9 vectors; the §10 reference code executed from the pinned
   text; the 2000-01-01 row reported as a corpus inconsistency), `work_cycle` (Cycle6
-  rosters and 24/7 coverage, S-LAB-08).
+  rosters and 24/7 coverage, S-LAB-08), `failure_chain` (stale and contradictory data,
+  S-LAB-02: ORACLE TTL and divergence → EPISTEMIC-BOUNDARIES metadata and disputes →
+  EPISTEMIC-TRANSITIONS suspension and re-entry → ASSETS / FINANCE; reference adapter,
+  independent checker, nine deliberate adapter faults as counterexamples).
 - Coverage is declared by modules and synced into the registry; a test checks that every
   declared check is emitted.
 - Browser runtime: deterministic bundle for Pyodide; results in the browser equal CPython.

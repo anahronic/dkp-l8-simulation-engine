@@ -312,11 +312,17 @@
    "data_dependencies": [
     "datum timestamps and assigned TTL values"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "ttl_zero_weight"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-4.7-01",
@@ -720,11 +726,17 @@
    "data_dependencies": [
     "datum timestamps and type assignments"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "ttl_zero_weight"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-9-02",
@@ -745,13 +757,19 @@
    "data_dependencies": [
     "current-state computation lineage"
    ],
-   "gap": "Substitution is undefined and can describe either using stale data as a replacement or replacing stale data. No lab check implemented yet.",
+   "gap": "S(t) is an equal-weight mean of admissible values (H-FC-2).",
    "hypotheses_needed": [
     "Declare the meaning of substitution and operation labels for stale-data processing."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_stale_in_state"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-9-03",
@@ -774,13 +792,19 @@
     "oracle availability and signal status",
     "higher-layer signal receipts"
    ],
-   "gap": "Silence detection, neutral-state classification, and propagation timing are unspecified. No lab check implemented yet.",
+   "gap": "Uses the declared mapping H-FC-1 of zero-weight conditions to EB states.",
    "hypotheses_needed": [
     "Declare silence-detection timing, state classifications, and signal-propagation semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "silence_propagates"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-10-01",
@@ -889,13 +913,19 @@
    "data_dependencies": [
     "class-specific posterior distributions"
    ],
-   "gap": "No metric defines a percentage difference between posterior distributions. No lab check implemented yet.",
+   "gap": "The text does not define the difference of posteriors; point values are compared (H-FC-3).",
    "hypotheses_needed": [
     "Declare the posterior-distance metric, percentage basis, multi-class comparison rule, and relationship to statistical significance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "divergence_threshold"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-11-02",
@@ -917,11 +947,17 @@
    "data_dependencies": [
     "transaction dependency mapping and execution states"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "divergence_freeze"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-11-03",
@@ -943,13 +979,19 @@
    "data_dependencies": [
     "arbitration lifecycle timestamps"
    ],
-   "gap": "The window's start event and unresolved-expiry behavior are not specified. No lab check implemented yet.",
+   "gap": "The text gives no consequence when the window is exceeded; the check only reports it.",
    "hypotheses_needed": [
     "Declare whether the window starts at divergence detection or arbitration initiation and define expiry handling."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "arbitration_window"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-11-04",
@@ -972,13 +1014,19 @@
     "source fault or compromise findings",
     "class posterior comparisons"
    ],
-   "gap": "Fault qualification, necessary extent of exclusion, and whether convergence is required after exclusion are unspecified. No lab check implemented yet.",
+   "gap": "Ends by convergence within 7 % or exclusion; staleness does not end it (H-FC-4).",
    "hypotheses_needed": [
     "Declare fault-evidence criteria and whether exclusion independently suffices for resolution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "divergence_resolution"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-12-01",
@@ -1205,13 +1253,19 @@
     "L1 state and attribution records",
     "L2-and-higher execution traces"
    ],
-   "gap": "Semantic preservation, invalidation, and subject continuity are not operationally defined. No lab check implemented yet.",
+   "gap": "The halt is a scenario input; its triggers (confidence, coverage) are not computed.",
    "hypotheses_needed": [
     "Declare continuity and semantic-preservation invariants for L1 records."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "halt_blocks_l2"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-14-01",
@@ -1424,11 +1478,17 @@
    "data_dependencies": [
     "data-type TTL assignments"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "ttl_registry"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-17-02",
@@ -1448,11 +1508,17 @@
    "data_dependencies": [
     "data-type TTL assignments"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "ttl_registry"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ORACLE-18-01",

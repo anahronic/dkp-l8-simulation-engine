@@ -126,11 +126,17 @@
    "data_dependencies": [
     "Physical Truth Layer halt and divergence status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "assets_invalid_in_halt_or_divergence"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ASSETS-3.1-01",
@@ -815,13 +821,19 @@
     "Impact measurements and confidence metadata",
     "upstream epistemic metadata"
    ],
-   "gap": "The referenced metadata specification and confidence propagation rule are not supplied. No lab check implemented yet.",
+   "gap": "Inheritance from a Justice output is replaced by the evaluation of this chain.",
    "hypotheses_needed": [
     "Supply the referenced metadata schema and declare confidence propagation semantics where that schema leaves them open."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "asset_order_metadata"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ASSETS-8.3-07",
@@ -849,13 +861,19 @@
     "asset control output metadata",
     "operation and enforcement status"
    ],
-   "gap": "The full mandatory metadata set in the referenced document is absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Use an explicitly supplied authoritative metadata schema rather than assuming the six locally listed fields exhaust it."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "asset_order_requires_metadata"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ASSETS-8.3-08",

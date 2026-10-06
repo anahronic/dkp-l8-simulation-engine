@@ -442,11 +442,17 @@
    "data_dependencies": [
     "output metadata and operational validity classification"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "incomplete_is_invalid"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-5.x-03",
@@ -468,11 +474,17 @@
     "metadata completeness results",
     "execution records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "incomplete_not_executed"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-5.x-04",
@@ -551,13 +563,19 @@
     "processing records",
     "system topology"
    ],
-   "gap": "The distinction between forbidden repair and a separately produced new evaluation is not specified. No lab check implemented yet.",
+   "gap": "Checks that the consumer does not fill in missing fields; other repairs are not modelled.",
    "hypotheses_needed": [
     "Define downstream system relationships and which operations constitute repair."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_downstream_repair"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-5.x-07",
@@ -725,11 +743,17 @@
     "original output snapshots",
     "mutation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "dispute_preserves_original"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-7.2-02",
@@ -752,11 +776,17 @@
     "dispute and evaluation event records",
     "event associations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "dispute_new_evaluation"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-7.2-03",
@@ -782,13 +812,19 @@
     "admissibility decisions",
     "recomputation records"
    ],
-   "gap": "Input admissibility and the complete deterministic recomputation model are absent. No lab check implemented yet.",
+   "gap": "Admissibility of the new inputs is the TTL rule only.",
    "hypotheses_needed": [
     "Declare admissibility rules and the input and state model required for deterministic recomputation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "dispute_recomputes"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-7.2-04",
@@ -810,13 +846,19 @@
     "original and reevaluated outputs",
     "comparison artifact"
    ],
-   "gap": "The delta's fields, comparison semantics, and representation are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which output differences the comparative delta represents and how."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "dispute_delta"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-8-01",
@@ -862,11 +904,17 @@
     "output scope metadata",
     "enforcement eligibility and records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_scope_no_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "EB-9-01",

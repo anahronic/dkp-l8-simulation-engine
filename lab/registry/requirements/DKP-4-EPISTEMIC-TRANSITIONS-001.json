@@ -86,11 +86,17 @@
     "output validity determinations",
     "output operational status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Validity of the upstream output under H-FC-1.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "operational_within_validity"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-3-02",
@@ -112,14 +118,20 @@
     "output dependency graph",
     "epistemic state and downstream response histories"
    ],
-   "gap": "A complete degradation classification, propagation semantics and timing model are missing. No lab check implemented yet.",
+   "gap": "One chain: PTL output → evaluation → asset control and transactions.",
    "hypotheses_needed": [
     "Declare which changes count as degradation.",
     "Declare downstream reachability and propagation timing semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "downgrade_propagates"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-3-03",
@@ -199,11 +211,17 @@
     "output dependency relationships",
     "downstream revalidation flags"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "revalidation_flag"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.1-02",
@@ -227,11 +245,17 @@
     "output dependency relationships",
     "downstream execution modes"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "suspension_on_downgrade"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.1-03",
@@ -254,14 +278,20 @@
     "output dependency relationships",
     "enforcement histories and escalation classifications"
    ],
-   "gap": "Enforcement escalation and the precise duration of the restriction are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which enforcement changes constitute escalation.",
     "Declare how section 4.4 re-entry ends the restriction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_escalation_after_downgrade"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.2-01",
@@ -286,14 +316,20 @@
     "epistemic and consistency states",
     "enforcement justification provenance"
    ],
-   "gap": "Admissibility and the test for sole reliance on past validity are not defined. No lab check implemented yet.",
+   "gap": "New admissible data is introduced by a declared dispute (H-FC-5).",
    "hypotheses_needed": [
     "Treat the listed conditions as alternative triggers.",
     "Declare how admissibility and sole reliance are established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_persistence_on_past_valid"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.3-01",
@@ -316,14 +352,20 @@
     "uncertainty and dispute status",
     "system state history"
    ],
-   "gap": "The protected state scope, reference instant and uncertainty or dispute classifications are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the preserved state scope and reference instant.",
     "Declare how uncertainty and dispute intervals are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "status_quo_preserved"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.3-02",
@@ -346,13 +388,19 @@
     "uncertainty and dispute status",
     "enforcement escalation events"
    ],
-   "gap": "Uncertainty, dispute and escalation are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare uncertainty and dispute detection rules and escalation semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_escalation_in_uncertainty"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.3-03",
@@ -375,14 +423,20 @@
     "uncertainty and dispute status",
     "penalty ledgers"
    ],
-   "gap": "The trigger classifications and gross-accrual versus net-balance meaning of accumulation are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare uncertainty and dispute intervals.",
     "Declare whether accumulation is measured by accrual events or net balance changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_penalty_accumulation"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.3-04",
@@ -405,14 +459,20 @@
     "uncertainty and dispute status",
     "recomputation completion and execution records"
    ],
-   "gap": "Waiting-state semantics, recomputation scope and determinism criteria are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the relevant recomputation and its determinism test.",
     "Declare which actions are permitted while awaiting recomputation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "awaits_recomputation"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.4-01",
@@ -438,14 +498,20 @@
     "epistemic metadata schema",
     "input versions and recomputation provenance"
    ],
-   "gap": "The full metadata schema and the criteria for newness, validity and updated-input coverage are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the required metadata fields.",
     "Declare how output newness, validity and updated-input coverage are verified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "reentry_new_output"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.4-02",
@@ -466,11 +532,17 @@
    "data_dependencies": [
     "output identity and activation event logs"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_auto_reactivation"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "ETRANS-4.5-01",

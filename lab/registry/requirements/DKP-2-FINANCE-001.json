@@ -1060,13 +1060,19 @@
     "Status Quo Suspension periods under DKP-4-ERROR-001 Section 4.1",
     "dispute scope"
    ],
-   "gap": "The referenced period definition and scope of affected financial obligations are not supplied. No lab check implemented yet.",
+   "gap": "Status quo of an epistemic dispute; Justice-domain disputes are not modelled.",
    "hypotheses_needed": [
     "Declare the period boundaries and which accounts and restriction events are covered."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.0.0",
+    "check": "no_accumulation_in_status_quo"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ]
   },
   {
    "id": "FINANCE-11.2-04",

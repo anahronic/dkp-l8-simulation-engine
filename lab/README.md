@@ -27,7 +27,7 @@ unless every provision of the document was applicable and passed.
 | `lab/registry/protocol_catalog.json` | generated catalog: kinds, layers, sections, references, unresolved dependencies |
 | `lab/registry/requirements/*.json` | one file per document: provisions with verbatim quote, section, kind, inputs, criterion, numeric source, dependencies, coverage |
 | `lab/core/` | input schema, check statuses, run identity, reports, replay packages |
-| `lab/modules/` | installed modules: `prevention`, `time`, `work_cycle` |
+| `lab/modules/` | installed modules: `prevention`, `time`, `work_cycle`, `failure_chain` |
 | `lab/api.py` | functions used by the browser worker and by a server |
 | `lab/tools/` | catalog builder, registry checker, coverage sync, Codex drafting prompt, web bundle |
 
