@@ -249,6 +249,18 @@ def _has_section(doc: Dict[str, Any], text: str, label: str) -> bool:
     return any(h["number"] == label for h in doc["sections"])
 
 
+def _norm_title(t: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", (t or "").lower()).strip()
+
+
+def _section_of(heads: List[Dict[str, Any]], h: Dict[str, Any]) -> str:
+    """Number of the numbered section that contains heading h (h itself if numbered)."""
+    if h["number"]:
+        return h["number"]
+    prev = [x for x in heads if x["line"] < h["line"] and x["number"]]
+    return prev[-1]["number"] if prev else ""
+
+
 def _section_references(docs, texts, aliases) -> List[Dict[str, Any]]:
     """Every reference to a numbered section, with whether that section exists in the target."""
     out = []
@@ -269,14 +281,28 @@ def _section_references(docs, texts, aliases) -> List[Dict[str, Any]]:
                     else:
                         token, label = doc_id, m.group(1)
                     target = token if token in docs else aliases["aliases"].get(token)
+                    named = re.match(r"\s*\(([A-Z][^)]{3,80})\)", line[m.end():])
+                    entry = {"from": doc_id, "line": ln, "kind": kind, "target": target or token, "section": label}
                     if target is None:
                         status = "TARGET_UNRESOLVED"
-                    elif _has_section(docs[target], texts[target], label):
-                        status = "resolved"
-                    else:
+                    elif not _has_section(docs[target], texts[target], label):
                         status = "SECTION_NOT_FOUND"
-                    out.append({"from": doc_id, "line": ln, "kind": kind, "target": target or token,
-                                "section": label, "status": status, "text": m.group(0)})
+                    elif named and kind != "codex":
+                        # "Section N (Title)": the title must be the heading of section N
+                        want = _norm_title(named.group(1))
+                        heads = docs[target]["sections"]
+                        title_n = next((h["title"] for h in heads if h["number"] == label), "")
+                        if _norm_title(title_n) == want:
+                            status = "resolved"
+                        else:
+                            status = "TITLE_MISMATCH"
+                            entry["heading_of_section"] = title_n
+                            entry["title_found_under"] = sorted({_section_of(heads, h) for h in heads
+                                                                 if _norm_title(h["title"]) == want})
+                        entry["title"] = named.group(1)
+                    else:
+                        status = "resolved"
+                    out.append({**entry, "status": status, "text": m.group(0)})
     return sorted(out, key=lambda r: (r["from"], r["line"], r["text"]))
 
 

@@ -13,14 +13,14 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 
 | Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 21/38 | 948 | 159 (16.8 %) | 136 | 7 | 10 | 6 | 789 | 158 | 733 |
+| A. Registry and base | PARTIAL | 21/38 | 948 | 159 (16.8 %) | 136 | 7 | 10 | 6 | 789 | 157 | 734 |
 | B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 18 | 0 | 1 | 0 | 24 | 0 | 36 |
-| C. Common checks | PARTIAL | 5/8 | 199 | 52 (26.1 %) | 48 | 2 | 0 | 2 | 147 | 47 | 130 |
+| C. Common checks | PARTIAL | 5/8 | 199 | 52 (26.1 %) | 48 | 2 | 0 | 2 | 147 | 46 | 131 |
 | D. Transitions and rights | PARTIAL | 6/9 | 263 | 53 (20.2 %) | 47 | 0 | 4 | 2 | 210 | 36 | 211 |
 | E. Applied modules | PARTIAL | 1/7 | 39 | 16 (41.0 %) | 8 | 5 | 1 | 2 | 23 | 8 | 23 |
 | F. Remaining constraints and stress | PARTIAL | 7/12 | 303 | 19 (6.3 %) | 15 | 0 | 4 | 0 | 284 | 56 | 243 |
 | G. General release | NOT STARTED | — | | | | | | | | | |
-| **All registrable documents** | | 21/38 | 948 | 159 (16.8 %) | 136 | 7 | 10 | 6 | 789 | 158 | 733 |
+| **All registrable documents** | | 21/38 | 948 | 159 (16.8 %) | 136 | 7 | 10 | 6 | 789 | 157 | 734 |
 
 ### Stage criteria
 
@@ -89,13 +89,16 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 - Q-024 [UNRESOLVED] Numeric reference bounds and 'axiom-defined safe margins' (IMPACT Bᵢ, JUSTICE §7) are not given in AXIOMS
 - Q-025 [UNRESOLVED] Minimum attribution confidence (IDENTITY §4.1) depends on a DKP-8-SIMULATION-001 calibration that does not exist
 - Q-026 [UNRESOLVED] N_eff and N_eff_min are used by CRISIS PATCH §2/§5.2 and RESILIENCE §5.1/§8.4 'per DKP-0-ORACLE-001', but no document defines them
+- Q-027 [UNRESOLVED] Crisis Mercy Mode: CRISIS §6 allows extending oracle TTLs; ORACLE §14/§15 forbid modifying TTL values
+- Q-028 [UNRESOLVED] CRISIS §12.3 cites 'Section 8 (Non-Precedent Rule)'; the rule is in §6
+- Q-029 [UNRESOLVED] CRISIS forbids numbers in the protocol and defers them to DKP-8-SIMULATION-001 (durations, 'sustained', revalidation cadence), which defines none
 
 ## Documents
 
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | CODE-OF-PLANETARY-SYNERGY | 101 | 0 | 0 | 0 | 0 | 0 | 101 | 90 |
-| DKP-0-ORACLE-001 | 58 | 13 | 11 | 1 | 0 | 1 | 45 | 47 |
+| DKP-0-ORACLE-001 | 58 | 13 | 11 | 1 | 0 | 1 | 45 | 48 |
 | DKP-0-TIME-001 | 35 | 12 | 11 | 1 | 0 | 0 | 23 | 6 |
 | DKP-1-AXIOMS-001 | 44 | 0 | 0 | 0 | 0 | 0 | 44 | 25 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 9 | 9 | 0 | 0 | 0 | 29 | 27 |

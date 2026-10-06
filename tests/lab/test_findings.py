@@ -71,7 +71,18 @@ def test_f007_n_eff_undefined():
     assert trig["n_eff_min_missing"] == "UNKNOWN"
 
 
+def test_f008_quotes_still_contradict():
+    """The pinned texts still say both things (F-008)."""
+    from lab.tools.check_registry import normalize
+    base = os.path.join(os.path.dirname(__file__), "..", "..", "lab", "corpus", "world-aad3e86", "Dikenocracy", "Protocols")
+    crisis = normalize(open(os.path.join(base, "L4_FailSafe", "DKP-4-CRISIS-001.md"), encoding="utf-8").read())
+    oracle = normalize(open(os.path.join(base, "L0_Physical_Truth", "DKP-0-ORACLE-001.md"), encoding="utf-8").read())
+    assert "allowing limited extension of oracle data TTLs" in crisis
+    assert "DOES NOT modify TTL values" in oracle and "modify TTL values," in oracle
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [
-        ("DKP-2-FINANCE-001", 243, "DKP-4-ERROR-001 Section 4.1")]
+        ("DKP-2-FINANCE-001", 243, "DKP-4-ERROR-001 Section 4.1"),
+        ("DKP-4-CRISIS-001", 280, "Section 8")]                 # F-009: the named rule is under §6

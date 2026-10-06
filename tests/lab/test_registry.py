@@ -37,11 +37,13 @@ def test_unresolved_dependencies_are_reported_not_substituted():
 
 def test_broken_section_references_are_reported():
     """Every 'DKP-X Section N' / 'Section N of DKP-X' / own-section reference is checked against
-    the target's headings.  At World aad3e86 exactly one is broken (MODEL_GAPS, finding F-004)."""
+    the target's headings, and a title given in parentheses must be that section's heading.
+    At World aad3e86 two are broken (findings F-004, F-009)."""
     sr = catalog()["section_references"]
     assert sr["checked"] >= 40
     assert [(r["from"], r["target"], r["section"], r["status"]) for r in sr["broken"]] == [
-        ("DKP-2-FINANCE-001", "DKP-4-ERROR-001", "4.1", "SECTION_NOT_FOUND")]
+        ("DKP-2-FINANCE-001", "DKP-4-ERROR-001", "4.1", "SECTION_NOT_FOUND"),
+        ("DKP-4-CRISIS-001", "DKP-4-CRISIS-001", "8", "TITLE_MISMATCH")]
 
 
 def test_corpus_pin_detects_a_changed_file(tmp_path, monkeypatch):
