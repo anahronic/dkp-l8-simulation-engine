@@ -21,7 +21,8 @@ def identities() -> dict:
     smoke = run_simulation(deep_merge(load_config("simulation/configs/prevention_childcare_fast_smoke.yaml"),
                                       {"output": {"directory": "unused"}}), write=False)
     out = {"bench_smoke": [smoke.manifest["input_id"], smoke.manifest["result_id"]]}
-    for mod in ("time", "work_cycle", "failure_chain", "dispute_correction", "sensor_loss", "contribution", "prevention"):
+    from lab.modules import MODULES
+    for mod in sorted(MODULES):
         req = api.example_request(mod)
         req["variants"] = req["variants"][:2]
         doc = api.run_payload(req)
