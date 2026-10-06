@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import os
 import sys
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from lab.tools.check_registry import REQ_DIR
 
@@ -35,9 +35,28 @@ def declared() -> Dict[str, Dict[str, Any]]:
     return out
 
 
-def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
+def question_links() -> Dict[str, list]:
+    """requirement id -> open question ids (lab/registry/open_questions.json)."""
+    with open(os.path.join(os.path.dirname(REQ_DIR), "open_questions.json"), encoding="utf-8") as f:
+        qs = json.load(f)["questions"]
+    out: Dict[str, list] = {}
+    for q in qs:
+        if q["status"] == "UNRESOLVED":
+            for rid in q["requirements"]:
+                out.setdefault(rid, []).append(q["id"])
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
+           links: Optional[Dict[str, list]] = None) -> Dict[str, Any]:
     reg = json.loads(json.dumps(reg))
+    links = question_links() if links is None else links
     for r in reg["requirements"]:
+        # derived status fields: interpretation is never upgraded here
+        r.setdefault("interpretation_status", "DRAFT_UNREVIEWED")
+        r["open_questions"] = links.get(r["id"], [])
+        r["decision_status"] = "UNRESOLVED" if (r.get("hypotheses_needed") or r["open_questions"]) \
+            else "NONE_IDENTIFIED"
         d = decl.get(r["id"])
         base_gap = (r.get("gap") or "").replace(NOT_IMPLEMENTED_GAP, "").strip() or None
         if d:

@@ -29,7 +29,11 @@ unless every provision of the document was applicable and passed.
 | `lab/core/` | input schema, check statuses, run identity, reports, replay packages |
 | `lab/modules/` | installed modules: `prevention`, `time`, `work_cycle`, `failure_chain` |
 | `lab/api.py` | functions used by the browser worker and by a server |
-| `lab/tools/` | catalog builder, registry checker, coverage sync, Codex drafting prompt, web bundle |
+| `lab/registry/open_questions.json` | questions that need an author decision (UNRESOLVED), linked to provisions, hypotheses and findings |
+| `lab/registry/traceability.json`, `lab/TRACEABILITY.md` | generated map requirement → implementation → test → gap → open question; execution matrix of the specification (stages A–G, S-LAB scenarios) |
+| `lab/findings/` | problems found in the protocols, with minimal reproductions and options for the author |
+| `lab/ARCHITECTURE_DEVIATION.md` | open deviation: browser-only execution instead of the specified server API |
+| `lab/tools/` | catalog builder, registry checker, coverage sync, traceability, Codex drafting prompt, web bundle |
 
 ## Commands
 
@@ -42,6 +46,7 @@ python -m lab replay pkg.zip                   # recompute; compare input_id and
 python -m lab.tools.check_registry             # verbatim quotes, sections, ids, coverage rules
 python -m lab.tools.sync_coverage --check      # registry coverage = module declarations
 python -m lab.tools.build_catalog              # verify the corpus pin, rebuild the catalog
+python -m lab.tools.trace                      # traceability map and execution matrix
 ```
 
 ## Registry
@@ -52,7 +57,10 @@ every `quote` must occur verbatim in the pinned text, every `section` must be a 
 of the document, ids are unique.  Coverage is never typed by hand: modules declare what
 they implement (`implements`), `sync_coverage` writes it into the registry, and a test
 checks that every declared check is actually emitted when the module's examples run.
-Drafted interpretations are proposals for review, not readings accepted by the author.
+Every provision carries `interpretation_status` (all `DRAFT_UNREVIEWED`; no tool upgrades
+it) and `decision_status` (`UNRESOLVED` when the draft names missing definitions or an open
+question links it).  Drafted interpretations are proposals for review, not readings
+accepted by the author.
 
 ## Identity and replay
 
@@ -69,6 +77,8 @@ The same request gives the same ids in CPython on Windows and Linux and in Pyodi
 `lab-bundle.json`.  The web page (repository anahronic/Dikenocracy,
 `website/projects/protocol-lab/`) loads Pyodide from jsDelivr, verifies the bundle
 digest and runs `lab.api` in a Web Worker.  Inputs stay in the browser.
+This replaces the server API of the specification only provisionally: see
+[ARCHITECTURE_DEVIATION.md](ARCHITECTURE_DEVIATION.md).
 
 ## Gaps
 

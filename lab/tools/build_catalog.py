@@ -37,6 +37,17 @@ WORLD_COMMIT = "aad3e86ca293d61c7c6d3a0a05741d23676f0e18"
 SITE = "https://dikenocracy.com/pages/protocols/"
 
 REF_RE = re.compile(r"DKP-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*")
+_ID = r"DKP-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*"
+_NUM = r"[0-9]+(?:\.[0-9]+)*"
+# references to a section of a document: "DKP-X Section 4.1", "DKP-X §3", "Section 7.1 of DKP-X",
+# "Appendix A.4 / Article 12 of the Code of Planetary Synergy", and bare "Section 4.1" / "§4.1" (own document)
+SECTION_REF_RES = [
+    ("id_first", re.compile(rf"({_ID}),? (?:§ ?|[Ss]ection )({_NUM})")),
+    ("section_first", re.compile(rf"(?:[Ss]ection |§ ?)({_NUM}) of ({_ID})")),
+    ("codex", re.compile(r"((?:Appendix [A-Z]\.[0-9]+)|(?:Article [0-9]+)) of the Code of Planetary Synergy")),
+    ("own", re.compile(rf"(?<!§)(?:[Ss]ection |§ ?)({_NUM})(?![0-9.]*x)(?! of (?:DKP|the Code))")),
+]
+CODEX_ID = "CODE-OF-PLANETARY-SYNERGY"
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*$")
 NUMBER_RE = re.compile(r"^((?:[A-Z]\.)?\d+(?:\.(?:\d+|x))*|[A-Z]\.\d+(?:\.\d+)*)[.)]?\s+(.*)$")
 BOLD_LINE_RE = re.compile(r"^\*\*([^*].*?)\*\*\s*$")
@@ -209,6 +220,7 @@ def build() -> Dict[str, Any]:
             if dep not in ids and dep not in aliases["aliases"]:
                 unresolved.setdefault(dep, []).append(doc_id)
 
+    section_refs = _section_references(docs, texts, aliases)
     counts = {}
     for d in docs.values():
         counts[d["kind"]] = counts.get(d["kind"], 0) + 1
@@ -224,7 +236,48 @@ def build() -> Dict[str, Any]:
         "unresolved_dependencies": [{"raw": k, "referenced_by": sorted(set(v))} for k, v in sorted(unresolved.items())],
         "ambiguous_references": [{"raw": k, "referenced_by": sorted(set(v)), "note": aliases["ambiguous"][k]}
                                  for k, v in sorted(ambiguous.items())],
+        "section_references": {"checked": len(section_refs),
+                               "broken": [r for r in section_refs if r["status"] != "resolved"]},
     }
+
+
+def _has_section(doc: Dict[str, Any], text: str, label: str) -> bool:
+    if label.startswith("Article "):
+        return re.search(rf"^{re.escape(label)}\.", text, flags=re.M) is not None
+    if label.startswith("Appendix "):
+        label = label.split(" ", 1)[1]
+    return any(h["number"] == label for h in doc["sections"])
+
+
+def _section_references(docs, texts, aliases) -> List[Dict[str, Any]]:
+    """Every reference to a numbered section, with whether that section exists in the target."""
+    out = []
+    for doc_id, raw in texts.items():
+        for ln, line in enumerate(raw.split("\n"), start=1):
+            seen = set()
+            for kind, rx in SECTION_REF_RES:
+                for m in rx.finditer(line):
+                    if any(a <= m.start() < b for a, b in seen):
+                        continue
+                    seen.add((m.start(), m.end()))
+                    if kind == "id_first":
+                        token, label = m.group(1), m.group(2)
+                    elif kind == "section_first":
+                        label, token = m.group(1), m.group(2)
+                    elif kind == "codex":
+                        token, label = CODEX_ID, m.group(1)
+                    else:
+                        token, label = doc_id, m.group(1)
+                    target = token if token in docs else aliases["aliases"].get(token)
+                    if target is None:
+                        status = "TARGET_UNRESOLVED"
+                    elif _has_section(docs[target], texts[target], label):
+                        status = "resolved"
+                    else:
+                        status = "SECTION_NOT_FOUND"
+                    out.append({"from": doc_id, "line": ln, "kind": kind, "target": target or token,
+                                "section": label, "status": status, "text": m.group(0)})
+    return sorted(out, key=lambda r: (r["from"], r["line"], r["text"]))
 
 
 def compare_local(local_dir: str) -> List[str]:

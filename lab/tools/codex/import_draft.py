@@ -75,6 +75,9 @@ def main(argv=None) -> int:
             r["gap"] = (r["gap"] + " " if r["gap"] else "") + NOT_IMPLEMENTED_GAP
         r["implementation"] = None
         r["tests"] = []
+        r["interpretation_status"] = "DRAFT_UNREVIEWED"    # never upgraded by a tool
+        r["decision_status"] = "UNRESOLVED" if r.get("hypotheses_needed") else "NONE_IDENTIFIED"
+        r["open_questions"] = []
         reqs.append(r)
     out = {
         "schema": "dkp-lab-requirements/1",
@@ -85,7 +88,7 @@ def main(argv=None) -> int:
             "drafted_by": args.model,
             "prompt": "lab/tools/codex/requirements_prompt.md",
             "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); "
-                      "content reviewed by Claude where noted in review_notes",
+                      "interpretations are unreviewed drafts (interpretation_status per requirement)",
             "review_notes": [],
         },
         "draft_notes": draft.get("notes", ""),

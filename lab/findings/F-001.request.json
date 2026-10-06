@@ -1,0 +1,36 @@
+{
+ "schema": "dkp-lab-input/1",
+ "module": "failure_chain",
+ "variants": [
+  {
+   "name": "declared_events",
+   "input": {
+    "horizon_steps": 24,
+    "orbital_interval_minutes": 60,
+    "autonomous_interval_minutes": 60,
+    "value_change_at_step": 6
+   }
+  },
+  {
+   "name": "every_step",
+   "input": {
+    "horizon_steps": 24,
+    "orbital_interval_minutes": 60,
+    "autonomous_interval_minutes": 60,
+    "value_change_at_step": 6,
+    "reevaluation_policy": "every_step"
+   }
+  },
+  {
+   "name": "material_change_5pct",
+   "input": {
+    "horizon_steps": 24,
+    "orbital_interval_minutes": 60,
+    "autonomous_interval_minutes": 60,
+    "value_change_at_step": 6,
+    "reevaluation_policy": "material_change",
+    "material_change_percent": 5
+   }
+  }
+ ]
+}

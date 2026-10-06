@@ -35,6 +35,15 @@ def test_unresolved_dependencies_are_reported_not_substituted():
     assert [a["raw"] for a in catalog()["ambiguous_references"]] == ["DKP-7"]
 
 
+def test_broken_section_references_are_reported():
+    """Every 'DKP-X Section N' / 'Section N of DKP-X' / own-section reference is checked against
+    the target's headings.  At World aad3e86 exactly one is broken (MODEL_GAPS, finding F-004)."""
+    sr = catalog()["section_references"]
+    assert sr["checked"] >= 40
+    assert [(r["from"], r["target"], r["section"], r["status"]) for r in sr["broken"]] == [
+        ("DKP-2-FINANCE-001", "DKP-4-ERROR-001", "4.1", "SECTION_NOT_FOUND")]
+
+
 def test_corpus_pin_detects_a_changed_file(tmp_path, monkeypatch):
     snap = tmp_path / "snap"
     shutil.copytree(build_catalog.SNAPSHOT_DIR, snap)
@@ -73,3 +82,18 @@ def test_coverage_table_lists_every_document():
     assert len(rows) == 39
     reg = [r for r in rows if r["registered"]]
     assert all(r["requirements"] == len(requirements(r["id"])) for r in reg)
+
+
+def test_traceability_files_are_current():
+    """lab/registry/traceability.json and lab/TRACEABILITY.md match the registry, modules and examples."""
+    from lab.tools import trace
+    assert trace.main(["--check"]) == 0
+
+
+def test_every_requirement_is_marked_as_draft_and_decisions_are_explicit():
+    from lab.tools.trace import registry
+    for reg in registry().values():
+        for r in reg["requirements"]:
+            assert r["interpretation_status"] == "DRAFT_UNREVIEWED"      # no tool may upgrade it
+            if r["hypotheses_needed"] or r["open_questions"]:
+                assert r["decision_status"] == "UNRESOLVED"

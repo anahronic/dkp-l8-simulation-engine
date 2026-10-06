@@ -31,6 +31,7 @@ def catalog_payload() -> Dict[str, Any]:
         "documents": coverage_table(),
         "unresolved_dependencies": cat["unresolved_dependencies"],
         "ambiguous_references": cat["ambiguous_references"],
+        "broken_section_references": cat["section_references"]["broken"],
         "modules": [m.manifest() for m in MODULES.values()],
         "prefixes": _prefixes(),
     }

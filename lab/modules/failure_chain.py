@@ -300,6 +300,32 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
                             level = 0
                         mode = "INACTIVE"
                         events.append({"step": k, "type": "end", "evaluation": current})
+        elif (current is not None and valid and mode in ("ACTIVE", "INACTIVE")
+              and r["reevaluation_policy"] != "declared_events"):
+            old_value = store[current]["value"]
+            if r["reevaluation_policy"] == "every_step" and S != old_value:
+                old = current
+                current = new_evaluation(k, S, meta, cls, old)
+                events.append({"step": k, "type": "recomputed", "evaluation": current, "reason": "every_step"})
+                if S > limit:
+                    if mode != "ACTIVE":
+                        events.append({"step": k, "type": "resume", "evaluation": current})
+                    mode = "ACTIVE"
+                else:
+                    if level:
+                        events.append({"step": k, "type": "lift", "evaluation": current, "level": 0})
+                        level = 0
+                    if mode != "INACTIVE":
+                        events.append({"step": k, "type": "end", "evaluation": current})
+                    mode = "INACTIVE"
+            elif (r["reevaluation_policy"] == "material_change"
+                  and abs(S - old_value) > abs(old_value) * r["material_change_percent"] / 100):
+                events.append({"step": k, "type": "material_change", "evaluation": current,
+                               "old_value": old_value, "S": S})
+                if mode == "ACTIVE":
+                    mode, reval = "SUSPENDED", True
+                    events.append({"step": k, "type": "suspend", "reason": "material_change", "evaluation": current})
+                pending = {"reason": "material_change", "since": k, "ready_at": None}
 
         acting = mode == "ACTIVE"
         if acting or (mode == "SUSPENDED" and "accrue_during_suspension" in faults):
@@ -323,6 +349,12 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
                      "asset_level": level, "penalty_units": penalty})
         prev = meta
     return rows, events, store
+
+
+def contradicted_steps(r: Dict[str, Any], rows: List[Dict[str, Any]], store: Dict[str, Dict[str, Any]]) -> int:
+    """Steps of enforcement while S(t) and the relied-on evaluation lie on different sides of the limit."""
+    return sum(1 for row in rows if row["mode"] == "ACTIVE" and row["S"] is not None
+               and (row["S"] > r["limit"]) != (store[row["evaluation"]]["value"] > r["limit"]))
 
 
 # checker ----------------------------------------------------------------------------
@@ -811,6 +843,13 @@ class FailureChainModule(LabModule):
                   "(new admissible data submitted), re-entry after a downgrade. Routine readings update S(t) only.",
             "ru": "Зависимая оценка пересчитывается только в объявленных событиях: первое состояние VALID, спор "
                   "(поданы новые допустимые данные), возврат после понижения. Обычные показания меняют только S(t)."}},
+        {"id": "H-FC-5-ALT", "source": "alternative", "text": {
+            "en": "Alternative readings for comparison, not adopted norms: 'every_step' recomputes the evaluation at "
+                  "every step (ETRANS §3 item 4 read literally); 'material_change' treats a change of S(t) beyond a "
+                  "declared tolerance as new admissible data (ETRANS §4.2) and recomputes after the status quo delay.",
+            "ru": "Альтернативные прочтения для сравнения, не принятые нормы: 'every_step' — пересчёт на каждом шаге "
+                  "(буквальное прочтение ETRANS §3 п.4); 'material_change' — изменение S(t) сверх объявленного допуска "
+                  "считается новыми допустимыми данными (ETRANS §4.2), пересчёт после задержки статус-кво."}},
         {"id": "H-FC-6", "source": "hypothesis", "text": {
             "en": "Enforcement stand-in: while the evaluated value exceeds the limit, an asset restriction applies "
                   "(level +1 every N active steps) and a penalty accrues 1 model unit per active step. Not money.",
@@ -861,6 +900,14 @@ class FailureChainModule(LabModule):
         "recompute_delay_steps": {"type": "int", "min": 0, "max": 1000, "default": 2, "unit": "step",
                                   "source": "hypothesis",
                                   "label": {"en": "Recomputation takes", "ru": "Пересчёт занимает"}},
+        "reevaluation_policy": {"type": "enum", "values": ["declared_events", "every_step", "material_change"],
+                                "default": "declared_events", "source": "hypothesis",
+                                "label": {"en": "When the evaluation is recomputed (H-FC-5; alternatives H-FC-5-ALT)",
+                                          "ru": "Когда пересчитывается оценка (H-FC-5; альтернативы H-FC-5-ALT)"}},
+        "material_change_percent": {"type": "number", "min": 0, "max": 1000, "default": 5, "unit": "%",
+                                    "source": "alternative",
+                                    "label": {"en": "Material change of S(t) (for 'material_change')",
+                                              "ru": "Существенное изменение S(t) (для 'material_change')"}},
         "limit": {"type": "number", "min": -10 ** 9, "max": 10 ** 9, "default": 90, "source": "hypothesis",
                   "label": {"en": "Enforcement above (H-FC-6)", "ru": "Принуждение выше (H-FC-6)"}},
         "escalation_every_steps": {"type": "int", "min": 1, "max": 10 ** 6, "default": 24, "unit": "step",
@@ -902,6 +949,9 @@ class FailureChainModule(LabModule):
         checks = run_checks(r, ttl, readings, rows, events, store)
         modes = [row["mode"] for row in rows]
         last = rows[-1]
+        # diagnostic, not a check: enforcement while the current S(t) is on the other side of the
+        # limit than the evaluation it relies on (MODEL_GAPS §11, finding F-001)
+        contradicted = contradicted_steps(r, rows, store)
         outputs = {
             "ttl_minutes": ttl,
             "ttl_text_maximum_minutes": TTL_TEXT[r["data_type"]],
@@ -916,6 +966,7 @@ class FailureChainModule(LabModule):
                 "steps_divergence": sum(1 for row in rows if row["divergence_open"]),
                 "evaluations": len(store),
                 "final_mode": last["mode"],
+                "steps_enforced_against_current_state": contradicted,
             },
         }
         records = [{k: v for k, v in row.items()} for row in rows]
@@ -953,6 +1004,14 @@ class FailureChainModule(LabModule):
                           f"level {last['asset_level']}; evaluation records: {len(store)}.",
                     "ru": f"Итог: режим {last['mode']}; {last['penalty_units']} единиц штрафа (модель); уровень "
                           f"ограничения {last['asset_level']}; записей оценок: {len(store)}."})
+        if contradicted_steps(r, rows, store):
+            n = contradicted_steps(r, rows, store)
+            out.append({"en": f"Enforcement acted in {n} steps while the current S(t) was on the other side of the "
+                              "limit than the evaluation it relies on. No provision is reported as violated: see "
+                              "MODEL_GAPS §11, finding F-001.",
+                        "ru": f"Принуждение действовало {n} шагов, когда текущее S(t) было по другую сторону предела, "
+                              "чем оценка, на которой оно основано. Нарушение положений не фиксируется: см. "
+                              "MODEL_GAPS §11, находка F-001."})
         if r["faults"]:
             out.append({"en": "Deliberate adapter faults: " + ", ".join(r["faults"]) + ". FAIL marks what the checks caught.",
                         "ru": "Намеренные ошибки адаптера: " + ", ".join(r["faults"]) + ". FAIL — то, что поймали проверки."})
@@ -962,7 +1021,8 @@ class FailureChainModule(LabModule):
         t = outputs["totals"]
         return {"penalty_units": t["penalty_units"], "max_asset_level": t["max_asset_level"],
                 "steps_suspended": t["steps_suspended"], "steps_divergence": t["steps_divergence"],
-                "evaluations": t["evaluations"], "final_mode": t["final_mode"]}
+                "evaluations": t["evaluations"], "final_mode": t["final_mode"],
+                "steps_enforced_against_current_state": t["steps_enforced_against_current_state"]}
 
     def examples(self) -> Dict[str, Dict[str, Any]]:
         div = {"bias_percent": -12, "bias_window": [24, 240], "exclude_faulty_at_step": 72}

@@ -34,7 +34,15 @@ NUMERIC = {"text", "calibration", "hypothesis", "missing", "none"}
 COVERAGE = {"IMPLEMENTED", "PARTIAL", "NOT_IMPLEMENTED", "BLOCKED", "NOT_COMPUTABLE"}
 REQUIRED = ["id", "section", "title", "quote", "interpretation", "kind", "checkable", "inputs",
             "criterion", "numeric_source", "normative_dependencies", "data_dependencies", "gap",
-            "hypotheses_needed", "coverage", "implementation", "tests"]
+            "hypotheses_needed", "coverage", "implementation", "tests",
+            "interpretation_status", "decision_status", "open_questions"]
+# DRAFT_UNREVIEWED: machine draft, not a confirmed reading; REVIEWED: checked by a human
+# reviewer; CONFIRMED_BY_AUTHOR: the author accepted the reading.  No tool upgrades it.
+INTERPRETATION = {"DRAFT_UNREVIEWED", "REVIEWED", "CONFIRMED_BY_AUTHOR"}
+# UNRESOLVED: a human or author decision is needed (hypotheses_needed or an open question)
+DECISION = {"UNRESOLVED", "NONE_IDENTIFIED"}
+OPEN_QUESTIONS = os.path.join(LAB_ROOT, "registry", "open_questions.json")
+PREFIXES = os.path.join(LAB_ROOT, "registry", "prefixes.json")
 
 
 def normalize(text: str) -> str:
@@ -104,6 +112,32 @@ def check_file(path: str, catalog: Dict[str, Any], seen_ids: Dict[str, str]) -> 
                 problems.append(f"{where}: {r['coverage']} needs implementation and tests")
         elif not r["gap"]:
             problems.append(f"{where}: {r['coverage']} needs a gap reason")
+        if r["interpretation_status"] not in INTERPRETATION:
+            problems.append(f"{where}: interpretation_status {r['interpretation_status']!r}")
+        if r["decision_status"] not in DECISION:
+            problems.append(f"{where}: decision_status {r['decision_status']!r}")
+        needs = bool(r["hypotheses_needed"]) or bool(r["open_questions"])
+        if needs and r["decision_status"] != "UNRESOLVED":
+            problems.append(f"{where}: open decisions but decision_status {r['decision_status']}")
+    return problems
+
+
+def check_open_questions(seen_ids: Dict[str, str]) -> List[str]:
+    """Every requirement linked by an open question exists, unless its document is not registered yet."""
+    with open(OPEN_QUESTIONS, encoding="utf-8") as f:
+        qs = json.load(f)["questions"]
+    with open(PREFIXES, encoding="utf-8") as f:
+        prefix_doc = {p: d for d, p in json.load(f).items()}
+    registered = set(seen_ids.values())
+    problems, ids = [], set()
+    for q in qs:
+        if q["id"] in ids:
+            problems.append(f"open_questions: duplicate {q['id']}")
+        ids.add(q["id"])
+        for rid in q["requirements"]:
+            doc = prefix_doc.get(rid.split("-", 1)[0])
+            if rid not in seen_ids and doc in registered:
+                problems.append(f"open_questions {q['id']}: unknown requirement {rid}")
     return problems
 
 
@@ -123,6 +157,8 @@ def main(argv: List[str]) -> int:
         problems += check_file(p, catalog, seen)
         with open(p, encoding="utf-8") as f:
             total += len(json.load(f).get("requirements", []))
+    if not argv:
+        problems += check_open_questions(seen)
     for line in problems:
         print(line)
     print(f"{len(files)} files, {total} requirements, {len(problems)} problems")
