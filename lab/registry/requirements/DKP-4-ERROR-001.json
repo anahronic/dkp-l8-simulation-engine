@@ -1380,13 +1380,19 @@
     "protocol-defined threshold",
     "escalation event logs"
    ],
-   "gap": "The threshold, its defining protocol, the cross-layer trigger semantics, and escalation timing are unspecified. No lab check implemented yet.",
+   "gap": "'Protocol-defined threshold' of affected Subjects is not modelled; the cascade is a declared window.",
    "hypotheses_needed": [
     "Declare the threshold source, cross-layer trigger interpretation, and timing criterion for automatic escalation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "systemic_error_escalates"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"

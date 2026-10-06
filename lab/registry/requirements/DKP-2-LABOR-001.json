@@ -596,14 +596,20 @@
     "obligation and debt terms",
     "crisis status"
    ],
-   "gap": "Several prohibited conditions lack operational definitions, and their relationship to crisis compulsion is not explicit. No lab check implemented yet.",
+   "gap": "Only compulsion and punishment of refusal are observable here.",
    "hypotheses_needed": [
     "Operational definitions of punishment, debt bondage, open-ended obligation, and compelled alignment.",
     "A rule reconciling this prohibition with section 9.2."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.1.0",
+    "check": "no_prohibited_conditions"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -862,11 +868,17 @@
     "formal crisis status",
     "compulsion findings"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Refusal is a declared number of workers; crisis modulation (§9.2) is not modelled.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.1.0",
+    "check": "no_compulsion"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -895,14 +907,20 @@
     "baseline access history",
     "crisis status"
    ],
-   "gap": "The crisis scope of the listed protections and attribution of consequences to refusal are not fully specified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A reading of whether the outside-crisis qualifier governs the refusal list.",
     "A causal attribution method for consequences of refusal."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.1.0",
+    "check": "refusal_not_punished"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"

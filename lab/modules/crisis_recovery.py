@@ -40,6 +40,7 @@ FAULTS = {
     "cite_precedent": "a post-crisis decision cites a crisis action as justification",
     "no_broadcast": "no Final State Vector Broadcast in C3",
     "stale_confirmation": "crisis actions continue without refreshed PTL confirmation",
+    "upgrade_during_crisis": "a protocol upgrade is activated while the crisis lasts",
 }
 
 
@@ -148,6 +149,8 @@ def run(r: Dict[str, Any]):
             if "emergency_authority" in faults:
                 put("notice", "GOVERNANCE", k, {"authority": "emergency council", "discretionary": True}, [cmsg.event_id])
             layers_active.update(L1=False, L2=False)
+        if in_crisis and "upgrade_during_crisis" in faults and k == r["d3_window"][0] + 8:
+            put("notice", "UPGRADE", k, {"activation": "emergency patch", "crisis_state": state}, [cmsg.event_id])
         if k == r["human_intervention_step"]:
             if "unlogged_human" in faults:
                 put("action", "HUMAN", k, {"intervention": "manual rerouting"}, [cmsg.event_id])
@@ -169,6 +172,8 @@ def run(r: Dict[str, Any]):
                     put("notice", "RECOVERY", k, {"reactivate": "L2", "finance": "resumes",
                                                   "claims_closed": closed}, [cmsg.event_id])
                     layers_active["L2"] = True
+            if k == r["upgrade_activation_step"] and r["exit_pathway"] == "upgrade":
+                put("notice", "UPGRADE", k, {"activation": "DKP-4-UPGRADE-001 pathway", "crisis_state": state}, [cmsg.event_id])
             if k == r["post_crisis_decision_step"]:
                 prov = [cmsg.event_id] + (crisis_actions[:1] if "cite_precedent" in faults else [])
                 put("decision", "GOVERNANCE", k, {"decision": "routine allocation", "justification": "protocol rules"}, prov)
@@ -322,6 +327,21 @@ def scope_mirrors(results: List[CheckResult]) -> List[CheckResult]:
 
 def defense_checks(r, log, rows, msgs, v, na) -> List[CheckResult]:
     out = []
+    # ERROR §9: a systemic or cascading error escalates to CRISIS automatically
+    lo, hi = r["error_cascade_window"]
+    if hi > lo:
+        esc = [m.arrived_at for m in msgs if m.source == "ERROR" and m.value.get("escalate_to")]
+        first = next((x["step"] for x in rows if lo <= x["step"] < hi and x["confirmed"]), None)
+        out.append(v("ERROR-9-05", "systemic_error_escalates", [] if first is None or (esc and esc[0] == first) else [first],
+                     "the cascading error escalated to CRISIS at its first confirmed hour", "no automatic escalation"))
+    else:
+        out.append(na("ERROR-9-05", "systemic_error_escalates", "systemic error escalation", "no cascading error"))
+    # UPGRADE §2, §11: no upgrade operation while a crisis state C1-C4 holds
+    ups = [m for m in msgs if m.source == "UPGRADE"]
+    bad = [m.event_id for m in ups if rows[m.arrived_at]["state"] != "C0"]
+    for rid, chk in (("UPGRADE-2-05", "no_upgrade_in_crisis"), ("UPGRADE-11-01", "no_emergency_upgrade")):
+        out.append(v(rid, chk, bad, f"{len(ups)} upgrade activation(s), none during a crisis state" if ups else
+                     "no upgrade operation during the crisis", "{n} upgrade operations during a crisis state"))
     d3 = [x["step"] for x in rows if x["defense"] == "D3"]
     if d3:
         esc = [m.arrived_at for m in msgs if m.source == "DEFENSE" and m.kind == "notice" and m.value.get("escalate_to")]
@@ -369,6 +389,9 @@ IMPLEMENTS = {
     "DEFENSE-8-02": ("resource_recovery_claim", "IMPLEMENTED", None),
     "DEFENSE-8-04": ("wind_down", "PARTIAL", "Admissible-state restoration is the end of the harm window."),
     "DEFENSE-9-01": ("escalation_to_crisis", "IMPLEMENTED", None),
+    "ERROR-9-05": ("systemic_error_escalates", "PARTIAL", "'Protocol-defined threshold' of affected Subjects is not modelled; the cascade is a declared window."),
+    "UPGRADE-2-05": ("no_upgrade_in_crisis", "IMPLEMENTED", None),
+    "UPGRADE-11-01": ("no_emergency_upgrade", "IMPLEMENTED", None),
     "SCOPE-5-02": ("crisis_entry_by_state_machine", "IMPLEMENTED", None),
     "SCOPE-5-12": ("exit_collapses_to_s0", "IMPLEMENTED", None),
     "SCOPE-6-04": ("stabilization_restores_baseline", "PARTIAL", "Baseline = absence of crisis authority notices after exit."),
@@ -441,6 +464,8 @@ class CrisisRecoveryModule(LabModule):
                                     "label": {"en": "Human intervention at hour (-1: none)", "ru": "Вмешательство человека в час (-1: нет)"}},
         "post_crisis_decision_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 80, "unit": "h", "source": "user",
                                       "label": {"en": "Routine decision after the crisis at hour", "ru": "Обычное решение после кризиса в час"}},
+        "upgrade_activation_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 70, "unit": "h", "source": "user",
+                                    "label": {"en": "Upgrade activation at hour (pathway 'upgrade')", "ru": "Активация обновления в час (путь 'upgrade')"}},
         "exit_pathway": {"type": "enum", "values": ["soft_reset", "upgrade", "partition"], "default": "soft_reset", "source": "user",
                          "label": {"en": "Exit pathway (CRISIS §9)", "ru": "Путь выхода (CRISIS §9)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
@@ -498,6 +523,7 @@ class CrisisRecoveryModule(LabModule):
             "faulty_crisis": {"faults": ["forecast_entry", "emergency_authority", "status_priority", "delayed_collapse",
                                          "finance_early", "cite_precedent", "unlogged_human"]},
             "no_crisis": {"d3_window": [0, 0], "human_intervention_step": -1},
+            "exit_to_upgrade": {"exit_pathway": "upgrade"},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

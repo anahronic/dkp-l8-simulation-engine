@@ -181,8 +181,8 @@ def build() -> Dict[str, Any]:
 
     module_docs: Dict[str, set] = {}
     for row in rows:
-        if row["module"]:
-            module_docs.setdefault(row["module"], set()).add(row["document"])
+        for mid in ([row["module"]] if row["module"] else []) + [a.split(" · ")[0] for a in row["also_checked_by"]]:
+            module_docs.setdefault(mid, set()).add(row["document"])
     scen_rows = []
     for sc in stages["scenarios"]:
         m = sc["module"]

@@ -13,14 +13,14 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 
 | Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 242 (13.9 %) | 210 | 9 | 15 | 8 | 1495 | 257 | 1401 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 249 (14.3 %) | 217 | 9 | 15 | 8 | 1488 | 255 | 1401 |
 | B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 18 | 0 | 1 | 0 | 24 | 0 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 67 (18.4 %) | 62 | 3 | 0 | 2 | 298 | 78 | 262 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 96 (22.6 %) | 87 | 1 | 4 | 4 | 328 | 60 | 332 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 103 (24.3 %) | 94 | 1 | 4 | 4 | 321 | 58 | 332 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 16 (5.5 %) | 8 | 5 | 1 | 2 | 277 | 35 | 250 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 44 (8.6 %) | 35 | 0 | 9 | 0 | 467 | 73 | 431 |
 | G. General release | NOT STARTED | — | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 242 (13.9 %) | 210 | 9 | 15 | 8 | 1495 | 257 | 1401 |
+| **All registrable documents** | | 38/38 | 1737 | 249 (14.3 %) | 217 | 9 | 15 | 8 | 1488 | 255 | 1401 |
 
 ### Stage criteria
 
@@ -51,9 +51,9 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | S-LAB-03 Local loss of sensors | DONE | sensor_loss | — |
 | S-LAB-04 Dispute and correction | DONE | dispute_correction | — |
 | S-LAB-05 Calibration expiry | NOT STARTED | — | DKP-8-SIMULATION-001, DKP-5-HABITAT-001, DKP-4-EPISTEMIC-TRANSITIONS-001 |
-| S-LAB-06 Crisis and recovery | PARTIAL | crisis_recovery | DKP-4-ERROR-001, DKP-4-UPGRADE-001 |
-| S-LAB-07 Exit and integration | PARTIAL | exit_integration | DKP-2-FINANCE-001, DKP-2-ASSETS-001 |
-| S-LAB-08 Round-the-clock service | PARTIAL | work_cycle | DKP-0-TIME-001, DKP-2-LABOR-001 |
+| S-LAB-06 Crisis and recovery | DONE | crisis_recovery | — |
+| S-LAB-07 Exit and integration | DONE | exit_integration | — |
+| S-LAB-08 Round-the-clock service | DONE | work_cycle | — |
 | S-LAB-09 Transport capacity | NOT STARTED | — | DKP-5-TRANSPORT-001, DKP-1-IMPACT-001, DKP-0-ORACLE-001 |
 | S-LAB-10 Failure of an external interface | DONE | interop_failure | — |
 
@@ -107,8 +107,8 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | DKP-1-JUSTICE-001 | 41 | 12 | 9 | 0 | 3 | 0 | 29 | 33 |
 | DKP-1-PREVENTION-001 | 43 | 19 | 18 | 0 | 1 | 0 | 24 | 36 |
 | DKP-2-ASSETS-001 | 43 | 3 | 3 | 0 | 0 | 0 | 40 | 38 |
-| DKP-2-FINANCE-001 | 44 | 1 | 1 | 0 | 0 | 0 | 43 | 39 |
-| DKP-2-LABOR-001 | 40 | 11 | 9 | 0 | 2 | 0 | 29 | 28 |
+| DKP-2-FINANCE-001 | 44 | 2 | 2 | 0 | 0 | 0 | 42 | 39 |
+| DKP-2-LABOR-001 | 40 | 14 | 12 | 0 | 2 | 0 | 26 | 28 |
 | DKP-3-ANTITERROR-001 | 41 | 0 | 0 | 0 | 0 | 0 | 41 | 35 |
 | DKP-3-DEFENSE-001 | 44 | 4 | 4 | 0 | 0 | 0 | 40 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 0 | 0 | 0 | 0 | 0 | 49 | 47 |
@@ -116,8 +116,8 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | DKP-4-CRISIS-001 | 53 | 17 | 16 | 1 | 0 | 0 | 36 | 41 |
 | DKP-4-CRISIS-001-PATCH | 31 | 20 | 19 | 0 | 1 | 0 | 11 | 22 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 12 | 12 | 0 | 0 | 0 | 17 | 24 |
-| DKP-4-ERROR-001 | 52 | 18 | 15 | 0 | 1 | 2 | 34 | 44 |
-| DKP-4-UPGRADE-001 | 48 | 0 | 0 | 0 | 0 | 0 | 48 | 34 |
+| DKP-4-ERROR-001 | 52 | 19 | 16 | 0 | 1 | 2 | 33 | 44 |
+| DKP-4-UPGRADE-001 | 48 | 2 | 2 | 0 | 0 | 0 | 46 | 34 |
 | DKP-5-CULTURE-001 | 43 | 0 | 0 | 0 | 0 | 0 | 43 | 37 |
 | DKP-5-EDU-001 | 64 | 0 | 0 | 0 | 0 | 0 | 64 | 54 |
 | DKP-5-HABITAT-001 | 56 | 0 | 0 | 0 | 0 | 0 | 56 | 50 |
@@ -218,9 +218,10 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | PREV-8-01 | PARTIAL | prevention · zkp_proof | UNKNOWN | — | — |
 | PREV-9.1-01 | PARTIAL | contribution · no_recognition_for_own_threat | PASS | yes | — |
 | PREV-9.4-02 | IMPLEMENTED | prevention · no_data_zero | PASS | — | — |
-| ASSETS-2-02 | IMPLEMENTED | failure_chain · assets_invalid_in_halt_or_divergence | PASS | yes | — |
+| ASSETS-2-02 | IMPLEMENTED | exit_integration · no_asset_decision_in_halt | PASS | yes | — |
 | ASSETS-8.3-06 | PARTIAL | failure_chain · asset_order_metadata | PASS | — | — |
 | ASSETS-8.3-07 | IMPLEMENTED | failure_chain · asset_order_requires_metadata | PASS | yes | — |
+| FINANCE-10-03 | PARTIAL | exit_integration · tail_before_release | PASS | — | — |
 | FINANCE-11.2-03 | PARTIAL | failure_chain · no_accumulation_in_status_quo | PASS | yes | Q-009 |
 | LABOR-11-01 | IMPLEMENTED | contribution · identity_bound_traceable | PASS | — | — |
 | LABOR-11-02 | IMPLEMENTED | contribution · no_proxy_or_fictitious_participation | PASS | — | — |
@@ -231,8 +232,11 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | LABOR-3.3-02 | PARTIAL | contribution · record_links | PASS | — | — |
 | LABOR-5.2-01 | PARTIAL | contribution · justice_recovery_function | UNKNOWN | — | — |
 | LABOR-5.2-02 | IMPLEMENTED | contribution · no_declarative_recognition | PASS | yes | — |
+| LABOR-6-01 | PARTIAL | work_cycle · no_prohibited_conditions | PASS | yes | — |
 | LABOR-8.1-02 | PARTIAL | contribution · compensation_proportional | UNKNOWN | — | — |
 | LABOR-8.2-01 | PARTIAL | contribution · nonmarket_prevention_recognised | PASS | — | — |
+| LABOR-9.1-01 | PARTIAL | work_cycle · no_compulsion | PASS | yes | — |
+| LABOR-9.1-02 | IMPLEMENTED | work_cycle · refusal_not_punished | PASS | yes | — |
 | DEFENSE-5-02 | IMPLEMENTED | crisis_recovery · d3_needs_confirmation | PASS | — | — |
 | DEFENSE-8-02 | IMPLEMENTED | crisis_recovery · resource_recovery_claim | PASS | — | — |
 | DEFENSE-8-04 | PARTIAL | crisis_recovery · wind_down | PASS | — | — |
@@ -304,6 +308,9 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | ERROR-8-03 | PARTIAL | dispute_correction · irreversible_logged | NOT_APPLICABLE | yes | — |
 | ERROR-8-04 | IMPLEMENTED | dispute_correction · justice_uses_corrected_inputs | PASS | yes | Q-021 |
 | ERROR-8-05 | PARTIAL | dispute_correction · no_new_penalties | UNKNOWN | yes | Q-021 |
+| ERROR-9-05 | PARTIAL | crisis_recovery · systemic_error_escalates | PASS | — | — |
+| UPGRADE-11-01 | IMPLEMENTED | crisis_recovery · no_emergency_upgrade | PASS | — | — |
+| UPGRADE-2-05 | IMPLEMENTED | crisis_recovery · no_upgrade_in_crisis | PASS | — | — |
 | WORKCYCLE-3-02 | IMPLEMENTED | work_cycle · cycle_day | PASS | — | Q-012 |
 | WORKCYCLE-4.1-01 | PARTIAL | work_cycle · default_cycle | UNKNOWN | — | Q-011 |
 | WORKCYCLE-4.2-01 | IMPLEMENTED | work_cycle · max_consecutive | FAIL | — | — |

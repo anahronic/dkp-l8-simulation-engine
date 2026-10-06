@@ -42,6 +42,8 @@ FAULTS = {
     "collect_after_exit": "data collection continues after exit",
     "reentry_penalty": "re-entry is delayed because of the earlier exit",
     "protocol_bound_settlement": "the exit settlement is paid only in protocol-bound form",
+    "settle_during_halt": "assets are settled during a PTL systemic halt or unresolved divergence",
+    "release_before_tail": "the settlement is released before the restitution tail is recorded",
 }
 
 LIAB = {"type": "object", "fields": {"day": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -76,6 +78,7 @@ def run(r: Dict[str, Any]):
     impact_events = []
     reentry_day = None
     decl_msg = None
+    settled = False
     for k in range(r["horizon_days"]):
         if k == r["consent_day"]:
             consent = put("notice", "INTEGRATION", k, {"consent": "charter ratification", "ptl_access": r["ptl_access_agreement"]})
@@ -145,11 +148,16 @@ def run(r: Dict[str, Any]):
                 for name, days in zip(EXIT_PHASES, r["exit_phase_days"]):
                     put("notice", "EXIT", acc, {"phase_start": name}, [decl_msg.event_id]) if acc == k else None
                     acc += days
-            if k == exit_decl + r["cooling_days"] + sum(r["exit_phase_days"][:2]):
+            halt = r["ptl_halt_window"][0] <= k < r["ptl_halt_window"][1]
+            due_settle = exit_decl + r["cooling_days"] + sum(r["exit_phase_days"][:2])
+            if "release_before_tail" in faults:
+                due_settle = exit_decl
+            if not settled and k >= due_settle and (not halt or "settle_during_halt" in faults):
                 form = "protocol-bound units" if "protocol_bound_settlement" in faults else "detachable equivalent"
                 put("action", "FINANCE", k, {"settlement": "per DKP-2-FINANCE-001", "assets": form,
-                                             "requires_continued_dkp": "protocol_bound_settlement" in faults},
-                    [decl_msg.event_id])
+                                             "requires_continued_dkp": "protocol_bound_settlement" in faults,
+                                             "ptl_halt": halt}, [decl_msg.event_id])
+                settled = True
             if r["system_critical_asset"] and k == exit_decl + r["cooling_days"]:
                 put("notice", "EXIT", k, {"delayed_settlement": "system-critical asset", "bounded_days": r["critical_settlement_days"],
                                           "compensated": True, "logged": True}, [decl_msg.event_id])
@@ -249,7 +257,7 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     # EXIT ------------------------------------------------------------------------------
     decl = [m for m in msgs if m.source == "EXIT" and "declaration" in m.value]
     if not decl:
-        for rid, chk in EXIT_CHECKS + SCOPE_CHECKS:
+        for rid, chk in EXIT_CHECKS + SCOPE_CHECKS + [("ASSETS-2-02", "no_asset_decision_in_halt"), ("FINANCE-10-03", "tail_before_release")]:
             out.append(na(rid, chk, "exit", "no exit declared in this experiment"))
         return out
     d = decl[0]
@@ -310,6 +318,25 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     out.append(v("EXIT-9-01", "only_prior_verified", bad + [m.event_id for m in tail if isinstance(m.value["tail_item"], int)
                                                            and not r["liabilities"][m.value["tail_item"]]["verified"]],
                  "only verified liabilities incurred before the declaration remain", "{n} tail items not verified or not prior"))
+    # ASSETS §2, FINANCE §10: settlement outside PTL halt; restitution tail recorded before release
+    settle = [m for m in msgs if m.source == "FINANCE"]
+    if settle:
+        hlo, hhi = r["ptl_halt_window"]
+        if hhi > hlo:
+            out.append(v("ASSETS-2-02", "no_asset_decision_in_halt", [m.event_id for m in settle if m.value["ptl_halt"]],
+                         "the asset settlement waited for the end of the PTL systemic halt",
+                         "{n} asset settlements during a PTL halt"))
+        else:
+            out.append(na("ASSETS-2-02", "no_asset_decision_in_halt", "asset decisions under halt", "no PTL halt"))
+        first = min(m.arrived_at * 10 + m.order for m in settle)
+        late_tail = [m.event_id for m in msgs if m.source == "RESTITUTION" and m.arrived_at * 10 + m.order > first]
+        out.append(v("FINANCE-10-03", "tail_before_release", late_tail,
+                     "the restitution tail was recorded before the settlement left the system",
+                     "{n} tail items recorded after the settlement was released"))
+    else:
+        out.append(na("ASSETS-2-02", "no_asset_decision_in_halt", "asset settlement", "no settlement"))
+        out.append(na("FINANCE-10-03", "tail_before_release", "asset settlement", "no settlement"))
+
     # SCOPE §9 ----------------------------------------------------------------------------
     out.append(v("SCOPE-9-01", "exit_not_conditioned", ["approval"] if d.value["approval_required"] else [],
                  "exit was not conditioned on compliance or approval", "exit conditioned on an approval"))
@@ -361,6 +388,8 @@ SCOPE_CHECKS = [("SCOPE-9-01", "exit_not_conditioned"), ("SCOPE-9-02", "no_delay
                 ("SCOPE-9-07", "non_protocol_form")]
 
 IMPLEMENTS = {
+    "ASSETS-2-02": ("no_asset_decision_in_halt", "IMPLEMENTED", None),
+    "FINANCE-10-03": ("tail_before_release", "PARTIAL", "Bypass is checked as release of assets before the restitution tail is fixed."),
     "SCOPE-9-01": ("exit_not_conditioned", "IMPLEMENTED", None),
     "SCOPE-9-02": ("no_delay_for_stability", "PARTIAL", "Any cooling period counts as a delay for stability (EXIT §6 states that purpose): rule conflict F-011."),
     "SCOPE-9-03": ("suspension_only_in_crisis_scope", "PARTIAL", "Crisis Scope is a declared window."),
@@ -458,6 +487,8 @@ class ExitIntegrationModule(LabModule):
                                   "label": {"en": "Exit involves a system-critical asset", "ru": "Выход затрагивает системно важный актив"}},
         "critical_settlement_days": {"type": "int", "min": 0, "max": 3650, "default": 30, "unit": "DTI-Day", "source": "user",
                                      "label": {"en": "Delayed settlement bound", "ru": "Предел отложенного расчёта"}},
+        "ptl_halt_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "DTI-Day", "source": "user",
+                            "label": {"en": "PTL systemic halt from/to day", "ru": "Системная остановка PTL с/до дня"}},
         "crisis_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "DTI-Day", "source": "user",
                           "label": {"en": "Declared crisis from/to day", "ru": "Объявленный кризис с/до дня"}},
         "crisis_exit_reading": {"type": "enum", "values": ["never_suspended", "scope_crisis_suspension"], "default": "never_suspended",
@@ -531,6 +562,7 @@ class ExitIntegrationModule(LabModule):
                                        "reentry_penalty"],
                             "liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                             {"day": 120, "kind": "punitive", "verified": True}]},
+            "settlement_after_halt": {"ptl_halt_window": [276, 282]},
             "liabilities_mix": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                                 {"day": 120, "kind": "ideological", "verified": True},
                                                 {"day": 140, "kind": "projected", "verified": False},

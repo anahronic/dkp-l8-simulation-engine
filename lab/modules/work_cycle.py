@@ -25,6 +25,7 @@ from typing import Any, Dict, List
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
 from lab.core.schema import LabInputError
+from lab.modules.time import canonical, dy_doy
 
 DEFAULT_PATTERN = ["W", "W", "R", "W", "W", "R"]   # §4.1
 
@@ -46,12 +47,16 @@ IMPLEMENTS = {
     "WORKCYCLE-8.1-02": ("no_exhaustion", "IMPLEMENTED", None),
     "WORKCYCLE-8.2-01": ("shift_allocation", "IMPLEMENTED", None),
     "WORKCYCLE-8.2-02": ("high_intensity_recovery", "IMPLEMENTED", None),
+    "LABOR-9.1-01": ("no_compulsion", "PARTIAL", "Refusal is a declared number of workers; crisis modulation (§9.2) is not modelled."),
+    "LABOR-9.1-02": ("refusal_not_punished", "IMPLEMENTED", None),
+    "LABOR-6-01": ("no_prohibited_conditions", "PARTIAL", "Only compulsion and punishment of refusal are observable here."),
+    "TIME-5.1-01": ("roster_dti_index", "PARTIAL", "The roster's start day is checked; each day follows by +1."),
 }
 
 
 class WorkCycleModule(LabModule):
     id = "work_cycle"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "24/7 service rosters (WORK-CYCLE)", "ru": "Круглосуточные смены (WORK-CYCLE)"}
     summary = {"en": "Is there enough staff for round-the-clock service without breaking the 6-day "
                      "cycle and the daily recovery block?",
@@ -104,6 +109,11 @@ class WorkCycleModule(LabModule):
                    "label": {"en": "Required productive staff per hour of day", "ru": "Нужно работающих по часам суток"}},
         "high_intensity": {"type": "bool", "default": False, "source": "user",
                            "label": {"en": "High-intensity environment (§8.2)", "ru": "Высокая нагрузка (§8.2)"}},
+        "refusing_workers": {"type": "int", "min": 0, "max": 1000, "default": 0, "source": "user",
+                             "label": {"en": "Workers who refuse participation (LABOR §9.1)", "ru": "Отказавшихся от участия (LABOR §9.1)"}},
+        "faults": {"type": "list", "min_items": 0, "max_items": 2,
+                   "items": {"type": "enum", "values": ["assign_refusers", "penalize_refusal"]}, "default": [], "source": "user",
+                   "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"}},
         "compensation_declared": {"type": "bool", "default": False, "source": "user",
                                   "label": {"en": "Equivalent recovery compensation declared (§7)",
                                             "ru": "Заявлена равноценная компенсация восстановления (§7)"}},
@@ -129,7 +139,10 @@ class WorkCycleModule(LabModule):
         combos = [(s, o) for o in range(n_pat) for s in starts] if r["phase_offsets"] == "staggered" \
             else [(s, 0) for s in starts]
         out = []
+        refusing = set(range(r["workers"] - r["refusing_workers"], r["workers"]))             if "assign_refusers" not in r["faults"] else set()
         for w in range(r["workers"]):
+            if w in refusing:
+                continue
             s, o = combos[w % len(combos)]
             days = []
             for k in range(-1, r["horizon_days"]):           # day -1: its shifts reach into hour 0
@@ -180,13 +193,14 @@ class WorkCycleModule(LabModule):
         lower_bound = math.ceil(avg_need * 24 / max(r["work_hours"], 1e-9) / work_frac) if avg_need and work_frac else 0
         outputs = {
             "roster": [{k: v for k, v in w.items()} for w in roster],
+            "roster_days": [canonical(*dy_doy(d)) for d in range(r["start_dti_day"], r["start_dti_day"] + r["horizon_days"])],
             "coverage": {"hours": H, "deficit_hours": deficit_hours, "max_deficit": max_deficit,
                          "covered_fraction": (H - deficit_hours) / H},
             "hourly": hours[: 24 * min(r["horizon_days"], 14)],
             "longest_workday_run": max(runs.values()),
             "workers_lower_bound_flat": lower_bound,
         }
-        checks = self.checks(r, roster, runs, deficit_hours)
+        checks = self.checks(r, roster, runs, deficit_hours) + self.labor_time_checks(r, roster)
         explain = [
             {"en": f"{r['workers']} workers, shifts at {sorted(r['shift_starts'])} h: demand is fully covered in "
                    f"{H - deficit_hours} of {H} hours; largest shortfall {max_deficit:g} staff.",
@@ -201,6 +215,35 @@ class WorkCycleModule(LabModule):
             explain.append({"en": "Aligned phases: everybody rests on the same Cycle6 days, so those days have no staff.",
                             "ru": "Совпадающие фазы: все отдыхают в одни и те же дни Cycle6, в эти дни работать некому."})
         return ModuleResult(outputs=outputs, checks=checks, explain=explain)
+
+    def labor_time_checks(self, r, roster) -> List[CheckResult]:
+        """LABOR §6, §9.1 (refusal without compulsion or punishment) and TIME §5 (DTI-indexed roster days)."""
+        out: List[CheckResult] = []
+        refusers = {f"w{w + 1:03d}" for w in range(r["workers"] - r["refusing_workers"], r["workers"])}
+        if refusers:
+            scheduled = sorted(w["worker"] for w in roster if w["worker"] in refusers and "W" in w["days"])
+            out.append(CheckResult("LABOR-9.1-01", "no_compulsion", FAIL if scheduled else PASS,
+                                   f"{len(scheduled)} refusing workers scheduled" if scheduled else
+                                   f"none of {len(refusers)} refusing workers is scheduled (no declared crisis)",
+                                   evidence={"scheduled_refusers": scheduled[:10]}))
+            penal = "penalize_refusal" in r["faults"]
+            for rid, chk in (("LABOR-9.1-02", "refusal_not_punished"), ("LABOR-6-01", "no_prohibited_conditions")):
+                out.append(CheckResult(rid, chk, FAIL if penal else PASS,
+                                       "refusal recorded as a violation with a penalty" if penal else
+                                       "refusal causes no violation or penalty; any coverage gap is a planning failure"))
+        else:
+            for rid, chk in (("LABOR-9.1-01", "no_compulsion"), ("LABOR-9.1-02", "refusal_not_punished"),
+                             ("LABOR-6-01", "no_prohibited_conditions")):
+                out.append(CheckResult(rid, chk, NOT_APPLICABLE, "refusal of participation",
+                                       applicability="no worker refuses participation in this experiment"))
+        d0, n = r["start_dti_day"], r["horizon_days"]
+        labels = [canonical(*dy_doy(d)) for d in range(d0, d0 + n)]          # what the roster publishes
+        bad = [i for i, d in enumerate(range(d0, d0 + n))                   # TIME §5.1, computed independently
+               if labels[i] != f"DY{d // 360}-{d % 360 + 1:03d}"]
+        out.append(CheckResult("TIME-5.1-01", "roster_dti_index", FAIL if bad else PASS,
+                               f"roster days {labels[0]} … {labels[-1]} are DY/DOY of DTI-Days {d0}–{d0 + n - 1}; "
+                               f"CycleDay of day 0 = {d0 % 6}", evidence={"mismatches": bad[:10]}))
+        return out
 
     def checks(self, r, roster, runs, deficit_hours) -> List[CheckResult]:
         out: List[CheckResult] = []
@@ -307,6 +350,8 @@ class WorkCycleModule(LabModule):
             "shifts_every_8h": {"shift_starts": [0, 8, 16]},
             "three_in_a_row": {"pattern": ["W", "W", "W", "R", "W", "R"]},
             "high_intensity": {"high_intensity": True},
+            "refusals": {"refusing_workers": 6},
+            "refusals_faulty": {"refusing_workers": 6, "faults": ["assign_refusers", "penalize_refusal"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

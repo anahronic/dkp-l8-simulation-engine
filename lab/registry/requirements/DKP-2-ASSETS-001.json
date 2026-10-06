@@ -139,11 +139,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "assets_invalid_in_halt_or_divergence"
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_asset_decision_in_halt",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "assets_invalid_in_halt_or_divergence"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_exit_integration_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

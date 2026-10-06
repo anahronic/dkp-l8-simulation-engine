@@ -33,6 +33,7 @@ FAULT_CASES = {
     "cite_precedent": ({}, ["CRISIS-Non-PrecedentRule_-01"]),
     "no_broadcast": ({"ptl_divergence_window": [20, 26]}, ["CRISIS-10-02"]),
     "stale_confirmation": ({"confirmation_gap_window": [20, 24]}, ["CRISIS-5-07"]),
+    "upgrade_during_crisis": ({}, ["UPGRADE-2-05", "UPGRADE-11-01"]),
 }
 
 

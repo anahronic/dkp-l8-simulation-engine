@@ -196,11 +196,17 @@
     "current Crisis state",
     "protocol operation log"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "no_upgrade_in_crisis"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1246,13 +1252,19 @@
     "Crisis state",
     "upgrade event log"
    ],
-   "gap": "Emergency conditions are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the emergency predicate and its applicable time interval."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "no_emergency_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

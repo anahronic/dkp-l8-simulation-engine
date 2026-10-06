@@ -56,3 +56,18 @@ def test_invalid_inputs_refused():
             M.validate(inp)
     with pytest.raises(LabInputError):
         M.validate({"demand": [1] * 23})
+
+
+def test_refusal_is_respected_and_not_punished():
+    """LABOR §9.1: outside a declared crisis refusing workers are not scheduled and not penalised."""
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"refusing_workers": 6})).checks}
+    assert (st["LABOR-9.1-01"], st["LABOR-9.1-02"], st["LABOR-6-01"]) == ("PASS", "PASS", "PASS")
+    for fault, rid in (("assign_refusers", "LABOR-9.1-01"), ("penalize_refusal", "LABOR-9.1-02")):
+        st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"refusing_workers": 6, "faults": [fault]})).checks}
+        assert st[rid] == "FAIL", fault
+
+
+def test_roster_days_are_dti_labels():
+    res = M.evaluate(M.validate({"start_dti_day": 2461042, "horizon_days": 6}))
+    assert res.outputs["roster_days"][0] == "DY6836-083"
+    assert {c.requirement_id: c.status for c in res.checks}["TIME-5.1-01"] == "PASS"

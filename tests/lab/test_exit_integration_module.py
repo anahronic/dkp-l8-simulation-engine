@@ -16,7 +16,7 @@ def statuses(res):
     return {c.requirement_id: c.status for c in res.checks}
 
 
-@pytest.mark.parametrize("name", ["join_then_leave", "shock_and_rollback", "liabilities_mix"])
+@pytest.mark.parametrize("name", ["join_then_leave", "shock_and_rollback", "liabilities_mix", "settlement_after_halt"])
 def test_reference_breaks_no_rule_except_the_cooling_conflict(name):
     st = statuses(run(**M.examples()[name]))
     assert [k for k, s in st.items() if s == "FAIL"] == ["SCOPE-9-02"]        # F-011: EXIT §6 against SCOPE §9
@@ -35,8 +35,10 @@ FAULT_CASES = {
     "collect_after_exit": ["EXIT-12-02"],
     "reentry_penalty": ["EXIT-13-03"],
     "protocol_bound_settlement": ["SCOPE-9-04", "SCOPE-9-07"],
+    "settle_during_halt": ["ASSETS-2-02"],
+    "release_before_tail": ["FINANCE-10-03"],
 }
-EXTRA = {"shock_ignored": {"shock_window": [95, 110]},
+EXTRA = {"shock_ignored": {"shock_window": [95, 110]}, "settle_during_halt": {"ptl_halt_window": [276, 282]},
          "punitive_tail": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                            {"day": 120, "kind": "punitive", "verified": True}]}}
 
