@@ -13,6 +13,7 @@
   "prevention",
   "sensor_loss",
   "time",
+  "transport_capacity",
   "work_cycle"
  ],
  "runs": [
@@ -395,6 +396,41 @@
    "module": "calibration_expiry",
    "example": "never_calibrated",
    "kind": "reference"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "bench_interior",
+   "kind": "reference"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "faulty_transport",
+   "kind": "counterexample"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "more_vehicles",
+   "kind": "reference"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "red_channel_separated",
+   "kind": "alternative"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "seated_only",
+   "kind": "reference"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "standing_allowed",
+   "kind": "reference"
+  },
+  {
+   "module": "transport_capacity",
+   "example": "thin_service",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -402,18 +438,18 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 265,
-  "covered_percent": 15.3,
+  "covered": 285,
+  "covered_percent": 16.4,
   "statuses": {
-   "PASS": 232,
+   "PASS": 243,
    "FAIL": 9,
-   "UNKNOWN": 16,
-   "NOT_APPLICABLE": 8,
-   "UNCOVERED": 1472
+   "UNKNOWN": 21,
+   "NOT_APPLICABLE": 12,
+   "UNCOVERED": 1452
   },
-  "resolvable": 332,
-  "resolvable_uncovered": 248,
-  "unresolved_decisions": 1405
+  "resolvable": 330,
+  "resolvable_uncovered": 244,
+  "unresolved_decisions": 1407
  },
  "stages": [
   {
@@ -463,18 +499,18 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 265,
-    "covered_percent": 15.3,
+    "covered": 285,
+    "covered_percent": 16.4,
     "statuses": {
-     "PASS": 232,
+     "PASS": 243,
      "FAIL": 9,
-     "UNKNOWN": 16,
-     "NOT_APPLICABLE": 8,
-     "UNCOVERED": 1472
+     "UNKNOWN": 21,
+     "NOT_APPLICABLE": 12,
+     "UNCOVERED": 1452
     },
-    "resolvable": 332,
-    "resolvable_uncovered": 248,
-    "unresolved_decisions": 1405
+    "resolvable": 330,
+    "resolvable_uncovered": 244,
+    "unresolved_decisions": 1407
    }
   },
   {
@@ -544,18 +580,18 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 75,
-    "covered_percent": 20.5,
+    "covered": 78,
+    "covered_percent": 21.4,
     "statuses": {
-     "PASS": 69,
+     "PASS": 70,
      "FAIL": 3,
      "UNKNOWN": 1,
-     "NOT_APPLICABLE": 2,
-     "UNCOVERED": 290
+     "NOT_APPLICABLE": 4,
+     "UNCOVERED": 287
     },
-    "resolvable": 99,
-    "resolvable_uncovered": 73,
-    "unresolved_decisions": 266
+    "resolvable": 97,
+    "resolvable_uncovered": 71,
+    "unresolved_decisions": 268
    }
   },
   {
@@ -606,17 +642,17 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 24,
-    "covered_percent": 8.2,
+    "covered": 41,
+    "covered_percent": 14.0,
     "statuses": {
-     "PASS": 16,
+     "PASS": 26,
      "FAIL": 5,
-     "UNKNOWN": 1,
-     "NOT_APPLICABLE": 2,
-     "UNCOVERED": 269
+     "UNKNOWN": 6,
+     "NOT_APPLICABLE": 4,
+     "UNCOVERED": 252
     },
     "resolvable": 43,
-    "resolvable_uncovered": 33,
+    "resolvable_uncovered": 31,
     "unresolved_decisions": 250
    }
   },
@@ -795,13 +831,9 @@
     "DKP-1-IMPACT-001",
     "DKP-0-ORACLE-001"
    ],
-   "module": null,
-   "status": "NOT STARTED",
-   "documents_without_checks": [
-    "DKP-5-TRANSPORT-001",
-    "DKP-1-IMPACT-001",
-    "DKP-0-ORACLE-001"
-   ]
+   "module": "transport_capacity",
+   "status": "DONE",
+   "documents_without_checks": []
   },
   {
    "id": "S-LAB-10",
@@ -990,6 +1022,16 @@
   {
    "id": "Q-035",
    "title": "No Calibration Bundle exists: which protocols are meant to bind now, and do constants written in the texts (ORACLE §16/§17, ERROR §7, UPGRADE cooling-off) need a bundle",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-036",
+   "title": "TRANSPORT RED as one delta over mortality, medical, infrastructure and insurance harm 'computed via IMPACT', against IMPACT's ban on aggregated scores; RED coefficient and DKP-2-ECONOMIC-001 missing",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-037",
+   "title": "PPDI 'forced bodily contact between non-consenting passengers' as a PTL-measurable indicator, against ORACLE §5.3 (no PTL outputs about consent)",
    "status": "UNRESOLVED"
   }
  ],
@@ -4842,13 +4884,19 @@
    "section": "5.2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The uncertainty propagation method is model-dependent and is not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "red_proxy_declared",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -4856,11 +4904,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "ORACLE-5.3-01",
@@ -4868,25 +4918,35 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No executable rule determines whether an output concerns an excluded domain. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "no_excluded_domain_outputs",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-037"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "ORACLE-6-01",
@@ -9735,25 +9795,37 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "no_aggregated_score",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "RED as a single delta conflicts with IMPACT §5/§10 (F-015).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-036"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "NOT_APPLICABLE",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "IMPACT-11-01",
@@ -10135,8 +10207,10 @@
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-036"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -33241,25 +33315,35 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Justice outcomes are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "no_justice_outcomes",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-11-03",
@@ -33371,25 +33455,33 @@
    "section": "4",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The PPDI computation method and publication and audit scope are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "ppdi_published",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Components published; the composite has no formula: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "UNKNOWN": 1
+   }
   },
   {
    "id": "TRANSPORT-4.1-01",
@@ -33397,25 +33489,35 @@
    "section": "4.1",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Measurement procedures, threshold values, comfort bounds, and the encoding of a prohibition as an indicator are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "ppdi_components",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Vibration, noise and thermal comfort are declared inputs.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-037"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-4.1-02",
@@ -33423,25 +33525,35 @@
    "section": "4.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Force, consent, and whether the prohibition is an absolute operating constraint or a PPDI compliance component are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "no_forced_contact",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Forced contact = standing density above a declared threshold.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-037"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-4.2-01",
@@ -33449,25 +33561,33 @@
    "section": "4.2",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The minimum PPDI threshold and score computation are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "degrading_mode_classification",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "No PPDI minimum in the corpus: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "UNKNOWN": 1
+   }
   },
   {
    "id": "TRANSPORT-4.2-02",
@@ -33527,25 +33647,33 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Emergency, temporary overload, and system recovery classifications lack operational definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "standing_only_exceptional",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-5-03",
@@ -33553,25 +33681,33 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The frequency and observation period defining regular standing are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "regular_standing_classified",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "'Regularly' is a declared share of service hours.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-5-04",
@@ -33579,25 +33715,35 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The qualifying actions and evidence sufficient to show that the classification triggered them are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "capacity_expansion",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   }
   },
   {
    "id": "TRANSPORT-6-01",
@@ -33605,25 +33751,33 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Priority, spatial separation, layout applicability, and core routes are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "individual_seating",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Interior layout is a declared input.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-6-02",
@@ -33657,25 +33811,35 @@
    "section": "7.1",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced Physical Truth Layer quantification method and a RED computation rule are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "red_quantified",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "RED coefficient declared; ECONOMIC-001 missing.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-036"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-7.2-01",
@@ -33683,25 +33847,37 @@
    "section": "7.2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced computation rules, high-PPDI classification, and funding conversion mechanism are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "red_redirected",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-036"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "UNKNOWN",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-7.2-02",
@@ -33709,13 +33885,19 @@
    "section": "7.2",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The compensation computation and criteria distinguishing compensation from taxation or punishment are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "red_not_a_tax",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -33723,11 +33905,15 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "NOT_APPLICABLE",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-7.3-01",
@@ -33787,13 +33973,19 @@
    "section": "7.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The categories of prohibited weighting and treatment of proxy variables are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "no_moral_weighting",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -33801,11 +33993,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-7.3-04",
@@ -33839,25 +34033,35 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of 'as primary tools' and the definitions of moral pressure and primary tool are ambiguous. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "no_bans_or_punishment",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORT-8-02",
@@ -33865,25 +34069,33 @@
    "section": "8",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The behavioral model, qualitative condition definitions, income boundary, and response horizon are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "comfort_driven_shift",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "An empirical claim the behaviour model assumes: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "UNKNOWN": 1
+   }
   },
   {
    "id": "TRANSPORT-9-01",
@@ -33969,25 +34181,35 @@
    "section": "A.1",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "no_justice_trigger",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORTA-A.1-02",
@@ -33995,25 +34217,35 @@
    "section": "A.1",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "degradation_signal_only",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "TRANSPORTA-A.1-03",

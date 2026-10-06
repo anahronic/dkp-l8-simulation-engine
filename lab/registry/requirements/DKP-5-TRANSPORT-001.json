@@ -123,14 +123,20 @@
     "passenger physical condition measurements",
     "publication and audit records"
    ],
-   "gap": "The PPDI computation method and publication and audit scope are unspecified. No lab check implemented yet.",
+   "gap": "Components published; the composite has no formula: UNKNOWN.",
    "hypotheses_needed": [
     "A PPDI aggregation method.",
     "The population, reporting scope, and observation period for checking performance of the three duties."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "ppdi_published"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -161,18 +167,26 @@
     "thermal readings",
     "crowd density measurements"
    ],
-   "gap": "Measurement procedures, threshold values, comfort bounds, and the encoding of a prohibition as an indicator are missing. No lab check implemented yet.",
+   "gap": "Vibration, noise and thermal comfort are declared inputs.",
    "hypotheses_needed": [
     "Measurement procedures and aggregation periods for each component.",
     "Vibration and noise thresholds and a thermal comfort range.",
     "A representation of forced-contact prohibition within PPDI."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "ppdi_components"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-037"
+   ]
   },
   {
    "id": "TRANSPORT-4.1-02",
@@ -195,17 +209,25 @@
    "data_dependencies": [
     "passenger contact observations and consent evidence"
    ],
-   "gap": "Force, consent, and whether the prohibition is an absolute operating constraint or a PPDI compliance component are unspecified. No lab check implemented yet.",
+   "gap": "Forced contact = standing density above a declared threshold.",
    "hypotheses_needed": [
     "Operational definitions of forced contact and non-consent.",
     "A declared reading of the prohibition's operational scope."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "no_forced_contact"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-037"
+   ]
   },
   {
    "id": "TRANSPORT-4.2-01",
@@ -226,13 +248,19 @@
    "data_dependencies": [
     "transport mode PPDI scores"
    ],
-   "gap": "The minimum PPDI threshold and score computation are unspecified. No lab check implemented yet.",
+   "gap": "No PPDI minimum in the corpus: UNKNOWN.",
    "hypotheses_needed": [
     "A minimum PPDI threshold and PPDI computation method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "degrading_mode_classification"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -316,13 +344,19 @@
    "data_dependencies": [
     "operational state and incident records"
    ],
-   "gap": "Emergency, temporary overload, and system recovery classifications lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Definitions and start and end conditions for each permitted exception."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "standing_only_exceptional"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -345,13 +379,19 @@
    "data_dependencies": [
     "standing passenger observations over time"
    ],
-   "gap": "The frequency and observation period defining regular standing are missing. No lab check implemented yet.",
+   "gap": "'Regularly' is a declared share of service hours.",
    "hypotheses_needed": [
     "A rule for regular standing, including the observation period."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "regular_standing_classified"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -374,14 +414,20 @@
    "data_dependencies": [
     "capacity projects and logistics redesign records"
    ],
-   "gap": "The qualifying actions and evidence sufficient to show that the classification triggered them are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Definitions of capacity expansion, logistical redesign, and passenger adaptation.",
     "A method for linking response actions to classification events."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "capacity_expansion"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -407,14 +453,20 @@
     "vehicle architecture specifications",
     "route classifications"
    ],
-   "gap": "Priority, spatial separation, layout applicability, and core routes are not operationally defined. No lab check implemented yet.",
+   "gap": "Interior layout is a declared input.",
    "hypotheses_needed": [
     "A method for checking design priority.",
     "Definitions of spatial separation, applicable layouts, and core routes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "individual_seating"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -481,17 +533,25 @@
     "infrastructure damage estimates",
     "insurance exposure estimates"
    ],
-   "gap": "The referenced Physical Truth Layer quantification method and a RED computation rule are absent. No lab check implemented yet.",
+   "gap": "RED coefficient declared; ECONOMIC-001 missing.",
    "hypotheses_needed": [
     "A probabilistic external harm model and aggregation rule if the referenced protocol is unavailable.",
     "A classification of high-risk transport modes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "red_quantified"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-036"
+   ]
   },
   {
    "id": "TRANSPORT-7.2-01",
@@ -519,17 +579,25 @@
     "infrastructure funding records",
     "recipient PPDI scores"
    ],
-   "gap": "The referenced computation rules, high-PPDI classification, and funding conversion mechanism are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A high-PPDI classification rule.",
     "A mechanism relating computed RED to redirected funding if external protocols do not supply one."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "red_redirected"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-036"
+   ]
   },
   {
    "id": "TRANSPORT-7.2-02",
@@ -551,14 +619,20 @@
    "data_dependencies": [
     "compensation accounting and computation records"
    ],
-   "gap": "The compensation computation and criteria distinguishing compensation from taxation or punishment are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A substantive classification of compensation, taxation, and punishment.",
     "A complete input specification for testing determinism."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "red_not_a_tax"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -655,13 +729,19 @@
    "data_dependencies": [
     "identity modulation model and feature provenance"
    ],
-   "gap": "The categories of prohibited weighting and treatment of proxy variables are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A classification of model features and transformations by prohibited weighting basis."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "no_moral_weighting"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -715,14 +795,20 @@
    "data_dependencies": [
     "transport strategy and intervention records"
    ],
-   "gap": "The scope of 'as primary tools' and the definitions of moral pressure and primary tool are ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared grammatical reading of the primary-tool qualification.",
     "A classification of tools and their primary or secondary roles."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "no_bans_or_punishment"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -748,15 +834,21 @@
     "public transport condition observations",
     "demand histories by income stratum"
    ],
-   "gap": "The behavioral model, qualitative condition definitions, income boundary, and response horizon are unspecified. No lab check implemented yet.",
+   "gap": "An empirical claim the behaviour model assumes: UNKNOWN.",
    "hypotheses_needed": [
     "Definitions of the four public transport conditions and organic demand decline.",
     "An income stratification and observation horizon.",
     "A model linking improved conditions to demand."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "comfort_driven_shift"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1066,13 +1158,19 @@
    "data_dependencies": [
     "protocol decision and output records"
    ],
-   "gap": "Justice outcomes are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A definition of justice outcomes applicable to protocol outputs."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "no_justice_outcomes"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

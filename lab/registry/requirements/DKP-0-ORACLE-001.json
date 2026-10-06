@@ -526,13 +526,19 @@
    "data_dependencies": [
     "proxy models and input uncertainties"
    ],
-   "gap": "The uncertainty propagation method is model-dependent and is not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the uncertainty representation and propagation procedure for each proxy model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "red_proxy_declared"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -555,15 +561,23 @@
    "data_dependencies": [
     "output subject classifications"
    ],
-   "gap": "No executable rule determines whether an output concerns an excluded domain. No lab check implemented yet.",
+   "gap": "Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016).",
    "hypotheses_needed": [
     "Declare a classifier or reviewed labels for excluded output subjects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.0.0",
+    "check": "no_excluded_domain_outputs"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-037"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {

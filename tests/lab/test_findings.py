@@ -119,6 +119,22 @@ def test_f014_bundle_precondition_text():
     assert not any("calibration" in f.lower() and "bundle" in f.lower() for f in names)     # no bundle in the corpus
 
 
+def test_f015_red_aggregation():
+    with open(os.path.join(FINDINGS, "F-015.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    st = {n: next(c["status"] for c in x["checks"] if c["requirement_id"] == "IMPACT-10-02") for n, x in v.items()}
+    assert st == {"single_delta": "FAIL", "channel_separated": "PASS"}
+
+
+def test_f016_consent_not_measurable_by_ptl():
+    from lab.tools.check_registry import normalize
+    base = os.path.join(os.path.dirname(__file__), "..", "..", "lab", "corpus", "world-aad3e86", "Dikenocracy", "Protocols")
+    tr = normalize(open(os.path.join(base, "L5_Social", "DKP-5-TRANSPORT-001.md"), encoding="utf-8").read())
+    oracle = normalize(open(os.path.join(base, "L0_Physical_Truth", "DKP-0-ORACLE-001.md"), encoding="utf-8").read())
+    assert "forced bodily contact between non-consenting passengers" in tr
+    assert "The PTL SHALL NOT emit outputs concerning:" in oracle and "- consent," in oracle
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [
