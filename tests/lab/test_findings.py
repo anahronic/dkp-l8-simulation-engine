@@ -88,6 +88,18 @@ def test_f010_sustained_d3_gap():
     assert got == {"sustained_6h": (10, 15), "sustained_24h": (10, 33), "immediate": (10, 10)}
 
 
+def test_f011_f012_exit_conflicts():
+    def run(name):
+        with open(os.path.join(FINDINGS, f"{name}.request.json"), encoding="utf-8") as f:
+            return run_request(json.load(f))["variants"]
+    v = run("F-011")
+    assert {n: (x["outputs"]["exit_executed_day"], next(c["status"] for c in x["checks"] if c["requirement_id"] == "SCOPE-9-02"))
+            for n, x in v.items()} == {"cooling_14": (284, "FAIL"), "cooling_0": (270, "PASS")}
+    v = run("F-012")
+    assert {n: (x["outputs"]["exit_executed_day"], next(c["status"] for c in x["checks"] if c["requirement_id"] == "EXIT-4-03"))
+            for n, x in v.items()} == {"never_suspended": (284, "PASS"), "scope_crisis_suspension": (302, "FAIL")}
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [

@@ -214,13 +214,19 @@
    "data_dependencies": [
     "S1 execution timestamps and configured limits"
    ],
-   "gap": "The applicable duration limits and their assignment are unspecified. No lab check implemented yet.",
+   "gap": "Crisis actions end at exit; no numeric time limit exists (Q-029).",
    "hypotheses_needed": [
     "Declare how finite S1 time limits are assigned and enforced."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "s1_time_limited"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -333,13 +339,19 @@
    "data_dependencies": [
     "policy changes and normative decision provenance"
    ],
-   "gap": "Normative precedent and its causal relationship to execution are not formally defined. No lab check implemented yet.",
+   "gap": "Precedent detected as citation of a crisis action.",
    "hypotheses_needed": [
     "Declare how explicit and implicit normative precedent are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "s1_no_precedent"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -911,13 +923,19 @@
    "data_dependencies": [
     "Crisis state transitions and entry evidence"
    ],
-   "gap": "The referenced state machine and entry conditions are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply the DKP-4-CRISIS-001 entry specification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "crisis_entry_by_state_machine"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1217,13 +1235,19 @@
     "Crisis condition evaluations",
     "scope transition histories"
    ],
-   "gap": "The referenced exit conditions and event-ordering semantics for automatic collapse are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply Crisis exit conditions and declare event-ordering semantics without assuming an authorized grace period."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "exit_collapses_to_s0"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1339,13 +1363,19 @@
    "data_dependencies": [
     "stabilization assessments and execution-state histories"
    ],
-   "gap": "The stabilization predicate and collapse timing semantics are unspecified. No lab check implemented yet.",
+   "gap": "Baseline = absence of crisis authority notices after exit.",
    "hypotheses_needed": [
     "Declare a stabilization predicate, baseline state, and event-ordering semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "stabilization_restores_baseline"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1694,13 +1724,19 @@
    "data_dependencies": [
     "sensor classifications, regional evidence, and reproducibility assessments"
    ],
-   "gap": "Single-sensor classes, regional isolation, reproducibility, and treatment of mixed evidence are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the sensor-class reading, isolation and reproducibility tests, and treatment of mixed evidence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_escalation_from_isolated_region"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1724,11 +1760,17 @@
    "data_dependencies": [
     "exit eligibility rules and decision records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "exit_not_conditioned"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1752,14 +1794,22 @@
    "data_dependencies": [
     "exit processing events and delay provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Any cooling period counts as a delay for stability (EXIT §6 states that purpose): rule conflict F-011.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_delay_for_stability"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-031"
+   ]
   },
   {
    "id": "SCOPE-9-03",
@@ -1781,16 +1831,24 @@
    "data_dependencies": [
     "Crisis Scope states, suspension records, and life-preservation assessments"
    ],
-   "gap": "Temporary duration and immediate-life preservation lack operational criteria. No lab check implemented yet.",
+   "gap": "Crisis Scope is a declared window.",
    "hypotheses_needed": [
     "Declare the temporary-duration criterion and evidence required for preserving immediate life."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "suspension_only_in_crisis_scope"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-032"
+   ]
   },
   {
    "id": "SCOPE-9-04",
@@ -1813,13 +1871,19 @@
     "L2 asset records",
     "settlement valuation and physical delivery information"
    ],
-   "gap": "The asset-equivalence method and physical-detachability criteria are unspecified, and no specific L2 protocol identifier is given. No lab check implemented yet.",
+   "gap": "The form of settlement is recorded, not valued.",
    "hypotheses_needed": [
     "Declare the equivalence method, asset valuation basis where needed, and physical-detachability test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "detachable_equivalent"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1901,13 +1965,19 @@
    "data_dependencies": [
     "delivery mechanisms and asset dependency information"
    ],
-   "gap": "Non-protocol-bound form has no operational definition. No lab check implemented yet.",
+   "gap": "The form of settlement is recorded, not valued.",
    "hypotheses_needed": [
     "Declare the dependencies and conditions that make a settlement form protocol-bound."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "non_protocol_form"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

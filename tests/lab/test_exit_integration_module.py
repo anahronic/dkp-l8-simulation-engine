@@ -17,8 +17,10 @@ def statuses(res):
 
 
 @pytest.mark.parametrize("name", ["join_then_leave", "shock_and_rollback", "liabilities_mix"])
-def test_reference_breaks_no_rule(name):
-    assert "FAIL" not in statuses(run(**M.examples()[name])).values()
+def test_reference_breaks_no_rule_except_the_cooling_conflict(name):
+    st = statuses(run(**M.examples()[name]))
+    assert [k for k, s in st.items() if s == "FAIL"] == ["SCOPE-9-02"]        # F-011: EXIT §6 against SCOPE §9
+    assert "FAIL" not in statuses(run(**{**M.examples()[name], "cooling_days": 0})).values()
 
 
 FAULT_CASES = {
@@ -32,6 +34,7 @@ FAULT_CASES = {
     "post_declaration_obligation": ["EXIT-9-04"],
     "collect_after_exit": ["EXIT-12-02"],
     "reentry_penalty": ["EXIT-13-03"],
+    "protocol_bound_settlement": ["SCOPE-9-04", "SCOPE-9-07"],
 }
 EXTRA = {"shock_ignored": {"shock_window": [95, 110]},
          "punitive_tail": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},

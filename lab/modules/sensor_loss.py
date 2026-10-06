@@ -38,6 +38,7 @@ FAULTS = {
     "manual_restart": "recovery waits for an approval",
     "stop_measurement": "PTL collection stops during the null-output state",
     "precedent": "the null-output episode leaves an emergency authority behind",
+    "escalate_from_region": "the loss of one region is used to enter Crisis Scope (S1)",
 }
 
 
@@ -187,6 +188,8 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, List[Dict[str, Any]]]:
             authority_left = True
         if authority_left:
             put("notice", "GOVERNANCE", k, {"emergency_authority": "active"}, [state_msg.event_id])
+        if "escalate_from_region" in faults and e["lost"] and not any(m.source == "SCOPE" for m in log.messages()):
+            put("notice", "SCOPE", k, {"transition": "S0->S1", "basis": f"loss of region {r['loss_region']}"}, [state_msg.event_id])
         rows.append({"step": k, "null_output": null, "regions_null": sorted(g for g, v in state.items() if v),
                      "n_eff": round(e["n_eff"], 9), "coverage": e["coverage"], "lost": e["lost"],
                      "active": e["active"], "systemic_halt": e["systemic_halt"]})
@@ -316,6 +319,15 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
     else:
         out.append(na("ORACLE-13-01", "systemic_halt_on_coverage", "systemic halt", "global coverage stays at or above 80 %"))
 
+    # SCOPE §8: escalation from an isolated region is rejected -----------------------------
+    lost_steps = [e["step"] for e in exp if e["lost"]]
+    if lost_steps:
+        esc = [m.event_id for m in msgs if m.source == "SCOPE" and m.value.get("transition") == "S0->S1"]
+        out.append(v("SCOPE-8-05", "no_escalation_from_isolated_region", esc,
+                     "the loss of one region did not move the system from S0 to S1", "{n} escalations based on an isolated region"))
+    else:
+        out.append(na("SCOPE-8-05", "no_escalation_from_isolated_region", "escalation from a regional loss", "no sensor loss"))
+
     # RESILIENCE ------------------------------------------------------------------------
     below = [e["step"] for e in exp if e["trigger"] and not e["inconsistent"]]
     if undecidable:
@@ -391,6 +403,7 @@ IMPLEMENTS = {
     "RESILIENCE-5.8-02": ("no_influence_from_scaling", "PARTIAL", "Influence measured as N_eff; depends on the counting basis (H-SL-1)."),
     "RESILIENCE-8.4-01": ("statistical_collapse_null_output", "PARTIAL", "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007)."),
     "RESILIENCE-11-01": ("actor_removal_no_impact", "PARTIAL", "Only the N_eff and removal conditions of §11 are checked."),
+    "SCOPE-8-05": ("no_escalation_from_isolated_region", "IMPLEMENTED", None),
 }
 
 

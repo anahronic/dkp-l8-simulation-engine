@@ -13,14 +13,14 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 
 | Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 212 (12.2 %) | 182 | 7 | 15 | 8 | 1525 | 264 | 1398 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 223 (12.8 %) | 192 | 8 | 15 | 8 | 1514 | 262 | 1400 |
 | B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 18 | 0 | 1 | 0 | 24 | 0 | 36 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 52 (14.2 %) | 48 | 2 | 0 | 2 | 313 | 82 | 261 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 96 (22.6 %) | 87 | 0 | 5 | 4 | 328 | 60 | 331 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 63 (17.3 %) | 58 | 3 | 0 | 2 | 302 | 80 | 262 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 96 (22.6 %) | 87 | 0 | 5 | 4 | 328 | 60 | 332 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 16 (5.5 %) | 8 | 5 | 1 | 2 | 277 | 35 | 250 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 29 (5.7 %) | 21 | 0 | 8 | 0 | 482 | 76 | 430 |
 | G. General release | NOT STARTED | — | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 212 (12.2 %) | 182 | 7 | 15 | 8 | 1525 | 264 | 1398 |
+| **All registrable documents** | | 38/38 | 1737 | 223 (12.8 %) | 192 | 8 | 15 | 8 | 1514 | 262 | 1400 |
 
 ### Stage criteria
 
@@ -48,11 +48,11 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 |---|---|---|---|
 | S-LAB-01 Prevention and recognition of contribution | DONE | contribution | — |
 | S-LAB-02 Stale and contradictory data | DONE | failure_chain | — |
-| S-LAB-03 Local loss of sensors | PARTIAL | sensor_loss | DKP-7-SCOPE-001 |
+| S-LAB-03 Local loss of sensors | DONE | sensor_loss | — |
 | S-LAB-04 Dispute and correction | DONE | dispute_correction | — |
 | S-LAB-05 Calibration expiry | NOT STARTED | — | DKP-8-SIMULATION-001, DKP-5-HABITAT-001, DKP-4-EPISTEMIC-TRANSITIONS-001 |
-| S-LAB-06 Crisis and recovery | PARTIAL | crisis_recovery | DKP-7-SCOPE-001, DKP-4-ERROR-001, DKP-4-UPGRADE-001 |
-| S-LAB-07 Exit and integration | PARTIAL | exit_integration | DKP-2-FINANCE-001, DKP-2-ASSETS-001, DKP-7-SCOPE-001 |
+| S-LAB-06 Crisis and recovery | PARTIAL | crisis_recovery | DKP-4-ERROR-001, DKP-4-UPGRADE-001 |
+| S-LAB-07 Exit and integration | PARTIAL | exit_integration | DKP-2-FINANCE-001, DKP-2-ASSETS-001 |
 | S-LAB-08 Round-the-clock service | PARTIAL | work_cycle | DKP-0-TIME-001, DKP-2-LABOR-001 |
 | S-LAB-09 Transport capacity | NOT STARTED | — | DKP-5-TRANSPORT-001, DKP-1-IMPACT-001, DKP-0-ORACLE-001 |
 | S-LAB-10 Failure of an external interface | NOT STARTED | — | DKP-8-INTEROP-001, DKP-6-RESILIENCE-001, DKP-8-AUDIT-001 |
@@ -89,6 +89,8 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 - Q-028 [UNRESOLVED] CRISIS §12.3 cites 'Section 8 (Non-Precedent Rule)'; the rule is in §6
 - Q-029 [UNRESOLVED] CRISIS forbids numbers in the protocol and defers them to DKP-8-SIMULATION-001 (durations, 'sustained', revalidation cadence), which defines none
 - Q-030 [UNRESOLVED] DEFENSE §5 makes escalation at D3 mandatory; CRISIS §4 enters only on 'sustained' D3 (duration undefined)
+- Q-031 [UNRESOLVED] EXIT §6 cooling period 'to prevent cascading instability' against SCOPE §9 'exit SHALL NOT be delayed for optimization or stability goals'
+- Q-032 [UNRESOLVED] EXIT §4 'never suspended' against SCOPE §9 'except temporarily within Crisis Scope to preserve immediate life'
 
 ## Documents
 
@@ -122,12 +124,12 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | DKP-5-TRANSPORT-001 | 35 | 0 | 0 | 0 | 0 | 0 | 35 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 0 | 0 | 0 | 0 | 0 | 17 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 16 | 8 | 5 | 1 | 2 | 23 | 23 |
-| DKP-6-EXIT-001 | 62 | 17 | 15 | 0 | 0 | 2 | 45 | 48 |
+| DKP-6-EXIT-001 | 62 | 17 | 15 | 0 | 0 | 2 | 45 | 49 |
 | DKP-6-INTEGRATION-001 | 51 | 9 | 9 | 0 | 0 | 0 | 42 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 6 | 2 | 0 | 4 | 0 | 31 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 0 | 0 | 0 | 0 | 0 | 39 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 0 | 0 | 0 | 0 | 0 | 39 | 31 |
-| DKP-7-SCOPE-001 | 75 | 0 | 0 | 0 | 0 | 0 | 75 | 61 |
+| DKP-7-SCOPE-001 | 75 | 11 | 10 | 1 | 0 | 0 | 64 | 62 |
 | DKP-7-TRANSPARENCY-001 | 44 | 0 | 0 | 0 | 0 | 0 | 44 | 41 |
 | DKP-8-AUDIT-001 | 43 | 0 | 0 | 0 | 0 | 0 | 43 | 34 |
 | DKP-8-INTEROP-001 | 49 | 0 | 0 | 0 | 0 | 0 | 49 | 41 |
@@ -325,10 +327,10 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | EXIT-13-04 | IMPLEMENTED | exit_integration · restitution_before_reentry | PASS | — | — |
 | EXIT-15-03 | IMPLEMENTED | exit_integration · authority_terminates | PASS | — | — |
 | EXIT-4-02 | IMPLEMENTED | exit_integration · no_approval_needed | PASS | yes | — |
-| EXIT-4-03 | PARTIAL | exit_integration · never_suspended | PASS | — | — |
+| EXIT-4-03 | PARTIAL | exit_integration · never_suspended | PASS | — | Q-032 |
 | EXIT-5-01 | PARTIAL | exit_integration · signed_scoped_declaration | PASS | — | — |
 | EXIT-5-03 | IMPLEMENTED | exit_integration · no_additional_authorization | PASS | yes | — |
-| EXIT-6-02 | PARTIAL | exit_integration · cooling_bounded | PASS | — | — |
+| EXIT-6-02 | PARTIAL | exit_integration · cooling_bounded | PASS | — | Q-031 |
 | EXIT-7-02 | IMPLEMENTED | exit_integration · phases_declared | PASS | — | — |
 | EXIT-8-02 | IMPLEMENTED | exit_integration · mechanisms_disengage | PASS | — | — |
 | EXIT-9-01 | IMPLEMENTED | exit_integration · only_prior_verified | PASS | yes | — |
@@ -349,5 +351,16 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | RESILIENCE-5.8-01 | IMPLEMENTED | sensor_loss · node_concentration | PASS | — | — |
 | RESILIENCE-5.8-02 | PARTIAL | sensor_loss · no_influence_from_scaling | PASS | — | — |
 | RESILIENCE-8.4-01 | PARTIAL | sensor_loss · statistical_collapse_null_output | UNKNOWN | — | — |
+| SCOPE-3-04 | PARTIAL | crisis_recovery · s1_time_limited | PASS | — | — |
+| SCOPE-3-08 | PARTIAL | crisis_recovery · s1_no_precedent | PASS | yes | — |
+| SCOPE-5-02 | IMPLEMENTED | crisis_recovery · crisis_entry_by_state_machine | PASS | yes | — |
+| SCOPE-5-12 | IMPLEMENTED | crisis_recovery · exit_collapses_to_s0 | PASS | yes | — |
+| SCOPE-6-04 | PARTIAL | crisis_recovery · stabilization_restores_baseline | PASS | yes | — |
+| SCOPE-8-05 | IMPLEMENTED | sensor_loss · no_escalation_from_isolated_region | PASS | — | — |
+| SCOPE-9-01 | IMPLEMENTED | exit_integration · exit_not_conditioned | PASS | yes | — |
+| SCOPE-9-02 | PARTIAL | exit_integration · no_delay_for_stability | FAIL | yes | Q-031 |
+| SCOPE-9-03 | PARTIAL | exit_integration · suspension_only_in_crisis_scope | PASS | — | Q-032 |
+| SCOPE-9-04 | PARTIAL | exit_integration · detachable_equivalent | PASS | — | — |
+| SCOPE-9-07 | PARTIAL | exit_integration · non_protocol_form | PASS | — | — |
 
 The full map (every provision, its gap and tests) is `lab/registry/traceability.json`.

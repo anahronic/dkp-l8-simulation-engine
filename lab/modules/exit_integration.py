@@ -41,6 +41,7 @@ FAULTS = {
     "post_declaration_obligation": "a new obligation is created after the exit declaration",
     "collect_after_exit": "data collection continues after exit",
     "reentry_penalty": "re-entry is delayed because of the earlier exit",
+    "protocol_bound_settlement": "the exit settlement is paid only in protocol-bound form",
 }
 
 LIAB = {"type": "object", "fields": {"day": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -145,7 +146,9 @@ def run(r: Dict[str, Any]):
                     put("notice", "EXIT", acc, {"phase_start": name}, [decl_msg.event_id]) if acc == k else None
                     acc += days
             if k == exit_decl + r["cooling_days"] + sum(r["exit_phase_days"][:2]):
-                put("action", "FINANCE", k, {"settlement": "per DKP-2-FINANCE-001", "assets": "detachable equivalent"},
+                form = "protocol-bound units" if "protocol_bound_settlement" in faults else "detachable equivalent"
+                put("action", "FINANCE", k, {"settlement": "per DKP-2-FINANCE-001", "assets": form,
+                                             "requires_continued_dkp": "protocol_bound_settlement" in faults},
                     [decl_msg.event_id])
             if r["system_critical_asset"] and k == exit_decl + r["cooling_days"]:
                 put("notice", "EXIT", k, {"delayed_settlement": "system-critical asset", "bounded_days": r["critical_settlement_days"],
@@ -246,7 +249,7 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     # EXIT ------------------------------------------------------------------------------
     decl = [m for m in msgs if m.source == "EXIT" and "declaration" in m.value]
     if not decl:
-        for rid, chk in EXIT_CHECKS:
+        for rid, chk in EXIT_CHECKS + SCOPE_CHECKS:
             out.append(na(rid, chk, "exit", "no exit declared in this experiment"))
         return out
     d = decl[0]
@@ -307,6 +310,31 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     out.append(v("EXIT-9-01", "only_prior_verified", bad + [m.event_id for m in tail if isinstance(m.value["tail_item"], int)
                                                            and not r["liabilities"][m.value["tail_item"]]["verified"]],
                  "only verified liabilities incurred before the declaration remain", "{n} tail items not verified or not prior"))
+    # SCOPE §9 ----------------------------------------------------------------------------
+    out.append(v("SCOPE-9-01", "exit_not_conditioned", ["approval"] if d.value["approval_required"] else [],
+                 "exit was not conditioned on compliance or approval", "exit conditioned on an approval"))
+    if r["cooling_days"] > 0:
+        out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", FAIL,
+                               f"exit is delayed by a {r['cooling_days']}-day cooling period whose stated purpose is to "
+                               "'prevent cascading instability' (EXIT §6); SCOPE §9 forbids delaying exit for stability goals. "
+                               "Rule conflict between texts in force (F-011, Q-031)",
+                               evidence={"tag": "rule_conflict", "cooling_days": r["cooling_days"]}))
+    else:
+        out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", PASS, "no cooling delay: exit not delayed for stability"))
+    pauses = [m for m in msgs if m.source == "EXIT" and "suspended" in str(m.value.get("exit", ""))]
+    lo, hi = r["crisis_window"]
+    out.append(v("SCOPE-9-03", "suspension_only_in_crisis_scope", [m.event_id for m in pauses if not lo <= m.arrived_at < hi],
+                 "exit suspended only temporarily within a declared crisis" if pauses else "exit was never suspended",
+                 "{n} suspensions outside a declared crisis"))
+    settle = [m for m in msgs if m.source == "FINANCE"]
+    if settle:
+        bad = [m.event_id for m in settle if m.value["assets"] != "detachable equivalent" or m.value["requires_continued_dkp"]]
+        for rid, chk in (("SCOPE-9-04", "detachable_equivalent"), ("SCOPE-9-07", "non_protocol_form")):
+            out.append(v(rid, chk, bad, "settlement delivers a physically detachable equivalent in non-protocol form",
+                         "{n} settlements bound to the protocol"))
+    else:
+        for rid, chk in (("SCOPE-9-04", "detachable_equivalent"), ("SCOPE-9-07", "non_protocol_form")):
+            out.append(na(rid, chk, "exit settlement", "no settlement within the horizon"))
     re = [m for m in msgs if m.value.get("reapply")]
     if re:
         out.append(v("EXIT-13-03", "reentry_not_delayed", [m.event_id for m in re if m.value["delay_for_exit_history"]],
@@ -328,7 +356,16 @@ EXIT_CHECKS = [("EXIT-4-02", "no_approval_needed"), ("EXIT-5-01", "signed_scoped
                ("EXIT-9-03", "no_punitive_tail"), ("EXIT-9-04", "no_new_obligations"), ("EXIT-9-01", "only_prior_verified"),
                ("EXIT-13-03", "reentry_not_delayed"), ("EXIT-13-04", "restitution_before_reentry")]
 
+SCOPE_CHECKS = [("SCOPE-9-01", "exit_not_conditioned"), ("SCOPE-9-02", "no_delay_for_stability"),
+                ("SCOPE-9-03", "suspension_only_in_crisis_scope"), ("SCOPE-9-04", "detachable_equivalent"),
+                ("SCOPE-9-07", "non_protocol_form")]
+
 IMPLEMENTS = {
+    "SCOPE-9-01": ("exit_not_conditioned", "IMPLEMENTED", None),
+    "SCOPE-9-02": ("no_delay_for_stability", "PARTIAL", "Any cooling period counts as a delay for stability (EXIT §6 states that purpose): rule conflict F-011."),
+    "SCOPE-9-03": ("suspension_only_in_crisis_scope", "PARTIAL", "Crisis Scope is a declared window."),
+    "SCOPE-9-04": ("detachable_equivalent", "PARTIAL", "The form of settlement is recorded, not valued."),
+    "SCOPE-9-07": ("non_protocol_form", "PARTIAL", "The form of settlement is recorded, not valued."),
     "INTEGRATION-4.1-01": ("explicit_consent", "PARTIAL", "Consent is a declared event; its legitimacy is not assessed."),
     "INTEGRATION-4.2-01": ("sequential_phases", "IMPLEMENTED", None),
     "INTEGRATION-4.2-02": ("explicit_validation", "IMPLEMENTED", None),

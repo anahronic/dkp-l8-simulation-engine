@@ -325,18 +325,18 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 212,
-  "covered_percent": 12.2,
+  "covered": 223,
+  "covered_percent": 12.8,
   "statuses": {
-   "PASS": 182,
-   "FAIL": 7,
+   "PASS": 192,
+   "FAIL": 8,
    "UNKNOWN": 15,
    "NOT_APPLICABLE": 8,
-   "UNCOVERED": 1525
+   "UNCOVERED": 1514
   },
-  "resolvable": 339,
-  "resolvable_uncovered": 264,
-  "unresolved_decisions": 1398
+  "resolvable": 337,
+  "resolvable_uncovered": 262,
+  "unresolved_decisions": 1400
  },
  "stages": [
   {
@@ -386,18 +386,18 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 212,
-    "covered_percent": 12.2,
+    "covered": 223,
+    "covered_percent": 12.8,
     "statuses": {
-     "PASS": 182,
-     "FAIL": 7,
+     "PASS": 192,
+     "FAIL": 8,
      "UNKNOWN": 15,
      "NOT_APPLICABLE": 8,
-     "UNCOVERED": 1525
+     "UNCOVERED": 1514
     },
-    "resolvable": 339,
-    "resolvable_uncovered": 264,
-    "unresolved_decisions": 1398
+    "resolvable": 337,
+    "resolvable_uncovered": 262,
+    "unresolved_decisions": 1400
    }
   },
   {
@@ -467,18 +467,18 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 52,
-    "covered_percent": 14.2,
+    "covered": 63,
+    "covered_percent": 17.3,
     "statuses": {
-     "PASS": 48,
-     "FAIL": 2,
+     "PASS": 58,
+     "FAIL": 3,
      "UNKNOWN": 0,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 313
+     "UNCOVERED": 302
     },
-    "resolvable": 104,
-    "resolvable_uncovered": 82,
-    "unresolved_decisions": 261
+    "resolvable": 103,
+    "resolvable_uncovered": 80,
+    "unresolved_decisions": 262
    }
   },
   {
@@ -507,9 +507,9 @@
      "NOT_APPLICABLE": 4,
      "UNCOVERED": 328
     },
-    "resolvable": 93,
+    "resolvable": 92,
     "resolvable_uncovered": 60,
-    "unresolved_decisions": 331
+    "unresolved_decisions": 332
    }
   },
   {
@@ -641,10 +641,8 @@
     "DKP-7-SCOPE-001"
    ],
    "module": "sensor_loss",
-   "status": "PARTIAL",
-   "documents_without_checks": [
-    "DKP-7-SCOPE-001"
-   ]
+   "status": "DONE",
+   "documents_without_checks": []
   },
   {
    "id": "S-LAB-04",
@@ -689,7 +687,6 @@
    "module": "crisis_recovery",
    "status": "PARTIAL",
    "documents_without_checks": [
-    "DKP-7-SCOPE-001",
     "DKP-4-ERROR-001",
     "DKP-4-UPGRADE-001"
    ]
@@ -708,8 +705,7 @@
    "status": "PARTIAL",
    "documents_without_checks": [
     "DKP-2-FINANCE-001",
-    "DKP-2-ASSETS-001",
-    "DKP-7-SCOPE-001"
+    "DKP-2-ASSETS-001"
    ]
   },
   {
@@ -909,6 +905,16 @@
   {
    "id": "Q-030",
    "title": "DEFENSE §5 makes escalation at D3 mandatory; CRISIS §4 enters only on 'sustained' D3 (duration undefined)",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-031",
+   "title": "EXIT §6 cooling period 'to prevent cascading instability' against SCOPE §9 'exit SHALL NOT be delayed for optimization or stability goals'",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-032",
+   "title": "EXIT §4 'never suspended' against SCOPE §9 'except temporarily within Crisis Scope to preserve immediate life'",
    "status": "UNRESOLVED"
   }
  ],
@@ -35581,7 +35587,9 @@
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-032"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -36473,7 +36481,9 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-032"
+   ],
    "observed": {
     "PASS": 3,
     "FAIL": 0,
@@ -36623,7 +36633,9 @@
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-031"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -36654,8 +36666,10 @@
     "H-EI-3"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-031"
+   ],
    "observed": {
     "PASS": 3,
     "FAIL": 0,
@@ -41958,25 +41972,33 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The applicable duration limits and their assignment are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "s1_time_limited",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Crisis actions end at exit; no numeric time limit exists (Q-029).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-3-05",
@@ -42062,25 +42084,35 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Normative precedent and its causal relationship to execution are not formally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "s1_no_precedent",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Precedent detected as citation of a crisis action.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-3-09",
@@ -42556,25 +42588,35 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced state machine and entry conditions are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "crisis_entry_by_state_machine",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-5-03",
@@ -42816,25 +42858,35 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced exit conditions and event-ordering semantics for automatic collapse are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "exit_collapses_to_s0",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-6-01",
@@ -42920,25 +42972,35 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The stabilization predicate and collapse timing semantics are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "stabilization_restores_baseline",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Baseline = absence of crisis authority notices after exit.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-6-05",
@@ -43206,25 +43268,34 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Single-sensor classes, regional isolation, reproducibility, and treatment of mixed evidence are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "sensor_loss",
+   "check": "no_escalation_from_isolated_region",
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SL-1",
+    "H-SL-2",
+    "H-SL-3",
+    "H-SL-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 3
+   }
   },
   {
    "id": "SCOPE-9-01",
@@ -43232,25 +43303,35 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "exit_not_conditioned",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-9-02",
@@ -43258,25 +43339,38 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_delay_for_stability",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Any cooling period counts as a delay for stability (EXIT §6 states that purpose): rule conflict F-011.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-031"
+   ],
    "observed": {
     "PASS": 0,
-    "FAIL": 0,
+    "FAIL": 3,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "FAIL",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit",
+    "exit_integration:faulty_integration"
+   ],
+   "under_alternative_readings": {
+    "FAIL": 1
+   }
   },
   {
    "id": "SCOPE-9-03",
@@ -43284,25 +43378,35 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Temporary duration and immediate-life preservation lack operational criteria. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "suspension_only_in_crisis_scope",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Crisis Scope is a declared window.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-032"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-9-04",
@@ -43310,25 +43414,33 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The asset-equivalence method and physical-detachability criteria are unspecified, and no specific L2 protocol identifier is given. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "detachable_equivalent",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "The form of settlement is recorded, not valued.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-9-05",
@@ -43388,25 +43500,33 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Non-protocol-bound form has no operational definition. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "non_protocol_form",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "The form of settlement is recorded, not valued.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SCOPE-9-08",

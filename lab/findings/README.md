@@ -20,4 +20,6 @@ author decides; `tests/lab/test_findings.py` keeps the documented numbers as reg
 | [F-007](F-007.md) | N_eff and N_eff_min decide the null-output state but are defined nowhere | missing definition | UNRESOLVED |
 | [F-008](F-008.md) | CRISIS allows extending oracle TTLs; ORACLE forbids it | contradiction between protocols | UNRESOLVED |
 | [F-009](F-009.md) | CRISIS §12.3 cites "Section 8 (Non-Precedent Rule)"; the rule is in §6 | corpus defect | UNRESOLVED |
+| [F-011](F-011.md) | EXIT delays exit for stability; SCOPE forbids delaying exit for stability | contradiction between protocols | UNRESOLVED |
+| [F-012](F-012.md) | EXIT: exit is never suspended; SCOPE: it may be suspended within Crisis Scope | contradiction between protocols | UNRESOLVED |
 | [F-010](F-010.md) | DEFENSE escalates at D3; CRISIS enters only on "sustained" D3 of undefined duration | rule interaction / missing parameter | UNRESOLVED |

@@ -302,6 +302,24 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
     return out + defense_checks(r, log, rows, msgs, v, na)
 
 
+SCOPE_MIRRORS = [("CRISIS-4-02", "SCOPE-5-02", "crisis_entry_by_state_machine"),
+                 ("CRISIS-9-05", "SCOPE-5-12", "exit_collapses_to_s0"),
+                 ("CRISIS-9-05", "SCOPE-6-04", "stabilization_restores_baseline"),
+                 ("CRISIS-Non-PrecedentRule_-01", "SCOPE-3-08", "s1_no_precedent"),
+                 ("CRISIS-6-04", "SCOPE-3-04", "s1_time_limited")]
+
+
+def scope_mirrors(results: List[CheckResult]) -> List[CheckResult]:
+    """SCOPE §3, §5, §6 constrain the same crisis execution; each mirrors one CRISIS check."""
+    by = {c.requirement_id: c for c in results}
+    out = []
+    for src, rid, chk in SCOPE_MIRRORS:
+        c = by[src]
+        out.append(CheckResult(rid, chk, c.status, f"{c.explanation} (as checked for {src})", evidence=c.evidence,
+                               applicability=c.applicability))
+    return out
+
+
 def defense_checks(r, log, rows, msgs, v, na) -> List[CheckResult]:
     out = []
     d3 = [x["step"] for x in rows if x["defense"] == "D3"]
@@ -351,6 +369,11 @@ IMPLEMENTS = {
     "DEFENSE-8-02": ("resource_recovery_claim", "IMPLEMENTED", None),
     "DEFENSE-8-04": ("wind_down", "PARTIAL", "Admissible-state restoration is the end of the harm window."),
     "DEFENSE-9-01": ("escalation_to_crisis", "IMPLEMENTED", None),
+    "SCOPE-5-02": ("crisis_entry_by_state_machine", "IMPLEMENTED", None),
+    "SCOPE-5-12": ("exit_collapses_to_s0", "IMPLEMENTED", None),
+    "SCOPE-6-04": ("stabilization_restores_baseline", "PARTIAL", "Baseline = absence of crisis authority notices after exit."),
+    "SCOPE-3-08": ("s1_no_precedent", "PARTIAL", "Precedent detected as citation of a crisis action."),
+    "SCOPE-3-04": ("s1_time_limited", "PARTIAL", "Crisis actions end at exit; no numeric time limit exists (Q-029)."),
 }
 
 
@@ -441,6 +464,7 @@ class CrisisRecoveryModule(LabModule):
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, rows, commits, info = run(r)
         res = checks(r, log, rows, commits, info)
+        res += scope_mirrors(res)
         states = [x["state"] for x in rows]
         d3 = [x["step"] for x in rows if x["defense"] == "D3"]
         entry = next((x["step"] for x in rows if x["state"] != "C0"), None)

@@ -56,6 +56,7 @@ FAULT_CASES = {
     "manual_restart": ["CRISISPATCH-5.2-02", "CRISISPATCH-6-01"],
     "stop_measurement": ["CRISISPATCH-3-06", "CRISISPATCH-5.1-01"],
     "precedent": ["CRISISPATCH-7-01", "CRISISPATCH-9-04"],
+    "escalate_from_region": ["SCOPE-8-05"],
 }
 
 
