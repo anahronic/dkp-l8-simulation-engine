@@ -1,0 +1,1385 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-CULTURE-001",
+ "doc_sha256": "e2266e038388902df1a70e062fe8f9f2ae44ce42f609c9f950fcfcb35e0d8933",
+ "prefix": "CULTURE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Related requirements expressed as a single list are sometimes represented as one provision. Quotations of individual list items inherit the obligation or prohibition from their introducing sentence. Purpose statements and optional examples of preservation mechanisms are not separate requirements. Referenced protocols were not supplied. Neutrality, dominance, semantic fidelity, permanence, and valid calibration lack operational definitions. Section 12's requirement for a new identifier for any modification potentially conflicts with its presentation-only correction exception; their relationship requires clarification.",
+ "requirements": [
+  {
+   "id": "CULTURE-0-01",
+   "section": "0",
+   "title": "Reject Cultural Transformation Objectives",
+   "quote": "This protocol explicitly rejects cultural optimization, convergence, homogenization, or ranking.",
+   "interpretation": "Check whether protocol mechanisms pursue any of the four rejected objectives. The text does not specify how to distinguish prohibited homogenization or convergence from voluntary cultural change.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mechanism_objectives",
+    "mechanism_effects"
+   ],
+   "criterion": "No protocol mechanism pursues cultural optimization, convergence, homogenization, or ranking.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mechanism objectives and cultural effects"
+   ],
+   "gap": "Operational definitions of the rejected cultural transformations are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how each rejected transformation is identified and attributed to a mechanism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-2-01",
+   "section": "2",
+   "title": "Observe External Protocol Constraints",
+   "quote": "Constrained by:",
+   "interpretation": "Validate this protocol's operation against the subsequently listed scope and simulation protocols. Their names establish dependencies, but their requirements cannot be recovered from this text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operation",
+    "scope_rules",
+    "simulation_rules"
+   ],
+   "criterion": "Protocol operation satisfies the applicable constraints of DKP-7-SCOPE-001 and DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001",
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "scope compliance records",
+    "simulation compliance records"
+   ],
+   "gap": "The two constraining protocols and their applicability rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which external constraints apply to each operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-2-02",
+   "section": "2",
+   "title": "Limit Protocol Regulatory Authority",
+   "quote": "This protocol SHALL NOT:\n\ndefine belief systems or moral doctrines,",
+   "interpretation": "Inspect protocol rules and actions for the four forbidden activities listed under this prohibition. Classification requires a distinction between regulating identity or belief and providing neutral interfaces.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "protocol_actions"
+   ],
+   "criterion": "The protocol does not define belief systems or moral doctrines, evaluate cultural content for correctness, impose language hierarchies, or regulate personal identity or belief.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol rules and enforcement actions"
+   ],
+   "gap": "The text provides no operational classifier for the prohibited regulatory activities. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria for identifying each prohibited regulatory activity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-3-01",
+   "section": "3",
+   "title": "Identify Cultural Dominance Conditions",
+   "quote": "Cultural Dominance A condition in which a single culture, language, or cognitive model gains systemic advantage that suppresses alternative models.",
+   "interpretation": "A dominance check must establish both systemic advantage for one model and suppression of alternatives caused by that advantage. Advantage alone does not satisfy the stated definition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "cultural_models",
+    "systemic_advantages",
+    "alternative_suppression",
+    "causal_evidence"
+   ],
+   "criterion": "Cultural dominance holds when one culture, language, or cognitive model gains systemic advantage that suppresses alternative models.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "distribution of systemic advantages",
+    "evidence of suppression and causation"
+   ],
+   "gap": "Systemic advantage, suppression, and the required causal evidence are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an advantage and suppression model, including how causation is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-3-02",
+   "section": "3",
+   "title": "Define Cultural Exception Eligibility",
+   "quote": "Cultural Exception A temporary, non-enforceable allowance granted to preserve cultural expression in conflict scenarios, without overriding higher-layer constraints.",
+   "interpretation": "Check that an allowance classified as a Cultural Exception concerns a conflict and preservation of cultural expression, is temporary and non-enforceable, and respects higher-layer constraints. The definition does not identify every higher-layer constraint or specify an expiry mechanism.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "exception_record",
+    "conflict_record",
+    "preservation_purpose",
+    "higher_layer_constraints"
+   ],
+   "criterion": "A Cultural Exception is temporary, non-enforceable, granted to preserve cultural expression in a conflict, and does not override higher-layer constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "conflict records",
+    "exception lifecycle and enforcement records",
+    "applicable higher-layer constraints"
+   ],
+   "gap": "The applicable higher-layer constraints and operational meaning of temporary are not fully specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the relevant higher-layer constraints and how temporary status is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.1-01",
+   "section": "4",
+   "title": "Forbid Systemic Cultural Priority",
+   "quote": "No culture, language, or cognitive model SHALL be granted systemic priority.",
+   "interpretation": "Inspect allocation, scheduling, access, and decision rules for priority granted on cultural, linguistic, or cognitive-model grounds. The text does not define the boundary of systemic priority.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_rules",
+    "priority_assignments",
+    "cultural_attributes"
+   ],
+   "criterion": "No culture, language, or cognitive model is granted systemic priority.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system priority rules and allocation decisions"
+   ],
+   "gap": "Systemic priority requires an operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which forms of priority count as systemic cultural priority."
+   ],
+   "section_label": "4.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.1-02",
+   "section": "4",
+   "title": "Maintain Neutral Governance Algorithms",
+   "quote": "Governance algorithms MUST remain culture-neutral and language-agnostic.",
+   "interpretation": "Assess governance algorithms for dependence on cultural or linguistic context. Neutrality could mean absence of cultural inputs, invariant outcomes, or equivalent treatment; the document does not select among these readings.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "governance_algorithms",
+    "algorithm_inputs",
+    "algorithm_outputs",
+    "neutrality_model"
+   ],
+   "criterion": "Every governance algorithm remains culture-neutral and language-agnostic.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance algorithm specifications and execution records"
+   ],
+   "gap": "No operational definition of culture-neutral or language-agnostic behavior is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a neutrality model and the cultural or linguistic changes under which behavior is compared."
+   ],
+   "section_label": "4.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.1-03",
+   "section": "4",
+   "title": "Exclude Cultural Reference Frameworks",
+   "quote": "No cultural framework may be treated as:",
+   "interpretation": "Check configurations and model specifications for a cultural framework assigned any of the subsequently listed roles: default, baseline, or reference model. Detecting an implicit assignment requires additional interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "framework_roles",
+    "default_configurations",
+    "model_specifications"
+   ],
+   "criterion": "No cultural framework serves as a default, baseline, or reference model.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system defaults and model reference specifications"
+   ],
+   "gap": "The identification of cultural frameworks and implicit reference roles is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how explicit and implicit cultural reference roles are identified."
+   ],
+   "section_label": "4.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.2-01",
+   "section": "4",
+   "title": "Require Linguistically Neutral Interfaces",
+   "quote": "All officially supported system interfaces SHALL be linguistically neutral.",
+   "interpretation": "Evaluate every officially supported interface against a linguistic-neutrality model. The document does not define official support or the properties that establish neutrality.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "official_interface_inventory",
+    "interface_behavior",
+    "linguistic_neutrality_model"
+   ],
+   "criterion": "Every officially supported system interface is linguistically neutral.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "official interface inventory",
+    "interface behavior across languages"
+   ],
+   "gap": "A linguistic-neutrality criterion and authoritative supported-interface inventory are needed. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the linguistic-neutrality model used for interface assessment."
+   ],
+   "section_label": "4.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.2-02",
+   "section": "4",
+   "title": "Preserve Meaning Through Translation",
+   "quote": "Translation layers MUST:\n\npreserve semantic fidelity,",
+   "interpretation": "Compare source and translated content for semantic fidelity, preserved agency and intent, and absence of normative framing. The following sentence explicitly makes meaning-, agency-, or intent-altering lossy translation a violation, but supplies no semantic comparison method.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "source_content",
+    "translated_content",
+    "source_agency",
+    "source_intent",
+    "semantic_assessment"
+   ],
+   "criterion": "Translation preserves semantic fidelity, agency, and intent and avoids normative framing; loss that alters meaning, agency, or intent is a protocol violation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "source and translated content",
+    "agency and intent annotations"
+   ],
+   "gap": "The document supplies no method for determining semantic fidelity, preserved agency or intent, or normative framing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the semantic assessment method and how source agency and intent are established."
+   ],
+   "section_label": "4.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.3-01",
+   "section": "4",
+   "title": "Prohibit Cultural Optimization Operations",
+   "quote": "Culture SHALL NOT be:\n\noptimized,",
+   "interpretation": "Inspect system operations for optimization, ranking, scoring, or convergence applied to culture. The prohibition is categorical, but identifying culture as the object of an operation requires an operational classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_operations",
+    "operation_targets"
+   ],
+   "criterion": "Culture is not optimized, ranked, scored, or converged.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation specifications and targets"
+   ],
+   "gap": "The scope of operations that count as optimizing, ranking, scoring, or converging culture is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how cultural targets and prohibited operations are classified."
+   ],
+   "section_label": "4.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.3-02",
+   "section": "4",
+   "title": "Exclude Cultural Evaluation Metrics",
+   "quote": "No metric may evaluate cultural “efficiency”, “progress”, or “superiority”.",
+   "interpretation": "Inspect metric definitions and uses for evaluation of any of the three prohibited cultural attributes. Renamed or indirect metrics require semantic analysis beyond checking metric names.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "metric_definitions",
+    "metric_uses"
+   ],
+   "criterion": "No metric evaluates cultural efficiency, progress, or superiority.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metric registry and downstream uses"
+   ],
+   "gap": "No method is supplied for identifying indirect evaluation of the prohibited attributes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how metric purpose and indirect cultural evaluation are determined."
+   ],
+   "section_label": "4.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-4.3-03",
+   "section": "4",
+   "title": "Protect Unconditional Cultural Persistence",
+   "quote": "Cultural persistence SHALL NOT be required to justify itself via:",
+   "interpretation": "Check whether permission or support for cultural persistence is conditioned on economic performance, demographic scale, or productivity metrics. The text does not define the institutional acts that constitute requiring justification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "persistence_policies",
+    "justification_requirements",
+    "decision_records"
+   ],
+   "criterion": "Cultural persistence is not required to justify itself through economic performance, demographic scale, or productivity metrics.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cultural persistence policies and decision criteria"
+   ],
+   "gap": "The operational scope of cultural persistence and required justification is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which decisions and requirements can condition cultural persistence."
+   ],
+   "section_label": "4.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-5-01",
+   "section": "5",
+   "title": "Forbid Enforced Cultural Conformity",
+   "quote": "The following are explicitly forbidden:\n\nenforcement of cultural conformity,",
+   "interpretation": "Identify rules or actions that compel cultural conformity. The text does not define conformity or distinguish its enforcement from other behavioral requirements.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "behavioral_rules",
+    "enforcement_actions",
+    "cultural_context"
+   ],
+   "criterion": "No cultural conformity is enforced.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "behavioral requirements and enforcement records"
+   ],
+   "gap": "Cultural conformity and its enforcement lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria distinguishing cultural conformity requirements from other behavioral rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-5-02",
+   "section": "5",
+   "title": "Forbid Minority Language Suppression",
+   "quote": "suppression or marginalization of minority languages,",
+   "interpretation": "Assess practices for suppression or marginalization of languages classified as minority languages. Neither minority status nor suppression and marginalization are operationally specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "language_status",
+    "system_practices",
+    "language_access_outcomes"
+   ],
+   "criterion": "No minority language is suppressed or marginalized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "minority language classifications",
+    "language access and treatment records"
+   ],
+   "gap": "Definitions of minority language status, suppression, and marginalization are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare minority language classification and suppression or marginalization criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-5-03",
+   "section": "5",
+   "title": "Forbid Assimilation Linked Incentives",
+   "quote": "economic incentives tied to cultural assimilation,",
+   "interpretation": "Inspect economic incentive eligibility and award rules for links to cultural assimilation. A check needs a declared classification of assimilation and what constitutes a tie.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "incentive_rules",
+    "incentive_awards",
+    "assimilation_conditions"
+   ],
+   "criterion": "No economic incentive is tied to cultural assimilation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "economic incentive rules and award records"
+   ],
+   "gap": "Cultural assimilation and direct or indirect incentive ties are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare assimilation criteria and how incentive dependence is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-5-04",
+   "section": "5",
+   "title": "Forbid Dominant Narrative Amplification",
+   "quote": "algorithmic amplification of a dominant cultural narrative,",
+   "interpretation": "Evaluate whether algorithms amplify a cultural narrative classified as dominant. The text supplies neither an amplification baseline nor a procedure for identifying dominant narratives.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "algorithm_behavior",
+    "narrative_visibility",
+    "narrative_dominance"
+   ],
+   "criterion": "Algorithms do not amplify a dominant cultural narrative.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "algorithmic exposure records",
+    "narrative dominance assessments"
+   ],
+   "gap": "Dominant narrative classification and the comparison establishing amplification are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a dominance model and the reference condition used to detect amplification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-5-05",
+   "section": "5",
+   "title": "Forbid Cultural Proxy Inference",
+   "quote": "use of culture or language as a proxy for:",
+   "interpretation": "Trace decision inputs and derived features for use of culture or language as substitutes for trust, risk, competence, or loyalty. Indirect proxies require a declared feature-dependence or causal model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "decision_models",
+    "feature_lineage",
+    "decision_targets"
+   ],
+   "criterion": "Culture and language are not used as proxies for trust, risk, competence, or loyalty.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision feature lineage",
+    "model specifications and prediction targets"
+   ],
+   "gap": "The document does not specify how indirect proxy use is detected. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how proxy use is distinguished from incidental correlation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-6-01",
+   "section": "6",
+   "title": "Protect Minority Cultural Access",
+   "quote": "Minority cultures and languages SHALL be protected from:",
+   "interpretation": "Check protection against each listed threat: systemic interface exclusion, forced translation into dominant semantic frameworks, and erosion through algorithmic visibility bias. Observing erosion requires a temporal and causal assessment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "minority_classifications",
+    "interface_access",
+    "translation_requirements",
+    "visibility_history",
+    "protection_mechanisms"
+   ],
+   "criterion": "Minority cultures and languages are protected from systemic exclusion from public or system interfaces, forced translation into dominant semantic frameworks, and erosion through algorithmic visibility bias.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interface access records",
+    "translation policies",
+    "algorithmic visibility histories"
+   ],
+   "gap": "The protected population, adequacy of protection, dominant frameworks, and erosion criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare minority classifications and a model connecting exclusion, forced translation, or visibility bias to cultural harm."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-6-02",
+   "section": "6",
+   "title": "Limit Preservation Mechanism Conditions",
+   "quote": "No preservation mechanism may:",
+   "interpretation": "Inspect every preservation mechanism for the three forbidden requirements listed under this sentence. Given explicit requirement records, a program can reject mechanisms imposing behavioral obligations, mandatory participation, or cultural self-identification.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "preservation_mechanisms",
+    "behavioral_obligations",
+    "participation_requirements",
+    "self_identification_requirements"
+   ],
+   "criterion": "No preservation mechanism imposes behavioral obligations, mandates participation, or requires cultural self-identification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "preservation mechanism eligibility and participation rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-7-01",
+   "section": "7",
+   "title": "Preserve Voluntary Cultural Expression",
+   "quote": "Subjects retain full autonomy over cultural expression.\n\nParticipation in cultural systems SHALL be strictly voluntary.",
+   "interpretation": "Check participation and expression rules for compulsion or limits inconsistent with autonomy. Formal consent can be recorded, but whether a choice is strictly voluntary requires a model of coercion and available alternatives.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "expression_rules",
+    "participation_rules",
+    "participation_decisions",
+    "coercion_evidence"
+   ],
+   "criterion": "Subjects retain full autonomy over cultural expression, and participation in cultural systems is strictly voluntary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cultural participation rules",
+    "subject choice and coercion evidence"
+   ],
+   "gap": "Full autonomy and strict voluntariness lack operational tests. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what constitutes coercion or an infringement of cultural-expression autonomy."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-7-02",
+   "section": "7",
+   "title": "Decouple Affiliation From Entitlements",
+   "quote": "No cultural affiliation SHALL affect:",
+   "interpretation": "Assess whether changing cultural affiliation affects any listed status, access, participation, privilege, or obligation. A causal comparison is needed to distinguish prohibited influence from unrelated differences.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "cultural_affiliation",
+    "legal_status",
+    "justice_access",
+    "economic_participation",
+    "system_privileges",
+    "system_obligations"
+   ],
+   "criterion": "Cultural affiliation does not affect legal status, access to justice, economic participation, or system privileges or obligations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal and justice decisions",
+    "economic participation records",
+    "system privilege and obligation assignments"
+   ],
+   "gap": "The causal test for whether affiliation affects an outcome is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a causal or counterfactual model for affiliation effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-7-03",
+   "section": "7",
+   "title": "Apply Neutrality Across Cultures",
+   "quote": "Cultural neutrality applies equally to dominant and minority cultures.",
+   "interpretation": "Check that neutrality rules and their enforcement apply to both dominant and minority cultures. Equal application is explicit, but neutrality and the classifications still need operational definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "culture_classifications",
+    "neutrality_rules",
+    "neutrality_enforcement"
+   ],
+   "criterion": "Cultural-neutrality requirements apply equally to dominant and minority cultures.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "culture classifications",
+    "neutrality policy and enforcement records"
+   ],
+   "gap": "Operational definitions of neutrality and dominant or minority status are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare culture classifications and how equal application of neutrality is assessed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-8-01",
+   "section": "8",
+   "title": "Provide Plural Selectable Interface Contexts",
+   "quote": "Human–system interfaces MUST:\n\navoid culturally loaded symbols by default,",
+   "interpretation": "Inspect interface defaults, available symbolic representations, and subject-controlled context selection. Capability checks can establish selectable contexts and plural representations, while culturally loaded symbols require semantic assessment.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "interface_defaults",
+    "symbolic_representations",
+    "context_selection_controls",
+    "symbol_classifications"
+   ],
+   "criterion": "Human–system interfaces avoid culturally loaded symbols by default, support plural symbolic representations, and allow Subjects to select preferred linguistic and cultural contexts.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interface configuration and capabilities",
+    "symbol assessments"
+   ],
+   "gap": "Culturally loaded symbols and the required breadth of representation and context support are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how symbols are classified and which contexts and representations establish the required support."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-8-02",
+   "section": "8",
+   "title": "Exclude Cultural Assumptions From Defaults",
+   "quote": "Default settings SHALL NOT encode:",
+   "interpretation": "Assess default settings for cultural assumptions, semantic hierarchies, and implicit normative frames. Configuration inspection alone cannot identify all implicit meanings without an interpretive model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "default_settings",
+    "default_semantics"
+   ],
+   "criterion": "Default settings encode no cultural assumptions, semantic hierarchies, or implicit normative frames.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "default settings and semantic assessments"
+   ],
+   "gap": "The prohibited semantic properties lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a method for identifying cultural assumptions, semantic hierarchies, and implicit normative frames."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-9-01",
+   "section": "9",
+   "title": "Respect Higher Priority Protection Constraints",
+   "quote": "Cultural protection SHALL NOT override:\n\nPTL-verified physical harm (DKP-0-ORACLE-001),",
+   "interpretation": "Check conflict decisions against all three listed limits: PTL-verified physical harm, life-preservation constraints, and scope and conflict rules. The phrase about overriding physical harm could mean overriding the verified finding or overriding the response required by that finding.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "cultural_protection_decisions",
+    "ptl_verified_harm",
+    "life_preservation_constraints",
+    "scope_conflict_rules"
+   ],
+   "criterion": "Cultural protection does not override PTL-verified physical harm, life-preservation constraints, or scope and conflict rules.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-1-AXIOMS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "PTL-verified harm findings",
+    "life-preservation constraints",
+    "scope and conflict determinations"
+   ],
+   "gap": "The referenced constraints and the exact meaning of overriding a physical-harm finding are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the physical-harm limit protects the finding, its required response, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-9-02",
+   "section": "9",
+   "title": "Constrain Declared Cultural Exceptions",
+   "quote": "such exception SHALL be:\n\ntemporary,",
+   "interpretation": "For a Cultural Exception declared in a conflict with another L5 protocol, check that it is temporary, explicitly scoped, non-enforceable, and logged for post-resolution audit. Declaration is optional; no maximum duration or audit deadline is stated.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l5_conflict_record",
+    "exception_scope",
+    "exception_lifecycle",
+    "exception_enforceability",
+    "exception_audit_log"
+   ],
+   "criterion": "An exception declared under the L5-conflict rule is temporary, explicitly scoped, non-enforceable, and logged for post-resolution audit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L5 conflict records",
+    "exception scope and lifecycle records",
+    "audit logs"
+   ],
+   "gap": "The text does not specify how temporary status is established or what the audit log must contain. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how an exception ends and what log evidence establishes readiness for post-resolution audit."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-9-03",
+   "section": "9",
+   "title": "Use Scope Governed Conflict Resolution",
+   "quote": "Conflict resolution SHALL be governed by DKP-7-SCOPE-001.",
+   "interpretation": "Compare conflict-resolution procedures and outcomes with DKP-7-SCOPE-001. This text establishes the controlling protocol but does not reproduce its rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "conflict_resolution_records",
+    "scope_protocol_rules"
+   ],
+   "criterion": "Conflict resolution complies with DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "conflict-resolution records",
+    "applicable scope rules"
+   ],
+   "gap": "DKP-7-SCOPE-001 is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-9-04",
+   "section": "9",
+   "title": "Preserve Factual Verification Obligations",
+   "quote": "Cultural or linguistic context SHALL NOT be used to:\n\nexempt factual claims from verification under DKP-5-INFO-001,",
+   "interpretation": "Inspect verification exemptions and their reasons for reliance on cultural or linguistic context. Determining which claims require verification additionally depends on DKP-5-INFO-001.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "factual_claims",
+    "verification_requirements",
+    "verification_exemptions",
+    "exemption_reasons"
+   ],
+   "criterion": "No factual claim is exempted from verification under DKP-5-INFO-001 because of cultural or linguistic context.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-5-INFO-001"
+   ],
+   "data_dependencies": [
+    "factual-claim verification requirements",
+    "exemption decisions and reasons"
+   ],
+   "gap": "The verification rules of DKP-5-INFO-001 are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-9-05",
+   "section": "9",
+   "title": "Preserve PTL Safety Signal Delivery",
+   "quote": "block PTL-based safety or harm signals.",
+   "interpretation": "Check signal-handling decisions for blocking based on cultural or linguistic context. The text does not define whether blocking includes delay, attenuation, or only complete suppression.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_safety_harm_signals",
+    "signal_handling_records",
+    "blocking_reasons"
+   ],
+   "criterion": "Cultural or linguistic context is not used to block PTL-based safety or harm signals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL-based safety and harm signals",
+    "signal delivery and filtering records"
+   ],
+   "gap": "The prohibited forms of signal blocking are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which delivery, filtering, or attenuation actions count as blocking."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-10-01",
+   "section": "10",
+   "title": "Expose Algorithmic Audit Capabilities",
+   "quote": "Any algorithmic process interacting with cultural or linguistic content:\n\nMUST be auditable for structural neutrality,",
+   "interpretation": "Inventory applicable processes and check for structural-neutrality audit access, exposed bias-detection hooks, and post-facto review capability. The document requires all three capabilities without specifying their interfaces or adequacy criteria.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "algorithmic_process_inventory",
+    "content_interactions",
+    "audit_capabilities",
+    "bias_detection_hooks",
+    "review_capabilities"
+   ],
+   "criterion": "Every algorithmic process interacting with cultural or linguistic content is auditable for structural neutrality, exposes bias-detection hooks, and is reviewable post-facto.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "algorithmic process inventory",
+    "audit interfaces",
+    "bias-detection interfaces",
+    "retained review evidence"
+   ],
+   "gap": "Required hook interfaces, audit sufficiency, and post-facto review evidence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the capabilities and retained evidence sufficient for each required audit or review function."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-10-02",
+   "section": "10",
+   "title": "Constrain Cultural Audit Assessment Scope",
+   "quote": "Audits SHALL assess:\n\nneutrality of structure and access,",
+   "interpretation": "Check audit plans and reports for assessment of structural and access neutrality and absence of dominance amplification, while excluding content value, cultural merit, and ideological alignment. Merely mentioning an excluded topic need not constitute assessing it.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_plans",
+    "audit_reports",
+    "assessment_topics"
+   ],
+   "criterion": "Audits assess neutrality of structure and access and absence of dominance amplification, and do not assess content value, cultural merit, or ideological alignment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit plans, assessment records, and reports"
+   ],
+   "gap": "The required and forbidden assessment categories lack operational boundaries. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how audit activities are classified as assessment of each required or forbidden topic."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-11-01",
+   "section": "11",
+   "title": "Forbid Enforceable Cultural Controls",
+   "quote": "DKP-5-CULTURE-001 SHALL NOT introduce enforceable thresholds, rankings, or restrictions.",
+   "interpretation": "Inspect introduced controls for prohibited enforceability. Grammatically, enforceable may qualify all three listed controls or only thresholds; restrictions may also mean cultural restrictions specifically or all restrictions introduced by this protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "introduced_controls",
+    "control_types",
+    "control_enforceability"
+   ],
+   "criterion": "The protocol introduces no enforceable thresholds, rankings, or restrictions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "introduced control definitions and enforcement behavior"
+   ],
+   "gap": "The scope of enforceable and restrictions is ambiguous, particularly alongside this protocol's mandatory prohibitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether enforceable qualifies every listed control and which restrictions fall within the prohibition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-11-02",
+   "section": "11",
+   "title": "Simulate Access Affecting Interactions",
+   "quote": "Any mechanism interacting with other protocols that may affect access or visibility:\n\nMUST be simulated under DKP-8-SIMULATION-001,",
+   "interpretation": "Identify mechanisms that interact with other protocols and may affect access or visibility, then verify simulation under the referenced protocol. Potential effects, rather than only observed effects, trigger this requirement.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mechanism_inventory",
+    "protocol_interactions",
+    "potential_access_visibility_effects",
+    "simulation_records"
+   ],
+   "criterion": "Every mechanism interacting with other protocols that may affect access or visibility is simulated under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "mechanism interaction and impact assessments",
+    "simulation compliance records"
+   ],
+   "gap": "The simulation requirements and a method for identifying potential access or visibility effects are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how mechanisms with possible access or visibility effects are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-11-03",
+   "section": "11",
+   "title": "Declare Interaction Mechanism Properties",
+   "quote": "MUST declare scope, duration, and reversibility,",
+   "interpretation": "For each mechanism covered by the preceding access-or-visibility condition, check for declarations of all three named properties. This establishes declaration completeness, not a prescribed duration or a requirement that reversibility be true.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "applicable_mechanisms",
+    "scope_declarations",
+    "duration_declarations",
+    "reversibility_declarations"
+   ],
+   "criterion": "Every applicable mechanism declares scope, duration, and reversibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "applicable mechanism inventory and declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-11-04",
+   "section": "11",
+   "title": "Prevent Permanent Cultural Effects",
+   "quote": "MUST NOT create permanent cultural advantage or exclusion.",
+   "interpretation": "Model the long-term effects of mechanisms covered by the preceding access-or-visibility condition. A finite observation period cannot by itself establish that an effect is permanent or will eventually end.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "applicable_mechanisms",
+    "cultural_effect_history",
+    "effect_persistence_model"
+   ],
+   "criterion": "No applicable mechanism creates permanent cultural advantage or exclusion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cultural advantage and exclusion observations",
+    "mechanism lifecycle and reversal records"
+   ],
+   "gap": "Cultural advantage, exclusion, and permanence require an explicit temporal and causal model. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how cultural effects are attributed and how their permanence or eventual termination is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-11-05",
+   "section": "11",
+   "title": "Limit Uncalibrated Cultural Interactions",
+   "quote": "Absent valid L8 calibration, cultural interactions are informational and non-binding only.",
+   "interpretation": "When valid L8 calibration is absent, check that cultural interactions remain informational and non-binding. Valid calibration does not by itself authorize binding interactions, because the sentence states only a necessary condition and other prohibitions still apply.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "l8_calibration_status",
+    "cultural_interactions",
+    "interaction_effects",
+    "binding_status"
+   ],
+   "criterion": "If valid L8 calibration is absent, every cultural interaction is informational and non-binding.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 calibration validity records",
+    "interaction behavior and binding effects"
+   ],
+   "gap": "Valid L8 calibration and the boundary of informational-only behavior are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how calibration validity and informational versus binding effects are determined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-12-01",
+   "section": "12",
+   "title": "Require Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check protocol changes for compliance with the named controlled procedure and its listed components, subject to the later presentation-only exception. This text does not supply acceptance criteria or clarify whether rollback means a capability, a plan, or an executed reversal.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change_record",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_record"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 with proposal, DKP-8-SIMULATION-001 simulation, DKP-8-AUDIT-001 audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation and audit records",
+    "acceptance, activation, and rollback evidence"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, timing rules, and meaning of rollback are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how the presentation-only exception limits this change procedure and what rollback evidence is required."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-12-02",
+   "section": "12",
+   "title": "Assign New Modification Identifiers",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Compare identifiers before and after modifications and check whether the resulting identifier is new. The literal scope includes any modification, while the subsequent presentation-only correction clause suggests an exception.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_record",
+    "previous_protocol_identifier",
+    "resulting_protocol_identifier",
+    "identifier_registry",
+    "modification_classification"
+   ],
+   "criterion": "Every modification within this clause's scope receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "modification classification records"
+   ],
+   "gap": "The scope of any modification relative to presentation-only corrections and the required domain of identifier novelty are unclear. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections are excluded and whether new means different from the preceding identifier or unused in the registry."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-12-03",
+   "section": "12",
+   "title": "Declare Scope Protocol Compatibility",
+   "quote": "explicit compatibility declaration with DKP-7-SCOPE-001 is mandatory,",
+   "interpretation": "For a protocol modification, check for an explicit compatibility declaration naming DKP-7-SCOPE-001. The requirement establishes declaration presence; it does not supply a test of the declaration's truth.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_modification",
+    "compatibility_declaration"
+   ],
+   "criterion": "A protocol modification includes an explicit compatibility declaration with DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "modification compatibility declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-12-04",
+   "section": "12",
+   "title": "Allow Required Interface Resimulation",
+   "quote": "re-simulation of affected interfaces MAY be required.",
+   "interpretation": "This permits an additional requirement to re-simulate affected interfaces but does not impose it for every modification. A program cannot determine from this document when that discretionary requirement is triggered.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "protocol_modification",
+    "affected_interfaces",
+    "resimulation_requirement_decision",
+    "resimulation_records"
+   ],
+   "criterion": "If re-simulation is required for a modification, affected interfaces are re-simulated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "affected-interface assessment",
+    "resimulation requirement decision",
+    "resimulation records"
+   ],
+   "gap": "The document supplies neither a decision authority nor conditions for requiring re-simulation.",
+   "hypotheses_needed": [
+    "Declare who may require re-simulation, its trigger, and how affected interfaces are identified."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-12-05",
+   "section": "12",
+   "title": "Record Presentation Corrections By Date",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify corrections by whether normative content changes; qualifying corrections are excluded from Upgrades and recorded only through the document's update date. Determining unchanged normative meaning requires semantic judgment, and the named date label differs from the front matter key last_updated.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_change_assessment",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_records"
+   ],
+   "criterion": "A presentation-only correction that changes no normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document revision comparison",
+    "upgrade classification and date records"
+   ],
+   "gap": "Normative equivalence, the referenced Upgrade definition, and the treatment of the date label require clarification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how normative equivalence is determined and whether Last updated maps to the last_updated front matter field."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "CULTURE-12-06",
+   "section": "12",
+   "title": "Publish Canonical Edition Digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its supplied canonical source bytes and compare with its entry in the named repository file. The check requires authoritative edition-to-source mappings and the repository manifest.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "canonical_repository_manifest"
+   ],
+   "criterion": "For every published edition, SHA-256(canonical source bytes) is listed for that edition in SHA256SUMS.txt in github.com/anahronic/World.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source bytes and edition mappings",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

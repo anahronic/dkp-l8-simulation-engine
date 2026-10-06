@@ -1,0 +1,1929 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-EDU-001",
+ "doc_sha256": "81cead93a2b10761f85ee897a3457ab0bd0f41983e88e18c6ae913f94b4cd5a1",
+ "prefix": "EDU",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Purpose statements and protocol-position lists were not converted into requirements. The unnumbered heading Safeguards is used literally as the section identifier. Repeated prohibitions in different sections are retained. Referenced protocols and the canonical repository were not consulted. The text does not specify competence standards, assessment acceptance criteria, calibration validity criteria, or the threshold for repeated failure. Section 13's requirement that any modification receive a new identifier may conflict with its presentation-only correction exception; the registry preserves both.",
+ "requirements": [
+  {
+   "id": "EDU-0-01",
+   "section": "0",
+   "title": "Education Must Not Rank Subjects",
+   "quote": "Education is treated as a stability requirement, not a value judgment and not a mechanism of social ranking.",
+   "interpretation": "Inspect whether educational processes produce value judgments or social rankings. The text does not define social ranking or distinguish it operationally from permitted competence distinctions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_processes",
+    "educational_outputs"
+   ],
+   "criterion": "Education does not function as a value judgment or mechanism of social ranking.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "A classification of value judgments and social ranking is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which educational outputs constitute value judgments or social ranking."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-1-01",
+   "section": "1",
+   "title": "Excluded Subjects Of Definition",
+   "quote": "This protocol does not define culture, worldview, morality, intelligence, or personal values.",
+   "interpretation": "Inspect protocol definitions and implementations for definitions of the excluded concepts. Deciding whether an indirect rule effectively defines one of these concepts requires semantic interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_definitions",
+    "implementation_rules"
+   ],
+   "criterion": "The protocol does not define culture, worldview, morality, intelligence, or personal values.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "An operational boundary for what constitutes defining an excluded concept is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a semantic classification for definitions of the excluded concepts."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-2-01",
+   "section": "2",
+   "title": "Education Cannot Influence Truth Outputs",
+   "quote": "Educational processes SHALL NOT influence:",
+   "interpretation": "Test whether educational processes affect factual classification, verification outcomes, or truth status under DKP-5-INFO-001, as listed immediately after this clause. Influence could mean direct computational dependence or broader causal effects; the text does not choose between them.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_processes",
+    "classification_results",
+    "verification_results",
+    "truth_status",
+    "dependency_graph"
+   ],
+   "criterion": "Educational processes have no influence on factual classification, verification outcomes, or truth status under DKP-5-INFO-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-5-INFO-001"
+   ],
+   "data_dependencies": [
+    "factual classifications",
+    "verification outcomes",
+    "truth-status outputs"
+   ],
+   "gap": "The meaning and causal boundary of influence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define influence as direct data dependence or a specified broader causal relation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-2-02",
+   "section": "2",
+   "title": "No Imposed Ideological Narratives",
+   "quote": "- impose ideological narratives,",
+   "interpretation": "This bullet is governed by the preceding 'This protocol SHALL NOT' clause. Test educational content and delivery against a declared classification of ideological narrative imposition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_content",
+    "delivery_rules"
+   ],
+   "criterion": "The protocol does not impose ideological narratives.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Ideological narratives and imposition lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which content and delivery practices constitute ideological narrative imposition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-2-03",
+   "section": "2",
+   "title": "No Correctness Doctrine Definitions",
+   "quote": "- define moral or political correctness,",
+   "interpretation": "This bullet is a prohibition under the preceding SHALL NOT clause. Inspect protocol rules for definitions of moral or political correctness.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "educational_content"
+   ],
+   "criterion": "The protocol does not define moral or political correctness.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "A semantic test for definitions of moral or political correctness is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a classification of rules that prescribe moral or political correctness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-2-04",
+   "section": "2",
+   "title": "Excluded Personal Evaluation Targets",
+   "quote": "- evaluate beliefs, loyalties, or identities,",
+   "interpretation": "This bullet is governed by SHALL NOT. Check that evaluation targets and scoring rules exclude beliefs, loyalties, and identities, including any proxies recognized by a declared model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "evaluation_targets",
+    "scoring_rules",
+    "evaluation_features"
+   ],
+   "criterion": "The protocol does not evaluate beliefs, loyalties, or identities.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "A classification of prohibited targets and their indirect proxies is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how evaluation features map to beliefs, loyalties, or identities."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-2-05",
+   "section": "2",
+   "title": "Opinion Independent Educational Access",
+   "quote": "- restrict access to education based on opinion or worldview.",
+   "interpretation": "This bullet is governed by SHALL NOT. Check access rules and decisions for dependence on opinion or worldview; indirect dependence requires a causal or proxy model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "education_access_rules",
+    "education_access_decisions",
+    "decision_features"
+   ],
+   "criterion": "Opinion or worldview is not a basis for restricting access to education.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "education access decisions and their grounds"
+   ],
+   "gap": "A model identifying direct and indirect opinion or worldview dependence is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which decision features or causal paths count as opinion or worldview dependence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-3-01",
+   "section": "3",
+   "title": "System Literacy Capability Definition",
+   "quote": "System Literacy A capability set enabling a Subject to understand DKP structure, rules, incentives, risks, and limits, and to act accordingly.",
+   "interpretation": "Check evidence of understanding and corresponding action across the named dimensions. The definition supplies the dimensions but no tasks or success criteria.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_capabilities",
+    "performance_evidence"
+   ],
+   "criterion": "System literacy enables understanding of DKP structure, rules, incentives, risks, and limits, and action accordingly.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DKP structure, rules, incentives, risks, and limits"
+   ],
+   "gap": "Tasks and criteria for understanding and acting accordingly are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define observable evidence of understanding and appropriate action for each named dimension."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-3-02",
+   "section": "3",
+   "title": "Competence Requires Demonstrated Correct Application",
+   "quote": "Competence Demonstrable ability to apply knowledge correctly in defined contexts.",
+   "interpretation": "A competence claim must identify a context and evidence of correct knowledge application. Correctness criteria for those contexts are not supplied.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "competence_claim",
+    "defined_context",
+    "performance_evidence",
+    "correctness_criteria"
+   ],
+   "criterion": "Competence is supported by demonstrable correct application of knowledge in a defined context.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Context-specific correctness criteria and acceptable demonstration evidence are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define correctness and sufficient demonstration for each assessed context."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-3-03",
+   "section": "3",
+   "title": "Educational Module Qualification Conditions",
+   "quote": "Educational Module A bounded, verifiable unit of instruction targeting a specific competence domain.",
+   "interpretation": "Check that each module has an identifiable boundary, a specific competence domain, and a means of verification. The text does not define adequate boundaries or verification.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "module_definition",
+    "module_boundaries",
+    "competence_domain",
+    "verification_method"
+   ],
+   "criterion": "An educational module is bounded, verifiable, instructional, and targeted at a specific competence domain.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Acceptance criteria for boundedness and verifiability are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define adequate module boundaries and verification methods."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-3-04",
+   "section": "3",
+   "title": "Assessment Event Qualification Conditions",
+   "quote": "Assessment Event An auditable, reproducible process confirming competence through observable performance.",
+   "interpretation": "Inspect assessment records, reproducibility evidence, and observed performance supporting competence confirmation. The text does not specify an audit procedure or reproducibility standard.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "assessment_process",
+    "audit_records",
+    "reproduction_evidence",
+    "observed_performance"
+   ],
+   "criterion": "An assessment event confirms competence through observable performance and is auditable and reproducible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Standards for auditability, reproducibility, and competence confirmation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define evidence sufficient to establish auditability, reproducibility, and performance-based competence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-4-01",
+   "section": "4",
+   "title": "Understanding Takes Priority Over Recall",
+   "quote": "Understanding system logic takes precedence over factual recall.",
+   "interpretation": "Inspect instructional and assessment decisions for priority given to understanding when it competes with factual recall. No weighting or conflict-resolution rule is provided.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "instructional_priorities",
+    "assessment_rules",
+    "priority_decisions"
+   ],
+   "criterion": "Understanding system logic takes precedence over factual recall.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The operational meaning of precedence is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how precedence is observed in instructional and assessment decisions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-4-02",
+   "section": "4",
+   "title": "Credentials Carry No Intrinsic Authority",
+   "quote": "Diplomas, titles, or institutional affiliation carry no intrinsic authority.",
+   "interpretation": "Check that a diploma, title, or affiliation alone does not confer authority. The text leaves intrinsic authority undefined and does not explicitly prohibit using independently verified competence associated with credentials.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "authority_rules",
+    "credential_attributes",
+    "authority_decisions"
+   ],
+   "criterion": "Diplomas, titles, and institutional affiliation do not themselves confer authority.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority assignments and their grounds"
+   ],
+   "gap": "The boundary between intrinsic credential authority and competence-based authority is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which authority assignments depend on credentials alone."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-4-03",
+   "section": "4",
+   "title": "Content Excludes Ideological Enforcement",
+   "quote": "Educational content MUST remain free of ideological enforcement.",
+   "interpretation": "Review content and associated requirements for ideological enforcement. A program requires an externally declared classification of that concept.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_content",
+    "content_requirements"
+   ],
+   "criterion": "No educational content contains ideological enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Ideological enforcement has no operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define ideological enforcement in content and participation requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-4-04",
+   "section": "4",
+   "title": "Universal Educational Infrastructure Access",
+   "quote": "Educational infrastructure MUST be universally accessible.",
+   "interpretation": "Check access coverage for the relevant population. Universal accessibility may concern eligibility, practical availability, accommodations, or all of these; the text does not specify the test.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "population",
+    "education_infrastructure",
+    "access_conditions",
+    "access_evidence"
+   ],
+   "criterion": "Educational infrastructure is accessible universally.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "population coverage and accessibility evidence"
+   ],
+   "gap": "The population boundary and dimensions of accessibility are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the covered population and the conditions constituting accessible infrastructure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-4-05",
+   "section": "4",
+   "title": "Auditable Reproducible Educational Outcomes",
+   "quote": "Educational outcomes MUST be auditable and reproducible.",
+   "interpretation": "Check that outcome evidence supports audit and reproduction. Reproducibility might mean reproducing the evaluation result from evidence or repeating the educational outcome; the text does not resolve this.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_outcomes",
+    "outcome_evidence",
+    "audit_procedure",
+    "reproduction_results"
+   ],
+   "criterion": "Every educational outcome is auditable and reproducible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Auditability criteria and the intended meaning of outcome reproducibility are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the object and acceptance criteria of outcome reproduction and audit."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-5-01",
+   "section": "5",
+   "title": "Governance Interaction Requires Baseline Literacy",
+   "quote": "All Subjects interacting with DKP governance layers SHALL possess a minimum system literacy capability set.",
+   "interpretation": "For each Subject interacting with governance layers, check demonstrated competence in the five listed baseline domains. The requirement must be read together with Safeguards, which limits consequences of failure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "governance_interactions",
+    "subject_competence_evidence",
+    "baseline_assessment_criteria"
+   ],
+   "criterion": "Every interacting Subject demonstrates competence in DKP layer structure and protocol boundaries, individual rights and obligations, risk attribution and liability mechanics, dispute resolution and appeal pathways, and scope limitations and exit rights.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance interaction records",
+    "current rules for the listed baseline domains"
+   ],
+   "gap": "Baseline competence tasks, success criteria, and the timing of competence verification are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define competence criteria for each baseline domain.",
+    "Define when possession of the baseline is evaluated relative to governance interaction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-Safeguards-01",
+   "section": "Safeguards",
+   "title": "Literacy Failure Cannot Cause Punishment",
+   "quote": "- SHALL NOT result in punishment,",
+   "interpretation": "For baseline literacy failures, inspect resulting actions for punishment. The document does not supply a classification distinguishing punishment from permitted corrective measures.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_failures",
+    "resulting_actions",
+    "action_grounds"
+   ],
+   "criterion": "Failure to meet baseline system literacy does not result in punishment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "actions taken in response to baseline failures"
+   ],
+   "gap": "An operational definition of punishment is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which responses constitute punishment rather than correction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-Safeguards-02",
+   "section": "Safeguards",
+   "title": "Literacy Failure Cannot Permanently Exclude",
+   "quote": "- SHALL NOT result in permanent exclusion,",
+   "interpretation": "Check that no permanent exclusion is imposed because of a baseline literacy failure. A policy-level permanent exclusion can be tested directly; an observed exclusion lasting indefinitely cannot be established from a finite trace alone.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_failures",
+    "exclusion_rules",
+    "exclusion_decisions",
+    "restoration_conditions"
+   ],
+   "criterion": "Baseline literacy failure never results in permanent exclusion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exclusion decisions and restoration conditions"
+   ],
+   "gap": "The scope of exclusion and the treatment of indefinitely renewable exclusions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the excluded services or functions covered by this safeguard.",
+    "Define how restoration conditions establish that an exclusion is not permanent."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-Safeguards-03",
+   "section": "Safeguards",
+   "title": "Literacy Failure Preserves Status Identity",
+   "quote": "- SHALL NOT alter legal status or identity,",
+   "interpretation": "Compare legal status and identity before and after consequences attributed to a baseline literacy failure. The prohibition concerns changes caused by that failure.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "baseline_failure",
+    "failure_consequences",
+    "legal_status_before",
+    "legal_status_after",
+    "identity_before",
+    "identity_after"
+   ],
+   "criterion": "No consequence of baseline literacy failure changes legal status or identity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal-status records",
+    "identity records",
+    "failure-linked consequence records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-Safeguards-04",
+   "section": "Safeguards",
+   "title": "Limited Temporary Function Access Restrictions",
+   "quote": "- MAY temporarily restrict access to advanced or high-impact system functions,",
+   "interpretation": "Treat this as permission, not a requirement to restrict access. If exercised because of baseline failure, the restriction must be temporary and concern advanced or high-impact functions, with applicable section 12 constraints.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_failure",
+    "restricted_functions",
+    "restriction_duration",
+    "restoration_conditions",
+    "function_classifications"
+   ],
+   "criterion": "Any access restriction permitted by this clause is temporary and applies to advanced or high-impact system functions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system function classifications",
+    "access restriction records"
+   ],
+   "gap": "Advanced, high-impact, and temporary lack operational boundaries or a specified duration. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define advanced and high-impact function classes.",
+    "Define how a restriction qualifies as temporary without imposing an invented textual deadline."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-Safeguards-05",
+   "section": "Safeguards",
+   "title": "Automatic Free Remediation Access",
+   "quote": "- MUST trigger automatic, free educational remediation access.",
+   "interpretation": "Check that a baseline literacy failure automatically initiates remediation access without a charge. The document specifies no delivery deadline.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "baseline_failure",
+    "remediation_trigger",
+    "remediation_access",
+    "remediation_charges"
+   ],
+   "criterion": "Baseline failure triggers automatic access to educational remediation, and that access is free.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "remediation access and charging records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-Safeguards-06",
+   "section": "Safeguards",
+   "title": "Failures Are Corrective Signals",
+   "quote": "Education failures are corrective signals, not fault markers.",
+   "interpretation": "Inspect the classifications and downstream uses of education failures. The distinction between a corrective signal and a fault marker is not formally defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "failure_classifications",
+    "failure_signal_uses"
+   ],
+   "criterion": "Education failures are treated as corrective signals and are not treated as fault markers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "downstream uses of education failure signals"
+   ],
+   "gap": "Corrective signals and fault markers lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define classifications and uses that constitute corrective signaling or fault marking."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-6-01",
+   "section": "6",
+   "title": "Domains Cannot Mandate Belief Acceptance",
+   "quote": "No domain SHALL:\n\n- mandate belief acceptance,",
+   "interpretation": "Inspect requirements in every educational domain for mandatory belief acceptance. The text does not define how acceptance differs from demonstrating knowledge of a belief.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "domain_requirements",
+    "assessment_requirements"
+   ],
+   "criterion": "No educational domain mandates belief acceptance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "An operational distinction between belief acceptance and demonstrated knowledge is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which participation or assessment requirements mandate belief acceptance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-6-02",
+   "section": "6",
+   "title": "Domains Cannot Require Worldview Alignment",
+   "quote": "- require worldview alignment,",
+   "interpretation": "This bullet is governed by 'No domain SHALL'. Check domain participation and completion conditions for required worldview alignment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "domain_requirements",
+    "completion_conditions"
+   ],
+   "criterion": "No educational domain requires worldview alignment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Worldview alignment has no operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define conditions that require worldview alignment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-6-03",
+   "section": "6",
+   "title": "Domains Cannot Enforce Cultural Conformity",
+   "quote": "- enforce cultural or moral conformity.",
+   "interpretation": "This bullet is governed by 'No domain SHALL'. Check domain rules and responses for enforcement of cultural or moral conformity.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "domain_rules",
+    "enforcement_actions"
+   ],
+   "criterion": "No educational domain enforces cultural or moral conformity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Cultural conformity, moral conformity, and their enforcement are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define rules and actions that constitute enforcement of cultural or moral conformity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-7-01",
+   "section": "7",
+   "title": "Required Competence Verification Methods",
+   "quote": "- standardized, open assessments,\n- scenario-based evaluations,\n- reproducible problem-solving tasks.",
+   "interpretation": "These methods follow 'Educational competence SHALL be verified through'. Check method records against the list; the text does not settle whether every competence verification must use all three methods or whether the list governs the overall assessment system.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "competence_verifications",
+    "assessment_methods",
+    "method_properties"
+   ],
+   "criterion": "Competence verification uses standardized open assessments, scenario-based evaluations, and reproducible problem-solving tasks as required by the adopted reading of the list.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The list's per-assessment applicability and standards for its method properties are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether all listed methods are required for each verification or across the assessment system.",
+    "Define standardized, open, scenario-based, and reproducible method properties."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-7-02",
+   "section": "7",
+   "title": "Transparent And Auditable Assessments",
+   "quote": "- MUST be transparent and auditable,",
+   "interpretation": "Check assessment procedures and records for transparency and audit support. The required audience, disclosure extent, and audit evidence are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "assessment_procedures",
+    "assessment_disclosures",
+    "assessment_records"
+   ],
+   "criterion": "Every assessment is transparent and auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Transparency and auditability standards are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define required disclosures, audiences, and audit evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-7-03",
+   "section": "7",
+   "title": "Assessments Declare Evaluation Criteria",
+   "quote": "- MUST declare evaluation criteria,",
+   "interpretation": "Check that each assessment includes declared evaluation criteria. This checks declaration, not the criteria's adequacy; the text gives no declaration deadline.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "assessment",
+    "declared_evaluation_criteria"
+   ],
+   "criterion": "Each assessment declares its evaluation criteria.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-7-04",
+   "section": "7",
+   "title": "Minimize Feasible Assessment Bias",
+   "quote": "- MUST minimize cultural and linguistic bias where possible,",
+   "interpretation": "Assessments must minimize both named forms of bias where doing so is possible. The text provides no bias metric, feasible alternative set, or rule for deciding what is possible.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "assessment_design",
+    "assessment_results",
+    "cultural_context",
+    "linguistic_context",
+    "feasible_alternatives"
+   ],
+   "criterion": "Cultural and linguistic bias is minimized where possible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cultural and linguistic assessment evidence"
+   ],
+   "gap": "Bias measurement and the feasibility judgment required by 'where possible' are unspecified.",
+   "hypotheses_needed": [
+    "Define cultural and linguistic bias measures.",
+    "Define feasible alternatives and how minimization is judged."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-7-05",
+   "section": "7",
+   "title": "Assessments Exclude Ideological Personal Targets",
+   "quote": "- SHALL NOT evaluate ideology, belief, intent, or loyalty.",
+   "interpretation": "Inspect assessment targets, features, and scoring rules for evaluation of the named attributes. Indirect evaluation requires a declared proxy classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "assessment_targets",
+    "assessment_features",
+    "scoring_rules"
+   ],
+   "criterion": "Assessments do not evaluate ideology, belief, intent, or loyalty.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "A mapping from assessment features and proxies to the prohibited targets is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define direct and indirect evaluation of ideology, belief, intent, and loyalty."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-7-06",
+   "section": "7",
+   "title": "Outcomes Signal Competence Only",
+   "quote": "Assessment outcomes are competence signals, not judgments of worth or intelligence.",
+   "interpretation": "Inspect outcome descriptions and uses for judgments of worth or intelligence. The permitted competence interpretation is explicit, but semantic boundaries require a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "assessment_outcomes",
+    "outcome_descriptions",
+    "outcome_uses"
+   ],
+   "criterion": "Assessment outcomes are treated as competence signals and not as judgments of worth or intelligence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "downstream assessment outcome uses"
+   ],
+   "gap": "The operational distinction between competence signals and judgments of worth or intelligence is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define outcome descriptions and uses that constitute judgments of worth or intelligence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-8-01",
+   "section": "8",
+   "title": "Competence Errors Trigger Targeted Offers",
+   "quote": "When system interaction errors attributable to insufficient competence are detected:\n\n- targeted educational modules MUST be offered,",
+   "interpretation": "For each detected interaction error attributed to insufficient competence, check that targeted modules are offered. The attribution method and standard for matching a module to an error are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "detected_interaction_errors",
+    "competence_attributions",
+    "module_offers",
+    "module_targets"
+   ],
+   "criterion": "Detection of a system interaction error attributable to insufficient competence triggers an offer of targeted educational modules.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system interaction error detections",
+    "competence attribution results"
+   ],
+   "gap": "Competence attribution and module-targeting criteria are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define attribution of interaction errors to insufficient competence.",
+    "Define when an offered module adequately targets the detected error."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-8-02",
+   "section": "8",
+   "title": "Remediation Prioritizes Assistance",
+   "quote": "- remediation SHALL prioritize assistance over restriction,",
+   "interpretation": "In the context of detected competence-related interaction errors, inspect remediation choices for priority given to assistance. Priority could mean ordering, preference, or allocation of resources; the text does not specify which.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "remediation_options",
+    "remediation_decisions",
+    "decision_reasons"
+   ],
+   "criterion": "Remediation prioritizes assistance over restriction.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "competence-related interaction error records"
+   ],
+   "gap": "The operational meaning of prioritizing assistance is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how assistance priority is evaluated when restriction is also available."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-8-03",
+   "section": "8",
+   "title": "Repeated Failure Triggers Enhanced Support",
+   "quote": "- repeated failure triggers enhanced support, not penalty.",
+   "interpretation": "Track failures and verify that the repeated-failure condition triggers increased support without penalty. Neither the repetition threshold nor the required enhancement is defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "failure_history",
+    "support_before",
+    "support_after",
+    "resulting_penalties"
+   ],
+   "criterion": "Repeated failure triggers enhanced support and does not trigger a penalty.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "failure history",
+    "support and penalty records"
+   ],
+   "gap": "The repeated-failure threshold, observation window, and definitions of enhanced support and penalty are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define repeated failure and its observation window.",
+    "Define enhanced support relative to prior support.",
+    "Define which responses constitute penalties."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-8-04",
+   "section": "8",
+   "title": "Education Cannot Serve Discipline",
+   "quote": "Education functions as a preventive stabilizer, not an enforcement or disciplinary tool.",
+   "interpretation": "Inspect the role assigned to education in response and enforcement workflows. Demonstrating prevention or stabilization and identifying disciplinary use require an explicit behavioral and purpose model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "education_workflows",
+    "response_policies",
+    "education_uses"
+   ],
+   "criterion": "Education serves a preventive stabilizing role and is not used as an enforcement or disciplinary tool.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement and disciplinary workflow definitions"
+   ],
+   "gap": "Preventive stabilization and enforcement or disciplinary use lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define permitted preventive uses and prohibited enforcement or disciplinary uses."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-8-05",
+   "section": "8",
+   "title": "No Permanent Educational Access Denial",
+   "quote": "Permanent denial of access to education is explicitly prohibited.",
+   "interpretation": "Check denial policies and decisions for permanently unavailable educational access. Policy-level permanence is detectable, but practical permanence through repeated temporary denials needs a temporal model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "education_denial_rules",
+    "education_denial_history",
+    "restoration_conditions"
+   ],
+   "criterion": "No person is permanently denied access to education.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "education access denial and restoration records"
+   ],
+   "gap": "The treatment of indefinite or repeatedly renewed denials is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how restoration conditions and repeated denials establish or exclude permanence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-9-01",
+   "section": "9",
+   "title": "Ideological Indoctrination Is Forbidden",
+   "quote": "The following practices are explicitly forbidden:\n\n- ideological indoctrination,",
+   "interpretation": "Classify educational practices and reject those constituting ideological indoctrination. The text supplies no operational definition of indoctrination.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_practices",
+    "educational_content"
+   ],
+   "criterion": "No educational practice constitutes ideological indoctrination.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "An operational definition of ideological indoctrination is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which educational practices constitute ideological indoctrination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-9-02",
+   "section": "9",
+   "title": "Political Conditioning Is Forbidden",
+   "quote": "- political conditioning,",
+   "interpretation": "This bullet is explicitly forbidden by the section's introductory clause. Inspect educational practices for political conditioning using a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_practices",
+    "educational_content"
+   ],
+   "criterion": "No educational practice constitutes political conditioning.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Political conditioning has no operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define political conditioning in educational practices."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-9-03",
+   "section": "9",
+   "title": "Loyalty And Belief Screening Forbidden",
+   "quote": "- loyalty testing or belief screening,",
+   "interpretation": "This bullet is an explicit prohibition. Inspect admission, instruction, and assessment processes for loyalty tests or belief screening.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "admission_procedures",
+    "instruction_procedures",
+    "assessment_procedures"
+   ],
+   "criterion": "Educational practices do not include loyalty testing or belief screening.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Operational criteria for detecting loyalty tests and belief screening, including proxies, are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define direct and indirect loyalty testing and belief screening."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-9-04",
+   "section": "9",
+   "title": "Punitive Education Models Forbidden",
+   "quote": "- punitive education models,",
+   "interpretation": "This bullet is an explicit prohibition. Inspect educational models and their consequences for punitive design.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "education_models",
+    "educational_consequences"
+   ],
+   "criterion": "No education model is punitive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Punitive education is not operationally distinguished from permitted remediation or access restrictions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define punitive educational models consistently with the expressly permitted restrictions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-9-05",
+   "section": "9",
+   "title": "Credential Based Privilege Enforcement Forbidden",
+   "quote": "- credential-based privilege enforcement,",
+   "interpretation": "This bullet is an explicit prohibition. Inspect privilege assignment and enforcement rules for reliance on credentials.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "privilege_rules",
+    "privilege_enforcement_decisions",
+    "credential_dependencies"
+   ],
+   "criterion": "No educational practice enforces privilege based on credentials.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "privilege assignments and enforcement grounds"
+   ],
+   "gap": "The boundaries of privilege and credential-based enforcement are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define covered privileges and distinguish credential reliance from demonstrated competence reliance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-9-06",
+   "section": "9",
+   "title": "Penalties Cannot Substitute For Education",
+   "quote": "- substitution of education with economic or administrative penalties.",
+   "interpretation": "This bullet is an explicit prohibition. Check whether an educational response is replaced with an economic or administrative penalty; the counterfactual educational response may require a policy model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "required_educational_responses",
+    "actual_responses",
+    "economic_penalties",
+    "administrative_penalties"
+   ],
+   "criterion": "Education is not replaced by economic or administrative penalties.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "economic and administrative penalty records"
+   ],
+   "gap": "A rule identifying when a penalty substitutes for education is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the educational response being displaced and the substitution relationship."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-10-01",
+   "section": "10",
+   "title": "Open Or Publicly Inspectable Content",
+   "quote": "- MUST be open-source or publicly inspectable,",
+   "interpretation": "For every educational content item, check that at least one of the two access conditions holds. The document does not define qualifying open-source terms or practical public inspectability.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_content_inventory",
+    "source_availability",
+    "license_terms",
+    "public_inspection_access"
+   ],
+   "criterion": "Each educational content item is open-source or publicly inspectable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Acceptance criteria for open-source status and public inspectability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define qualifying open-source status and public inspection conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-10-02",
+   "section": "10",
+   "title": "Required Educational Content Declarations",
+   "quote": "- MUST declare scope, objectives, and assessment criteria,",
+   "interpretation": "Check each educational content item for declarations of all three named elements. The clause requires their presence but does not supply substantive adequacy criteria.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "educational_content",
+    "declared_scope",
+    "declared_objectives",
+    "declared_assessment_criteria"
+   ],
+   "criterion": "All educational content declares scope, objectives, and assessment criteria.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-10-03",
+   "section": "10",
+   "title": "Educational Content Audit Permission",
+   "quote": "- MAY be audited under DKP-8-AUDIT-001.",
+   "interpretation": "This permits auditing educational content under the named protocol; it does not require every item to be audited. Any audit claimed under this permission needs the external protocol to verify its conduct.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "educational_content_audit",
+    "audit_procedure",
+    "audit_authorization"
+   ],
+   "criterion": "Educational content may be audited under DKP-8-AUDIT-001, and audits relying on this clause follow that protocol.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "audit procedures and records"
+   ],
+   "gap": "DKP-8-AUDIT-001 is not included in the supplied text. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-10-04",
+   "section": "10",
+   "title": "Minimize Individual Learning Data",
+   "quote": "Individual learning data:\n\n- SHALL be minimized,",
+   "interpretation": "Inspect collection, storage, and use of individual learning data for minimization. The text does not identify the quantity to minimize, necessary purposes, retention limits, or permitted tradeoffs.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "individual_learning_data",
+    "collection_rules",
+    "retention_rules",
+    "processing_purposes"
+   ],
+   "criterion": "Individual learning data is minimized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "individual learning data inventories and processing records"
+   ],
+   "gap": "The minimization objective and criteria for necessary learning data are missing.",
+   "hypotheses_needed": [
+    "Define necessary data by purpose and the dimensions over which minimization is evaluated."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-10-05",
+   "section": "10",
+   "title": "Scope Protection For Learning Data",
+   "quote": "- SHALL be protected under DKP-7-SCOPE-001,",
+   "interpretation": "Check individual learning data protections against the named scope protocol. Its protection rules are not supplied here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "individual_learning_data",
+    "data_protection_controls",
+    "scope_requirements"
+   ],
+   "criterion": "Individual learning data is protected in accordance with DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope protection requirements",
+    "learning data access and protection records"
+   ],
+   "gap": "The applicable protections in DKP-7-SCOPE-001 are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-10-06",
+   "section": "10",
+   "title": "No Learning Data Repurposing",
+   "quote": "- SHALL NOT be repurposed for profiling or enforcement.",
+   "interpretation": "Trace individual learning data uses and reject repurposing for profiling or enforcement. The text prohibits repurposing specifically and does not define the boundaries of either prohibited purpose.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "learning_data_lineage",
+    "original_purposes",
+    "subsequent_uses",
+    "use_purposes"
+   ],
+   "criterion": "Individual learning data is not repurposed for profiling or enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-module learning data lineage and use records"
+   ],
+   "gap": "Purpose classifications and the operational meaning of repurposing are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define profiling, enforcement, and changes of purpose that constitute repurposing."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-11-01",
+   "section": "11",
+   "title": "No Success Or Intelligence Definitions",
+   "quote": "DKP-5-EDU-001 SHALL NOT:\n\n- define personal success or intelligence,",
+   "interpretation": "Inspect protocol definitions and educational rules for definitions of personal success or intelligence. Semantic review is needed to detect implicit definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_definitions",
+    "educational_rules"
+   ],
+   "criterion": "The protocol does not define personal success or intelligence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "An operational test for explicit and implicit definitions of the excluded concepts is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which rules constitute definitions of personal success or intelligence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-11-02",
+   "section": "11",
+   "title": "Ranking Limited To Competence Requirements",
+   "quote": "- rank Subjects beyond competence requirements,",
+   "interpretation": "This bullet is governed by SHALL NOT. Inspect Subject rankings and establish whether each ranking stays within competence requirements; this qualifies the broader preamble statement against social ranking.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_rankings",
+    "ranking_criteria",
+    "competence_requirements"
+   ],
+   "criterion": "Subjects are not ranked beyond competence requirements.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The permissible extent of competence-related ranking is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define when a ranking is within rather than beyond competence requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-11-03",
+   "section": "11",
+   "title": "No Enforced Uniform Educational Paths",
+   "quote": "- enforce uniform educational paths,",
+   "interpretation": "This bullet is governed by SHALL NOT. Inspect path requirements for enforced uniformity; the text does not distinguish a forbidden uniform path from the shared literacy baseline.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_paths",
+    "mandatory_path_rules",
+    "available_alternatives"
+   ],
+   "criterion": "The protocol does not enforce uniform educational paths.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The boundary between uniform paths and common competence requirements is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which path constraints constitute enforced uniformity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-11-04",
+   "section": "11",
+   "title": "Education Cannot Override Personal Identity",
+   "quote": "- override cultural, religious, or personal identity,",
+   "interpretation": "This bullet is governed by SHALL NOT. Inspect educational obligations and decisions for overrides of the named forms of identity.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_obligations",
+    "educational_decisions",
+    "identity_conflicts"
+   ],
+   "criterion": "The protocol does not override cultural, religious, or personal identity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "relevant identity and conflict records"
+   ],
+   "gap": "The meaning of overriding an identity and the handling of conflicts are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define educational actions that constitute overriding cultural, religious, or personal identity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-11-05",
+   "section": "11",
+   "title": "Education Cannot Gate Basic Rights",
+   "quote": "- function as a gate for basic rights or dignity.",
+   "interpretation": "This bullet is governed by SHALL NOT. Check that access to basic rights or dignity is not conditioned on education or competence; the relevant rights and observable dignity conditions are not defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "rights_access_rules",
+    "rights_access_decisions",
+    "educational_conditions",
+    "dignity_conditions"
+   ],
+   "criterion": "The education protocol does not act as a gate for basic rights or dignity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "basic rights definitions",
+    "rights access conditions and decisions"
+   ],
+   "gap": "The set of basic rights and an operational definition of dignity are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the covered rights and dignity conditions.",
+    "Define direct and indirect educational gating."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-12-01",
+   "section": "12",
+   "title": "Competence Restrictions Defined As Reversible",
+   "quote": "Any restriction of access to advanced system functions based on competence:\n\n- MUST be defined as reversible,",
+   "interpretation": "For each restriction explicitly classified as competence-based and affecting an advanced system function, check its definition for reversibility. The clause expressly requires a reversible definition, while actual restoration performance is not specified.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "restriction_definition",
+    "restriction_basis",
+    "function_classification",
+    "reversibility_definition"
+   ],
+   "criterion": "Every competence-based restriction on advanced system functions is defined as reversible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "function classifications",
+    "access restriction definitions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-12-02",
+   "section": "12",
+   "title": "Restrictions Require Simulation Calibration",
+   "quote": "- MUST be calibrated under DKP-8-SIMULATION-001,",
+   "interpretation": "Check calibration provenance for every competence-based restriction of advanced system functions. Calibration compliance requires the referenced simulation protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "competence_based_restriction",
+    "function_classification",
+    "calibration_record",
+    "calibration_procedure"
+   ],
+   "criterion": "Every competence-based restriction of advanced system functions is calibrated under DKP-8-SIMULATION-001.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "simulation calibration records and validity evidence"
+   ],
+   "gap": "DKP-8-SIMULATION-001 and its calibration acceptance rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-12-03",
+   "section": "12",
+   "title": "Restriction Confidence And Review Metadata",
+   "quote": "- MUST include confidence bounds and review intervals.",
+   "interpretation": "Check that each applicable restriction includes both confidence bounds and review intervals. This provision tests their presence; it specifies neither acceptable values nor an explicit requirement here to execute each review.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "competence_based_restriction",
+    "function_classification",
+    "confidence_bounds",
+    "review_intervals"
+   ],
+   "criterion": "Every competence-based restriction of advanced system functions includes confidence bounds and review intervals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "restriction metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-12-04",
+   "section": "12",
+   "title": "Uncalibrated Signals Are Informational Only",
+   "quote": "Absent valid L8 calibration, educational signals are informational only.",
+   "interpretation": "When valid L8 calibration is absent, inspect downstream uses of educational signals for informational-only treatment. L8 is read in this section as the referenced simulation calibration, but neither validity nor informational-only use is defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "educational_signals",
+    "calibration_validity",
+    "downstream_signal_uses"
+   ],
+   "criterion": "If valid L8 calibration is absent, educational signals have informational-only use.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "L8 calibration validity",
+    "downstream educational signal uses"
+   ],
+   "gap": "Calibration validity rules and the boundary of informational-only use are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define informational-only use and its boundary with operative access decisions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-13-01",
+   "section": "13",
+   "title": "Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check change records for the listed procedural elements and compliance with the referenced protocols. The sentence requires rollback to be part of the procedure but does not establish that every successful change must actually be rolled back.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_procedure"
+   ],
+   "criterion": "A protocol change follows DKP-4-UPGRADE-001 and includes proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, an activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "simulation results",
+    "audit results",
+    "activation and rollback records"
+   ],
+   "gap": "The referenced procedures, acceptance rules, and timing requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-13-02",
+   "section": "13",
+   "title": "Modifications Require New Protocol Identifiers",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Compare the identifiers of the original and modified protocol. The later presentation-only correction clause may create an exception, or may only exempt corrections from Upgrade procedure; its relation to 'any modification' is ambiguous.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "modification_classification"
+   ],
+   "criterion": "Any modification within the scope of this clause receives a protocol identifier different from the previous identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier history"
+   ],
+   "gap": "The applicability of the new-identifier rule to presentation-only corrections is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections are excepted from 'any modification'."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-13-03",
+   "section": "13",
+   "title": "Modifications Require Mandatory Simulation",
+   "quote": "- mandatory simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "For modifications subject to the change procedure, verify that simulation under the named protocol was performed. The separate presentation-only correction exception requires classification before applying this obligation.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "modification_classification",
+    "simulation_record",
+    "simulation_procedure"
+   ],
+   "criterion": "Applicable protocol modifications undergo simulation under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "modification simulation records"
+   ],
+   "gap": "Simulation requirements are absent, and applicability to presentation-only corrections depends on interpreting the exception. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the scope of the presentation-only correction exception."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-13-04",
+   "section": "13",
+   "title": "Explicit Cross Protocol Compatibility Declaration",
+   "quote": "- explicit compatibility declaration with DKP-5-INFO-001 and DKP-7-SCOPE-001.",
+   "interpretation": "Check that a modification subject to these requirements carries an explicit compatibility declaration naming both protocols. This tests declaration presence, not actual compatibility; treatment of presentation-only corrections remains ambiguous.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "modification_classification",
+    "compatibility_declaration"
+   ],
+   "criterion": "Applicable modifications have an explicit compatibility declaration with both DKP-5-INFO-001 and DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-5-INFO-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [],
+   "gap": "The applicability of modification declarations to presentation-only corrections is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections require compatibility declarations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-13-05",
+   "section": "13",
+   "title": "Presentation Correction Exception And Recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction by whether it is presentation-only and preserves normative content; qualifying corrections are not Upgrades and use only the stated date for change recording. The front matter uses 'last_updated', while this clause says 'Last updated', and the text does not explicitly equate them.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "normative_content_comparison",
+    "change_classification",
+    "change_metadata"
+   ],
+   "criterion": "A presentation-only correction preserving normative content is not classified as an Upgrade and is recorded only by the document's \"Last updated\" date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "upgrade classification rules from DKP-4-UPGRADE-001 §3"
+   ],
+   "gap": "Normative equivalence criteria, the referenced Upgrade definition, and the date-field mapping are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how presentation-only changes and preservation of normative content are established.",
+    "Declare whether 'Last updated' maps to the front-matter 'last_updated' field."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EDU-13-06",
+   "section": "13",
+   "title": "Published Edition Digest Registry",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute the SHA-256 digest of its designated canonical source bytes and compare it with the repository manifest. The text does not identify edition-to-source mappings or specify whether canonicalization is required before hashing.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "sha256sums_manifest",
+    "repository_identity"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in github.com/anahronic/World lists the SHA-256 digest of that edition's canonical source.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source artifacts",
+    "SHA256SUMS.txt from the canonical repository"
+   ],
+   "gap": "Canonical source selection and any byte-canonicalization rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how each published edition maps to canonical source bytes and whether those bytes are hashed without transformation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

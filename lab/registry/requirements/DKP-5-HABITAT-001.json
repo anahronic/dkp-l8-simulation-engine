@@ -1,0 +1,1721 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-HABITAT-001",
+ "doc_sha256": "4fd2f860dde0b317ab5d3920ac436b2f348cca9aded5d01b3ca10fffec54b755",
+ "prefix": "HABITAT",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Sections 0–1 contain purpose statements rather than separately operationalized provisions. Section 2's lists of protocol relationships are not independently registered. The unnumbered label 'Threshold Governance' is treated as part of numbered section 5. Related requirements forming one measurement contract or upgrade procedure are grouped. Permissions marked MAY are recorded as permissions, not obligations. Admissibility and activation conditions are necessary conditions, not guarantees of admissibility or authorization to enforce. Section 6's activation gate qualifies the remediation triggers in sections 8 and 10. The scope of 'any modification' in section 13 is ambiguous alongside the exception for presentation-only corrections. Referenced documents, calibration materials, and the canonical repository were not supplied or consulted; their existence and contents are unverified. 'L2 protocols' is not expanded into an inferred document identifier.",
+ "requirements": [
+  {
+   "id": "HABITAT-2-01",
+   "section": "2",
+   "title": "No architectural style definition",
+   "quote": "define architectural styles,",
+   "interpretation": "Inspect protocol rules for provisions defining architectural styles. The prohibition comes from the preceding SHALL NOT; distinguishing a style definition from a physical requirement needs a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "architectural_style_classification"
+   ],
+   "criterion": "The protocol contains no rule defining architectural styles.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The text does not define what counts as an architectural style. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification distinguishing architectural styles from physical habitat requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-2-02",
+   "section": "2",
+   "title": "No cultural aesthetic imposition",
+   "quote": "impose cultural or aesthetic norms,",
+   "interpretation": "Check whether protocol rules impose cultural or aesthetic norms. Classification of a rule as cultural or aesthetic is not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "norm_classification"
+   ],
+   "criterion": "No protocol rule imposes a cultural or aesthetic norm.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "A classification of cultural and aesthetic norms is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule classification for cultural and aesthetic impositions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-2-03",
+   "section": "2",
+   "title": "Preserve local habitat adaptations",
+   "quote": "override local climatic or cultural adaptations,",
+   "interpretation": "Compare protocol requirements with documented local adaptations and identify overrides. The text does not specify how to resolve a conflict between an adaptation and a dignity floor.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "local_adaptations",
+    "override_relations"
+   ],
+   "criterion": "Protocol requirements do not override local climatic or cultural adaptations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Documented local climatic and cultural adaptations"
+   ],
+   "gap": "Adaptation recognition and the meaning of an override are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A definition of recognized adaptations and a method for detecting overrides."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-2-04",
+   "section": "2",
+   "title": "Calibration precedes enforcement activation",
+   "quote": "activate enforcement without valid L8 calibration.",
+   "interpretation": "Reject enforcement activation if valid L8 calibration is absent. Section 6 elaborates the gate, but validity cannot be established from this document alone.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_activation",
+    "l8_calibration",
+    "calibration_validity"
+   ],
+   "criterion": "Enforcement activation implies valid L8 calibration.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 calibration and validity evidence"
+   ],
+   "gap": "The criteria for valid L8 calibration are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A calibration validity predicate supplied by the L8 process."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-3-01",
+   "section": "3",
+   "title": "Habitat residence and extent",
+   "quote": "Habitat The physical environment in which a Subject resides for a sustained duration, including living space, immediate surroundings, and access paths to essential resources.",
+   "interpretation": "Classify an environment as habitat using residence duration and its spatial coverage. 'Sustained', 'immediate', and 'essential' lack operational definitions.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "residence_history",
+    "living_space",
+    "surroundings",
+    "resource_access_paths"
+   ],
+   "criterion": "Habitat covers the environment of sustained residence, including living space, immediate surroundings, and access paths to essential resources.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Residence histories and spatial resource-access data"
+   ],
+   "gap": "Residence duration, surrounding extent, and essential-resource classification are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A sustained-residence duration rule.",
+    "Definitions of immediate surroundings and essential resources."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-3-02",
+   "section": "3",
+   "title": "Living space qualifying conditions",
+   "quote": "Living Space An enclosed or semi-enclosed area intended for rest, shelter, and daily life.",
+   "interpretation": "Check enclosure classification and declared intended uses. The boundary between semi-enclosed and open areas needs a declared definition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "area_enclosure",
+    "intended_uses"
+   ],
+   "criterion": "Living space is enclosed or semi-enclosed and intended for rest, shelter, and daily life.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Area characteristics and intended-use records"
+   ],
+   "gap": "The text does not define semi-enclosure. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An enclosure classification and an authoritative source of intended uses."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-3-03",
+   "section": "3",
+   "title": "Environmental dignity stress condition",
+   "quote": "Environmental Dignity A state in which physical conditions do not impose chronic physiological stress beyond adaptive human capacity.",
+   "interpretation": "Evaluate chronic physiological stress attributable to habitat against adaptive human capacity. Neither the stress model nor the relevant capacity is specified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "physical_conditions",
+    "physiological_stress",
+    "adaptive_capacity",
+    "exposure_history"
+   ],
+   "criterion": "Physical conditions do not impose chronic physiological stress beyond adaptive human capacity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical exposure and physiological response data"
+   ],
+   "gap": "A chronic-stress model and adaptive-capacity bounds are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A definition of chronic exposure.",
+    "A model linking conditions to physiological stress and adaptive capacity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-4-01",
+   "section": "4",
+   "title": "Normalized SPDI value range",
+   "quote": "SPDI is a normalized index in the range [0,1].",
+   "interpretation": "Check that each reported SPDI value lies within the inclusive interval. This checks the output range without supplying a normalization formula.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "spdi"
+   ],
+   "criterion": "0 ≤ SPDI ≤ 1.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Reported SPDI values"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-4-02",
+   "section": "4",
+   "title": "Exclusive physical measurement derivation",
+   "quote": "SPDI is derived exclusively from PTL-verified physical measurements, including but not limited to:",
+   "interpretation": "Trace SPDI inputs to PTL-verified physical measurements covering space per Subject, noise, illumination, air and ventilation, thermal stability, water, and green or open-space access within a defined radius. The list permits additional physical measurements, but supplies no aggregation formula, weights, or radius.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_inputs",
+    "measurement_provenance",
+    "ptl_verification",
+    "component_definitions",
+    "access_radius"
+   ],
+   "criterion": "Every SPDI input is a PTL-verified physical measurement, with coverage of the listed measurement categories.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL-verified habitat measurements and provenance"
+   ],
+   "gap": "The derivation method, component definitions, and access radius are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An SPDI aggregation method and component operationalization.",
+    "A defined radius for green or open-space access.",
+    "A PTL verification predicate."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-4-03",
+   "section": "4",
+   "title": "Exclude subjective preference inputs",
+   "quote": "subjective preference,",
+   "interpretation": "Inspect SPDI input lineage for subjective-preference data under the preceding SHALL NOT incorporate clause. A data taxonomy is needed to identify such inputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_input_lineage",
+    "input_classification"
+   ],
+   "criterion": "SPDI incorporates no subjective preference.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "SPDI input provenance and classifications"
+   ],
+   "gap": "The boundary of subjective preference is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification of subjective-preference inputs."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-4-04",
+   "section": "4",
+   "title": "Exclude market value inputs",
+   "quote": "market value,",
+   "interpretation": "Inspect complete SPDI input lineage for market-value inputs. With structured input types, their presence is decidable.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "spdi_input_lineage",
+    "input_types"
+   ],
+   "criterion": "SPDI incorporates no market value.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Typed SPDI input lineage"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-4-05",
+   "section": "4",
+   "title": "Exclude social economic status",
+   "quote": "social or economic status indicators,",
+   "interpretation": "Check SPDI lineage for social- or economic-status indicators, including derived inputs. The text does not define which proxy variables count as status indicators.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_input_lineage",
+    "status_indicator_classification"
+   ],
+   "criterion": "SPDI incorporates no social or economic status indicators.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "SPDI input provenance and indicator classifications"
+   ],
+   "gap": "A classification of direct and proxy status indicators is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule for identifying social and economic status indicators."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-4-06",
+   "section": "4",
+   "title": "Exclude cultural aesthetic metrics",
+   "quote": "cultural or aesthetic metrics.",
+   "interpretation": "Inspect SPDI inputs for cultural or aesthetic metrics. Their classification requires an operational taxonomy.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_input_lineage",
+    "metric_classification"
+   ],
+   "criterion": "SPDI incorporates no cultural or aesthetic metrics.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "SPDI input provenance and metric classifications"
+   ],
+   "gap": "Cultural and aesthetic metrics are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification of cultural and aesthetic metrics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-01",
+   "section": "5",
+   "title": "Minimum aggregate admissibility threshold",
+   "quote": "SPDI ≥ SPDI_min,",
+   "interpretation": "Check this necessary condition whenever a habitat is classified as admissible. SPDI_min must come from the prescribed calibration process.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "admissibility_status",
+    "spdi",
+    "spdi_min"
+   ],
+   "criterion": "Admissible habitat implies SPDI ≥ SPDI_min.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "SPDI values and calibrated SPDI_min"
+   ],
+   "gap": "The calibrated SPDI_min value is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An applicable calibrated SPDI_min."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-02",
+   "section": "5",
+   "title": "Component survivability admissibility thresholds",
+   "quote": "no individual SPDI component falls below its critical survivability threshold,",
+   "interpretation": "For an admissible habitat, compare every component with its corresponding critical survivability threshold. This requires calibrated component definitions and thresholds.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "admissibility_status",
+    "spdi_components",
+    "critical_survivability_thresholds"
+   ],
+   "criterion": "Admissible habitat implies every SPDI component is at or above its critical survivability threshold.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "SPDI component values and calibrated critical thresholds"
+   ],
+   "gap": "Component definitions and critical survivability thresholds are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Applicable calibrated component thresholds and component scales."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-03",
+   "section": "5",
+   "title": "Chronic exposure admissibility limits",
+   "quote": "chronic exposure parameters remain within PTL-confirmed safe limits.",
+   "interpretation": "Check chronic exposure parameters against PTL-confirmed safe limits before classifying a habitat as admissible. Exposure windows and the safe limits themselves are absent.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "admissibility_status",
+    "chronic_exposure_parameters",
+    "ptl_safe_limits"
+   ],
+   "criterion": "Admissible habitat implies all chronic exposure parameters remain within PTL-confirmed safe limits.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Chronic exposure measurements and PTL-confirmed safe limits"
+   ],
+   "gap": "The exposure parameters, chronic-exposure windows, and PTL-confirmed safe limits are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An operational definition of chronic exposure and applicable PTL-confirmed limits."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-04",
+   "section": "5",
+   "title": "No local numerical thresholds",
+   "quote": "SHALL NOT be defined numerically within this protocol,",
+   "interpretation": "Inspect the protocol for numerical definitions of SPDI_min or component thresholds. The separately specified SPDI normalization range is not an admissibility threshold.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_threshold_definitions"
+   ],
+   "criterion": "This protocol contains no numerical definition of SPDI_min or any component threshold.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-05",
+   "section": "5",
+   "title": "Exclusive simulation threshold governance",
+   "quote": "SHALL be specified, calibrated, and validated exclusively under DKP-8-SIMULATION-001,",
+   "interpretation": "Verify that SPDI_min and every component threshold have specification, calibration, and validation records under the named protocol. Whether those records satisfy that protocol requires its absent rules.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "thresholds",
+    "specification_records",
+    "calibration_records",
+    "validation_records"
+   ],
+   "criterion": "SPDI_min and all component thresholds are specified, calibrated, and validated exclusively under DKP-8-SIMULATION-001.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "Threshold specification, calibration, and validation records"
+   ],
+   "gap": "The governing simulation protocol and its acceptance rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A conformance predicate for records under DKP-8-SIMULATION-001."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-06",
+   "section": "5",
+   "title": "Biophysical threshold derivation evidence",
+   "quote": "SHALL be derived from biophysical research and PTL-confirmed survivability bounds,",
+   "interpretation": "Check threshold derivation records for both biophysical research and PTL-confirmed survivability bounds. The document does not specify an evidentiary standard for the derivation.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "threshold_derivations",
+    "biophysical_research",
+    "ptl_survivability_bounds"
+   ],
+   "criterion": "Every governed threshold is derived from biophysical research and PTL-confirmed survivability bounds.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Biophysical research evidence and PTL-confirmed survivability bounds"
+   ],
+   "gap": "Research qualification and acceptable derivation methods are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A standard for acceptable research evidence and threshold derivation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-5-07",
+   "section": "5",
+   "title": "Protect thresholds from external alteration",
+   "quote": "SHALL NOT be lowered, overridden, or parameterized by economic, operational, or governance protocols.",
+   "interpretation": "Inspect threshold change records and parameter dependencies for prohibited originating protocols. Protocol categories and the extent of 'parameterized' need classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "threshold_history",
+    "threshold_dependencies",
+    "originating_protocol_types"
+   ],
+   "criterion": "Economic, operational, and governance protocols do not lower, override, or parameterize SPDI_min or component thresholds.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Threshold change provenance and protocol classifications"
+   ],
+   "gap": "Protocol categories and prohibited parameterization are not formally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A protocol-category taxonomy and a definition of threshold parameterization."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-6-01",
+   "section": "6",
+   "title": "Mandatory enforcement activation gate",
+   "quote": "DKP-5-HABITAT-001 is NON-ENFORCEABLE unless all of the following exist:",
+   "interpretation": "Require a valid L8 Calibration Bundle explicitly covering SPDI, declared thresholds and confidence bounds, a defined validity window, and an active DKP-8-AUDIT-001 linkage before enforcement. These are necessary conditions; the sentence does not independently authorize enforcement once they exist.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_status",
+    "l8_calibration_bundle",
+    "spdi_coverage",
+    "declared_thresholds",
+    "confidence_bounds",
+    "validity_window",
+    "audit_linkage"
+   ],
+   "criterion": "Enforceability implies all four listed activation requirements exist.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "L8 Calibration Bundle, confidence bounds, validity window, and audit linkage status"
+   ],
+   "gap": "Bundle validity, window applicability, and active audit-linkage criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Predicates for calibration validity and active audit linkage.",
+    "A validity-window interpretation supplied by the calibration process."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-6-02",
+   "section": "6",
+   "title": "Informational mode without calibration",
+   "quote": "SPDI outputs are informational only,\n\nno enforcement, restriction, or remediation may be triggered.",
+   "interpretation": "When a valid L8 bundle is absent, verify informational output status and block enforcement, restriction, and remediation triggers. This condition qualifies the later mandatory-remediation provisions.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "l8_bundle_validity",
+    "spdi_output_status",
+    "triggered_actions"
+   ],
+   "criterion": "Without a valid L8 bundle, SPDI outputs are informational only and no enforcement, restriction, or remediation is triggered.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Calibration validity status and action logs"
+   ],
+   "gap": "The document does not establish how L8 bundle validity is determined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An authoritative bundle-validity predicate."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-6-03",
+   "section": "6",
+   "title": "Prohibit manual SPDI interpretation",
+   "quote": "Manual interpretation of SPDI values is explicitly prohibited.",
+   "interpretation": "Inspect interpretation events for manual handling of SPDI values. The text may prohibit all human interpretation or only manual interpretation used in operational decisions; it does not delimit the scope.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_interpretation_events",
+    "interpretation_method"
+   ],
+   "criterion": "No prohibited manual interpretation of SPDI values occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "SPDI interpretation and decision provenance"
+   ],
+   "gap": "The scope of manual interpretation is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared reading of whether the prohibition covers all human interpretation or operational interpretation only."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-7-01",
+   "section": "7",
+   "title": "Prevent stress inducing density",
+   "quote": "exceed population density levels known to induce chronic biophysical stress,",
+   "interpretation": "Evaluate habitat design and allocation against density levels associated with chronic biophysical stress. The text supplies neither levels nor a context-dependent stress model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "habitat_density",
+    "stress_inducing_density_levels",
+    "spdi_components"
+   ],
+   "criterion": "Habitat design and allocation do not exceed population density levels known to induce chronic biophysical stress.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Population and habitat measurements and density-stress evidence"
+   ],
+   "gap": "Applicable stress-inducing density levels and their relationship to SPDI are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A context-sensitive density-stress model evaluated through SPDI components."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-7-02",
+   "section": "7",
+   "title": "Open access during permanent enclosure",
+   "quote": "create permanent enclosure without access to open environments,",
+   "interpretation": "Check that permanent enclosure created by design or allocation retains access to open environments. Permanence and qualifying access need operational definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enclosure_state",
+    "enclosure_duration",
+    "open_environment_access"
+   ],
+   "criterion": "Permanent enclosure is not created without access to open environments.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Enclosure histories and open-environment access data"
+   ],
+   "gap": "Permanence, open environments, and sufficient access are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of permanent enclosure, open environment, and qualifying access."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-7-03",
+   "section": "7",
+   "title": "Limit vertical scarcity solutions",
+   "quote": "rely on vertical compression as the primary solution to scarcity,",
+   "interpretation": "Assess whether habitat design or allocation relies primarily on vertical compression to address scarcity. The terms 'vertical compression' and 'primary' do not have objective criteria here.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "habitat_design",
+    "allocation_strategy",
+    "scarcity_response"
+   ],
+   "criterion": "Vertical compression is not the primary solution to scarcity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Design and allocation rationale"
+   ],
+   "gap": "The text supplies no decision rule for vertical compression or its primacy.",
+   "hypotheses_needed": [
+    "An operational definition of vertical compression.",
+    "A rule for determining which scarcity response is primary."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-7-04",
+   "section": "7",
+   "title": "Preserve population biospheric interaction",
+   "quote": "isolate populations from biospheric interaction.",
+   "interpretation": "Evaluate whether habitat design or allocation isolates populations from biospheric interaction. No qualifying interaction or isolation criterion is supplied.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "habitat_design",
+    "population_access",
+    "biospheric_interaction"
+   ],
+   "criterion": "Habitat design and allocation do not isolate populations from biospheric interaction.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Population access and environmental interaction evidence"
+   ],
+   "gap": "Biospheric interaction and isolation are undefined.",
+   "hypotheses_needed": [
+    "Operational definitions of biospheric interaction and population isolation."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-7-05",
+   "section": "7",
+   "title": "Indirect density enclosure evaluation",
+   "quote": "Density and enclosure are evaluated indirectly via SPDI components, not via fixed architectural prescriptions.",
+   "interpretation": "Inspect the evaluation method for use of SPDI components and exclusion of fixed architectural prescriptions. The actual mapping from components to density and enclosure evaluation is absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "density_evaluation_method",
+    "enclosure_evaluation_method",
+    "spdi_components"
+   ],
+   "criterion": "Density and enclosure evaluations operate indirectly through SPDI components and do not use fixed architectural prescriptions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "SPDI component outputs and evaluation lineage"
+   ],
+   "gap": "The indirect evaluation method and classification of fixed architectural prescriptions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An indirect evaluation method and a classification of architectural prescriptions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-8-01",
+   "section": "8",
+   "title": "Persistent low SPDI violation",
+   "quote": "persistent SPDI below minimum threshold,",
+   "interpretation": "Flag a violation when SPDI remains below its minimum according to a persistence rule. The threshold is governed by section 5, but persistence duration or recurrence is undefined.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_history",
+    "spdi_min",
+    "persistence_rule"
+   ],
+   "criterion": "Persistent SPDI < SPDI_min constitutes a habitat violation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "SPDI history and calibrated minimum threshold"
+   ],
+   "gap": "The required persistence duration or recurrence pattern is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A persistence rule and the applicable calibrated minimum threshold."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-8-02",
+   "section": "8",
+   "title": "Deliberate containment zone violation",
+   "quote": "deliberate creation of high-density containment zones,",
+   "interpretation": "Classify deliberate creation of high-density containment zones as a violation. Density, containment, and deliberate intent require external definitions or findings.",
+   "kind": "definition",
+   "checkable": "no",
+   "inputs": [
+    "zone_density",
+    "zone_function",
+    "creation_events",
+    "intent_evidence"
+   ],
+   "criterion": "Deliberate creation of high-density containment zones constitutes a habitat violation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Zone design, density, and intent evidence"
+   ],
+   "gap": "High density, containment, and deliberate creation have no supplied decision criteria.",
+   "hypotheses_needed": [
+    "A high-density criterion, containment definition, and intent determination method."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-8-03",
+   "section": "8",
+   "title": "Biospheric resource denial violation",
+   "quote": "denial of access to basic biospheric resources,",
+   "interpretation": "Flag denied access to resources classified as basic biospheric resources. The resource set and the distinction between denial and incidental unavailability are unspecified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "resource_access",
+    "basic_biospheric_resources",
+    "denial_events"
+   ],
+   "criterion": "Denial of access to basic biospheric resources constitutes a habitat violation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Resource access and denial records"
+   ],
+   "gap": "The basic resource set and access-denial criteria are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A basic biospheric resource classification and an access-denial rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-8-04",
+   "section": "8",
+   "title": "Environmental degradation leverage violation",
+   "quote": "environmental degradation used as an economic or political lever,",
+   "interpretation": "Classify environmental degradation used for economic or political leverage as a violation. Establishing instrumental use requires a finding about purpose or causation.",
+   "kind": "definition",
+   "checkable": "no",
+   "inputs": [
+    "environmental_degradation",
+    "economic_actions",
+    "political_actions",
+    "purpose_evidence"
+   ],
+   "criterion": "Environmental degradation used as an economic or political lever constitutes a habitat violation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Environmental changes and evidence of economic or political use"
+   ],
+   "gap": "No decision rule establishes when degradation is used as leverage.",
+   "hypotheses_needed": [
+    "An operational degradation definition and a method for determining instrumental use."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-8-05",
+   "section": "8",
+   "title": "Autonomy suppressing configuration violation",
+   "quote": "spatial configurations designed to suppress autonomy or mobility.",
+   "interpretation": "Classify spatial configurations intended to suppress autonomy or mobility as violations. The operative condition concerns design purpose, not merely an observed reduction in movement.",
+   "kind": "definition",
+   "checkable": "no",
+   "inputs": [
+    "spatial_configuration",
+    "design_intent",
+    "autonomy_effects",
+    "mobility_effects"
+   ],
+   "criterion": "Spatial configurations designed to suppress autonomy or mobility constitute habitat violations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Spatial design records and intent evidence"
+   ],
+   "gap": "Suppression of autonomy or mobility and the determination of design intent are unspecified.",
+   "hypotheses_needed": [
+    "Definitions of suppression and a method for determining design intent."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-8-06",
+   "section": "8",
+   "title": "Violation triggers mandatory remediation",
+   "quote": "Such conditions trigger mandatory remediation pathways.",
+   "interpretation": "Check that a listed violation triggers a remediation pathway when section 6 permits operational action. The text specifies neither a pathway interface nor a deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "habitat_violation",
+    "activation_gate_status",
+    "remediation_pathway_events"
+   ],
+   "criterion": "Listed habitat violations trigger mandatory remediation pathways subject to the activation gate.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Violation records, activation status, and remediation events"
+   ],
+   "gap": "The remediation pathways and their required trigger timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A mapping from violations to remediation pathways and an observation horizon for trigger verification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-9-01",
+   "section": "9",
+   "title": "SPDI measurement verification contract",
+   "quote": "All SPDI measurements:\n\nMUST be PTL-anchored,",
+   "interpretation": "For every SPDI measurement, check PTL anchoring, physically verifiable supporting data, auditability, reproducibility, and support beyond self-reporting alone. These form one measurement-evidence contract, but verification methods and reproducibility tolerances are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_measurements",
+    "ptl_anchors",
+    "physical_evidence",
+    "audit_records",
+    "reproduction_results",
+    "source_types"
+   ],
+   "criterion": "Every SPDI measurement is PTL-anchored, physically verifiable, auditable, reproducible, and not dependent on self-reporting alone.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Measurement provenance, physical evidence, audit access, and reproduction evidence"
+   ],
+   "gap": "PTL anchoring, physical verification, auditability, and reproducibility criteria are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Verification and auditability predicates.",
+    "A reproducibility procedure with declared comparison criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-9-02",
+   "section": "9",
+   "title": "Critical sensor integrity violations",
+   "quote": "Sensor tampering, suppression, or manipulation constitutes a critical integrity violation.",
+   "interpretation": "Map established sensor tampering, suppression, or manipulation events to critical integrity violations. Detecting and establishing those events is delegated by the following provision.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "established_sensor_event_type",
+    "integrity_violation_classification"
+   ],
+   "criterion": "A sensor event established as tampering, suppression, or manipulation is classified as a critical integrity violation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Established sensor-integrity event classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-9-03",
+   "section": "9",
+   "title": "Exclusive sensor integrity governance",
+   "quote": "Detection, classification, and enforcement of sensor integrity violations are governed exclusively by:",
+   "interpretation": "Check that detection, classification, and enforcement follow DKP-0-ORACLE-001 and DKP-8-AUDIT-001 exclusively. This document does not allocate responsibilities between them or supply their procedures.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "sensor_integrity_procedures",
+    "governing_protocols",
+    "integrity_action_records"
+   ],
+   "criterion": "Sensor-integrity detection, classification, and enforcement are governed exclusively by DKP-0-ORACLE-001 and DKP-8-AUDIT-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Oracle and audit procedures and action provenance"
+   ],
+   "gap": "The two governing protocols and their division of responsibilities are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Conformance predicates for the named protocols."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-9-04",
+   "section": "9",
+   "title": "No independent integrity mechanisms",
+   "quote": "DKP-5-HABITAT-001 SHALL NOT define independent investigative or punitive mechanisms.",
+   "interpretation": "Inspect this protocol's mechanisms for independent investigation or punishment. The surrounding context concerns sensor integrity, while the sentence itself can also be read as a protocol-wide prohibition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_mechanisms",
+    "mechanism_authority",
+    "mechanism_function"
+   ],
+   "criterion": "The protocol defines no independent investigative or punitive mechanisms within the applicable scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Mechanism authority and governance records"
+   ],
+   "gap": "Independence and whether the prohibition is sensor-specific or protocol-wide are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared scope and a definition of independent investigative or punitive mechanisms."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-10-01",
+   "section": "10",
+   "title": "Initiate confirmed violation remediation",
+   "quote": "When admissibility violations are confirmed:\n\nremediation plans MUST be initiated,",
+   "interpretation": "Check for remediation-plan initiation after confirmation of an admissibility violation, subject to section 6. No confirmation procedure or initiation deadline is supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "confirmed_admissibility_violations",
+    "activation_gate_status",
+    "remediation_plan_events"
+   ],
+   "criterion": "Confirmed admissibility violations require initiation of remediation plans when the activation gate permits action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Violation confirmations, activation status, and remediation-plan records"
+   ],
+   "gap": "Confirmation criteria and the deadline for initiating a plan are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A confirmation predicate and an observation horizon for initiation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-10-02",
+   "section": "10",
+   "title": "Permit conditional relocation assistance",
+   "quote": "relocation assistance MAY be provided,",
+   "interpretation": "Treat relocation assistance as permitted after confirmed admissibility violations, subject to the activation gate. Its absence is not a violation, and the sentence does not prohibit assistance in other circumstances.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "confirmed_admissibility_violation",
+    "activation_gate_status",
+    "relocation_assistance_event"
+   ],
+   "criterion": "Following confirmation and satisfaction of the activation gate, relocation assistance is an allowed, optional action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Confirmed violation and activation statuses"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-10-03",
+   "section": "10",
+   "title": "Permit L2 economic incentives",
+   "quote": "economic incentives MAY be triggered via L2 protocols,",
+   "interpretation": "Treat economic incentives as optional following confirmed violations, with the stated route through L2 protocols and subject to section 6. No particular L2 protocol or interface is identified in this provision.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "confirmed_admissibility_violation",
+    "activation_gate_status",
+    "economic_incentive_events",
+    "triggering_protocol"
+   ],
+   "criterion": "Economic incentives may be triggered via L2 protocols following confirmed admissibility violations when activation is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L2 incentive interfaces and trigger provenance"
+   ],
+   "gap": "The applicable L2 protocols and triggering interfaces are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An authoritative identification of applicable L2 protocols and their incentive interface."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-10-04",
+   "section": "10",
+   "title": "No default forced displacement",
+   "quote": "forced displacement SHALL NOT be used as a default remedy.",
+   "interpretation": "Inspect the default remediation choice and verify that it is not forced displacement. The text does not establish whether or when non-default forced displacement is permitted.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "default_remedy",
+    "remedy_type"
+   ],
+   "criterion": "The default remedy is not forced displacement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Remediation policy defaults"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-10-05",
+   "section": "10",
+   "title": "Escalate persistent systemic violations",
+   "quote": "Persistent or systemic violations escalate to system-level review under DKP-7-SCOPE-001.",
+   "interpretation": "Check that violations classified as persistent or systemic enter system-level review under the named protocol. Neither classification rules nor escalation timing are given.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "violation_history",
+    "systemic_violation_status",
+    "review_escalations"
+   ],
+   "criterion": "Persistent or systemic violations escalate to system-level review under DKP-7-SCOPE-001.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Violation histories and system-level review records"
+   ],
+   "gap": "Persistence, systemic status, and the referenced review procedure are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of persistent and systemic violations.",
+    "An escalation timing rule and review conformance predicate."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-11-01",
+   "section": "11",
+   "title": "No ranking beyond compliance",
+   "quote": "rank habitats beyond minimum compliance,",
+   "interpretation": "Inspect protocol outputs for habitat rankings extending beyond minimum-compliance determination. The descriptive SPDI may differ between habitats, so an explicit ranking must be distinguished from simply reporting values.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "habitat_outputs",
+    "ranking_operations",
+    "minimum_compliance_status"
+   ],
+   "criterion": "The protocol does not rank habitats beyond minimum compliance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Habitat evaluation outputs"
+   ],
+   "gap": "The boundary between descriptive value reporting and prohibited ranking is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A definition of ranking beyond minimum compliance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-11-02",
+   "section": "11",
+   "title": "No globally uniform standards",
+   "quote": "enforce uniform living standards globally,",
+   "interpretation": "Inspect enforcement rules for a globally uniform living-standard requirement. The document does not define how prohibited uniform standards differ operationally from its shared dignity floors.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "living_standard_rules",
+    "geographic_scope",
+    "enforcement_rules"
+   ],
+   "criterion": "The protocol does not enforce uniform living standards globally.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Geographically scoped enforcement rules"
+   ],
+   "gap": "Uniform living standards are not distinguished operationally from minimum dignity floors. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A distinction between prohibited global uniformity and permitted minimum-compliance requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-11-03",
+   "section": "11",
+   "title": "No mandated housing forms",
+   "quote": "mandate specific housing forms,",
+   "interpretation": "Inspect protocol requirements for mandatory housing forms. A classification is needed to distinguish housing forms from physical performance conditions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "housing_requirements",
+    "housing_form_classification"
+   ],
+   "criterion": "The protocol does not mandate specific housing forms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Housing form is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification distinguishing housing forms from physical performance requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-11-04",
+   "section": "11",
+   "title": "No adaptation overrides",
+   "quote": "override cultural or climatic adaptations.",
+   "interpretation": "Check protocol rules and enforcement against cultural or climatic adaptations. This restates section 2's protection without the word 'local'; the relationship to conflicting dignity floors remains unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "enforcement_actions",
+    "recognized_adaptations"
+   ],
+   "criterion": "The protocol does not override cultural or climatic adaptations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Recognized cultural and climatic adaptations"
+   ],
+   "gap": "Recognized adaptations and override criteria are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An adaptation-recognition rule and an override-detection method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-12-01",
+   "section": "12",
+   "title": "Audit access to habitat outputs",
+   "quote": "SPDI values and violation flags:\n\nMUST be available for audit,",
+   "interpretation": "Check that auditors can access both SPDI values and violation flags. Auditor eligibility, access interfaces, and acceptable aggregation are not specified here.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "spdi_values",
+    "violation_flags",
+    "audit_access"
+   ],
+   "criterion": "SPDI values and violation flags are available for audit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Audit access records for SPDI values and violation flags"
+   ],
+   "gap": "Audit-access authority and availability requirements are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An authorized-auditor model and a test for audit availability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-12-02",
+   "section": "12",
+   "title": "Permit privacy protecting aggregation",
+   "quote": "MAY be aggregated to protect individual privacy,",
+   "interpretation": "Treat aggregation of SPDI values and violation flags for privacy protection as optional. The text supplies no privacy model or aggregation method, and does not waive auditability or later review.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "aggregated_spdi_values",
+    "aggregated_violation_flags",
+    "aggregation_method",
+    "privacy_purpose"
+   ],
+   "criterion": "SPDI values and violation flags may be aggregated to protect individual privacy while retaining the other stated obligations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Aggregation provenance and privacy-protection evidence"
+   ],
+   "gap": "Privacy protection and acceptable aggregation methods are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A privacy model and an aggregation method compatible with audit and review."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-12-03",
+   "section": "12",
+   "title": "Retain post facto reviewability",
+   "quote": "SHALL be reviewable post-facto.",
+   "interpretation": "Check that SPDI values and violation flags can be reviewed after the relevant event. The text does not define a retention period, review interface, or event boundary.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "historical_spdi_values",
+    "historical_violation_flags",
+    "review_access",
+    "event_times"
+   ],
+   "criterion": "SPDI values and violation flags remain reviewable post-facto.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Historical outputs and review access records"
+   ],
+   "gap": "Required retention duration and post-facto review conditions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A review-access model and a retention or observation horizon."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-12-04",
+   "section": "12",
+   "title": "Protect individual exposure data",
+   "quote": "Individual-level exposure data SHALL be protected under DKP-7-SCOPE-001.",
+   "interpretation": "Evaluate handling of individual-level exposure data against the named protocol. The protection requirements cannot be recovered from the supplied text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "individual_exposure_data",
+    "data_handling_controls",
+    "scope_protection_rules"
+   ],
+   "criterion": "Individual-level exposure data is protected in accordance with DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Exposure-data handling records and scope protection requirements"
+   ],
+   "gap": "The referenced data-protection requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A protection-conformance predicate supplied by DKP-7-SCOPE-001."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-13-01",
+   "section": "13",
+   "title": "Controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Require protocol changes to follow the named upgrade procedure with proposal, mandatory simulation, audit, acceptance conditions, an activation window, and rollback provisions. The text requires rollback to be part of the procedure, but does not say every change must actually be rolled back.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_records",
+    "audit_records",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_provisions"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 and include all listed procedural elements, subject to the presentation-only exception.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Upgrade, simulation, audit, acceptance, activation, and rollback records"
+   ],
+   "gap": "The referenced procedures, acceptance rules, activation timing, and rollback conditions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Conformance predicates for the referenced procedures and a classification of presentation-only changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-13-02",
+   "section": "13",
+   "title": "New identifier for modifications",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Compare the protocol identifiers before and after a modification. 'Any modification' could include presentation-only corrections, while the following exception could be read to exempt those corrections; the text does not resolve this explicitly.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "modification_type",
+    "previous_protocol_identifier",
+    "new_protocol_identifier"
+   ],
+   "criterion": "Every modification within the applicable scope requires a protocol identifier different from the previous identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Protocol identifier history"
+   ],
+   "gap": "Whether presentation-only corrections fall within 'any modification' is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interpretation of the presentation-only exception's effect on identifier changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-13-03",
+   "section": "13",
+   "title": "Explicit modification compatibility declaration",
+   "quote": "explicit compatibility declaration with DKP-5-TRANSPORT-001 and DKP-7-SCOPE-001.",
+   "interpretation": "Check modification records for an explicit compatibility declaration naming both protocols. The text requires a declaration rather than specifying a compatibility proof; its applicability to presentation-only corrections shares the surrounding ambiguity.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_type",
+    "compatibility_declaration",
+    "declared_protocols"
+   ],
+   "criterion": "Every applicable modification includes an explicit compatibility declaration with DKP-5-TRANSPORT-001 and DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-5-TRANSPORT-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Modification compatibility declarations"
+   ],
+   "gap": "The exception's applicability to presentation-only corrections is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared scope for modifications requiring compatibility declarations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-13-04",
+   "section": "13",
+   "title": "Presentation correction upgrade exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify corrections with no normative-content change as non-Upgrades and check that their correction record is confined to the document's Last updated date. Semantic equivalence requires a decision method; 'recorded only' also has an unclear relationship to the separate edition-digest requirement.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_diff",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "correction_records"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "Edition comparisons and change records"
+   ],
+   "gap": "Normative-equivalence criteria and the scope of the exclusive date-recording rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A method for establishing unchanged normative content.",
+    "An interpretation reconciling correction recording with edition-integrity records."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "HABITAT-13-05",
+   "section": "13",
+   "title": "Published edition digest integrity",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For every published edition, compute SHA-256 over its canonical source and compare it with the corresponding entry in the specified repository file. The check needs authoritative canonical source bytes and a mapping between editions and entries.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_file",
+    "edition_entry_mapping"
+   ],
+   "criterion": "For each published edition, SHA-256(canonical source) equals its digest listed in the canonical repository's SHA256SUMS.txt.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Canonical edition sources and SHA256SUMS.txt from github.com/anahronic/World"
+   ],
+   "gap": "Canonical source identification and published-edition mapping are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An authoritative source-byte representation and edition-to-checksum mapping."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

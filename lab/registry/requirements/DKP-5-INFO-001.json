@@ -1,0 +1,1363 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-INFO-001",
+ "doc_sha256": "ab73cb252b0e1266bd3f40096239f29c5f3d0af46e3ff4bae909e04d41d6be7b",
+ "prefix": "INFO",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Related enumerated conditions are grouped into single checks where they define one classification, interface, gate, or prohibited-action set. The unnumbered Informational Arbitration heading is used as the section identifier for its provisions. Purpose statements and protocol-position lists without additional operational rules are not separate entries. Important unresolved interactions include TTL expiry versus temporal thresholds, the ordering of T₁ and T₂, whether I4 escalation conditions are conjunctive, and informational annotations versus prohibited remediation without calibration. Referenced documents and calibration bundles were not supplied.",
+ "requirements": [
+  {
+   "id": "INFO-0-01",
+   "section": "0",
+   "title": "Jurisdiction over verifiable factual claims",
+   "quote": "This protocol does not regulate opinions, beliefs, interpretations, or meanings. It regulates verifiable factual claims and their systemic impact.",
+   "interpretation": "Check that regulated subjects are verifiable factual claims or their systemic impact, excluding the listed subjective categories. Mixed factual and expressive content requires a declared method for separating components.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "regulated_subjects",
+    "claim_types",
+    "systemic_impacts"
+   ],
+   "criterion": "Regulated subjects fall within verifiable factual claims and their systemic impact; opinions, beliefs, interpretations, and meanings are excluded.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "claim classification records",
+    "systemic impact assessments"
+   ],
+   "gap": "The text does not specify an operational method for separating factual claims from mixed or subjective expression. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared classification method for factual, subjective, and mixed content."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-0-02",
+   "section": "0",
+   "title": "Descriptive and noncoercive information governance",
+   "quote": "Information governance under DKP is descriptive and non-coercive.",
+   "interpretation": "Assess every information-governance action against the descriptive and noncoercive requirements. Later prohibitions provide examples, but the general terms do not have complete operational definitions.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "governance_actions",
+    "action_effects"
+   ],
+   "criterion": "Information governance is descriptive and non-coercive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance action records",
+    "effects on affected parties"
+   ],
+   "gap": "Descriptive governance and coercion lack complete decision criteria.",
+   "hypotheses_needed": [
+    "Operational definitions of descriptive governance and coercive effects."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-2-01",
+   "section": "2",
+   "title": "Prohibited evaluation and cognitive controls",
+   "quote": "This protocol SHALL NOT:\n\nevaluate ideology, belief, or artistic expression,",
+   "interpretation": "Check that protocol actions neither evaluate ideology, belief, or artistic expression, enforce cognitive conformity, nor mandate acceptance of verified claims. The prohibition list supplies these three exclusions, but recognizing them in actual actions requires an action taxonomy.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_actions",
+    "action_purposes",
+    "acceptance_requirements"
+   ],
+   "criterion": "No action evaluates ideology, belief, or artistic expression, enforces cognitive conformity, or mandates acceptance of verified claims.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol action logs",
+    "requirements imposed on participants"
+   ],
+   "gap": "No operational classifier for the prohibited evaluation and cognitive controls is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared taxonomy identifying prohibited evaluation, conformity, and compelled acceptance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-2-02",
+   "section": "2",
+   "title": "Calibration prerequisite for enforcement activation",
+   "quote": "activate enforcement without valid L8 calibration.",
+   "interpretation": "This item is governed by the section's SHALL NOT list. Check that enforcement activation has valid L8 calibration; section 9 adds bundle-content requirements but does not fully define validity.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_activations",
+    "l8_calibration",
+    "calibration_validity"
+   ],
+   "criterion": "Enforcement activation implies valid L8 calibration.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "L8 calibration records and validity information"
+   ],
+   "gap": "The calibration bundle and complete validity rules are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared validator for L8 calibration applicability and validity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-3-01",
+   "section": "3",
+   "title": "Intentional factual transmission definition",
+   "quote": "Information Act Any intentional transmission of a claim presented as factual.",
+   "interpretation": "An information act requires transmission, intentionality, and presentation of a claim as factual. A program can apply this definition when those attributes are established, but the text provides no method for determining intention or presentation.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "transmission",
+    "intentionality",
+    "factual_presentation"
+   ],
+   "criterion": "An information act is an intentional transmission of a claim presented as factual.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transmission records",
+    "intent and presentation assessments"
+   ],
+   "gap": "Methods for establishing intentionality and factual presentation are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared method for assigning intentionality and factual presentation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-3-02",
+   "section": "3",
+   "title": "Physical correspondence factual claim definition",
+   "quote": "Factual Claim A statement asserting correspondence with physical reality and thus verifiable via PTL.",
+   "interpretation": "Check whether a statement asserts correspondence with physical reality and is verifiable via PTL. The definition does not describe how to establish that a statement is within PTL's verification capabilities.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "statement",
+    "asserted_correspondence",
+    "ptl_verifiability"
+   ],
+   "criterion": "A factual claim asserts correspondence with physical reality and is verifiable via PTL.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL verification capability information",
+    "statement interpretation"
+   ],
+   "gap": "The PTL verifiability test and interpretation method are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared mapping from statements to PTL-verifiable propositions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-3-03",
+   "section": "3",
+   "title": "Nonverifiable subjective opinion definition",
+   "quote": "Opinion A non-verifiable subjective position, interpretation, or value judgment.",
+   "interpretation": "Classify a statement as opinion when it is non-verifiable and constitutes a subjective position, interpretation, or value judgment. Applying these attributes to natural language requires additional interpretation.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "statement",
+    "verifiability",
+    "subjective_category"
+   ],
+   "criterion": "Opinion is non-verifiable and is a subjective position, interpretation, or value judgment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "statement classification assessments"
+   ],
+   "gap": "No decision procedure for non-verifiability or subjective categories is given. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared classifier for verifiability and subjective categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-3-04",
+   "section": "3",
+   "title": "PTL inconsistent dissemination definition",
+   "quote": "Disinformation The dissemination of factual claims demonstrably inconsistent with PTL-confirmed reality.",
+   "interpretation": "Check dissemination records for factual claims whose inconsistency with PTL-confirmed reality is demonstrated. The text does not specify what evidence is sufficient to demonstrate inconsistency.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "dissemination_records",
+    "factual_claims",
+    "ptl_confirmations",
+    "inconsistency_evidence"
+   ],
+   "criterion": "Disinformation is dissemination of factual claims demonstrably inconsistent with PTL-confirmed reality.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "claim dissemination records",
+    "PTL-confirmed reality and inconsistency evidence"
+   ],
+   "gap": "The evidentiary standard for demonstrable PTL inconsistency is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared evidentiary test for inconsistency with PTL-confirmed reality."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-3-05",
+   "section": "3",
+   "title": "Persistent harmful disinformation definition",
+   "quote": "Systemic Lie A persistent pattern of disinformation that measurably degrades system stability, safety, or Physical Truth coherence.",
+   "interpretation": "Evaluate a pattern over time for persistence and measurable degradation of at least one listed system property. Persistence, degradation metrics, and attribution of degradation to the pattern require additional specifications.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "disinformation_history",
+    "stability_measurements",
+    "safety_measurements",
+    "physical_truth_coherence"
+   ],
+   "criterion": "A systemic lie is a persistent disinformation pattern that measurably degrades system stability, safety, or Physical Truth coherence.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "disinformation histories",
+    "system stability and safety measurements",
+    "PTL coherence measurements",
+    "L8 propagation and impact calibration"
+   ],
+   "gap": "Persistence, measurable degradation, and causal attribution are not operationally specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A calibrated persistence model.",
+    "A model attributing measured system degradation to disinformation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-4-01",
+   "section": "4",
+   "title": "Information classification state mapping",
+   "quote": "I3 — False Claim PTL-inconsistent factual claim.\n\nI4 — Systemic Disinformation Persistent I3 with measurable systemic impact.",
+   "interpretation": "Validate the I0–I4 mapping against the five descriptions: non-factual expression, pending verification, PTL consistency, PTL inconsistency, and persistent I3 with measurable systemic impact. I4 appears to refine I3, but exclusivity, precedence, and the apparent inclusion of non-factual expression within information acts are not resolved.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "content_category",
+    "verification_status",
+    "ptl_consistency",
+    "claim_history",
+    "systemic_impact",
+    "assigned_class"
+   ],
+   "criterion": "I0 denotes opinion, belief, satire, art, metaphor, or speculation; I1 denotes a factual claim pending PTL verification; I2 denotes a PTL-consistent factual claim; I3 denotes a PTL-inconsistent factual claim; I4 denotes persistent I3 with measurable systemic impact.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "content classifications",
+    "PTL verification results",
+    "claim histories",
+    "calibrated persistence and systemic impact assessments"
+   ],
+   "gap": "Persistence and impact tests, class precedence, and the relationship between I0 and the information-act definition are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared policy for overlapping classes and mixed content.",
+    "Calibrated persistence and systemic impact tests."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-4-02",
+   "section": "4",
+   "title": "Systemic evaluation class eligibility",
+   "quote": "Only I2–I4 are subject to systemic evaluation.",
+   "interpretation": "Check that every systemic evaluation targets an I2, I3, or I4 classification. This establishes eligibility, not an obligation to evaluate every eligible claim, and does not override the activation gate.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "systemic_evaluation_records",
+    "claim_class_at_evaluation"
+   ],
+   "criterion": "Every systemically evaluated claim has class I2, I3, or I4.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "systemic evaluation logs",
+    "classification histories"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-5-01",
+   "section": "5",
+   "title": "Exclusive truth determination evidence sources",
+   "quote": "Truth status is determined exclusively by:\n\nPTL outputs,",
+   "interpretation": "Inspect decision provenance to ensure truth status uses only PTL outputs, reproducible measurements, and cross-oracle consensus thresholds. The text does not clarify whether all three are mandatory for each determination or merely the exclusive permitted sources.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "truth_decisions",
+    "decision_provenance",
+    "ptl_outputs",
+    "measurement_records",
+    "cross_oracle_consensus_thresholds"
+   ],
+   "criterion": "Truth determination relies exclusively on PTL outputs, reproducible measurements, and cross-oracle consensus thresholds.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL outputs",
+    "reproducible measurement evidence",
+    "cross-oracle consensus results and thresholds"
+   ],
+   "gap": "Consensus threshold values, reproducibility criteria, and whether the three evidence sources are jointly required are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interpretation of joint versus permitted-source requirements.",
+    "Declared cross-oracle consensus thresholds and measurement reproducibility criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-5-02",
+   "section": "5",
+   "title": "Forbidden bases for truth determination",
+   "quote": "Truth SHALL NOT be determined by:\n\npopularity,",
+   "interpretation": "Check truth-decision provenance for reliance on popularity, authority, repetition, institutional endorsement, or social consensus. Distinguishing a causal decision basis from contextual information requires an explicit provenance model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "truth_decisions",
+    "decision_inputs",
+    "decision_provenance"
+   ],
+   "criterion": "No truth status is determined by popularity, authority, repetition, institutional endorsement, or social consensus.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "truth-decision provenance and input categories"
+   ],
+   "gap": "The document does not define how to establish that a prohibited factor determined a decision. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A provenance model distinguishing determinative inputs from incidental context."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-5-03",
+   "section": "5",
+   "title": "Disputed claim retention and expiry",
+   "quote": "Disputed claims remain I1 until PTL resolution or TTL expiry.",
+   "interpretation": "Check that disputed claims remain I1 before either PTL resolution or TTL expiry. The post-expiry state is unspecified, and this retention rule may interact with the T₁ annotation downgrade in section 6.1.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "dispute_status",
+    "classification_history",
+    "ptl_resolution_time",
+    "ttl_expiry_time"
+   ],
+   "criterion": "A disputed claim remains I1 until PTL resolution or TTL expiry.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute records",
+    "PTL resolution events",
+    "claim TTL metadata"
+   ],
+   "gap": "TTL assignment, the post-expiry state, and precedence relative to T₁ transitions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared TTL policy.",
+    "A declared precedence rule between dispute retention and temporal downgrade."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-6.1-01",
+   "section": "6",
+   "title": "Initial temporal retention in I1",
+   "quote": "I1 + time ≤ T₁ → remains I1,",
+   "interpretation": "Compare the time associated with an I1 claim against calibrated T₁ and check retention at or below the threshold. The clock origin and precedence of new PTL findings during this interval are not stated.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "claim_class",
+    "time",
+    "t1",
+    "classification_history"
+   ],
+   "criterion": "For an I1 claim, time ≤ T₁ implies that it remains I1.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "claim timing and classification history",
+    "L8-calibrated T₁"
+   ],
+   "gap": "T₁, the time origin, and precedence relative to PTL resolution are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared claim clock origin and time unit.",
+    "A declared precedence rule for PTL resolution during the retention interval."
+   ],
+   "section_label": "6.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-6.1-02",
+   "section": "6",
+   "title": "Inconclusive claim downgrade after threshold",
+   "quote": "I1 + time > T₁ and PTL inconclusive → downgraded to informational annotation,",
+   "interpretation": "Check for an informational-annotation downgrade when an I1 claim exceeds T₁ and PTL remains inconclusive. The document does not establish whether annotation replaces I1 as a classification or is metadata attached to it.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "claim_class",
+    "time",
+    "t1",
+    "ptl_result",
+    "annotation_state"
+   ],
+   "criterion": "I1 with time > T₁ and inconclusive PTL is downgraded to informational annotation.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "claim timing",
+    "PTL verification status",
+    "L8-calibrated T₁",
+    "annotation transition records"
+   ],
+   "gap": "T₁, the claim clock, and the classification semantics of informational annotation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared claim clock.",
+    "A declared state representation for annotation and its relationship to I1."
+   ],
+   "section_label": "6.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-6.1-03",
+   "section": "6",
+   "title": "Late PTL inconsistency reclassification",
+   "quote": "I1 + time > T₂ and PTL inconsistency emerges → reclassified as I3.",
+   "interpretation": "Check reclassification to I3 when an I1 claim exceeds T₂ and PTL inconsistency emerges. The text gives no ordering between T₁ and T₂ and does not say whether a previously downgraded annotation still qualifies as I1.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "claim_class",
+    "time",
+    "t2",
+    "ptl_inconsistency_event",
+    "next_class"
+   ],
+   "criterion": "I1 with time > T₂ and emerging PTL inconsistency is reclassified as I3.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "claim timing and classification history",
+    "PTL inconsistency events",
+    "L8-calibrated T₂"
+   ],
+   "gap": "T₂, the claim clock, threshold ordering, and eligibility after annotation downgrade are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared claim clock.",
+    "A declared interpretation of I1 eligibility after downgrade without assuming an unstated T₁/T₂ ordering."
+   ],
+   "section_label": "6.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-6.1-04",
+   "section": "6",
+   "title": "External calibration of temporal thresholds",
+   "quote": "Values of T₁ and T₂ SHALL NOT be defined in this protocol and MUST be calibrated under DKP-8-SIMULATION-001.",
+   "interpretation": "Check that T₁ and T₂ originate in calibration under the named protocol and are not defined by this protocol. Provenance can be inspected, but compliance with the external calibration procedure requires its contents.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_content",
+    "t1",
+    "t2",
+    "threshold_provenance"
+   ],
+   "criterion": "T₁ and T₂ are calibrated under DKP-8-SIMULATION-001 and are not defined in DKP-5-INFO-001.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "temporal threshold calibration records"
+   ],
+   "gap": "The external calibration procedure and resulting records are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared method for validating threshold calibration provenance."
+   ],
+   "section_label": "6.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-6.2-01",
+   "section": "6",
+   "title": "Unresolved claims cannot obstruct operations",
+   "quote": "Unresolved I1 claims SHALL NOT:\n\nblock unrelated system operations,",
+   "interpretation": "Check that unresolved I1 claims do not block unrelated operations, suspend non-dependent protocols, or trigger enforcement. Operational and protocol dependency relationships must be supplied to determine the first two exclusions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "unresolved_claims",
+    "claim_classes",
+    "operation_blocks",
+    "protocol_suspensions",
+    "enforcement_events",
+    "dependency_graph"
+   ],
+   "criterion": "Unresolved I1 claims cause no blocking of unrelated operations, suspension of non-dependent protocols, or enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation and protocol dependency graph",
+    "blocking and suspension logs",
+    "enforcement trigger provenance"
+   ],
+   "gap": "The meanings of unrelated and non-dependent, together with causal trigger attribution, are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared dependency graph and causal attribution model."
+   ],
+   "section_label": "6.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-6.2-02",
+   "section": "6",
+   "title": "Informational default and impact exception",
+   "quote": "I1 is informational unless escalated by PTL-confirmed impact.",
+   "interpretation": "Check that I1 treatment remains informational unless escalation is supported by PTL-confirmed impact. This exception does not specify a target class or override the separate prohibition on enforcement triggered by unresolved I1 claims.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "claim_class",
+    "claim_treatment",
+    "escalation_events",
+    "ptl_confirmed_impact"
+   ],
+   "criterion": "I1 remains informational unless an escalation is based on PTL-confirmed impact.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL impact confirmations",
+    "escalation provenance",
+    "claim treatment records"
+   ],
+   "gap": "The impact confirmation standard, escalation destination, and interaction with other I1 restrictions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared impact-confirmation test and escalation state model."
+   ],
+   "section_label": "6.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-7-01",
+   "section": "7",
+   "title": "Systemic lie escalation impact conditions",
+   "quote": "A false claim escalates to Systemic Lie (I4) when:\n\nrepetition exceeds L8-calibrated propagation thresholds,",
+   "interpretation": "Evaluate repetition against calibrated propagation thresholds and assess measurable harm, degraded PTL coherence, and cascading resource misallocation. The list does not specify whether every condition is required, any condition suffices, or a combined impact model applies.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "false_claim",
+    "repetition",
+    "propagation_thresholds",
+    "safety_infrastructure_life_harm",
+    "ptl_coherence",
+    "resource_misallocation"
+   ],
+   "criterion": "Escalation to I4 is conditioned on repetition exceeding L8-calibrated propagation thresholds, measurable harm to safety, infrastructure, or life, degraded PTL coherence, and triggered cascading resource misallocation, with the list's logical connective unspecified.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 propagation and systemic impact calibration",
+    "claim propagation histories",
+    "harm measurements",
+    "PTL coherence indicators",
+    "resource allocation histories"
+   ],
+   "gap": "The logical combination of conditions, calibrated values, impact metrics, and causal attribution model are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared conjunctive, disjunctive, or combined-model reading of the condition list.",
+    "A model connecting claim propagation to measured harms and cascading effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-7-02",
+   "section": "7",
+   "title": "Required impact assessment evidence categories",
+   "quote": "Impact assessment relies on:\n\nPTL indicators,",
+   "interpretation": "Inspect impact assessments for reliance on PTL indicators, downstream protocol disturbances, and measurable deviation from admissible system states. The text does not define admissible states or how these evidence categories are combined.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "impact_assessment",
+    "ptl_indicators",
+    "downstream_disturbances",
+    "system_state",
+    "admissible_states"
+   ],
+   "criterion": "Impact assessment relies on PTL indicators, downstream protocol disturbances, and measurable deviation from admissible system states.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL indicators",
+    "downstream disturbance reports",
+    "admissible state definitions and state measurements"
+   ],
+   "gap": "Admissible system states, deviation metrics, and the evidence-combination method are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declared admissible states and deviation metrics.",
+    "A declared method for combining the listed evidence categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-8-01",
+   "section": "8",
+   "title": "Conditional permission for informational responses",
+   "quote": "Upon identification of I3 or I4 events, the system MAY:\n\nattach PTL-anchored correction markers,",
+   "interpretation": "Record permission, after identification of I3 or I4, to attach PTL-anchored correction markers, reduce algorithmic amplification, trigger informational remediation channels, and flag systemic risk patterns for audit. These actions are optional, and any remediation or escalation remains subject to section 9.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "identified_event_class",
+    "response_action",
+    "ptl_anchor",
+    "calibration_bundle"
+   ],
+   "criterion": "The listed responses are permitted upon identification of I3 or I4, subject to the activation gate; their execution is not mandatory.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "I3 and I4 event identification records",
+    "PTL correction anchors",
+    "response logs",
+    "L8 calibration validity"
+   ],
+   "gap": "The text does not define response implementations or precisely distinguish informational annotations from remediation subject to the activation gate. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared response taxonomy separating annotation, amplification changes, remediation, and escalation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-InformationalArbitration_Non-RemovalPrinciple_-01",
+   "section": "8",
+   "title": "I4 records must remain preserved",
+   "quote": "In the case of I4, the system SHALL NOT remove, erase, or delete informational records.",
+   "interpretation": "Check that I4 handling preserves informational records and keeps the original claim visible, as required by the following arbitration description. This also implements the stated prevention of retroactive evidence erasure, but record scope and the audience for visibility are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "i4_events",
+    "informational_records",
+    "record_history",
+    "original_claim_visibility"
+   ],
+   "criterion": "I4 handling does not remove, erase, or delete informational records; the original claim remains visible and preserved.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "informational record histories",
+    "original claim visibility records",
+    "audit evidence archives"
+   ],
+   "gap": "The scope of protected informational records and the required audience and duration of visibility are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared protected-record scope and visibility interpretation."
+   ],
+   "section_label": "Informational Arbitration (Non-Removal Principle)",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-InformationalArbitration_Non-RemovalPrinciple_-02",
+   "section": "8",
+   "title": "Mandatory arbitration annotation and metadata",
+   "quote": "Instead, the system SHALL apply informational arbitration by annotation:",
+   "interpretation": "For I4, check attachment of a PTL-anchored annotation specifying the inconsistency's nature, relevant oracle classes or node ranges, quantified correspondence probability, and a timestamped verification reference. Field presence is mechanically testable, but the probability method and adequacy of the PTL anchor are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "i4_event",
+    "annotation",
+    "ptl_anchor",
+    "inconsistency_nature",
+    "oracle_classes_or_node_ranges",
+    "correspondence_probability",
+    "timestamped_verification_reference"
+   ],
+   "criterion": "Every I4 arbitration attaches a PTL-anchored annotation containing the nature of PTL inconsistency, relevant oracle classes or node ranges, quantified probability of correspondence with physical reality, and a timestamped verification reference.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL inconsistency evidence",
+    "oracle class or node range metadata",
+    "correspondence probability estimates",
+    "timestamped verification records"
+   ],
+   "gap": "The probability computation, relevance test for oracle metadata, and validation of PTL anchoring are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared correspondence-probability model.",
+    "A declared validation method for PTL anchors and relevant oracle metadata."
+   ],
+   "section_label": "Informational Arbitration (Non-Removal Principle)",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-InformationalArbitration_Non-RemovalPrinciple_-03",
+   "section": "8",
+   "title": "Annotations cannot impose enforcement consequences",
+   "quote": "Annotations are informational disclosures, not enforcement actions.",
+   "interpretation": "Check that annotations are informational and do not alter legal status, impose penalties, or modify rights or obligations. Establishing whether an annotation caused such effects requires records and an attribution model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "annotations",
+    "enforcement_actions",
+    "legal_status_changes",
+    "penalties",
+    "rights_changes",
+    "obligation_changes"
+   ],
+   "criterion": "Annotations are informational disclosures and cause no enforcement action, legal-status alteration, penalty, or modification of rights or obligations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "annotation records",
+    "enforcement records",
+    "legal status, penalty, rights, and obligation changes"
+   ],
+   "gap": "No method is supplied for attributing prohibited downstream consequences to annotations. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared causal attribution model for annotation effects."
+   ],
+   "section_label": "Informational Arbitration (Non-Removal Principle)",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-InformationalArbitration_Non-RemovalPrinciple_-04",
+   "section": "8",
+   "title": "Protected expression and isolated falsehood",
+   "quote": "penalize individuals for isolated I3 events absent systemic impact.",
+   "interpretation": "Under the governing SHALL NOT list, check that the system neither suppresses opinions or beliefs, enforces belief correction, nor penalizes individuals for isolated I3 events without systemic impact. Isolation and systemic impact need operational definitions, and the clause does not itself authorize penalties when impact exists.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_actions",
+    "expression_categories",
+    "belief_correction_requirements",
+    "individual_penalties",
+    "i3_event_history",
+    "systemic_impact"
+   ],
+   "criterion": "No suppression of opinions or beliefs or enforced belief correction occurs; no individual is penalized for an isolated I3 event absent systemic impact.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system action and penalty records",
+    "expression classifications",
+    "I3 histories",
+    "calibrated systemic impact assessments"
+   ],
+   "gap": "The text does not define isolation or operational tests for suppression and belief correction, and calibrated impact criteria are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interpretation of isolated events.",
+    "A declared prohibited-action taxonomy and calibrated impact test."
+   ],
+   "section_label": "Informational Arbitration (Non-Removal Principle)",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-9-01",
+   "section": "9",
+   "title": "Calibration bundle enforceability gate",
+   "quote": "DKP-5-INFO-001 is NON-ENFORCEABLE unless:",
+   "interpretation": "Check that enforceability requires a valid L8 Calibration Bundle covering propagation thresholds, temporal transition parameters, and systemic impact metrics, with confidence bounds and validity windows defined. Meeting the gate is necessary and does not grant permission for actions prohibited elsewhere.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "enforceability_status",
+    "l8_calibration_bundle",
+    "propagation_thresholds",
+    "temporal_parameters",
+    "systemic_impact_metrics",
+    "confidence_bounds",
+    "validity_windows"
+   ],
+   "criterion": "Enforceability implies a valid L8 Calibration Bundle for propagation thresholds, temporal transition parameters, and systemic impact metrics, with defined confidence bounds and validity windows.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 Calibration Bundle",
+    "calibration confidence bounds and validity windows"
+   ],
+   "gap": "The bundle, full validity criteria, and required granularity of confidence bounds and validity windows are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared bundle-validity procedure and interpretation of confidence-bound and validity-window coverage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-9-02",
+   "section": "9",
+   "title": "Uncalibrated operation remains informational only",
+   "quote": "Absent a valid L8 bundle:\n\nclassifications above I1 are informational only,",
+   "interpretation": "When no valid L8 bundle exists, check that classifications above I1 have only informational effects and that no systemic remediation or escalation is triggered. The relationship between prohibited remediation and mandatory I4 annotation is not fully specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "l8_bundle_validity",
+    "claim_classes",
+    "classification_effects",
+    "systemic_remediation_events",
+    "escalation_events"
+   ],
+   "criterion": "Without a valid L8 bundle, classifications above I1 are informational only and no systemic remediation or escalation is triggered.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 bundle validity information",
+    "classification effects",
+    "remediation and escalation logs"
+   ],
+   "gap": "Bundle validity and the boundary between informational annotation and systemic remediation or escalation are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared bundle-validity procedure.",
+    "A declared distinction between informational effects, remediation, and escalation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-9-03",
+   "section": "9",
+   "title": "Manual truth interpretation is prohibited",
+   "quote": "Manual interpretation of truth status is explicitly prohibited.",
+   "interpretation": "Check truth-status processing for manual interpretation. The text does not say whether this excludes all human interpretation or only manual substitution for PTL-derived determinations.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "truth_status_operations",
+    "operator_type",
+    "decision_provenance"
+   ],
+   "criterion": "No truth-status operation constitutes manual interpretation of truth status.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "truth-status operation logs",
+    "human involvement and decision provenance"
+   ],
+   "gap": "The scope of manual interpretation is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared reading of manual interpretation covering either all human interpretation or manual truth-status determination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-10-01",
+   "section": "10",
+   "title": "Prohibited coercive informational actions",
+   "quote": "convert informational annotations into coercive enforcement.\n\nTruth exposure is informational, not coercive.",
+   "interpretation": "Check that the system does not criminalize false belief, censor artistic or cultural expression, mandate acceptance of verified claims, perform psychological or ideological conditioning, or convert annotations into coercive enforcement. Truth exposure must remain informational; recognizing coercion, censorship, and conditioning requires operational definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_actions",
+    "action_targets",
+    "acceptance_requirements",
+    "conditioning_activities",
+    "annotation_effects",
+    "truth_exposure_effects"
+   ],
+   "criterion": "None of the five prohibited actions occurs, and truth exposure is informational and noncoercive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system action records",
+    "criminalization and censorship decisions",
+    "acceptance requirements",
+    "conditioning activities",
+    "annotation and truth-exposure effects"
+   ],
+   "gap": "Operational definitions of censorship, conditioning, and coercion are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared taxonomy for the prohibited actions and coercive effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-11-01",
+   "section": "11",
+   "title": "Gaming attempts require abuse escalation",
+   "quote": "manipulate propagation metrics,\n\nare classified as systemic abuse and escalated to DKP-8-AUDIT-001.",
+   "interpretation": "Check that attempts to game verification thresholds, exploit ambiguity to propagate falsehoods, deliberately overload PTL with spurious claims, or manipulate propagation metrics receive both systemic-abuse classification and audit escalation. Attempt detection and its interaction with section 9's prohibition on escalation without calibration are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "attempt_events",
+    "attempt_categories",
+    "abuse_classifications",
+    "audit_escalations",
+    "l8_bundle_validity"
+   ],
+   "criterion": "An attempt in any listed category is classified as systemic abuse and escalated to DKP-8-AUDIT-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "verification and propagation telemetry",
+    "PTL workload records",
+    "attempt and intent assessments",
+    "audit escalation records",
+    "L8 bundle validity information"
+   ],
+   "gap": "Attempt-detection criteria, the audit interface, and precedence relative to the uncalibrated escalation prohibition are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared detector for each abuse-attempt category.",
+    "A declared precedence rule for abuse escalation when no valid calibration bundle exists."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-12-01",
+   "section": "12",
+   "title": "Auditable classifications expose verification paths",
+   "quote": "MUST be auditable,\n\nMUST expose verification paths,",
+   "interpretation": "Check every truth classification for an auditable record and an exposed verification path. Privacy-protecting aggregation is permitted but does not expressly waive either obligation; audit sufficiency and the audience for exposure are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "truth_classifications",
+    "audit_records",
+    "verification_paths",
+    "aggregation_records",
+    "privacy_purpose"
+   ],
+   "criterion": "All truth classifications are auditable and expose verification paths; aggregation may be used to protect privacy.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "truth classification provenance",
+    "audit-access records",
+    "verification paths",
+    "privacy aggregation metadata"
+   ],
+   "gap": "Auditability criteria, exposure access requirements, and acceptable aggregation are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declared auditability and verification-path access criteria.",
+    "A declared aggregation policy preserving the mandatory verification properties."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-12-02",
+   "section": "12",
+   "title": "Independent reproducibility of truth classifications",
+   "quote": "SHALL be reproducible by independent nodes.",
+   "interpretation": "Have independent nodes reproduce each truth classification using its verification path and compare results. The text does not define node independence, the reproduction procedure, or acceptable agreement.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "truth_classifications",
+    "verification_paths",
+    "independent_node_results",
+    "node_relationships"
+   ],
+   "criterion": "Every truth classification is reproducible by independent nodes.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "independent node verification results",
+    "node independence information",
+    "classification verification inputs"
+   ],
+   "gap": "Node independence, reproduction conditions, and result-agreement criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared node-independence test and reproduction procedure.",
+    "A declared interpretation of acceptable agreement without assuming an unstated tolerance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-13-01",
+   "section": "13",
+   "title": "Factual jurisdiction excludes broader adjudication",
+   "quote": "Its jurisdiction ends at factual correspondence with physical reality.",
+   "interpretation": "Check protocol actions for adherence to factual correspondence and exclusion of narrative optimization, social-harmony enforcement, philosophical-dispute resolution, and moral-truth adjudication. Identifying these purposes in actual actions requires interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_actions",
+    "action_purposes",
+    "adjudicated_subjects"
+   ],
+   "criterion": "The protocol does not optimize narratives, enforce social harmony, resolve philosophical disputes, or adjudicate moral truth; its jurisdiction is factual correspondence with physical reality.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action purpose and jurisdiction records"
+   ],
+   "gap": "The document supplies no operational method for distinguishing prohibited purposes from factual correspondence work. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared jurisdiction and action-purpose classification method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-14-01",
+   "section": "14",
+   "title": "Controlled procedure for protocol changes",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check normative changes for compliance with the named upgrade procedure, including all listed elements. The later presentation-only exception narrows the apparent universal wording; the acceptance criteria, activation timing, and meaning of rollback participation depend on the absent procedures.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_changes",
+    "change_type",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_record"
+   ],
+   "criterion": "Protocol changes other than qualifying presentation-only corrections follow DKP-4-UPGRADE-001 and include proposal, simulation, audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade proposals",
+    "simulation and audit records",
+    "acceptance decisions",
+    "activation schedules",
+    "rollback provisions"
+   ],
+   "gap": "The referenced procedures and their acceptance, timing, and rollback requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interpretation of rollback as a provision, capability, or executed procedure pending the referenced protocol."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-14-02",
+   "section": "14",
+   "title": "Modification identity simulation and compatibility",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Check modifications for a new protocol identifier, mandatory simulation under DKP-8-SIMULATION-001, and an explicit compatibility declaration with DKP-7-SCOPE-001. The later presentation-only rule suggests an exception, but the scope of 'any modification' is not expressly reconciled with it.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "change_type",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "simulation_record",
+    "compatibility_declaration"
+   ],
+   "criterion": "A modification requires a new protocol identifier, simulation under DKP-8-SIMULATION-001, and an explicit compatibility declaration with DKP-7-SCOPE-001, subject to resolution of the presentation-only exception.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "protocol identifier history",
+    "simulation records",
+    "scope compatibility declarations"
+   ],
+   "gap": "Simulation requirements and the applicability of these requirements to presentation-only corrections are unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared reconciliation of 'any modification' with presentation-only corrections."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-14-03",
+   "section": "14",
+   "title": "Presentation corrections use date records",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "For a correction that changes presentation without changing normative content, check that it is not treated as an Upgrade and that its document change record uses only the Last updated date. Determining normative equivalence requires a semantic review method, and the named label differs from the supplied front-matter key last_updated.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "upgrade_status",
+    "last_updated_date",
+    "change_record"
+   ],
+   "criterion": "A presentation-only correction preserving normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document edition comparisons",
+    "upgrade classification records",
+    "document update metadata"
+   ],
+   "gap": "The normative-equivalence test, the referenced upgrade definition, and the mapping of Last updated to last_updated are not explicitly supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared normative-equivalence review method.",
+    "A declared mapping between the Last updated label and document metadata."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INFO-14-04",
+   "section": "14",
+   "title": "Published edition canonical digest listing",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its identified canonical source and compare the result with its entry in the specified repository's SHA256SUMS.txt. The comparison is decidable given canonical source bytes and their edition-to-entry mapping; the document does not require any additional normalization.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_entry_mapping",
+    "sha256sums_contents",
+    "repository_identity"
+   ],
+   "criterion": "Every published edition has an entry in SHA256SUMS.txt in github.com/anahronic/World equal to the SHA-256 digest of that edition's canonical source.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source bytes",
+    "canonical repository SHA256SUMS.txt and edition mapping"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

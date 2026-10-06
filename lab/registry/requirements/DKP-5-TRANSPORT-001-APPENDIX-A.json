@@ -1,0 +1,567 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-TRANSPORT-001-APPENDIX-A",
+ "doc_sha256": "c9310c46a97ad52609165f2c96ee5abbff901b36f47a792c22ff60e3d4184b30",
+ "prefix": "TRANSPORTA",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "PPDI, RED, low/high classifications, physical impact, and economic pressure are not defined here. Referenced documents were not supplied. A.5 uses both DKP-8-SIMULATION-001 and DKP-8-SIMULATION; their equivalence is not established. The scope of identical evaluation and the relationship between PPDI competition and physical impact as the sole criterion require clarification. A.5 exempts presentation-only corrections from Upgrades, but its requirement that any modification receive a new identifier does not explicitly repeat that exemption.",
+ "requirements": [
+  {
+   "id": "TRANSPORTA-A.1-01",
+   "section": "A.1",
+   "title": "No Automatic Justice Trigger",
+   "quote": "Low PPDI or high RED SHALL NOT automatically trigger Justice outcomes.",
+   "interpretation": "Given events already classified as low PPDI or high RED, inspect decision rules and outcome provenance for automatic Justice triggers. This checks the trigger prohibition without defining the low/high classifications.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "signal_classifications",
+    "justice_trigger_rules",
+    "justice_outcome_provenance"
+   ],
+   "criterion": "Neither low PPDI nor high RED automatically triggers a Justice outcome.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classified PPDI and RED signals",
+    "Justice trigger rules and outcome provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.1-02",
+   "section": "A.1",
+   "title": "Degradation Signal Classification",
+   "quote": "They are treated as system degradation signals, not violations by Subjects.",
+   "interpretation": "For signals already identified as low PPDI or high RED, verify their classification as system degradation signals and the absence of a Subject-violation classification based on those signals alone.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "signal_classifications",
+    "degradation_records",
+    "subject_violation_records"
+   ],
+   "criterion": "Low PPDI and high RED are classified as system degradation signals rather than Subject violations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classified PPDI and RED signals",
+    "degradation and Subject-violation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.1-03",
+   "section": "A.1",
+   "title": "Justice Consequence Preconditions",
+   "quote": "Justice consequences may only arise through DKP-1-JUSTICE-001 using proper attribution and thresholds.",
+   "interpretation": "Verify that every Justice consequence follows the named procedure and satisfies its attribution and threshold requirements. Those requirements are not supplied in this appendix.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_consequences",
+    "justice_procedure_records",
+    "attribution_records",
+    "justice_thresholds"
+   ],
+   "criterion": "Every Justice consequence arises through DKP-1-JUSTICE-001 with proper attribution and satisfied applicable thresholds.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "Justice procedure records",
+    "attribution evidence",
+    "applicable Justice thresholds"
+   ],
+   "gap": "The referenced Justice procedure, attribution standard, and thresholds are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the attribution standard and applicable thresholds if the referenced procedure is unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.2-01",
+   "section": "A.2",
+   "title": "Active Harm Scope Exclusion",
+   "quote": "This protocol does not address active harm or hostile events.",
+   "interpretation": "Check that protocol responsibilities and actions exclude handling active harm and hostile events. Applying this scope boundary requires definitions of those event categories.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_responsibilities",
+    "protocol_actions",
+    "event_classifications"
+   ],
+   "criterion": "Handling active harm or hostile events is outside this protocol's scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "event classifications",
+    "responsibility assignments"
+   ],
+   "gap": "The text does not define how to classify active harm or hostile events. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare classification rules for active harm and hostile events."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.2-02",
+   "section": "A.2",
+   "title": "Defense Real-Time Containment Responsibility",
+   "quote": "Defense remains responsible for real-time containment of physical threats.",
+   "interpretation": "Verify that Defense is assigned responsibility for physical-threat containment. Checking the real-time aspect additionally requires an operational timing criterion; the sentence assigns responsibility without expressly guaranteeing containment success.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "responsibility_assignments",
+    "physical_threat_events",
+    "containment_timestamps"
+   ],
+   "criterion": "Defense holds responsibility for real-time containment of physical threats.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Defense responsibility assignments",
+    "physical-threat and containment records"
+   ],
+   "gap": "Physical-threat classification and the timing criterion for real-time containment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare physical-threat classification rules and an operational meaning of real-time containment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.2-03",
+   "section": "A.2",
+   "title": "Transport Redesign Scope Boundary",
+   "quote": "Transport redesign addresses structural risk generation, not attacks.",
+   "interpretation": "Classify redesign targets and verify that they concern structural risk generation rather than attacks. The text does not establish how mixed cases should be classified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "redesign_targets",
+    "risk_classifications"
+   ],
+   "criterion": "Transport redesign targets structural risk generation rather than attacks.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "redesign target descriptions",
+    "risk and attack classifications"
+   ],
+   "gap": "The boundary between structural risk generation and attacks, including mixed cases, is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare classification rules distinguishing structural risk generation from attacks."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.3-01",
+   "section": "A.3",
+   "title": "Identical Transport Evaluation Rules",
+   "quote": "Autonomous or assisted transport systems are evaluated identically:",
+   "interpretation": "Compare evaluation procedures for autonomous and assisted systems to ensure the same rules apply. Identically may mean equivalence between these two categories or equivalence with a broader transport baseline that is not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transport_system_types",
+    "evaluation_procedures",
+    "evaluation_baseline"
+   ],
+   "criterion": "Autonomous and assisted transport systems receive identical evaluation rules within the intended comparison scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport evaluation procedures",
+    "system type classifications"
+   ],
+   "gap": "The comparison baseline and the intended extent of identical evaluation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the comparison scope and which evaluation procedure elements must be identical."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.3-02",
+   "section": "A.3",
+   "title": "Low RED Competition Shift",
+   "quote": "- if RED approaches zero, economic pressure shifts to PPDI competition,",
+   "interpretation": "Model how economic pressure changes as RED approaches zero and test whether PPDI competition becomes its destination. The text supplies neither a near-zero criterion nor a measurable definition of the shift.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "red_trajectory",
+    "economic_pressure",
+    "ppdi_competition"
+   ],
+   "criterion": "If RED approaches zero, economic pressure shifts to PPDI competition.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "RED trajectories",
+    "economic-pressure and PPDI-competition observations"
+   ],
+   "gap": "An operational meaning of approaches zero and a model measuring the economic-pressure shift are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether approaches zero means a limiting trajectory or a near-zero range.",
+    "Declare how economic pressure and its shift to PPDI competition are measured."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.3-03",
+   "section": "A.3",
+   "title": "Ownership Form Evaluation Independence",
+   "quote": "- ownership form is irrelevant,",
+   "interpretation": "Inspect evaluation rules or compare otherwise identical structured evaluations with different ownership forms. Ownership form must not affect the evaluation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ownership_form",
+    "evaluation_rules",
+    "evaluation_inputs",
+    "evaluation_outputs"
+   ],
+   "criterion": "Changing only ownership form does not change the transport evaluation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport evaluation rules and records",
+    "ownership classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.3-04",
+   "section": "A.3",
+   "title": "Physical Impact Sole Criterion",
+   "quote": "- physical impact remains the sole criterion.",
+   "interpretation": "Inspect evaluation dependencies to verify that all operative criteria concern physical impact. The text does not define physical impact or explain how PPDI competition fits within this restriction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "evaluation_criteria",
+    "criterion_dependencies",
+    "physical_impact_classifications"
+   ],
+   "criterion": "Physical impact is the sole transport evaluation criterion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport evaluation criteria and dependencies",
+    "physical-impact classifications"
+   ],
+   "gap": "Physical impact and its relationship to PPDI competition are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which evaluation inputs and derived criteria qualify as physical impact."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.4-01",
+   "section": "A.4",
+   "title": "No Direct Axiom Enforcement",
+   "quote": "without encoding axioms as direct enforcement triggers.",
+   "interpretation": "Inspect enforcement rules for direct triggers based on the listed axioms A1, A5, and A7. Distinguishing direct axiom enforcement from an independently specified rule compatible with an axiom requires an explicit interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_rules",
+    "trigger_dependencies",
+    "axiom_mappings"
+   ],
+   "criterion": "A1, A5, and A7 are not encoded as direct enforcement triggers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement rule dependencies",
+    "mappings between rules and axioms"
+   ],
+   "gap": "The text does not define what makes an enforcement trigger directly encode an axiom. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a rule for distinguishing direct axiom triggers from axiom-compatible enforcement rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.5-01",
+   "section": "A.5",
+   "title": "Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check change records for the named controlled procedure and all listed components, subject to the presentation-only correction exception below. The text does not specify the acceptance conditions, activation timing, or whether rollback means a required capability or an executed action.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change_records",
+    "proposal",
+    "simulation_records",
+    "audit_records",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_records"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 with proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation records",
+    "rollback provisions"
+   ],
+   "gap": "The referenced procedures and their acceptance, timing, and rollback requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether rollback requires a capability, a plan, or execution if the referenced procedure is unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.5-02",
+   "section": "A.5",
+   "title": "New Identifier For Modifications",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Compare the identifiers associated with a modification and its preceding protocol version. Whether presentation-only corrections are exempt from this requirement is ambiguous because the later exception expressly concerns Upgrades and recording.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_records",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "identifier_registry",
+    "correction_classification"
+   ],
+   "criterion": "Every modification within the applicable scope receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "modification and correction records"
+   ],
+   "gap": "The applicability to presentation-only corrections and the uniqueness scope of a new identifier are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections count as modifications for this requirement.",
+    "Declare whether new means different from the preceding identifier or previously unused in the registry."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.5-03",
+   "section": "A.5",
+   "title": "Explicit Incompatibility Declaration Required",
+   "quote": "- explicit incompatibility declaration,",
+   "interpretation": "Read this list item with the preceding requirement for any modification and check for an explicit incompatibility declaration. The required contents and its applicability to presentation-only corrections are not specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_records",
+    "incompatibility_declaration",
+    "correction_classification"
+   ],
+   "criterion": "Every modification within the applicable scope includes an explicit incompatibility declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "modification metadata",
+    "incompatibility declarations"
+   ],
+   "gap": "The declaration's required contents and the treatment of presentation-only corrections are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the required declaration format and whether presentation-only corrections are exempt."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.5-04",
+   "section": "A.5",
+   "title": "Full-System Simulation For Modifications",
+   "quote": "- full-system simulation under DKP-8-SIMULATION.",
+   "interpretation": "Read this list item as requiring full-system simulation for modifications and verify simulation coverage and procedure. The reference differs from DKP-8-SIMULATION-001, and the appendix does not establish whether they identify the same procedure.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_records",
+    "simulation_records",
+    "simulation_scope",
+    "simulation_procedure",
+    "correction_classification"
+   ],
+   "criterion": "Every modification within the applicable scope undergoes full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "simulation procedure and results",
+    "system coverage records"
+   ],
+   "gap": "DKP-8-SIMULATION, the full-system coverage definition, and applicability to presentation-only corrections are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the system boundary for full-system simulation.",
+    "Declare whether DKP-8-SIMULATION denotes DKP-8-SIMULATION-001 and whether presentation-only corrections are exempt."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.5-05",
+   "section": "A.5",
+   "title": "Presentation Corrections Upgrade Exemption",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3);",
+   "interpretation": "Compare document versions and exclude a correction from the Upgrade classification when it is presentation-only and leaves normative content unchanged. The text provides no formal method for deciding normative equivalence.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "correction_classification",
+    "normative_content_comparison",
+    "upgrade_classification"
+   ],
+   "criterion": "A presentation-only correction that does not change normative content is not classified as an Upgrade.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document versions",
+    "correction classifications",
+    "normative equivalence determinations"
+   ],
+   "gap": "Normative equivalence and presentation-only classification are not defined, and the referenced §3 is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes and unchanged normative content are determined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORTA-A.5-06",
+   "section": "A.5",
+   "title": "Correction Recording By Date Only",
+   "quote": "they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "For corrections already established as presentation-only with unchanged normative content, inspect how the correction is recorded. The phrase only may restrict document metadata alone or all associated recording, and the relationship between the quoted label and the front-matter last_updated field is implicit.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "correction_classification",
+    "document_metadata",
+    "correction_records",
+    "last_updated_date"
+   ],
+   "criterion": "Qualifying presentation-only corrections are recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "document metadata history",
+    "correction records"
+   ],
+   "gap": "The scope of only and the mapping from Last updated to the front-matter last_updated field are not explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the recording restriction applies only within the document or also to external records.",
+    "Declare whether last_updated is the required Last updated date field."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

@@ -13,14 +13,14 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 
 | Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 21/38 | 948 | 159 (16.8 %) | 136 | 7 | 10 | 6 | 789 | 157 | 734 |
+| A. Registry and base | PARTIAL | 27/38 | 1215 | 159 (13.1 %) | 136 | 7 | 10 | 6 | 1056 | 198 | 960 |
 | B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 18 | 0 | 1 | 0 | 24 | 0 | 36 |
 | C. Common checks | PARTIAL | 5/8 | 199 | 52 (26.1 %) | 48 | 2 | 0 | 2 | 147 | 46 | 131 |
-| D. Transitions and rights | PARTIAL | 6/9 | 263 | 53 (20.2 %) | 47 | 0 | 4 | 2 | 210 | 36 | 211 |
-| E. Applied modules | PARTIAL | 1/7 | 39 | 16 (41.0 %) | 8 | 5 | 1 | 2 | 23 | 8 | 23 |
+| D. Transitions and rights | PARTIAL | 7/9 | 311 | 53 (17.0 %) | 47 | 0 | 4 | 2 | 258 | 50 | 245 |
+| E. Applied modules | PARTIAL | 6/7 | 258 | 16 (6.2 %) | 8 | 5 | 1 | 2 | 242 | 35 | 215 |
 | F. Remaining constraints and stress | PARTIAL | 7/12 | 303 | 19 (6.3 %) | 15 | 0 | 4 | 0 | 284 | 56 | 243 |
 | G. General release | NOT STARTED | — | | | | | | | | | |
-| **All registrable documents** | | 21/38 | 948 | 159 (16.8 %) | 136 | 7 | 10 | 6 | 789 | 157 | 734 |
+| **All registrable documents** | | 27/38 | 1215 | 159 (13.1 %) | 136 | 7 | 10 | 6 | 1056 | 198 | 960 |
 
 ### Stage criteria
 
@@ -29,7 +29,7 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 - A / A3 **not met**: requirement registry covers every document with provisions
 - A / A4 met: every requirement has a coverage status and a gap reason when uncovered
 - A / A5 met: source mismatches described (unresolved, ambiguous and broken section references)
-  - not registered: DKP-4-UPGRADE-001, DKP-5-CULTURE-001, DKP-5-EDU-001, DKP-5-HABITAT-001, DKP-5-INFO-001, DKP-5-TRANSPORT-001, DKP-5-TRANSPORT-001-APPENDIX-A, DKP-6-EXIT-001, DKP-6-INTEGRATION-001, DKP-6-RESILIENCE-001, DKP-7-AI-SUBJECT-001, DKP-7-PRIVACY-001, DKP-7-SCOPE-001, DKP-7-TRANSPARENCY-001, DKP-8-AUDIT-001, DKP-8-INTEROP-001, DKP-8-SIMULATION-001
+  - not registered: DKP-5-TRANSPORT-001, DKP-6-EXIT-001, DKP-6-INTEGRATION-001, DKP-6-RESILIENCE-001, DKP-7-AI-SUBJECT-001, DKP-7-PRIVACY-001, DKP-7-SCOPE-001, DKP-7-TRANSPARENCY-001, DKP-8-AUDIT-001, DKP-8-INTEROP-001, DKP-8-SIMULATION-001
 - B / B1 met: interface runs smoke and a visitor's admissible variant; comparison; reports
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
@@ -37,9 +37,9 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 - C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
   - not registered: DKP-7-SCOPE-001, DKP-8-AUDIT-001, DKP-8-SIMULATION-001
 - D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-  - not registered: DKP-4-UPGRADE-001, DKP-6-EXIT-001, DKP-6-INTEGRATION-001
+  - not registered: DKP-6-EXIT-001, DKP-6-INTEGRATION-001
 - E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
-  - not registered: DKP-5-TRANSPORT-001, DKP-5-TRANSPORT-001-APPENDIX-A, DKP-5-HABITAT-001, DKP-5-EDU-001, DKP-5-INFO-001, DKP-5-CULTURE-001
+  - not registered: DKP-5-TRANSPORT-001
 - F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
   - not registered: DKP-6-RESILIENCE-001, DKP-7-AI-SUBJECT-001, DKP-7-PRIVACY-001, DKP-7-TRANSPARENCY-001, DKP-8-INTEROP-001
 - G / G1 **not met**: all parts implementable without unresolved decisions are checked
@@ -117,6 +117,12 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | DKP-4-CRISIS-001-PATCH | 31 | 20 | 19 | 0 | 1 | 0 | 11 | 22 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 12 | 12 | 0 | 0 | 0 | 17 | 24 |
 | DKP-4-ERROR-001 | 52 | 18 | 15 | 0 | 1 | 2 | 34 | 44 |
+| DKP-4-UPGRADE-001 | 48 | 0 | 0 | 0 | 0 | 0 | 48 | 34 |
+| DKP-5-CULTURE-001 | 43 | 0 | 0 | 0 | 0 | 0 | 43 | 37 |
+| DKP-5-EDU-001 | 64 | 0 | 0 | 0 | 0 | 0 | 64 | 54 |
+| DKP-5-HABITAT-001 | 56 | 0 | 0 | 0 | 0 | 0 | 56 | 50 |
+| DKP-5-INFO-001 | 39 | 0 | 0 | 0 | 0 | 0 | 39 | 37 |
+| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 0 | 0 | 0 | 0 | 0 | 17 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 16 | 8 | 5 | 1 | 2 | 23 | 23 |
 
 ## Covered provisions

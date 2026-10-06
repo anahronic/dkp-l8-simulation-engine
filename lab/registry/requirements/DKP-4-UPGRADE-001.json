@@ -1,0 +1,1585 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-4-UPGRADE-001",
+ "doc_sha256": "6265df15b1d9cb4ec8892dcda16ba15441c8a667cdafa778134b03d620360e49",
+ "prefix": "UPGRADE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Referenced protocols were not supplied. The unnumbered subsection under section 8 is recorded as \"Post-Crisis Cooldown Rule\", including its subsequent cooling-off and activation provisions. Repeated prohibitions are retained where later sections restate them. The text does not define the highest security threshold, influence caps, simulation pass thresholds, reversibility window, or several substantive safety predicates. Section 4.5 is ambiguous about response latency because its blanket prohibition on reduction can conflict with strengthening response performance. Section 12's requirement for a new identifier is read alongside its explicit exception for presentation-only corrections.",
+ "requirements": [
+  {
+   "id": "UPGRADE-0-01",
+   "section": "0",
+   "title": "Exclusive Lawful Modification Procedure",
+   "quote": "DKP-4-UPGRADE-001 defines the only lawful mechanism by which the Dikenocracy system may be modified after deployment.",
+   "interpretation": "Check that every post-deployment modification within the protocol's scope follows this procedure. Section 3 excludes cosmetic and presentation changes, creating a narrower scope than a literal reading of all system modifications.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deployment_status",
+    "change_classification",
+    "procedure_compliance"
+   ],
+   "criterion": "Every in-scope post-deployment modification complies with DKP-4-UPGRADE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "deployment records",
+    "change records",
+    "upgrade compliance evidence"
+   ],
+   "gap": "The boundary between all post-deployment modifications and the exclusions in section 3 requires an explicit scope interpretation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Apply section 3 exclusions when determining which modifications require this procedure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-2-01",
+   "section": "2",
+   "title": "Required Downstream Protocol Position",
+   "quote": "- strictly downstream of DKP-0-ORACLE-001 (PTL) and DKP-0-TIME-001,\n- downstream of all L1–L3 execution protocols,\n- downstream of DKP-4-ERROR-001 and DKP-4-CRISIS-001,",
+   "interpretation": "Check a declared dependency or execution graph for the required downstream relationships. The document does not specify whether downstream means authority, data dependency, execution order, or a combination.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_relationship_graph",
+    "l1_l3_protocol_inventory"
+   ],
+   "criterion": "UPGRADE is downstream of ORACLE, TIME, all L1–L3 execution protocols, ERROR, and CRISIS.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-0-TIME-001",
+    "DKP-4-ERROR-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "protocol dependency graph",
+    "L1–L3 execution protocol inventory"
+   ],
+   "gap": "The meaning of downstream and the full L1–L3 inventory are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which graph relationships implement downstream ordering."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-2-02",
+   "section": "2",
+   "title": "Required Upstream Protocol Position",
+   "quote": "- upstream of DKP-8-SIMULATION-001 and DKP-8-AUDIT-001.",
+   "interpretation": "Check the required upstream relationships in the declared protocol graph. This cannot safely be treated as activation preceding simulation or audit, because later sections require those procedures before activation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_relationship_graph"
+   ],
+   "criterion": "UPGRADE is upstream of SIMULATION and AUDIT under the declared relationship semantics.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "protocol dependency graph"
+   ],
+   "gap": "The document does not define upstream relationship semantics. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Distinguish architectural upstream position from chronological execution order."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-2-03",
+   "section": "2",
+   "title": "Axiom Redefinition Is Prohibited",
+   "quote": "- DKP-4-UPGRADE-001 SHALL NOT redefine axioms (A1/A2).",
+   "interpretation": "Compare proposed changes with the authoritative A1 and A2 definitions. A textual difference can be detected, but deciding whether an indirect change redefines an axiom requires their definitions and a semantic comparison rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "proposed_changes",
+    "axiom_definitions"
+   ],
+   "criterion": "No proposed change redefines A1 or A2.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "authoritative A1 and A2 definitions"
+   ],
+   "gap": "The axiom definitions and a test for semantic redefinition are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how direct and indirect axiom redefinitions are recognized."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-2-04",
+   "section": "2",
+   "title": "Physical Truth Rules Remain Unmodified",
+   "quote": "- DKP-4-UPGRADE-001 SHALL NOT modify Physical Truth Layer rules.",
+   "interpretation": "Compare the PTL rules before and after the proposed change. Testing indirect effects requires an authoritative rule inventory and a definition of modification beyond source edits.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "proposed_changes",
+    "ptl_rules_before",
+    "ptl_rules_after"
+   ],
+   "criterion": "The upgrade leaves all Physical Truth Layer rules unmodified.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "authoritative PTL rules",
+    "proposed PTL behavior"
+   ],
+   "gap": "The PTL rule inventory and semantic modification test are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether rule equivalence is textual, behavioral, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-2-05",
+   "section": "2",
+   "title": "Active Crisis Operation Ban",
+   "quote": "- DKP-4-UPGRADE-001 SHALL NOT operate during active Crisis states (C1–C4).",
+   "interpretation": "Reject any protocol operation while the supplied crisis state is C1, C2, C3, or C4. The literal wording covers the entire protocol, although it does not enumerate what counts as an operation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_state",
+    "upgrade_protocol_operation"
+   ],
+   "criterion": "If crisis_state is C1, C2, C3, or C4, no upgrade protocol operation occurs.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "current Crisis state",
+    "protocol operation log"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-2-06",
+   "section": "2",
+   "title": "Self Modification Security Conditions",
+   "quote": "Any modification of DKP-4-UPGRADE-001 itself SHALL require the highest security threshold and MUST demonstrably preserve or strengthen anti-capture guarantees relative to the current version.",
+   "interpretation": "Check self-modification against the highest applicable security threshold and compare anti-capture guarantees with the current version. Neither the threshold nor the guarantee comparison method is specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "self_modification",
+    "security_thresholds",
+    "security_evidence",
+    "current_anti_capture_guarantees",
+    "proposed_anti_capture_guarantees"
+   ],
+   "criterion": "A self-modification satisfies the highest security threshold and demonstrably preserves or strengthens current anti-capture guarantees.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "security assessment",
+    "current and proposed anti-capture evidence"
+   ],
+   "gap": "The security threshold hierarchy and formal comparison of anti-capture guarantees are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the security threshold hierarchy and highest threshold.",
+    "Declare the model and evidence standard for preserving or strengthening anti-capture guarantees."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-3-01",
+   "section": "3",
+   "title": "Substantive Change Upgrade Classification",
+   "quote": "An Upgrade is any proposed change that affects:",
+   "interpretation": "Classify a proposal as an Upgrade if it affects any listed mathematical, scoring, protocol, state-machine, trigger, interaction, or escalation element. Classification is decidable from declared affected categories, but establishing indirect effects requires impact analysis.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "affected_change_categories"
+   ],
+   "criterion": "A proposed change affecting formulas, coefficients, transformations, thresholds, weights, scoring functions, protocol logic, state machines, trigger conditions, cross-layer interactions, or escalation rules is an Upgrade.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "declared change impact categories"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-3-02",
+   "section": "3",
+   "title": "Cosmetic Change Scope Exclusion",
+   "quote": "Cosmetic, UI, documentation, or presentation changes are not considered upgrades under this protocol.",
+   "interpretation": "Exclude changes classified solely within these categories. A UI or documentation change that also affects a substantive category creates an overlap; section 12 explicitly limits its presentation exception to changes without normative effects.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "change_categories",
+    "normative_effects",
+    "substantive_effects"
+   ],
+   "criterion": "Cosmetic, UI, documentation, or presentation changes are excluded from Upgrade classification, subject to resolution of overlapping substantive effects.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "change classification",
+    "normative impact analysis"
+   ],
+   "gap": "The text does not explicitly resolve changes that belong to both excluded and substantive categories. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether substantive effects override an excluded presentation or UI classification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.1-01",
+   "section": "4.1",
+   "title": "Axiom Strength And Meaning Preservation",
+   "quote": "No upgrade SHALL weaken, reinterpret, or condition Axiom A1 (Preservation of Life) or Axiom A2 (Systemic Sustainability).",
+   "interpretation": "Compare the proposed system's treatment of both axioms with the deployed treatment. Detecting weakening, reinterpretation, or conditioning requires formal axiom semantics and an accepted comparison method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_axiom_semantics",
+    "proposed_axiom_semantics",
+    "upgrade_effects"
+   ],
+   "criterion": "Neither A1 nor A2 is weakened, reinterpreted, or made conditional by the upgrade.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom definitions",
+    "upgrade semantic analysis"
+   ],
+   "gap": "Formal axiom semantics and tests for weakening, reinterpretation, and conditioning are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a semantic preservation relation for A1 and A2."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.2-01",
+   "section": "4.2",
+   "title": "Exclusive PTL Verifiable Evidence",
+   "quote": "All upgrade evaluation, validation, and acceptance MUST rely exclusively on PTL-verifiable data and simulations.",
+   "interpretation": "Trace every evidentiary dependency used in evaluation, validation, and acceptance to a PTL verification basis. The wording may require simulations themselves to be PTL-verifiable or may distinguish PTL-verifiable data from simulations as a separate permitted class.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "evaluation_evidence",
+    "validation_evidence",
+    "acceptance_evidence",
+    "ptl_verification_records"
+   ],
+   "criterion": "Every relied-upon datum and simulation satisfies the applicable PTL-verifiability requirement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "evidence provenance",
+    "PTL verification records",
+    "simulation provenance"
+   ],
+   "gap": "PTL verification criteria and the precise verification requirement for simulations are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether PTL-verifiable modifies both data and simulations.",
+    "Declare acceptable PTL verification evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.3-01",
+   "section": "4.3",
+   "title": "Non Emergency Execution Requirement",
+   "quote": "Upgrades SHALL NOT be executed under urgency, fear, or crisis conditions.",
+   "interpretation": "Block execution when any prohibited condition holds. Crisis can be represented by system state, but urgency and fear lack operational definitions or specified measurement methods.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "execution_event",
+    "urgency_condition",
+    "fear_condition",
+    "crisis_condition"
+   ],
+   "criterion": "Upgrade execution implies the absence of urgency, fear, and crisis conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis state",
+    "execution context assessments"
+   ],
+   "gap": "No operational definitions or measurement rules are given for urgency and fear. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare operational predicates for urgency, fear, and crisis conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.4-01",
+   "section": "4.4",
+   "title": "Visible Specified Auditable Upgrades",
+   "quote": "Every upgrade MUST be publicly visible, formally specified, and fully auditable.",
+   "interpretation": "Check that each upgrade has a public record, a formal specification, and sufficient audit evidence. The text does not define the required specification language, public access standard, or audit completeness.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "public_upgrade_record",
+    "formal_specification",
+    "audit_evidence"
+   ],
+   "criterion": "Every upgrade is publicly visible, formally specified, and fully auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "public publication records",
+    "formal upgrade specifications",
+    "audit evidence"
+   ],
+   "gap": "Standards for public visibility, formal specification, and full auditability are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare public accessibility, specification validity, and audit completeness criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.5-01",
+   "section": "4.5",
+   "title": "Defense And Crisis Non Degradation",
+   "quote": "No upgrade SHALL reduce, weaken, delay, condition, or probabilistically dilute the effectiveness, trigger sensitivity, execution scope, or response latency of:",
+   "interpretation": "Compare Defense and Crisis behavior against the currently deployed version across every listed dimension. The blanket wording includes reducing response latency, which literally bans an improvement; a performance-preservation reading would instead prohibit increased latency.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_defense_behavior",
+    "proposed_defense_behavior",
+    "current_crisis_behavior",
+    "proposed_crisis_behavior",
+    "comparison_scenarios"
+   ],
+   "criterion": "Neither DKP-3-DEFENSE-001 nor DKP-4-CRISIS-001 undergoes a prohibited reduction, weakening, delay, conditioning, or probabilistic dilution relative to the deployed version.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "deployed and proposed Defense behavior",
+    "deployed and proposed Crisis behavior",
+    "comparative simulation results"
+   ],
+   "gap": "The comparison metrics and scenario coverage are unspecified, and the direction of the response-latency constraint is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare metrics and comparison semantics for every protected dimension.",
+    "Resolve whether response latency must remain numerically unreduced or must not worsen."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.5-02",
+   "section": "4.5",
+   "title": "Worst Case Survival Preservation",
+   "quote": "Any modification affecting L3 or L4 protocols MUST demonstrably preserve or strengthen survival guarantees under worst-case PTL-confirmed scenarios.",
+   "interpretation": "For changes affecting L3 or L4, compare survival guarantees under a declared set of worst-case PTL-confirmed scenarios. The document does not define survival guarantees or establish which scenarios are worst-case.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "affected_layers",
+    "current_survival_guarantees",
+    "proposed_survival_guarantees",
+    "ptl_confirmed_scenarios"
+   ],
+   "criterion": "Every change affecting L3 or L4 preserves or strengthens survival guarantees under worst-case PTL-confirmed scenarios.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "layer impact classification",
+    "PTL-confirmed scenarios",
+    "survival simulation results"
+   ],
+   "gap": "The survival model, guarantee ordering, and worst-case scenario selection are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare survival guarantee semantics and the method for identifying worst-case PTL-confirmed scenarios."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.6-01",
+   "section": "4.6",
+   "title": "Physical Inevitability Response Preservation",
+   "quote": "Any upgrade affecting threat detection, Defense triggers, Crisis escalation logic, or containment boundaries MUST preserve the system’s ability to respond to PTL-confirmed Vectors of Physical Inevitability.",
+   "interpretation": "For affected upgrades, test that the proposed system retains response capability for PTL-confirmed Vectors of Physical Inevitability. Neither the vector definition nor an adequate response criterion is supplied.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "affected_components",
+    "ptl_confirmed_vectors",
+    "current_response_capability",
+    "proposed_response_capability"
+   ],
+   "criterion": "Changes affecting the listed components preserve response capability for PTL-confirmed Vectors of Physical Inevitability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL-confirmed threat vectors",
+    "threat and response models",
+    "component impact analysis"
+   ],
+   "gap": "Vectors of Physical Inevitability and sufficient response capability are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare vector membership and a response-capability preservation test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-4.6-02",
+   "section": "4.6",
+   "title": "Inevitability Based Trigger Protection",
+   "quote": "Removal, weakening, probabilistic reinterpretation, or indirect delay of inevitability-based triggers is forbidden.",
+   "interpretation": "Compare inevitability-based triggers and their dependency paths before and after an upgrade. Detecting indirect delay or probabilistic reinterpretation requires a behavioral model beyond a direct source comparison.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_inevitability_triggers",
+    "proposed_inevitability_triggers",
+    "trigger_dependency_paths",
+    "trigger_timing"
+   ],
+   "criterion": "No inevitability-based trigger is removed, weakened, probabilistically reinterpreted, or indirectly delayed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "trigger definitions",
+    "trigger dependency graph",
+    "response timing evidence"
+   ],
+   "gap": "The trigger inventory and semantic tests for weakening, reinterpretation, and indirect delay are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare trigger equivalence, strength, and indirect timing comparison rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-5-01",
+   "section": "5",
+   "title": "Required Upgrade Proposal Contents",
+   "quote": "Any Upgrade Proposal MUST include:",
+   "interpretation": "Validate that a proposal contains all five required content categories: a formal change specification, before/after formula and logic comparison, expected Impact deltas, failure modes with deterministic rollback, and full simulation parameters and assumptions. Presence can be checked mechanically, while completeness, relevance, and rollback determinism need declared validation rules.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "formal_change_specification",
+    "before_after_comparison",
+    "expected_impact_deltas",
+    "failure_modes",
+    "rollback_plan",
+    "simulation_parameters",
+    "simulation_assumptions"
+   ],
+   "criterion": "The proposal contains all proposed changes, explicit before/after formula and logic comparisons, expected Impact deltas across relevant domains, identified failure modes, a deterministic rollback plan, and full simulation parameters and assumptions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "change inventory",
+    "domain impact estimates",
+    "failure analysis",
+    "rollback design",
+    "simulation configuration"
+   ],
+   "gap": "The document supplies no schema or completeness criteria for relevant domains, formal specification, full parameters, or deterministic rollback. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare required proposal schemas, completeness rules, relevant domains, and rollback determinism semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-5-02",
+   "section": "5",
+   "title": "Incomplete Proposal Procedural Rejection",
+   "quote": "Incomplete proposals SHALL be rejected procedurally.",
+   "interpretation": "Given a proposal completeness determination, require procedural rejection when the proposal is incomplete. The rule specifies rejection but no deadline or appeal path.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "proposal_completeness",
+    "proposal_disposition",
+    "rejection_basis"
+   ],
+   "criterion": "An incomplete proposal receives a procedural rejection.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "proposal validation result",
+    "proposal disposition log"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-6-01",
+   "section": "6",
+   "title": "Simulation Before Upgrade Approval",
+   "quote": "Before approval, every upgrade MUST undergo:\n\n- mandatory simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "Require a compliant simulation before approval; the additional statement \"No simulation → no upgrade.\" reinforces the gate. Event ordering is directly testable, but compliance with the referenced simulation protocol is not defined here.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_record",
+    "simulation_compliance",
+    "simulation_completion_time",
+    "approval_time"
+   ],
+   "criterion": "Every approved upgrade has already undergone simulation under DKP-8-SIMULATION-001; an upgrade without simulation cannot proceed.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "simulation execution records",
+    "simulation protocol compliance evidence"
+   ],
+   "gap": "DKP-8-SIMULATION-001 is absent, so its simulation requirements cannot be evaluated from this text. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an interface for establishing simulation protocol compliance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-6-02",
+   "section": "6",
+   "title": "Adversarial And Capture Analysis",
+   "quote": "- stress-testing against adversarial and edge-case scenarios,\n- capture-resistance analysis (including incremental takeover detection),",
+   "interpretation": "Require both stress-testing and capture-resistance analysis before approval, including incremental takeover detection. Merely recording their existence does not establish adequate scenario coverage or detection capability.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "stress_test_records",
+    "adversarial_scenarios",
+    "edge_case_scenarios",
+    "capture_resistance_analysis",
+    "incremental_takeover_detection",
+    "approval_time"
+   ],
+   "criterion": "Before approval, the upgrade undergoes adversarial and edge-case stress tests and capture-resistance analysis that includes incremental takeover detection.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "stress-test results",
+    "adversarial scenario inventory",
+    "capture-resistance analysis"
+   ],
+   "gap": "The required scenario coverage and adequacy standards for capture and incremental takeover analysis are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare adversarial and edge-case coverage and the capture model used for incremental takeover detection."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-6-03",
+   "section": "6",
+   "title": "Public Simulation Results And Methodology",
+   "quote": "- public release of simulation results and methodology.",
+   "interpretation": "Check that both simulation results and methodology are publicly released before approval, as required by the section's introductory condition. The document does not specify a publication platform.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "results_publication_record",
+    "methodology_publication_record",
+    "approval_time"
+   ],
+   "criterion": "Both simulation results and methodology have public release records preceding approval.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "public publication records",
+    "approval log"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-7-01",
+   "section": "7",
+   "title": "Upgrade Initiation Influence Caps",
+   "quote": "- caps on influence over upgrade initiation,",
+   "interpretation": "Measure initiation influence and enforce the applicable cap. The text requires caps but provides neither an influence metric nor a cap value.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "initiation_influence",
+    "influence_caps",
+    "proposal_initiators"
+   ],
+   "criterion": "Influence over upgrade initiation does not exceed the applicable caps.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "proposal initiation records",
+    "influence attribution"
+   ],
+   "gap": "The influence measure, aggregation scope, and cap values are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the influence metric, aggregation scope, and caps."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-7-02",
+   "section": "7",
+   "title": "Identity Linked Proposal Correlation",
+   "quote": "- detection of correlated proposals via DKP-1-IDENTITY-001 linkage,",
+   "interpretation": "Use Identity linkage data to detect correlated proposals. The document specifies the linkage source but not the correlation rule or detection standard.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "proposal_records",
+    "identity_linkages",
+    "correlation_rule"
+   ],
+   "criterion": "Correlated proposals are detected using DKP-1-IDENTITY-001 linkage.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "Identity linkage records",
+    "proposal history"
+   ],
+   "gap": "The Identity protocol and a rule for deciding proposal correlation are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how Identity linkages establish proposal correlation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-7-03",
+   "section": "7",
+   "title": "Cumulative Capture Upgrade Rejection",
+   "quote": "- rejection of cumulative micro-upgrades converging toward capture,",
+   "interpretation": "Evaluate upgrade sequences and reject micro-upgrades whose cumulative effects converge toward capture. This requires a temporal capture model and an operational definition of convergence.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "upgrade_history",
+    "candidate_micro_upgrade",
+    "cumulative_system_effects",
+    "capture_model"
+   ],
+   "criterion": "Cumulative micro-upgrades converging toward capture are rejected.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "historical upgrade effects",
+    "proposal sequence",
+    "capture analysis"
+   ],
+   "gap": "Micro-upgrade scope, capture, convergence, and the relevant historical horizon are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a cumulative capture model, convergence test, and historical horizon."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-7-04",
+   "section": "7",
+   "title": "Historical Proposal Lineage Traceability",
+   "quote": "- historical traceability of proposal lineage.",
+   "interpretation": "Check that retained records allow proposal lineage to be followed over time. The required lineage relationships and completeness standard are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "proposal_history",
+    "proposal_lineage_records"
+   ],
+   "criterion": "Proposal lineage remains historically traceable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "historical proposal records",
+    "proposal ancestry and linkage records"
+   ],
+   "gap": "The text does not define which lineage links must be recorded or what constitutes complete traceability. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the proposal lineage schema and completeness criterion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-8-01",
+   "section": "8",
+   "title": "Activation Eligibility Gate Conditions",
+   "quote": "- all simulations pass predefined safety and stability thresholds,\n- no unresolved ERROR or Justice appeals remain,\n- the activation window is publicly announced in advance.",
+   "interpretation": "Permit activation only when all three conditions hold. Threshold values and the meaning of unresolved ERROR are unspecified; advance announcement requires temporal precedence but no minimum lead time is given here.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_results",
+    "predefined_safety_thresholds",
+    "predefined_stability_thresholds",
+    "unresolved_error_records",
+    "unresolved_justice_appeals",
+    "activation_window",
+    "public_announcement_time",
+    "activation_time"
+   ],
+   "criterion": "Activation requires every simulation to pass predefined safety and stability thresholds, no unresolved ERROR or Justice appeals, and prior public announcement of the activation window.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "simulation results",
+    "ERROR status",
+    "Justice appeal status",
+    "public activation announcement"
+   ],
+   "gap": "Threshold values, the relevant unresolved-case scope, and the deadline against which advance announcement is measured are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare safety and stability thresholds and when they must be predefined.",
+    "Declare whether unresolved ERROR covers all error cases or only appeals.",
+    "Declare whether announcement must precede the window opening or the actual activation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-Post-CrisisCooldownRule-01",
+   "section": "Post-Crisis Cooldown Rule",
+   "title": "Post Crisis Proposal Activation Gate",
+   "quote": "Any upgrade affecting Defense, Crisis, Identity, or Justice layers SHALL NOT be proposed or activated until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001.",
+   "interpretation": "Block proposal and activation of affected upgrades until both the post-crisis audit and stabilization period are complete. The referenced audit protocol must supply completion criteria and clarify applicability when no crisis has occurred.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "affected_layers",
+    "crisis_history",
+    "post_crisis_audit_status",
+    "stabilization_period_status",
+    "proposal_time",
+    "activation_time"
+   ],
+   "criterion": "For upgrades affecting Defense, Crisis, Identity, or Justice, proposal and activation occur only after completion of the full post-crisis audit and stabilization period.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Crisis history",
+    "post-crisis audit completion",
+    "stabilization period completion"
+   ],
+   "gap": "DKP-8-AUDIT-001 is absent, leaving duration, completion criteria, and no-prior-crisis applicability unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the audit and stabilization completion interface and applicability before any crisis."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-Post-CrisisCooldownRule-02",
+   "section": "Post-Crisis Cooldown Rule",
+   "title": "Minimum Simulation Publication Cooling Period",
+   "quote": "- no less than 30 DTI-Days MUST elapse between publication of final simulation results and activation.",
+   "interpretation": "Compare final-result publication and activation using the supplied DTI time coordinates. Activation exactly 30 DTI-Days later satisfies the stated minimum.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "final_results_publication_dti",
+    "activation_dti"
+   ],
+   "criterion": "activation_dti − final_results_publication_dti ≥ 30 DTI-Days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "final simulation publication timestamp",
+    "activation timestamp",
+    "DTI time coordinates"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-Post-CrisisCooldownRule-03",
+   "section": "Post-Crisis Cooldown Rule",
+   "title": "Subject Cooling Period Error Access",
+   "quote": "During this period, any Subject MAY initiate DKP-4-ERROR-001 procedures upon detection of capture vectors, regressions, or hidden degradation.",
+   "interpretation": "Ensure any Subject can initiate the referenced error procedure during cooling-off after detecting a listed problem. The rule grants access and does not require initiation or specify adjudication outcomes.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "subject_status",
+    "cooling_period_status",
+    "detected_issue",
+    "error_initiation_request",
+    "error_procedure_access"
+   ],
+   "criterion": "During cooling-off, any Subject detecting a capture vector, regression, or hidden degradation is permitted to initiate DKP-4-ERROR-001 procedures.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001"
+   ],
+   "data_dependencies": [
+    "Subject status",
+    "reported issue evidence",
+    "ERROR procedure access records"
+   ],
+   "gap": "The referenced procedure and the recognition criteria for qualifying detections are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare qualifying detection evidence and the ERROR initiation interface."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-Post-CrisisCooldownRule-04",
+   "section": "Post-Crisis Cooldown Rule",
+   "title": "Deterministic DTI Activation Day",
+   "quote": "- occur at a deterministic DTI-Day,",
+   "interpretation": "Check that activation occurs on the day produced by a declared deterministic schedule. The document does not specify the scheduling function or when its inputs become fixed.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activation_schedule_rule",
+    "schedule_inputs",
+    "actual_activation_dti_day"
+   ],
+   "criterion": "Activation occurs at the deterministic DTI-Day determined by the activation schedule.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DTI calendar",
+    "activation scheduling record",
+    "actual activation event"
+   ],
+   "gap": "The deterministic scheduling rule and its input-fixing conditions are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the deterministic scheduling rule and when schedule inputs become fixed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-Post-CrisisCooldownRule-05",
+   "section": "Post-Crisis Cooldown Rule",
+   "title": "Defined Activation Reversibility Window",
+   "quote": "- be reversible within a defined window,",
+   "interpretation": "Require an explicitly defined window and verify that activation can be reversed within it. The wording can mean reversal remains available during the window or reversal must complete within the window.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "reversibility_window",
+    "reversal_mechanism",
+    "reversal_execution_model"
+   ],
+   "criterion": "Activation is reversible within its defined window.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reversal configuration",
+    "rollback capability evidence"
+   ],
+   "gap": "The window duration, its reference point, and whether it bounds availability or completion are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the window bounds and whether they govern reversal availability or completion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-Post-CrisisCooldownRule-06",
+   "section": "Post-Crisis Cooldown Rule",
+   "title": "Automatic Activation Logging And Commitment",
+   "quote": "- be automatically logged and committed.",
+   "interpretation": "Check that an activation automatically produces both a log record and a committed record. The text does not define the commitment mechanism or its durability semantics.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "activation_event",
+    "automatic_log_record",
+    "commit_record",
+    "commit_semantics"
+   ],
+   "criterion": "Every activation is automatically logged and committed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activation log",
+    "commitment records"
+   ],
+   "gap": "The meaning and required guarantees of committed are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the commitment operation and evidence that logging and commitment occur automatically."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-9-01",
+   "section": "9",
+   "title": "Automatic Last Stable Version Rollback",
+   "quote": "then automatic rollback to the last stable version SHALL be triggered.",
+   "interpretation": "When post-activation monitoring reports unexpected Impact deviation, instability, emergent capture vectors, or an upgrade-invariant violation, require an automatic rollback trigger targeting the last stable version. This specifies triggering, without a completion deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "post_activation_monitoring_events",
+    "expected_impact",
+    "invariant_checks",
+    "stable_version_history",
+    "rollback_trigger"
+   ],
+   "criterion": "Detection of any listed post-activation failure triggers automatic rollback to the last stable version.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact monitoring",
+    "stability and capture monitoring",
+    "invariant evaluation results",
+    "version stability history"
+   ],
+   "gap": "Unexpected deviation, instability, emergent capture, and last stable version lack operational selection or detection criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare deviation and instability detection rules, a capture detector, and the last-stable-version selection rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-9-02",
+   "section": "9",
+   "title": "Critical Error Upgrade Stacking Ban",
+   "quote": "Critical errors SHALL NOT be corrected by stacking new upgrades on top of a faulty version.",
+   "interpretation": "Reject a critical-error correction that applies another upgrade on top of the faulty version. The decision is mechanical once criticality, fault status, and version ancestry are supplied.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "error_criticality",
+    "faulty_version_status",
+    "correction_method",
+    "version_ancestry"
+   ],
+   "criterion": "A critical error is not corrected by applying a new upgrade on top of a faulty version.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error classification",
+    "version fault status",
+    "upgrade ancestry",
+    "correction plan"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-9-03",
+   "section": "9",
+   "title": "Rollback Precedes Optimization And Features",
+   "quote": "Rollback priority is higher than optimization or feature progression.",
+   "interpretation": "Check that the scheduling or decision policy ranks rollback above optimization and feature progression. The text does not require a particular preemption mechanism.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "operation_priority_order"
+   ],
+   "criterion": "Rollback ranks higher in priority than optimization and feature progression.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation scheduling policy"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-10-01",
+   "section": "10",
+   "title": "Public Anchored Permanent Audit Artifacts",
+   "quote": "All upgrade-related artifacts MUST be:",
+   "interpretation": "Check every upgrade-related artifact for public accessibility, PTL anchoring, permanent archival, and auditability under the referenced audit protocol. Permanent retention can be monitored and configured but cannot be conclusively established from a finite observation.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "upgrade_artifact_inventory",
+    "public_access_records",
+    "ptl_anchors",
+    "archive_records",
+    "retention_policy",
+    "audit_compliance"
+   ],
+   "criterion": "Every upgrade-related artifact is publicly accessible, PTL-anchored, permanently archived, and auditable under DKP-8-AUDIT-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "artifact inventory",
+    "public repository access",
+    "PTL anchors",
+    "archive retention records",
+    "audit compliance evidence"
+   ],
+   "gap": "The audit protocol, artifact scope, anchoring standard, and guarantees needed to establish permanent archival are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare artifact scope, PTL anchoring criteria, and an archival persistence model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-11-01",
+   "section": "11",
+   "title": "Emergency And Crisis Upgrade Ban",
+   "quote": "- allow emergency or crisis-time upgrades,",
+   "interpretation": "Under the introductory SHALL NOT, prohibit upgrades during emergencies or crises. This repeats earlier crisis and urgency restrictions but leaves emergency classification undefined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "upgrade_event",
+    "emergency_status",
+    "crisis_status"
+   ],
+   "criterion": "No emergency or crisis-time upgrade is allowed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "emergency classification",
+    "Crisis state",
+    "upgrade event log"
+   ],
+   "gap": "Emergency conditions are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the emergency predicate and its applicable time interval."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-11-02",
+   "section": "11",
+   "title": "Opaque Discretionary Parameter Tuning Ban",
+   "quote": "- permit opaque or discretionary parameter tuning,",
+   "interpretation": "Reject parameter tuning that is opaque or discretionary. The text does not define the disclosure or rule-based decision standard needed to classify either property.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "parameter_changes",
+    "tuning_rules",
+    "decision_records",
+    "public_disclosures"
+   ],
+   "criterion": "No parameter tuning is opaque or discretionary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "parameter tuning records",
+    "decision rules",
+    "public disclosures"
+   ],
+   "gap": "Opacity and discretion lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare sufficient transparency and the boundary between deterministic tuning and discretion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-11-03",
+   "section": "11",
+   "title": "Mandatory Safeguard Bypass Prohibition",
+   "quote": "- bypass simulation, audit, or cooling-off requirements,",
+   "interpretation": "Require every applicable simulation, audit, and cooling-off condition to be satisfied without an exemption path. A program can check the workflow against supplied requirement satisfaction records.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "applicable_requirements",
+    "requirement_satisfaction_records",
+    "workflow_trace"
+   ],
+   "criterion": "No upgrade workflow bypasses any applicable simulation, audit, or cooling-off requirement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "simulation compliance status",
+    "audit compliance status",
+    "cooling-off compliance status",
+    "workflow history"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-11-04",
+   "section": "11",
+   "title": "Subject Group Interest Privilege Ban",
+   "quote": "- privilege specific Subjects, groups, or interests.",
+   "interpretation": "Assess whether protocol rules or their effects privilege particular Subjects, groups, or interests. The text does not define privilege or distinguish permitted differentiation from prohibited preferential treatment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_rules",
+    "subject_treatment",
+    "group_treatment",
+    "interest_effects"
+   ],
+   "criterion": "The protocol does not privilege specific Subjects, groups, or interests.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject and group treatment records",
+    "distributional effects analysis"
+   ],
+   "gap": "A testable definition of privilege and the relevant comparison baseline are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the privilege predicate, comparison groups, and treatment or outcome dimensions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-01",
+   "section": "12",
+   "title": "Controlled Protocol Self Amendment",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Require a self-amendment to follow every named part of the controlled procedure, including simulation and audit under their referenced protocols. Rollback may mean a required capability or plan rather than mandatory actual reversion, since section 9 makes execution conditional on detected failures.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "self_amendment_record",
+    "proposal_record",
+    "simulation_compliance",
+    "audit_compliance",
+    "acceptance_compliance",
+    "activation_window",
+    "rollback_arrangements"
+   ],
+   "criterion": "A protocol change follows the controlled proposal, simulation, audit, acceptance, activation-window, and rollback procedure.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "self-amendment workflow",
+    "simulation compliance",
+    "audit compliance",
+    "activation and rollback records"
+   ],
+   "gap": "The simulation and audit protocols are absent, and the finality clause does not distinguish rollback capability from actual rollback execution. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Interpret rollback in the amendment procedure as required arrangements plus execution when section 9 conditions arise."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-02",
+   "section": "12",
+   "title": "Modification Identifier And Compatibility Requirements",
+   "quote": "- any modification requires a new protocol identifier,\n- mandatory simulation and audit,\n- explicit compatibility declaration.",
+   "interpretation": "Require a changed protocol identifier, completed simulation and audit, and an explicit compatibility declaration for an in-scope modification. The immediate context concerns modification of this protocol, while a broader reading could apply these requirements to every protocol modification.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "modification_scope",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "simulation_record",
+    "audit_record",
+    "compatibility_declaration"
+   ],
+   "criterion": "An in-scope modification has a new protocol identifier, simulation and audit records, and an explicit compatibility declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier history",
+    "simulation and audit completion records",
+    "compatibility declaration"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-03",
+   "section": "12",
+   "title": "Presentation Correction Edition Only Recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Given a presentation-only classification with no normative change, exclude the correction from the upgrade procedure and record it through the document's Last updated date. The word only must be read alongside the separate requirement to publish an edition digest.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "presentation_only_status",
+    "normative_content_changed",
+    "upgrade_classification",
+    "edition_date_record"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "change classification",
+    "edition metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-04",
+   "section": "12",
+   "title": "Published Document Last Edition Date",
+   "quote": "Edition dating (all DKP documents): every published document shows the date of its last edition (\"Last updated\").",
+   "interpretation": "Check every published DKP document for a displayed Last updated date matching its last edition date. This requirement applies across the corpus.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_document_inventory",
+    "displayed_last_updated_dates",
+    "last_edition_dates"
+   ],
+   "criterion": "Every published DKP document displays its last edition date as Last updated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "publication inventory",
+    "edition history",
+    "rendered document metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-05",
+   "section": "12",
+   "title": "Edition Date Limited Evidentiary Meaning",
+   "quote": "The date identifies the edition only. It does not certify that a change passed this protocol or that any required simulation, calibration or audit exists; it is not the activation date of a deferred change (Section 8); and rebuilding the publication or changing shared navigation does not change the dates of unchanged documents.",
+   "interpretation": "Ensure edition dates are treated solely as edition identifiers and are not used by themselves to establish upgrade compliance, simulation, calibration, audit, or deferred activation. This is a distinction in meaning, not a requirement that an edition date and activation date can never numerically coincide.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "edition_date_usage",
+    "compliance_evidence_rules",
+    "deferred_activation_date_source"
+   ],
+   "criterion": "A Last updated date alone establishes only edition identity and does not establish protocol passage, simulation, calibration, audit, or deferred activation timing.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metadata interpretation rules",
+    "compliance evidence provenance",
+    "activation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-06",
+   "section": "12",
+   "title": "Unchanged Document Date Stability",
+   "quote": "and rebuilding the publication or changing shared navigation does not change the dates of unchanged documents.",
+   "interpretation": "Compare edition dates before and after publication rebuilds or shared-navigation changes. Dates must remain identical for documents whose own content is unchanged.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "publication_event_type",
+    "document_change_status",
+    "edition_date_before",
+    "edition_date_after"
+   ],
+   "criterion": "For unchanged documents, a publication rebuild or shared-navigation change leaves the edition date unchanged.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "publication build records",
+    "document change status",
+    "edition metadata history"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "UPGRADE-12-07",
+   "section": "12",
+   "title": "Canonical Published Edition Digest Listing",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Compute SHA-256 over each published edition's supplied canonical source and compare it with the entry in the canonical repository's SHA256SUMS.txt. The checker needs an unambiguous mapping from each edition to its canonical source bytes and manifest entry.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_manifest_mapping",
+    "canonical_sha256sums"
+   ],
+   "criterion": "For each published edition, SHA256SUMS.txt in github.com/anahronic/World lists a digest equal to SHA-256 of that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source bytes",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}
