@@ -465,11 +465,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "prevention",
+    "module": "contribution",
     "version": "1.0.0",
-    "check": "epistemic_metadata"
+    "check": "record_metadata",
+    "also": [
+     {
+      "module": "prevention",
+      "version": "1.0.0",
+      "check": "epistemic_metadata"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_prevention_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

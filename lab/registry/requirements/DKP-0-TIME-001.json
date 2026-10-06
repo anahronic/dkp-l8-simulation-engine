@@ -444,11 +444,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "time",
-    "version": "1.1.0",
-    "check": "string_form"
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "record_time_index",
+    "also": [
+     {
+      "module": "time",
+      "version": "1.1.0",
+      "check": "string_form"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_time_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

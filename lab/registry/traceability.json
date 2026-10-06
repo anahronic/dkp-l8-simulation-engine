@@ -3,6 +3,7 @@
  "corpus": "aad3e86ca293d61c7c6d3a0a05741d23676f0e18",
  "registry_problems": 0,
  "modules": [
+  "contribution",
   "dispute_correction",
   "failure_chain",
   "prevention",
@@ -189,6 +190,31 @@
    "module": "dispute_correction",
    "example": "unfounded_appeal",
    "counterexample": false
+  },
+  {
+   "module": "contribution",
+   "example": "faulty_recognition",
+   "counterexample": true
+  },
+  {
+   "module": "contribution",
+   "example": "proportional_attribution",
+   "counterexample": false
+  },
+  {
+   "module": "contribution",
+   "example": "smoke",
+   "counterexample": false
+  },
+  {
+   "module": "contribution",
+   "example": "stale_at_decision",
+   "counterexample": false
+  },
+  {
+   "module": "contribution",
+   "example": "with_adversary",
+   "counterexample": false
   }
  ],
  "totals": {
@@ -214,17 +240,17 @@
    "DKP-8-SIMULATION-001"
   ],
   "provisions": 948,
-  "covered": 126,
-  "covered_percent": 13.3,
+  "covered": 137,
+  "covered_percent": 14.5,
   "statuses": {
-   "PASS": 106,
+   "PASS": 116,
    "FAIL": 7,
-   "UNKNOWN": 7,
-   "NOT_APPLICABLE": 6,
-   "UNCOVERED": 822
+   "UNKNOWN": 9,
+   "NOT_APPLICABLE": 5,
+   "UNCOVERED": 811
   },
   "resolvable": 215,
-  "resolvable_uncovered": 168,
+  "resolvable_uncovered": 164,
   "unresolved_decisions": 733
  },
  "stages": [
@@ -287,17 +313,17 @@
      "DKP-8-SIMULATION-001"
     ],
     "provisions": 948,
-    "covered": 126,
-    "covered_percent": 13.3,
+    "covered": 137,
+    "covered_percent": 14.5,
     "statuses": {
-     "PASS": 106,
+     "PASS": 116,
      "FAIL": 7,
-     "UNKNOWN": 7,
-     "NOT_APPLICABLE": 6,
-     "UNCOVERED": 822
+     "UNKNOWN": 9,
+     "NOT_APPLICABLE": 5,
+     "UNCOVERED": 811
     },
     "resolvable": 215,
-    "resolvable_uncovered": 168,
+    "resolvable_uncovered": 164,
     "unresolved_decisions": 733
    }
   },
@@ -340,10 +366,10 @@
     "covered": 19,
     "covered_percent": 44.2,
     "statuses": {
-     "PASS": 17,
+     "PASS": 18,
      "FAIL": 0,
      "UNKNOWN": 1,
-     "NOT_APPLICABLE": 1,
+     "NOT_APPLICABLE": 0,
      "UNCOVERED": 24
     },
     "resolvable": 7,
@@ -407,17 +433,17 @@
      "DKP-6-INTEGRATION-001"
     ],
     "provisions": 263,
-    "covered": 22,
-    "covered_percent": 8.4,
+    "covered": 33,
+    "covered_percent": 12.5,
     "statuses": {
-     "PASS": 20,
+     "PASS": 29,
      "FAIL": 0,
-     "UNKNOWN": 1,
+     "UNKNOWN": 3,
      "NOT_APPLICABLE": 1,
-     "UNCOVERED": 241
+     "UNCOVERED": 230
     },
     "resolvable": 52,
-    "resolvable_uncovered": 45,
+    "resolvable_uncovered": 41,
     "unresolved_decisions": 211
    }
   },
@@ -535,16 +561,9 @@
     "DKP-2-LABOR-001",
     "DKP-1-EPISTEMIC-BOUNDARIES-001"
    ],
-   "module": null,
-   "status": "NOT STARTED",
-   "documents_without_checks": [
-    "DKP-0-ORACLE-001",
-    "DKP-0-TIME-001",
-    "DKP-1-PREVENTION-001",
-    "DKP-1-IDENTITY-001",
-    "DKP-2-LABOR-001",
-    "DKP-1-EPISTEMIC-BOUNDARIES-001"
-   ]
+   "module": "contribution",
+   "status": "DONE",
+   "documents_without_checks": []
   },
   {
    "id": "S-LAB-02",
@@ -4777,30 +4796,35 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "failure_chain",
-   "check": "no_stale_in_state",
+   "module": "contribution",
+   "check": "no_recognition_from_stale_data",
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "S(t) is an equal-weight mean of admissible values (H-FC-2).",
-   "also_checked_by": [],
+   "gap": "contribution: Staleness as flagged by the bench's TTL rule (PREVENTION §3.6; open question Q-015). failure_chain: S(t) is an equal-weight mean of admissible values (H-FC-2).",
+   "also_checked_by": [
+    "failure_chain · no_stale_in_state"
+   ],
    "hypotheses": [
+    "H-CO-1",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "PREVENTION-H-*"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -5438,19 +5462,25 @@
    "kind": "contract",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "time",
-   "check": "string_form",
+   "module": "contribution",
+   "check": "record_time_index",
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_time_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
-   "hypotheses": [],
+   "also_checked_by": [
+    "time · string_form"
+   ],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7306,21 +7336,25 @@
    "kind": "contract",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "prevention",
-   "check": "epistemic_metadata",
+   "module": "contribution",
+   "check": "record_metadata",
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_prevention_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "prevention · epistemic_metadata"
+   ],
    "hypotheses": [
+    "H-CO-1",
     "PREVENTION-H-*"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8682,32 +8716,39 @@
    "kind": "contract",
    "checkable": "partial",
    "coverage": "IMPLEMENTED",
-   "module": "dispute_correction",
-   "check": "no_attribution_logged_deferred",
+   "module": "contribution",
+   "check": "no_imputed_attribution",
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_dispute_correction_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "dispute_correction · no_attribution_logged_deferred"
+   ],
    "hypotheses": [
+    "H-CO-1",
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "PREVENTION-H-*"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 11
    },
    "status": "PASS",
-   "counterexample_detected_by": []
+   "counterexample_detected_by": [
+    "contribution:faulty_recognition"
+   ]
   },
   {
    "id": "IDENTITY-4.1-04",
@@ -12350,27 +12391,33 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "prevention",
-   "check": "self_induced_zero",
+   "module": "contribution",
+   "check": "no_recognition_for_own_threat",
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_prevention_module.py"
    ],
-   "gap": "Checks T = 0 for observed linkage > θ; how linkage is measured is a scenario hypothesis (H-L).",
-   "also_checked_by": [],
+   "gap": "contribution: Self-induced linkage as detected by the bench. prevention: Checks T = 0 for observed linkage > θ; how linkage is measured is a scenario hypothesis (H-L).",
+   "also_checked_by": [
+    "prevention · self_induced_zero"
+   ],
    "hypotheses": [
+    "H-CO-1",
     "PREVENTION-H-*"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 4
+    "NOT_APPLICABLE": 7
    },
-   "status": "NOT_APPLICABLE",
-   "counterexample_detected_by": []
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "contribution:faulty_recognition"
+   ]
   },
   {
    "id": "PREV-9.3-01",
@@ -14784,23 +14831,28 @@
    "section": "11",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The identity protocol, the meaning of direct bindability, and public audit access standards are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "contribution",
+   "check": "identity_bound_traceable",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": []
   },
   {
@@ -14809,23 +14861,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited participation categories and methods for establishing them are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "contribution",
+   "check": "no_proxy_or_fictitious_participation",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": []
   },
   {
@@ -15009,23 +15066,28 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "no_participation_rules_under_inconsistency",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "Oracle inconsistency of the bench stands for PTL divergence; systemic halt is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": []
   },
   {
@@ -15034,24 +15096,31 @@
    "section": "3.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The impact protocol and operational definitions of sustained activity, stability contribution, and causal attribution are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "only_measured_attributed_contribution",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "Voluntariness and 'sustained' are not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": []
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "contribution:faulty_recognition"
+   ]
   },
   {
    "id": "LABOR-3.2-01",
@@ -15084,24 +15153,31 @@
    "section": "3.2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "impact_only_evaluation",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "Invariance is checked against declared claims and attribution only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": []
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "contribution:faulty_recognition"
+   ]
   },
   {
    "id": "LABOR-3.3-01",
@@ -15109,23 +15185,28 @@
    "section": "3.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "contribution",
+   "check": "record_immutable_time_indexed",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": []
   },
   {
@@ -15134,23 +15215,28 @@
    "section": "3.3",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "record_links",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "The justice adjustment is a field marked 'not computed' (§5.2 gives no function).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": []
   },
   {
@@ -15309,23 +15395,28 @@
    "section": "5.2",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The deterministic recovery function and the representation of channel relevance are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "justice_recovery_function",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "The recovery function is not given: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 4,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": []
   },
   {
@@ -15334,24 +15425,31 @@
    "section": "5.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The excluded categories and their treatment when measurable impact exists are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "contribution",
+   "check": "no_declarative_recognition",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": []
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "contribution:faulty_recognition"
+   ]
   },
   {
    "id": "LABOR-6-01",
@@ -15509,23 +15607,28 @@
    "section": "8.1",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The proportionality interpretation, coefficient, and measurement scales for impact and compensation are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "compensation_proportional",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "Compensation is not defined: UNKNOWN; SPD is not renamed money.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 4,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": []
   },
   {
@@ -15534,23 +15637,28 @@
    "section": "8.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced impact protocol and criteria for stabilizing impact and appropriate proxies are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "contribution",
+   "check": "nonmarket_prevention_recognised",
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
+   "gap": "Prevention is the only non-market contribution modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CO-1",
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": []
   },
   {

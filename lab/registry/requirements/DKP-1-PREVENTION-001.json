@@ -936,17 +936,25 @@
     "L8 linkage thresholds",
     "tamper-resistance factors"
    ],
-   "gap": "Checks T = 0 for observed linkage > θ; how linkage is measured is a scenario hypothesis (H-L).",
+   "gap": "contribution: Self-induced linkage as detected by the bench. prevention: Checks T = 0 for observed linkage > θ; how linkage is measured is a scenario hypothesis (H-L).",
    "hypotheses_needed": [
     "Declare how linkage(subject, TAₖ) is measured."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "prevention",
+    "module": "contribution",
     "version": "1.0.0",
-    "check": "self_induced_zero"
+    "check": "no_recognition_for_own_threat",
+    "also": [
+     {
+      "module": "prevention",
+      "version": "1.0.0",
+      "check": "self_induced_zero"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_prevention_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

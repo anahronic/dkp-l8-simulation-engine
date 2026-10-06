@@ -415,11 +415,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "dispute_correction",
+    "module": "contribution",
     "version": "1.0.0",
-    "check": "no_attribution_logged_deferred"
+    "check": "no_imputed_attribution",
+    "also": [
+     {
+      "module": "dispute_correction",
+      "version": "1.0.0",
+      "check": "no_attribution_logged_deferred"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_dispute_correction_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

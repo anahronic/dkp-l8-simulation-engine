@@ -95,11 +95,17 @@
    "data_dependencies": [
     "PTL halt and divergence status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Oracle inconsistency of the bench stands for PTL divergence; systemic halt is not modelled.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "no_participation_rules_under_inconsistency"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -130,14 +136,20 @@
     "causal attribution",
     "Subject consent and activity history"
    ],
-   "gap": "The impact protocol and operational definitions of sustained activity, stability contribution, and causal attribution are absent. No lab check implemented yet.",
+   "gap": "Voluntariness and 'sustained' are not modelled.",
    "hypotheses_needed": [
     "An operational definition of sustained activity.",
     "A model for stability contribution and causal attribution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "only_measured_attributed_contribution"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -198,11 +210,17 @@
    "data_dependencies": [
     "measured impact outputs"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Invariance is checked against declared claims and attribution only.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "impact_only_evaluation"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -224,11 +242,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "record_immutable_time_indexed"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -256,11 +280,17 @@
     "measured impact outputs",
     "justice adjustments"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The justice adjustment is a field marked 'not computed' (§5.2 gives no function).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "record_links"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -487,14 +517,20 @@
     "harmed impact channels",
     "contribution time horizons"
    ],
-   "gap": "The deterministic recovery function and the representation of channel relevance are unspecified. No lab check implemented yet.",
+   "gap": "The recovery function is not given: UNKNOWN.",
    "hypotheses_needed": [
     "An explicit recovery function using the stated inputs.",
     "A representation of relevance to harmed impact channels."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "justice_recovery_function"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -518,14 +554,20 @@
    "data_dependencies": [
     "activity classification evidence"
    ],
-   "gap": "The excluded categories and their treatment when measurable impact exists are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Definitions of symbolic, performative, and purely declarative activity.",
     "A precedence rule for activities also satisfying the labor definition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "no_declarative_recognition"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -743,14 +785,20 @@
     "impact measurements",
     "compensation records"
    ],
-   "gap": "The proportionality interpretation, coefficient, and measurement scales for impact and compensation are unspecified. No lab check implemented yet.",
+   "gap": "Compensation is not defined: UNKNOWN; SPD is not renamed money.",
    "hypotheses_needed": [
     "A declared interpretation of proportionality.",
     "Compatible impact and compensation scales and any required proportionality parameters."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "compensation_proportional"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -778,13 +826,19 @@
     "stabilizing impact measurements",
     "physical or informational proxy readings"
    ],
-   "gap": "The referenced impact protocol and criteria for stabilizing impact and appropriate proxies are absent. No lab check implemented yet.",
+   "gap": "Prevention is the only non-market contribution modelled.",
    "hypotheses_needed": [
     "A model identifying stabilizing impact and suitable proxies for each contribution type."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "nonmarket_prevention_recognised"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1083,14 +1137,20 @@
     "impact outputs",
     "public audit interfaces"
    ],
-   "gap": "The identity protocol, the meaning of direct bindability, and public audit access standards are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A reading of bindability as an existing link or available binding capability.",
     "An operational public-audit standard."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "identity_bound_traceable"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1115,13 +1175,19 @@
    "data_dependencies": [
     "identity and activity verification evidence"
    ],
-   "gap": "The prohibited participation categories and methods for establishing them are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Definitions and detection rules for proxy, fictitious, and obscured participation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "no_proxy_or_fictitious_participation"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"

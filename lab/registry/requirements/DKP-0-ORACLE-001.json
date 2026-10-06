@@ -839,17 +839,25 @@
    "data_dependencies": [
     "current-state computation lineage"
    ],
-   "gap": "S(t) is an equal-weight mean of admissible values (H-FC-2).",
+   "gap": "contribution: Staleness as flagged by the bench's TTL rule (PREVENTION §3.6; open question Q-015). failure_chain: S(t) is an equal-weight mean of admissible values (H-FC-2).",
    "hypotheses_needed": [
     "Declare the meaning of substitution and operation labels for stale-data processing."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "no_stale_in_state"
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "no_recognition_from_stale_data",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "no_stale_in_state"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_contribution_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
