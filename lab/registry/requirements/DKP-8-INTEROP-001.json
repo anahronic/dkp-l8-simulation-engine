@@ -1,0 +1,1535 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-8-INTEROP-001",
+ "doc_sha256": "17102577c36b86675aaf0898b14046bfd00faa61732bc3dc9e276cfb5bf19fc4",
+ "prefix": "INTEROP",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Purpose statements and the System Position list of protocol names are not independently registered. Section 4's numbered provisions are treated as sections 4.1–4.4. Quotes containing list items inherit their permission, prohibition, or requirement from the introductory text. Referenced protocols were not supplied; their existence and contents are unverified. Dependencies list only document identifiers explicitly cited by the relevant provision. PTL, justice weighting, full externality internalization, graceful degradation, and compatibility lack operational definitions here. The relationship between the failure-time rollback prohibition in section 9 and upgrade rollback in section 13 requires clarification.",
+ "requirements": [
+  {
+   "id": "INTEROP-1-01",
+   "section": "1",
+   "title": "Excluded protocol functions",
+   "quote": "- harmonize legal systems,\n- enforce DKP externally,\n- accept external norms as binding within DKP.",
+   "interpretation": "Under the introductory prohibition, protocol operations must exclude these three functions. Testing requires a classification of operations as harmonization, external enforcement, or acceptance of binding external norms.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "operation_classifications"
+   ],
+   "criterion": "No protocol operation harmonizes legal systems, enforces DKP externally, or accepts external norms as internally binding.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation records and classifications"
+   ],
+   "gap": "The text does not operationally define the excluded functions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how operations are classified into the excluded functions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-2-01",
+   "section": "2",
+   "title": "Purely translational protocol",
+   "quote": "This protocol is purely translational.",
+   "interpretation": "Check that operations performed under this protocol are translations between representations. The boundary between translation and substantive decision-making is not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "translation_rules"
+   ],
+   "criterion": "Every operation under this protocol is translational.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation traces",
+    "translation rule definitions"
+   ],
+   "gap": "An operational boundary between translation and other functions is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the permitted semantics and effects of a translation operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-3-01",
+   "section": "3",
+   "title": "External system classification",
+   "quote": "External System — any legal, economic, technical, or informational system not governed by DKP protocols.",
+   "interpretation": "Classify a system as external when it belongs to a listed category and is not governed by DKP protocols. The check assumes those attributes are supplied as structured facts.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "system_category",
+    "governed_by_dkp"
+   ],
+   "criterion": "An external system is legal, economic, technical, or informational and is not governed by DKP protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system category and governance status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-3-02",
+   "section": "3",
+   "title": "Interop boundary definition",
+   "quote": "Interop Boundary — a formally defined interface where DKP state interacts with an external system.",
+   "interpretation": "Check that a claimed boundary has a formal interface definition and connects DKP state to a system classified as external. The text does not prescribe a formal specification language.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "interface_definition",
+    "interaction_endpoints",
+    "external_system_status"
+   ],
+   "criterion": "An interop boundary is a formally defined interface through which DKP state interacts with an external system.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interface specifications",
+    "endpoint governance classifications"
+   ],
+   "gap": "The required form and sufficiency of a formal interface definition are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an accepted formal interface specification format."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-3-03",
+   "section": "3",
+   "title": "Deterministic translation layer",
+   "quote": "Translation Layer — deterministic mapping between DKP-native representations and external representations.",
+   "interpretation": "Check that each complete mapping input determines a unique output between the two representation systems. A declared mapping domain and treatment of contextual state are needed to establish determinism.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "mapping_definition",
+    "dkp_representations",
+    "external_representations",
+    "mapping_context"
+   ],
+   "criterion": "The mapping between DKP-native and external representations is deterministic.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "representation schemas",
+    "mapping definitions"
+   ],
+   "gap": "The mapping domain and the contextual state included in its inputs are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the complete input domain and any context affecting mapping outputs."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-3-04",
+   "section": "3",
+   "title": "Normative leakage classification",
+   "quote": "Normative Leakage — implicit import of external authority, norms, or obligations into DKP without explicit protocol authorization.",
+   "interpretation": "Classify an import as normative leakage when it implicitly imports a listed normative object and lacks explicit protocol authorization. Identifying implicit imports and matching authorizations requires semantic rules.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "import_events",
+    "imported_object_types",
+    "protocol_authorizations"
+   ],
+   "criterion": "An implicit import of external authority, norms, or obligations without explicit protocol authorization is normative leakage.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "import provenance",
+    "protocol authorization records"
+   ],
+   "gap": "Rules for identifying implicit normative imports and applicable authorizations are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how implicit imports and their authorization scope are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-4.1-01",
+   "section": "4",
+   "title": "External systems cannot override axioms",
+   "quote": "No external system MAY override or reinterpret DKP axioms under any interoperability mechanism.",
+   "interpretation": "Check interoperability effects against the governing axioms for overrides or reinterpretations. The axiom content and a semantic equivalence test are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dkp_axioms",
+    "interoperability_effects",
+    "axiom_interpretations"
+   ],
+   "criterion": "No interoperability mechanism permits an external system to override or reinterpret DKP axioms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governing axioms",
+    "interoperability decisions and effects"
+   ],
+   "gap": "The axioms and a method for detecting reinterpretation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how operation semantics are compared with the governing axioms."
+   ],
+   "section_label": "4.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-4.2-01",
+   "section": "4",
+   "title": "Preserve established DKP jurisdiction",
+   "quote": "Interop SHALL NOT expand DKP jurisdiction beyond DKP-7-SCOPE-001.",
+   "interpretation": "Compare jurisdiction exercised through interoperability with the jurisdiction allowed by the scope protocol. That protocol is not included.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "interop_jurisdiction",
+    "authorized_dkp_scope"
+   ],
+   "criterion": "Interop jurisdiction remains within the scope authorized by DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "authorized jurisdiction from the scope module",
+    "jurisdictional effects of interoperability"
+   ],
+   "gap": "DKP-7-SCOPE-001 is absent, so the authorized jurisdiction cannot be derived. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply an explicit scope model if the referenced protocol remains unavailable."
+   ],
+   "section_label": "4.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-4.3-01",
+   "section": "4",
+   "title": "Compatibility confers no normative status",
+   "quote": "Technical or legal compatibility SHALL NOT be treated as legitimacy, obligation, or consent.",
+   "interpretation": "Inspect decision rules and provenance to ensure compatibility is not treated as conferring any listed status. The text does not specify a formal representation of legitimacy, obligation, or consent.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "compatibility_findings",
+    "normative_decisions",
+    "decision_provenance"
+   ],
+   "criterion": "Technical or legal compatibility is not treated as legitimacy, obligation, or consent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "compatibility assessments",
+    "normative decision provenance"
+   ],
+   "gap": "A representation of the normative statuses and prohibited inference relationships is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how decisions and inference rules encode legitimacy, obligation, and consent."
+   ],
+   "section_label": "4.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-4.4-01",
+   "section": "4",
+   "title": "Explicit auditable translation rules",
+   "quote": "All interoperability MUST operate via explicit, auditable translation rules.",
+   "interpretation": "Require each interoperability operation to identify the translation rule it applies and make that rule available for audit. Auditability needs an acceptance standard beyond the presence of a rule record.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "interop_operations",
+    "translation_rule_records",
+    "audit_access"
+   ],
+   "criterion": "Every interoperability operation uses explicit translation rules that are auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation-to-rule links",
+    "translation rule specifications",
+    "audit access evidence"
+   ],
+   "gap": "The criteria for adequate explicitness and auditability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the evidence required to establish that a translation rule is explicit and auditable."
+   ],
+   "section_label": "4.4",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-5-01",
+   "section": "5",
+   "title": "Permitted legal output exports",
+   "quote": "- DKP outputs MAY be exported as evidence, signals, or reference data,",
+   "interpretation": "Recognize export of DKP outputs in these roles as permitted during external legal interaction. This permission neither requires exports nor explicitly makes the listed roles exhaustive.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "exported_object_type",
+    "export_role",
+    "interaction_context"
+   ],
+   "criterion": "In external legal interaction, export of DKP outputs as evidence, signals, or reference data is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "export records with object type, role, and context"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-5-02",
+   "section": "5",
+   "title": "External rulings lack internal force",
+   "quote": "- DKP SHALL NOT recognize external rulings as binding internally,",
+   "interpretation": "Check that no external ruling receives internally binding status. The check requires structured provenance and binding-status records.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ruling_origin",
+    "internal_binding_status"
+   ],
+   "criterion": "Every external ruling has no internally binding recognition.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "ruling provenance",
+    "internal recognition status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-5-03",
+   "section": "5",
+   "title": "Subjects hold external compliance responsibility",
+   "quote": "- legal compliance outside DKP is the responsibility of Subjects, not the system.",
+   "interpretation": "Check responsibility assignments for legal compliance outside DKP. This allocates responsibility; it does not require the protocol to establish whether actual external compliance occurred.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "compliance_context",
+    "responsibility_assignment"
+   ],
+   "criterion": "Responsibility for legal compliance outside DKP is assigned to Subjects and not to the DKP system.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external compliance responsibility records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-5-04",
+   "section": "5",
+   "title": "No external legal conflict adjudication",
+   "quote": "DKP does not adjudicate conflicts between external legal regimes.",
+   "interpretation": "Reject DKP operations that adjudicate a conflict between external legal regimes. Classifying an operation as adjudication requires an operational definition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dkp_operations",
+    "conflict_parties",
+    "operation_classifications"
+   ],
+   "criterion": "DKP performs no adjudication of conflicts between external legal regimes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation records",
+    "external legal regime classifications"
+   ],
+   "gap": "The boundary between adjudication and permitted legal information translation is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification rule for adjudication of external legal conflicts."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-6-01",
+   "section": "6",
+   "title": "Permitted economic interaction mechanisms",
+   "quote": "- asset bridges,\n- reporting gateways,\n- settlement mirrors.",
+   "interpretation": "Under the introductory permission, these mechanisms may connect external economic systems with DKP. The text does not say whether this permission exhausts all allowable mechanism types.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "external_system_category",
+    "interaction_mechanism"
+   ],
+   "criterion": "External economic interaction through asset bridges, reporting gateways, or settlement mirrors is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "economic interface mechanism classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-6-02",
+   "section": "6",
+   "title": "Justice weighted internal value translation",
+   "quote": "- be translated into justice-weighted internal equivalents,",
+   "interpretation": "For every external value, require an internal equivalent produced by justice weighting. No weighting formula or equivalence relation is supplied.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "external_values",
+    "internal_equivalents",
+    "justice_weighting_rule"
+   ],
+   "criterion": "Every external value is translated into its justice-weighted internal equivalent.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external value records",
+    "internal valuation outputs",
+    "justice weighting parameters"
+   ],
+   "gap": "The justice weighting formula and the meaning of internal equivalence are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the justice weighting formula, its parameters, and the equivalence relation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-6-03",
+   "section": "6",
+   "title": "Fully internalize external value externalities",
+   "quote": "- undergo full externality internalization,",
+   "interpretation": "Check each external value against a model identifying its externalities and how they are internalized. The text supplies neither a measurement model nor a completeness criterion.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "external_values",
+    "externality_inventory",
+    "internalization_records"
+   ],
+   "criterion": "Every external value undergoes full externality internalization.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "externality assessments",
+    "internalization accounting"
+   ],
+   "gap": "The externality accounting model and the criterion for full internalization are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare externality boundaries, valuation methods, and how complete internalization is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-6-04",
+   "section": "6",
+   "title": "Flag externally sourced values",
+   "quote": "- be flagged as externally sourced.",
+   "interpretation": "Require an external-source flag on every external value. The text requires the flag's meaning but does not prescribe its field name or encoding.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "value_origin",
+    "external_source_flag"
+   ],
+   "criterion": "Every externally sourced value carries an externally sourced flag.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "value provenance and source flags"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-6-05",
+   "section": "6",
+   "title": "Financial constraints remain applicable",
+   "quote": "No external financial instrument may bypass DKP-2-FINANCE-001 constraints.",
+   "interpretation": "Apply the finance protocol's constraints to every external financial instrument without an interoperability exemption. The relevant constraints are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "external_financial_instruments",
+    "finance_constraints",
+    "constraint_evaluations"
+   ],
+   "criterion": "No external financial instrument bypasses any applicable DKP-2-FINANCE-001 constraint.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-2-FINANCE-001"
+   ],
+   "data_dependencies": [
+    "financial instrument records",
+    "finance constraint definitions and evaluations"
+   ],
+   "gap": "DKP-2-FINANCE-001 is absent, so its constraints cannot be evaluated. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply an explicit finance constraint model if the referenced protocol remains unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-7-01",
+   "section": "7",
+   "title": "Require open technical specifications",
+   "quote": "- open specifications,",
+   "interpretation": "Require open specifications for technical interoperability. The text does not define whether openness concerns publication, licensing, implementation access, or all of these.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "technical_interfaces",
+    "specifications",
+    "specification_access_terms"
+   ],
+   "criterion": "Technical interoperability has open specifications.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "technical specifications and access terms"
+   ],
+   "gap": "The meaning and acceptance criteria of open specifications are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the publication, access, and licensing conditions that constitute openness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-7-02",
+   "section": "7",
+   "title": "Require cryptographic verifiability",
+   "quote": "- cryptographic verifiability,",
+   "interpretation": "Check that technical interoperability provides evidence that can be cryptographically verified. The text does not identify the objects to verify, algorithms, trust roots, or verification properties.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "interop_artifacts",
+    "cryptographic_evidence",
+    "verification_scheme",
+    "trust_roots"
+   ],
+   "criterion": "Technical interoperability is cryptographically verifiable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cryptographic proofs or signatures",
+    "verification keys and trust configuration"
+   ],
+   "gap": "The verification target, cryptographic scheme, and trust model are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which properties and artifacts must be verifiable and under which cryptographic trust model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-7-03",
+   "section": "7",
+   "title": "Provide compatible audit hooks",
+   "quote": "- audit hooks compatible with DKP-8-AUDIT-001.",
+   "interpretation": "Require technical interfaces to provide audit hooks satisfying the audit protocol. Their required interface and behavior cannot be derived from this document alone.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "audit_hooks",
+    "audit_interface_requirements"
+   ],
+   "criterion": "Technical interoperability provides audit hooks compatible with DKP-8-AUDIT-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "audit hook specifications",
+    "audit protocol interface requirements"
+   ],
+   "gap": "DKP-8-AUDIT-001 is absent, including its audit hook compatibility requirements. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an audit hook contract if the referenced protocol remains unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-7-04",
+   "section": "7",
+   "title": "Exclude opaque authoritative control inputs",
+   "quote": "Black-box or proprietary control logic SHALL NOT be trusted as authoritative inputs.",
+   "interpretation": "Reject authoritative-input status for control logic classified as black-box or proprietary. Either classification is sufficient; the text does not define the classifications.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "control_logic_classifications",
+    "input_authority_status"
+   ],
+   "criterion": "Control logic that is black-box or proprietary is never trusted as an authoritative input.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "control logic transparency and ownership classifications",
+    "input trust assignments"
+   ],
+   "gap": "Operational definitions of black-box and proprietary control logic are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how control logic is classified as black-box or proprietary."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-8-01",
+   "section": "8",
+   "title": "Restrict external information ingestion status",
+   "quote": "- untrusted inputs,\n- I1 (Unverified Claims) under DKP-5-INFO-001.",
+   "interpretation": "At ingestion, check that external information is treated as untrusted and assigned I1 status. The list may describe cumulative requirements or alternative permitted representations; the text does not explicitly resolve that distinction.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "information_origin",
+    "ingestion_trust_status",
+    "information_class"
+   ],
+   "criterion": "External information is ingested only in the untrusted-input and I1 categories specified by this clause.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-5-INFO-001"
+   ],
+   "data_dependencies": [
+    "information provenance",
+    "ingestion trust labels",
+    "information classification rules"
+   ],
+   "gap": "DKP-5-INFO-001 is absent, and the relationship between the two permitted ingestion descriptions is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether untrusted status and I1 classification are cumulative requirements or alternative representations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-8-02",
+   "section": "8",
+   "title": "External validation cannot replace PTL",
+   "quote": "External consensus, authority, or institutional validation SHALL NOT substitute PTL verification.",
+   "interpretation": "Inspect verification decisions to ensure external validation does not discharge a PTL verification requirement. PTL and its verification procedure are not defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "verification_decisions",
+    "ptl_verification_records",
+    "external_validation_records"
+   ],
+   "criterion": "External consensus, authority, or institutional validation never substitutes for PTL verification.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL verification requirements and results",
+    "verification decision provenance"
+   ],
+   "gap": "The PTL verification procedure and the conditions requiring it are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the PTL verification contract and how substitution is detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-9-01",
+   "section": "9",
+   "title": "Graceful boundary degradation on failure",
+   "quote": "- the interop boundary MUST degrade gracefully,",
+   "interpretation": "When an external system becomes unreliable, violates invariants, or attempts normative injection, assess the boundary's degradation behavior. No operational meaning of graceful degradation or required response time is provided.",
+   "kind": "state_transition",
+   "checkable": "no",
+   "inputs": [
+    "external_system_events",
+    "boundary_state_trace"
+   ],
+   "criterion": "Any listed external-system failure condition causes graceful degradation of the interop boundary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external reliability events",
+    "invariant violation reports",
+    "normative injection detections",
+    "boundary state traces"
+   ],
+   "gap": "The trigger classifications and the meaning of graceful degradation are not operationally defined.",
+   "hypotheses_needed": [
+    "Declare failure trigger detection rules, acceptable degraded states, and any assumed response timing."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-9-02",
+   "section": "9",
+   "title": "Preserve internal execution through failures",
+   "quote": "- DKP internal execution MUST remain unaffected,",
+   "interpretation": "For any listed external-system failure condition, compare internal execution with a declared unaffected reference behavior. The text does not specify whether unaffected means identical outputs, timing, availability, or all execution properties.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "external_system_events",
+    "internal_execution_trace",
+    "reference_execution"
+   ],
+   "criterion": "DKP internal execution remains unaffected when the external system becomes unreliable, violates invariants, or attempts normative injection.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external failure events",
+    "internal execution traces"
+   ],
+   "gap": "A reference execution model and the execution properties that must remain unaffected are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the failure triggers and the equivalence relation between affected-scenario and reference execution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-9-03",
+   "section": "9",
+   "title": "Forbid failure induced state rollback",
+   "quote": "- no rollback of DKP state is permitted.",
+   "interpretation": "When a listed external-system failure condition occurs, reject DKP state rollback. The placement suggests a failure-context prohibition, while the unqualified wording could also be read more broadly; section 13 separately includes upgrade rollback.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "external_system_events",
+    "dkp_state_transitions",
+    "transition_context"
+   ],
+   "criterion": "No rollback of DKP state is permitted in the failure conditions described by section 9.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external failure events",
+    "DKP transition logs",
+    "rollback classifications"
+   ],
+   "gap": "The scope of the rollback prohibition and its relationship to upgrade rollback are not explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the prohibition covers failure responses only or all rollbacks during a failure condition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-9-04",
+   "section": "9",
+   "title": "Failures cannot trigger exceptional mechanisms",
+   "quote": "Interop failure SHALL NOT trigger Crisis or Mercy mechanisms.",
+   "interpretation": "Check trigger provenance for every activation of Crisis or Mercy. An interoperability failure must not appear as the activating cause.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "mechanism_activations",
+    "activation_triggers"
+   ],
+   "criterion": "No Crisis or Mercy activation is triggered by interoperability failure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis and Mercy activation logs with trigger provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-10-01",
+   "section": "10",
+   "title": "Prohibit automatic legal harmonization",
+   "quote": "- automatic legal harmonization,",
+   "interpretation": "Under the explicit prohibition, identify and reject automatic legal harmonization in interoperability. The text does not define how this differs operationally from permitted legal translation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "interop_operations",
+    "legal_rule_changes",
+    "automation_status"
+   ],
+   "criterion": "No interoperability pattern performs automatic legal harmonization.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal integration rules and execution records"
+   ],
+   "gap": "An operational definition of automatic legal harmonization is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how harmonization is distinguished from translation and how automation is identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-10-02",
+   "section": "10",
+   "title": "Prohibit external decision algorithm dependency",
+   "quote": "- algorithmic dependency on external decision systems,",
+   "interpretation": "Inspect algorithm dependencies for reliance on external decision systems. The text does not distinguish prohibited dependency from permissible consumption of translated external data.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "algorithm_dependency_graph",
+    "external_decision_systems"
+   ],
+   "criterion": "No interoperability pattern creates algorithmic dependency on an external decision system.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "algorithm dependency graphs",
+    "external system functional classifications"
+   ],
+   "gap": "The meaning of algorithmic dependency and its boundary with permitted external inputs are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which data, control, or availability dependencies constitute algorithmic dependency."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-10-03",
+   "section": "10",
+   "title": "Prohibit governance through APIs",
+   "quote": "- governance-by-API,",
+   "interpretation": "Reject API integrations that constitute governance-by-API. Ordinary API access is included in section 7, so the prohibition needs a distinction between technical access and governance authority.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "api_capabilities",
+    "api_effects",
+    "governance_authority_assignments"
+   ],
+   "criterion": "No interoperability pattern constitutes governance-by-API.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "API capability specifications",
+    "governance authority and action records"
+   ],
+   "gap": "The boundary between permitted API access and prohibited governance-by-API is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which API capabilities or effects constitute exercise of governance authority."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-10-04",
+   "section": "10",
+   "title": "Prohibit silent external norm imports",
+   "quote": "- silent import of external norms,",
+   "interpretation": "Check external norm imports for the disclosure or authorization that distinguishes them from silent imports. Silence is not defined, and this clause does not itself identify a sufficient disclosure procedure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "external_norm_imports",
+    "import_disclosures",
+    "import_authorizations"
+   ],
+   "criterion": "No interoperability pattern silently imports external norms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "norm import records",
+    "disclosure and authorization records"
+   ],
+   "gap": "The evidence and procedure required to establish that an import is not silent are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how silent imports are detected and what disclosure or authorization is relevant."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-10-05",
+   "section": "10",
+   "title": "Prohibit permanent DKP function delegation",
+   "quote": "- permanent delegation of DKP functions.",
+   "interpretation": "Check interoperability delegations for permanence. The text does not distinguish an explicitly permanent delegation from one that is indefinite but revocable.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dkp_function_delegations",
+    "delegation_terms",
+    "revocation_conditions"
+   ],
+   "criterion": "No interoperability pattern permanently delegates DKP functions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "function delegation records and termination terms"
+   ],
+   "gap": "The treatment of indefinite or revocable delegations under the term permanent is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a permanence test for delegation terms without inventing a normative duration threshold."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-11-01",
+   "section": "11",
+   "title": "All interoperability layers auditable",
+   "quote": "- MUST be auditable,",
+   "interpretation": "Assess every interoperability layer for auditability. The document does not supply an auditability test or required evidence set.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "interoperability_layers",
+    "audit_capabilities",
+    "audit_evidence"
+   ],
+   "criterion": "Every interoperability layer is auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "layer inventories",
+    "audit capability and evidence records"
+   ],
+   "gap": "The acceptance criteria for layer auditability are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an auditability test and the evidence it requires."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-11-02",
+   "section": "11",
+   "title": "Expose interoperability translation logic",
+   "quote": "- MUST expose translation logic,",
+   "interpretation": "Require every interoperability layer to expose its translation logic. The audience, access mechanism, and required level of detail are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "interoperability_layers",
+    "translation_logic",
+    "logic_access_interfaces"
+   ],
+   "criterion": "Every interoperability layer exposes its translation logic.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "translation implementations or specifications",
+    "access interfaces"
+   ],
+   "gap": "The intended audience and sufficient form of exposure are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare who must be able to access the logic and what representation counts as exposure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-11-03",
+   "section": "11",
+   "title": "Record boundary events for review",
+   "quote": "- MUST record boundary events for post-facto review.",
+   "interpretation": "Compare boundary events with retained event records and ensure those records support later review. No event schema, event taxonomy, or retention period is specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "boundary_events",
+    "boundary_event_records",
+    "review_access"
+   ],
+   "criterion": "Interoperability layers record boundary events so they can be reviewed after occurrence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "boundary event streams",
+    "event logs and review access"
+   ],
+   "gap": "The set of recordable boundary events and the requirements for later review are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the boundary event taxonomy, minimum record contents, and any assumed retention policy."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-11-04",
+   "section": "11",
+   "title": "Exclusive audit authority governance",
+   "quote": "Audit authority is governed exclusively by DKP-8-AUDIT-001.",
+   "interpretation": "Check that audit authority assignments and powers derive exclusively from the audit protocol. The source protocol is not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_authority_assignments",
+    "authority_provenance",
+    "audit_governance_rules"
+   ],
+   "criterion": "All audit authority is governed exclusively by DKP-8-AUDIT-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "audit authority rules",
+    "authority assignments and provenance"
+   ],
+   "gap": "DKP-8-AUDIT-001 is absent, so valid audit authority cannot be established. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply an audit authority model if the referenced protocol remains unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-12-01",
+   "section": "12",
+   "title": "Exclude geopolitical conflict resolution",
+   "quote": "- resolve geopolitical conflicts,",
+   "interpretation": "Under the section's SHALL NOT, reject use of this protocol to resolve geopolitical conflicts. Identifying such a function requires a classification of protocol actions and their remit.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_actions",
+    "conflict_classifications",
+    "action_purposes"
+   ],
+   "criterion": "DKP-8-INTEROP-001 does not resolve geopolitical conflicts.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action records",
+    "conflict and purpose classifications"
+   ],
+   "gap": "The boundary between interoperability activity and geopolitical conflict resolution is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how protocol actions are classified as geopolitical conflict resolution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-12-02",
+   "section": "12",
+   "title": "Exclude legal system unification",
+   "quote": "- unify legal systems,",
+   "interpretation": "Under the section's SHALL NOT, reject protocol operations that unify legal systems. The text does not define when translation or compatibility becomes unification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "legal_system_effects"
+   ],
+   "criterion": "DKP-8-INTEROP-001 does not unify legal systems.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal interoperability operations and effects"
+   ],
+   "gap": "An operational distinction between legal compatibility and unification is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the legal-system effects that constitute unification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-12-03",
+   "section": "12",
+   "title": "No external compliance guarantee",
+   "quote": "- guarantee compliance by external actors,",
+   "interpretation": "Check protocol commitments for guarantees of compliance by external actors. This restricts guarantees rather than prohibiting external actors from actually complying.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_commitments",
+    "commitment_subjects"
+   ],
+   "criterion": "DKP-8-INTEROP-001 makes no guarantee of compliance by external actors.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol commitments and their scope"
+   ],
+   "gap": "The text provides no structured representation or recognition rule for compliance guarantees. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how guarantees and their subjects are identified in protocol commitments."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-12-04",
+   "section": "12",
+   "title": "Exclude enforcement bridge functions",
+   "quote": "- act as an enforcement bridge.",
+   "interpretation": "Under the section's SHALL NOT, reject interoperability functions that constitute an enforcement bridge. The term is not defined, including whether it covers enforcement in either direction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "interop_functions",
+    "enforcement_effects"
+   ],
+   "criterion": "DKP-8-INTEROP-001 does not act as an enforcement bridge.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interface capabilities",
+    "enforcement action provenance"
+   ],
+   "gap": "The functions and directions covered by enforcement bridge are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what cross-boundary enforcement effects constitute an enforcement bridge."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-12-05",
+   "section": "12",
+   "title": "Compatibility is the stated guarantee",
+   "quote": "This protocol guarantees compatibility, not convergence.",
+   "interpretation": "The stated guarantee concerns compatibility and excludes a guarantee of convergence. No observable success condition defines either term, and absence of a convergence guarantee does not prohibit convergence from occurring.",
+   "kind": "contract",
+   "checkable": "no",
+   "inputs": [
+    "interoperability_outcomes",
+    "protocol_guarantees"
+   ],
+   "criterion": "The protocol guarantees compatibility and does not guarantee convergence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interoperability outcomes",
+    "guarantee statements"
+   ],
+   "gap": "Compatibility and convergence lack operational definitions and acceptance criteria.",
+   "hypotheses_needed": [
+    "Declare observable meanings and acceptance criteria for compatibility and convergence."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-13-01",
+   "section": "13",
+   "title": "Controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "For changes other than the expressly excluded presentation-only corrections, require the controlled upgrade procedure and its listed components. The referenced protocols must determine sequencing, acceptance conditions, activation timing, and whether rollback is a capability or an executed step.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "upgrade_process_records",
+    "simulation_records",
+    "audit_records",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_records"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 with proposal, simulation, audit, acceptance conditions, activation window, and rollback as required by that procedure.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow rules and records",
+    "simulation results",
+    "audit results",
+    "activation and rollback records"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation window rules, and rollback semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the upgrade state machine and timing rules if the referenced protocols remain unavailable.",
+    "Declare how upgrade rollback relates to the section 9 rollback prohibition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-13-02",
+   "section": "13",
+   "title": "Modification requires new protocol identifier",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Compare identifiers before and after a modification and check that the replacement identifier is new. The later presentation-only correction exception may limit this requirement to normative modifications, despite the phrase any modification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_class",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "identifier_registry"
+   ],
+   "criterion": "A modification covered by this requirement receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "modification classifications"
+   ],
+   "gap": "It is unclear whether presentation-only corrections are exempt and whether new requires global uniqueness or only a changed identifier. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the interaction with the presentation-only correction exception and the scope of identifier freshness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-13-03",
+   "section": "13",
+   "title": "Mandatory simulation for protocol modification",
+   "quote": "- mandatory simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "Require simulation conforming to the simulation protocol for modifications subject to the upgrade process. Presentation-only corrections are separately excluded from Upgrades.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_class",
+    "simulation_records",
+    "simulation_requirements"
+   ],
+   "criterion": "Every modification subject to the upgrade process undergoes simulation under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "simulation requirements",
+    "simulation execution records and results"
+   ],
+   "gap": "DKP-8-SIMULATION-001 is absent, so conforming simulation cannot be established. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a conforming simulation procedure if the referenced protocol remains unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-13-04",
+   "section": "13",
+   "title": "Explicit scope compatibility declaration",
+   "quote": "- explicit compatibility declaration with DKP-7-SCOPE-001.",
+   "interpretation": "Check that a modification's records include an explicit declaration of compatibility with the named scope protocol. This tests the required declaration, not whether the asserted compatibility is substantively correct.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "modification_records",
+    "compatibility_declaration",
+    "declaration_target"
+   ],
+   "criterion": "Modification records include an explicit compatibility declaration naming DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "modification records and compatibility declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-13-05",
+   "section": "13",
+   "title": "Presentation correction exception and recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction as exempt from Upgrade treatment only when it is presentation-only and leaves normative content unchanged, then apply the date-only recording rule. Semantic equivalence and the scope of only are unresolved, particularly alongside edition digest recording.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "correction_classification",
+    "upgrade_status",
+    "last_updated_date",
+    "change_records"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document versions",
+    "upgrade classification rules",
+    "edition metadata"
+   ],
+   "gap": "DKP-4-UPGRADE-001 §3 and a normative-equivalence test are absent, and the scope of date-only recording is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how preservation of normative content is established.",
+    "Declare how date-only correction recording interacts with identifier and edition digest requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEROP-13-06",
+   "section": "13",
+   "title": "Published edition digest registration",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its identified canonical source and compare it with the corresponding repository listing. The algorithm is specified, but canonical source identification and any canonicalization procedure are not.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_entries",
+    "canonical_repository_identity"
+   ],
+   "criterion": "Each published edition has its canonical source SHA-256 digest correctly listed in SHA256SUMS.txt of github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source artifacts",
+    "canonical repository checksum file"
+   ],
+   "gap": "The method for identifying each edition's canonical source and any required canonicalization is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the canonical source artifact for each edition and whether hashing uses its exact stored bytes or a defined canonicalized representation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

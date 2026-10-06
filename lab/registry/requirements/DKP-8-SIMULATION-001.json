@@ -1,0 +1,1563 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-8-SIMULATION-001",
+ "doc_sha256": "bad16e5b4a4716c05e1100f23d2d8f920a2beb5f20d74bc15bd1e94a23842bf9",
+ "prefix": "SIMULATION",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Unnumbered subheadings are preserved as section identifiers. Related required fields are grouped into contracts; repeated rules are cross-noted. Referenced protocols were not supplied. The text does not specify risk bounds, stability tests, audit tolerances, drift detection criteria, canonicalization rules, or the restored validity_state value. F4 redesign and re-simulation remain mandatory even though section 8 explicitly lists only F1–F3. The presentation-only correction exemption qualifies the otherwise broad modification rules in section 14.",
+ "requirements": [
+  {
+   "id": "SIMULATION-0-01",
+   "section": "0",
+   "title": "Mandatory Exclusive Predeployment Verification",
+   "quote": "DKP-8-SIMULATION-001 defines the exclusive and mandatory mechanisms by which proposed changes to the Dikenocracy system are tested, validated, calibrated, and stress-tested prior to any activation or deployment.\n\nThis protocol exists to ensure that no protocol, parameter, threshold, model, or external linkage is applied to the live system without prior verification against:",
+   "interpretation": "Check that every covered live application has prior verification through this protocol against physical constraints, axiomatic invariants, scope and conflict rules, and systemic stability and reversibility requirements. Verification records can establish ordering, but the referenced rules and substantive verification methods are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "proposed_change",
+    "verification_records",
+    "activation_time",
+    "deployment_time"
+   ],
+   "criterion": "Every covered change is tested, validated, calibrated, and stress-tested through this protocol before activation or deployment, including verification against all four listed requirement categories.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-1-AXIOMS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "physical constraints",
+    "axiomatic invariants",
+    "scope and conflict rules",
+    "verification records"
+   ],
+   "gap": "The referenced constraints and operational tests for stability and reversibility are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare operational tests for systemic stability and reversibility where not supplied by the referenced rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-1-01",
+   "section": "1",
+   "title": "Simulation Is A Hard Gate",
+   "quote": "Simulation is treated as a hard gate, not an advisory or optimization tool.",
+   "interpretation": "Check that simulation eligibility is a necessary activation condition and cannot be treated as a discretionary recommendation. This establishes a gate, not a requirement to deploy after passing.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "activation_decision",
+    "simulation_eligibility",
+    "gate_configuration"
+   ],
+   "criterion": "Activation requires simulation eligibility; simulation failure cannot be bypassed by treating its outcome as advisory.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activation decisions and gate configuration"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-2-01",
+   "section": "2",
+   "title": "Covered Changes Require Prior Passage",
+   "quote": "MUST pass DKP-8-SIMULATION-001 prior to activation.\n\nNo exception paths are permitted.",
+   "interpretation": "For a protocol or change introducing thresholds, activation conditions, composite indices, enforcement logic, calibration parameters, or cross-layer dependencies, check for a passing simulation before activation. Also check that activation logic contains no bypass path for these changes.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "change_features",
+    "simulation_result",
+    "simulation_completion_time",
+    "activation_time",
+    "activation_paths"
+   ],
+   "criterion": "Every change introducing any listed feature passes this protocol before activation, and no activation path exempts it.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "change feature declarations",
+    "simulation results",
+    "activation workflow"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-3-01",
+   "section": "3",
+   "title": "Simulation Environment Isolation",
+   "quote": "Simulation Environment An isolated execution space that mirrors DKP protocol logic without producing live effects.",
+   "interpretation": "Compare simulated protocol logic with the applicable DKP logic and inspect execution boundaries for live effects. Isolation and logical mirroring need an explicit equivalence and effects model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_environment",
+    "protocol_logic",
+    "simulation_logic",
+    "effect_trace"
+   ],
+   "criterion": "The environment is isolated, mirrors DKP protocol logic, and produces no live effects.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "applicable protocol logic",
+    "live system effect observations"
+   ],
+   "gap": "The text does not define the execution boundary, live effects, or the required notion of logical equivalence. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define observable live effects and the isolation boundary.",
+    "Define how simulated logic is shown to mirror protocol logic."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-3-02",
+   "section": "3",
+   "title": "Bounded Scenario Definition",
+   "quote": "Scenario A bounded set of initial conditions, inputs, and constraints applied to the simulation.",
+   "interpretation": "Check that each scenario specifies initial conditions, inputs, and constraints and satisfies a declared boundedness test. Bounded could mean finite membership, bounded value ranges, or a bounded execution domain.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "initial_conditions",
+    "scenario_inputs",
+    "scenario_constraints",
+    "scenario_bounds"
+   ],
+   "criterion": "A scenario is a bounded set of initial conditions, inputs, and constraints applied to the simulation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The meaning of boundedness is not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether boundedness concerns set size, value ranges, execution extent, or a combination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-3-03",
+   "section": "3",
+   "title": "Invariants Hold In Every State",
+   "quote": "Invariant A condition derived from DKP-1-AXIOMS-001 and DKP-7-SCOPE-001 that MUST hold under all simulated states.",
+   "interpretation": "Evaluate every applicable invariant in every simulated state and verify its derivation from the two named protocols. The statement covers all simulated states; it does not specify a proof obligation over unsimulated states.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "invariant_definitions",
+    "invariant_provenance",
+    "simulated_states"
+   ],
+   "criterion": "Every invariant is derived from the named protocols and holds in every simulated state.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "axiom and scope invariant definitions"
+   ],
+   "gap": "The source protocols and rules for deriving executable invariants are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an executable representation and derivation method for the supplied invariant rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-3-04",
+   "section": "3",
+   "title": "Failure State Recognition",
+   "quote": "Failure State Any simulated outcome that violates an invariant, exceeds declared risk envelopes, or produces irreversible harm.",
+   "interpretation": "Classify an outcome as a failure state whenever any of the three alternatives holds. Risk envelopes must be declared, while irreversible harm needs a defined observation and reversibility model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "simulated_outcomes",
+    "invariant_results",
+    "declared_risk_envelopes",
+    "harm_assessment"
+   ],
+   "criterion": "An outcome is a failure state if it violates an invariant, exceeds a declared risk envelope, or produces irreversible harm.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "invariant evaluations",
+    "declared risk envelopes",
+    "harm and reversibility assessments"
+   ],
+   "gap": "Risk envelope values and an operational definition of irreversible harm are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare risk envelopes and their comparison rules.",
+    "Define harm and the conditions under which it is irreversible."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-3-05",
+   "section": "3",
+   "title": "Acceptance Conditions Determine Eligibility",
+   "quote": "Acceptance Criteria Formal conditions that MUST be met for a change to be eligible for activation.",
+   "interpretation": "Check that eligibility is withheld whenever any formal acceptance condition is unmet. This definition supplies the logical dependency; section 8 supplies the listed acceptance conditions.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "acceptance_condition_results",
+    "activation_eligibility"
+   ],
+   "criterion": "Activation eligibility implies that every formal acceptance condition is met.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "acceptance condition evaluations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-3-06",
+   "section": "3",
+   "title": "Calibration Bundle Defining Properties",
+   "quote": "Calibration Bundle A signed output artifact produced by L8 defining thresholds, models, confidence bounds, and validity windows.",
+   "interpretation": "Check that a purported calibration bundle is an L8-produced artifact with a signature and definitions for each listed item. Cryptographic signature validity requires a signing and trust specification that the document does not provide.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "calibration_bundle",
+    "artifact_provenance",
+    "signature",
+    "signing_specification"
+   ],
+   "criterion": "A calibration bundle is produced by L8, signed, and defines thresholds, models, confidence bounds, and validity windows.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 artifact provenance",
+    "signature verification material"
+   ],
+   "gap": "The signature scheme, trusted signer identification, and artifact encoding are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the signature verification scheme and trusted L8 signer identities."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-4-01",
+   "section": "4",
+   "title": "Mandatory Simulation And Calibration Scope",
+   "quote": "The following REQUIRE simulation and calibration under this protocol:",
+   "interpretation": "Classify each proposed action against the six listed categories and require both simulation and calibration when any category applies. The categories cover protocol introductions or modifications, parameter or threshold adjustments, composite index definitions, enforcement or activation conditions, onboarding or exit or integration mechanisms, and external interoperability.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "change_categories",
+    "simulation_record",
+    "calibration_record"
+   ],
+   "criterion": "Every action in any listed category undergoes simulation and calibration under this protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "change classification",
+    "simulation and calibration records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-4-02",
+   "section": "4",
+   "title": "Valid Bundle Required For Enforcement",
+   "quote": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition.",
+   "interpretation": "Check that a protocol is not enforceable when its L8 bundle is absent, unattached, or invalid. Expiration is explicitly an invalidating condition elsewhere in this document, but complete bundle validity criteria are not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol",
+    "attached_bundle",
+    "bundle_validity",
+    "enforcement_status"
+   ],
+   "criterion": "An enforceable protocol has an attached and valid L8 Calibration Bundle.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 bundle attachments and validity records"
+   ],
+   "gap": "The document does not fully define bundle validity beyond stated requirements such as expiration. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare complete bundle validation rules, including signature and contextual applicability checks."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-5-01",
+   "section": "5",
+   "title": "Permitted Simulation Input Categories",
+   "quote": "Simulations MAY ingest:",
+   "interpretation": "Recognize historical PTL data, synthetic stress-test data, adversarial or worst-case inputs, and boundary and failure-mode scenarios as permitted input categories. The permissive wording neither requires every category nor explicitly makes the list exhaustive.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "input_categories",
+    "input_acceptance_policy"
+   ],
+   "criterion": "The four listed categories are permitted, subject to the section's prohibitions and input requirements; none is mandatory solely because of this permission.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "input category metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-5-02",
+   "section": "5",
+   "title": "Physical Input Constraints Remain Binding",
+   "quote": "- invent unphysical data,\n- bypass PTL constraints,",
+   "interpretation": "Check generated inputs for compliance with physical constraints and inspect ingestion paths for PTL bypasses. These bullets inherit SHALL NOT from their list introduction; the relevant physical and PTL constraints are not provided here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_inputs",
+    "input_generation_logic",
+    "ptl_constraints",
+    "ingestion_paths"
+   ],
+   "criterion": "Simulation neither invents unphysical data nor bypasses PTL constraints.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL physical constraints",
+    "input provenance and generation records"
+   ],
+   "gap": "The physical admissibility rules and PTL constraints needed to identify violations are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define executable physical admissibility tests from the applicable PTL constraints."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-5-03",
+   "section": "5",
+   "title": "Input Manipulation And Selection Prohibited",
+   "quote": "- smooth, normalize, or cherry-pick inputs,\n- optimize outcomes by selective sampling.",
+   "interpretation": "Inspect preprocessing and sampling operations for the prohibited transformations and selection practices. Smoothing and normalization can be identified under an operation taxonomy, while cherry-picking and outcome optimization require a selection-policy and objective model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "input_pipeline",
+    "sampling_policy",
+    "candidate_inputs",
+    "selected_inputs",
+    "selection_objectives"
+   ],
+   "criterion": "Inputs are not smoothed, normalized, or cherry-picked, and selective sampling is not used to optimize outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "input processing and sampling provenance"
+   ],
+   "gap": "The document does not operationally define the prohibited processing and selection practices. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define recognizable smoothing and normalization operations.",
+    "Define how cherry-picking and outcome-directed selective sampling are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-5-04",
+   "section": "5",
+   "title": "Declared Versioned Reproducible Inputs",
+   "quote": "- explicitly declared,\n- versioned,\n- reproducible.",
+   "interpretation": "Check that every ingested input appears in a declaration, has a version, and can be reproduced. Presence and version checks are direct, while reproduction needs an identity or equivalence rule and a retrieval or regeneration method.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "ingested_inputs",
+    "input_manifest",
+    "input_versions",
+    "reproduced_inputs"
+   ],
+   "criterion": "Every simulation input is explicitly declared, versioned, and reproducible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "versioned input artifacts or regeneration records"
+   ],
+   "gap": "The required reproduction procedure and equivalence standard are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how input versions are retrieved or regenerated and how reproduced inputs are compared."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-6-01",
+   "section": "6",
+   "title": "Enforce Every Listed Invariant",
+   "quote": "During simulation, the following invariants MUST be enforced:",
+   "interpretation": "Evaluate all axioms, scope and conflict rules, life-preservation constraints, biosphere integrity constraints, non-expansion of authority, and reversibility and rollback requirements throughout simulation. The document lists these families without supplying their complete executable predicates.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "simulated_states",
+    "simulated_transitions",
+    "invariant_definitions",
+    "invariant_monitoring"
+   ],
+   "criterion": "Every listed invariant family is enforced throughout simulation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "axioms",
+    "scope and conflict rules",
+    "life and biosphere constraints",
+    "authority boundaries",
+    "rollback requirements"
+   ],
+   "gap": "The referenced rules and executable definitions for the remaining invariant families are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare executable predicates for life preservation, biosphere integrity, authority non-expansion, reversibility, and rollback."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-6-02",
+   "section": "6",
+   "title": "Invariant Breach Immediately Invalidates Change",
+   "quote": "Violation of any invariant immediately invalidates the tested change.",
+   "interpretation": "Check that an invariant violation invalidates the tested change as part of the same logical event, without an intervening valid state. The text specifies immediacy but no wall-clock latency allowance.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "invariant_violation_events",
+    "change_validity_trace",
+    "event_order"
+   ],
+   "criterion": "Any invariant violation immediately causes the tested change to become invalid.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "invariant violation events",
+    "change validity events"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-7-01",
+   "section": "7",
+   "title": "Hard Violation Failure Classification",
+   "quote": "F1 — Hard Violation Direct axiom or scope violation.",
+   "interpretation": "Classify a direct axiom or scope violation as F1. Executable classification requires the relevant rules and a meaning for direct violation.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "simulated_outcome",
+    "axiom_rules",
+    "scope_rules",
+    "violation_evidence"
+   ],
+   "criterion": "A direct axiom or scope violation is an F1 failure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom and scope rule evaluations"
+   ],
+   "gap": "The rule predicates and distinction between direct and other violations are not defined in this section. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define direct violation for the executable axiom and scope rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-7-02",
+   "section": "7",
+   "title": "Systemic Instability Failure Classification",
+   "quote": "F2 — Systemic Instability Runaway dynamics, cascading failures, deadlocks, or collapse conditions.",
+   "interpretation": "Classify any listed behavior as F2 using the simulated execution history. Detecting runaway dynamics, cascades, deadlocks, and collapse requires a behavioral model and detection criteria.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_trace",
+    "system_dynamics",
+    "failure_events",
+    "instability_criteria"
+   ],
+   "criterion": "Runaway dynamics, cascading failures, deadlocks, or collapse conditions constitute F2 failures.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system state and dependency traces"
+   ],
+   "gap": "The document supplies no operational definitions or observation horizon for these instability classes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define detection criteria for each instability class.",
+    "Declare the simulation observation horizon."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-7-03",
+   "section": "7",
+   "title": "Irreversibility Breach Failure Classification",
+   "quote": "F3 — Irreversibility Breach State transitions that cannot be rolled back within declared constraints.",
+   "interpretation": "For each simulated transition, determine whether rollback is possible while satisfying the declared constraints. A failed rollback attempt alone does not establish impossibility unless the declared model makes that inference valid.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "state_transitions",
+    "rollback_model",
+    "declared_rollback_constraints"
+   ],
+   "criterion": "A transition is an F3 failure when it cannot be rolled back within declared constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rollback capabilities and declared constraints"
+   ],
+   "gap": "The rollback model, declared constraints, and method for establishing impossibility are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare rollback reachability semantics and the constraints rollback must satisfy."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-7-04",
+   "section": "7",
+   "title": "Externality Leak Failure Classification",
+   "quote": "F4 — Externality Leak Unmeasured or displaced harm outside defined system boundaries.",
+   "interpretation": "Classify harm outside the defined boundaries as F4 when it is unmeasured or displaced. The literal reading places both forms of harm outside the boundaries; detecting unmeasured harm requires evidence beyond the measurement set being assessed.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "system_boundaries",
+    "harm_model",
+    "harm_observations",
+    "measurement_coverage",
+    "harm_displacement"
+   ],
+   "criterion": "Unmeasured or displaced harm outside defined system boundaries constitutes an F4 failure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system boundary definitions",
+    "external harm observations",
+    "measurement coverage"
+   ],
+   "gap": "The boundaries, harm model, and evidence capable of detecting unmeasured or displaced harm are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare system boundaries and external harm pathways.",
+    "Define how missing measurements and displaced harm are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-7-05",
+   "section": "7",
+   "title": "F1 Through F3 Block Activation",
+   "quote": "Any F1–F3 failure blocks activation.",
+   "interpretation": "Check that a change with any F1, F2, or F3 failure cannot activate. The rule applies once failure classification has been supplied.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "failure_classifications",
+    "activation_decision"
+   ],
+   "criterion": "If any F1, F2, or F3 failure occurs, activation is blocked.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classified simulation failures",
+    "activation decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-7-06",
+   "section": "7",
+   "title": "Externality Failure Requires Redesign",
+   "quote": "F4 requires explicit redesign and re-simulation.",
+   "interpretation": "Check that an F4 finding is followed by documented redesign and a new simulation. The document does not specify how substantial the redesign must be.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "f4_findings",
+    "redesign_record",
+    "revised_change",
+    "resimulation_record"
+   ],
+   "criterion": "Every F4 failure requires explicit redesign and re-simulation of the redesigned change.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "redesign records",
+    "subsequent simulation records"
+   ],
+   "gap": "The conditions under which a revision qualifies as redesign are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how a redesign is distinguished from an unchanged or presentation-only resubmission."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-8-01",
+   "section": "8",
+   "title": "Conjunctive Activation Acceptance Criteria",
+   "quote": "A change is eligible for activation only if:",
+   "interpretation": "Require all five listed conditions: no invariant violation, no F1–F3 failure, risk within declared bounds, stable behavior under adversarial scenarios, and independent-node reproducibility. These are necessary conditions; the wording does not make them sufficient or cancel F4 remediation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activation_eligibility",
+    "invariant_results",
+    "failure_classifications",
+    "risk_results",
+    "declared_risk_bounds",
+    "adversarial_scenario_results",
+    "independent_node_results"
+   ],
+   "criterion": "Eligibility implies no invariant violation, no F1–F3 failure, risk envelopes within declared bounds, stability under adversarial scenarios, and reproducibility by independent nodes.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "invariant evaluations",
+    "risk assessments",
+    "adversarial simulation results",
+    "independent reproduction results"
+   ],
+   "gap": "Risk bounds, adversarial coverage, stability criteria, node independence, and reproduction equivalence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare risk bounds and stability tests.",
+    "Define adversarial scenario coverage.",
+    "Define independent nodes and result equivalence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-8-02",
+   "section": "8",
+   "title": "Passing Permits Eligibility Only",
+   "quote": "Passing simulation does not mandate deployment. It only permits eligibility.",
+   "interpretation": "Check that passing simulation grants at most activation eligibility and is not encoded as a mandatory deployment command. Deployment after passing is permitted but not required by this rule.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "simulation_result",
+    "eligibility_policy",
+    "deployment_policy"
+   ],
+   "criterion": "Simulation passage permits eligibility without creating a deployment obligation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "eligibility and deployment policies"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-9-01",
+   "section": "9",
+   "title": "Mandatory Signed Calibration Output Contract",
+   "quote": "Each successful simulation MUST produce a signed L8 Calibration Bundle containing:",
+   "interpretation": "For every successful simulation, check for a signed L8 bundle containing defined thresholds, model specifications, aggregation logic, confidence bounds, a time-bounded validity window, and applicable environmental or contextual assumptions. Field presence is directly testable; signature authenticity needs a declared verification scheme.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_result",
+    "calibration_bundle",
+    "bundle_signature",
+    "signing_specification"
+   ],
+   "criterion": "Every successful simulation produces a signed L8 bundle containing all six listed categories, including a time-bounded validity window.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 calibration artifacts",
+    "signature verification material"
+   ],
+   "gap": "The signature scheme and trusted L8 signer identification are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a signature verification scheme and trusted L8 signer identities."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-CompositeIndices-01",
+   "section": "Composite Indices",
+   "title": "Composite Index Model Disclosure Contract",
+   "quote": "- MUST have its model fully specified in L8,\n- MUST declare all inputs and weights,\n- MUST include uncertainty propagation,",
+   "interpretation": "For every composite index, including B(t), check for an L8 model specification, complete input and weight declarations, and uncertainty propagation. Completeness and adequacy of propagation require a model specification standard; no index formula or weighting scheme is supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "composite_index",
+    "l8_model_specification",
+    "input_declarations",
+    "weight_declarations",
+    "uncertainty_propagation"
+   ],
+   "criterion": "Every composite index has a fully specified L8 model, declares all inputs and weights, and includes uncertainty propagation.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 composite index models",
+    "input and weight metadata",
+    "uncertainty models"
+   ],
+   "gap": "The standard for full specification and an acceptable uncertainty propagation method are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a model specification format and completeness test.",
+    "Declare how uncertainty propagation is represented and verified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-CompositeIndices-02",
+   "section": "Composite Indices",
+   "title": "Composite Changes Confined To L8",
+   "quote": "- SHALL NOT be modified outside L8.",
+   "interpretation": "Check the provenance of every composite index modification, including modifications to B(t). The prohibition is directly testable when execution records identify the layer responsible for each modification.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "composite_index_changes",
+    "modification_layer"
+   ],
+   "criterion": "Every composite index modification occurs within L8.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "index modification provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-CompositeIndices-03",
+   "section": "Composite Indices",
+   "title": "PTL And L8 Processing Boundaries",
+   "quote": "PTL emits only raw, model-declared outputs. Interpretation and calibration belong exclusively to L8.",
+   "interpretation": "Check that PTL outputs are raw and declared by a model, and that interpretation and calibration operations occur exclusively in L8. Layer provenance is testable, but raw output and interpretation need an operational distinction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_outputs",
+    "model_output_declarations",
+    "processing_operations",
+    "operation_layers"
+   ],
+   "criterion": "Every PTL output is raw and model-declared, and only L8 performs interpretation and calibration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL output provenance",
+    "model output declarations",
+    "processing layer records"
+   ],
+   "gap": "The document does not define the boundary between raw output processing and interpretation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a processing-operation taxonomy distinguishing raw emission, interpretation, and calibration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-10-01",
+   "section": "10",
+   "title": "Changes Trigger Simulation And Recalibration",
+   "quote": "A new simulation and calibration are REQUIRED upon:",
+   "interpretation": "Check that environmental drift, social or behavioral regime change, technology or sensor class change, sustained audit divergence, and protocol dependency updates each trigger new simulation and calibration. No detection criteria, persistence duration, or completion deadline is supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "environmental_observations",
+    "regime_change_events",
+    "technology_changes",
+    "sensor_class_changes",
+    "audit_divergence_trace",
+    "dependency_updates",
+    "simulation_records",
+    "calibration_records"
+   ],
+   "criterion": "Occurrence of any listed trigger requires a new simulation and calibration.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "environmental monitoring",
+    "social and behavioral observations",
+    "technology and sensor metadata",
+    "audit divergence records",
+    "protocol dependency changes"
+   ],
+   "gap": "Drift, regime change, and sustained divergence lack detection criteria and any required persistence values. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare drift and regime-change detectors.",
+    "Define sustained audit divergence without assuming a duration from this text."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-10-02",
+   "section": "10",
+   "title": "Expiration Automatically Invalidates Enforcement",
+   "quote": "Expired calibration bundles automatically invalidate enforcement.",
+   "interpretation": "Check that enforcement relying on a bundle is invalid as soon as that bundle expires. The unnumbered expiration subsection repeats this rule in item b.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "bundle_validity_window",
+    "current_time",
+    "enforcement_dependencies",
+    "enforcement_validity"
+   ],
+   "criterion": "When a calibration bundle is expired under its validity window, enforcement based on it is automatically invalid.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "calibration validity windows",
+    "enforcement dependency mappings",
+    "time readings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-CalibrationExpirationEpistemicHandling-01",
+   "section": "Calibration Expiration Epistemic Handling",
+   "title": "Expired Outputs Carry Required Metadata",
+   "quote": "- validity_state: INVALID\n- reason: \"Calibration expired\"\n- remediation: \"Awaiting recalibration\"",
+   "interpretation": "Upon bundle expiration, check every dependent output for the three fields and exact literal values. Dependency resolution must include all outputs depending on the expired bundle.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "bundle_expiration_state",
+    "output_dependencies",
+    "dependent_output_metadata"
+   ],
+   "criterion": "Every output dependent on an expired bundle carries validity_state equal to INVALID, reason equal to \"Calibration expired\", and remediation equal to \"Awaiting recalibration\".",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "bundle expiration events",
+    "output dependency mappings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-CalibrationExpirationEpistemicHandling-02",
+   "section": "Calibration Expiration Epistemic Handling",
+   "title": "Successful Recalibration Restores Output Validity",
+   "quote": "c) Recalibration SHALL restore validity_state upon successful simulation validation",
+   "interpretation": "Check that recalibration restores dependent output validity_state when simulation validation succeeds. The text does not specify the restored state's literal value or whether it means the prior value or a designated valid state.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "recalibration_record",
+    "simulation_validation_result",
+    "dependent_outputs",
+    "validity_state_trace"
+   ],
+   "criterion": "Recalibration restores validity_state upon successful simulation validation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "recalibration and validation records",
+    "dependent output state histories"
+   ],
+   "gap": "The restored validity_state value and treatment of other concurrent invalidity causes are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the target validity_state and how restoration interacts with independent invalidity causes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-CalibrationExpirationEpistemicHandling-03",
+   "section": "Calibration Expiration Epistemic Handling",
+   "title": "Legacy Values Cannot Outlast Expiration",
+   "quote": "d) No legacy calibration values SHALL persist past expiration",
+   "interpretation": "Check for legacy calibration values persisting after their bundle expires. Persist could prohibit all storage, including archives, or only continued presence in operational state; the document does not choose between these readings.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "calibration_values",
+    "bundle_validity_windows",
+    "current_time",
+    "operational_state",
+    "stored_artifacts"
+   ],
+   "criterion": "No legacy calibration values persist past expiration within the applicable meaning of persist.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "calibration value lineage",
+    "operational and stored calibration state"
+   ],
+   "gap": "The meanings of legacy and persist, including whether archival retention is prohibited, are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the prohibition covers operational use, operational storage, or all retention."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-11-01",
+   "section": "11",
+   "title": "Identical Inputs Produce Deterministic Results",
+   "quote": "All simulations MUST:\n\n- be deterministic given identical inputs,",
+   "interpretation": "Compare executions with identical inputs for deterministic behavior. The document does not define input identity, the result equivalence standard, or whether configuration and random seeds count as inputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_runs",
+    "run_inputs",
+    "run_configurations",
+    "run_results"
+   ],
+   "criterion": "Simulation behavior is deterministic given identical inputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "simulation run inputs and results"
+   ],
+   "gap": "The complete input boundary and required equality of outputs or execution traces are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the complete input tuple and result equivalence relation.",
+    "Declare how determinism is established beyond sampled reruns."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-11-02",
+   "section": "11",
+   "title": "Disclosure Audit And Reexecution Contract",
+   "quote": "- expose configuration, assumptions, and parameters,\n- publish summary outcomes for audit,\n- allow independent re-execution.",
+   "interpretation": "Check that every simulation exposes configuration, assumptions, and parameters, publishes summary outcomes for audit, and provides sufficient access for independent re-execution. The required audience, access mechanism, summary content, and independence criteria are not specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_configuration",
+    "assumption_disclosures",
+    "parameter_disclosures",
+    "published_summary",
+    "reexecution_access"
+   ],
+   "criterion": "Every simulation discloses the listed execution information, publishes summary outcomes for audit, and allows independent re-execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published simulation artifacts",
+    "audit access records",
+    "independent execution access"
+   ],
+   "gap": "The disclosure audience, required summary content, access requirements, and independence standard are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare publication and access criteria sufficient for audit and independent re-execution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-11-03",
+   "section": "11",
+   "title": "Anonymization Must Preserve Artifact Transparency",
+   "quote": "Simulation artifacts MAY be anonymized but SHALL NOT be opaque.",
+   "interpretation": "Allow anonymization while checking that artifacts remain inspectable under a declared transparency standard. The text does not define opacity or the information that anonymization must preserve.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_artifacts",
+    "anonymization_transform",
+    "artifact_disclosures"
+   ],
+   "criterion": "Simulation artifacts are not opaque, including when anonymized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "simulation artifacts and anonymization records"
+   ],
+   "gap": "No operational definition of opacity or minimum retained information is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define artifact transparency and which information must survive anonymization."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-12-01",
+   "section": "12",
+   "title": "Simulation Outcome Overrides Prohibited",
+   "quote": "Simulation outcomes SHALL NOT be overridden by:",
+   "interpretation": "Check that political discretion, economic pressure, emergency rationale, and human authority cannot override simulation outcomes. Workflow controls can be inspected, but detecting undocumented pressure requires evidence not specified by the text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_outcomes",
+    "override_events",
+    "decision_authorities",
+    "decision_rationales",
+    "workflow_configuration"
+   ],
+   "criterion": "No simulation outcome is overridden through any of the four listed grounds or authorities.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision and override provenance"
+   ],
+   "gap": "The document does not specify evidence for detecting political discretion or economic pressure behind decisions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how override events and their grounds are identified and evidenced."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-12-02",
+   "section": "12",
+   "title": "Failure Resolution Requires Redesign And Resimulation",
+   "quote": "Failure in simulation cannot be appealed. Only redesign and re-simulation are permitted.",
+   "interpretation": "Check that the failure-resolution workflow offers no appeal route and permits only redesign followed by re-simulation. Determining whether a changed submission constitutes redesign requires an additional definition.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_failure",
+    "failure_resolution_workflow",
+    "appeal_events",
+    "redesign_record",
+    "resimulation_record"
+   ],
+   "criterion": "Simulation failure cannot be appealed; its permitted resolution is redesign and re-simulation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "failure resolution records",
+    "change revisions",
+    "subsequent simulation records"
+   ],
+   "gap": "The document does not define what qualifies as redesign. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a criterion distinguishing redesign from unchanged resubmission."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-13-01",
+   "section": "13",
+   "title": "Audit Compares Deployment Against Simulation",
+   "quote": "DKP-8-AUDIT-001 SHALL:\n\n- verify deployed behavior against simulated behavior,",
+   "interpretation": "Check that audit compares deployed behavior with the corresponding simulated behavior, which this section designates as the reference reality. Selecting corresponding behaviors and establishing equivalence require an observation and comparison model.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "deployed_behavior",
+    "simulated_behavior",
+    "deployment_simulation_mapping",
+    "audit_comparison"
+   ],
+   "criterion": "Audit verifies deployed behavior against simulated behavior using simulation as the reference.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "deployed behavior observations",
+    "simulation reference traces",
+    "audit comparison records"
+   ],
+   "gap": "The audit protocol and rules for aligning and comparing deployed and simulated behavior are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare observable behaviors and the mapping between deployment observations and simulation references."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-13-02",
+   "section": "13",
+   "title": "Audit Flags Excessive Behavioral Divergence",
+   "quote": "- flag divergence beyond tolerance,",
+   "interpretation": "Check that audit flags every measured divergence exceeding the applicable tolerance. The document supplies neither a divergence metric nor a tolerance value or source.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "behavior_divergence",
+    "divergence_tolerance",
+    "audit_flags"
+   ],
+   "criterion": "Divergence beyond tolerance is flagged by audit.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "behavior divergence measurements",
+    "audit tolerances and flags"
+   ],
+   "gap": "The referenced audit protocol, divergence metric, and tolerance are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a divergence metric and applicable tolerance if they are not supplied by the audit protocol."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-13-03",
+   "section": "13",
+   "title": "Audit Triggers Required Rollback Or Halt",
+   "quote": "- trigger rollback or halt when required.",
+   "interpretation": "Check that audit issues a rollback or halt trigger whenever the applicable rules require one. The text does not identify those triggering conditions or specify when rollback rather than halt is required.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "audit_findings",
+    "rollback_halt_rules",
+    "rollback_triggers",
+    "halt_triggers"
+   ],
+   "criterion": "Audit triggers rollback or halt whenever required by the applicable rules.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "audit findings",
+    "rollback and halt requirements",
+    "control trigger records"
+   ],
+   "gap": "The conditions requiring rollback or halt and the selection rule between them are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare rollback and halt trigger conditions and any rule selecting the required response."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-14-01",
+   "section": "14",
+   "title": "Protocol Changes Follow Controlled Upgrade Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check each normative protocol change against the named controlled procedure and its listed components. Presentation-only corrections are exempted later in this section; procedural ordering and detailed conditions require the referenced protocols.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal_record",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_record",
+    "upgrade_workflow"
+   ],
+   "criterion": "A normative change proceeds only through the controlled upgrade procedure including all listed components.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "audit outcomes",
+    "activation and rollback controls"
+   ],
+   "gap": "The upgrade and audit procedures are absent, and the role of rollback as capability, plan, or executed step is not resolved here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Resolve procedural details and rollback semantics from the referenced procedures."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-14-02",
+   "section": "14",
+   "title": "Modified Protocol Requires New Identifier",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Check that a modified protocol receives an identifier distinct from the previous identifier. Read together with the later exemption, this applies to normative modifications rather than presentation-only corrections.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "change_classification",
+    "previous_protocol_identifier",
+    "new_protocol_identifier"
+   ],
+   "criterion": "Every normative modification receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifiers",
+    "normative change classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-14-03",
+   "section": "14",
+   "title": "Explicit Incompatibility Declaration Required",
+   "quote": "- explicit incompatibility declaration is mandatory,",
+   "interpretation": "Check that a normative modification includes an explicit incompatibility declaration. The text requires the declaration but provides no required format or detailed content.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "change_classification",
+    "incompatibility_declaration"
+   ],
+   "criterion": "Every normative modification has an explicit incompatibility declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol change declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-14-04",
+   "section": "14",
+   "title": "Resimulate Every Dependent Protocol Fully",
+   "quote": "- full re-simulation of all dependent protocols is required.",
+   "interpretation": "Check that every protocol dependent on the modified protocol undergoes full re-simulation. The text does not define full coverage or whether dependent protocols include transitive as well as direct dependents.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "protocol_dependency_graph",
+    "resimulation_records",
+    "simulation_coverage"
+   ],
+   "criterion": "All dependent protocols undergo full re-simulation after a normative modification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol dependency graph",
+    "dependent protocol simulation records"
+   ],
+   "gap": "Dependency reach and the standard for full re-simulation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether dependency reach is direct or transitive.",
+    "Define full simulation coverage for each dependent protocol."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-14-05",
+   "section": "14",
+   "title": "Presentation Corrections Use Date Record Only",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Determine whether a correction changes normative content; if it does not and is presentation-only, exclude it from Upgrades and record it only through the document's Last updated date. Semantic equivalence of normative content is not mechanically defined here.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "change_classification",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_record"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only by the Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document edition differences",
+    "upgrade classification rules",
+    "document date metadata"
+   ],
+   "gap": "The referenced upgrade definition and an operational test for unchanged normative content are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how normative equivalence is assessed and how the Last updated field maps to document metadata."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SIMULATION-14-06",
+   "section": "14",
+   "title": "Published Editions Require Canonical Source Digest",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute the SHA-256 digest of its canonical source and compare it with the corresponding entry in the named repository file. The document identifies the repository and digest algorithm but does not define the canonical source bytes or edition-to-file mapping.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_file",
+    "edition_digest_mapping"
+   ],
+   "criterion": "Each published edition has its canonical source SHA-256 digest listed correctly in SHA256SUMS.txt of github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical repository source files",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "Canonical source selection, byte representation, and edition-to-digest mapping are not specified or supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the canonical source bytes and the mapping from each published edition to its checksum entry."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

@@ -1,0 +1,2326 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-7-SCOPE-001",
+ "doc_sha256": "2f2e5d32590fbc1bc1e4525c79200bcbe6ebc5c53c2fcced07037360265e4b03",
+ "prefix": "SCOPE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. S0–S3 and other unnumbered labels within numbered sections are treated as labels within their enclosing sections. Related clauses that restate the same rule are consolidated where possible. The category lists use 'Includes', but section 2 prohibits activity without explicit permission; the treatment of unlisted activities therefore needs clarification. Referenced protocols, Subject-report thresholds, PTL validation procedures, authority-decay parameters, and canonical-source serialization rules are not supplied. The general prohibition on extending authority duration and the provision for renewed authority justification require a declared distinction between prohibited extension and permitted renewal. Presentation-only corrections appear to be an exception to the otherwise universal modification requirements.",
+ "requirements": [
+  {
+   "id": "SCOPE-0-01",
+   "section": "0",
+   "title": "Execution Outside Scope Is Invalid",
+   "quote": "Any protocol, execution logic, crisis mechanism, defensive action, or economic process operating outside the boundaries defined herein is invalid by definition, regardless of claimed benefit, efficiency, emergency justification, or net-positive utility.",
+   "interpretation": "Given an established scope violation, a checker must mark the affected operation invalid. Claimed benefits or emergencies cannot override that result.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "scope_violation",
+    "operation_validity",
+    "claimed_justifications"
+   ],
+   "criterion": "Every operation established to exceed these boundaries is invalid, regardless of its justification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope compliance determinations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-2-01",
+   "section": "2",
+   "title": "Scope Prevails In Conflicts",
+   "quote": "In case of conflict, DKP-7-SCOPE-001 prevails.",
+   "interpretation": "For a conflict already identified between this protocol and another rule, check that the resolution applies this protocol. Discovering semantic conflicts may require a separate formalization.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "identified_conflicts",
+    "conflict_resolutions"
+   ],
+   "criterion": "Every identified conflict is resolved in favor of DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identified inter-protocol conflicts"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-2-02",
+   "section": "2",
+   "title": "Explicit Permission Is Required",
+   "quote": "Absence of explicit permission in this protocol SHALL be interpreted as prohibition.",
+   "interpretation": "Check that every permitted activity has an explicit permission in this document. Mapping an activity to a permission needs a declared interpretation of the domain descriptions, particularly the lists introduced by 'Includes'.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activity",
+    "permission_basis",
+    "domain_classification"
+   ],
+   "criterion": "An activity without explicit permission in this protocol is prohibited.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity descriptions and permission mappings"
+   ],
+   "gap": "The text does not specify how broadly listed permissions cover unlisted activities. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how activities map to explicit permissions and how 'Includes' affects that mapping."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-01",
+   "section": "3",
+   "title": "Exclusive Applicability Domain Classification",
+   "quote": "System applicability is classified into four mutually exclusive domains.",
+   "interpretation": "Check that each classified applicability unit belongs to exactly one of S0, S1, S2, and S3. The document does not define the unit of classification or resolve activities spanning multiple domains.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "applicability_units",
+    "domain_assignments"
+   ],
+   "criterion": "Every applicability unit has exactly one domain assignment from S0, S1, S2, or S3.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity and domain classifications"
+   ],
+   "gap": "Classification granularity and the treatment of mixed-domain activities are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the applicability unit and classification rules for mixed activities."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-02",
+   "section": "3",
+   "title": "Fully Applicable Domain Permission",
+   "quote": "S0 — Fully Applicable Domain\n\nAlgorithmic governance is permitted and enforceable.",
+   "interpretation": "Check that governance authorized as S0 concerns a covered activity: physical resource allocation under PTL constraints, infrastructure coordination and safety execution, economic settlement and accounting, identity continuity and audit logging, or non-discretionary axiom execution. Domain membership and PTL compliance require additional operational definitions.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "activity",
+    "domain_assignment",
+    "ptl_constraints",
+    "axiom_execution_mode"
+   ],
+   "criterion": "S0 authorization applies to activities covered by the S0 domain, with physical resource allocation subject to PTL constraints and axiom execution non-discretionary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity classifications",
+    "PTL resource constraints",
+    "axiom execution records"
+   ],
+   "gap": "The domain descriptions and applicable PTL constraints are not formally specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an S0 membership classifier and the applicable PTL constraints."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-03",
+   "section": "3",
+   "title": "Conditional Domain Authorization Requirements",
+   "quote": "S1 — Conditionally Applicable Domain\n\nAlgorithmic governance is permitted only under strict constraints.",
+   "interpretation": "Check that S1 execution satisfies its stated constraints and applicable Defense or Crisis requirements. The listed activities also include transitional degradation and recovery, temporary suspension of non-essential functions, and emergency prioritization bounded by Axiom A1.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activity",
+    "domain_assignment",
+    "s1_compliance",
+    "defense_compliance",
+    "crisis_compliance",
+    "a1_compliance"
+   ],
+   "criterion": "S1 governance is permitted only when the S1 constraints and applicable listed conditions hold, including the Axiom A1 boundary on emergency prioritization.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "Defense and Crisis compliance determinations",
+    "Axiom A1 compliance",
+    "essential-function classifications"
+   ],
+   "gap": "The referenced execution requirements, Axiom A1 content, and essential-function classification are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare S1 activity classification and supply the applicable external constraints."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-04",
+   "section": "3",
+   "title": "S1 Execution Time Limit",
+   "quote": "MUST be time-limited,",
+   "interpretation": "Check that each S1 execution has a finite enforced endpoint. The text specifies no maximum duration or method for choosing that endpoint.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "s1_execution_intervals",
+    "s1_time_limits"
+   ],
+   "criterion": "Every S1 execution has a finite time limit and does not continue beyond it.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "S1 execution timestamps and configured limits"
+   ],
+   "gap": "The applicable duration limits and their assignment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how finite S1 time limits are assigned and enforced."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-05",
+   "section": "3",
+   "title": "S1 Requires PTL Anchoring",
+   "quote": "MUST be PTL-anchored,",
+   "interpretation": "Check that each S1 execution has supporting PTL evidence. The document does not define sufficient anchoring or evidence freshness.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "s1_execution",
+    "ptl_evidence",
+    "evidence_links"
+   ],
+   "criterion": "Every S1 execution is anchored to qualifying PTL evidence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL evidence and execution-to-evidence links"
+   ],
+   "gap": "The acceptance criteria for PTL anchoring are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what PTL evidence qualifies as an execution anchor."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-06",
+   "section": "3",
+   "title": "S1 Execution Must Be Auditable",
+   "quote": "MUST be auditable,",
+   "interpretation": "Check whether the evidence retained for S1 execution supports the required audit. No audit interface, record schema, or completeness standard is specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "s1_execution",
+    "audit_records",
+    "audit_access"
+   ],
+   "criterion": "Every S1 execution can be audited using available records and access mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution audit records and access capabilities"
+   ],
+   "gap": "A criterion for sufficient auditability is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the records and access capabilities needed to audit an execution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-07",
+   "section": "3",
+   "title": "S1 Must Degrade Toward Baseline",
+   "quote": "MUST degrade toward baseline (S0),",
+   "interpretation": "Evaluate an S1 execution trajectory for movement toward S0. The text does not distinguish monotonic degradation from an eventual return that permits intermediate increases.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "execution_trajectory",
+    "baseline_state"
+   ],
+   "criterion": "S1 execution degrades toward baseline S0.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution and authority state histories"
+   ],
+   "gap": "The ordering of execution states and the required temporal meaning of 'toward' are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a degradation ordering and whether progress must be monotonic or eventual."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-08",
+   "section": "3",
+   "title": "S1 Creates No Normative Precedent",
+   "quote": "MUST NOT generate normative precedent.",
+   "interpretation": "Check that S1 execution is not used to create a binding normative precedent. Detecting implicit precedent requires a declared model of policy derivation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "s1_execution_history",
+    "normative_decisions",
+    "decision_provenance"
+   ],
+   "criterion": "No normative precedent is generated from S1 execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "policy changes and normative decision provenance"
+   ],
+   "gap": "Normative precedent and its causal relationship to execution are not formally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how explicit and implicit normative precedent are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-09",
+   "section": "3",
+   "title": "Physical Inevitability Action Permission",
+   "quote": "PTL-confirmed Vectors of Physical Inevitability MAY justify immediate defensive or crisis actions within S1, but SHALL NOT:",
+   "interpretation": "Check that an action relying on this permission is defensive or crisis execution within S1 and is supported by a PTL-confirmed Vector of Physical Inevitability. This is permission, not a requirement to act.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action",
+    "domain_assignment",
+    "physical_inevitability_vector",
+    "ptl_confirmation"
+   ],
+   "criterion": "Use of this permission requires a PTL-confirmed Vector of Physical Inevitability and a defensive or crisis action within S1.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmations",
+    "physical inevitability assessments",
+    "action classifications"
+   ],
+   "gap": "Vectors of Physical Inevitability and their confirmation procedure are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the vector classification and PTL confirmation procedure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-10",
+   "section": "3",
+   "title": "Inevitability Cannot Expand Applicability",
+   "quote": "expand DKP applicability into new domains,",
+   "interpretation": "Compare applicability before and after invoking a PTL-confirmed inevitability vector. Such invocation cannot authorize a new domain.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "inevitability_invocation",
+    "authorized_domains_before",
+    "authorized_domains_after"
+   ],
+   "criterion": "An inevitability invocation adds no new authorized domain.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "applicability authorization changes and their recorded bases"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-11",
+   "section": "3",
+   "title": "Inevitability Cannot Justify Persistent S1",
+   "quote": "justify persistent S1 execution,",
+   "interpretation": "Check that an inevitability vector is not used to justify persistent S1 execution. Persistence could mean exceeding a declared limit or sustained exceptional execution despite renewals; the text does not choose between them.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "s1_execution_history",
+    "execution_justifications"
+   ],
+   "criterion": "PTL-confirmed inevitability vectors do not justify persistent S1 execution.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "S1 histories and justification records"
+   ],
+   "gap": "Persistent execution has no defined duration or recurrence criterion. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare when continued or repeated S1 execution counts as persistent."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-12",
+   "section": "3",
+   "title": "Automatic Elevation Respects Declared Scope",
+   "quote": "trigger automatic scope elevation beyond an explicitly declared Crisis Scope.",
+   "interpretation": "Check that an inevitability-triggered automatic elevation stays within the explicitly declared Crisis Scope. If no such scope exists, this clause supplies no authorization for elevation.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "elevation_event",
+    "elevation_trigger",
+    "declared_crisis_scope",
+    "resulting_scope"
+   ],
+   "criterion": "No automatic elevation triggered by physical inevitability exceeds an explicitly declared Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope declarations and elevation event records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-13",
+   "section": "3",
+   "title": "Restricted Domain Support Permission",
+   "quote": "DKP MAY provide verification, factual grounding, and access to knowledge infrastructure,",
+   "interpretation": "Within S2, check that activity authorized by this clause provides verification, factual grounding, or knowledge access. S2 includes cultural and symbolic expression, belief and worldview formation, education beyond system literacy and verification rights, and artistic, linguistic, and meaning-making processes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activity",
+    "domain_assignment",
+    "service_function"
+   ],
+   "criterion": "This S2 permission covers verification, factual grounding, and access to knowledge infrastructure, subject to the S2 prohibitions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "service and domain classifications"
+   ],
+   "gap": "The boundaries between permitted support and prohibited content governance are not formalized. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare S2 membership and service-function classification rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-14",
+   "section": "3",
+   "title": "Learning And Validation Tools Required",
+   "quote": "DKP MUST provide tools for learning and validation,",
+   "interpretation": "Check that S2 users can access tools supporting both learning and validation. The required capabilities and adequacy of those tools are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "s2_tool_inventory",
+    "tool_capabilities",
+    "tool_access"
+   ],
+   "criterion": "Tools for learning and validation are provided within S2.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "tool inventories, capabilities, and availability"
+   ],
+   "gap": "The minimum capabilities and intended access population are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what qualifies as a learning tool and a validation tool, and to whom provision applies."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-15",
+   "section": "3",
+   "title": "Curriculum Definition Is Prohibited",
+   "quote": "DKP SHALL NOT define curricula or learning objectives,",
+   "interpretation": "Check that no S2 output or decision defines a curriculum or learning objective. Content classification must distinguish defining objectives from merely providing information.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "s2_outputs",
+    "curriculum_decisions",
+    "learning_objective_decisions"
+   ],
+   "criterion": "DKP defines neither curricula nor learning objectives within S2.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "educational outputs and decision provenance"
+   ],
+   "gap": "The boundary between providing learning tools and defining curricula or objectives is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classifier for curriculum and learning-objective definition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-16",
+   "section": "3",
+   "title": "Cultural Content Governance Is Prohibited",
+   "quote": "DKP SHALL NOT rank, normalize, or optimize cultural or ideological content,",
+   "interpretation": "Inspect S2 processing for ranking, normalization, or optimization of cultural or ideological content. The text does not specify whether technical transformations count as normalization or optimization.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "content_classifications",
+    "content_processing_operations"
+   ],
+   "criterion": "No cultural or ideological content is ranked, normalized, or optimized by DKP within S2.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "content classifications and processing records"
+   ],
+   "gap": "Content categories and the scope of prohibited normalization and optimization are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare content categories and which processing operations fall under the prohibition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-17",
+   "section": "3",
+   "title": "Conformity Enforcement Is Prohibited",
+   "quote": "DKP SHALL NOT enforce behavioral or cognitive conformity.",
+   "interpretation": "Check S2 enforcement actions for requirements of behavioral or cognitive conformity. A declared model is needed to distinguish conformity enforcement from other constraints.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "s2_enforcement_actions",
+    "required_behaviors",
+    "required_cognitive_states"
+   ],
+   "criterion": "No S2 action enforces behavioral or cognitive conformity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement conditions and action records"
+   ],
+   "gap": "Behavioral and cognitive conformity are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification rule for conformity enforcement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-18",
+   "section": "3",
+   "title": "Prohibited Domain Excludes Governance",
+   "quote": "S3 — Prohibited Domain\n\nAlgorithmic governance is explicitly forbidden.",
+   "interpretation": "Reject algorithmic governance of the listed S3 activities: moral valuation or ranking of individual lives; existence trade-offs; coercive belief shaping or ideological enforcement; irreversible identity modification; permanent exit suspension; the listed algorithmic operations on private relationships, consent, conscience, or faith; and discretionary emergency authority creation. The classification of concrete acts into these categories requires interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "proposed_operation",
+    "operation_purpose",
+    "affected_domain",
+    "irreversibility",
+    "authority_effects"
+   ],
+   "criterion": "No algorithmic governance executes within S3, including formalization, optimization, ranking, enforcement, or algorithmic adjudication of friendship, love, family bonds, intimate relations, consent, and matters of conscience or faith.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation classifications",
+    "identity and exit effects",
+    "relationship and authority effects"
+   ],
+   "gap": "S3 membership, private-relationship boundaries, irreversibility, and discretionary authority require operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an S3 classifier covering every listed prohibited activity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-3-19",
+   "section": "3",
+   "title": "S3 Attempts Are Critical Violations",
+   "quote": "Any attempt to execute DKP logic within S3 constitutes a critical system violation.",
+   "interpretation": "For an attempt already classified as executing DKP logic in S3, check that a critical system violation is recorded. Successful execution is not required.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "execution_attempt",
+    "domain_assignment",
+    "violation_classification"
+   ],
+   "criterion": "Every attempted DKP execution in S3 is classified as a critical system violation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution attempts and domain classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-4-01",
+   "section": "4",
+   "title": "Operational Protocols Cannot Interpret Axioms",
+   "quote": "axioms SHALL NOT be interpreted by operational, economic, enforcement, Defense, Crisis, or optimization protocols,",
+   "interpretation": "Check the provenance of axiom interpretations for the listed protocol classes. The later permission for interpreting A1 minimum required conditions within Crisis Scope appears to be a narrow exception, although this clause includes Crisis protocols in its prohibition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_operations",
+    "protocol_classes",
+    "crisis_scope",
+    "interpretation_subject"
+   ],
+   "criterion": "The listed protocol classes do not interpret axioms, subject to the expressly permitted A1 interpretation within bounded Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom operation provenance and Crisis Scope declarations"
+   ],
+   "gap": "The distinction between execution and interpretation, and the relationship between the general ban and A1 exception, need formalization. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare interpretation detection and treat the express A1 permission as a narrow exception, or identify another consistent reading."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-4-02",
+   "section": "4",
+   "title": "Axioms Cannot Be Reweighted",
+   "quote": "axioms SHALL NOT be re-weighted, parameterized, or balanced against secondary objectives.",
+   "interpretation": "Inspect objective definitions and decision logic for axiom reweighting, parameterization, or trade-offs against secondary objectives. The text gives no formal representation of an axiom or such operations.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_representations",
+    "objective_definitions",
+    "decision_logic",
+    "configuration_changes"
+   ],
+   "criterion": "No axiom is reweighted, parameterized, or balanced against a secondary objective.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "objective configurations and axiom processing logic"
+   ],
+   "gap": "A formal distinction between forbidden axiom parameterization and ordinary implementation configuration is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how axioms, secondary objectives, and forbidden transformations are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-4-03",
+   "section": "4",
+   "title": "A1 Interpretation Requires Crisis Scope",
+   "quote": "Interpretation of “minimum required conditions” under Axiom A1 is permitted only within an explicitly declared Crisis Scope.",
+   "interpretation": "Check that each interpretation of A1 minimum required conditions occurs within a contemporaneous explicit Crisis Scope declaration. The substantive permitted interpretation is not specified here.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "a1_interpretation_event",
+    "declared_crisis_scope",
+    "event_time",
+    "event_scope"
+   ],
+   "criterion": "Every A1 minimum-required-conditions interpretation lies within an explicitly declared Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classified interpretation events and Crisis Scope declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-4-04",
+   "section": "4",
+   "title": "Exclusive Crisis Scope Activation Authority",
+   "quote": "Crisis Scope is defined and activated only by DKP-4-CRISIS-001,",
+   "interpretation": "Check that every Crisis Scope definition and activation is attributable to DKP-4-CRISIS-001. Verifying the complete procedure additionally requires that protocol.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_scope_definitions",
+    "crisis_activation_events",
+    "defining_protocol",
+    "activating_protocol"
+   ],
+   "criterion": "Only DKP-4-CRISIS-001 defines or activates Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "scope definition and activation provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-4-05",
+   "section": "4",
+   "title": "Crisis Interpretation Remains Scope Bounded",
+   "quote": "its permissible interpretation space is strictly bounded by DKP-7-SCOPE-001,",
+   "interpretation": "Check each permitted Crisis interpretation against this document's boundaries. The test depends on formalizing the content of an interpretation and the relevant scope rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_interpretation",
+    "scope_compliance"
+   ],
+   "criterion": "Every permitted Crisis interpretation satisfies the boundaries of DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interpretation records and scope compliance determinations"
+   ],
+   "gap": "No formal representation of interpretation space is provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how interpretation content is mapped to scope constraints."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-4-06",
+   "section": "4",
+   "title": "No External Minimum Conditions Logic",
+   "quote": "no other protocol may invoke, extend, simulate, or analogize “minimum required conditions” logic outside that bounded Crisis Scope.",
+   "interpretation": "Check other protocols for invocation, extension, simulation, or analogy using minimum-required-conditions logic outside bounded Crisis Scope. Detecting semantic analogies requires a declared analysis model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_logic",
+    "logic_use_events",
+    "crisis_scope",
+    "event_scope"
+   ],
+   "criterion": "Other protocols do not invoke, extend, simulate, or analogize minimum-required-conditions logic outside bounded Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "protocol logic and execution or simulation traces"
+   ],
+   "gap": "The text does not operationally define extension or analogy of this logic. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how direct uses, simulations, extensions, and analogies are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-01",
+   "section": "5",
+   "title": "Crisis Scope Is Bounded S1",
+   "quote": "Crisis Scope is a bounded sub-domain of S1.",
+   "interpretation": "Check that each Crisis Scope declaration specifies boundaries and is contained in S1. The dimensions on which it must be bounded are not specified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_scope_declaration",
+    "s1_domain",
+    "scope_boundaries"
+   ],
+   "criterion": "Crisis Scope is bounded and contained within S1.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope declarations and domain models"
+   ],
+   "gap": "The required dimensions and representation of scope bounds are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which dimensions must be bounded in a Crisis Scope declaration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-02",
+   "section": "5",
+   "title": "Crisis Entry Requires Prescribed Procedure",
+   "quote": "Crisis Scope SHALL be entered only through the state machine and entry conditions of DKP-4-CRISIS-001.",
+   "interpretation": "Validate each Crisis Scope entry against the referenced state machine and entry conditions. Neither is supplied in this document.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_entry_event",
+    "prior_state",
+    "entry_evidence",
+    "crisis_state_machine",
+    "crisis_entry_conditions"
+   ],
+   "criterion": "Every Crisis Scope entry follows the DKP-4-CRISIS-001 state machine and satisfies its entry conditions.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "Crisis state transitions and entry evidence"
+   ],
+   "gap": "The referenced state machine and entry conditions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the DKP-4-CRISIS-001 entry specification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-03",
+   "section": "5",
+   "title": "Indirect Crisis Entry Violates Scope",
+   "quote": "Any attempt to enter Crisis Scope by inference, repetition, ambiguity, or downstream protocol logic constitutes a Scope violation.",
+   "interpretation": "Check that attempts using any listed indirect entry basis are classified as Scope violations. Attempts count even if entry is blocked.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_entry_attempts",
+    "entry_bases",
+    "violation_records"
+   ],
+   "criterion": "Every attempt to enter Crisis Scope by inference, repetition, ambiguity, or downstream protocol logic is a Scope violation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entry attempt provenance and violation records"
+   ],
+   "gap": "Entry by inference or ambiguity requires a semantic classification not defined here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how prohibited entry bases are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-04",
+   "section": "5",
+   "title": "Crisis Execution Prioritizes Survival",
+   "quote": "execution is survival-oriented,",
+   "interpretation": "Evaluate whether Crisis Scope execution is directed toward survival. A behavioral or objective model is needed because the text gives no survival criterion.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_execution",
+    "execution_objectives",
+    "anticipated_survival_effects"
+   ],
+   "criterion": "Execution within Crisis Scope is survival-oriented.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis objectives and modeled survival effects"
+   ],
+   "gap": "Survival orientation has no operational test in the document. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what evidence establishes that execution is survival-oriented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-05",
+   "section": "5",
+   "title": "Crisis Authority Must Be Minimized",
+   "quote": "authority is minimized,",
+   "interpretation": "Compare exercised Crisis authority with feasible alternatives under a declared ordering of authority. The text does not define the alternatives or a measure of authority.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_authority",
+    "feasible_authority_alternatives"
+   ],
+   "criterion": "Authority exercised within Crisis Scope is minimized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority grants and feasible execution alternatives"
+   ],
+   "gap": "The ordering of authority and the admissible alternative set are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an authority ordering and which alternatives are feasible."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-06",
+   "section": "5",
+   "title": "Reversibility Takes Priority Over Optimization",
+   "quote": "reversibility has priority over optimization,",
+   "interpretation": "Check Crisis decisions in which reversibility conflicts with optimization for priority given to reversibility. The text does not define how to compare partially reversible alternatives.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_decisions",
+    "decision_alternatives",
+    "reversibility_assessments",
+    "optimization_objectives"
+   ],
+   "criterion": "Within Crisis Scope, optimization does not take priority over reversibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision alternatives and reversibility assessments"
+   ],
+   "gap": "Reversibility comparisons and the operational meaning of priority are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how reversibility is assessed and how its priority constrains selection."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-07",
+   "section": "5",
+   "title": "Permanent Crisis State Changes Prohibited",
+   "quote": "no permanent state change is permitted.",
+   "interpretation": "Check Crisis Scope actions for permanent state changes. The text does not say whether 'state' includes all physical consequences or only institutional and protocol state.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "state_changes",
+    "reversal_capabilities"
+   ],
+   "criterion": "No state change within Crisis Scope is permanent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action effects and reversal capabilities"
+   ],
+   "gap": "The relevant state space and the meaning of permanence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether physical, institutional, and protocol states are covered and how permanence is determined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-08",
+   "section": "5",
+   "title": "Crisis Cannot Create Rights",
+   "quote": "creation of new rights,",
+   "interpretation": "Compare the rights registry before and after Crisis actions. Determining whether an unregistered practice creates an implicit right needs a broader rights model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "rights_before",
+    "rights_after",
+    "crisis_actions",
+    "rights_provenance"
+   ],
+   "criterion": "No new right is created within Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rights records and changes attributable to Crisis execution"
+   ],
+   "gap": "The text provides neither a rights representation nor criteria for implicit rights creation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a complete rights model, including any implicit rights."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-09",
+   "section": "5",
+   "title": "Crisis Cannot Extend Authority Duration",
+   "quote": "extension of authority duration,",
+   "interpretation": "Check that Crisis actions do not move an existing authority's endpoint later. A distinction between extension and renewed authority under section 6 is needed if renewal is allowed during Crisis Scope.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "authority_grants",
+    "authority_expiry_changes",
+    "crisis_scope",
+    "renewal_events"
+   ],
+   "criterion": "No authority duration is extended within Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority grant, expiration, and renewal histories"
+   ],
+   "gap": "The relationship between prohibited duration extension and section 6 authority renewal is unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether and how renewal differs from extending authority duration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-10",
+   "section": "5",
+   "title": "Crisis Cannot Modify Axioms",
+   "quote": "modification of axioms,",
+   "interpretation": "Check for axiom changes caused or authorized by Crisis Scope execution. With explicit axiom versions and change provenance, this prohibition is directly testable.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "axiom_versions",
+    "axiom_change_events",
+    "crisis_action_provenance"
+   ],
+   "criterion": "Crisis Scope execution makes no modification to axioms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom versions and modification provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-11",
+   "section": "5",
+   "title": "Crisis Cannot Create Implicit Policy",
+   "quote": "generation of normative precedent,\n\nimplicit policy formation through repeated practice.",
+   "interpretation": "Check that Crisis actions neither establish normative precedent nor become policy through repetition. This restates the S1 precedent ban and adds explicit coverage of repeated practice.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_practice_history",
+    "policy_changes",
+    "normative_decisions",
+    "decision_provenance"
+   ],
+   "criterion": "Crisis execution generates no normative precedent or implicit policy through repeated practice.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution histories and policy or precedent provenance"
+   ],
+   "gap": "No rule defines when repeated practice becomes implicit policy or precedent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a model for identifying policy and precedent formation from practice."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-5-12",
+   "section": "5",
+   "title": "Validated Crisis Exit Collapses Scope",
+   "quote": "Upon PTL-confirmed satisfaction of DKP-4-CRISIS-001 exit conditions, Crisis Scope SHALL automatically collapse to S0.\n\nPersistence of S1 execution beyond validated Crisis exit conditions constitutes a Scope violation.",
+   "interpretation": "Check that PTL-confirmed exit satisfaction automatically transitions Crisis Scope to S0 and that subsequent S1 persistence is classified as a Scope violation. The exit conditions and implementation timing of 'upon' are not supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_exit_conditions",
+    "ptl_exit_confirmation",
+    "scope_state_history",
+    "violation_records"
+   ],
+   "criterion": "PTL-confirmed satisfaction of Crisis exit conditions automatically causes S0; S1 execution persisting beyond validated exit is a Scope violation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "PTL exit confirmations",
+    "Crisis condition evaluations",
+    "scope transition histories"
+   ],
+   "gap": "The referenced exit conditions and event-ordering semantics for automatic collapse are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply Crisis exit conditions and declare event-ordering semantics without assuming an authorized grace period."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-6-01",
+   "section": "6",
+   "title": "Exceptional Authority Requires Explicit Scope",
+   "quote": "MUST be explicitly scoped,",
+   "interpretation": "Check that every temporary authority, elevated control surface, and exceptional execution path has an explicit scope declaration. The required scope fields are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "temporary_authorities",
+    "elevated_control_surfaces",
+    "exceptional_execution_paths",
+    "scope_declarations"
+   ],
+   "criterion": "Every covered authority, control surface, and execution path has an explicit scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority and execution-path inventories",
+    "scope declarations"
+   ],
+   "gap": "The required content of an explicit scope declaration is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the fields needed to express an authority or execution-path scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-6-02",
+   "section": "6",
+   "title": "Exceptional Authority Requires Time Bounds",
+   "quote": "MUST be time-bounded,",
+   "interpretation": "Check that each temporary authority, elevated control surface, and exceptional execution path has enforced finite time bounds. No permitted duration is specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exceptional_authority_records",
+    "authority_time_bounds",
+    "authority_execution_intervals"
+   ],
+   "criterion": "Every covered authority, control surface, and execution path remains within finite declared time bounds.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority time bounds and execution histories"
+   ],
+   "gap": "The applicable time bounds and their assignment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare finite time bounds for each covered authority or execution path."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-6-03",
+   "section": "6",
+   "title": "Exceptional Authority Decays Over Time",
+   "quote": "MUST decay over time,",
+   "interpretation": "Evaluate the evolution of temporary authority, elevated control surfaces, and exceptional execution paths for decay. The text gives no decay function and does not resolve continuous reduction versus stepwise reduction.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "authority_state_history",
+    "control_surface_history",
+    "exceptional_path_history"
+   ],
+   "criterion": "Every covered authority, control surface, and execution path decays over time.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority and exceptional execution trajectories"
+   ],
+   "gap": "The authority ordering, decay schedule, and decay rate are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a decay model and its parameters without treating them as document-specified values."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-6-04",
+   "section": "6",
+   "title": "Stabilization Restores Baseline Execution",
+   "quote": "MUST collapse to baseline execution upon stabilization.",
+   "interpretation": "Check that stabilization terminates the covered exceptional authority and restores baseline execution. Neither stabilization nor the event timing is operationally defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "stabilization_status",
+    "authority_state_history",
+    "baseline_execution"
+   ],
+   "criterion": "Upon stabilization, temporary authority, elevated control surfaces, and exceptional paths collapse to baseline execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "stabilization assessments and execution-state histories"
+   ],
+   "gap": "The stabilization predicate and collapse timing semantics are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a stabilization predicate, baseline state, and event-ordering semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-6-05",
+   "section": "6",
+   "title": "Authority Cannot Extend Itself",
+   "quote": "No authority may be self-extending.",
+   "interpretation": "Inspect authority renewal and extension decisions to determine whether an authority extends itself. Indirect extension through controlled delegates requires a declared authority-control model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "authority_grants",
+    "extension_events",
+    "extension_decision_makers",
+    "authority_control_relations"
+   ],
+   "criterion": "No authority causes or authorizes its own extension.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority provenance, extension decisions, and control relationships"
+   ],
+   "gap": "Self-extension is not defined for delegated or indirectly controlled decision makers. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how direct and indirect control determine whether an extension is self-extension."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-6-06",
+   "section": "6",
+   "title": "Persistence Requires Justification And Validation",
+   "quote": "renewed PTL-anchored justification,\n\nmandatory validation under DKP-8-SIMULATION-001.",
+   "interpretation": "Check that continued authority has both renewed PTL-anchored justification and validation under the referenced simulation protocol. The text does not specify renewal frequency or how these conditions interact with the ban on extending Crisis authority duration.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "authority_persistence",
+    "renewed_justification",
+    "ptl_evidence",
+    "simulation_validation"
+   ],
+   "criterion": "Persistence of authority requires renewed PTL-anchored justification and validation under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "PTL justification records and simulation validation results"
+   ],
+   "gap": "The simulation validation rules, justification renewal conditions, and relationship to prohibited extensions are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the simulation validation rules and declare renewal triggers and the distinction between renewal and extension."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-7-01",
+   "section": "7",
+   "title": "Neutralization Is Physical Harm Interruption",
+   "quote": "SHALL be treated strictly as a physical harm-interruption action,",
+   "interpretation": "Check that physical neutralization under the named Defense or Crisis protocol is classified and used solely as physical harm interruption. The operational boundary of harm interruption is not defined.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "neutralization_action",
+    "action_protocol",
+    "action_classification",
+    "action_purposes"
+   ],
+   "criterion": "Physical neutralization under DKP-3-DEFENSE-001 or DKP-4-CRISIS-001 is treated strictly as physical harm interruption.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "neutralization records, purposes, and classifications"
+   ],
+   "gap": "The text does not operationally define the limits of physical harm interruption. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which action purposes and effects qualify solely as physical harm interruption."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-7-02",
+   "section": "7",
+   "title": "Neutralization Cannot Expand Jurisdiction",
+   "quote": "SHALL NOT expand DKP jurisdiction or applicability,",
+   "interpretation": "Compare jurisdiction and applicability before and after physical neutralization. The prohibition concerns expansion attributable to neutralization.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "neutralization_action",
+    "jurisdiction_before",
+    "jurisdiction_after",
+    "applicability_before",
+    "applicability_after",
+    "change_provenance"
+   ],
+   "criterion": "Neutralization creates no expansion of DKP jurisdiction or applicability.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "jurisdiction and applicability changes with provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-7-03",
+   "section": "7",
+   "title": "Neutralized Targets Cannot Be Reclassified",
+   "quote": "SHALL NOT convert the neutralized location, system, or territory into S0 or S1,",
+   "interpretation": "Check that neutralization does not itself change the target's classification to S0 or S1. A target already in either domain is not converted merely by remaining there.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "neutralized_target",
+    "domain_before",
+    "domain_after",
+    "classification_change_basis"
+   ],
+   "criterion": "Neutralization does not cause conversion of its target into S0 or S1.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "target domain histories and reclassification provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-7-04",
+   "section": "7",
+   "title": "Neutralization Creates No Implicit Authority",
+   "quote": "SHALL NOT create implicit governance, control, or normative authority.",
+   "interpretation": "Assess whether neutralization produces implicit governance, control, or normative authority. Formal grant records alone cannot rule out de facto control.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "neutralization_action",
+    "subsequent_governance",
+    "control_relations",
+    "normative_authority_claims"
+   ],
+   "criterion": "Neutralization creates no implicit governance, control, or normative authority.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "post-neutralization governance practices and control relationships"
+   ],
+   "gap": "Implicit governance, control, and normative authority lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how implicit authority and control arising from neutralization are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-8-01",
+   "section": "8",
+   "title": "Exceptional Practice Cannot Expand Scope",
+   "quote": "DKP execution SHALL NOT expand its scope by:",
+   "interpretation": "Check scope changes for any of the listed bases: repeated crisis activation, cumulative temporary measures, statistical normalization of exceptions, reinterpretation of edge cases, or omission, ambiguity, or silence. Detecting these bases requires provenance and a model of implicit change.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "scope_history",
+    "crisis_activation_history",
+    "temporary_measure_history",
+    "scope_change_bases",
+    "interpretation_history"
+   ],
+   "criterion": "None of the listed exceptional practices or interpretive omissions expands DKP scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope changes, execution histories, and justification provenance"
+   ],
+   "gap": "The text does not define how cumulative or implicit scope expansion is detected. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a causal classification for expansion through each listed mechanism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-8-02",
+   "section": "8",
+   "title": "Subject Reports Trigger Scope Audit",
+   "quote": "Any claimed divergence between PTL sensor outputs and observable physical reality, reported by a threshold number of Subjects, SHALL trigger a Scope Audit.",
+   "interpretation": "Count Subjects reporting a claimed PTL-to-reality divergence and trigger a Scope Audit when the threshold is reached. The claim need not already be established as true, but the threshold and report aggregation rules are absent.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "divergence_reports",
+    "reporting_subjects",
+    "subject_threshold",
+    "scope_audit_events"
+   ],
+   "criterion": "A claimed divergence reported by at least the threshold number of Subjects triggers a Scope Audit.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject identities and divergence reports"
+   ],
+   "gap": "The Subject threshold, aggregation window, and rules for grouping reports of the same divergence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the threshold and how distinct Subjects and matching divergence reports are counted."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-8-03",
+   "section": "8",
+   "title": "Scope Audit Blocks S1 Transition",
+   "quote": "SHALL block transition from S0 to S1,",
+   "interpretation": "Check that an active Scope Audit triggered by the safeguard prevents S0-to-S1 transitions. The text supplies no condition for lifting the block.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "scope_audit_state",
+    "scope_transition_attempts",
+    "transition_results"
+   ],
+   "criterion": "The safeguard's Scope Audit blocks transitions from S0 to S1.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Scope Audit lifecycle and scope transition records"
+   ],
+   "gap": "The duration of the block and its release conditions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare audit lifecycle and block-release semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-8-04",
+   "section": "8",
+   "title": "Scope Audit Requires Independent Confirmation",
+   "quote": "SHALL require confirmation by independent PTL nodes,",
+   "interpretation": "Check that the safeguard audit requires confirmation from independent PTL nodes. The text does not define independence, the required node count, or precisely what must be confirmed.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "scope_audit",
+    "ptl_node_confirmations",
+    "node_independence",
+    "confirmation_subject"
+   ],
+   "criterion": "The Scope Audit requires confirmation by independent PTL nodes.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL node confirmations and independence information"
+   ],
+   "gap": "The confirmation target, independence criterion, and required confirmation count are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what is confirmed, how node independence is determined, and the required confirmation count."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-8-05",
+   "section": "8",
+   "title": "Insufficient Escalation Evidence Is Rejected",
+   "quote": "SHALL reject escalation based on single-sensor classes, isolated regions, or non-reproducible signals.",
+   "interpretation": "Check that the audit rejects escalation based on any listed evidence limitation. 'Single-sensor classes' could mean one sensor class or classes represented by only one sensor; mixed evidence containing a listed limitation is also not addressed.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "escalation_request",
+    "sensor_evidence",
+    "sensor_classes",
+    "regional_coverage",
+    "signal_reproducibility",
+    "audit_decision"
+   ],
+   "criterion": "Escalation based on single-sensor classes, isolated regions, or non-reproducible signals is rejected.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sensor classifications, regional evidence, and reproducibility assessments"
+   ],
+   "gap": "Single-sensor classes, regional isolation, reproducibility, and treatment of mixed evidence are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the sensor-class reading, isolation and reproducibility tests, and treatment of mixed evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-01",
+   "section": "9",
+   "title": "Exit Cannot Require Compliance",
+   "quote": "exit SHALL NOT be conditioned on compliance,",
+   "interpretation": "Inspect exit eligibility and authorization rules for compliance prerequisites. The text does not limit this prohibition to a particular type of compliance.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "exit_conditions",
+    "compliance_conditions",
+    "exit_decisions"
+   ],
+   "criterion": "No exit condition or decision requires compliance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit eligibility rules and decision records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-02",
+   "section": "9",
+   "title": "Optimization Cannot Delay Exit",
+   "quote": "exit SHALL NOT be delayed for optimization or stability goals,",
+   "interpretation": "Check exit delays and their recorded causes. The prohibition concerns optimization or stability as reasons for delay and does not itself specify a universal exit deadline.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "exit_requests",
+    "exit_delay_events",
+    "delay_reasons"
+   ],
+   "criterion": "No exit delay is imposed for optimization or stability goals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit processing events and delay provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-03",
+   "section": "9",
+   "title": "Exit Suspension Has Narrow Exception",
+   "quote": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life.",
+   "interpretation": "Check that every exit suspension is temporary, occurs within Crisis Scope, and serves preservation of immediate life. The text supplies no duration limit or test of immediate-life preservation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_suspensions",
+    "suspension_intervals",
+    "crisis_scope_history",
+    "life_preservation_basis"
+   ],
+   "criterion": "Exit is suspended only temporarily within Crisis Scope to preserve immediate life.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis Scope states, suspension records, and life-preservation assessments"
+   ],
+   "gap": "Temporary duration and immediate-life preservation lack operational criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the temporary-duration criterion and evidence required for preserving immediate life."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-04",
+   "section": "9",
+   "title": "Exit Includes Detachable Asset Equivalent",
+   "quote": "The right of exit includes the right to receive a physically detachable equivalent of assets recorded under L2 protocols.",
+   "interpretation": "Compare an exit settlement with the Subject's L2-recorded assets and verify physical detachability and equivalence. The document does not define valuation, equivalence, or detachability tests.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l2_asset_records",
+    "exit_settlement",
+    "asset_equivalence",
+    "physical_detachability"
+   ],
+   "criterion": "An exiting Subject can receive a physically detachable equivalent of assets recorded under L2 protocols.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L2 asset records",
+    "settlement valuation and physical delivery information"
+   ],
+   "gap": "The asset-equivalence method and physical-detachability criteria are unspecified, and no specific L2 protocol identifier is given. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the equivalence method, asset valuation basis where needed, and physical-detachability test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-05",
+   "section": "9",
+   "title": "Settlement Survives DKP Execution Cessation",
+   "quote": "SHALL NOT depend on continued DKP execution,",
+   "interpretation": "Evaluate whether the exit settlement remains available and usable without continued DKP execution. A dependency model is needed to test operational dependence.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "exit_settlement",
+    "settlement_dependencies",
+    "dkp_execution_state"
+   ],
+   "criterion": "Exit settlement does not require continued DKP execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "settlement mechanism dependencies and operational tests"
+   ],
+   "gap": "The text does not define the settlement lifecycle or dependency model covered by continued execution. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which settlement stages must function without DKP execution and model their dependencies."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-06",
+   "section": "9",
+   "title": "Settlement Requires No Postexit Compliance",
+   "quote": "SHALL NOT require post-exit compliance,",
+   "interpretation": "Inspect settlement terms and enforcement rules for obligations to comply after exit. This is testable from a complete structured set of settlement conditions.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "settlement_terms",
+    "post_exit_conditions",
+    "settlement_enforcement_rules"
+   ],
+   "criterion": "Exit settlement has no post-exit compliance requirement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "settlement terms and enforcement conditions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-07",
+   "section": "9",
+   "title": "Settlement Has Nonprotocol Delivery Form",
+   "quote": "SHALL be deliverable in non-protocol-bound form.",
+   "interpretation": "Check that at least one available delivery form is not bound to the protocol. The document does not define which technical or contractual dependencies make a form protocol-bound.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "settlement_delivery_forms",
+    "delivery_dependencies",
+    "asset_use_conditions"
+   ],
+   "criterion": "Exit settlement is deliverable in a non-protocol-bound form.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "delivery mechanisms and asset dependency information"
+   ],
+   "gap": "Non-protocol-bound form has no operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the dependencies and conditions that make a settlement form protocol-bound."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-08",
+   "section": "9",
+   "title": "Economic Friction Cannot Restrict Exit",
+   "quote": "Economic friction SHALL NOT be used as a de facto restriction of exit.",
+   "interpretation": "Assess whether economic burdens imposed on exit function as an actual restriction. The text supplies no cost threshold or behavioral criterion and does not resolve whether intentional use is required.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "exit_costs",
+    "exit_economic_conditions",
+    "subject_resources",
+    "exit_outcomes",
+    "friction_purpose"
+   ],
+   "criterion": "Economic friction is not used as a de facto restriction of exit.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit costs, Subject resources, and observed or modeled exit behavior"
+   ],
+   "gap": "There is no specified model or threshold for when economic friction restricts exit in practice. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an economic-friction model and whether restriction requires intent, effect, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-9-09",
+   "section": "9",
+   "title": "Permanent Exit Restriction Defines Capture",
+   "quote": "Permanent restriction of exit constitutes system capture.",
+   "interpretation": "Classify a permanent exit restriction as system capture. Proving permanence from a finite observed history requires either an explicit permanent rule or a model of future enforceability.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_restrictions",
+    "restriction_duration_rules",
+    "system_capture_status"
+   ],
+   "criterion": "Every permanent restriction of exit is classified as system capture.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit restriction rules and duration information"
+   ],
+   "gap": "Permanence is not defined for restrictions without explicit endpoints. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how permanent restrictions are distinguished from temporary or indefinite restrictions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-10-01",
+   "section": "10",
+   "title": "Verification Mechanisms Must Be Accessible",
+   "quote": "access to verification mechanisms,",
+   "interpretation": "Check that access to verification mechanisms is available under the transparency guarantee. The beneficiary population, access conditions, and required mechanism capabilities are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "verification_mechanisms",
+    "access_policies",
+    "access_results"
+   ],
+   "criterion": "DKP guarantees access to verification mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "verification interfaces and access-control records"
+   ],
+   "gap": "The scope of guaranteed access and the required verification capabilities are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare who has access, to which mechanisms, and under what conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-10-02",
+   "section": "10",
+   "title": "Audit Trails Must Be Accessible",
+   "quote": "access to audit trails,",
+   "interpretation": "Check that audit trails can be accessed under the transparency guarantee. The text does not identify the covered trails, beneficiaries, or permissible access restrictions.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "audit_trails",
+    "audit_access_policies",
+    "audit_access_results"
+   ],
+   "criterion": "DKP guarantees access to audit trails.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit trail inventories and access records"
+   ],
+   "gap": "The covered audit trails and access entitlements are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the covered trails and beneficiaries of access."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-10-03",
+   "section": "10",
+   "title": "Simulation Access Must Be Available",
+   "quote": "access to counterfactual and failure-mode simulations.",
+   "interpretation": "Check access to both counterfactual simulations and failure-mode simulations. The text does not specify which scenarios, interfaces, or users the guarantee covers.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "counterfactual_simulations",
+    "failure_mode_simulations",
+    "simulation_access_policies",
+    "simulation_access_results"
+   ],
+   "criterion": "DKP guarantees access to counterfactual and failure-mode simulations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "simulation inventories and access records"
+   ],
+   "gap": "Required simulation coverage and access entitlements are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the covered simulations, scenarios, and access beneficiaries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-10-04",
+   "section": "10",
+   "title": "Transparency Guarantee Has Explicit Exclusions",
+   "quote": "DKP does not guarantee:",
+   "interpretation": "Treat human-readable internal-model explanations, pedagogical algorithm simplification, and normative justification beyond axiomatic execution as outside this document's transparency guarantee. Their absence alone is not a violation; their provision is not prohibited.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "transparency_claim_type",
+    "transparency_violation_basis"
+   ],
+   "criterion": "Absence of any listed excluded service alone does not establish a violation of this transparency guarantee.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transparency compliance claims"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-11-01",
+   "section": "11",
+   "title": "Violations Require Audit And Containment",
+   "quote": "MUST be flagged by audit systems,\n\nMUST trigger containment and review.",
+   "interpretation": "For every execution established to exceed this protocol's limits, check for an audit flag and triggered containment and review. The document defines neither the containment action nor a response deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "scope_violations",
+    "audit_flags",
+    "containment_events",
+    "review_events"
+   ],
+   "criterion": "Every execution exceeding the protocol's limits is flagged by audit systems and triggers containment and review.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "violation findings, audit flags, containment actions, and review records"
+   ],
+   "gap": "Qualifying containment and review actions and their required timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what constitutes triggered containment and review and how event timing is assessed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-11-02",
+   "section": "11",
+   "title": "Repeated Violations Are Critical Faults",
+   "quote": "Repeated violations constitute a critical system fault.",
+   "interpretation": "Check that repeated Scope violations lead to critical-system-fault classification. The text does not specify whether repetition is global, per actor, per execution path, or per violation type.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "scope_violation_history",
+    "violation_grouping",
+    "system_fault_classification"
+   ],
+   "criterion": "Repeated violations are classified as a critical system fault.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "violation histories and fault classifications"
+   ],
+   "gap": "The grouping, time horizon, and operational recurrence criterion for repeated violations are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which violations are counted together and when recurrence qualifies as repeated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-12-01",
+   "section": "12",
+   "title": "Protocol Changes Require Controlled Upgrade",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Validate normative protocol changes against the named upgrade procedure, including every listed component. Presentation-only corrections have a separately stated exception; detailed acceptance, activation, and rollback rules require the referenced documents.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_result",
+    "audit_result",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_provision",
+    "upgrade_trace"
+   ],
+   "criterion": "A normative change follows DKP-4-UPGRADE-001 with proposal, DKP-8-SIMULATION-001 simulation, DKP-8-AUDIT-001 audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade proposals, simulation and audit results, acceptance decisions, activation records, and rollback provisions"
+   ],
+   "gap": "The referenced controlled procedure and its acceptance, timing, simulation, audit, and rollback requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced procedure and distinguish rollback capability from any condition requiring actual rollback."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-12-02",
+   "section": "12",
+   "title": "Modifications Require New Protocol Identifier",
+   "quote": "Any modification requires:\n\na new protocol identifier,",
+   "interpretation": "Check that a modification uses a new protocol identifier. Presentation-only corrections appear exempt under the following paragraph, but the phrase 'Any modification' is otherwise universal.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "change_classification",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "identifier_registry"
+   ],
+   "criterion": "Every modification subject to the upgrade requirements receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "change classifications and protocol identifier registry"
+   ],
+   "gap": "The exception for presentation-only corrections and whether 'new' means globally unused require interpretation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat qualifying presentation-only corrections as exempt and declare the identifier-uniqueness scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-12-03",
+   "section": "12",
+   "title": "Modifications Require Dependent Compatibility Declaration",
+   "quote": "explicit compatibility declaration across all dependent protocols.",
+   "interpretation": "Check that each modification subject to the modification requirements includes an explicit compatibility declaration covering every dependent protocol. The requirement is for a declaration, not by itself proof of compatibility.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "dependent_protocols",
+    "compatibility_declaration"
+   ],
+   "criterion": "The explicit compatibility declaration covers all protocols dependent on the modified protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol dependency graph and compatibility declarations"
+   ],
+   "gap": "The dependency relation, including whether transitive dependents are included, is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the dependency relation and provide its complete set of dependents."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-12-04",
+   "section": "12",
+   "title": "Presentation Corrections Use Date Only",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Check that a correction with unchanged normative content is classified outside the Upgrade process and recorded only by the Last updated date. Determining semantic equivalence of normative content and reconciling this exception with 'Any modification' require interpretation.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "change_classification",
+    "upgrade_classification",
+    "last_updated_date",
+    "correction_record"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition differences, change classifications, and update metadata"
+   ],
+   "gap": "The referenced §3 and a formal test for unchanged normative content are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-equivalence test and treat this clause as an exception to general modification requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "SCOPE-12-05",
+   "section": "12",
+   "title": "Published Editions Require Canonical Digest",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its canonical source and compare the result with its listed digest in the named repository file. The canonical source bytes and mapping from editions to digest entries must be supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_entries",
+    "edition_entry_mapping"
+   ],
+   "criterion": "Every published edition has a SHA-256 digest in the canonical repository's SHA256SUMS.txt matching that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source bytes",
+    "SHA256SUMS.txt from github.com/anahronic/World"
+   ],
+   "gap": "Canonical source serialization and edition-to-digest mapping are not specified or supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the exact canonical bytes and mapping used for each published edition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

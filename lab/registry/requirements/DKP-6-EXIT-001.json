@@ -413,11 +413,17 @@
    "data_dependencies": [
     "validation rules and exit decision records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_approval_needed"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -440,13 +446,19 @@
    "data_dependencies": [
     "exit right and declaration state histories"
    ],
-   "gap": "It is unclear whether the prohibition governs the exit right, an initiated exit, or both. No lab check implemented yet.",
+   "gap": "Conflicts with SCOPE §9 under the crisis-suspension reading (F-012).",
    "hypotheses_needed": [
     "Declare whether revocation and suspension checks apply to rights, declarations, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "never_suspended"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -502,14 +514,20 @@
    "data_dependencies": [
     "signing credentials and identity binding"
    ],
-   "gap": "The signature verification scheme and permitted scope multiplicity are not defined. No lab check implemented yet.",
+   "gap": "The signature is a declared flag.",
    "hypotheses_needed": [
     "Declare signature verification and signer binding rules.",
     "Declare whether a declaration may contain more than one scope."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "signed_scoped_declaration"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -560,11 +578,17 @@
    "data_dependencies": [
     "initiation workflow rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_additional_authorization"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -620,11 +644,17 @@
    "data_dependencies": [
     "declared cooling-period bounds"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The cooling period length is not given (calibration missing): declared input.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "cooling_bounded"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -743,11 +773,17 @@
    "data_dependencies": [
     "phase schedule and declaration record"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "phases_declared"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -835,13 +871,19 @@
    "data_dependencies": [
     "module participation and enforcement states"
    ],
-   "gap": "The document does not explain how retained restitution enforcement operates after enforcement mechanisms disengage. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether any restitution enforcement mechanism lies outside the mechanisms required to disengage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "mechanisms_disengage"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -926,13 +968,19 @@
    "data_dependencies": [
     "liability verification and incurrence records"
    ],
-   "gap": "Verification standards and the rule for determining when a liability is incurred are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare verification and liability-incurrence rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "only_prior_verified"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -988,13 +1036,19 @@
    "data_dependencies": [
     "claim evidence and damage classifications"
    ],
-   "gap": "Operational classification rules for the prohibited categories are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how restitution claims are assigned to prohibited categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_punitive_tail"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1018,13 +1072,19 @@
    "data_dependencies": [
     "obligation creation and liability origin histories"
    ],
-   "gap": "The distinction between generating an obligation and recognizing an existing liability is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether later recognition or quantification of prior liability creates a new obligation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_new_obligations"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1080,13 +1140,19 @@
    "data_dependencies": [
     "settlement schedule and compensation determinations"
    ],
-   "gap": "The text lacks rules determining compensation applicability and sufficient compensation. No lab check implemented yet.",
+   "gap": "Compensation amounts are not computed.",
    "hypotheses_needed": [
     "Declare when compensation applies and how its sufficiency is assessed."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "delayed_settlement_bounded"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1201,11 +1267,17 @@
    "data_dependencies": [
     "crisis declarations and exit state history"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "valid_during_crisis"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1324,13 +1396,19 @@
    "data_dependencies": [
     "DKP contracts and finance settlement records"
    ],
-   "gap": "The finance settlement rules are absent and 'upon exit' is not tied explicitly to declaration, execution, or completion. No lab check implemented yet.",
+   "gap": "Settlement is an event; FINANCE settlement rules are not computed.",
    "hypotheses_needed": [
     "Declare which exit milestone triggers settlement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "finance_settlement"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1357,14 +1435,20 @@
    "data_dependencies": [
     "data inventories, archive records, and collection logs"
    ],
-   "gap": "The triggering exit milestone, freeze semantics, and collection boundary are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the exit milestone and data boundary used by the check.",
     "Declare which operations remain possible on frozen data."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "data_frozen"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1506,11 +1590,17 @@
    "data_dependencies": [
     "integration decisions and delay reasons"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "reentry_not_delayed"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1535,13 +1625,19 @@
    "data_dependencies": [
     "restitution status and resolution records"
    ],
-   "gap": "The criteria for resolving a restitution obligation are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which events establish restitution resolution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "restitution_before_reentry"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1719,14 +1815,20 @@
    "data_dependencies": [
     "authority state history and post-execution actions"
    ],
-   "gap": "The authority boundary and its relationship to restitution enforcement and exit completion are unresolved. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the relation between execution and completion.",
     "Declare how any retained restitution enforcement is consistent with terminated DKP authority."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "authority_terminates"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

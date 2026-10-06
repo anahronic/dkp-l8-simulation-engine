@@ -156,6 +156,8 @@ def build() -> Dict[str, Any]:
             return not reg_problems
         if check == "references_checked":
             return "section_references" in cat
+        if check == "interpretations_reviewed":
+            return all(x["interpretation_status"] != "DRAFT_UNREVIEWED" for x in rows)
         if check == "stage_coverage":
             s = doc_stats(stage_docs)
             return s["registered"] == s["documents"] and s["resolvable_uncovered"] == 0

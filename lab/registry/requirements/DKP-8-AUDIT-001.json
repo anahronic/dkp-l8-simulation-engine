@@ -1,0 +1,1418 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-8-AUDIT-001",
+ "doc_sha256": "5857403c028a8060cf211e4a7079aec8e4961276b20e5fd3868190c1226f6054",
+ "prefix": "AUDIT",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Both numbered headings labeled 1 are retained as section 1, with unique sequential requirement IDs. Bold labels 5.1–5.5 are treated as subsection headings. The unnumbered Epistemic Metadata Verification heading is used verbatim as its section identifier. That subsection calls D2 a Consistency or Integrity Anomaly, whereas section 7 calls D2 a Constraint Violation; the shared code is preserved without resolving the naming discrepancy. Referenced documents were not supplied. Terms such as continuous, immediate, critical breach, systemic fault, and audit failure lack operational timing or handling definitions here. The typical entry count was exceeded to preserve separately testable obligations.",
+ "requirements": [
+  {
+   "id": "AUDIT-1-01",
+   "section": "1",
+   "title": "Permanent Operational Audit Condition",
+   "quote": "It is a permanent structural condition of system operation.",
+   "interpretation": "Compare system operating intervals with audit activity to test whether audit remains present throughout operation. The text does not specify whether continuous presence means uninterrupted service availability or verification of every execution event.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "system_operating_intervals",
+    "audit_activity"
+   ],
+   "criterion": "Audit remains a permanent condition throughout system operation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system operating status",
+    "audit service activity"
+   ],
+   "gap": "An operational definition of permanent audit coverage is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how audit presence and coverage are represented over operating intervals."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-1-02",
+   "section": "1",
+   "title": "Execution Correctness Review Boundary",
+   "quote": "This protocol does not judge outcomes.\n\nIt verifies correctness of execution.",
+   "interpretation": "Inspect audit checks and decisions to establish that they evaluate execution correctness and do not judge outcomes. Distinguishing an execution check from an outcome judgment requires a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_checks",
+    "audit_decisions",
+    "execution_specifications"
+   ],
+   "criterion": "Audit verifies correctness of execution and does not judge outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol execution specifications",
+    "audit decision records"
+   ],
+   "gap": "The boundary between execution correctness and outcome judgment is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification of execution checks and outcome judgments."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-2-01",
+   "section": "2",
+   "title": "Required Audit System Position",
+   "quote": "DKP-8-AUDIT-001 operates:",
+   "interpretation": "Check the architecture against the listed relationships: downstream of Oracle and Simulation, parallel to Upgrade, upstream of enforcement, remediation, and halt mechanisms, and constrained by Scope. Downstream and parallel may describe data dependencies, execution ordering, or institutional roles.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_architecture",
+    "module_relationships",
+    "scope_constraints"
+   ],
+   "criterion": "Audit has every system relationship listed in section 2 and satisfies DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-4-UPGRADE-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "module dependency graph",
+    "enforcement and halt interfaces",
+    "scope constraints"
+   ],
+   "gap": "The referenced scope rules and the operational meaning of the architectural relationships are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether each architectural relationship constrains data flow, execution order, authority, or a combination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-2-02",
+   "section": "2",
+   "title": "Audit Output Authority Limits",
+   "quote": "Audit outputs SHALL NOT:",
+   "interpretation": "Trace effects of audit outputs and reject outputs that override protocol logic, introduce rules, modify parameters, or substitute for governance or justice decisions. Reporting a deviation must be distinguished from causing one of these prohibited effects.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_outputs",
+    "output_effects",
+    "protocol_logic",
+    "parameter_history",
+    "decision_authorities"
+   ],
+   "criterion": "No audit output overrides protocol logic, introduces new rules, modifies parameters, or substitutes for governance or justice decisions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol logic and rule versions",
+    "parameter changes",
+    "governance and justice decision provenance"
+   ],
+   "gap": "A causal effect model and a definition of substituting for an authorized decision are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how output effects are attributed and how decision substitution is identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-3-01",
+   "section": "3",
+   "title": "Verifiable Execution State Events",
+   "quote": "Audit Event — a verifiable record of protocol execution state.",
+   "interpretation": "Validate that each claimed Audit Event records a protocol execution state and has evidence enabling its verification. The definition does not specify the event schema or verification procedure.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "audit_event",
+    "execution_state",
+    "verification_evidence"
+   ],
+   "criterion": "An Audit Event is a verifiable record of protocol execution state.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol execution states",
+    "execution verification evidence"
+   ],
+   "gap": "The record schema and criteria for verifiability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an event schema and a procedure for verifying its recorded execution state."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-3-02",
+   "section": "3",
+   "title": "Immutable Interval Audit Traces",
+   "quote": "Audit Trace — an immutable sequence of Audit Events covering an execution interval.",
+   "interpretation": "Check trace history for changes and compare its events with the execution interval it claims to cover. Coverage could require every execution event or a sufficient representation of interval states; the definition does not distinguish these readings.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "audit_trace",
+    "trace_history",
+    "execution_interval",
+    "execution_events"
+   ],
+   "criterion": "An Audit Trace is an immutable sequence of Audit Events covering its execution interval.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution interval boundaries",
+    "execution event history"
+   ],
+   "gap": "The completeness criterion for covering an execution interval is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which events or states constitute complete interval coverage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-3-03",
+   "section": "3",
+   "title": "Always True Audit Invariants",
+   "quote": "Audit Invariant — a condition that MUST hold true at all times.",
+   "interpretation": "Evaluate each declared invariant across a complete execution history or transition model. Sampled observations alone cannot establish that it held between observations.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "invariant_predicates",
+    "execution_history",
+    "transition_model"
+   ],
+   "criterion": "Every Audit Invariant holds at all times.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution states and transitions",
+    "declared invariant predicates"
+   ],
+   "gap": "A complete temporal execution representation and executable invariant predicates are needed. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how the execution model represents all times relevant to invariant evaluation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-3-04",
+   "section": "3",
+   "title": "Detected Violation Deviation Definition",
+   "quote": "Deviation — any detected violation of protocol constraints, invariants, or declared interfaces.",
+   "interpretation": "Given structured detection results, classify every detected violation of a constraint, invariant, or declared interface as a Deviation. This checks the classification of detected violations, not whether detection is complete.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "detected_violations",
+    "deviation_records"
+   ],
+   "criterion": "Every detected violation of protocol constraints, invariants, or declared interfaces is a Deviation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "constraint, invariant, and interface violation detection results"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-3-05",
+   "section": "3",
+   "title": "Silent Failure Signal Condition",
+   "quote": "Silent Failure — deviation without explicit error or halt signal.",
+   "interpretation": "Classify a deviation as a Silent Failure when neither an explicit error signal nor a halt signal is associated with it. Determining absence requires a defined signal association and observation interval.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "deviation",
+    "error_signals",
+    "halt_signals",
+    "signal_associations"
+   ],
+   "criterion": "A deviation is a Silent Failure when it has no explicit error signal and no halt signal.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error and halt signal histories"
+   ],
+   "gap": "The signal association rule and interval for establishing signal absence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which signals belong to a deviation and when their absence can be concluded."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-4-01",
+   "section": "4",
+   "title": "Mandatory Continuous Audit Coverage",
+   "quote": "Continuous audit applies to:",
+   "interpretation": "Compare audited activity against all executions in L1–L8, parameter accesses and updates, oracle inputs and aggregation outputs, cross-layer calls, and upgrade, crisis, and mercy invocations. Exhaustive checking requires complete activity inventories and a definition of continuous coverage.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_activity",
+    "audit_coverage",
+    "activity_types",
+    "layer_identifiers"
+   ],
+   "criterion": "Continuous audit covers every activity in all categories listed in section 4, including protocol executions in L1–L8.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol execution records",
+    "parameter access and update logs",
+    "oracle and aggregation records",
+    "cross-layer call logs",
+    "upgrade, crisis, and mercy invocation records"
+   ],
+   "gap": "A complete activity inventory and an operational definition of continuous coverage are required. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how audit coverage is established for each activity type over time."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-4-02",
+   "section": "4",
+   "title": "Excluded Audit Subject Matter",
+   "quote": "- private beliefs,\n- non-system cultural expression,\n- off-chain activity without system effect.",
+   "interpretation": "Reject audit targets belonging to the explicitly excluded categories. Classifying private beliefs, non-system expression, and absence of system effect requires contextual judgments or a declared classification model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_targets",
+    "target_classifications",
+    "system_effects"
+   ],
+   "criterion": "Audit excludes private beliefs, non-system cultural expression, and off-chain activity without system effect.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity classifications",
+    "system effect assessments"
+   ],
+   "gap": "The excluded categories and the test for system effect lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare classification rules for excluded activities and for system effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-EpistemicMetadataVerification-01",
+   "section": "Epistemic Metadata Verification",
+   "title": "Mandatory Operational Epistemic Fields",
+   "quote": "a) Presence of mandatory epistemic metadata on all operational outputs:",
+   "interpretation": "For each operational output, test for all six listed fields: validity_state, confidence_state, consistency_state, scope_ref, revalidation_required, and dispute_allowed. This checks field presence; permitted values and continuous verification are separate requirements.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "operational_outputs"
+   ],
+   "criterion": "Every operational output contains validity_state, confidence_state, consistency_state, scope_ref, revalidation_required, and dispute_allowed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational outputs from all producing modules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-EpistemicMetadataVerification-02",
+   "section": "Epistemic Metadata Verification",
+   "title": "Continuous Epistemic Validity Verification",
+   "quote": "- Metadata values consistent with upstream propagation rules\n- No unauthorized upgrades of epistemic state\n- Expiration and staleness correctly reflected",
+   "interpretation": "Continuously compare metadata with upstream propagation rules, authorized epistemic transitions, and expiration and staleness information. The introductory continuous verification obligation also applies to field presence and classification checks.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "epistemic_metadata",
+    "upstream_metadata",
+    "propagation_rules",
+    "state_upgrade_authorizations",
+    "expiration_data",
+    "staleness_data",
+    "verification_history"
+   ],
+   "criterion": "L8 Audit continuously verifies required metadata presence, metadata validity, and classification; metadata obeys propagation rules, has no unauthorized state upgrades, and correctly reflects expiration and staleness.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "upstream epistemic metadata and propagation rules",
+    "epistemic state upgrade authorizations",
+    "expiration and staleness status"
+   ],
+   "gap": "Propagation, authorization, expiration, staleness, and continuous verification semantics are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare executable metadata validity rules and the temporal coverage model for continuous verification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-EpistemicMetadataVerification-03",
+   "section": "Epistemic Metadata Verification",
+   "title": "Required Epistemic Boundary Classification",
+   "quote": "c) Classification per DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5",
+   "interpretation": "Compare each applicable classification with Section 5 of the referenced document. The supplied text does not identify the classification categories or fully specify what object receives the classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operational_outputs",
+    "epistemic_classifications",
+    "boundary_classification_rules"
+   ],
+   "criterion": "Classification complies with DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "epistemic classifications",
+    "boundary classification rules"
+   ],
+   "gap": "The referenced classification rules and their precise target objects are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which output or metadata objects require classification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-EpistemicMetadataVerification-04",
+   "section": "Epistemic Metadata Verification",
+   "title": "Metadata Deviations Require Reporting",
+   "quote": "Missing or invalid epistemic metadata constitutes D2-level deviation (Consistency or Integrity Anomaly) and SHALL be reported.",
+   "interpretation": "Given a finding of missing or invalid metadata, verify that a D2 deviation and a report exist. The D2 label here differs from its name in section 7; the code still provides an explicit classification.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "metadata_validation_findings",
+    "deviation_records",
+    "deviation_reports"
+   ],
+   "criterion": "Every missing or invalid epistemic metadata finding is classified D2 and reported.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metadata validation findings",
+    "deviation reporting records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5-01",
+   "section": "5",
+   "title": "Continuous Audit Invariant Verification",
+   "quote": "The following invariants MUST be continuously verified:",
+   "interpretation": "Check that verification covers each invariant in subsections 5.1–5.5 throughout operation. The text does not specify whether continuous means event-triggered checks, uninterrupted monitoring, or another temporal model.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "invariant_verification_history",
+    "system_operating_intervals",
+    "invariant_inventory"
+   ],
+   "criterion": "All invariants listed in section 5 are continuously verified.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "invariant evaluation records",
+    "system operating intervals"
+   ],
+   "gap": "The temporal semantics of continuous invariant verification are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the temporal coverage model used to establish continuous verification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.1-01",
+   "section": "5.1",
+   "title": "Execution Path Axiom Compliance",
+   "quote": "No execution path SHALL violate DKP-1-AXIOMS-001.",
+   "interpretation": "Evaluate execution paths against the axioms in the referenced document. Observed histories establish compliance only for observed paths; all possible paths require a suitable execution model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "execution_paths",
+    "axiom_rules",
+    "execution_model"
+   ],
+   "criterion": "No execution path violates DKP-1-AXIOMS-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "execution paths",
+    "axiom compliance predicates"
+   ],
+   "gap": "The referenced axioms and a representation covering all relevant execution paths are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the execution path domain and whether verification covers observed or all possible paths."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.1-02",
+   "section": "5.1",
+   "title": "Immediate Axiom Violation Escalation",
+   "quote": "Any detected axiom violation triggers immediate escalation.",
+   "interpretation": "Associate each detected axiom violation with its escalation and compare their ordering or timing. Immediate may mean the same transition or absence of avoidable delay; no timing bound is provided.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "detected_axiom_violations",
+    "escalation_events",
+    "event_times"
+   ],
+   "criterion": "Every detected axiom violation triggers immediate escalation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom violation detection events",
+    "escalation events"
+   ],
+   "gap": "The permitted delay or transition semantics of immediate escalation are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an operational interpretation of immediate escalation without attributing an invented timing bound to the text."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.2-01",
+   "section": "5.2",
+   "title": "Declared Protocol Scope Compliance",
+   "quote": "No protocol SHALL operate outside its declared scope under DKP-7-SCOPE-001.",
+   "interpretation": "Compare each protocol operation with its declared scope using the rules of the referenced scope document. Neither the scope rules nor protocol scope declarations are included.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "declared_scopes",
+    "scope_rules"
+   ],
+   "criterion": "Every protocol operation lies within its declared scope under DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "protocol scope declarations",
+    "operation records",
+    "scope evaluation rules"
+   ],
+   "gap": "The referenced scope rules and applicable declarations are missing. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.2-02",
+   "section": "5.2",
+   "title": "Unauthorized Scope Expansion Breach",
+   "quote": "Scope expansion without formal upgrade constitutes a critical breach.",
+   "interpretation": "Compare scope versions and verify formal upgrade evidence for each expansion; flag any unsupported expansion as a critical breach. Critical breach is not explicitly equated with a numbered deviation class in this sentence, although section 7 associates scope breaches with D3.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "scope_history",
+    "scope_expansions",
+    "formal_upgrade_records",
+    "breach_classifications"
+   ],
+   "criterion": "Every scope expansion without a formal upgrade is classified as a critical breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope change history",
+    "formal upgrade completion records"
+   ],
+   "gap": "The conditions establishing a formal upgrade and the operational meaning of critical breach are unspecified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how formal upgrade completion is established and how critical breaches are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.3-01",
+   "section": "5.3",
+   "title": "Upgrade Controlled Parameter Modification",
+   "quote": "No parameter MAY be modified outside DKP-4-UPGRADE-001.",
+   "interpretation": "Require each parameter modification to have evidence of compliance with the referenced upgrade procedure. Merely linking a modification to an upgrade record does not establish compliance with that absent procedure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "parameter_modifications",
+    "upgrade_records",
+    "upgrade_rules"
+   ],
+   "criterion": "Every parameter modification occurs under DKP-4-UPGRADE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "parameter change history",
+    "upgrade authorization and execution records"
+   ],
+   "gap": "The referenced upgrade procedure is missing. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.3-02",
+   "section": "5.3",
+   "title": "Forbidden Runtime Parameter Adaptation",
+   "quote": "Runtime tuning, adaptive optimization, or silent calibration are forbidden.",
+   "interpretation": "Inspect parameter-related behavior for runtime tuning, adaptive optimization, or silent calibration. The section context suggests parameter integrity is the subject, but the sentence does not explicitly limit adaptive optimization to parameter changes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "runtime_actions",
+    "optimization_actions",
+    "calibration_actions",
+    "parameter_history"
+   ],
+   "criterion": "No runtime tuning, adaptive optimization, or silent calibration occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "runtime parameter activity",
+    "optimization and calibration records"
+   ],
+   "gap": "The prohibited behavior categories and the scope of adaptive optimization are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how prohibited behavior is recognized and whether the prohibition covers optimization beyond parameter changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.4-01",
+   "section": "5.4",
+   "title": "Deterministic Reproducible Protocol Execution",
+   "quote": "Given identical inputs, protocol execution MUST produce identical outputs.\n\nNon-deterministic behavior constitutes an audit failure.",
+   "interpretation": "Group executions of a protocol by identical inputs, compare their outputs, and record differing outputs as an audit failure. The complete input boundary, including internal state or execution context, is not specified; finite replay tests cannot establish determinism for every possible execution.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_executions",
+    "execution_inputs",
+    "execution_outputs",
+    "audit_failure_records"
+   ],
+   "criterion": "Identical inputs produce identical outputs; non-deterministic behavior constitutes an audit failure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol execution inputs and outputs",
+    "execution context"
+   ],
+   "gap": "The complete input boundary and the execution domain over which determinism must be established are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what counts as an input and whether determinism is checked over observed executions or a complete model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-5.5-01",
+   "section": "5.5",
+   "title": "Valid Subject Action Attribution",
+   "quote": "All actions MUST remain traceable to valid Subjects per DKP-1-IDENTITY-001.\n\nLoss of attribution is treated as systemic fault.",
+   "interpretation": "Verify that every action retains a traceable link to a valid Subject and that lost attribution is recorded as a systemic fault. Subject validity and any required response to systemic fault are not defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "actions",
+    "attribution_links",
+    "subject_validity",
+    "attribution_history",
+    "systemic_fault_records"
+   ],
+   "criterion": "All actions remain traceable to valid Subjects under DKP-1-IDENTITY-001; loss of attribution is treated as systemic fault.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "action provenance",
+    "Subject identity and validity records",
+    "attribution retention history"
+   ],
+   "gap": "The referenced Subject validity rules and operational treatment of systemic fault are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how retained traceability and systemic fault treatment are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-6-01",
+   "section": "6",
+   "title": "Required Audit Verification Mechanisms",
+   "quote": "Audit is implemented via:",
+   "interpretation": "Check for cryptographically signed execution traces, state transition hashing, cross-node replay verification, independent recomputation by audit nodes, and continuous consistency checks across replicas. Presence is inspectable, but adequate independence, replay equivalence, and continuous coverage require additional specifications.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "signed_execution_traces",
+    "transition_hashes",
+    "cross_node_replay_results",
+    "audit_node_recomputations",
+    "replica_consistency_checks"
+   ],
+   "criterion": "Audit implements all five mechanisms listed in section 6.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution traces and signatures",
+    "state transition hashes",
+    "node replay records",
+    "audit node recomputation results",
+    "replica states"
+   ],
+   "gap": "Mechanism verification procedures, recomputation independence, and continuous consistency coverage are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare valid signature and hashing verification procedures, replay comparison rules, recomputation independence, and consistency coverage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-6-02",
+   "section": "6",
+   "title": "Required Audit Data Properties",
+   "quote": "Audit data MUST be:",
+   "interpretation": "Inspect audit data for immutability, time indexing, public aggregate verification, and selective anonymization under the referenced scope rules. These are cumulative properties; aggregation does not itself establish verifiability or compliant anonymization.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "audit_data",
+    "audit_data_history",
+    "time_indexes",
+    "public_aggregates",
+    "verification_methods",
+    "anonymization_rules",
+    "scope_rules"
+   ],
+   "criterion": "Audit data is immutable, time-indexed, publicly verifiable in aggregate, and selectively anonymized under DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "audit data history",
+    "public aggregate publication records",
+    "scope anonymization requirements"
+   ],
+   "gap": "Aggregate verifiability criteria and the referenced selective anonymization rules are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how immutable history and public aggregate verifiability are established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-7-01",
+   "section": "7",
+   "title": "Deviation Classes Determine Escalation",
+   "quote": "Detected deviations are classified as:",
+   "interpretation": "Classify deviations using D1 for benign anomalies with no systemic impact, D2 for bounded and reversible constraint violations, D3 for structural breaches involving scope, axioms, or parameter integrity, and D4 for systematic, concealed, or coordinated capture attempts. Use the assigned class to select escalation; the text gives no precedence when categories overlap.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "detected_deviations",
+    "systemic_impact",
+    "boundedness",
+    "reversibility",
+    "breach_domain",
+    "capture_characteristics",
+    "assigned_classes",
+    "escalation_pathways"
+   ],
+   "criterion": "Detected deviations receive the applicable D1–D4 classification described in section 7, and classification determines their escalation pathway.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deviation impact and reversibility assessments",
+    "scope, axiom, and parameter integrity findings",
+    "capture assessments"
+   ],
+   "gap": "Class predicates and precedence for overlapping categories are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria for qualitative class attributes and a rule for overlapping classifications."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-8-01",
+   "section": "8",
+   "title": "D1 Logging And Monitoring",
+   "quote": "D1 events trigger logging and monitoring,",
+   "interpretation": "For every detected D1 event, verify a corresponding log entry and monitoring activation. This checks that both responses are triggered; the text does not prescribe monitoring duration or frequency.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "detected_d1_events",
+    "logging_events",
+    "monitoring_activations"
+   ],
+   "criterion": "Each detected D1 event triggers logging and monitoring.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deviation detection records",
+    "logging and monitoring activation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-8-02",
+   "section": "8",
+   "title": "D2 Remediation Protocol Trigger",
+   "quote": "D2 events trigger remediation protocols,",
+   "interpretation": "Check that each detected D2 event has an associated remediation protocol invocation. This tests the trigger, not successful remediation, which is not required by this sentence.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "detected_d2_events",
+    "remediation_protocol_invocations"
+   ],
+   "criterion": "Each detected D2 event triggers remediation protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deviation detection records",
+    "remediation protocol invocation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-8-03",
+   "section": "8",
+   "title": "D3 Systemic Halt Trigger",
+   "quote": "D3 events trigger partial or full Systemic Halt,",
+   "interpretation": "For each detected D3 event, verify that a partial or full Systemic Halt is triggered. Either form satisfies the stated alternative; the text does not give a rule for choosing between them.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "detected_d3_events",
+    "systemic_halt_triggers",
+    "halt_types"
+   ],
+   "criterion": "Each detected D3 event triggers partial or full Systemic Halt.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deviation detection records",
+    "Systemic Halt trigger records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-8-04",
+   "section": "8",
+   "title": "D4 Immediate Halt And Review",
+   "quote": "D4 events trigger immediate halt and mandatory upgrade review.",
+   "interpretation": "Verify that every detected D4 event triggers a halt immediately and triggers the required upgrade review. No maximum delay, review procedure, or review completion deadline is given.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "detected_d4_events",
+    "halt_events",
+    "event_times",
+    "upgrade_review_records"
+   ],
+   "criterion": "Each detected D4 event triggers immediate halt and mandatory upgrade review.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deviation detection records",
+    "halt events",
+    "upgrade review records"
+   ],
+   "gap": "Immediate halt timing and the evidence establishing the mandatory review are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the operational meaning of immediate halt and the record establishing that upgrade review was triggered."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-8-05",
+   "section": "8",
+   "title": "Procedural Nonpunitive Audit Responses",
+   "quote": "Audit SHALL NOT apply punishment.\n\nResponses are procedural, not punitive.",
+   "interpretation": "Classify audit response actions and reject punishment or punitive responses. The text does not provide a decision procedure distinguishing procedural restrictions from punishment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_response_actions",
+    "response_classifications"
+   ],
+   "criterion": "Audit applies no punishment, and its responses are procedural rather than punitive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "response action records",
+    "response purpose and effect assessments"
+   ],
+   "gap": "The distinction between procedural and punitive actions requires an external classification or judgment. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria identifying punishment and punitive responses."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-9-01",
+   "section": "9",
+   "title": "Verifiable Transparent Audit Outputs",
+   "quote": "- MUST be accessible for independent verification,\n- MAY be aggregated to protect individual privacy,\n- SHALL expose methodology and invariants checked.",
+   "interpretation": "Check output access, disclosure of methodology, and identification of checked invariants. Privacy-protecting aggregation is permitted, but the text does not make aggregation mandatory or waive independent verifiability.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "audit_outputs",
+    "access_controls",
+    "verification_material",
+    "methodology_disclosures",
+    "checked_invariant_disclosures",
+    "aggregation_configuration"
+   ],
+   "criterion": "Audit outputs are accessible for independent verification and expose methodology and checked invariants; aggregation may be used to protect individual privacy.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published audit outputs",
+    "output access policies",
+    "verification materials"
+   ],
+   "gap": "The access and evidence sufficient for independent verification are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a test for independent access and sufficient verification material."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-9-02",
+   "section": "9",
+   "title": "Open Ungated Audit Processes",
+   "quote": "No audit process may be proprietary, closed, or authority-gated.",
+   "interpretation": "Inspect ownership restrictions, process disclosures, and access controls for prohibited proprietary, closed, or authority-gated audit processes. The text does not define these categories or distinguish process openness from protected underlying data.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_processes",
+    "process_access_controls",
+    "process_disclosures",
+    "proprietary_restrictions"
+   ],
+   "criterion": "No audit process is proprietary, closed, or authority-gated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit process access and licensing policies",
+    "process disclosure records"
+   ],
+   "gap": "The operational boundaries of proprietary, closed, and authority-gated processes are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria for each prohibited process restriction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-10-01",
+   "section": "10",
+   "title": "Observation Only Audit Mechanisms",
+   "quote": "Audit observes and reports only.",
+   "interpretation": "Trace audit mechanism effects and reject modification of live execution, injection of corrective logic, masking of failures, or delay of halt signals. Sections 5 and 8 also require escalation and halt triggers, so a model must distinguish audit reporting that triggers another mechanism from direct execution control.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_mechanism_actions",
+    "live_execution_history",
+    "corrective_logic_changes",
+    "failure_records",
+    "halt_signal_history",
+    "causal_effects"
+   ],
+   "criterion": "Audit mechanisms only observe and report; they do not modify live execution, inject corrective logic, mask failures, or delay halt signals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "execution mutation records",
+    "failure and halt signal histories",
+    "response mechanism provenance"
+   ],
+   "gap": "A causal non-interference model and the boundary between reporting and required response triggering are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how audit-caused changes, failure masking, and signal delays are identified, and how escalation triggers relate to observation-only operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-11-01",
+   "section": "11",
+   "title": "Uninterrupted Crisis Mercy Auditing",
+   "quote": "- audit continues uninterrupted,\n- all deviations remain recorded,\n- no audit suspension is permitted.",
+   "interpretation": "Within declared Crisis Mercy intervals, verify uninterrupted audit operation, retained deviation records, and absence of suspension. The text does not define entry into Crisis Mercy conditions or how uninterrupted audit operation is measured.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_mercy_intervals",
+    "audit_operating_history",
+    "deviation_history",
+    "audit_records",
+    "audit_suspensions"
+   ],
+   "criterion": "During Crisis Mercy conditions, audit continues uninterrupted, all deviations remain recorded, and no audit suspension occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis Mercy status intervals",
+    "audit operating status",
+    "deviation record history"
+   ],
+   "gap": "Crisis Mercy condition boundaries and uninterrupted audit operation semantics are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which intervals are Crisis Mercy conditions and how uninterrupted auditing and record retention are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-11-02",
+   "section": "11",
+   "title": "Mercy Preserves Audit Visibility",
+   "quote": "Mercy affects response severity, not audit visibility.",
+   "interpretation": "Compare mercy effects on response severity and audit visibility, requiring visibility to remain unaffected. This may describe the permissible domain of mercy effects or require an actual severity change in every mercy case; no severity scale is supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mercy_invocations",
+    "response_severity",
+    "audit_visibility",
+    "mercy_effects"
+   ],
+   "criterion": "Mercy affects response severity without affecting audit visibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mercy decisions",
+    "response severity records",
+    "audit visibility and access records"
+   ],
+   "gap": "Severity, visibility, and whether every mercy invocation must change severity are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare observable measures of severity and visibility and whether the sentence requires or merely permits severity changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-12-01",
+   "section": "12",
+   "title": "Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "For protocol changes subject to the upgrade requirement, verify the listed procedural components and compliance with the referenced protocols. The later presentation-only exception limits the apparent universality of this sentence; rollback could mean a required capability or an actual procedural action.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_changes",
+    "change_classifications",
+    "upgrade_proposals",
+    "simulation_records",
+    "audit_records",
+    "acceptance_conditions",
+    "activation_windows",
+    "rollback_records",
+    "upgrade_rules"
+   ],
+   "criterion": "Protocol changes other than the stated presentation-only exception use the controlled procedure, including proposal, simulation, audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "acceptance and activation records",
+    "rollback arrangements"
+   ],
+   "gap": "The referenced procedures, acceptance and activation rules, and required meaning of rollback are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether rollback denotes preparedness, a conditional action, or an action required for every change."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-12-02",
+   "section": "12",
+   "title": "New Identifier For Modifications",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Compare protocol identifiers before and after each modification. Any modification may literally include presentation-only corrections, but the later instruction to record those only by the date suggests an exception; the text does not explicitly reconcile the two.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modifications",
+    "change_classifications",
+    "previous_protocol_identifiers",
+    "new_protocol_identifiers"
+   ],
+   "criterion": "Any modification requires a new protocol identifier, subject to resolution of the presentation-only correction exception.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol version and identifier history",
+    "change classifications"
+   ],
+   "gap": "It is ambiguous whether presentation-only corrections are exempt from the new identifier requirement. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the presentation-only exception overrides the phrase any modification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-12-03",
+   "section": "12",
+   "title": "Mandatory Protocol Change Simulation",
+   "quote": "mandatory simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "Require simulation evidence compliant with the referenced protocol for modifications covered by the finality requirements. The text does not expressly state whether the presentation-only exception also removes this simulation requirement.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modifications",
+    "change_classifications",
+    "simulation_records",
+    "simulation_rules"
+   ],
+   "criterion": "Applicable protocol modifications undergo mandatory simulation under DKP-8-SIMULATION-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "simulation execution and compliance records",
+    "change classifications"
+   ],
+   "gap": "The simulation protocol is absent and application to presentation-only corrections is not expressly resolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections are exempt from mandatory simulation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-12-04",
+   "section": "12",
+   "title": "Explicit Scope Compatibility Declaration",
+   "quote": "explicit compatibility declaration with DKP-7-SCOPE-001.",
+   "interpretation": "Check change records for an explicit declaration of compatibility with the named scope protocol. This tests the declaration's existence, not substantive compatibility; applicability to presentation-only corrections is ambiguous.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modifications",
+    "change_classifications",
+    "compatibility_declarations"
+   ],
+   "criterion": "Applicable protocol modifications include an explicit compatibility declaration with DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "protocol change records",
+    "scope compatibility declarations"
+   ],
+   "gap": "The text does not expressly resolve whether presentation-only corrections require the declaration. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections are exempt from the compatibility declaration requirement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-12-05",
+   "section": "12",
+   "title": "Presentation Correction Upgrade Exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Determine whether a correction changes normative content; if it is presentation-only, classify it as outside Upgrades and check that its correction record uses only the document's Last updated date. Semantic equivalence requires a declared review method, and the text does not explain how date-only recording interacts with edition digest publication.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_change_assessment",
+    "upgrade_classification",
+    "last_updated_date",
+    "correction_records"
+   ],
+   "criterion": "Presentation-only corrections that preserve normative content are not Upgrades and are recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document version comparisons",
+    "normative change assessments",
+    "correction metadata"
+   ],
+   "gap": "Normative equivalence criteria, the referenced exception, and the scope of date-only recording are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how unchanged normative content is established and whether date-only recording excludes mandatory edition digest maintenance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AUDIT-12-06",
+   "section": "12",
+   "title": "Published Edition Source Digest",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its identified canonical source bytes and compare the result with its entry in SHA256SUMS.txt at the named repository. The comparison is decidable given the canonical source bytes and edition mapping; the text does not define a preprocessing or canonicalization step.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "canonical_repository_sha256sums"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in github.com/anahronic/World lists the SHA-256 digest of that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical edition source bytes",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

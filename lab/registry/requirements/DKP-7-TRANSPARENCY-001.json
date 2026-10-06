@@ -1,0 +1,1402 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-7-TRANSPARENCY-001",
+ "doc_sha256": "b9710e4b0be7896953c0a440a3237d0a9cfd7d07439d40b0c072a8208e3a0f0e",
+ "prefix": "TRANSPARENCY",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Sections 1 and 2 state purposes and introduce requirements elaborated later; they do not receive separate entries. Required domain sets and interface fields are grouped as contracts. Quotations of individual list items inherit their normative force from the immediately preceding text. Scope and PTL references are mapped to the document identifiers explicitly named in section 3; unnamed justice protocols and higher axioms are not assigned invented identifiers. External documents were not supplied. The interaction between the identity-disclosure exceptions in section 7 and the de-anonymization conditions in section 8 is unresolved. Section 14 also leaves the boundary between 'any modification' and presentation-only corrections partly implicit.",
+ "requirements": [
+  {
+   "id": "TRANSPARENCY-3-01",
+   "section": "3",
+   "title": "Coverage Across System Layers",
+   "quote": "- constraining all governance, economic, informational, and enforcement layers.",
+   "interpretation": "Check that every component assigned to one of the four named layers is subject to this protocol. This requires an authoritative inventory and a rule for assigning components to layers.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "component_inventory",
+    "layer_assignments",
+    "protocol_applicability"
+   ],
+   "criterion": "All governance, economic, informational, and enforcement components fall within this protocol's constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system component inventory and layer assignments"
+   ],
+   "gap": "The document does not define the layer taxonomy or provide a complete component inventory. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the component inventory and its layer classification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-3-02",
+   "section": "3",
+   "title": "Participation Without Identity Disclosure",
+   "quote": "This protocol SHALL NOT:\n\n- mandate identity disclosure as a condition of participation,",
+   "interpretation": "Inspect participation requirements imposed by this protocol for mandatory identity disclosure. The prohibition concerns this protocol's mandates; section 7 separately recognizes requirements arising from other authority.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "participation_requirements",
+    "requirement_authority"
+   ],
+   "criterion": "No participation requirement imposed by this protocol mandates identity disclosure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "participation requirements and their authoritative sources"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-3-03",
+   "section": "3",
+   "title": "No Private Life Exposure",
+   "quote": "- expose private life, belief, or affiliation,",
+   "interpretation": "Inspect disclosures produced or required by this protocol for exposure of the named protected categories. Direct disclosure can be checked against classified records, but inferred exposure requires an additional privacy model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "disclosures",
+    "protected_data_classifications",
+    "inference_model"
+   ],
+   "criterion": "This protocol does not expose private life, belief, or affiliation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "disclosure records and protected-data classifications"
+   ],
+   "gap": "The text does not define how to detect indirect exposure or classify all private-life information. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare protected-data categories and the information available to an observer."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-3-04",
+   "section": "3",
+   "title": "No Reputation Verification Substitute",
+   "quote": "- replace verification with reputation or popularity.",
+   "interpretation": "Check whether action-validation decisions retain qualifying proof rather than accepting reputation or popularity in its place. Detecting substitution requires a model of how decision evidence affects acceptance.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "validation_rules",
+    "decision_evidence",
+    "decision_traces"
+   ],
+   "criterion": "Reputation or popularity does not substitute for verification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validation rules and evidence supporting decisions"
+   ],
+   "gap": "The document does not specify an operational test for replacement of verification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how a decision trace establishes that reputation or popularity replaced proof."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-4-01",
+   "section": "4",
+   "title": "Transparency Requires Independent Verification",
+   "quote": "- Transparency — the ability to independently verify that a system action occurred and complied with protocol.",
+   "interpretation": "An independent verifier must be able to establish both occurrence and protocol compliance from available evidence. A test needs the applicable protocol and an explicit independence model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "system_action",
+    "verification_evidence",
+    "applicable_protocol",
+    "verifier_model"
+   ],
+   "criterion": "An independent verifier can establish that the action occurred and complied with its applicable protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action evidence and applicable protocol rules"
+   ],
+   "gap": "Verifier independence and the applicable compliance checks are not specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the verifier's access, trust assumptions, and applicable protocol rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-4-02",
+   "section": "4",
+   "title": "Visibility Means Protected Information Exposure",
+   "quote": "- Visibility — exposure of identity, personal data, or private behavior.",
+   "interpretation": "Classify an exposure as visibility when it reveals any of the three named categories. Indirect revelations and the boundaries of personal data and private behavior require a declared classification model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "exposed_information",
+    "data_classifications",
+    "inference_model"
+   ],
+   "criterion": "Exposure of identity, personal data, or private behavior is classified as visibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "information disclosures and data classifications"
+   ],
+   "gap": "The text does not supply classification rules or a model of inferential exposure. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what information counts as personal or private and how inference is evaluated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-4-03",
+   "section": "4",
+   "title": "Verification Uses Actor Independent Proof",
+   "quote": "- Verification — cryptographic, physical, or procedural proof independent of trust in actors.",
+   "interpretation": "Check that verification rests on one of the named proof types and remains valid without trusting the actors involved. Proof validity and independence depend on a declared threat and trust model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "proof",
+    "proof_type",
+    "proof_validation_rules",
+    "trust_model"
+   ],
+   "criterion": "Verification uses cryptographic, physical, or procedural proof whose validity is independent of trust in actors.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "proof artifacts and validation procedures"
+   ],
+   "gap": "No proof-validation procedure or actor-independence model is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare proof-validity rules and which actors may be untrusted."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-4-04",
+   "section": "4",
+   "title": "Anonymity Requires Subject Action Unlinkability",
+   "quote": "- Anonymity — the absence of linkability between a Subject and a specific action, except where explicitly required by higher axioms.",
+   "interpretation": "Test whether observable information links a Subject to a specific action, allowing only exceptions explicitly required by higher axioms. The exception authority and the observer's information are not defined here.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_action_records",
+    "observable_information",
+    "linkability_model",
+    "higher_axiom_requirements"
+   ],
+   "criterion": "No Subject is linkable to a specific action unless higher axioms explicitly require that linkability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subject-action evidence and explicit higher-axiom requirements"
+   ],
+   "gap": "A linkability model and the applicable higher-axiom exceptions are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the observer's knowledge and the authoritative higher-axiom exceptions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-4-05",
+   "section": "4",
+   "title": "Transparency Does Not Imply Visibility",
+   "quote": "Transparency SHALL NOT imply visibility.",
+   "interpretation": "Check that transparency requirements do not entail exposing identity, personal data, or private behavior. The text may prohibit exposure as a consequence of transparency or, more narrowly, prohibit treating transparency as authorization for exposure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transparency_requirements",
+    "disclosure_rules",
+    "disclosure_effects"
+   ],
+   "criterion": "Transparency does not entail visibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transparency rules and resulting disclosures"
+   ],
+   "gap": "The operational meaning of 'imply' and the treatment of indirect exposure are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the check concerns actual exposure, authorization for exposure, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-5-01",
+   "section": "5",
+   "title": "Required Public System Elements",
+   "quote": "The following system elements MUST be publicly transparent:",
+   "interpretation": "Check public transparency for protocol texts and versions, governance-affecting algorithmic logic and source code, system-wide metrics and aggregate indicators, institutional and protocol resource flows, and state transitions and execution traces. Because transparency includes independent verification, publication alone does not establish full compliance.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "system_element_inventory",
+    "public_artifacts",
+    "public_access_results",
+    "verification_evidence"
+   ],
+   "criterion": "Every element in each of the five listed domains is publicly transparent, subject to the structural and aggregate limitation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol registry",
+    "governance algorithms and source code",
+    "system metrics",
+    "institutional and protocol resource flows",
+    "state transitions and execution traces"
+   ],
+   "gap": "A complete domain inventory and an operational independent-verification test are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare domain membership, public-access conditions, and independent-verification procedures."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-5-02",
+   "section": "5",
+   "title": "Structural And Aggregate Publication Limit",
+   "quote": "Public transparency applies at structural and aggregate levels only.",
+   "interpretation": "Classify public transparency outputs by level and reject outputs outside the structural or aggregate levels. The text does not define those levels or explain how detailed execution traces must be transformed to fit them.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "public_transparency_outputs",
+    "output_level_classifications"
+   ],
+   "criterion": "Every public transparency output is at a structural or aggregate level.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "public outputs and their granularity classifications"
+   ],
+   "gap": "Structural and aggregate levels lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare level-classification rules, including treatment of execution traces."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-6-01",
+   "section": "6",
+   "title": "Required Protection Of Personal Domains",
+   "quote": "The following domains MUST remain anonymous or privacy-protected:",
+   "interpretation": "Check protection of individual identity data, personal belief, opinion or cultural affiliation, private communications, and individual behavioral histories absent verified harm. The verified-harm qualifier attaches explicitly to behavioral histories; removing that default protection does not itself authorize disclosure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "personal_data_inventory",
+    "protection_controls",
+    "verified_harm_records",
+    "privacy_model"
+   ],
+   "criterion": "The listed personal domains remain anonymous or privacy-protected; the behavioral-history requirement applies when verified harm is absent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "personal-data classifications",
+    "privacy controls",
+    "verified-harm determinations"
+   ],
+   "gap": "Privacy protection, anonymity assessment, and verified-harm determination need operational rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare protection adequacy, linkability tests, and how verified harm is associated with a behavioral history."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-6-02",
+   "section": "6",
+   "title": "Scope Authorization For Protection Downgrades",
+   "quote": "No protocol may downgrade these protections without explicit Scope authorization.",
+   "interpretation": "For each reduction in the listed protections, require an explicit Scope authorization covering that reduction. Recognizing a downgrade and validating the authorization require protection-comparison rules and the Scope protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protection_changes",
+    "scope_authorizations",
+    "authorization_validity_rules"
+   ],
+   "criterion": "Every downgrade of the section 6 protections has explicit Scope authorization.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "protection change records and Scope authorizations"
+   ],
+   "gap": "The Scope authorization rules and a definition of protection downgrade are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how protection levels are compared and how Scope authorization is validated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-7-01",
+   "section": "7",
+   "title": "Permitted Action Verification Mechanisms",
+   "quote": "Verification of actions SHALL rely on:",
+   "interpretation": "Check action verification for reliance on cryptographic proofs, zero-knowledge attestations, PTL-anchored measurements, or reproducible execution traces. The list does not specify whether these are alternatives, jointly required mechanisms, or an exclusive set.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "action_verification_records",
+    "proof_artifacts",
+    "ptl_measurements",
+    "execution_traces"
+   ],
+   "criterion": "Action verification relies on the listed proof, attestation, measurement, and execution-trace mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "cryptographic proofs",
+    "zero-knowledge attestations",
+    "PTL-anchored measurements",
+    "reproducible execution traces"
+   ],
+   "gap": "The required combination of mechanisms and their validation rules are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the list is alternative or cumulative, whether other mechanisms are allowed, and how each mechanism is validated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-7-02",
+   "section": "7",
+   "title": "Exceptions To Identity Disclosure Prohibition",
+   "quote": "Identity disclosure SHALL NOT be required unless:\n\n- explicitly mandated by DKP-1-AXIOMS-001,",
+   "interpretation": "Reject required identity disclosure unless DKP-1-AXIOMS-001 explicitly mandates it or justice protocols require it to attribute verified harm. These are necessary exceptions, not a command to disclose; their interaction with section 8's additional gates is not stated.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "identity_disclosure_requirements",
+    "axiom_mandates",
+    "justice_attribution_requirements",
+    "verified_harm_records"
+   ],
+   "criterion": "Required identity disclosure implies an explicit DKP-1-AXIOMS-001 mandate or a justice-protocol requirement to attribute verified harm.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "explicit axiom mandates",
+    "justice attribution requirements",
+    "verified-harm records"
+   ],
+   "gap": "The axioms, unnamed justice protocols, and precedence relative to section 8 are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare valid external mandates and whether every permitted disclosure must also satisfy section 8."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-8-01",
+   "section": "8",
+   "title": "Necessary Gates For De Anonymization",
+   "quote": "- material harm is PTL-verified,\n- causal attribution is required for restitution or containment,\n- no anonymous remediation path exists.",
+   "interpretation": "Permit de-anonymization only when all three listed conditions hold. Checking the absence of an anonymous remediation path requires a defined search space; satisfying the gates permits but does not require de-anonymization.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "deanonymization_events",
+    "ptl_harm_verification",
+    "causal_attribution_need",
+    "anonymous_remediation_paths"
+   ],
+   "criterion": "De-anonymization implies PTL-verified material harm, required causal attribution for restitution or containment, and absence of an anonymous remediation path.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "PTL material-harm verification",
+    "restitution or containment requirements",
+    "anonymous remediation assessments"
+   ],
+   "gap": "Materiality, attribution necessity, PTL verification, and completeness of remediation-path assessment require external rules or models. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare material-harm criteria, the attribution-necessity test, and the universe of anonymous remediation paths."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-8-02",
+   "section": "8",
+   "title": "Minimal De Anonymization Requirement",
+   "quote": "- MUST be minimal,",
+   "interpretation": "Compare each de-anonymization with feasible alternatives serving the authorized case purpose. The text does not say whether minimality concerns disclosed fields, recipients, identifiability, affected Subjects, or a combination.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deanonymization_scope",
+    "case_requirements",
+    "feasible_disclosure_alternatives"
+   ],
+   "criterion": "Each de-anonymization is minimal for its specific case.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "case requirements and feasible disclosure alternatives"
+   ],
+   "gap": "No ordering or decision rule defines minimal de-anonymization. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the dimensions of minimality and how alternatives are compared."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-8-03",
+   "section": "8",
+   "title": "Time Bound De Anonymization",
+   "quote": "- MUST be time-bound,",
+   "interpretation": "Check that each de-anonymization has an enforceable temporal limit and is not maintained beyond it. The text sets no duration and does not specify whether the limit applies to identity access, retained links, authorization, or all of these.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "deanonymization_events",
+    "temporal_limits",
+    "identity_access_history",
+    "identity_link_retention"
+   ],
+   "criterion": "Every de-anonymization is bounded in time and respects its applicable temporal boundary.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "de-anonymization authorizations, access history, and retention records"
+   ],
+   "gap": "The duration, bounded object, and required behavior at expiry are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the temporal boundary, what it governs, and the effect of expiry."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-8-04",
+   "section": "8",
+   "title": "Auditable De Anonymization Events",
+   "quote": "- MUST be auditable,",
+   "interpretation": "Test whether an auditor can reconstruct and evaluate each de-anonymization from preserved evidence. No required evidence fields or audit procedure are stated in this provision.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "deanonymization_records",
+    "supporting_evidence",
+    "auditor_access",
+    "audit_procedure"
+   ],
+   "criterion": "Every de-anonymization can be audited.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "de-anonymization records and supporting evidence"
+   ],
+   "gap": "The evidence requirements and operational auditability test are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the auditor's access and the evidence needed to audit an event."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-8-05",
+   "section": "8",
+   "title": "Case Limited De Anonymization",
+   "quote": "- SHALL NOT propagate beyond the specific case.",
+   "interpretation": "Track disclosure and reuse of de-anonymization results and reject propagation to unrelated cases or contexts. A check needs case boundaries and a definition of propagation that covers any intended indirect reuse.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deanonymization_results",
+    "case_assignments",
+    "disclosure_lineage",
+    "reuse_events"
+   ],
+   "criterion": "De-anonymization results do not propagate beyond their specific case.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "case registry and identity-information disclosure or reuse lineage"
+   ],
+   "gap": "Case boundaries and the full meaning of propagation are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare case membership and which transfers, inferences, or reuses count as propagation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-9-01",
+   "section": "9",
+   "title": "Mass Surveillance Is Forbidden",
+   "quote": "The following are explicitly forbidden:\n\n- mass surveillance,",
+   "interpretation": "Inspect monitoring activities for mass surveillance. The text supplies neither a definition of surveillance nor a boundary distinguishing mass surveillance from other observation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "monitoring_activities",
+    "observed_population",
+    "surveillance_classification_rules"
+   ],
+   "criterion": "No activity constitutes mass surveillance.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "monitoring purposes, coverage, and collection practices"
+   ],
+   "gap": "The classification rule and any scale threshold for mass surveillance are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the surveillance definition and the boundary for the term 'mass'."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-9-02",
+   "section": "9",
+   "title": "Identity Based Scoring Is Forbidden",
+   "quote": "- identity-based scoring or profiling,",
+   "interpretation": "Inspect scoring and profiling systems for dependence on identity. Direct identity inputs are detectable, but proxy identities and merely attaching a score to an identified person require a declared reading of 'identity-based'.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "scoring_systems",
+    "profiling_systems",
+    "feature_lineage",
+    "identity_dependence_model"
+   ],
+   "criterion": "No scoring or profiling is identity-based.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scoring and profiling logic, inputs, and feature lineage"
+   ],
+   "gap": "The text does not define identity dependence or treatment of identity proxies. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether identity-based includes direct inputs, proxies, subject-linked outputs, or all of these."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-9-03",
+   "section": "9",
+   "title": "No Forced Transparency Punishment",
+   "quote": "- forced transparency as punishment,",
+   "interpretation": "Check sanctions and enforcement actions for compelled transparency imposed as punishment. Reliable classification requires definitions of compulsion and punitive purpose.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "sanctions",
+    "disclosure_obligations",
+    "enforcement_purposes"
+   ],
+   "criterion": "No punishment imposes forced transparency.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sanction decisions and imposed disclosure obligations"
+   ],
+   "gap": "The text does not operationalize forced transparency or punitive purpose. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how compelled transparency and punishment are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-9-04",
+   "section": "9",
+   "title": "No Unrelated Dataset Identity Inference",
+   "quote": "- linking unrelated datasets to infer identity,",
+   "interpretation": "Inspect dataset-linking operations for identity inference involving unrelated datasets. The text does not define relatedness or say whether 'to infer' concerns intended purpose, actual result, or both.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dataset_linking_operations",
+    "dataset_relationships",
+    "operation_purposes",
+    "inference_results"
+   ],
+   "criterion": "Unrelated datasets are not linked to infer identity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dataset lineage, linking operations, and identity-inference results"
+   ],
+   "gap": "Dataset relatedness and the purpose-versus-outcome reading of identity inference are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare dataset-relatedness rules and whether prohibited inference is assessed by purpose, result, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-9-05",
+   "section": "9",
+   "title": "No Transparency For Social Control",
+   "quote": "- using transparency mechanisms for social control.",
+   "interpretation": "Review uses of transparency mechanisms for a social-control purpose or effect. The document provides no operational definition separating social control from other governance activity.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "transparency_mechanism_uses",
+    "stated_purposes",
+    "observed_effects"
+   ],
+   "criterion": "Transparency mechanisms are not used for social control.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mechanism deployment purposes and effects"
+   ],
+   "gap": "Determining social control requires an undefined substantive judgment.",
+   "hypotheses_needed": [
+    "Declare an externally chosen definition and decision procedure for social control."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-10-01",
+   "section": "10",
+   "title": "Crisis Increases Action Transparency",
+   "quote": "During Crisis Scope activation:\n\n- transparency of actions and decisions SHALL increase,",
+   "interpretation": "Compare transparency of actions and decisions during Crisis Scope activation with an applicable baseline. Neither the baseline, measurement method, amount of increase, nor timing within activation is defined.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_scope_intervals",
+    "action_transparency_history",
+    "decision_transparency_history",
+    "transparency_baseline"
+   ],
+   "criterion": "During Crisis Scope activation, transparency of actions and decisions increases relative to the applicable baseline.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Crisis Scope activation records and transparency history"
+   ],
+   "gap": "A transparency comparison model, baseline, and evaluation timing are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the transparency ordering or measure, comparison baseline, and time at which an increase must be observed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-10-02",
+   "section": "10",
+   "title": "No Default Crisis Identity Expansion",
+   "quote": "- identity exposure SHALL NOT increase by default.",
+   "interpretation": "Check that activating Crisis Scope does not itself increase identity exposure under default settings. This is not an absolute ban on separately authorized exposure, but the meaning of default and the comparison measure need specification.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_activation_events",
+    "default_disclosure_settings",
+    "identity_exposure_before",
+    "identity_exposure_after",
+    "separate_authorizations"
+   ],
+   "criterion": "Default Crisis Scope activation does not increase identity exposure.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Crisis Scope transitions, disclosure settings, and identity-exposure records"
+   ],
+   "gap": "The exposure comparison and distinction between default and separately authorized changes are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how exposure is compared and which changes count as default consequences of activation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-10-03",
+   "section": "10",
+   "title": "Emergency Logging And Later Review",
+   "quote": "Emergency measures MUST be logged and reviewable post-facto.",
+   "interpretation": "Require a log for every emergency measure and evidence that supports subsequent review. The document does not prescribe log fields, retention duration, reviewer access, or a review deadline.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "emergency_measures",
+    "measure_logs",
+    "review_access",
+    "review_procedure"
+   ],
+   "criterion": "Every emergency measure is logged and can be reviewed after the fact.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "emergency measure registry and logs"
+   ],
+   "gap": "The minimum log content and operational criteria for post-facto reviewability are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare sufficient log content and the access needed for later review."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-10-04",
+   "section": "10",
+   "title": "No Permanent Crisis Transparency Expansion",
+   "quote": "No crisis may justify permanent transparency expansion.",
+   "interpretation": "Reject permanent transparency expansions whose authorization relies on a crisis. The text does not set an expiry deadline for temporary expansions or specify when a long-lived expansion becomes permanent.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transparency_expansions",
+    "expansion_justifications",
+    "duration_rules",
+    "expiry_conditions"
+   ],
+   "criterion": "No permanent transparency expansion is justified by a crisis.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transparency change authorizations, rationales, and duration conditions"
+   ],
+   "gap": "Permanence and the sufficiency of non-crisis justification are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how permanence and crisis-based justification are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-11-01",
+   "section": "11",
+   "title": "Required Interface Explanations And Verification",
+   "quote": "- explain why an action occurred,\n- expose applicable protocol references,\n- allow independent verification of outcomes,",
+   "interpretation": "Check that human–system interfaces provide action explanations, applicable protocol references, and a usable route to independent outcome verification. Field presence alone cannot establish explanation adequacy, reference applicability, or independent verifiability.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "interface_outputs",
+    "action_reasons",
+    "applicable_protocols",
+    "outcome_verification_evidence"
+   ],
+   "criterion": "Human–system interfaces explain action occurrence, expose applicable protocol references, and enable independent outcome verification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action reasons",
+    "applicable protocol references",
+    "outcome verification evidence"
+   ],
+   "gap": "Explanation adequacy, protocol applicability, and the independent-verification procedure require additional rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare acceptance tests for explanations, applicable references, and verifier access."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-11-02",
+   "section": "11",
+   "title": "Informative Interfaces Without Persuasive Framing",
+   "quote": "- avoid persuasive or manipulative framing.\n\nInterfaces SHALL inform, not convince.",
+   "interpretation": "Assess interface wording and presentation for informative content and persuasive or manipulative framing. The text provides no deterministic criterion for distinguishing explanation from persuasion.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "interface_content",
+    "interface_presentation",
+    "interaction_context"
+   ],
+   "criterion": "Interfaces inform rather than convince and avoid persuasive or manipulative framing.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interface content and presentation in context"
+   ],
+   "gap": "The distinction between informing, convincing, and manipulation requires an undefined judgment.",
+   "hypotheses_needed": [
+    "Declare a review rubric or behavioral model for persuasive and manipulative framing."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-12-01",
+   "section": "12",
+   "title": "Audit Hooks For Every Mechanism",
+   "quote": "All transparency mechanisms:\n\n- MUST expose hooks for DKP-8-AUDIT-001,",
+   "interpretation": "Enumerate transparency mechanisms and verify that each exposes hooks compatible with DKP-8-AUDIT-001. Hook presence is observable, but compatibility cannot be determined without the audit interface specification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "transparency_mechanism_inventory",
+    "exposed_audit_hooks",
+    "audit_interface_specification"
+   ],
+   "criterion": "Every transparency mechanism exposes hooks for DKP-8-AUDIT-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "mechanism inventory and audit interface specifications"
+   ],
+   "gap": "The required audit-hook interface is defined by an unavailable external document. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the required audit interface and compatibility tests."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-12-02",
+   "section": "12",
+   "title": "Preservation Of Historical Records",
+   "quote": "- MUST preserve historical records,",
+   "interpretation": "Compare historical records with retained records for each transparency mechanism. The text does not define which records are historical, their required fidelity, or how preservation interacts with privacy-preserving aggregation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "historical_record_inventory",
+    "retained_records",
+    "record_transformations"
+   ],
+   "criterion": "All transparency mechanisms preserve historical records.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "historical records, retained archives, and transformation history"
+   ],
+   "gap": "Record scope, preservation fidelity, and permitted transformations are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which records must be preserved and whether aggregated representations satisfy preservation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-12-03",
+   "section": "12",
+   "title": "Privacy Protecting Aggregation Permission",
+   "quote": "- MAY aggregate data to protect privacy.",
+   "interpretation": "Recognize aggregation for privacy protection as permitted rather than mandatory. The clause does not establish that every aggregation method protects privacy or expressly prohibit aggregation for other purposes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "aggregation_operations",
+    "aggregation_purposes",
+    "privacy_effects"
+   ],
+   "criterion": "Data aggregation to protect privacy is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "aggregation methods, declared purposes, and privacy assessments"
+   ],
+   "gap": "The text does not specify whether qualifying privacy protection is determined by purpose, effect, or both. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the permission is tested against privacy intent, demonstrated privacy effect, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-12-04",
+   "section": "12",
+   "title": "Auditability Without Required Identity Exposure",
+   "quote": "Auditability SHALL NOT require identity exposure.",
+   "interpretation": "Inspect audit workflows for mandatory identity-exposing inputs or steps. A complete check must also account for identity inferred from otherwise non-identifying audit evidence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_workflows",
+    "required_audit_inputs",
+    "audit_evidence",
+    "identity_inference_model"
+   ],
+   "criterion": "Auditability can be achieved without requiring identity exposure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit procedures and required evidence"
+   ],
+   "gap": "Audit sufficiency and indirect identity exposure require operational models. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a sufficient audit procedure and the observer model used to detect identity exposure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-13-01",
+   "section": "13",
+   "title": "No Moral Accountability Definition",
+   "quote": "DKP-7-TRANSPARENCY-001 SHALL NOT:\n\n- define moral accountability,",
+   "interpretation": "Review rules attributed to this protocol for definitions of moral accountability. Deciding whether a rule constitutes such a definition requires semantic judgment absent from the document.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "protocol_rules",
+    "rule_authority"
+   ],
+   "criterion": "This protocol does not define moral accountability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rules and decisions attributed to this protocol"
+   ],
+   "gap": "Moral accountability and what counts as defining it are not operationally specified.",
+   "hypotheses_needed": [
+    "Declare a semantic review rubric for definitions of moral accountability."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-13-02",
+   "section": "13",
+   "title": "No Replacement Of Justice Attribution",
+   "quote": "- replace justice attribution,",
+   "interpretation": "Check that transparency outputs and procedures do not substitute for the justice attribution process. The relevant justice process and the boundary between evidence provision and replacement are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transparency_decisions",
+    "justice_attribution_workflows",
+    "decision_authority"
+   ],
+   "criterion": "This protocol does not replace justice attribution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice attribution procedures and decision provenance"
+   ],
+   "gap": "The justice attribution interface and the test for procedural replacement are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the authoritative attribution workflow and what constitutes replacing it."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-13-03",
+   "section": "13",
+   "title": "No Override Of Cultural Protections",
+   "quote": "- override cultural or informational protections,",
+   "interpretation": "Compare transparency requirements and decisions with applicable cultural and informational protections. Reject cases where this protocol is used to override those protections.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transparency_requirements",
+    "cultural_protections",
+    "informational_protections",
+    "conflict_resolutions"
+   ],
+   "criterion": "This protocol does not override cultural or informational protections.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "applicable cultural and informational protections and conflict decisions"
+   ],
+   "gap": "The protected rules and a procedure for identifying overrides are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the applicable protections and the rule-conflict evaluation procedure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-13-04",
+   "section": "13",
+   "title": "No Expansion Of System Scope",
+   "quote": "- expand system scope.",
+   "interpretation": "Compare system authority before and after applying transparency requirements. This protocol must not itself expand that authority, but the document does not define the scope boundary or comparison method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_scope_before",
+    "system_scope_after",
+    "scope_change_authority"
+   ],
+   "criterion": "Applying this protocol does not expand system scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system scope definitions and authority-change records"
+   ],
+   "gap": "A formal system-scope representation and expansion test are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the scope baseline and how increases in authority are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-14-01",
+   "section": "14",
+   "title": "Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Require each normative change to follow the named upgrade procedure, including the listed simulation, audit, acceptance, activation, and rollback elements. The text does not specify acceptance criteria or whether rollback means a required capability, a conditional action, or a performed step.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_changes",
+    "upgrade_proposals",
+    "simulation_records",
+    "audit_records",
+    "acceptance_records",
+    "activation_windows",
+    "rollback_records"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 with proposal, DKP-8-SIMULATION-001 simulation, DKP-8-AUDIT-001 audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "acceptance decisions",
+    "activation and rollback controls"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation rules, and rollback semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the external procedure requirements and the intended rollback obligation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-14-02",
+   "section": "14",
+   "title": "New Identifier For Protocol Modifications",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Compare identifiers across modifications and require a new identifier for changes within this rule's scope. 'Any modification' could include presentation corrections literally, while the later correction clause suggests that those corrections are recorded only by date.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modifications",
+    "change_classifications",
+    "previous_identifier",
+    "new_identifier",
+    "identifier_registry"
+   ],
+   "criterion": "Every modification covered by this requirement receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol version history and identifier registry"
+   ],
+   "gap": "The treatment of presentation-only corrections and whether 'new' means globally unused are not explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections are exempt and whether identifier novelty is local or registry-wide."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-14-03",
+   "section": "14",
+   "title": "Mandatory Protocol Compatibility Declaration",
+   "quote": "- mandatory compatibility declaration with DKP-7-SCOPE-001 and DKP-8-AUDIT-001.",
+   "interpretation": "Check that the change package includes a compatibility declaration covering both named protocols. This provision explicitly requires a declaration but does not itself define a test proving actual compatibility.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "change_package",
+    "compatibility_declaration",
+    "declared_protocol_references"
+   ],
+   "criterion": "The compatibility declaration covers both DKP-7-SCOPE-001 and DKP-8-AUDIT-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "change package compatibility declaration"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-14-04",
+   "section": "14",
+   "title": "Presentation Corrections Use Date Recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify corrections that preserve normative content as non-Upgrades and record them only through the document's Last updated date. Semantic preservation requires a decision rule, and the relationship to the requirement for a new identifier on any modification is implicit.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "change_classification",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_recording"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only by the Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document revision history and upgrade classification records"
+   ],
+   "gap": "The referenced upgrade definition and a test for unchanged normative content are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how normative equivalence is established and how this exception interacts with identifier changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPARENCY-14-05",
+   "section": "14",
+   "title": "Published Edition Source Digest Registry",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For every published edition with an identified canonical source, compute its SHA-256 digest and check that the repository's SHA256SUMS.txt lists that digest for the edition. The computation is determinate once the exact canonical source bytes and edition mapping are supplied.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "sha256sums_contents",
+    "repository_identity"
+   ],
+   "criterion": "For each published edition, SHA256SUMS.txt in github.com/anahronic/World lists the SHA-256 digest of that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published-edition inventory",
+    "canonical source bytes",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

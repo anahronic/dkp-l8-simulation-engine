@@ -370,14 +370,20 @@
     "sovereign consent records",
     "consent audit evidence"
    ],
-   "gap": "Auditable consent, equivalent sovereign procedures, and coercion lack operational validation rules. No lab check implemented yet.",
+   "gap": "Consent is a declared event; its legitimacy is not assessed.",
    "hypotheses_needed": [
     "Define acceptable consent evidence, auditability, and coercion tests."
    ],
    "section_label": "4.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "explicit_consent"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -402,12 +408,18 @@
     "phase transition logs",
     "explicit progression decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
    "section_label": "4.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "sequential_phases"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -432,12 +444,18 @@
    "data_dependencies": [
     "entry and exit validation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
    "section_label": "4.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "explicit_validation"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -531,14 +549,20 @@
     "assessment activity records",
     "intervention and effect records"
    ],
-   "gap": "The document does not define the scope or attribution of legal, economic, and administrative effects. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define effect classification and whether indirect effects count."
    ],
    "section_label": "5.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "shadow_mode_no_effects"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -765,12 +789,18 @@
     "enforceability declarations",
     "enforcement and activation logs"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
    "section_label": "5.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "phase2_domains_only"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1024,11 +1054,17 @@
     "progression and enforcement state logs",
     "rollback decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Shock indicators are a declared window.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "shock_halts_and_suspends"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1091,11 +1127,17 @@
    "data_dependencies": [
     "rollback scope and cost records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "rollback_logged"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1318,11 +1360,17 @@
     "public documentation and access records",
     "current phase configuration"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "steps_documented"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1445,13 +1493,19 @@
     "rule activation history",
     "target event history"
    ],
-   "gap": "The temporal event and legal relation used to determine retroactivity are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which target event and rule effective time determine retroactive enforcement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.0.0",
+    "check": "no_retroactive_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

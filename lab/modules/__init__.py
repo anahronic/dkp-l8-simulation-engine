@@ -3,6 +3,7 @@
 from lab.modules.contribution import ContributionModule
 from lab.modules.crisis_recovery import CrisisRecoveryModule
 from lab.modules.dispute_correction import DisputeCorrectionModule
+from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
 from lab.modules.prevention import PreventionModule
 from lab.modules.sensor_loss import SensorLossModule
@@ -11,4 +12,4 @@ from lab.modules.work_cycle import WorkCycleModule
 
 MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule(), FailureChainModule(),
                              DisputeCorrectionModule(), ContributionModule(), SensorLossModule(),
-                             CrisisRecoveryModule())}
+                             CrisisRecoveryModule(), ExitIntegrationModule())}
