@@ -1,0 +1,1232 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-7-PRIVACY-001",
+ "doc_sha256": "6195530890def3ddac1c5e4508d40959dc7ba5d6a444e41e581672e6d16a2962",
+ "prefix": "PRIVACY",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Sections 1 and 2 contain purpose statements; section 3's protocol-position lists are not independently treated as obligations. The numbered principle headings printed under section 5 are 4.1–4.4; their printed numbers are preserved. Enumerated domains and prohibited practices are treated as sets governed by a common provision. No reconstruction thresholds, anonymity proof standard, minimum-exposure algorithm, or Crisis Scope definition is supplied. References to higher-layer enforcement protocols are unnamed; no document identifiers have been inferred for them. Referenced documents were not supplied or checked for existence. Section 14's presentation-only correction exception qualifies its otherwise broad modification language. The interaction between absolute privacy, crisis anonymity reduction, enforcement disclosure, and the liability limitations is not fully specified.",
+ "requirements": [
+  {
+   "id": "PRIVACY-3-01",
+   "section": "3",
+   "title": "Privacy constraints bind all protocols",
+   "quote": "No protocol may override privacy constraints except where explicitly permitted herein.",
+   "interpretation": "Check each protocol override against an explicit permission in this document. Automation requires a representation of protocol effects and a decision about the extent of the enforcement and crisis exceptions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_effects",
+    "privacy_constraints",
+    "exception_basis"
+   ],
+   "criterion": "Every override of a privacy constraint has an applicable explicit permission in this document.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "other protocols' rules and effects",
+    "enforcement and crisis exception records"
+   ],
+   "gap": "The document does not specify a formal conflict test or fully delimit the effects of its exceptions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how protocol effects conflict with privacy constraints and how each exception applies."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4-01",
+   "section": "4",
+   "title": "Personal data causal linkage",
+   "quote": "- Personal Data — any data that can be causally linked to a specific Subject across time.",
+   "interpretation": "Classify data as personal when a causal link to a specific Subject across time can be established. The text does not define the causal evidence or time coverage necessary for that classification.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "data_items",
+    "subject_records",
+    "temporal_linkage_evidence"
+   ],
+   "criterion": "Data is Personal Data if it can be causally linked to a specific Subject across time.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subject linkage evidence across time"
+   ],
+   "gap": "A causal-linkage model and interpretation of across time are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the causal-linkage test and temporal evidence it requires."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4-02",
+   "section": "4",
+   "title": "Identifying data reveals identity",
+   "quote": "- Identifying Data — data that directly reveals subject identity.",
+   "interpretation": "Classify data as identifying when it directly reveals a Subject's identity. A checker needs a definition of identity and of direct revelation.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "data_items",
+    "identity_mapping"
+   ],
+   "criterion": "Data is Identifying Data if it directly reveals subject identity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identity mappings and identifier semantics"
+   ],
+   "gap": "The document does not specify which identifiers or disclosures directly reveal identity. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the identity representation and direct-identification test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4-03",
+   "section": "4",
+   "title": "Quasi identifying correlation capability",
+   "quote": "- Quasi-Identifying Data — data that enables re-identification via correlation.",
+   "interpretation": "Test whether correlation of the data with available information enables re-identification. Results depend on the auxiliary information and correlation methods included in the test.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "data_items",
+    "auxiliary_data",
+    "correlation_model"
+   ],
+   "criterion": "Data is Quasi-Identifying Data if it enables re-identification via correlation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "auxiliary datasets usable for correlation"
+   ],
+   "gap": "The available auxiliary information and re-identification model are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the correlation methods, auxiliary information, and meaning of successful re-identification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4-04",
+   "section": "4",
+   "title": "Anonymous data requires nonlinkability proof",
+   "quote": "- Anonymous Data — data provably non-linkable to a Subject.",
+   "interpretation": "Accept data as anonymous only if non-linkability to a Subject is proved. Checking a proof requires a proof system and assumptions about observers' information that the document does not supply.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "data_items",
+    "nonlinkability_proof",
+    "proof_assumptions"
+   ],
+   "criterion": "Anonymous Data has a valid proof that it is non-linkable to a Subject.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "non-linkability proofs and their assumptions"
+   ],
+   "gap": "The proof standard and information available to potential linkers are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the proof system and observer knowledge under which non-linkability is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4-05",
+   "section": "4",
+   "title": "Privacy breach reconstruction threshold",
+   "quote": "- Privacy Breach — any condition enabling identity reconstruction beyond defined thresholds.",
+   "interpretation": "Classify a condition as a privacy breach when its identity-reconstruction capability exceeds the applicable thresholds. Neither the thresholds nor the quantity they measure is defined here.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "system_condition",
+    "identity_reconstruction_measure",
+    "reconstruction_thresholds"
+   ],
+   "criterion": "A Privacy Breach occurs when a condition enables identity reconstruction beyond the defined thresholds.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identity reconstruction assessments",
+    "applicable threshold definitions"
+   ],
+   "gap": "The identity-reconstruction measure and referenced thresholds are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the reconstruction measure, thresholds, and comparison semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4.1-01",
+   "section": "4.1",
+   "title": "No complete subject observability",
+   "quote": "No Subject SHALL be fully observable across all system layers.",
+   "interpretation": "Evaluate whether combined visibility across system layers makes any Subject fully observable. The text does not define full observability or whether visibility is assessed for one observer or for the system collectively.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subjects",
+    "system_layers",
+    "visibility_relations"
+   ],
+   "criterion": "No Subject is fully observable across all system layers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system layer inventory",
+    "subject visibility and access relationships"
+   ],
+   "gap": "Full observability and the observer whose visibility is evaluated are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the system-layer boundary, observer model, and full-observability condition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4.1-02",
+   "section": "4.1",
+   "title": "Total cross domain aggregation prohibited",
+   "quote": "Total data aggregation across domains is forbidden.",
+   "interpretation": "Inspect aggregation operations for total collection across domains. Total may mean all data from any combined domains or comprehensive aggregation across every domain; the document does not choose between these readings.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "aggregation_operations",
+    "domain_inventory",
+    "data_coverage"
+   ],
+   "criterion": "No aggregation operation constitutes total data aggregation across domains.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "aggregation lineage and domain coverage"
+   ],
+   "gap": "The meanings of domain and total aggregation are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare domain boundaries and the coverage condition that makes aggregation total."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4.2-01",
+   "section": "4.2",
+   "title": "Processing limited to minimum necessity",
+   "quote": "Only the minimum data required for protocol execution may be processed.",
+   "interpretation": "Compare processed data with the minimum necessary to execute the relevant protocol. Minimum could refer to fields, records, granularity, or another ordering of exposure; the text provides no minimization method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_execution_requirements",
+    "processed_data",
+    "minimum_required_data"
+   ],
+   "criterion": "Processed data contains no data beyond the minimum required for protocol execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol execution requirements",
+    "data processing records"
+   ],
+   "gap": "A method for determining and comparing minimum required data is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how execution necessity and minimality are evaluated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4.3-01",
+   "section": "4.3",
+   "title": "Prevent reconstruction through data linkage",
+   "quote": "The system MUST prevent identity reconstruction through data linkage.",
+   "interpretation": "Test whether permitted access and linkage operations enable identity reconstruction. A finite test can establish this only within a declared linkage and observer model; no tolerance is stated in this provision.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "accessible_data",
+    "linkage_operations",
+    "observer_knowledge"
+   ],
+   "criterion": "Identity reconstruction through data linkage is prevented.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data access relationships",
+    "linkage capabilities and auxiliary information"
+   ],
+   "gap": "The possible linkage operations, observer knowledge, and reconstruction success condition are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a linkage threat model and the condition constituting identity reconstruction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-4.4-01",
+   "section": "4.4",
+   "title": "Convenience cannot justify privacy erosion",
+   "quote": "Efficiency, optimization, or analytical value SHALL NOT justify privacy erosion.",
+   "interpretation": "Inspect decisions that permit privacy erosion and reject efficiency, optimization, or analytical value as authorizing grounds. Automated checking requires classified decision grounds and a definition of privacy erosion.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "privacy_effects",
+    "decision_grounds"
+   ],
+   "criterion": "Efficiency, optimization, and analytical value are never accepted as justifications for privacy erosion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision rationales and assessed privacy effects"
+   ],
+   "gap": "Privacy erosion and the treatment of mixed decision grounds are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how privacy erosion and authorizing decision grounds are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-6-01",
+   "section": "6",
+   "title": "Absolute domains remain permanently private",
+   "quote": "The following domains SHALL ALWAYS remain private and non-public:",
+   "interpretation": "Check all disclosure states for medical and biological data, mental and psychological states, intimate relationships, beliefs, conscience and inner conviction, and private communications not producing externalized impact. Publication can be tested against classifications, but the broader meaning of private and the externalized-impact condition need definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "data_domain",
+    "communication_impact",
+    "access_states",
+    "publication_events"
+   ],
+   "criterion": "Data in every listed absolute privacy domain always remains private and non-public.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data domain classifications",
+    "communication impact assessments",
+    "access and publication histories"
+   ],
+   "gap": "Private access boundaries and the meaning of externalized impact are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare permitted private access and how externalized impact of communications is determined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-6-02",
+   "section": "6",
+   "title": "No individual extraction or auditing",
+   "quote": "These domains are non-extractable and non-auditable at the individual level.",
+   "interpretation": "Reject individual-level extraction and auditing involving the absolute privacy domains. The final qualifier may apply to both extraction and auditing, or only to auditing; extraction itself is also undefined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "data_domain",
+    "operation_type",
+    "operation_granularity"
+   ],
+   "criterion": "Absolute privacy domains are non-extractable and are not audited at the individual level.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data operation records and granularity classifications"
+   ],
+   "gap": "Extraction is undefined and the scope of the individual-level qualifier is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what constitutes extraction and whether the individual-level qualifier limits both prohibitions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-7-01",
+   "section": "7",
+   "title": "Conditional domains require protected exposure",
+   "quote": "The following MAY be exposed only in anonymized or aggregated form:",
+   "interpretation": "Check exposures of economic activity, resource consumption, mobility patterns, educational interaction, and platform usage metrics for anonymized or aggregated form. The text treats those forms as alternatives but supplies no aggregation standard and separately permits enforcement-triggered individual disclosure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "data_domain",
+    "exposure_form",
+    "anonymization_evidence",
+    "aggregation_description",
+    "enforcement_trigger"
+   ],
+   "criterion": "Exposure of a listed conditional domain uses anonymized or aggregated form, subject to the individual-disclosure exception in this section.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "disclosure records",
+    "anonymization evidence",
+    "aggregation descriptions",
+    "enforcement trigger records"
+   ],
+   "gap": "Anonymization and aggregation acceptance standards and the exception's precise interaction with this rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how anonymization and aggregation are validated and how the individual-disclosure exception applies."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-7-02",
+   "section": "7",
+   "title": "Individual disclosure requires enforcement trigger",
+   "quote": "Individual-level disclosure is forbidden unless explicitly triggered by higher-layer enforcement protocols within Scope.",
+   "interpretation": "Require an explicit higher-layer enforcement trigger and applicable Scope for each individual-level disclosure. The heading suggests application to the listed conditional domains, while the sentence alone could be read as a broader disclosure rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "individual_disclosures",
+    "enforcement_triggers",
+    "protocol_layer",
+    "applicable_scope"
+   ],
+   "criterion": "Every individual-level disclosure governed by this provision is explicitly triggered by a higher-layer enforcement protocol within Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "higher-layer enforcement authorizations",
+    "Scope boundaries and validity"
+   ],
+   "gap": "The qualifying enforcement protocols, Scope test, and domain extent of this sentence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare eligible enforcement protocols, the Scope membership test, and the domains governed by this exception."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-8-01",
+   "section": "8",
+   "title": "Anonymous action available when eligible",
+   "quote": "Subjects SHALL have the right to act anonymously wherever identity is not required for:",
+   "interpretation": "Check that anonymous action is available unless identity is required for liability attribution, risk allocation, or resource transfer. An identity requirement for one of those purposes limits the guarantee but does not itself mandate identified participation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_action",
+    "identity_requirements",
+    "identity_requirement_purposes",
+    "anonymous_action_available"
+   ],
+   "criterion": "If identity is not required for liability attribution, risk allocation, or resource transfer, Subjects can perform the action anonymously.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identity requirements of attribution, risk allocation, and transfer modules",
+    "available participation modes"
+   ],
+   "gap": "The document supplies no test for when identity is required for the three permitted purposes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the necessity test for identity in each listed purpose."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-8-02",
+   "section": "8",
+   "title": "Anonymous participation preserves rights access",
+   "quote": "Anonymous participation SHALL NOT reduce rights or access to system functions.",
+   "interpretation": "Compare rights and function access for otherwise equivalent anonymous and identified participants. The comparison requires an equivalence rule and a reconciliation with functions for which the preceding provision allows identity to be required.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participation_mode",
+    "participant_entitlements",
+    "function_access",
+    "identity_requirements"
+   ],
+   "criterion": "Anonymous participation causes no reduction in rights or access to system functions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rights and entitlement rules",
+    "access-control outcomes",
+    "identity-dependent function requirements"
+   ],
+   "gap": "The comparison baseline and treatment of identity-required functions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare equivalent participation cases and how identity-required functions interact with equal access."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-9-01",
+   "section": "9",
+   "title": "Audits use anonymized datasets when possible",
+   "quote": "- MUST operate on anonymized datasets where possible,",
+   "interpretation": "Check that each audit uses anonymized datasets whenever doing so is possible. Possibility may mean technical feasibility or adequate verification capability; the text does not specify which.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_process",
+    "audit_datasets",
+    "anonymization_evidence",
+    "anonymized_audit_feasibility"
+   ],
+   "criterion": "If an audit can operate on anonymized datasets, it does so.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit dataset records",
+    "anonymization evidence",
+    "audit feasibility assessments"
+   ],
+   "gap": "The meaning of possible and the anonymization validation standard are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the feasibility test for conducting an audit with anonymized data."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-9-02",
+   "section": "9",
+   "title": "Audit verification uses zero knowledge",
+   "quote": "- MUST use zero-knowledge proofs for verification,",
+   "interpretation": "Check that audit verification uses zero-knowledge proofs. Given structured verification-method records, the required method is decidable; the document does not prescribe a particular proof construction.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "audit_verification_records",
+    "proof_method"
+   ],
+   "criterion": "Audit verification uses zero-knowledge proofs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit verification methods and proof-use records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-9-03",
+   "section": "9",
+   "title": "Audits cannot access raw personal data",
+   "quote": "- SHALL NOT access raw personal data.",
+   "interpretation": "Check audit access events against data records classified as both raw and personal. This is decidable from supplied classifications; establishing those classifications remains a separate task.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "audit_access_events",
+    "raw_data_flags",
+    "personal_data_flags"
+   ],
+   "criterion": "No audit process accesses a data item classified as raw personal data.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit access logs",
+    "raw and personal data classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-9-04",
+   "section": "9",
+   "title": "Auditability limited to system behavior",
+   "quote": "Auditability applies to system behavior, not personal life.",
+   "interpretation": "Check audit targets and evidence requests for whether they concern system behavior or personal life. The document does not define the boundary when system activity also reveals personal life.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_targets",
+    "audit_evidence_requests",
+    "target_classifications"
+   ],
+   "criterion": "Auditability concerns system behavior and excludes personal life.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit scopes and evidence requests"
+   ],
+   "gap": "The boundary between system behavior and personal life is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how audit targets that involve both system behavior and personal life are classified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-10-01",
+   "section": "10",
+   "title": "Listed surveillance practices are prohibited",
+   "quote": "The following are explicitly forbidden:",
+   "interpretation": "Check system practices for mass surveillance, behavioral profiling, predictive policing, social credit scoring, and cross-domain identity correlation. The ban is explicit, but identifying these practices in implementations requires operational definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_practices",
+    "practice_classifications"
+   ],
+   "criterion": "No system practice is mass surveillance, behavioral profiling, predictive policing, social credit scoring, or cross-domain identity correlation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system operation descriptions and practice assessments"
+   ],
+   "gap": "The prohibited practice categories are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare classification rules for each prohibited practice."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-10-02",
+   "section": "10",
+   "title": "Violations constitute critical integrity breaches",
+   "quote": "Violation constitutes a critical system integrity breach.",
+   "interpretation": "Classify a violation of the section's prohibited-practices rule as a critical system integrity breach. This follows the immediate section context; the document specifies no consequent remediation or shutdown.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "prohibited_practice_violation",
+    "integrity_breach_classification"
+   ],
+   "criterion": "A violation of a practice prohibition in section 10 constitutes a critical system integrity breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "prohibited-practice violation findings",
+    "integrity incident classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-11-01",
+   "section": "11",
+   "title": "Crisis cannot suspend privacy",
+   "quote": "Privacy SHALL NOT be suspended during crisis.",
+   "interpretation": "Check that crisis states do not suspend privacy protections. The subsequent anonymity-reduction permission requires distinguishing suspension of privacy from a permitted reduction in anonymity.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_state",
+    "privacy_controls",
+    "anonymity_reductions"
+   ],
+   "criterion": "Privacy remains in force throughout a crisis.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis state history",
+    "privacy control changes"
+   ],
+   "gap": "The boundary between privacy suspension and permitted anonymity reduction is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which changes constitute privacy suspension and how permitted anonymity reductions are distinguished."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-11-02",
+   "section": "11",
+   "title": "Anonymity reduction requires bounded lifesaving purpose",
+   "quote": "- reduce anonymity only within explicitly bounded Crisis Scope,\n- ONLY for direct life-preservation purposes.",
+   "interpretation": "Require every crisis-authorized anonymity reduction to fall within an explicitly bounded Crisis Scope and serve direct life preservation. Scope membership and the directness of the life-preservation purpose require external assessments.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "anonymity_reduction",
+    "crisis_scope",
+    "reduction_purpose"
+   ],
+   "criterion": "A crisis-authorized anonymity reduction is within explicitly bounded Crisis Scope and is only for direct life-preservation purposes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis Scope declarations",
+    "life-preservation purpose assessments"
+   ],
+   "gap": "Crisis Scope membership and direct life-preservation purposes are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the Scope membership test and how direct life-preservation purposes are established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-11-03",
+   "section": "11",
+   "title": "Anonymity reductions must be temporary",
+   "quote": "- MUST be temporary,",
+   "interpretation": "Check that each crisis anonymity reduction ends rather than becoming permanent. No maximum duration is supplied, and an ongoing reduction cannot be conclusively classified as temporary from a finite observation alone.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "anonymity_reduction_history",
+    "reduction_end_condition"
+   ],
+   "criterion": "Every crisis anonymity reduction eventually ceases.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "anonymity reduction lifecycle records"
+   ],
+   "gap": "No independent duration limit or method for establishing eventual cessation is specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether eventual cessation is checked on completed traces or proved from a lifecycle model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-11-04",
+   "section": "11",
+   "title": "Anonymity reductions must be logged",
+   "quote": "- MUST be logged,",
+   "interpretation": "Match every crisis anonymity reduction to a log record. The document requires logging but supplies no mandatory fields or logging deadline.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "anonymity_reductions",
+    "reduction_log"
+   ],
+   "criterion": "Each crisis anonymity reduction has a corresponding log record.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "anonymity reduction events",
+    "exception logs"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-11-05",
+   "section": "11",
+   "title": "Anonymity reductions must be reversible",
+   "quote": "- MUST be reversible,",
+   "interpretation": "Check that each crisis anonymity reduction admits a reversal. Reversal may mean restoring access controls or undoing informational exposure; these are materially different and the text does not select one.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "anonymity_reduction",
+    "reversal_mechanism",
+    "pre_reduction_state",
+    "restored_state"
+   ],
+   "criterion": "Every crisis anonymity reduction can be reversed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reversal mechanisms and restoration evidence"
+   ],
+   "gap": "The required meaning and extent of reversal are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the state properties that reversal must restore and whether disclosed information must also be addressed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-11-06",
+   "section": "11",
+   "title": "Anonymity reductions end with scope",
+   "quote": "- SHALL NOT persist beyond Crisis Scope.",
+   "interpretation": "Check that an anonymity reduction does not remain effective after its authorizing Crisis Scope ceases to cover it. Beyond may encompass temporal expiry as well as subject, territorial, or functional boundaries.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "anonymity_reduction_state",
+    "crisis_scope_history",
+    "scope_membership"
+   ],
+   "criterion": "No crisis anonymity reduction persists outside its applicable Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis Scope lifecycle and boundaries",
+    "active anonymity reduction records"
+   ],
+   "gap": "Crisis Scope dimensions and the event that terminates applicable coverage are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare Scope membership over time and the cessation condition for a reduction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-12-01",
+   "section": "12",
+   "title": "Privacy rules thresholds guarantees public",
+   "quote": "- MUST be public,",
+   "interpretation": "Compare the inventory of privacy rules, thresholds, and guarantees with publicly available records. This checks publication coverage given the inventory and public-access status.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "privacy_rule_inventory",
+    "privacy_threshold_inventory",
+    "privacy_guarantee_inventory",
+    "public_records"
+   ],
+   "criterion": "Every privacy rule, threshold, and guarantee is public.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "privacy configuration inventories",
+    "public publication records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-12-02",
+   "section": "12",
+   "title": "Privacy provisions must be auditable",
+   "quote": "- MUST be auditable,",
+   "interpretation": "Check that every privacy rule, threshold, and guarantee has a means of audit consistent with the audit restrictions. The document does not specify the evidence or coverage needed to establish auditability.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "privacy_provisions",
+    "audit_methods",
+    "audit_evidence"
+   ],
+   "criterion": "All privacy rules, thresholds, and guarantees are auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "privacy inventories",
+    "audit methods and available evidence"
+   ],
+   "gap": "An acceptance standard for auditability is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the evidence and procedure sufficient to audit each privacy provision."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-12-03",
+   "section": "12",
+   "title": "Subjects can verify privacy provisions",
+   "quote": "- MUST be verifiable by Subjects.",
+   "interpretation": "Check that Subjects can verify every privacy rule, threshold, and guarantee using available mechanisms and evidence. Publication alone does not establish that verification is possible.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "privacy_provisions",
+    "subject_verification_methods",
+    "subject_evidence_access"
+   ],
+   "criterion": "Subjects can verify all privacy rules, thresholds, and guarantees.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subject verification interfaces",
+    "subject-accessible evidence"
+   ],
+   "gap": "The verification standard and required Subject capabilities are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what verification establishes and what capabilities a Subject may be assumed to possess."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-12-04",
+   "section": "12",
+   "title": "Subjects verify system visibility limits",
+   "quote": "Subjects must be able to verify what the system cannot see.",
+   "interpretation": "Check for Subject-accessible evidence establishing limits on system visibility. The system boundary and the proof required for a claim of non-observability are not defined.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "system_visibility_claims",
+    "nonvisibility_evidence",
+    "subject_verification_access"
+   ],
+   "criterion": "Subjects can verify claims about what the system cannot see.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system visibility model",
+    "non-observability evidence",
+    "subject verification interfaces"
+   ],
+   "gap": "The system boundary, visibility model, and sufficient verification evidence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the observer boundary and proof standard for system nonvisibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-13-01",
+   "section": "13",
+   "title": "Privacy cannot authorize listed limitations",
+   "quote": "DKP-7-PRIVACY-001 SHALL NOT:",
+   "interpretation": "Check uses and effects of this protocol for shielding criminal liability, preventing impact attribution, overriding DKP-1-AXIOMS-001, or justifying harm concealment. The limits are explicit, but determining liability, harm, attribution interference, and axiomatic conflict requires additional rules and findings.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "privacy_applications",
+    "liability_findings",
+    "attribution_effects",
+    "axiom_constraints",
+    "harm_concealment_findings"
+   ],
+   "criterion": "Applying this protocol does not shield criminal liability, prevent impact attribution, override DKP-1-AXIOMS-001, or justify harm concealment.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "criminal liability determinations",
+    "impact attribution records",
+    "harm findings",
+    "axiom compliance assessments"
+   ],
+   "gap": "The referenced axioms and operational tests for the listed forbidden effects are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how shielding liability, preventing attribution, and justifying harm concealment are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-14-01",
+   "section": "14",
+   "title": "Changes follow controlled upgrade procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check normative changes for the listed procedure components and conformance to the referenced upgrade, simulation, and audit protocols. This also captures the later repeated mandatory-simulation requirement; the text does not establish whether rollback must occur or must be available.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal_record",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_record",
+    "upgrade_procedure"
+   ],
+   "criterion": "Every normative protocol change follows DKP-4-UPGRADE-001, including proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade lifecycle records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation records",
+    "rollback provisions or events"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation rules, and rollback semantics are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether rollback means an available recovery path or an executed step if the referenced procedure does not resolve it."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-14-02",
+   "section": "14",
+   "title": "Modifications require new protocol identifiers",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Compare protocol identifiers before and after a modification and check that the new identifier has not already been assigned. Read together with the later exception, presentation-only corrections without normative changes are recorded by date instead.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "normative_change_flag",
+    "previous_protocol_identifier",
+    "modified_protocol_identifier",
+    "assigned_protocol_identifiers"
+   ],
+   "criterion": "A modification that changes normative content uses a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "normative change classification"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-14-03",
+   "section": "14",
+   "title": "Changes require explicit compatibility declarations",
+   "quote": "- explicit compatibility declaration with DKP-7-SCOPE-001 and DKP-7-TRANSPARENCY-001.",
+   "interpretation": "Check that each normative modification includes an explicit compatibility declaration addressing both named protocols. The stated requirement is the declaration; verifying substantive compatibility would additionally require their contents.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "normative_modification",
+    "compatibility_declaration",
+    "declared_protocol_ids"
+   ],
+   "criterion": "Each normative modification has an explicit compatibility declaration with both DKP-7-SCOPE-001 and DKP-7-TRANSPARENCY-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001",
+    "DKP-7-TRANSPARENCY-001"
+   ],
+   "data_dependencies": [
+    "modification records and compatibility declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-14-04",
+   "section": "14",
+   "title": "Presentation corrections use date recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify presentation-only corrections without normative effects as non-Upgrades and record them through the document's Last updated date. Whether a textual edit changes normative content requires a semantic assessment; the printed front matter uses the key last_updated.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_diff",
+    "normative_content_assessment",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_recording_method"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition differences",
+    "normative change assessments",
+    "document update metadata"
+   ],
+   "gap": "A normative-equivalence test and the referenced upgrade classification rule are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes are distinguished from changes to normative content and how Last updated maps to last_updated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "PRIVACY-14-05",
+   "section": "14",
+   "title": "Published editions require source digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Compute SHA-256 over the supplied canonical source of every published edition and compare it with the corresponding entry in the named repository file. The check needs an edition inventory and canonical source bytes; it does not require an invented digest threshold.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_entries",
+    "repository_identity"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in github.com/anahronic/World lists a digest equal to SHA-256 of that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical edition sources",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

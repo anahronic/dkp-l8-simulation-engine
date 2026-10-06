@@ -1,0 +1,1705 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-6-INTEGRATION-001",
+ "doc_sha256": "512bf4a8ef88f0a4a3473c8c8d974a2684eefb1bc18348b65f8ca3eeaf9d7743",
+ "prefix": "INTEGRATION",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Section 1 contains purpose statements rather than additional operational rules. The upstream/downstream document list in section 2 is not treated as a separate provision or as an automatic dependency of every provision. Closely related conditions forming one phase contract are grouped; their criteria include the complete contract even where the quotation shows only part of it. Referenced protocols were not supplied. The text leaves stability, shock, systemic risk, compatibility, and several protection standards without operational definitions. Section 2 prohibits overriding existing legal systems during transition, while section 9 permits explicit supersession during all phases; their precedence is unresolved. Section 12 requires a new identifier for 'any modification' but separately exempts presentation-only corrections from Upgrades; whether those corrections also escape identifier replacement is ambiguous. 'L8-simulated' is not explicitly identified as DKP-8-SIMULATION-001. Permissions expressed with MAY are distinguished from mandatory actions.",
+ "requirements": [
+  {
+   "id": "INTEGRATION-0-01",
+   "section": "0",
+   "title": "Voluntary and controlled participation",
+   "quote": "Integration is voluntary, controlled, phased, and reversible by design. Participation in Dikenocracy is not compelled and not presumed.",
+   "interpretation": "Check that integration records establish an affirmative participation decision and provide phased controls and reversal mechanisms. Whether participation is actually voluntary and what makes integration controlled require operational definitions; later sections refine phasing and reversibility.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participation_record",
+    "integration_controls",
+    "phase_plan",
+    "reversal_mechanisms"
+   ],
+   "criterion": "Participation is neither compelled nor presumed, and integration is controlled, phased, and reversible subject to the later phase-specific rules.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "consent evidence",
+    "integration control and reversal records"
+   ],
+   "gap": "The text does not operationally define voluntariness or controlled integration. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define observable evidence of compulsion and the controls sufficient to qualify integration as controlled."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-2-01",
+   "section": "2",
+   "title": "No forced DKP adoption",
+   "quote": "This protocol SHALL NOT:\n\nforce adoption of DKP,",
+   "interpretation": "Evaluate adoption decisions for coercive actions attributable to this protocol. A program needs a declared classification of force and evidence about the adoption process.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "adoption_process",
+    "protocol_actions",
+    "coercion_evidence"
+   ],
+   "criterion": "No action under this protocol forces adoption of DKP.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "adoption decisions and coercion evidence"
+   ],
+   "gap": "The text supplies no operational definition or evidentiary test for forced adoption. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which actions constitute force and how they are attributed to the protocol."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-2-02",
+   "section": "2",
+   "title": "Preserve transitional legal systems",
+   "quote": "override existing legal systems during transition,",
+   "interpretation": "Check whether protocol actions override an existing legal system while transition is underway. Section 9's exception for explicit supersession creates an unresolved alternative reading: either transition overrides remain forbidden or explicit supersession permits them.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transition_status",
+    "existing_legal_systems",
+    "protocol_legal_effects",
+    "supersession_declarations"
+   ],
+   "criterion": "During transition, the protocol does not override existing legal systems.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal authority and supersession records"
+   ],
+   "gap": "The transition boundary, legal override test, and precedence over section 9's supersession exception are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the transition period and legal override relation.",
+    "Declare how sections 2 and 9 are reconciled."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-2-03",
+   "section": "2",
+   "title": "No imposed cultural alignment",
+   "quote": "impose cultural or ideological alignment,",
+   "interpretation": "Inspect integration conditions and protocol actions for imposed cultural or ideological alignment. This requires a declared classification of alignment requirements and imposition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "integration_conditions",
+    "protocol_actions",
+    "alignment_classification"
+   ],
+   "criterion": "No integration condition or protocol action imposes cultural or ideological alignment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integration conditions and cultural or ideological impact assessments"
+   ],
+   "gap": "The text does not define an operational test for imposed cultural or ideological alignment. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which requirements impose cultural or ideological alignment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-2-04",
+   "section": "2",
+   "title": "Authority bounded by phase",
+   "quote": "expand DKP authority beyond the declared integration phase.",
+   "interpretation": "Compare each exercise of DKP authority with the authority declared for the active phase. This is decidable when declarations and actions use the same structured authority vocabulary.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "current_phase",
+    "declared_phase_authority",
+    "authority_actions"
+   ],
+   "criterion": "Every DKP authority action falls within the authority declared for the current integration phase.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "phase authority declarations",
+    "authority action records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-3-01",
+   "section": "3",
+   "title": "Integrating entity eligibility definition",
+   "quote": "Integrating Entity A country, region, city, or jurisdiction applying to enter DKP.",
+   "interpretation": "Check that a record classified as an Integrating Entity has an allowed entity type and an application to enter DKP. The definition does not itself establish that an application is valid consent.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "entity_type",
+    "dkp_application"
+   ],
+   "criterion": "An Integrating Entity is a country, region, city, or jurisdiction applying to enter DKP.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity classification and application records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-3-02",
+   "section": "3",
+   "title": "Required integration phase declarations",
+   "quote": "Integration Phase A bounded stage with explicitly defined rights, obligations, scope, and reversibility.",
+   "interpretation": "Validate each phase specification for explicit stage boundaries, rights, obligations, scope, and reversibility. This checks that the required definitions exist, not that their content meets other substantive rules.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "phase_boundaries",
+    "phase_rights",
+    "phase_obligations",
+    "phase_scope",
+    "phase_reversibility"
+   ],
+   "criterion": "Every integration phase is bounded and explicitly defines rights, obligations, scope, and reversibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "phase specifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-3-03",
+   "section": "3",
+   "title": "Shadow Mode effect restrictions",
+   "quote": "Shadow Mode A non-enforcing observational state in which DKP ingests and analyzes data without producing legal, economic, or administrative effects.",
+   "interpretation": "Check that Shadow Mode permits observation and analysis without enforcement or the listed effects. Direct system outputs can be classified, but the text does not say whether indirect real-world consequences also count as effects.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "shadow_mode_actions",
+    "enforcement_events",
+    "effect_records"
+   ],
+   "criterion": "Shadow Mode ingests and analyzes data without enforcement or legal, economic, or administrative effects.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system action logs",
+    "legal, economic, and administrative effect records"
+   ],
+   "gap": "The scope and attribution of prohibited effects are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether effects include indirect consequences and how effects are attributed to DKP."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-3-04",
+   "section": "3",
+   "title": "Compatibility metrics require PTL anchoring",
+   "quote": "Compatibility Metrics PTL-anchored indicators used to assess readiness for phase progression.",
+   "interpretation": "Check that each compatibility metric used for progression has a traceable PTL basis. The document does not define what evidence is sufficient to establish anchoring.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "compatibility_metrics",
+    "metric_provenance",
+    "progression_assessments"
+   ],
+   "criterion": "Compatibility metrics are PTL-anchored indicators used to assess readiness for phase progression.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL outputs",
+    "metric provenance and readiness assessments"
+   ],
+   "gap": "A validation rule for PTL anchoring is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the provenance relationship sufficient to establish PTL anchoring."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-3-05",
+   "section": "3",
+   "title": "Integration Shock causal definition",
+   "quote": "Integration Shock A measurable destabilization causally linked to DKP activation.",
+   "interpretation": "Classifying a destabilization as Integration Shock requires measurement and causal attribution to DKP activation. Correlation alone does not establish the stated causal condition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "destabilization_measurements",
+    "dkp_activation_events",
+    "causal_assessment"
+   ],
+   "criterion": "Integration Shock is measurable destabilization causally linked to DKP activation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "destabilization observations",
+    "activation history",
+    "causal attribution evidence"
+   ],
+   "gap": "Destabilization measures and a causal attribution model are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define destabilization measurements and the model used to attribute them to activation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-3-06",
+   "section": "3",
+   "title": "Rollback destination and declarations",
+   "quote": "Rollback A controlled reversion to a prior integration phase with declared scope and cost.",
+   "interpretation": "Check that a rollback targets a prior phase and declares its scope and cost. Whether a reversion is controlled requires an additional operational definition; later provisions sometimes specify the immediately previous phase.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_history",
+    "rollback_target",
+    "rollback_scope",
+    "rollback_cost",
+    "rollback_controls"
+   ],
+   "criterion": "Rollback is a controlled reversion to a prior integration phase with declared scope and cost.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "phase history",
+    "rollback plans and cost declarations"
+   ],
+   "gap": "The text does not define the controls needed for a reversion to qualify as controlled. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the required rollback controls."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-4.1-01",
+   "section": "4",
+   "title": "Explicit auditable uncoerced consent",
+   "quote": "No entity may be integrated without explicit, auditable consent.",
+   "interpretation": "Require explicit consent evidence and an audit trail before integration, rejecting implicit or coerced consent. Referenda, charter ratification, legislative acts, and equivalent sovereign procedures are permitted examples rather than an exhaustive required list.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "consent_declaration",
+    "consent_audit_trail",
+    "consent_mechanism",
+    "coercion_evidence",
+    "integration_start"
+   ],
+   "criterion": "Integration requires explicit, auditable consent; implicit or coerced consent is invalid.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sovereign consent records",
+    "consent audit evidence"
+   ],
+   "gap": "Auditable consent, equivalent sovereign procedures, and coercion lack operational validation rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define acceptable consent evidence, auditability, and coercion tests."
+   ],
+   "section_label": "4.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-4.2-01",
+   "section": "4",
+   "title": "Sequential nonautomatic phase progression",
+   "quote": "No phase may be skipped.\n\nNo phase progression is automatic.",
+   "interpretation": "Check forward phase transitions against the stated sequence and require an explicit progression decision. Rollback transitions are governed separately and are not forward progression.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "phase_history",
+    "progression_decisions",
+    "transition_direction"
+   ],
+   "criterion": "Forward integration proceeds sequentially through Phases 0, 1, 2, and 3, skips no phase, and never occurs automatically.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "phase transition logs",
+    "explicit progression decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "4.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-4.2-02",
+   "section": "4",
+   "title": "Explicit phase boundary validation",
+   "quote": "Each phase requires explicit entry and exit validation.",
+   "interpretation": "Require an explicit validation record for entry into and exit from each phase. This is a record-presence check; the substantive criteria are specified elsewhere and Phase 3 exit relies on an external protocol.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "phase_entries",
+    "phase_exits",
+    "entry_validations",
+    "exit_validations"
+   ],
+   "criterion": "Every phase entry and every phase exit has an explicit corresponding validation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entry and exit validation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "4.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-4.3-01",
+   "section": "4",
+   "title": "Reversibility until Full Integration",
+   "quote": "Early integration phases SHALL be fully reversible without punitive consequences.\n\nReversibility is a hard requirement until Full Integration is reached.",
+   "interpretation": "Assess whether integration can be fully reversed without punitive consequences before Phase 3. A transition graph alone cannot demonstrate restoration of all relevant real-world effects, and the text does not define punitive consequences.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "current_phase",
+    "reversal_paths",
+    "state_restoration_model",
+    "reversal_consequences"
+   ],
+   "criterion": "Until Full Integration is reached, integration phases remain fully reversible without punitive consequences.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rollback capabilities",
+    "restoration and consequence assessments"
+   ],
+   "gap": "The required extent of full reversal and the classification of punitive consequences are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which state and effects must be restored.",
+    "Define punitive consequences and how reversal feasibility is demonstrated."
+   ],
+   "section_label": "4.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-4.4-01",
+   "section": "4",
+   "title": "Declared scope contains all applicability",
+   "quote": "During integration, DKP applicability SHALL be strictly limited to the declared phase scope.\n\nNo implicit extension of authority, enforcement, or dependency is permitted.",
+   "interpretation": "Compare applicability, authority, enforcement, and dependency records with the active phase's explicit scope. This is decidable over a complete structured inventory, although discovering undeclared real-world dependencies is a separate data collection problem.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "declared_phase_scope",
+    "applicability_records",
+    "authority_records",
+    "enforcement_records",
+    "dependency_records"
+   ],
+   "criterion": "All DKP applicability is within the declared phase scope, with no implicit extension of authority, enforcement, or dependency.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope declarations",
+    "authority, enforcement, and dependency inventories"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "4.4",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.1-01",
+   "section": "5",
+   "title": "Observation phase operating restrictions",
+   "quote": "No enforcement, incentives, or penalties,\n\nNo legal, economic, or administrative effects,",
+   "interpretation": "In Phase 0, check that data access is read-only and activities are limited to PTL compatibility and data quality assessment, with none of the listed interventions or effects. Testing direct actions is straightforward; evaluating all effects requires a declared attribution model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_phase",
+    "data_access_operations",
+    "assessment_activities",
+    "intervention_events",
+    "effect_records"
+   ],
+   "criterion": "Phase 0 uses read-only ingestion for PTL compatibility and data quality assessment only, with no enforcement, incentives, penalties, or legal, economic, or administrative effects.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data access logs",
+    "assessment activity records",
+    "intervention and effect records"
+   ],
+   "gap": "The document does not define the scope or attribution of legal, economic, and administrative effects. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define effect classification and whether indirect effects count."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.1-02",
+   "section": "5",
+   "title": "Observation phase entry prerequisites",
+   "quote": "Valid consent declaration,\n\nPTL data access agreement.",
+   "interpretation": "Require both a valid consent declaration and a PTL data access agreement before entering Phase 0. Document presence is decidable, but consent validity inherits the unresolved evidentiary questions in section 4.1.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_entry_request",
+    "consent_declaration",
+    "consent_validity",
+    "ptl_data_access_agreement"
+   ],
+   "criterion": "Entry to Phase 0 requires a valid consent declaration and a PTL data access agreement.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "consent validation",
+    "PTL data access agreement"
+   ],
+   "gap": "The substantive validation method for consent is not fully specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how consent validity is established."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.1-03",
+   "section": "5",
+   "title": "Observation phase exit alternatives",
+   "quote": "Voluntary withdrawal, or\n\nSuccessful completion of data integrity and coverage checks.",
+   "interpretation": "Validate Phase 0 exit as either voluntary withdrawal or successful completion of integrity and coverage checks. Successful completion permits consideration of progression but does not override the prohibition on automatic progression.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_exit_request",
+    "withdrawal_consent",
+    "data_integrity_checks",
+    "data_coverage_checks"
+   ],
+   "criterion": "Phase 0 exit requires voluntary withdrawal or successful completion of both data integrity and coverage checks.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "withdrawal records",
+    "PTL integrity and coverage check results"
+   ],
+   "gap": "Integrity and coverage acceptance criteria and the test of voluntary withdrawal are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define integrity and coverage pass criteria and evidence of voluntary withdrawal."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.1-04",
+   "section": "5",
+   "title": "Observation does not prove compatibility",
+   "quote": "Notes Shadow Mode does not constitute compatibility proof. It establishes observability only.",
+   "interpretation": "Reject any validation rule that treats Shadow Mode participation or completion alone as compatibility proof. The provision does not define what additional evidence would establish compatibility.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "compatibility_claims",
+    "claim_evidence",
+    "shadow_mode_status"
+   ],
+   "criterion": "Shadow Mode establishes observability only and is not itself sufficient evidence of compatibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "compatibility claim provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.2-01",
+   "section": "5",
+   "title": "Partial Interface operating restrictions",
+   "quote": "No sanctions, kill switches, or automatic enforcement,\n\nLocal economic and legal systems remain fully sovereign.",
+   "interpretation": "Check that selected modules operate only in advisory or opt-in mode, that prohibited mechanisms are absent, and that local economic and legal sovereignty is preserved. The text leaves full sovereignty undefined, including how it interacts with opt-in module operation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "selected_modules",
+    "module_modes",
+    "sanction_events",
+    "kill_switch_events",
+    "automatic_enforcement_events",
+    "sovereignty_assessment"
+   ],
+   "criterion": "In Phase 1, selected modules may operate in advisory or opt-in mode; sanctions, kill switches, and automatic enforcement are absent, and local economic and legal systems remain fully sovereign.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "module configurations and actions",
+    "local authority assessments"
+   ],
+   "gap": "The text does not operationally define full local economic and legal sovereignty. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how module operation is tested for preservation of local sovereignty."
+   ],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.2-02",
+   "section": "5",
+   "title": "Partial Interface entry prerequisites",
+   "quote": "L8-simulated interface stability,\n\nDeclared scope of application.",
+   "interpretation": "Require successful Phase 0 completion, L8-simulated interface stability, and a declared scope before Phase 1 entry. The text does not identify the L8 simulation specification or a stability acceptance rule.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_0_completion",
+    "l8_interface_simulation",
+    "interface_stability_result",
+    "declared_application_scope"
+   ],
+   "criterion": "Phase 1 entry requires successful Phase 0 completion, L8-simulated interface stability, and declared scope of application.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Phase 0 completion validation",
+    "L8 interface simulation results",
+    "application scope declaration"
+   ],
+   "gap": "The L8 simulation model and interface stability acceptance criteria are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Identify the L8 simulation procedure and its stability acceptance rule."
+   ],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.2-03",
+   "section": "5",
+   "title": "Partial Interface exit alternatives",
+   "quote": "Voluntary rollback to Phase 0, or\n\nVerified operational stability within declared scope.",
+   "interpretation": "Accept Phase 1 exit through voluntary rollback to Phase 0 or verified operational stability within the declared scope. Stability verification does not itself authorize automatic progression.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_exit_request",
+    "rollback_consent",
+    "rollback_target",
+    "operational_stability_verification",
+    "declared_scope"
+   ],
+   "criterion": "Phase 1 exit requires voluntary rollback to Phase 0 or verified operational stability within declared scope.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rollback decision records",
+    "operational stability verification"
+   ],
+   "gap": "Operational stability measures, acceptance limits, and the observation period are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define operational stability criteria and their observation period.",
+    "Define evidence of voluntary rollback."
+   ],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.3-01",
+   "section": "5",
+   "title": "Conditional Integration enforcement boundaries",
+   "quote": "Enforceability is scope-bound and time-bound,\n\nPeace Staking and Physical Truth compliance MAY activate.",
+   "interpretation": "Check each Phase 2 enforcement action against defined protocols, declared domains, and its declared temporal bounds. Peace Staking and Physical Truth compliance activation are permitted rather than mandatory, and remain subject to those bounds.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "defined_enforceable_protocols",
+    "enforceable_domains",
+    "enforceability_time_bounds",
+    "enforcement_actions",
+    "peace_staking_activation",
+    "physical_truth_compliance_activation"
+   ],
+   "criterion": "Phase 2 enforcement is limited to defined protocols within declared domains and temporal bounds; Peace Staking and Physical Truth compliance may activate within those limits.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforceability declarations",
+    "enforcement and activation logs"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "5.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.3-02",
+   "section": "5",
+   "title": "Conditional Integration entry prerequisites",
+   "quote": "DKP-8-SIMULATION-001 stress-test clearance,\n\nExplicit declaration of enforceable domains.",
+   "interpretation": "Require successful Phase 1 completion, stress-test clearance under the named simulation protocol, and explicitly declared enforceable domains. Clearance record presence can be checked, but its substantive validity depends on the absent protocol.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_1_completion",
+    "stress_test_clearance",
+    "enforceable_domain_declaration"
+   ],
+   "criterion": "Phase 2 entry requires successful Phase 1 completion, DKP-8-SIMULATION-001 stress-test clearance, and an explicit declaration of enforceable domains.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "Phase 1 completion validation",
+    "simulation stress-test clearance",
+    "domain declarations"
+   ],
+   "gap": "The referenced stress-test clearance requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply or explicitly model the referenced clearance requirements."
+   ],
+   "section_label": "5.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.3-03",
+   "section": "5",
+   "title": "Conditional Integration exit and rollback",
+   "quote": "Exit under DKP-6-EXIT-001 without punitive consequences,\n\nRollback to Phase 1 if shock indicators appear.",
+   "interpretation": "Check Phase 2 exit against the named exit protocol and the nonpunitive condition, and check that shock-triggered rollback targets Phase 1. The unqualified rollback condition can be read as mandatory, while section 7 describes rollback after shock detection as discretionary.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_2_exit",
+    "exit_protocol_validation",
+    "exit_consequences",
+    "shock_indicator_events",
+    "rollback_events",
+    "rollback_target"
+   ],
+   "criterion": "Phase 2 exit follows DKP-6-EXIT-001 without punitive consequences; if shock indicators appear, the stated rollback destination is Phase 1.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-6-EXIT-001"
+   ],
+   "data_dependencies": [
+    "exit protocol validation",
+    "exit consequence assessments",
+    "shock detections",
+    "rollback records"
+   ],
+   "gap": "Exit rules and punitive-consequence criteria are absent, and the mandatory versus discretionary status of shock rollback is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced exit rules and define punitive consequences.",
+    "Declare whether Phase 2 shock rollback is mandatory or discretionary under sections 5.3 and 7."
+   ],
+   "section_label": "5.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.4-01",
+   "section": "5",
+   "title": "Full Integration activates applicable obligations",
+   "quote": "Full rights and obligations are active,\n\nExit conditions transition to standard DKP-6-EXIT-001 rules.",
+   "interpretation": "At Phase 3 entry, verify activation of all applicable protocols and full rights and obligations within declared scope, and switch exit handling to the standard exit rules. Determining substantive applicability, rights, obligations, and exit compliance requires the corresponding protocol specifications.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_3_entry",
+    "declared_scope",
+    "applicable_protocols",
+    "active_protocols",
+    "rights_status",
+    "obligations_status",
+    "exit_rule_configuration"
+   ],
+   "criterion": "In Phase 3, all applicable DKP protocols and full rights and obligations are active within declared scope, and standard DKP-6-EXIT-001 exit rules apply.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-6-EXIT-001"
+   ],
+   "data_dependencies": [
+    "protocol applicability determinations",
+    "rights and obligations specifications",
+    "standard exit rules"
+   ],
+   "gap": "Applicable protocol content, full rights and obligations, and standard exit requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the applicability rules and external protocol requirements."
+   ],
+   "section_label": "5.4",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-5.4-02",
+   "section": "5",
+   "title": "Full Integration entry prerequisites",
+   "quote": "Demonstrated long-term stability in Phase 2,\n\nAbsence of unresolved systemic risk,",
+   "interpretation": "Require demonstrated long-term Phase 2 stability, no unresolved systemic risk, and final consent reaffirmation before Phase 3 entry. Neither long-term duration nor the stability and risk acceptance rules are specified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "phase_2_stability_history",
+    "stability_demonstration",
+    "systemic_risk_register",
+    "risk_resolution_status",
+    "final_consent_reaffirmation"
+   ],
+   "criterion": "Phase 3 entry requires demonstrated long-term Phase 2 stability, absence of unresolved systemic risk, and final consent reaffirmation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Phase 2 stability evidence",
+    "systemic risk assessments",
+    "final consent records"
+   ],
+   "gap": "The long-term observation period, stability criteria, and systemic risk resolution standard are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define long-term duration, stability acceptance criteria, and when systemic risk is resolved.",
+    "Define valid final consent reaffirmation."
+   ],
+   "section_label": "5.4",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-6-01",
+   "section": "6",
+   "title": "Mandatory compatibility progression assessment",
+   "quote": "Progression between phases requires verification of:\n\nPTL data integrity and coverage,",
+   "interpretation": "Gate each forward phase transition on verification of every listed compatibility condition. The text identifies the assessment dimensions but supplies no minimum biosphere or safety values, manipulation test, or capacity acceptance criteria.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "progression_request",
+    "ptl_integrity_verification",
+    "ptl_coverage_verification",
+    "systemic_manipulation_assessment",
+    "biosphere_assessment",
+    "safety_assessment",
+    "administrative_capacity",
+    "technical_capacity"
+   ],
+   "criterion": "Progression requires verified PTL integrity and coverage, absence of systemic manipulation, satisfaction of minimum biosphere and safety thresholds, and administrative and technical capacity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL integrity and coverage assessments",
+    "manipulation assessments",
+    "biosphere and safety measurements",
+    "capacity assessments"
+   ],
+   "gap": "Threshold values and verification standards for the listed assessment dimensions are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare biosphere and safety thresholds.",
+    "Define integrity, coverage, manipulation, and capacity acceptance criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-6-02",
+   "section": "6",
+   "title": "Exclusive compatibility assessment evidence",
+   "quote": "Assessment relies exclusively on:\n\nPTL outputs,",
+   "interpretation": "Check assessment provenance against the exclusive list of PTL outputs, reproducible metrics, and DKP-8-SIMULATION-001 stress testing. The wording may require all three categories or may primarily exclude evidence outside them; reproducibility and stress-test validity need additional specifications.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "assessment_evidence",
+    "evidence_provenance",
+    "metric_reproduction_records",
+    "stress_test_records"
+   ],
+   "criterion": "Compatibility assessment relies exclusively on PTL outputs, reproducible metrics, and DKP-8-SIMULATION-001 stress testing.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "PTL outputs",
+    "metric reproduction evidence",
+    "simulation stress-test results"
+   ],
+   "gap": "Reproducibility criteria and the referenced stress-testing rules are absent, and required use of every listed category is not explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define reproducibility acceptance and supply stress-testing rules.",
+    "Declare whether every assessment must use all three evidence categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-7-01",
+   "section": "7",
+   "title": "Automatic response to shock detection",
+   "quote": "phase progression SHALL halt automatically,\n\nactive enforcement SHALL be suspended,",
+   "interpretation": "On detection of Integration Shock indicators, verify automatic halting of progression and suspension of active enforcement. Rollback to the immediately previous phase is permitted; the text gives no response deadline or rule for resuming progression or enforcement.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "shock_indicator_detection",
+    "progression_status",
+    "halt_trigger",
+    "active_enforcement_status",
+    "rollback_target",
+    "current_phase"
+   ],
+   "criterion": "Detected Integration Shock indicators trigger automatic progression halt and enforcement suspension; rollback to the previous phase may be triggered.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "shock detection events",
+    "progression and enforcement state logs",
+    "rollback decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-7-02",
+   "section": "7",
+   "title": "Listed shock indicator detection",
+   "quote": "financial instability beyond modeled bounds,\n\naccelerated biospheric degradation,",
+   "interpretation": "A detector must recognize the listed indicator categories: sudden welfare collapse, financial instability beyond modeled bounds, accelerated biospheric degradation, and systemic unrest causally linked to activation. 'Include' makes the list non-exhaustive; financial limits come from a model, while suddenness, acceleration, and causal attribution need declared tests.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "welfare_time_series",
+    "financial_instability_measurements",
+    "modeled_financial_bounds",
+    "biosphere_time_series",
+    "systemic_unrest_observations",
+    "activation_history",
+    "causal_assessment"
+   ],
+   "criterion": "Shock indicator coverage includes sudden welfare collapse, financial instability beyond modeled bounds, accelerated biospheric degradation, and systemic unrest causally linked to protocol activation.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "welfare and financial observations",
+    "modeled financial bounds",
+    "biosphere observations",
+    "unrest and causal attribution assessments"
+   ],
+   "gap": "The bounds model and operational tests for collapse, suddenness, acceleration, systemic unrest, and causal linkage are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the model producing financial instability bounds.",
+    "Define welfare collapse, suddenness, biospheric acceleration, and systemic unrest.",
+    "Specify how the section 3 causal definition applies to each listed indicator."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-7-03",
+   "section": "7",
+   "title": "Rollback scope and cost records",
+   "quote": "rollback scope MUST be declared,\n\nrollback costs MUST be logged,",
+   "interpretation": "For every rollback, require an explicit scope declaration and recorded costs. The text does not prescribe a cost unit or calculation method, so this checks recording rather than cost correctness.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "rollback_events",
+    "rollback_scope_declarations",
+    "rollback_cost_logs"
+   ],
+   "criterion": "Every rollback has declared scope and logged costs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rollback scope and cost records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-7-04",
+   "section": "7",
+   "title": "Rollback preserves data and audits",
+   "quote": "rollback SHALL preserve data continuity and audit trails.",
+   "interpretation": "Compare data and audit records across a rollback to detect losses or discontinuities. A program needs a specified continuity invariant and an inventory of the records that must survive.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "pre_rollback_data",
+    "post_rollback_data",
+    "pre_rollback_audit_trails",
+    "post_rollback_audit_trails",
+    "continuity_specification"
+   ],
+   "criterion": "Rollback preserves data continuity and audit trails.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data lineage and continuity records",
+    "audit trails before and after rollback"
+   ],
+   "gap": "The required data continuity invariant and preservation scope are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the continuity invariant and which data and audit records must be preserved."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-8-01",
+   "section": "8",
+   "title": "Protect existing members from integration",
+   "quote": "dilute existing protocol guarantees,\n\nredistribute risk retroactively,",
+   "interpretation": "Assess integration effects against existing guarantees, historical risk allocations, and current members' exposure to imported instability. These prohibitions need a baseline and an impact or risk model to be tested.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "existing_protocol_guarantees",
+    "integration_effects",
+    "historical_risk_allocations",
+    "current_member_exposures",
+    "imported_instability_assessment"
+   ],
+   "criterion": "Integration does not dilute existing protocol guarantees, redistribute risk retroactively, or expose current members to imported instability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "existing guarantee specifications",
+    "historical risk allocations",
+    "member exposure and instability assessments"
+   ],
+   "gap": "Guarantee dilution, retroactive risk redistribution, and imported instability exposure lack operational assessment rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the guarantee and risk baselines.",
+    "Define how integration changes guarantees, risk allocations, and member exposure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-8-02",
+   "section": "8",
+   "title": "Nonfinal phase isolation and sandboxing",
+   "quote": "Risk isolation and sandboxing SHALL be enforced during all non-final phases.",
+   "interpretation": "Check that risk isolation and sandboxing remain enforced throughout every phase before Full Integration. Merely recording enabled controls does not establish their effectiveness without a containment specification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_phase",
+    "risk_isolation_controls",
+    "sandbox_controls",
+    "containment_assessment"
+   ],
+   "criterion": "Risk isolation and sandboxing are enforced throughout Phases 0, 1, and 2.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "isolation and sandbox configurations",
+    "containment verification"
+   ],
+   "gap": "The required isolation and sandboxing properties are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the containment properties and verification method for risk isolation and sandboxing."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-9-01",
+   "section": "9",
+   "title": "Local legal continuity with supersession",
+   "quote": "local legal systems remain operative unless explicitly superseded,",
+   "interpretation": "During every integration phase, require local legal systems to remain operative unless an explicit supersession exists. Whether that exception applies during transition is ambiguous because section 2 prohibits transition overrides.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_phase",
+    "local_legal_system_status",
+    "explicit_supersession_records",
+    "transition_status"
+   ],
+   "criterion": "Local legal systems remain operative during all integration phases unless explicitly superseded.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "local legal system status",
+    "supersession instruments"
+   ],
+   "gap": "The scope of lawful supersession and its relationship to section 2's transition prohibition are unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define operative legal status and explicit supersession.",
+    "Declare the precedence between sections 2 and 9."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-9-02",
+   "section": "9",
+   "title": "Cultural preservation and limited harmonization",
+   "quote": "cultural and linguistic systems remain untouched,\n\nno harmonization is required beyond interface compatibility.",
+   "interpretation": "Check that integration leaves cultural and linguistic systems untouched and imposes harmonization only to the extent required for interface compatibility. The text does not define untouched systems or the boundary of necessary interface compatibility.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "cultural_system_changes",
+    "linguistic_system_changes",
+    "harmonization_requirements",
+    "interface_compatibility_requirements"
+   ],
+   "criterion": "During all phases, cultural and linguistic systems remain untouched and required harmonization does not exceed interface compatibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cultural and linguistic impact records",
+    "harmonization and interface requirements"
+   ],
+   "gap": "The meanings of untouched systems and harmonization necessary for interface compatibility are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define prohibited cultural and linguistic changes and the requirements necessary for interface compatibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-9-03",
+   "section": "9",
+   "title": "Divergence cannot establish failure",
+   "quote": "Cultural or legal divergence is not a failure condition.",
+   "interpretation": "Inspect assessment rules and failure decisions to ensure cultural or legal divergence is not treated as a failure condition. This does not exempt a separately demonstrated interface incompatibility or another stated failure condition.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "failure_rules",
+    "failure_decisions",
+    "decision_reasons"
+   ],
+   "criterion": "Neither cultural divergence nor legal divergence is used as an integration failure condition.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "assessment rules",
+    "failure decision reasons"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-10-01",
+   "section": "10",
+   "title": "Public documentation and required disclosures",
+   "quote": "MUST be publicly documented,\n\nMUST expose current phase, scope, and enforceability,",
+   "interpretation": "For every integration step, verify a publicly accessible documentation record exposing the current phase, scope, and enforceability. The text does not impose a publication deadline or prescribe a document format.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "integration_steps",
+    "public_documentation",
+    "public_access_status",
+    "current_phase",
+    "current_scope",
+    "current_enforceability"
+   ],
+   "criterion": "Every integration step is publicly documented and exposes its current phase, scope, and enforceability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integration step inventory",
+    "public documentation and access records",
+    "current phase configuration"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-10-02",
+   "section": "10",
+   "title": "Permitted audits assess process integrity",
+   "quote": "Audit focuses on process integrity, not political preference.",
+   "interpretation": "Integration steps may be audited under DKP-8-AUDIT-001; such auditing is permitted rather than universally required here. When an audit occurs, assess whether its criteria concern process integrity rather than political preference.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "audit_records",
+    "audit_protocol_validation",
+    "audit_criteria",
+    "audit_findings"
+   ],
+   "criterion": "Integration steps may be audited under DKP-8-AUDIT-001, and integration audits focus on process integrity rather than political preference.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "audit procedures",
+    "audit criteria and findings"
+   ],
+   "gap": "The referenced audit rules and a classification separating process integrity from political preference are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced audit rules.",
+    "Define how audit criteria are classified as process integrity or political preference."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-11-01",
+   "section": "11",
+   "title": "No forced or accelerated integration",
+   "quote": "forced or accelerated integration,",
+   "interpretation": "Reject forced integration and integration classified as accelerated. The document gives neither a baseline pace nor a criterion distinguishing acceleration from ordinary progress, so acceleration cannot be inferred from elapsed time alone.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "integration_process",
+    "coercion_evidence",
+    "phase_timeline",
+    "acceleration_standard"
+   ],
+   "criterion": "Integration is neither forced nor accelerated.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integration process and timeline",
+    "coercion evidence"
+   ],
+   "gap": "Force and acceleration are undefined, with no reference pace or timing limit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define forced integration and the baseline or procedural test for accelerated integration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-11-02",
+   "section": "11",
+   "title": "Aid cannot require DKP adoption",
+   "quote": "conditional aid tied to DKP adoption,",
+   "interpretation": "Inspect structured aid eligibility and disbursement conditions for a dependency on DKP adoption. The prohibition does not state that aid itself is forbidden.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "aid_conditions",
+    "aid_eligibility_rules",
+    "aid_disbursement_rules"
+   ],
+   "criterion": "No aid condition is tied to DKP adoption.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "aid terms and conditionality rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-11-03",
+   "section": "11",
+   "title": "No retroactive protocol enforcement",
+   "quote": "retroactive enforcement,",
+   "interpretation": "Compare enforcement targets with the effective scope and time of the enforced rule. The text does not specify whether retroactivity attaches to the time of conduct, legal status, accrued obligations, or another event.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_actions",
+    "rule_effective_times",
+    "rule_effective_scopes",
+    "target_event_times",
+    "target_event_types"
+   ],
+   "criterion": "No enforcement action is retroactive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement records",
+    "rule activation history",
+    "target event history"
+   ],
+   "gap": "The temporal event and legal relation used to determine retroactivity are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which target event and rule effective time determine retroactive enforcement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-11-04",
+   "section": "11",
+   "title": "Integration cannot bypass scope protocol",
+   "quote": "use of integration to bypass DKP-7-SCOPE-001,",
+   "interpretation": "Check integration decisions and effects against the requirements of DKP-7-SCOPE-001. The supplied document does not contain that protocol's rules or a definition of bypass.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "integration_actions",
+    "integration_decisions",
+    "scope_protocol_rules",
+    "scope_compliance_results"
+   ],
+   "criterion": "Integration is not used to bypass DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope protocol requirements",
+    "scope compliance assessments"
+   ],
+   "gap": "The referenced scope rules and their bypass criteria are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the scope protocol requirements and define how bypass is detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-11-05",
+   "section": "11",
+   "title": "No hidden early phase dependencies",
+   "quote": "hidden dependency creation during early phases.",
+   "interpretation": "Compare newly created dependencies with disclosed integration dependencies during early phases. Section 4.3 associates reversibility with the period before Full Integration, but this prohibition does not explicitly define early phases or what disclosure prevents a dependency from being hidden.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_phase",
+    "created_dependencies",
+    "dependency_disclosures",
+    "dependency_creation_times"
+   ],
+   "criterion": "No hidden dependency is created during early integration phases.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dependency inventories",
+    "dependency creation and disclosure records"
+   ],
+   "gap": "The early-phase boundary and the disclosure standard for hidden dependencies are not explicitly defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define early phases and the disclosure needed for a dependency to count as visible."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-12-01",
+   "section": "12",
+   "title": "Controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Validate protocol changes against the named upgrade procedure, including each listed procedural component. The presence of records is checkable, but acceptance conditions, activation rules, and rollback requirements depend on the referenced documents; the separate presentation-only exception must also be applied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal_record",
+    "simulation_record",
+    "audit_record",
+    "acceptance_validation",
+    "activation_window",
+    "rollback_record",
+    "change_classification"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 with proposal, DKP-8-SIMULATION-001 simulation, DKP-8-AUDIT-001 audit, acceptance conditions, activation window, and rollback, subject to the presentation-only exception.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure validation",
+    "simulation and audit records",
+    "acceptance, activation, and rollback records"
+   ],
+   "gap": "The referenced upgrade, simulation, and audit procedures and their acceptance and activation conditions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced procedures.",
+    "Clarify whether the listed rollback component requires a capability, plan, or executed rollback."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-12-02",
+   "section": "12",
+   "title": "Modifications require new protocol identifiers",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Compare identifiers before and after a modification and require a new one. A literal reading includes presentation corrections, while the later statement that those corrections are recorded only by the date suggests an exception.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_record",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "change_classification"
+   ],
+   "criterion": "Any modification requires a new protocol identifier, subject to the unresolved treatment of presentation-only corrections.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier history",
+    "change classifications"
+   ],
+   "gap": "The text does not resolve whether presentation-only corrections are exempt from the new-identifier requirement. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections count as modifications for identifier replacement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-12-03",
+   "section": "12",
+   "title": "Modification simulation and compatibility declaration",
+   "quote": "mandatory simulation under DKP-8-SIMULATION-001,\n\nexplicit compatibility declaration with DKP-7-SCOPE-001.",
+   "interpretation": "For modifications covered by the upgrade requirements, require simulation under the named protocol and an explicit compatibility declaration with the scope protocol. Declaration presence is directly checkable; simulation compliance depends on the absent simulation rules.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_record",
+    "change_classification",
+    "simulation_record",
+    "simulation_protocol_validation",
+    "scope_compatibility_declaration"
+   ],
+   "criterion": "A covered modification has mandatory DKP-8-SIMULATION-001 simulation and an explicit compatibility declaration with DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "simulation execution and compliance records",
+    "scope compatibility declarations"
+   ],
+   "gap": "Simulation requirements are absent, and the application of these requirements to presentation-only corrections is not fully explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply simulation requirements and declare the treatment of presentation-only corrections."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-12-04",
+   "section": "12",
+   "title": "Presentation correction classification and recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction as outside the Upgrade process only if it changes presentation without changing normative content, and record it through the document's Last updated date. Determining normative equivalence requires a semantic decision rule, and the cited external section is absent.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "change_classification",
+    "last_updated_date",
+    "change_recording_method"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition differences",
+    "normative equivalence assessment",
+    "document date metadata"
+   ],
+   "gap": "Normative equivalence criteria and DKP-4-UPGRADE-001 §3 are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how unchanged normative content is established and apply the referenced classification rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "INTEGRATION-12-05",
+   "section": "12",
+   "title": "Published edition checksum registry",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its identified canonical source and compare it with the corresponding entry in the named repository's SHA256SUMS.txt. The check assumes the published edition inventory and canonical source bytes are supplied.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_edition_inventory",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "sha256sums_file",
+    "repository_identity"
+   ],
+   "criterion": "Every published edition has its canonical source's SHA-256 digest listed correctly in SHA256SUMS.txt of github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical edition sources",
+    "canonical repository checksum file"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

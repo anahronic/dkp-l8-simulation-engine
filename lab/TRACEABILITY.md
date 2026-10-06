@@ -13,14 +13,14 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 
 | Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 27/38 | 1215 | 180 (14.8 %) | 156 | 7 | 11 | 6 | 1035 | 191 | 961 |
+| A. Registry and base | PARTIAL | 33/38 | 1478 | 186 (12.6 %) | 158 | 7 | 15 | 6 | 1292 | 229 | 1186 |
 | B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 18 | 0 | 1 | 0 | 24 | 0 | 36 |
 | C. Common checks | PARTIAL | 5/8 | 199 | 52 (26.1 %) | 48 | 2 | 0 | 2 | 147 | 46 | 131 |
-| D. Transitions and rights | PARTIAL | 7/9 | 311 | 70 (22.5 %) | 63 | 0 | 5 | 2 | 241 | 44 | 246 |
-| E. Applied modules | PARTIAL | 6/7 | 258 | 16 (6.2 %) | 8 | 5 | 1 | 2 | 242 | 35 | 215 |
-| F. Remaining constraints and stress | PARTIAL | 7/12 | 303 | 23 (7.6 %) | 19 | 0 | 4 | 0 | 280 | 55 | 243 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 70 (16.5 %) | 63 | 0 | 5 | 2 | 354 | 72 | 331 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 16 (5.5 %) | 8 | 5 | 1 | 2 | 277 | 35 | 250 |
+| F. Remaining constraints and stress | PARTIAL | 10/12 | 418 | 29 (6.9 %) | 21 | 0 | 8 | 0 | 389 | 65 | 348 |
 | G. General release | NOT STARTED | — | | | | | | | | | |
-| **All registrable documents** | | 27/38 | 1215 | 180 (14.8 %) | 156 | 7 | 11 | 6 | 1035 | 191 | 961 |
+| **All registrable documents** | | 33/38 | 1478 | 186 (12.6 %) | 158 | 7 | 15 | 6 | 1292 | 229 | 1186 |
 
 ### Stage criteria
 
@@ -29,7 +29,7 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 - A / A3 **not met**: requirement registry covers every document with provisions
 - A / A4 met: every requirement has a coverage status and a gap reason when uncovered
 - A / A5 met: source mismatches described (unresolved, ambiguous and broken section references)
-  - not registered: DKP-5-TRANSPORT-001, DKP-6-EXIT-001, DKP-6-INTEGRATION-001, DKP-6-RESILIENCE-001, DKP-7-AI-SUBJECT-001, DKP-7-PRIVACY-001, DKP-7-SCOPE-001, DKP-7-TRANSPARENCY-001, DKP-8-AUDIT-001, DKP-8-INTEROP-001, DKP-8-SIMULATION-001
+  - not registered: DKP-7-SCOPE-001, DKP-7-TRANSPARENCY-001, DKP-8-AUDIT-001, DKP-8-INTEROP-001, DKP-8-SIMULATION-001
 - B / B1 met: interface runs smoke and a visitor's admissible variant; comparison; reports
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
@@ -37,11 +37,9 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 - C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
   - not registered: DKP-7-SCOPE-001, DKP-8-AUDIT-001, DKP-8-SIMULATION-001
 - D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-  - not registered: DKP-6-EXIT-001, DKP-6-INTEGRATION-001
 - E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
-  - not registered: DKP-5-TRANSPORT-001
 - F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-  - not registered: DKP-6-RESILIENCE-001, DKP-7-AI-SUBJECT-001, DKP-7-PRIVACY-001, DKP-7-TRANSPARENCY-001, DKP-8-INTEROP-001
+  - not registered: DKP-7-TRANSPARENCY-001, DKP-8-INTEROP-001
 - G / G1 **not met**: all parts implementable without unresolved decisions are checked
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
@@ -52,7 +50,7 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 |---|---|---|---|
 | S-LAB-01 Prevention and recognition of contribution | DONE | contribution | — |
 | S-LAB-02 Stale and contradictory data | DONE | failure_chain | — |
-| S-LAB-03 Local loss of sensors | PARTIAL | sensor_loss | DKP-6-RESILIENCE-001, DKP-7-SCOPE-001 |
+| S-LAB-03 Local loss of sensors | PARTIAL | sensor_loss | DKP-7-SCOPE-001 |
 | S-LAB-04 Dispute and correction | DONE | dispute_correction | — |
 | S-LAB-05 Calibration expiry | NOT STARTED | — | DKP-8-SIMULATION-001, DKP-5-HABITAT-001, DKP-4-EPISTEMIC-TRANSITIONS-001 |
 | S-LAB-06 Crisis and recovery | PARTIAL | crisis_recovery | DKP-7-SCOPE-001, DKP-4-ERROR-001, DKP-4-UPGRADE-001 |
@@ -123,8 +121,14 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | DKP-5-EDU-001 | 64 | 0 | 0 | 0 | 0 | 0 | 64 | 54 |
 | DKP-5-HABITAT-001 | 56 | 0 | 0 | 0 | 0 | 0 | 56 | 50 |
 | DKP-5-INFO-001 | 39 | 0 | 0 | 0 | 0 | 0 | 39 | 37 |
+| DKP-5-TRANSPORT-001 | 35 | 0 | 0 | 0 | 0 | 0 | 35 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 0 | 0 | 0 | 0 | 0 | 17 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 16 | 8 | 5 | 1 | 2 | 23 | 23 |
+| DKP-6-EXIT-001 | 62 | 0 | 0 | 0 | 0 | 0 | 62 | 48 |
+| DKP-6-INTEGRATION-001 | 51 | 0 | 0 | 0 | 0 | 0 | 51 | 37 |
+| DKP-6-RESILIENCE-001 | 37 | 6 | 2 | 0 | 4 | 0 | 31 | 37 |
+| DKP-7-AI-SUBJECT-001 | 39 | 0 | 0 | 0 | 0 | 0 | 39 | 37 |
+| DKP-7-PRIVACY-001 | 39 | 0 | 0 | 0 | 0 | 0 | 39 | 31 |
 
 ## Covered provisions
 
@@ -310,5 +314,11 @@ unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questio
 | WORKCYCLE-8.1-02 | IMPLEMENTED | work_cycle · no_exhaustion | FAIL | — | — |
 | WORKCYCLE-8.2-01 | IMPLEMENTED | work_cycle · shift_allocation | PASS | — | — |
 | WORKCYCLE-8.2-02 | IMPLEMENTED | work_cycle · high_intensity_recovery | NOT_APPLICABLE | — | Q-013 |
+| RESILIENCE-11-01 | PARTIAL | sensor_loss · actor_removal_no_impact | UNKNOWN | — | — |
+| RESILIENCE-5.1-01 | PARTIAL | sensor_loss · no_single_point_of_failure | UNKNOWN | — | — |
+| RESILIENCE-5.1-02 | PARTIAL | sensor_loss · statistical_validity_gate | UNKNOWN | yes | — |
+| RESILIENCE-5.8-01 | IMPLEMENTED | sensor_loss · node_concentration | PASS | — | — |
+| RESILIENCE-5.8-02 | PARTIAL | sensor_loss · no_influence_from_scaling | PASS | — | — |
+| RESILIENCE-8.4-01 | PARTIAL | sensor_loss · statistical_collapse_null_output | UNKNOWN | — | — |
 
 The full map (every provision, its gap and tests) is `lab/registry/traceability.json`.

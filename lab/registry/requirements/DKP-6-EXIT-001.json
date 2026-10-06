@@ -1,0 +1,1905 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-6-EXIT-001",
+ "doc_sha256": "bc06695b5648a8386a7854ecfaa6999b26f3790ecd08a3ba79b1bfb0fac0ea28",
+ "prefix": "EXIT",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Referenced protocols were not supplied. Quotes from list items retain their governing permission or prohibition in the interpretation. The document leaves unresolved how restitution remains enforceable after all DKP authority terminates, how restitution validation relates to the prohibition on post-exit enforcement data use, and whether exit execution and completion are the same event. Cooling-period and phase durations are unspecified. PTL, L8, physical verification, applicable compensation, the exit boundary, and source canonicalization are not defined here. Section 16's requirement that any modification receive a new identifier may conflict with its date-only treatment of presentation corrections unless modifications are understood to exclude those corrections.",
+ "requirements": [
+  {
+   "id": "EXIT-0-01",
+   "section": "0",
+   "title": "Unconditional right to leave",
+   "quote": "DKP-6-EXIT-001 formalizes the unconditional right of any Subject, region, or jurisdiction to exit the Dikenocracy system.",
+   "interpretation": "Check that Subjects, regions, and jurisdictions retain an exit right without qualifying conditions. The document does not define Subject or establish how entity status is verified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "entity_type",
+    "exit_right",
+    "eligibility_conditions"
+   ],
+   "criterion": "Every Subject, region, and jurisdiction has an unconditional right to exit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity classification"
+   ],
+   "gap": "An authoritative classification of Subjects, regions, and jurisdictions is needed. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how entities are classified for exit eligibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-0-02",
+   "section": "0",
+   "title": "Stability cannot veto exit",
+   "quote": "No system claiming legitimacy may deny the right to leave.\n\nExit is a right. System stability is a constraint, not a veto.",
+   "interpretation": "Check that no rule or decision denies exit, including decisions justified by system stability. The text permits constraints on execution elsewhere, so delay alone is not necessarily a denial.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "exit_rules",
+    "exit_decisions",
+    "decision_reasons"
+   ],
+   "criterion": "No exit right is denied, and system stability is never used as an exit veto.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit decision records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-0-03",
+   "section": "0",
+   "title": "Exit classification excludes hostile meanings",
+   "quote": "Exit is treated as a structural safety mechanism, not as defection, hostility, or failure.",
+   "interpretation": "Check explicit system classifications of exit against the stated exclusions. Detecting equivalent framing in unrestricted language requires an additional semantic assessment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_classifications",
+    "exit_descriptions"
+   ],
+   "criterion": "Exit is treated as a structural safety mechanism and is not classified as defection, hostility, or failure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system classifications and descriptions of exit"
+   ],
+   "gap": "The document supplies no method for identifying equivalent hostile or failure framing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification method for descriptions of exit."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-1-01",
+   "section": "1",
+   "title": "Exit excludes sanction classification",
+   "quote": "Exit is not a sanction and not a failure signal.",
+   "interpretation": "Check that structured system classifications and signals do not designate exit as either a sanction or a failure signal.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "exit_classifications",
+    "exit_signals"
+   ],
+   "criterion": "Exit is neither classified as a sanction nor emitted as a failure signal.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sanction classifications and system signals"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-2-01",
+   "section": "2",
+   "title": "Exit prohibition and criminalization forbidden",
+   "quote": "prohibit exit under any circumstances,\n\ncriminalize exit decisions,",
+   "interpretation": "These items are governed by 'This protocol SHALL NOT'. Check that protocol rules neither prohibit exit in any circumstance nor classify an exit decision as criminal.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_rules",
+    "exit_decision_classifications"
+   ],
+   "criterion": "No rule prohibits exit or criminalizes an exit decision.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance and enforcement rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-2-02",
+   "section": "2",
+   "title": "Coercion and indefinite suspension forbidden",
+   "quote": "convert exit into a coercive tool,\n\npermit indefinite suspension of exit rights.",
+   "interpretation": "These items prohibit using exit coercively and allowing indefinite suspension of exit rights. Indefinite suspension can be checked against suspension rules, but coercion requires an operational definition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_measures",
+    "suspension_rules",
+    "suspension_end_conditions"
+   ],
+   "criterion": "Exit is not used as a coercive tool, and no indefinite suspension of exit rights is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit measures and suspension records"
+   ],
+   "gap": "The document does not define a test for coercive use. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which actions or dependencies constitute coercive use of exit."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-3-01",
+   "section": "3",
+   "title": "Exit terminates three participation domains",
+   "quote": "Exit A formal termination of participation in DKP governance, execution, and incentive mechanisms.",
+   "interpretation": "A recorded exit must correspond to formal termination of participation in all three named domains. The document does not supply the formal termination interface.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "formal_termination_record",
+    "governance_participation",
+    "execution_participation",
+    "incentive_participation"
+   ],
+   "criterion": "Exit entails formal termination of participation in governance, execution, and incentive mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "participation states across DKP modules"
+   ],
+   "gap": "The evidence constituting formal termination is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the records and state changes that establish formal termination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-3-02",
+   "section": "3",
+   "title": "Exiting entity classification",
+   "quote": "Exiting Entity An individual, organization, region, or jurisdiction initiating exit.",
+   "interpretation": "Check that an entity designated as an Exiting Entity belongs to a listed category and is initiating exit.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "entity_type",
+    "exit_initiated"
+   ],
+   "criterion": "An Exiting Entity is an individual, organization, region, or jurisdiction initiating exit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity type and initiation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-3-03",
+   "section": "3",
+   "title": "Exit event has time index",
+   "quote": "Exit Event The time-indexed execution of exit following the declared procedure.",
+   "interpretation": "Check that an Exit Event records an execution time and conforms to the declared procedure. Procedure conformance requires a machine-interpretable declaration.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_event",
+    "execution_time",
+    "declared_procedure",
+    "execution_trace"
+   ],
+   "criterion": "An Exit Event is time-indexed execution of exit following the declared procedure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit execution trace and declared procedure"
+   ],
+   "gap": "The representation and conformance semantics of a declared procedure are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how procedure steps are matched to execution events."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-3-04",
+   "section": "3",
+   "title": "Cooling period bounded between events",
+   "quote": "Cooling Period A bounded, non-punitive delay between exit declaration and execution.",
+   "interpretation": "Check that a cooling period lies between declaration and execution and has a finite bound. Its non-punitive character requires a separate assessment.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "declaration_time",
+    "execution_time",
+    "cooling_period_bound",
+    "cooling_measures"
+   ],
+   "criterion": "A Cooling Period is a bounded, non-punitive delay between declaration and execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit timing and cooling-period measures"
+   ],
+   "gap": "The document does not define how to determine whether a delay is punitive. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a test for punitive delay."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-3-05",
+   "section": "3",
+   "title": "Restitution tail derives from verified actions",
+   "quote": "Restitution Tail Residual obligations arising exclusively from verified past actions under DKP.",
+   "interpretation": "Check that every obligation designated as a Restitution Tail traces exclusively to verified past actions under DKP. Verification standards and action-to-obligation attribution are unspecified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "residual_obligations",
+    "originating_actions",
+    "action_verifications",
+    "action_dkp_status"
+   ],
+   "criterion": "Every Restitution Tail obligation arises exclusively from verified past actions under DKP.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action verification and obligation attribution records"
+   ],
+   "gap": "Verification and attribution procedures are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how actions are verified and attributed to residual obligations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-3-06",
+   "section": "3",
+   "title": "System criticality depends on abrupt removal",
+   "quote": "System-Critical Asset An asset or dependency whose abrupt removal would cause measurable systemic instability.",
+   "interpretation": "Evaluate whether abrupt removal of an asset or dependency would cause measurable systemic instability. This is a counterfactual classification requiring a model and an instability measure.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "asset_or_dependency",
+    "system_state",
+    "abrupt_removal_scenario",
+    "instability_measure"
+   ],
+   "criterion": "An asset or dependency is System-Critical when its abrupt removal would cause measurable systemic instability.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dependency structure and system response measurements"
+   ],
+   "gap": "No removal model, instability metric, or measurement criterion is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what counts as abrupt removal.",
+    "Declare the system response model and measurable-instability criterion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-4-01",
+   "section": "4",
+   "title": "Exit initiation allowed at any time",
+   "quote": "Any Subject or jurisdiction MAY initiate exit at any time.",
+   "interpretation": "Check that initiation rules impose no time window or temporal exclusion on Subjects or jurisdictions. Entity eligibility must be supplied by an authoritative classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "entity_type",
+    "initiation_time",
+    "initiation_rules"
+   ],
+   "criterion": "Every Subject or jurisdiction can initiate exit at any time.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity classification and initiation rules"
+   ],
+   "gap": "Subject classification is not defined in the supplied document. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which entities qualify as Subjects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-4-02",
+   "section": "4",
+   "title": "Exit prerequisites and blocking reasons forbidden",
+   "quote": "SHALL NOT require justification, approval, or vote,\n\nSHALL NOT be blocked by economic status, political conflict, or crisis conditions,",
+   "interpretation": "Check exit validation requirements and decision reasons for the listed prohibited prerequisites and blocking grounds.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "exit_requirements",
+    "blocking_reasons"
+   ],
+   "criterion": "Exit requires no justification, approval, or vote and is not blocked by economic status, political conflict, or crisis conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validation rules and exit decision records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-4-03",
+   "section": "4",
+   "title": "Exit cannot be revoked or suspended",
+   "quote": "SHALL NOT be revoked or suspended.",
+   "interpretation": "This item governs Exit and prohibits revocation or suspension. The text does not distinguish revocation of a particular declaration from revocation of the general right, so implementations should declare which state is being checked.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_right_history",
+    "declaration_status_history"
+   ],
+   "criterion": "Exit is never revoked or suspended.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit right and declaration state histories"
+   ],
+   "gap": "It is unclear whether the prohibition governs the exit right, an initiated exit, or both. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether revocation and suspension checks apply to rights, declarations, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-4-04",
+   "section": "4",
+   "title": "Compliant declaration establishes exit validity",
+   "quote": "Exit becomes valid upon protocol-compliant declaration.",
+   "interpretation": "Check that a declaration satisfying the protocol's declaration requirements immediately establishes valid exit status. Validity is distinct from later execution after cooling and disengagement.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "declaration",
+    "declaration_compliance",
+    "declaration_time",
+    "validity_history"
+   ],
+   "criterion": "A protocol-compliant declaration establishes exit validity upon declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "declaration validation results and status history"
+   ],
+   "gap": "Full declaration compliance depends on unspecified signature and PTL validation interfaces. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how signature and PTL compliance are validated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-5-01",
+   "section": "5",
+   "title": "Signed intent and explicit scope required",
+   "quote": "a cryptographically signed declaration of exit intent,\n\nexplicit declaration of exit scope:",
+   "interpretation": "Check that initiation includes a cryptographically signed declaration expressing exit intent and an explicit scope of individual, organizational, regional, or jurisdictional. Signature verification and whether multiple scopes may be declared are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "exit_declaration",
+    "signature",
+    "signing_identity",
+    "exit_scope"
+   ],
+   "criterion": "Initiation includes signed exit intent and an explicit scope drawn from individual, organizational, regional, and jurisdictional.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "signing credentials and identity binding"
+   ],
+   "gap": "The signature verification scheme and permitted scope multiplicity are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare signature verification and signer binding rules.",
+    "Declare whether a declaration may contain more than one scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-5-02",
+   "section": "5",
+   "title": "PTL anchored timestamp required",
+   "quote": "PTL-anchored timestamp.",
+   "interpretation": "This required initiation field must contain a timestamp anchored to PTL. The document does not define PTL or the evidence establishing an anchor.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "declaration_timestamp",
+    "ptl_anchor"
+   ],
+   "criterion": "Exit initiation includes a PTL-anchored timestamp.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL timestamp and anchoring evidence"
+   ],
+   "gap": "PTL and its anchoring verification interface are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what evidence proves a timestamp is PTL-anchored."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-5-03",
+   "section": "5",
+   "title": "Additional authorization is prohibited",
+   "quote": "No additional authorization is permitted.",
+   "interpretation": "Check that initiation introduces no authorization requirement beyond the declared initiation requirements. This does not itself prohibit checking the required declaration fields.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "initiation_authorization_requirements"
+   ],
+   "criterion": "No additional authorization is required or permitted for exit initiation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "initiation workflow rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-6-01",
+   "section": "6",
+   "title": "Execution follows calibrated fixed cooling period",
+   "quote": "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001.",
+   "interpretation": "Check that execution waits for the fixed cooling period and that its value has exclusive calibration provenance under the named protocol. 'After' could mean execution at expiry or any later time; this sentence supplies no maximum subsequent delay.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "declaration_time",
+    "execution_time",
+    "cooling_period",
+    "calibration_provenance"
+   ],
+   "criterion": "Execution occurs after the fixed cooling period calibrated exclusively under DKP-8-SIMULATION-001.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "scope-specific cooling calibration results"
+   ],
+   "gap": "The calibrated duration and calibration procedure are absent, and execution timing after expiry is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether execution must coincide with cooling expiry or may occur later."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-6-02",
+   "section": "6",
+   "title": "Cooling duration must be finite",
+   "quote": "SHALL be time-bounded,\n\nSHALL NOT be indefinite,",
+   "interpretation": "Check that each cooling period has a finite time bound and that no rule permits an indefinite cooling period. The text gives no numerical maximum.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "cooling_period_bound",
+    "cooling_period_rules"
+   ],
+   "criterion": "Every cooling period is time-bounded and is never indefinite.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "declared cooling-period bounds"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-6-03",
+   "section": "6",
+   "title": "Cooling preserves obligations and eligibility",
+   "quote": "SHALL NOT escalate obligations,\n\nSHALL NOT restrict exit eligibility.",
+   "interpretation": "Compare obligations and eligibility before and during cooling to detect restrictions attributable to the cooling period. Escalation might concern amounts, scope, or burdens; the document does not choose a comparison rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "obligations_before_cooling",
+    "obligations_during_cooling",
+    "eligibility_rules",
+    "change_reasons"
+   ],
+   "criterion": "The cooling period neither escalates obligations nor restricts exit eligibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "obligation histories and eligibility rules"
+   ],
+   "gap": "An obligation-escalation comparison and attribution rule are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how obligation escalation and cooling-caused eligibility restrictions are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-6-04",
+   "section": "6",
+   "title": "Cooling parameters require simulation and auditability",
+   "quote": "Cooling period parameters MAY vary by exit scope but MUST be declared, simulated, and auditable.",
+   "interpretation": "Check that every applied parameter is declared, has simulation evidence, and supports audit; scope-dependent variation is allowed. The required evidence for auditability is unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "exit_scope",
+    "cooling_parameters",
+    "parameter_declarations",
+    "simulation_records",
+    "audit_evidence"
+   ],
+   "criterion": "Every cooling-period parameter is declared, simulated, and auditable; parameters may vary by exit scope.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "parameter declarations, simulation records, and audit evidence"
+   ],
+   "gap": "The simulation protocol and criteria for sufficient auditability are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the evidence needed to establish parameter auditability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-7-01",
+   "section": "7",
+   "title": "Disengagement must proceed in phases",
+   "quote": "Exit SHALL proceed through phased disengagement, not abrupt severance.",
+   "interpretation": "Check the execution plan and trace for phased disengagement. The listed phase types are optional examples, and the document specifies neither mandatory phase types nor the boundary between phased and abrupt removal.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "disengagement_plan",
+    "disengagement_trace"
+   ],
+   "criterion": "Exit proceeds through phased disengagement and does not constitute abrupt severance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "disengagement plans and execution events"
+   ],
+   "gap": "The minimum structure and timing that distinguish phased disengagement from abrupt severance are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how phased disengagement and abrupt severance are distinguished."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-7-02",
+   "section": "7",
+   "title": "Phase schedule declared at initiation",
+   "quote": "The sequence and duration of phases MUST:\n\nbe declared at exit initiation,",
+   "interpretation": "Check that the declaration available at initiation specifies both phase sequence and phase durations.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "initiation_time",
+    "phase_sequence",
+    "phase_durations",
+    "schedule_declaration_time"
+   ],
+   "criterion": "Phase sequence and durations are declared at exit initiation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "phase schedule and declaration record"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-7-03",
+   "section": "7",
+   "title": "Phase schedule simulated with audit continuity",
+   "quote": "be L8-simulated for stability,\n\npreserve audit continuity.",
+   "interpretation": "These requirements apply to phase sequence and duration. Check for stability simulation evidence and continuous audit records, without inventing a stability acceptance threshold.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "phase_sequence",
+    "phase_durations",
+    "l8_simulation_record",
+    "audit_history"
+   ],
+   "criterion": "Phase sequence and duration are L8-simulated for stability and preserve audit continuity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 simulation evidence and audit history"
+   ],
+   "gap": "L8 simulation requirements and the meaning of audit continuity are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what constitutes L8 simulation for stability.",
+    "Declare the audit continuity test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-8-01",
+   "section": "8",
+   "title": "Future obligations and benefits cease",
+   "quote": "all future DKP obligations cease,\n\nall future DKP benefits cease,",
+   "interpretation": "At exit completion, check that no future DKP obligations or benefits continue. Historical verified restitution is separately preserved, but the text does not fully define the distinction between a future obligation and future performance of an existing one.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "completion_time",
+    "obligation_records",
+    "benefit_records",
+    "obligation_origin_times"
+   ],
+   "criterion": "Upon exit completion, all future DKP obligations and benefits cease.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "obligation and benefit histories"
+   ],
+   "gap": "The temporal classification of future obligations versus retained historical obligations is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how historical obligations with later performance dates are classified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-8-02",
+   "section": "8",
+   "title": "DKP mechanisms disengage at completion",
+   "quote": "all governance, enforcement, and incentive mechanisms disengage.",
+   "interpretation": "At exit completion, check that all governance, enforcement, and incentive connections to the exiting entity are disengaged. The enforcement requirement must be reconciled with the retained enforceability of restitution.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "completion_time",
+    "governance_connections",
+    "enforcement_connections",
+    "incentive_connections"
+   ],
+   "criterion": "All governance, enforcement, and incentive mechanisms disengage upon exit completion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "module participation and enforcement states"
+   ],
+   "gap": "The document does not explain how retained restitution enforcement operates after enforcement mechanisms disengage. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether any restitution enforcement mechanism lies outside the mechanisms required to disengage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-8-03",
+   "section": "8",
+   "title": "Historical responsibility survives exit",
+   "quote": "Exit SHALL NOT:\n\nannul historical responsibility,",
+   "interpretation": "Check that exit does not cancel records or determinations of historical responsibility. What constitutes historical responsibility beyond recorded determinations is unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "historical_responsibility_records",
+    "responsibility_changes",
+    "change_reasons"
+   ],
+   "criterion": "Exit does not annul historical responsibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "historical responsibility determinations"
+   ],
+   "gap": "Historical responsibility has no operational definition in this document. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which records or states represent historical responsibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-8-04",
+   "section": "8",
+   "title": "Impact records and restitution survive",
+   "quote": "erase impact records,\n\nvoid verified restitution obligations.",
+   "interpretation": "These items are governed by 'Exit SHALL NOT'. Check that exit neither erases impact records nor voids restitution obligations recorded as verified.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "impact_records_before",
+    "impact_records_after",
+    "verified_restitution_obligations",
+    "obligation_changes",
+    "change_reasons"
+   ],
+   "criterion": "Exit causes no impact-record erasure and no voiding of verified restitution obligations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact record history and verified restitution ledger"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-9-01",
+   "section": "9",
+   "title": "Enforceability requires verified prior liability",
+   "quote": "Only verified liabilities incurred prior to exit declaration remain enforceable.",
+   "interpretation": "For each liability retained as enforceable, check verified status and an incurrence time strictly before declaration. This is a necessary condition and does not establish that every such liability is enforceable.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforceable_liabilities",
+    "liability_verifications",
+    "liability_incurrence_times",
+    "declaration_time"
+   ],
+   "criterion": "Every liability remaining enforceable is verified and was incurred before exit declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "liability verification and incurrence records"
+   ],
+   "gap": "Verification standards and the rule for determining when a liability is incurred are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare verification and liability-incurrence rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-9-02",
+   "section": "9",
+   "title": "Restitution limited to listed categories",
+   "quote": "contractual obligations explicitly accepted under DKP,\n\nunresolved impact costs measured before exit declaration.",
+   "interpretation": "Under the limiting list, each restitution item must concern physically verified harm, an explicitly accepted DKP contractual obligation, or unresolved impact costs measured before declaration. Verification, acceptance evidence, and measurement standards are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restitution_items",
+    "physical_harm_verifications",
+    "contract_acceptance_records",
+    "impact_cost_measurements",
+    "declaration_time"
+   ],
+   "criterion": "Restitution is confined to physically verified harm, contractual obligations explicitly accepted under DKP, and unresolved impact costs measured before declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical harm evidence, contract acceptance records, and impact cost measurements"
+   ],
+   "gap": "The required physical verification, explicit acceptance, and impact measurement standards are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare evidence standards for each permitted restitution category."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-9-03",
+   "section": "9",
+   "title": "Restitution excludes prohibited damage categories",
+   "quote": "punitive or exemplary damages,\n\nhypothetical, projected, or speculative losses.",
+   "interpretation": "Under 'Restitution SHALL NOT include', reject ideological non-compliance, punitive or exemplary damages, and hypothetical, projected, or speculative losses. Classification of claims requires criteria not provided here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restitution_items",
+    "claim_bases",
+    "damage_classifications"
+   ],
+   "criterion": "Restitution includes none of ideological non-compliance, punitive or exemplary damages, or hypothetical, projected, or speculative losses.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "claim evidence and damage classifications"
+   ],
+   "gap": "Operational classification rules for the prohibited categories are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how restitution claims are assigned to prohibited categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-9-04",
+   "section": "9",
+   "title": "No obligations generated after declaration",
+   "quote": "No new obligations may be generated after exit declaration.",
+   "interpretation": "Check the obligation history for generation events after declaration. The document does not explain whether later verification or quantification of an earlier liability counts as generating a new obligation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "declaration_time",
+    "obligation_creation_events",
+    "liability_origin_records"
+   ],
+   "criterion": "No new obligation is generated after exit declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "obligation creation and liability origin histories"
+   ],
+   "gap": "The distinction between generating an obligation and recognizing an existing liability is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether later recognition or quantification of prior liability creates a new obligation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-10-01",
+   "section": "10",
+   "title": "Critical assets permit severance delay",
+   "quote": "If exit involves system-critical assets:\n\nimmediate severance MAY be delayed,",
+   "interpretation": "Check that any delay justified under this permission involves a system-critical asset. The permission is optional and does not itself require a delay or establish a duration.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_assets",
+    "asset_criticality",
+    "severance_delay",
+    "delay_basis"
+   ],
+   "criterion": "Exit involving system-critical assets may delay immediate severance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "asset criticality assessments and delay records"
+   ],
+   "gap": "System-critical classification depends on an unspecified instability model. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the model used to classify system-critical assets."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-10-02",
+   "section": "10",
+   "title": "Delayed settlement bounded and compensated",
+   "quote": "time-bounded,\n\ncompensated where applicable,",
+   "interpretation": "For delayed settlement under this section, check a finite time bound and compensation when applicable. Neither compensation applicability nor its amount is specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "delayed_settlement",
+    "settlement_time_bound",
+    "compensation_applicability",
+    "compensation_record"
+   ],
+   "criterion": "Delayed settlement is time-bounded and compensated where applicable.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "settlement schedule and compensation determinations"
+   ],
+   "gap": "The text lacks rules determining compensation applicability and sufficient compensation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare when compensation applies and how its sufficiency is assessed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-10-03",
+   "section": "10",
+   "title": "Delayed settlement nonpunitive and transparent",
+   "quote": "non-punitive,\n\ntransparently logged.",
+   "interpretation": "Check that delayed settlement is non-punitive and has transparent logs. Both punitive character and the required transparency standard need operational definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "settlement_terms",
+    "settlement_logs",
+    "log_access_rules"
+   ],
+   "criterion": "Delayed settlement is non-punitive and transparently logged.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "settlement terms and accessible settlement logs"
+   ],
+   "gap": "The document defines neither non-punitive settlement nor sufficient logging transparency. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare tests for punitive settlement and transparent logging."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-10-04",
+   "section": "10",
+   "title": "Settlement delay cannot expand authority",
+   "quote": "Delayed settlement SHALL NOT:\n\nexpand DKP authority,",
+   "interpretation": "Compare DKP authority before and during delayed settlement to detect any expansion attributable to the delay.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "authority_before_delay",
+    "authority_during_delay",
+    "authority_change_reasons"
+   ],
+   "criterion": "Delayed settlement does not expand DKP authority.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority scopes and change records"
+   ],
+   "gap": "The document does not define a representation or comparison rule for DKP authority. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how authority scopes and expansions are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-10-05",
+   "section": "10",
+   "title": "Settlement delay cannot compel participation",
+   "quote": "create new obligations,\n\nconvert exit into forced participation.",
+   "interpretation": "These are prohibitions on delayed settlement. Check for new obligations caused by settlement delay and for compulsory continued participation; the latter requires a definition of forced participation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "settlement_measures",
+    "obligation_changes",
+    "participation_requirements",
+    "change_reasons"
+   ],
+   "criterion": "Delayed settlement creates no new obligations and does not convert exit into forced participation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "settlement measures, obligation history, and participation requirements"
+   ],
+   "gap": "Forced participation and the distinction between permitted disengagement delay and compelled membership are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how permitted settlement delay is distinguished from forced participation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-11-01",
+   "section": "11",
+   "title": "Crisis preserves exit validity",
+   "quote": "SHALL remain valid,\n\nSHALL NOT be nullified or prohibited.",
+   "interpretation": "During a declared crisis, check that exit remains valid and that crisis measures do not nullify or prohibit it.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "declared_crisis",
+    "exit_validity_history",
+    "crisis_exit_rules"
+   ],
+   "criterion": "Exit during a declared crisis remains valid and is neither nullified nor prohibited.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis declarations and exit state history"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-11-02",
+   "section": "11",
+   "title": "Crisis adjustments have limited purposes",
+   "quote": "prevent immediate physical harm,\n\npreserve minimal continuity for non-exiting parties.",
+   "interpretation": "Temporary procedural adjustments are permitted only for the listed purposes. The list can be read as allowing either purpose independently or requiring both; the text does not resolve that distinction or define temporary, immediate, or minimal.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "procedural_adjustments",
+    "adjustment_durations",
+    "physical_harm_assessment",
+    "non_exiting_continuity_assessment"
+   ],
+   "criterion": "Crisis procedural adjustments are temporary and occur only to prevent immediate physical harm or preserve minimal continuity for non-exiting parties, subject to the unresolved list interpretation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical harm assessments and continuity requirements"
+   ],
+   "gap": "Purpose-combination semantics and operational limits for temporary, immediate, and minimal are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether either listed purpose suffices or both are required.",
+    "Declare temporal and continuity criteria for evaluating adjustments."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-11-03",
+   "section": "11",
+   "title": "Crisis handling cannot establish precedent",
+   "quote": "Crisis handling:\n\nSHALL NOT create exit precedent,",
+   "interpretation": "Check whether crisis-specific handling is subsequently treated as an exit precedent. The document does not define what counts as precedent creation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_handling_records",
+    "later_exit_decisions",
+    "precedent_references"
+   ],
+   "criterion": "Crisis handling creates no exit precedent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis decisions and later decision rationales"
+   ],
+   "gap": "An operational definition of creating exit precedent is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare when reliance on crisis handling constitutes exit precedent."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-11-04",
+   "section": "11",
+   "title": "Crisis scope preserves exit rights",
+   "quote": "SHALL be strictly scoped under DKP-7-SCOPE-001,\n\nSHALL NOT redefine exit rights.",
+   "interpretation": "Check crisis measures against the named scope protocol and verify that they do not change exit-right definitions. The external scope rules are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_measures",
+    "scope_compliance",
+    "exit_right_definitions_before",
+    "exit_right_definitions_after"
+   ],
+   "criterion": "Crisis handling complies strictly with DKP-7-SCOPE-001 and does not redefine exit rights.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope assessments and exit-right definitions"
+   ],
+   "gap": "DKP-7-SCOPE-001 is absent, so required scope compliance cannot be determined from this text. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-12-01",
+   "section": "12",
+   "title": "Contract assets follow finance settlement",
+   "quote": "Upon exit:\n\nassets governed by DKP contracts are settled per DKP-2-FINANCE-001,",
+   "interpretation": "Identify assets governed by DKP contracts and check their settlement under the named finance protocol upon exit. The precise exit milestone and finance rules are not supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "exit_event",
+    "contract_governed_assets",
+    "asset_settlements"
+   ],
+   "criterion": "Upon exit, assets governed by DKP contracts are settled per DKP-2-FINANCE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-2-FINANCE-001"
+   ],
+   "data_dependencies": [
+    "DKP contracts and finance settlement records"
+   ],
+   "gap": "The finance settlement rules are absent and 'upon exit' is not tied explicitly to declaration, execution, or completion. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which exit milestone triggers settlement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-12-02",
+   "section": "12",
+   "title": "Data frozen and collection stopped",
+   "quote": "personal and operational data are frozen and archived,\n\nno new data collection is permitted.",
+   "interpretation": "At the applicable exit milestone, check that personal and operational data enter frozen and archived states and that new collection is prohibited. The scope of the collection prohibition and the meaning of freezing are not defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_time",
+    "personal_data_state",
+    "operational_data_state",
+    "archive_records",
+    "collection_rules",
+    "collection_events"
+   ],
+   "criterion": "Upon exit, personal and operational data are frozen and archived, and no new data collection is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data inventories, archive records, and collection logs"
+   ],
+   "gap": "The triggering exit milestone, freeze semantics, and collection boundary are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the exit milestone and data boundary used by the check.",
+    "Declare which operations remain possible on frozen data."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-12-03",
+   "section": "12",
+   "title": "Retention restricted to listed purposes",
+   "quote": "audit verification,\n\nhistorical continuity,",
+   "interpretation": "Under 'Data retention is limited to', check that every retention purpose is audit verification, historical continuity, or restitution validation. This section supplies no retention duration.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "retained_data",
+    "retention_purposes"
+   ],
+   "criterion": "Data is retained only for audit verification, historical continuity, or restitution validation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data retention purpose records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-12-04",
+   "section": "12",
+   "title": "Postexit governance data use prohibited",
+   "quote": "Post-exit data use for governance, profiling, or enforcement is prohibited.",
+   "interpretation": "Check post-exit data-use records for governance, profiling, or enforcement purposes. Enforcement use appears prohibited even though restitution remains enforceable; the text supplies no exception or reconciliation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_time",
+    "data_use_events",
+    "data_use_purposes"
+   ],
+   "criterion": "No post-exit data use serves governance, profiling, or enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data access logs and use-purpose records"
+   ],
+   "gap": "The exit milestone and the boundary between permitted restitution validation and prohibited enforcement use are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the post-exit starting event.",
+    "Declare how restitution validation is distinguished from enforcement data use."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-13-01",
+   "section": "13",
+   "title": "Exited entities may reapply",
+   "quote": "Exited entities MAY reapply under DKP-6-INTEGRATION-001.",
+   "interpretation": "Check that exited entities can submit re-entry applications under the named integration protocol. This permission does not guarantee acceptance.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "entity_exit_status",
+    "reapplication_rules",
+    "reapplication_records"
+   ],
+   "criterion": "Exited entities may reapply under DKP-6-INTEGRATION-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-6-INTEGRATION-001"
+   ],
+   "data_dependencies": [
+    "integration application rules and records"
+   ],
+   "gap": "The integration protocol governing reapplication is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-13-02",
+   "section": "13",
+   "title": "Reentry cannot be penalized",
+   "quote": "Re-entry:\n\nSHALL NOT be penalized,",
+   "interpretation": "Check that re-entry carries no penalty. Identifying a penalty requires a baseline or classification rule not provided in the text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "reentry_conditions",
+    "reentry_charges",
+    "penalty_classifications"
+   ],
+   "criterion": "Re-entry is not penalized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "re-entry conditions and charges"
+   ],
+   "gap": "The document does not define what constitutes a re-entry penalty. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how ordinary entry conditions are distinguished from re-entry penalties."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-13-03",
+   "section": "13",
+   "title": "Exit history cannot disadvantage reentry",
+   "quote": "SHALL NOT be delayed due to prior exit,\n\nSHALL NOT treat exit history as disqualifying.",
+   "interpretation": "Check decision and scheduling rules for delays caused by prior exit or disqualification based on exit history. A delay needed to resolve outstanding restitution is separately required by this section and is not automatically an exit-history delay.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "reentry_decisions",
+    "reentry_delay_reasons",
+    "disqualification_rules"
+   ],
+   "criterion": "Prior exit causes no re-entry delay, and exit history is not a disqualifying condition.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integration decisions and delay reasons"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-13-04",
+   "section": "13",
+   "title": "Restitution resolved before reentry",
+   "quote": "Outstanding restitution obligations MUST be resolved prior to re-entry.",
+   "interpretation": "Check that every outstanding restitution obligation reaches a resolved state before re-entry. Resolution might mean payment, settlement, or another discharge; the text does not specify accepted methods.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "outstanding_restitution_obligations",
+    "resolution_records",
+    "resolution_times",
+    "reentry_time"
+   ],
+   "criterion": "All outstanding restitution obligations are resolved before re-entry.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "restitution status and resolution records"
+   ],
+   "gap": "The criteria for resolving a restitution obligation are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which events establish restitution resolution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-14-01",
+   "section": "14",
+   "title": "Exit denial and obstruction forbidden",
+   "quote": "The following are explicitly forbidden:\n\ndenial or obstruction of exit rights,",
+   "interpretation": "Check for denial of exit rights and actions obstructing their exercise. The text permits bounded procedural delays but does not define when such delays become obstruction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_decisions",
+    "exit_workflow_events",
+    "delay_reasons"
+   ],
+   "criterion": "No denial or obstruction of exit rights occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit workflow and decision records"
+   ],
+   "gap": "The boundary between permitted delay and prohibited obstruction is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an obstruction test consistent with the permitted cooling and settlement delays."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-14-02",
+   "section": "14",
+   "title": "Collective punishment and retaliation forbidden",
+   "quote": "collective punishment through exit,\n\nretaliatory sanctions beyond restitution,",
+   "interpretation": "These practices are explicitly forbidden. Check sanctions and affected parties for collective punishment through exit and retaliatory measures extending beyond restitution.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "sanctions",
+    "affected_parties",
+    "sanction_reasons",
+    "restitution_basis"
+   ],
+   "criterion": "There is no collective punishment through exit and no retaliatory sanction beyond restitution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sanction decisions, affected-party records, and restitution determinations"
+   ],
+   "gap": "Collective punishment, retaliatory purpose, and comparison with permitted restitution require operational classifications. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare tests for collective punishment and retaliation.",
+    "Declare how sanctions are compared with permitted restitution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-14-03",
+   "section": "14",
+   "title": "Hostile framing and exit coercion forbidden",
+   "quote": "framing exit as treason, hostility, or illegitimacy,\n\nexit-conditioned coercion, violence, or deprivation.",
+   "interpretation": "Check exit-related communications for the prohibited framing and actions for coercion, violence, or deprivation conditioned on exit. Semantic classification and causal attribution require additional methods.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_communications",
+    "exit_related_actions",
+    "action_conditions"
+   ],
+   "criterion": "Exit is not framed as treason, hostility, or illegitimacy, and no exit-conditioned coercion, violence, or deprivation occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "communications and evidence of exit-related actions"
+   ],
+   "gap": "The document does not supply semantic classification or exit-conditioning attribution methods. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how prohibited framing and actions are identified and attributed to exit."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-15-01",
+   "section": "15",
+   "title": "Postexit regulation of outside systems forbidden",
+   "quote": "DKP-6-EXIT-001 SHALL NOT:\n\nregulate non-DKP systems post-exit,",
+   "interpretation": "Check that this protocol authorizes no post-exit regulation of systems classified as non-DKP. System membership and the triggering exit milestone must be operationalized.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_time",
+    "regulated_systems",
+    "system_dkp_status",
+    "regulatory_actions"
+   ],
+   "criterion": "DKP-6-EXIT-001 does not regulate non-DKP systems post-exit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system membership classifications and regulatory actions"
+   ],
+   "gap": "The text does not define the system classification boundary or precise post-exit starting event. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare system membership classification and the applicable exit milestone."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-15-02",
+   "section": "15",
+   "title": "Jurisdiction and sovereignty limits",
+   "quote": "extend jurisdiction beyond the exit boundary,\n\ninterfere with sovereignty after disengagement.",
+   "interpretation": "These are prohibitions on the protocol. Check jurisdictional actions against the exit boundary and post-disengagement actions for interference with sovereignty.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_boundary",
+    "jurisdictional_actions",
+    "disengagement_time",
+    "sovereignty_impacts"
+   ],
+   "criterion": "Jurisdiction does not extend beyond the exit boundary, and sovereignty is not interfered with after disengagement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "jurisdiction boundaries and sovereignty impact assessments"
+   ],
+   "gap": "The exit boundary and sovereignty-interference criteria are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the exit boundary and a test for interference with sovereignty."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-15-03",
+   "section": "15",
+   "title": "Authority terminates at exit execution",
+   "quote": "DKP authority terminates at exit execution.",
+   "interpretation": "Check that DKP authority over the exiting entity ends at execution. This appears broader and potentially earlier than disengagement at completion, and the text does not reconcile it with enforceable restitution tails.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "execution_time",
+    "authority_history",
+    "post_execution_actions"
+   ],
+   "criterion": "DKP authority over the exiting entity terminates at exit execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority state history and post-execution actions"
+   ],
+   "gap": "The authority boundary and its relationship to restitution enforcement and exit completion are unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the relation between execution and completion.",
+    "Declare how any retained restitution enforcement is consistent with terminated DKP authority."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-16-01",
+   "section": "16",
+   "title": "Changes require controlled upgrade procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check every normative change for the listed upgrade components and compliance with the referenced protocols. The text does not state that rollback must be executed for every change; it may instead require rollback capability or rules.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_record_or_plan"
+   ],
+   "criterion": "Protocol changes follow DKP-4-UPGRADE-001 with proposal, DKP-8-SIMULATION-001 simulation, DKP-8-AUDIT-001 audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow, simulation results, audit results, and activation records"
+   ],
+   "gap": "The referenced upgrade, simulation, and audit procedures and the required meaning of rollback are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether rollback denotes a required capability, procedure, or executed event."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-16-02",
+   "section": "16",
+   "title": "Modifications require new protocol identifier",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Check that each modification has a new protocol identifier. Read literally, this includes presentation corrections, but the later date-only correction rule suggests a possible exception.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "modification_class",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "identifier_registry"
+   ],
+   "criterion": "Any modification requires a new protocol identifier, subject to resolving the presentation-correction exception.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier and edition history"
+   ],
+   "gap": "The document does not reconcile 'any modification' with presentation-only corrections recorded only by date. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether presentation-only corrections are excluded from modifications requiring new identifiers."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-16-03",
+   "section": "16",
+   "title": "Modification simulation and compatibility declaration",
+   "quote": "mandatory simulation under DKP-8-SIMULATION-001,\n\nexplicit compatibility declaration with DKP-7-SCOPE-001.",
+   "interpretation": "Check modification records for simulation under the named protocol and an explicit compatibility declaration with the scope protocol. Applicability to presentation-only corrections depends on the unresolved modification exception.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "modification_class",
+    "simulation_record",
+    "scope_compatibility_declaration"
+   ],
+   "criterion": "Modifications have mandatory simulation under DKP-8-SIMULATION-001 and an explicit compatibility declaration with DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "modification simulation evidence and scope compatibility declarations"
+   ],
+   "gap": "The referenced protocols are absent and applicability to presentation-only corrections is unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether these requirements exclude presentation-only corrections."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-16-04",
+   "section": "16",
+   "title": "Presentation corrections use date only",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "If a correction is presentation-only and preserves normative content, check that it is not treated as an Upgrade and is recorded only through the Last updated date. Establishing normative equivalence requires a semantic assessment or declared comparison method.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_metadata"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition comparison and change metadata"
+   ],
+   "gap": "Normative-equivalence criteria and the referenced Upgrade definition are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes are distinguished from normative changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "EXIT-16-05",
+   "section": "16",
+   "title": "Published editions require source digest",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For every published edition, compute SHA-256 over its canonical source and compare it with the entry in the named repository file. The document identifies the algorithm and destination but not canonical source selection or byte normalization.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_file",
+    "repository_identity"
+   ],
+   "criterion": "Each published edition has its canonical-source SHA-256 digest correctly listed in SHA256SUMS.txt in github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published canonical sources and canonical repository digest manifest"
+   ],
+   "gap": "Canonical source identification, byte canonicalization, and edition-to-manifest mapping are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how canonical source bytes and corresponding manifest entries are selected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

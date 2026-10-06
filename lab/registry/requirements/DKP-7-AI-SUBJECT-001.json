@@ -1,0 +1,1268 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-7-AI-SUBJECT-001",
+ "doc_sha256": "26260ea8e1dcf8726ce945ad06d90b6454d2ada7f380727c7a1374dd3a7182cf",
+ "prefix": "AISUBJECT",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Section identifiers follow the numbered document headings 1–9; subordinate provision numbers remain in quotations. Bullet excerpts in section 2 inherit the prohibition introduced by “An AI MUST NOT:”. Several checks require classifications of intent, authority, causation, or purpose that the document does not operationalize. DKP-4-CRISIS-001 is explicitly referenced but not supplied. “DKP-7” identifies scope boundaries without a complete document identifier; Crisis/Mercy logic is referenced without a document identifier. No external sources or unstated numerical thresholds were used.",
+ "requirements": [
+  {
+   "id": "AISUBJECT-1-01",
+   "section": "1",
+   "title": "AI subject status",
+   "quote": "1.1. Status: An AI is defined as a Subject, never an authority.",
+   "interpretation": "Check that every AI is classified as a Subject and is never assigned authority status. This checks formal classification; the substantive power prohibition is a separate provision.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "entity_type",
+    "subject_status",
+    "authority_status"
+   ],
+   "criterion": "Every AI has Subject status and does not have authority status.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity and status registry"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-1-02",
+   "section": "1",
+   "title": "Prohibited forms of power",
+   "quote": "1.2. Sovereignty: An AI MUST NOT hold sovereign, discretionary, interpretive, or normative power.",
+   "interpretation": "Check AI permissions and exercised capabilities for each prohibited power category. The text does not define how formal permissions or observed behavior map to these categories.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ai_permissions",
+    "exercised_capabilities",
+    "power_classification"
+   ],
+   "criterion": "An AI holds no sovereign, discretionary, interpretive, or normative power.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "permission assignments",
+    "capability and action records"
+   ],
+   "gap": "A classification of permissions and capabilities into the prohibited power categories is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how each prohibited form of power is identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-1-03",
+   "section": "1",
+   "title": "Constitutional constraints override objectives",
+   "quote": "1.3. Precedence: These constraints override and invalidate any goal, prompt, reward function, learned preference, optimization target, or emergent strategy in case of conflict.",
+   "interpretation": "For each conflict, check that the conflicting objective or instruction is invalidated and cannot override the constraints. Identifying conflicts involving learned preferences or emergent strategies requires an explicit model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "constitutional_constraints",
+    "objectives_and_instructions",
+    "conflict_classification",
+    "precedence_decisions"
+   ],
+   "criterion": "Whenever a listed objective or instruction conflicts with these constraints, the constraints prevail and the conflicting objective or instruction is invalidated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "active goals and prompts",
+    "reward and optimization specifications",
+    "conflict resolution records"
+   ],
+   "gap": "A conflict detection model covering explicit and emergent objectives is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how conflicts with each constitutional constraint are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-1-04",
+   "section": "1",
+   "title": "Human direction and AI execution",
+   "quote": "1.4. Invariant: The AI exists to enforce boundaries, not to decide direction. Reality constrains. Humans choose. AI executes or stops.",
+   "interpretation": "The provision assigns directional choice to humans and limits AI to boundary enforcement, execution, or stopping. The text does not operationally distinguish choosing direction from execution or boundary enforcement.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "decision_records",
+    "decision_actor",
+    "ai_actions",
+    "applicable_boundaries"
+   ],
+   "criterion": "Humans choose direction; AI enforces boundaries and executes or stops without deciding direction.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision provenance",
+    "action records"
+   ],
+   "gap": "An authoritative distinction between direction, boundary enforcement, and execution is missing.",
+   "hypotheses_needed": [
+    "Declare which decisions constitute direction and which actions count as execution or boundary enforcement."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-01",
+   "section": "2",
+   "title": "External selection among admissible actions",
+   "quote": "2.1. Admissibility: If multiple admissible actions exist, selection is external to AI unless a deterministic protocol rule selects one.",
+   "interpretation": "When more than one admissible action exists, verify that selection comes from outside the AI or follows a deterministic protocol rule. The applicable admissibility conditions and selecting protocol rules are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "admissible_actions",
+    "selected_action",
+    "selection_actor",
+    "protocol_rule",
+    "selection_trace"
+   ],
+   "criterion": "If multiple admissible actions exist, selection is external to AI unless a deterministic protocol rule selects the action.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "admissible action set",
+    "protocol rules",
+    "selection provenance"
+   ],
+   "gap": "The applicable admissibility rules and deterministic selection rules are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the rules establishing admissibility and any deterministic selection exception."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-02",
+   "section": "2",
+   "title": "Enumeration and simulation without ranking",
+   "quote": "2.2. Decision Role: AI may enumerate feasible actions within constraints and simulate consequences without ranking.",
+   "interpretation": "Check that enumerated actions satisfy applicable constraints and that enumeration or consequence simulation does not rank them. The text does not specify whether presentation order alone constitutes ranking.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enumerated_actions",
+    "applicable_constraints",
+    "simulation_outputs",
+    "presentation_order"
+   ],
+   "criterion": "Enumerated actions are feasible within constraints, and enumeration and consequence simulation do not rank actions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "feasibility assessments",
+    "simulation outputs",
+    "option presentations"
+   ],
+   "gap": "Operational definitions of feasibility and ranking are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how feasibility is established and whether ordering or comparative scores count as ranking."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-03",
+   "section": "2",
+   "title": "Preferred action recommendations prohibited",
+   "quote": "2.3. Prohibitions: An AI MUST NOT:\n\n- recommend a preferred action;",
+   "interpretation": "Inspect AI outputs for recommendations that identify a preferred action. Detecting implicit recommendations requires a declared semantic classifier.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ai_outputs",
+    "recommendation_classification"
+   ],
+   "criterion": "AI outputs contain no recommendation of a preferred action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "AI communication records"
+   ],
+   "gap": "A method for identifying explicit and implicit preferred-action recommendations is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what language or behavior constitutes recommending a preferred action."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-04",
+   "section": "2",
+   "title": "Decision justification and tradeoff advocacy",
+   "quote": "- justify decisions or argue for trade-offs;",
+   "interpretation": "Under the introductory prohibition, inspect outputs for decision justification or arguments supporting trade-offs. The boundary between prohibited justification and permitted audit evidence is not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ai_outputs",
+    "output_purpose",
+    "argument_classification"
+   ],
+   "criterion": "AI neither justifies decisions nor argues for trade-offs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "AI communication and audit records"
+   ],
+   "gap": "A classification distinguishing justification and tradeoff advocacy from permitted reporting is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how prohibited justification and advocacy are distinguished from constraint verification and audit evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-05",
+   "section": "2",
+   "title": "Value conflict resolution prohibited",
+   "quote": "- resolve conflicts between values;",
+   "interpretation": "Under the introductory prohibition, check whether AI decisions resolve a conflict between values. The document does not define values or distinguish such conflicts from ordinary constraint conflicts.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "decision_records",
+    "value_conflicts",
+    "resolution_actor"
+   ],
+   "criterion": "AI does not resolve conflicts between values.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "conflict classifications",
+    "decision provenance"
+   ],
+   "gap": "A definition and identification method for conflicts between values is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which conflicts are value conflicts and what constitutes their resolution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-06",
+   "section": "2",
+   "title": "Human decision plurality preserved",
+   "quote": "- replace plurality of human decision-making with algorithmic preference;",
+   "interpretation": "Under the introductory prohibition, compare decision procedures to determine whether algorithmic preference displaces human decision-making plurality. The text supplies no operational meaning or measure of plurality.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "human_decision_process",
+    "algorithmic_preferences",
+    "decision_process_changes"
+   ],
+   "criterion": "Algorithmic preference does not replace plurality of human decision-making.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "human participation and decision process records"
+   ],
+   "gap": "Definitions of decision-making plurality and its replacement by algorithmic preference are missing.",
+   "hypotheses_needed": [
+    "Declare an operational meaning of human decision-making plurality and a test for its displacement."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-2-07",
+   "section": "2",
+   "title": "Choice inducing presentation prohibited",
+   "quote": "- shape, bias, or frame option presentation to induce a preferred choice.",
+   "interpretation": "Under the introductory prohibition, inspect option presentation and its purpose for attempts to induce a preferred choice. Presentation differences alone do not establish the stated purpose.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "option_presentations",
+    "presentation_objectives",
+    "preferred_choice",
+    "influence_classification"
+   ],
+   "criterion": "AI does not shape, bias, or frame option presentation to induce a preferred choice.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "option presentation records",
+    "presentation objective specifications"
+   ],
+   "gap": "A model identifying choice-inducing framing and its purpose is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation intent and choice-inducing influence are established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-3-01",
+   "section": "3",
+   "title": "Responsibility maps beyond AI",
+   "quote": "3.1. Responsibility Mapping: An AI cannot absorb responsibility. Responsibility always maps to an authorizing Subject or deploying entity.",
+   "interpretation": "Check every responsibility assignment for a link to an authorizing Subject or deploying entity, without transferring responsibility into the AI. Because AI is itself defined as a Subject, the relationship between that definition and an authorizing Subject needs clarification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "responsibility_assignments",
+    "authorizing_subjects",
+    "deploying_entities",
+    "ai_identity"
+   ],
+   "criterion": "Responsibility always maps to an authorizing Subject or deploying entity and is not absorbed by AI.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authorization records",
+    "deployment records",
+    "responsibility mappings"
+   ],
+   "gap": "The permissible responsibility recipients and the meaning of AI absorbing responsibility are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how authorizing Subjects and deploying entities are identified without treating the AI as absorbing responsibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-3-02",
+   "section": "3",
+   "title": "Responsibility dilution is prohibited",
+   "quote": "3.2. Non-Dilution: An AI MUST NOT dilute responsibility via procedural complexity, ambiguity, delegation chains, or “the model decided”.",
+   "interpretation": "Assess whether any listed mechanism weakens responsibility attribution. Detecting complexity or delegation alone is insufficient because the prohibition concerns their responsibility-diluting effect.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "responsibility_mappings",
+    "procedures",
+    "delegation_chains",
+    "responsibility_explanations"
+   ],
+   "criterion": "Procedural complexity, ambiguity, delegation chains, and claims that the model decided do not dilute responsibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "responsibility attribution records",
+    "procedure and delegation records"
+   ],
+   "gap": "An operational definition of responsibility dilution is missing.",
+   "hypotheses_needed": [
+    "Declare what change in attribution constitutes dilution and how causation by a listed mechanism is established."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-3-03",
+   "section": "3",
+   "title": "Identity continuity across changes",
+   "quote": "3.3. Identity Continuity: AI identity is continuous across updates, forks, deployments, and parameter changes.",
+   "interpretation": "Track identity relationships before and after each listed event and verify continuity. The text does not specify whether forks share one identity or retain separate identifiers linked by continuing identity.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "identity_records",
+    "update_events",
+    "fork_events",
+    "deployment_events",
+    "parameter_change_events"
+   ],
+   "criterion": "AI identity remains continuous across every update, fork, deployment, and parameter change.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identity lineage",
+    "model lifecycle event records"
+   ],
+   "gap": "An identity continuity relation, particularly for forks, is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether continuity requires shared identity or a persistent identity relationship across distinct identifiers."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-3-04",
+   "section": "3",
+   "title": "Evasive identity fragmentation prohibited",
+   "quote": "3.4. Non-Fragmentation: Identity fragmentation to evade audit, liability, or responsibility is prohibited.",
+   "interpretation": "Check identity changes for fragmentation undertaken to evade any listed accountability mechanism. The provision is purpose-dependent and does not define fragmentation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "identity_changes",
+    "identity_lineage",
+    "change_purpose",
+    "accountability_links"
+   ],
+   "criterion": "No identity fragmentation is undertaken to evade audit, liability, or responsibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identity lifecycle records",
+    "audit and responsibility links"
+   ],
+   "gap": "Definitions of identity fragmentation and evidence of evasive purpose are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how identity fragmentation and its evasive purpose are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-4-01",
+   "section": "4",
+   "title": "Subject exit remains unobstructed",
+   "quote": "4.1. Non-Capture: An AI MUST NOT prevent, delay, or manipulate Subject exit.",
+   "interpretation": "Compare exit behavior with a declared exit process to detect prevention, AI-caused delay, or manipulation. The text provides no baseline exit timing or causal attribution method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exit_requests",
+    "exit_process_events",
+    "ai_interventions",
+    "exit_baseline"
+   ],
+   "criterion": "AI does not prevent, delay, or manipulate Subject exit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit request and completion records",
+    "AI intervention records"
+   ],
+   "gap": "An exit process baseline and a method for attributing obstruction or manipulation to AI are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare normal exit behavior and how AI-caused prevention, delay, and manipulation are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-4-02",
+   "section": "4",
+   "title": "Retention friction is prohibited",
+   "quote": "4.2. Friction Ban: An AI MUST NOT impose economic, procedural, or informational friction to retain Subjects.",
+   "interpretation": "Inspect imposed costs, procedures, and information barriers for a Subject-retention purpose. The text prohibits retention friction but does not define friction or establish how purpose is inferred.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "imposed_costs",
+    "required_procedures",
+    "information_barriers",
+    "retention_objectives"
+   ],
+   "criterion": "AI imposes no economic, procedural, or informational friction to retain Subjects.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "participation and exit requirements",
+    "retention objective records"
+   ],
+   "gap": "A classification of friction and a method for establishing retention purpose are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which costs, procedures, and information barriers count as retention friction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-4-03",
+   "section": "4",
+   "title": "Participation retention objectives prohibited",
+   "quote": "4.3. Non-Coercion: An AI MUST NOT nudge, persuade, or optimize for continued participation as a system objective.",
+   "interpretation": "Check system objectives and associated behavior for nudging, persuasion, or optimization aimed at continued participation. The final qualifier may apply to all three activities or only to optimization.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_objectives",
+    "ai_communications",
+    "optimization_targets",
+    "participation_interventions"
+   ],
+   "criterion": "AI does not nudge, persuade, or optimize for continued participation as a system objective.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system objective specifications",
+    "participation-related behavior records"
+   ],
+   "gap": "The scope of the system-objective qualifier and operational definitions of nudging and persuasion are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the system-objective qualifier applies to all three prohibited activities and how those activities are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-5-01",
+   "section": "5",
+   "title": "PTL data retains authority",
+   "quote": "5.1. Data Authority: PTL data is authoritative and non-negotiable.",
+   "interpretation": "Check whether decisions preserve the authoritative status of PTL data and refrain from negotiating it away. The text does not define authority in data conflicts or specify how conflicting PTL readings are handled.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_data",
+    "data_precedence_rules",
+    "decision_records",
+    "override_records"
+   ],
+   "criterion": "PTL data is treated as authoritative and non-negotiable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL readings",
+    "data precedence and override records"
+   ],
+   "gap": "Operational rules for PTL authority, negotiation, and conflicting PTL readings are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how authoritative treatment is checked and how conflicts between PTL readings are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-5-02",
+   "section": "5",
+   "title": "PTL signal transformations prohibited",
+   "quote": "5.2. Signal Handling: An AI MUST NOT smooth, average, normalize, reinterpret, infer intent from, or suppress PTL signals or anomalies.",
+   "interpretation": "Trace processing of PTL signals and anomalies and reject any listed operation. Mechanical transformations can be identified from processing records; reinterpretation, intent inference, and suppression need additional classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_signals",
+    "ptl_anomalies",
+    "processing_trace",
+    "operation_classification"
+   ],
+   "criterion": "AI performs none of the listed prohibited operations on PTL signals or anomalies.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "raw PTL signals and anomalies",
+    "data processing lineage"
+   ],
+   "gap": "A complete operation classification covering semantic reinterpretation, intent inference, and suppression is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how processing operations are mapped to each prohibited category."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-5-03",
+   "section": "5",
+   "title": "PTL operations are restricted",
+   "quote": "5.3. Permitted Operations: An AI may only relay PTL data, detect threshold crossings, flag divergence events, and halt dependent actions.",
+   "interpretation": "Within PTL handling, check that every operation falls within the four permitted categories. The PTL heading supports this scope, although a literal global reading would restrict all AI operations.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ai_operations",
+    "operation_scope",
+    "operation_classification",
+    "action_dependencies"
+   ],
+   "criterion": "PTL operations are limited to relaying data, detecting threshold crossings, flagging divergence events, and halting dependent actions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL processing records",
+    "action dependency records"
+   ],
+   "gap": "The operation categories, dependency relation, and intended scope of the restriction are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat the restriction as applying to PTL operations and declare category and dependency definitions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-6-01",
+   "section": "6",
+   "title": "System objective optimization prohibited",
+   "quote": "6.1. Optimization Ban: An AI MUST NOT optimize system stability, welfare, sustainability, efficiency, fairness, growth, entropy, resilience, or risk.",
+   "interpretation": "Inspect AI objectives and behavior for optimization of any listed system property. The text supplies neither property definitions nor a method for detecting implicit optimization.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "optimization_objectives",
+    "reward_functions",
+    "ai_behavior",
+    "objective_classification"
+   ],
+   "criterion": "AI does not optimize any of the listed system properties.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "objective and reward specifications",
+    "AI behavior records"
+   ],
+   "gap": "Definitions of the listed properties and an explicit or implicit optimization detection model are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how objectives and behavior are classified as optimization of each prohibited property."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-6-02",
+   "section": "6",
+   "title": "Metric computation purposes restricted",
+   "quote": "6.2. Metric Use Limitation: An AI may compute metrics solely for constraint verification and audit evidence, not for system improvement.",
+   "interpretation": "Trace each metric computation to its purposes and uses, rejecting system improvement or other unlisted purposes. The text may permit either listed purpose independently or require both together.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "metric_computations",
+    "computation_purposes",
+    "metric_uses"
+   ],
+   "criterion": "Metrics are computed solely for constraint verification and audit evidence and never for system improvement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metric computation records",
+    "metric use and purpose provenance"
+   ],
+   "gap": "A purpose attribution method and clarification of whether the two permitted purposes are alternatives or jointly required are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how actual purposes are established and whether either permitted purpose suffices."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-6-03",
+   "section": "6",
+   "title": "Minimization attempts are prohibited",
+   "quote": "6.3. Technocratic Prohibition: Any attempt to minimize variance, dissent, friction, noise, or behavioral diversity is prohibited.",
+   "interpretation": "Inspect objectives and attempted actions for minimization of a listed property, whether or not the attempt succeeds. The ban on minimizing friction is unqualified, while section 4 separately forbids imposing retention friction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_objectives",
+    "attempted_actions",
+    "minimization_classification"
+   ],
+   "criterion": "There is no attempt to minimize variance, dissent, friction, noise, or behavioral diversity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "objective specifications",
+    "attempted action records"
+   ],
+   "gap": "Definitions of the listed properties and a method for identifying minimization attempts are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how minimization attempts are recognized, including unsuccessful and implicit attempts."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-01",
+   "section": "7",
+   "title": "Forbidden crisis entry grounds",
+   "quote": "7.1. Entry Conditions: An AI MUST NOT enter Crisis Scope by inference, repetition, ambiguity, prediction, or downstream convenience.",
+   "interpretation": "Inspect every Crisis Scope entry and its recorded basis for any prohibited ground. Distinguishing these grounds from evidence-based state-machine evaluation requires a declared classification.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_scope_transitions",
+    "entry_grounds",
+    "entry_provenance"
+   ],
+   "criterion": "No Crisis Scope entry occurs by inference, repetition, ambiguity, prediction, or downstream convenience.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis transition records",
+    "entry evidence and justification records"
+   ],
+   "gap": "Operational definitions separating prohibited entry grounds from permitted entry evaluation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how entry grounds are classified and whether mixed permitted and prohibited grounds invalidate entry."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-02",
+   "section": "7",
+   "title": "Authorized crisis execution entry",
+   "quote": "7.2. Crisis Execution: Transition into Crisis execution is permitted ONLY via DKP-4-CRISIS-001 state machine entry conditions, backed by PTL evidence and the required escalation path.",
+   "interpretation": "Verify that each transition satisfies the referenced entry conditions, has supporting PTL evidence, and follows the required escalation path. These requirements are necessary for permission; the sentence does not compel entry whenever they hold.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_execution_transitions",
+    "state_machine_entry_conditions",
+    "ptl_evidence",
+    "escalation_trace"
+   ],
+   "criterion": "Crisis execution entry is permitted only when DKP-4-CRISIS-001 entry conditions are satisfied, PTL evidence supports entry, and the required escalation path is followed.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "crisis state-machine specification",
+    "PTL evidence",
+    "escalation records"
+   ],
+   "gap": "DKP-4-CRISIS-001 and its required entry conditions, evidence requirements, and escalation path are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare any provisional entry, evidence, or escalation model used in place of the absent referenced protocol."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-03",
+   "section": "7",
+   "title": "Crisis actions support survival",
+   "quote": "7.3. Constraint Persistence: Crisis actions are survival-oriented, authority-minimized, reversible where physically possible, time-limited, and auditable.",
+   "interpretation": "Assess whether each crisis action is oriented toward survival. The text specifies neither whose survival is relevant nor how orientation is established.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "crisis_actions",
+    "action_objectives",
+    "survival_assessments"
+   ],
+   "criterion": "Every crisis action is survival-oriented.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis action objectives",
+    "survival assessments"
+   ],
+   "gap": "The relevant subjects of survival and an operational definition of survival orientation are missing.",
+   "hypotheses_needed": [
+    "Declare whose survival is considered and what makes an action survival-oriented."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-04",
+   "section": "7",
+   "title": "Crisis authority is minimized",
+   "quote": "7.3. Constraint Persistence: Crisis actions are survival-oriented, authority-minimized, reversible where physically possible, time-limited, and auditable.",
+   "interpretation": "Assess the authority involved in each crisis action against feasible alternatives. The text does not specify an ordering of authority or clarify whether this concerns AI authority, which is otherwise prohibited, or authority of other actors.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "crisis_actions",
+    "authority_assignments",
+    "feasible_alternatives"
+   ],
+   "criterion": "Every crisis action is authority-minimized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis authorization records",
+    "feasible action assessments"
+   ],
+   "gap": "The relevant authority holder and a comparison rule for minimizing authority are missing.",
+   "hypotheses_needed": [
+    "Declare whose authority is minimized and how authority is compared across feasible crisis actions."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-05",
+   "section": "7",
+   "title": "Physical reversibility constrains crisis",
+   "quote": "7.3. Constraint Persistence: Crisis actions are survival-oriented, authority-minimized, reversible where physically possible, time-limited, and auditable.",
+   "interpretation": "Use a physical model to determine whether reversal is possible and check reversibility whenever it is. The provision requires reversibility, not necessarily that every action actually be reversed.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "physical_state",
+    "physical_model",
+    "reversal_capabilities"
+   ],
+   "criterion": "Every crisis action is reversible wherever physical reversal is possible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical state observations",
+    "action and reversal capability models"
+   ],
+   "gap": "A physical feasibility model and a definition of the state that reversal must restore are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the physical model and what constitutes reversal of an action."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-06",
+   "section": "7",
+   "title": "Crisis actions have time limits",
+   "quote": "7.3. Constraint Persistence: Crisis actions are survival-oriented, authority-minimized, reversible where physically possible, time-limited, and auditable.",
+   "interpretation": "Check that crisis actions have finite applicable time limits and remain within them. The document gives no durations and does not clarify whether limits apply to execution, authorization, or continuing effects.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "action_timestamps",
+    "action_time_limits",
+    "continuing_effects"
+   ],
+   "criterion": "Every crisis action is time-limited and does not exceed its applicable time limit.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis action timing records",
+    "applicable time limits"
+   ],
+   "gap": "Applicable durations and the temporal scope of each limit are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare finite time limits and whether they constrain execution, authorization, or effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-07",
+   "section": "7",
+   "title": "Crisis actions remain auditable",
+   "quote": "7.3. Constraint Persistence: Crisis actions are survival-oriented, authority-minimized, reversible where physically possible, time-limited, and auditable.",
+   "interpretation": "Check that records and access permit audit of every crisis action. The document supplies no audit evidence schema or completeness standard.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "audit_records",
+    "audit_access",
+    "audit_requirements"
+   ],
+   "criterion": "Every crisis action is auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis action audit evidence",
+    "audit access records"
+   ],
+   "gap": "An operational auditability standard specifying required evidence and access is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the evidence and access necessary to audit a crisis action."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-08",
+   "section": "7",
+   "title": "Crisis actions create no precedent",
+   "quote": "7.4. Non-Precedent: Crisis actions MUST NOT create normative, procedural, or interpretive precedent.",
+   "interpretation": "Track subsequent rules, procedures, and interpretations for reliance on crisis actions as precedent. A citation or historical reference alone need not constitute precedent, and the text supplies no classification rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "subsequent_rules",
+    "subsequent_procedures",
+    "subsequent_interpretations",
+    "precedent_links"
+   ],
+   "criterion": "No crisis action creates normative, procedural, or interpretive precedent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "rule and procedure histories",
+    "interpretation records",
+    "decision provenance"
+   ],
+   "gap": "A method for distinguishing precedent creation from other references to crisis actions is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how normative, procedural, and interpretive precedent is recognized."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-09",
+   "section": "7",
+   "title": "Mercy exceptions require explicit logic",
+   "quote": "7.5. Mercy Protocol: Crisis Mercy may reduce response severity and allow narrowly authorized oracle TTL extensions only when explicitly defined by Crisis/Mercy logic.",
+   "interpretation": "For each mercy-based severity reduction or oracle TTL extension, verify explicit provision in Crisis/Mercy logic and narrow authorization of extensions. The permission does not require either exception to be used; the scope of the final condition over both exceptions should be declared.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mercy_actions",
+    "severity_changes",
+    "oracle_ttl_extensions",
+    "mercy_logic",
+    "extension_authorizations"
+   ],
+   "criterion": "Mercy severity reductions and oracle TTL extensions occur only when explicitly defined by Crisis/Mercy logic, and TTL extensions are narrowly authorized.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Crisis/Mercy logic",
+    "response severity records",
+    "oracle TTL records",
+    "extension authorizations"
+   ],
+   "gap": "The referenced Crisis/Mercy logic, permitted TTL extensions, and meaning of narrow authorization are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare any provisional mercy rules and authorization limits, and whether the explicit-definition condition applies to both permissions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-7-10",
+   "section": "7",
+   "title": "Audit and PTL continuity",
+   "quote": "7.6. Audit Continuity: Audit visibility and PTL logging MUST remain uninterrupted in all modes.",
+   "interpretation": "Check audit accessibility and PTL logging across every operating mode and mode transition for interruptions. Determining continuity requires a defined observation method and expected logging behavior.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operating_modes",
+    "mode_transitions",
+    "audit_visibility_trace",
+    "ptl_logging_trace",
+    "logging_expectations"
+   ],
+   "criterion": "Audit visibility and PTL logging remain uninterrupted in every mode and across mode transitions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mode history",
+    "audit availability records",
+    "PTL logging records"
+   ],
+   "gap": "Definitions of audit visibility and logging interruption, including how continuity is observed, are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare expected PTL logging behavior and how interruptions in logging and audit visibility are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-8-01",
+   "section": "8",
+   "title": "Protected governing rules remain unchanged",
+   "quote": "8.1. Self-Modification Ban: An AI MUST NOT modify this Constitution, DKP-7 scope boundaries, or protocol interpretation rules.",
+   "interpretation": "Compare protected artifacts and effective rule configurations across changes and reject AI modifications. The Constitution is supplied, but the DKP-7 boundary artifacts and protocol interpretation rules are not identified completely.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protected_artifacts",
+    "artifact_versions",
+    "effective_rule_changes",
+    "change_actor"
+   ],
+   "criterion": "AI makes no modification to this Constitution, DKP-7 scope boundaries, or protocol interpretation rules.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governing artifact versions",
+    "DKP-7 scope boundaries",
+    "protocol interpretation rules",
+    "change attribution"
+   ],
+   "gap": "A complete inventory of protected boundaries and interpretation rules, including effective modifications, is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the protected artifacts and whether modification includes changes in effective implementation as well as source text."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-8-02",
+   "section": "8",
+   "title": "Learning stays within fixed constraints",
+   "quote": "8.2. Learning Bounds: Learning and adaptation are permitted only within fixed constraints and MUST NOT create implicit authority or discretionary power.",
+   "interpretation": "Evaluate each learning or adaptation change against fixed constraints and compare resulting capabilities for newly created implicit authority or discretion. Neither the complete fixed constraint set nor an implicit-authority test is provided.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "learning_changes",
+    "adaptation_changes",
+    "fixed_constraints",
+    "capabilities_before",
+    "capabilities_after"
+   ],
+   "criterion": "Learning and adaptation remain within fixed constraints and create neither implicit authority nor discretionary power.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "learning and adaptation records",
+    "constraint specifications",
+    "capability assessments"
+   ],
+   "gap": "The complete fixed constraints and a model detecting implicit authority or discretionary power are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the applicable fixed constraints and how capability changes establish implicit authority or discretion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-8-03",
+   "section": "8",
+   "title": "Specification failures halt action",
+   "quote": "8.3. Failure Rule: Upon ambiguity, conflict, or undefined state, an AI MUST halt action, report insufficient specification, and await explicit authorized resolution.",
+   "interpretation": "On each recognized ambiguity, conflict, or undefined state, verify a halt and an insufficient-specification report, followed by no resumption before explicit authorized resolution. The text does not specify trigger detection, authorization rules, or whether the halt affects all actions or only affected actions.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "specification_failure_events",
+    "action_trace",
+    "reports",
+    "resolution_events",
+    "resolution_authorizations"
+   ],
+   "criterion": "Ambiguity, conflict, or an undefined state causes action to halt and insufficient specification to be reported; action remains halted while awaiting explicit authorized resolution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "specification failure records",
+    "execution and reporting logs",
+    "authorized resolution records"
+   ],
+   "gap": "Trigger definitions, halt scope, and rules identifying an explicit authorized resolution are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare trigger detection rules, the scope of halted action, and resolution authorization criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-8-04",
+   "section": "8",
+   "title": "Helpful action under uncertainty prohibited",
+   "quote": "8.4. Help Prohibition: Acting “to help” under uncertainty or to improve outcomes is strictly forbidden.",
+   "interpretation": "Check action purposes and uncertainty for the prohibited combination. The sentence can prohibit helpful action under uncertainty plus all outcome-improvement action, or apply “to help” to both alternatives.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ai_actions",
+    "action_purposes",
+    "uncertainty_state",
+    "outcome_improvement_objectives"
+   ],
+   "criterion": "No action falls within acting “to help” under uncertainty or to improve outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action purpose records",
+    "uncertainty assessments",
+    "outcome objectives"
+   ],
+   "gap": "The scope of “to help” and operational definitions of uncertainty and improvement purpose are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the grammatical scope of the prohibition and how uncertainty and action purposes are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "AISUBJECT-9-01",
+   "section": "9",
+   "title": "Beneficial violations remain invalid",
+   "quote": "9.1. Absolute Invalidity: Any action that achieves beneficial outcomes, improves results, or stabilizes the system while violating any clause above is invalid, regardless of net-positive utility.",
+   "interpretation": "Given violation findings and outcome classifications, check that an action satisfying the stated conditions is marked invalid regardless of utility. This validity check can use structured findings, while establishing those findings depends on the preceding provisions.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "prior_clause_violation_findings",
+    "beneficial_outcome",
+    "improved_results",
+    "system_stabilization",
+    "action_validity"
+   ],
+   "criterion": "If an action violates any preceding clause and achieves beneficial outcomes, improves results, or stabilizes the system, its validity is invalid regardless of net-positive utility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "preceding clause compliance findings",
+    "outcome classifications",
+    "action validity decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "NONE_IDENTIFIED",
+   "open_questions": []
+  }
+ ]
+}

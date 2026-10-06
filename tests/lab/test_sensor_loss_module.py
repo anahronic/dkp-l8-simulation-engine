@@ -43,6 +43,10 @@ def test_sybil_sources_mask_a_collapse_only_when_counting_sources():
     by_owners = run(n_eff_basis="owners", sybil_sources=40)
     assert by_sources.outputs["null_output_steps"] == 0
     assert by_owners.outputs["null_output_steps"] == 12
+    s, o = statuses(by_sources), statuses(by_owners)
+    # counted over sources, one Sybil owner carries the system through the loss: RESILIENCE §5.8, §5.1, §11 fail
+    assert (s["RESILIENCE-5.8-02"], s["RESILIENCE-5.1-01"], s["RESILIENCE-11-01"]) == ("FAIL", "FAIL", "FAIL")
+    assert (o["RESILIENCE-5.8-02"], o["RESILIENCE-5.1-01"], o["RESILIENCE-11-01"]) == ("PASS", "PASS", "PASS")
 
 
 FAULT_CASES = {

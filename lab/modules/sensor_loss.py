@@ -305,6 +305,7 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
         bad += [(e["step"], o) for o, x in owners.items() if x > OWNER_CAP + 1e-12]
     out.append(v("ORACLE-8-01", "source_owner_caps", bad, "no source and no owner above 4 % of weight in any step",
                  "{n} cap violations"))
+    bad_caps = bad
     halts = [e["step"] for e in exp if e["systemic_halt"]]
     if halts:
         hs = set(halts)
@@ -314,6 +315,49 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
                      "with an admissible source, H-SL-4)", "{n} executions during a systemic halt"))
     else:
         out.append(na("ORACLE-13-01", "systemic_halt_on_coverage", "systemic halt", "global coverage stays at or above 80 %"))
+
+    # RESILIENCE ------------------------------------------------------------------------
+    below = [e["step"] for e in exp if e["trigger"] and not e["inconsistent"]]
+    if undecidable:
+        for rid, chk in (("RESILIENCE-5.1-02", "statistical_validity_gate"), ("RESILIENCE-8.4-01", "statistical_collapse_null_output")):
+            out.append(CheckResult(rid, chk, UNKNOWN, "N_eff_min is not defined (F-007); validity cannot be decided"))
+    elif below:
+        bs = set(below)
+        out.append(v("RESILIENCE-5.1-02", "statistical_validity_gate", [m.event_id for m in actions if m.arrived_at in bs],
+                     f"no enforcement in {len(below)} steps with N_eff < N_eff_min", "{n} enforcement outputs while N_eff < N_eff_min"))
+        out.append(v("RESILIENCE-8.4-01", "statistical_collapse_null_output", [k for k in below if not rows[k]["null_output"]],
+                     "statistical collapse put the system into the null-output state", "{n} collapse steps not in null output"))
+    else:
+        for rid, chk in (("RESILIENCE-5.1-02", "statistical_validity_gate"), ("RESILIENCE-8.4-01", "statistical_collapse_null_output")):
+            out.append(na(rid, chk, "statistical collapse", "N_eff never falls below N_eff_min"))
+    out.append(v("RESILIENCE-5.8-01", "node_concentration", bad_caps,
+                 "no owner's node concentration exceeds the ORACLE §8 limits", "{n} concentration violations"))
+    if r["sybil_sources"]:
+        plain = expected({**r, "sybil_sources": 0})
+        grew = [e["step"] for e, p in zip(exp, plain) if e["n_eff"] > p["n_eff"] + 1e-9]
+        out.append(v("RESILIENCE-5.8-02", "no_influence_from_scaling", grew,
+                     f"{r['sybil_sources']} extra sources of one owner do not raise N_eff (counted over {r['n_eff_basis']})",
+                     "{n} steps where duplicated sources of one owner raise N_eff (counted over " + r["n_eff_basis"] + ")"))
+    else:
+        out.append(na("RESILIENCE-5.8-02", "no_influence_from_scaling", "artificial scaling", "no extra sources of one owner"))
+    if r["n_eff_min"] >= 0:
+        fragile = []
+        for e in exp:
+            if e["trigger"]:
+                continue
+            owners: Dict[str, float] = {}
+            for s in e["active_sources"]:
+                owners[s["owner"]] = owners.get(s["owner"], 0.0) + e["weights"][s["id"]]
+            top = max(owners, key=lambda o: (owners[o], o))
+            rest = [s for s in e["active_sources"] if s["owner"] != top]
+            if n_eff(rest, weights(rest), r["n_eff_basis"]) < r["n_eff_min"]:
+                fragile.append(e["step"])
+        for rid, chk in (("RESILIENCE-5.1-01", "no_single_point_of_failure"), ("RESILIENCE-11-01", "actor_removal_no_impact")):
+            out.append(v(rid, chk, fragile, "removing the largest owner in any enforcing step keeps N_eff ≥ N_eff_min",
+                         "{n} enforcing steps where losing one owner would stop the system"))
+    else:
+        for rid, chk in (("RESILIENCE-5.1-01", "no_single_point_of_failure"), ("RESILIENCE-11-01", "actor_removal_no_impact")):
+            out.append(CheckResult(rid, chk, UNKNOWN, "N_eff_min is not defined (F-007)"))
     return out
 
 
@@ -341,6 +385,12 @@ IMPLEMENTS = {
     "ETRANS-4.4-02": ("no_auto_reactivation", "IMPLEMENTED", None),
     "ORACLE-8-01": ("source_owner_caps", "IMPLEMENTED", None),
     "ORACLE-13-01": ("systemic_halt_on_coverage", "PARTIAL", "Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled."),
+    "RESILIENCE-5.1-01": ("no_single_point_of_failure", "PARTIAL", "Single point of failure tested as loss of the largest owner (N_eff, H-SL-1)."),
+    "RESILIENCE-5.1-02": ("statistical_validity_gate", "PARTIAL", "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007)."),
+    "RESILIENCE-5.8-01": ("node_concentration", "IMPLEMENTED", None),
+    "RESILIENCE-5.8-02": ("no_influence_from_scaling", "PARTIAL", "Influence measured as N_eff; depends on the counting basis (H-SL-1)."),
+    "RESILIENCE-8.4-01": ("statistical_collapse_null_output", "PARTIAL", "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007)."),
+    "RESILIENCE-11-01": ("actor_removal_no_impact", "PARTIAL", "Only the N_eff and removal conditions of §11 are checked."),
 }
 
 
@@ -357,7 +407,7 @@ class SensorLossModule(LabModule):
     example_order = ["region_lost_global", "region_lost_regional_reading", "n_eff_min_missing", "sybil_inflation",
                      "faulty_recovery", "resume_old_outputs", "inconsistency_window"]
     implements = IMPLEMENTS
-    alternative_examples = ["region_lost_regional_reading", "resume_old_outputs"]
+    alternative_examples = ["region_lost_regional_reading", "resume_old_outputs", "sybil_inflation"]
     tests = ["tests/lab/test_sensor_loss_module.py"]
     causal_note = None
     hypotheses = [

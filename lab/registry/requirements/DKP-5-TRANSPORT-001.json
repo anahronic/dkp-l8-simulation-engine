@@ -1,0 +1,1145 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-TRANSPORT-001",
+ "doc_sha256": "7bf910fb6c866cdef6bffe696ae7022c42401b8f1ee9b0bb6bb22215f13c71f6",
+ "prefix": "TRANSPORT",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The document declares dependencies on DKP-0-ORACLE-001, DKP-1-IDENTITY-001, DKP-1-IMPACT-001, and DKP-2-ECONOMIC-001; their contents are not supplied. Provision-level dependencies identify explicitly invoked protocols, including the Physical Truth Layer mapped by the dependency list to DKP-0-ORACLE-001. PPDI aggregation, thresholds, RED computation, and several qualitative classifications are unspecified. Sections 2 and 12 contain no independently testable operative provisions. Section 8 is ambiguous about whether 'as primary tools' qualifies all three rejected tools or only punitive enforcement. Defense and Crisis protocols are referenced without document ids.",
+ "requirements": [
+  {
+   "id": "TRANSPORT-1-01",
+   "section": "1",
+   "title": "Regulate Transport Environment Rather Than Driving",
+   "quote": "This protocol does not regulate driving behavior directly. It regulates the physical and economic environment in which transport choices occur.",
+   "interpretation": "Check whether measures issued under this protocol concern the physical or economic transport environment and avoid direct regulation of driving behavior. Distinguishing environmental incentives from direct behavior regulation requires a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_measures",
+    "measure_classification"
+   ],
+   "criterion": "Measures regulate the physical and economic transport environment without directly regulating driving behavior.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport policy measures and their effects"
+   ],
+   "gap": "The boundary between direct driving regulation and environmental intervention is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule distinguishing direct driving regulation from environmental intervention."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-3-01",
+   "section": "3",
+   "title": "Require Preferable Safe Transport Modes",
+   "quote": "Safe modes of transport MUST be physically and psychologically preferable to dangerous ones.",
+   "interpretation": "Compare safe and dangerous modes on physical and psychological preference. The text supplies neither mode risk categories nor a preference measure or population aggregation rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transport_modes",
+    "mode_risks",
+    "physical_preferences",
+    "psychological_preferences"
+   ],
+   "criterion": "Safe modes are preferable to dangerous modes on both physical and psychological grounds.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mode risk assessments",
+    "passenger preference observations"
+   ],
+   "gap": "Risk classification, preference measurement, and population comparison rules are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of safe and dangerous modes.",
+    "A method for comparing physical and psychological preferences across Subjects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-3-02",
+   "section": "3",
+   "title": "Exclude Dignity Sacrifice From Viable Equilibria",
+   "quote": "Safety that requires sacrifice of bodily dignity is not adopted at scale and SHALL NOT be assumed as a viable equilibrium.",
+   "interpretation": "Inspect behavioral models and planning assumptions for equilibria designated viable despite requiring bodily dignity sacrifice. The assertion about adoption at scale lacks a scale definition and supporting behavioral model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "equilibrium_assumptions",
+    "bodily_dignity_conditions"
+   ],
+   "criterion": "An equilibrium requiring sacrifice of bodily dignity is not assumed viable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport planning and adoption models"
+   ],
+   "gap": "Bodily dignity sacrifice and equilibrium viability are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Operational definitions of bodily dignity sacrifice and viable equilibrium."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-4-01",
+   "section": "4",
+   "title": "Compute Publish And Audit PPDI",
+   "quote": "The system SHALL compute, publish, and audit a mandatory metric:\n\nPPDI — Passenger Physical Dignity Index",
+   "interpretation": "Verify that PPDI is computed and that publication and audit records exist. Checking the correctness of the computed metric requires an aggregation method that this document does not provide; no publication or audit cadence is specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "ppdi_values",
+    "ppdi_computation",
+    "publication_records",
+    "audit_records"
+   ],
+   "criterion": "PPDI is computed, published, and audited.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "passenger physical condition measurements",
+    "publication and audit records"
+   ],
+   "gap": "The PPDI computation method and publication and audit scope are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A PPDI aggregation method.",
+    "The population, reporting scope, and observation period for checking performance of the three duties."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-4.1-01",
+   "section": "4.1",
+   "title": "Include Minimum Measurable PPDI Components",
+   "quote": "PPDI SHALL include, at minimum, the following Physical Truth Layer–measurable indicators:",
+   "interpretation": "Inspect the PPDI specification for seated-trip percentage, minimum guaranteed individual seat width, forced-contact prohibition, vibration and noise thresholds, thermal comfort range, and average crowd density per cubic meter. Additional components are allowed; measurement methods and numerical bounds are absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "ppdi_component_schema",
+    "component_measurement_methods",
+    "component_thresholds"
+   ],
+   "criterion": "PPDI includes every listed component, and each is measurable through the Physical Truth Layer.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "trip seating observations",
+    "guaranteed seat dimensions",
+    "passenger contact and consent observations",
+    "vibration and noise readings",
+    "thermal readings",
+    "crowd density measurements"
+   ],
+   "gap": "Measurement procedures, threshold values, comfort bounds, and the encoding of a prohibition as an indicator are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Measurement procedures and aggregation periods for each component.",
+    "Vibration and noise thresholds and a thermal comfort range.",
+    "A representation of forced-contact prohibition within PPDI."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-4.1-02",
+   "section": "4.1",
+   "title": "Prohibit Forced Nonconsensual Bodily Contact",
+   "quote": "- prohibition of forced bodily contact between non-consenting passengers,",
+   "interpretation": "Check passenger contact events against force and consent classifications. The list presents this as a PPDI component, leaving ambiguity between an absolute operating prohibition and a requirement to represent prohibition compliance in PPDI.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "bodily_contact_events",
+    "passenger_consent",
+    "contact_force_classification"
+   ],
+   "criterion": "Forced bodily contact between non-consenting passengers is prohibited.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "passenger contact observations and consent evidence"
+   ],
+   "gap": "Force, consent, and whether the prohibition is an absolute operating constraint or a PPDI compliance component are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Operational definitions of forced contact and non-consent.",
+    "A declared reading of the prohibition's operational scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-4.2-01",
+   "section": "4.2",
+   "title": "Classify Transport Below Minimum PPDI",
+   "quote": "Transport modes operating below the minimum PPDI threshold are classified as:\n\nPhysically Degrading Transport Modes",
+   "interpretation": "Compare each mode's PPDI with the minimum threshold and require the degrading classification when its score is strictly below that threshold. Cost efficiency and throughput cannot exempt a mode; the text does not establish the converse classification rule.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "mode_ppdi",
+    "minimum_ppdi_threshold",
+    "mode_classifications"
+   ],
+   "criterion": "If mode PPDI < minimum PPDI threshold, classify the mode as Physically Degrading Transport Modes regardless of cost efficiency or throughput.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport mode PPDI scores"
+   ],
+   "gap": "The minimum PPDI threshold and score computation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A minimum PPDI threshold and PPDI computation method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-4.2-02",
+   "section": "4.2",
+   "title": "Limit PPDI To System Quality",
+   "quote": "PPDI is a system quality metric, not a justice or liability score.",
+   "interpretation": "Inspect metric definitions and downstream uses to ensure PPDI is treated as system quality and not assigned the role of a justice or liability score. This does not explicitly prohibit every incidental use of PPDI data in another process.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "metric_role_metadata",
+    "ppdi_downstream_uses"
+   ],
+   "criterion": "PPDI functions as a system quality metric and does not function as a justice or liability score.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "downstream metric use and decision records"
+   ],
+   "gap": "The boundary between informing another process and functioning as a justice or liability score is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification of metric uses as system quality, justice scoring, or liability scoring."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-5-01",
+   "section": "5",
+   "title": "Exclude Standing From Standard Operations",
+   "quote": "- Standing passengers SHALL NOT be treated as a standard operating mode.",
+   "interpretation": "Inspect operating plans and capacity assumptions for routine reliance on standing passengers. A definition of standard operating mode is needed to distinguish planned exceptions from ordinary service.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operating_plans",
+    "standing_capacity_assumptions",
+    "operating_mode_classifications"
+   ],
+   "criterion": "Standing passengers are not treated as a standard operating mode.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "service plans and capacity planning assumptions"
+   ],
+   "gap": "Standard operating mode is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule distinguishing standard operation from exceptional operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-5-02",
+   "section": "5",
+   "title": "Restrict Standing To Listed Exceptions",
+   "quote": "- Standing transport is permitted only under:",
+   "interpretation": "For every instance of standing transport, require emergency conditions, a temporary overload event, or a system recovery state. The text supplies the permitted categories but no criteria for entering or leaving them.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "standing_transport_events",
+    "emergency_conditions",
+    "temporary_overload_events",
+    "system_recovery_states"
+   ],
+   "criterion": "Standing transport implies emergency conditions, a temporary overload event, or a system recovery state.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational state and incident records"
+   ],
+   "gap": "Emergency, temporary overload, and system recovery classifications lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions and start and end conditions for each permitted exception."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-5-03",
+   "section": "5",
+   "title": "Classify Regular Standing As Underprovision",
+   "quote": "If standing occurs regularly, the transport system SHALL be classified as:\n\nStructurally under-provisioned",
+   "interpretation": "Evaluate standing occurrence over time and require the specified classification when standing is regular. The text provides neither a frequency threshold nor an observation window.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "standing_occurrence_history",
+    "system_classification"
+   ],
+   "criterion": "Regular standing triggers classification as Structurally under-provisioned.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "standing passenger observations over time"
+   ],
+   "gap": "The frequency and observation period defining regular standing are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule for regular standing, including the observation period."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-5-04",
+   "section": "5",
+   "title": "Trigger Capacity Expansion Or Redesign",
+   "quote": "This classification triggers capacity expansion or logistical redesign, not passenger adaptation.",
+   "interpretation": "When the system receives the structurally under-provisioned classification, check that it triggers capacity expansion or logistical redesign. Passenger adaptation does not satisfy the required response; no completion deadline is given.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "system_classification_events",
+    "response_actions"
+   ],
+   "criterion": "Classification as Structurally under-provisioned triggers capacity expansion or logistical redesign rather than passenger adaptation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "capacity projects and logistics redesign records"
+   ],
+   "gap": "The qualifying actions and evidence sufficient to show that the classification triggered them are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of capacity expansion, logistical redesign, and passenger adaptation.",
+    "A method for linking response actions to classification events."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-6-01",
+   "section": "6",
+   "title": "Prioritize Specified Vehicle Interior Features",
+   "quote": "Public transport vehicles SHALL prioritize:",
+   "interpretation": "Review design decisions for priority given to fully individual seating, passenger separation, staggered or chess-pattern layouts where applicable, and elimination of continuous bench seating on core routes. 'Prioritize' does not unambiguously require every feature in every vehicle.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "vehicle_designs",
+    "design_decision_records",
+    "route_classifications",
+    "layout_applicability"
+   ],
+   "criterion": "Vehicle design prioritizes all listed features, with layout applicability and the core-route limitation respected.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "vehicle architecture specifications",
+    "route classifications"
+   ],
+   "gap": "Priority, spatial separation, layout applicability, and core routes are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A method for checking design priority.",
+    "Definitions of spatial separation, applicable layouts, and core routes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-6-02",
+   "section": "6",
+   "title": "Accept Capacity Loss With Joint Benefits",
+   "quote": "Loss of nominal capacity is acceptable where it results in:",
+   "interpretation": "Assess whether a capacity-reducing design causes both increased PPDI and reduced dependence on high-risk private transport. The text supplies an acceptance condition but does not explicitly make it the only possible basis for acceptance.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "nominal_capacity_change",
+    "ppdi_change",
+    "high_risk_private_transport_dependency_change",
+    "design_effect_model"
+   ],
+   "criterion": "Loss of nominal capacity is acceptable where it results in increased PPDI and reduced dependency on high-risk private transport.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "capacity and PPDI comparisons",
+    "private transport dependence observations"
+   ],
+   "gap": "The dependency measure, comparison baseline, and causal attribution method are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A baseline and measure of dependence on high-risk private transport.",
+    "A model attributing both benefits to the capacity-reducing design."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.1-01",
+   "section": "7.1",
+   "title": "Quantify External Harm As RED",
+   "quote": "The Physical Truth Layer SHALL quantify this harm as:\n\nRED — Risk Externalization Delta",
+   "interpretation": "Verify that RED quantifies probabilistic external harm associated with every kilometer of private or high-risk transport, including mortality risk, medical system load, infrastructure degradation, and systemic insurance exposure. The text does not provide units, aggregation rules, or a harm model.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "distance_traveled",
+    "transport_mode",
+    "mortality_risk",
+    "medical_system_load",
+    "infrastructure_degradation",
+    "systemic_insurance_exposure",
+    "red_value"
+   ],
+   "criterion": "The Physical Truth Layer quantifies the listed probabilistic external harms of private or high-risk transport as RED.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "distance and mode observations",
+    "mortality risk estimates",
+    "medical load estimates",
+    "infrastructure damage estimates",
+    "insurance exposure estimates"
+   ],
+   "gap": "The referenced Physical Truth Layer quantification method and a RED computation rule are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A probabilistic external harm model and aggregation rule if the referenced protocol is unavailable.",
+    "A classification of high-risk transport modes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.2-01",
+   "section": "7.2",
+   "title": "Compute Account For And Redirect RED",
+   "quote": "- computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001,\n- recorded as an externality cost,\n- redirected to fund high-PPDI transport infrastructure.",
+   "interpretation": "Check computation provenance, externality accounting entries, and funding destinations for RED. The computation methods, high-PPDI boundary, and mechanism converting a risk quantity into funding are not supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "red_computation_provenance",
+    "externality_cost_records",
+    "funding_allocations",
+    "recipient_infrastructure_ppdi"
+   ],
+   "criterion": "RED is computed via both named protocols, recorded as an externality cost, and redirected to high-PPDI transport infrastructure.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "oracle and impact computation records",
+    "externality ledger entries",
+    "infrastructure funding records",
+    "recipient PPDI scores"
+   ],
+   "gap": "The referenced computation rules, high-PPDI classification, and funding conversion mechanism are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A high-PPDI classification rule.",
+    "A mechanism relating computed RED to redirected funding if external protocols do not supply one."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.2-02",
+   "section": "7.2",
+   "title": "Treat RED As Deterministic Compensation",
+   "quote": "RED is not a tax and not a punishment. It is deterministic damage compensation for probabilistic physical harm.",
+   "interpretation": "Check the declared economic role of RED and whether identical complete computation inputs yield identical compensation. The text does not define a substantive test distinguishing damage compensation from a tax or punishment.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "red_role_metadata",
+    "red_computation_inputs",
+    "red_computation_outputs",
+    "compensated_harm"
+   ],
+   "criterion": "RED is deterministic damage compensation for probabilistic physical harm and is not classified or implemented as a tax or punishment.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "compensation accounting and computation records"
+   ],
+   "gap": "The compensation computation and criteria distinguishing compensation from taxation or punishment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A substantive classification of compensation, taxation, and punishment.",
+    "A complete input specification for testing determinism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.3-01",
+   "section": "7.3",
+   "title": "Condition Optional Identity Risk Modulation",
+   "quote": "RED computation MAY include Identity-bound risk modulation via DKP-1-IDENTITY-001, where:\n\n- risk reduction is supported by PTL-confirmed data,",
+   "interpretation": "Identity-bound modulation is optional. When it is used, verify linkage through the named identity protocol and Physical Truth Layer confirmation supporting risk reduction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "identity_modulation_enabled",
+    "identity_linkage",
+    "risk_reduction_evidence",
+    "ptl_confirmation"
+   ],
+   "criterion": "If identity-bound risk modulation is used, it operates via DKP-1-IDENTITY-001 and risk reduction is supported by PTL-confirmed data.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001",
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "identity linkage records",
+    "PTL-confirmed risk reduction evidence"
+   ],
+   "gap": "The identity mechanism and standards for PTL confirmation of risk reduction are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Evidence validation and identity linkage rules if the referenced protocols are unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.3-02",
+   "section": "7.3",
+   "title": "Reduce RED For Lower Impact Profiles",
+   "quote": "- Subjects with demonstrably lower impact profiles generate lower RED,",
+   "interpretation": "When identity modulation is used, compare demonstrated impact profiles and their RED values. The comparison baseline and whether travel distance and other conditions must be held equal are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_impact_profiles",
+    "impact_evidence",
+    "subject_red_values",
+    "comparison_context"
+   ],
+   "criterion": "Demonstrably lower impact profiles generate lower RED within identity-bound risk modulation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "verified Subject impact profiles",
+    "Subject RED computations"
+   ],
+   "gap": "Impact profile ordering, comparison conditions, and the modulation function are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule ordering impact profiles.",
+    "Comparable travel and exposure conditions.",
+    "A modulation function preserving the required lower-impact, lower-RED relation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.3-03",
+   "section": "7.3",
+   "title": "Exclude Moral Reputation And Intent Weighting",
+   "quote": "- no moral, reputational, or intent-based weighting is permitted.",
+   "interpretation": "Inspect the identity modulation model's inputs, transformations, and weights for prohibited bases. A feature taxonomy is needed to identify indirect or proxy use.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "modulation_features",
+    "modulation_weights",
+    "feature_provenance"
+   ],
+   "criterion": "Identity-bound RED modulation contains no moral, reputational, or intent-based weighting.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "identity modulation model and feature provenance"
+   ],
+   "gap": "The categories of prohibited weighting and treatment of proxy variables are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification of model features and transformations by prohibited weighting basis."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-7.3-04",
+   "section": "7.3",
+   "title": "Exclude Behavioral Enforcement From Incentives",
+   "quote": "This mechanism creates an economic incentive for skill, safety, and risk mitigation without behavioral enforcement.",
+   "interpretation": "Inspect the identity risk incentive mechanism for behavioral enforcement measures. The text does not define whether any economic consequence could itself count as enforcement.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "identity_incentive_mechanism",
+    "associated_enforcement_measures"
+   ],
+   "criterion": "The economic incentive mechanism operates without behavioral enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "incentive and enforcement policy records"
+   ],
+   "gap": "The boundary between an economic incentive and behavioral enforcement is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A definition distinguishing incentives from behavioral enforcement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-8-01",
+   "section": "8",
+   "title": "Reject Prohibited Equilibrium Shift Tools",
+   "quote": "- bans,\n- moral pressure,\n- punitive enforcement as primary tools.",
+   "interpretation": "Inspect the transport strategy for use of the listed tools. The grammar permits either an absolute rejection of bans and moral pressure with a primary-tool restriction on punitive enforcement, or a primary-tool restriction applying to all three.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transport_strategy_tools",
+    "tool_roles"
+   ],
+   "criterion": "The strategy complies with the stated rejection of bans, moral pressure, and punitive enforcement as primary tools.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport strategy and intervention records"
+   ],
+   "gap": "The scope of 'as primary tools' and the definitions of moral pressure and primary tool are ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared grammatical reading of the primary-tool qualification.",
+    "A classification of tools and their primary or secondary roles."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-8-02",
+   "section": "8",
+   "title": "Model Comfort Driven Demand Decline",
+   "quote": "private high-risk transport demand declines organically, including among high-income Subjects.",
+   "interpretation": "Test the stated behavioral implication that seated, predictable, calm, physically dignified public transport leads to declining private high-risk demand, including among high-income Subjects. This is a qualitative dynamic relationship, with no magnitude or time horizon supplied.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "public_transport_conditions",
+    "private_high_risk_demand_history",
+    "subject_income_strata",
+    "behavioral_model"
+   ],
+   "criterion": "When public transport is seated, predictable, calm, and physically dignified, private high-risk transport demand declines organically, including among high-income Subjects.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "public transport condition observations",
+    "demand histories by income stratum"
+   ],
+   "gap": "The behavioral model, qualitative condition definitions, income boundary, and response horizon are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of the four public transport conditions and organic demand decline.",
+    "An income stratification and observation horizon.",
+    "A model linking improved conditions to demand."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-9-01",
+   "section": "9",
+   "title": "Include Biosphere Impacts In Evaluation",
+   "quote": "- transport-related impacts on biosphere indicators (B(t))\n\n  SHALL be included in system evaluation,",
+   "interpretation": "Inspect system evaluations for inclusion of transport-related impacts on B(t). The document names the indicator family but does not specify its members or transport attribution method.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "system_evaluation",
+    "biosphere_indicators",
+    "transport_attributed_impacts"
+   ],
+   "criterion": "System evaluation includes transport-related impacts on biosphere indicators B(t).",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "biosphere indicator observations",
+    "transport impact attribution"
+   ],
+   "gap": "B(t), transport attribution, and the required evaluation coverage are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A biosphere indicator set and transport attribution method.",
+    "A definition of sufficient inclusion in system evaluation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-9-02",
+   "section": "9",
+   "title": "Measure Biosphere Impacts Through Oracle",
+   "quote": "- these impacts SHALL be measured via DKP-0-ORACLE-001,",
+   "interpretation": "Check measurement provenance for transport-related biosphere impacts. Full compliance requires the measurement rules of the referenced protocol, which is not supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "biosphere_impact_measurements",
+    "measurement_provenance"
+   ],
+   "criterion": "Transport-related biosphere impacts are measured via DKP-0-ORACLE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "oracle biosphere impact measurements and provenance"
+   ],
+   "gap": "The referenced oracle measurement protocol is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Oracle measurement and provenance validation rules if the referenced protocol is unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-9-03",
+   "section": "9",
+   "title": "Make Biosphere Impacts Influence Decisions",
+   "quote": "- and SHALL influence funding, prioritization, and redesign decisions.",
+   "interpretation": "Inspect all three decision processes for operative use of measured transport-related biosphere impacts. Merely storing the measurements need not establish influence; no weight or tradeoff rule is specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "biosphere_impact_measurements",
+    "funding_decisions",
+    "prioritization_decisions",
+    "redesign_decisions",
+    "decision_rules"
+   ],
+   "criterion": "Transport-related biosphere impacts influence funding, prioritization, and redesign decisions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "biosphere impact measurements",
+    "decision rules and decision records"
+   ],
+   "gap": "The minimum evidence of influence and the decision tradeoff rules are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A test of operative influence in each decision process."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-10-01",
+   "section": "10",
+   "title": "Reduce Private Kilometers Without Prohibition",
+   "quote": "- private vehicle kilometers decrease without legal prohibition,",
+   "interpretation": "Treat this as one component of the listed effectiveness criteria and compare private vehicle kilometers over time while checking applicable prohibitions. The scope of legal prohibition could mean all relevant prohibitions or only prohibitions producing the decrease.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "private_vehicle_kilometer_history",
+    "legal_prohibitions"
+   ],
+   "criterion": "Private vehicle kilometers decrease without legal prohibition.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "private vehicle distance histories",
+    "applicable prohibition records"
+   ],
+   "gap": "The comparison period, geographic scope, and relationship between prohibition and the decrease are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A comparison baseline, period, and geographic scope.",
+    "A declared interpretation of 'without legal prohibition'."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-10-02",
+   "section": "10",
+   "title": "Require Structural Road Mortality Decline",
+   "quote": "- road mortality declines structurally, not episodically,",
+   "interpretation": "Evaluate mortality history for a structural decline as part of effectiveness assessment. The text does not choose between counts and rates or define a structural rather than episodic change.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "road_mortality_history",
+    "mortality_trend_model"
+   ],
+   "criterion": "Road mortality exhibits a structural decline rather than an episodic decline.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "road mortality observations over time"
+   ],
+   "gap": "The mortality measure, analysis period, and structural change criterion are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A mortality measure and observation period.",
+    "A model distinguishing structural decline from episodic variation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-10-03",
+   "section": "10",
+   "title": "Increase PPDI Year Over Year",
+   "quote": "- PPDI scores trend upward year-over-year,",
+   "interpretation": "Compare annual PPDI scores as part of effectiveness assessment. 'Trend upward year-over-year' could require an increase in every annual comparison or a positive trend across annual observations.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "annual_ppdi_scores",
+    "ppdi_aggregation_scope"
+   ],
+   "criterion": "PPDI scores trend upward year-over-year.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "annual PPDI score series"
+   ],
+   "gap": "The score aggregation scope, assessment span, and strict-increase versus overall-trend interpretation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A consistent annual score aggregation scope.",
+    "A choice between strict annual increases and a positive trend over annual observations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-10-04",
+   "section": "10",
+   "title": "Require Voluntary Choice Across Incomes",
+   "quote": "- public transport is voluntarily chosen across income strata,",
+   "interpretation": "Check observed public transport choices and voluntariness within income strata as part of effectiveness assessment. The text does not define the strata, required uptake, or whether 'across' means every stratum or broad representation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transport_choice_records",
+    "choice_voluntariness",
+    "income_strata"
+   ],
+   "criterion": "Public transport is voluntarily chosen across income strata.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport choices and income classifications",
+    "evidence of voluntariness"
+   ],
+   "gap": "Income strata, voluntariness, and sufficient uptake across strata are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An income stratification and voluntariness rule.",
+    "A coverage and uptake interpretation for 'across income strata'."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-10-05",
+   "section": "10",
+   "title": "Decrease Transport Related Biospheric Impact",
+   "quote": "- biospheric transport-related impact trends downward.",
+   "interpretation": "Evaluate transport-related biospheric impact over time as part of effectiveness assessment. Multiple indicators may move in different directions, and the text supplies no aggregation or trend rule.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "transport_biospheric_impact_history",
+    "impact_aggregation_method",
+    "trend_model"
+   ],
+   "criterion": "Biospheric transport-related impact trends downward.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transport-attributed biosphere impact time series"
+   ],
+   "gap": "Indicator aggregation, comparison period, and the downward-trend test are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An aggregation rule for biospheric impacts.",
+    "An observation period and trend criterion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-11-01",
+   "section": "11",
+   "title": "Preserve Declared System Dependency Position",
+   "quote": "DKP-5-TRANSPORT-001 operates:",
+   "interpretation": "Inspect the system dependency graph for transport downstream of Physical Truth, Impact, and Identity; upstream of urban planning, labor mobility, and social systems; and coordinated with economic externality accounting. The text does not define whether these relationships require data flow, decision precedence, or organizational placement.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "system_dependency_graph",
+    "module_interfaces",
+    "economic_coordination_records"
+   ],
+   "criterion": "Transport operates downstream of L0 Physical Truth and L1 Impact and Identity, upstream of the listed systems, and in coordination with L2 economic externality accounting.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-1-IMPACT-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-2-ECONOMIC-001"
+   ],
+   "data_dependencies": [
+    "module interfaces and dependency architecture",
+    "economic externality coordination records"
+   ],
+   "gap": "Downstream, upstream, and coordination relationships lack interface or precedence definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An operational interpretation of system dependency direction and coordination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-11-02",
+   "section": "11",
+   "title": "Prohibit Assignment Of Justice Outcomes",
+   "quote": "This protocol SHALL NOT:\n\n- assign justice outcomes,",
+   "interpretation": "Inspect protocol outputs and decisions for assigned justice outcomes. Classification requires a definition of justice outcomes, which this document does not provide.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_outputs",
+    "protocol_decisions",
+    "justice_outcome_classification"
+   ],
+   "criterion": "The protocol assigns no justice outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol decision and output records"
+   ],
+   "gap": "Justice outcomes are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A definition of justice outcomes applicable to protocol outputs."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-11-03",
+   "section": "11",
+   "title": "Prohibit Restrictions On Individual Freedoms",
+   "quote": "- restrict individual freedoms,",
+   "interpretation": "Evaluate protocol measures for restrictions on individual freedoms under the governing 'SHALL NOT' clause. The text supplies neither a freedom set nor a rule distinguishing restrictions from economic consequences.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_measures",
+    "individual_freedoms",
+    "measure_effects"
+   ],
+   "criterion": "The protocol does not restrict individual freedoms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "implemented measures and their effects on Subjects"
+   ],
+   "gap": "The protected freedoms and the test for a restriction are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A defined set of individual freedoms.",
+    "A rule for determining whether a measure restricts a freedom."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "TRANSPORT-11-04",
+   "section": "11",
+   "title": "Preserve Defense And Crisis Protocol Precedence",
+   "quote": "- override Defense or Crisis protocols.",
+   "interpretation": "Check conflict resolution and execution records to ensure transport rules do not override Defense or Crisis protocols. The referenced protocols have no supplied ids or contents.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "transport_rules",
+    "defense_rules",
+    "crisis_rules",
+    "conflict_resolution_records"
+   ],
+   "criterion": "Transport protocol rules do not override Defense or Crisis protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Defense and Crisis protocol rules",
+    "protocol conflict and precedence records"
+   ],
+   "gap": "Defense and Crisis protocol identities, contents, and conflict semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Identification of the applicable Defense and Crisis protocols.",
+    "A rule for detecting overrides and resolving protocol conflicts."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}

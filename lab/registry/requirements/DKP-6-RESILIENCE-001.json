@@ -1,0 +1,1257 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-6-RESILIENCE-001",
+ "doc_sha256": "247af10491db08f04dc3406ad889c896addbedf887ff200e51a61091887ba04b",
+ "prefix": "RESILIENCE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); interpretations are unreviewed drafts (interpretation_status per requirement)",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Backslash escapes were removed where permitted. Sections 2 and 4.1–4.3 provide positioning or threat categories without operative requirements; sections 8.1–8.3 and the audit appendix add no distinct rules. Sections 7.1–7.4 are included because their enclosing heading explicitly makes the named patterns forbidden. External documents were not supplied, so their formulas, thresholds, and definitions remain unresolved. Section 11 says N_eff must remain 'above threshold', whereas 5.1 permits equality; this boundary ambiguity is retained. Section 5.5 explicitly distinguishes integration from resilience. Null-output, invalid system state, and local entry-point invalidation are retained as distinct outcomes because their equivalence is not specified. No precedence is inferred between the resilience conditions and referenced crisis rules.",
+ "requirements": [
+  {
+   "id": "RESILIENCE-0-01",
+   "section": "0",
+   "title": "Protocol Override Is Prohibited",
+   "quote": "meta: \"Layer: L6–L7 · Depends on: DKP-0-ORACLE-001, DKP-1-AXIOMS-001, DKP-1-PREVENTION-001, DKP-7-SCOPE-001, DKP-8-INTEROP-001 · Override: Not permitted\"",
+   "interpretation": "Check that no effective override targets this protocol. The front matter does not define override mechanisms or their relationship to crisis actions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "override_rules",
+    "override_events"
+   ],
+   "criterion": "No override of this protocol is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "override configuration and event records"
+   ],
+   "gap": "An operational definition of an override and its interaction with crisis actions is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which configuration changes and actions count as overriding the protocol."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-1-01",
+   "section": "1",
+   "title": "Resilience Requires Unprotected Continuity",
+   "quote": "continuity of function under pressure without dependency on protected actors",
+   "interpretation": "Evaluate whether function continues under pressure without relying on protected actors. Function, pressure, protection, and dependency require operational definitions.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "functional_traces",
+    "pressure_scenarios",
+    "actor_dependencies",
+    "actor_protection_status"
+   ],
+   "criterion": "Function continues under pressure without dependency on protected actors.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "functional status",
+    "actor dependencies and protection status"
+   ],
+   "gap": "The document supplies no model of pressure, protected actors, or functional continuity. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define pressure scenarios, protected actors, functional continuity, and dependency."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-3-01",
+   "section": "3",
+   "title": "Operation Without Actor Or Authority Dependency",
+   "quote": "DKP must remain operational without dependency on:",
+   "interpretation": "Test operation without reliance on any individual actor, centralized authority, or permission layer, as enumerated immediately after the excerpt. The text does not specify whether simultaneous removal of all such dependencies must be tested.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "dependency_model",
+    "operational_traces",
+    "removal_scenarios"
+   ],
+   "criterion": "DKP remains operational without dependency on any individual actor, centralized authority, or permission layer.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system dependency topology",
+    "operational status"
+   ],
+   "gap": "Operational criteria, dependency semantics, and the scope of removal scenarios are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define operational success and whether removals are individual or simultaneous."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-4.4-01",
+   "section": "4.4",
+   "title": "Physical Suppression Uses Structural Invariants",
+   "quote": "physical suppression scenarios\n(handled via structural invariants only)",
+   "interpretation": "Check that mechanisms addressing physical suppression rely exclusively on structural invariants. The scenario class is expressly flagged as undefined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "suppression_scenarios",
+    "mitigation_mechanisms",
+    "invariant_mapping"
+   ],
+   "criterion": "Physical suppression scenarios are handled via structural invariants only.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mitigation mechanism specifications"
+   ],
+   "gap": "Physical suppression scenarios and the classification of invariant-based handling are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define physical suppression scenarios and how mechanisms are classified as structural-invariant handling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.1-01",
+   "section": "5.1",
+   "title": "No Unique Functional Dependency",
+   "quote": "No function of DKP may depend on a unique actor, node, or interface",
+   "interpretation": "For every function, evaluate whether removing an actor, node, or interface eliminates that function. This requires a dependency model that captures shared dependencies as well as nominal redundancy.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "function_inventory",
+    "dependency_model",
+    "removal_results"
+   ],
+   "criterion": "No DKP function depends on a unique actor, node, or interface.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "function inventory",
+    "actor, node, and interface dependencies"
+   ],
+   "gap": "Single point of failure tested as loss of the largest owner (N_eff, H-SL-1).",
+   "hypotheses_needed": [
+    "Define dependency and function preservation under removal."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_single_point_of_failure"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.1-02",
+   "section": "5.1",
+   "title": "Statistical Validity Gates Enforcement",
+   "quote": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)\n\nIf violated → system enters invalid state (no enforcement)",
+   "interpretation": "Check that validity implies N_eff ≥ N_eff_min and that violation produces an invalid state with no enforcement. Satisfying the inequality is a necessary condition, not a sufficient condition for validity.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "n_eff",
+    "n_eff_min",
+    "system_state",
+    "enforcement_events"
+   ],
+   "criterion": "Valid state requires N_eff ≥ N_eff_min; N_eff < N_eff_min causes invalid state and no enforcement.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "oracle effective node count",
+    "oracle minimum effective node count",
+    "enforcement status"
+   ],
+   "gap": "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
+   "hypotheses_needed": [
+    "Supply the referenced statistical definitions and specify transition evaluation timing."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "statistical_validity_gate"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.2-01",
+   "section": "5.2",
+   "title": "Individual And Leadership Representation Prohibited",
+   "quote": "DKP must not be representable as an individual or leadership structure",
+   "interpretation": "The provision concerns the possibility of representing DKP as an individual or leadership structure. Observing particular representations cannot establish that no such representation is possible.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "organizational_structure",
+    "system_representations"
+   ],
+   "criterion": "DKP is not representable as an individual or leadership structure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "organizational and public representation records"
+   ],
+   "gap": "Representability and leadership structure have no operational definitions or bounded decision domain.",
+   "hypotheses_needed": [
+    "Restrict representability to a declared class of organizational or public representations."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.3-01",
+   "section": "5.3",
+   "title": "Enforcement Remains Bound To PTL",
+   "quote": "All enforcement must remain bound to measurable physical states (PTL)",
+   "interpretation": "Trace each enforcement action to measurable physical states and verify that those states constrain the action. The required binding relationship and measurement validity rules are not given.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_events",
+    "ptl_states",
+    "enforcement_bindings"
+   ],
+   "criterion": "Every enforcement action remains bound to measurable physical states.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL physical state measurements",
+    "enforcement provenance"
+   ],
+   "gap": "The binding relation and criteria for acceptable physical measurements are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a verifiable binding between enforcement actions and physical state measurements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.3-02",
+   "section": "5.3",
+   "title": "Interpretive Override Categories Are Forbidden",
+   "quote": "- narrative override\n- expert override\n- institutional override",
+   "interpretation": "The preceding 'Forbidden:' applies to all three listed override categories. Check that no configured or executed override belongs to any of them.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "override_rules",
+    "override_events",
+    "override_classifications"
+   ],
+   "criterion": "No narrative, expert, or institutional override is allowed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "override configuration",
+    "override event provenance"
+   ],
+   "gap": "The boundaries of the three override categories are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how override rules and events are classified as narrative, expert, or institutional."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.3-03",
+   "section": "5.3",
+   "title": "Human Validation Permits Unaltered Mirroring",
+   "quote": "If external systems require human validation,\nDKP outputs may be mirrored but not altered (DKP-8-INTEROP-001)",
+   "interpretation": "When an external system requires human validation, compare mirrored outputs with their DKP originals. Mirroring is permitted rather than required; the text does not define whether alteration includes representation-only changes.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "human_validation_required",
+    "original_outputs",
+    "mirrored_outputs",
+    "output_transformations"
+   ],
+   "criterion": "If human validation is required, DKP outputs may be mirrored, but must not be altered.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-INTEROP-001"
+   ],
+   "data_dependencies": [
+    "external validation requirements",
+    "original and mirrored DKP outputs"
+   ],
+   "gap": "The referenced interoperability rules and the required notion of output identity are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define whether output preservation means exact representation equality or semantic equality."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.4-01",
+   "section": "5.4",
+   "title": "Operation Does Not Require Displacement",
+   "quote": "DKP must not require explicit displacement of existing systems to operate",
+   "interpretation": "Test whether DKP can operate while existing systems remain in place. The clarification characterizes DKP as a constraint layer rather than a governance replacement mechanism.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "integration_design",
+    "existing_systems",
+    "operating_preconditions"
+   ],
+   "criterion": "DKP operation does not require explicit displacement of existing systems and serves as a constraint layer.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integration architecture",
+    "existing system roles"
+   ],
+   "gap": "Operational sufficiency, displacement, and governance replacement are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define operation, displacement, and constraint-layer versus governance-replacement roles."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.5-01",
+   "section": "5.5",
+   "title": "Components Produce Measurable Constraint Dependency",
+   "quote": "DKP components must produce measurable dependency through constraint enforcement",
+   "interpretation": "Measure whether component enforcement creates a dependency in the surrounding system. The text provides neither a dependency measure nor an attribution method.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "component_enforcement",
+    "system_constraints",
+    "dependency_measurements"
+   ],
+   "criterion": "DKP components produce measurable dependency through constraint enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "component enforcement records",
+    "system constraint measurements"
+   ],
+   "gap": "A dependency measure and a model attributing dependency to constraint enforcement are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define measurable dependency and how constraint enforcement causes it."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.5-02",
+   "section": "5.5",
+   "title": "Irreplaceability Emerges Without Imposition",
+   "quote": "Irreplaceability is emergent, not imposed",
+   "interpretation": "Evaluate the mechanism that produces irreplaceability and distinguish emergent dependency from imposed dependency. No operational distinction is supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dependency_formation_history",
+    "integration_mechanisms"
+   ],
+   "criterion": "Irreplaceability emerges and is not imposed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integration history",
+    "dependency formation mechanisms"
+   ],
+   "gap": "The distinction between emergent and imposed irreplaceability is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define observable criteria distinguishing emergent from imposed dependency."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.5-03",
+   "section": "5.5",
+   "title": "Removal Effects Determine Nonintegration",
+   "quote": "If DKP removal causes no measurable change in system constraints,\nDKP is not yet integrated (not a resilience condition)",
+   "interpretation": "Compare system constraints with and without DKP and classify DKP as not yet integrated when no measurable change results. The converse is not stated, and this test must not be treated as a resilience condition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "constraints_with_dkp",
+    "constraints_without_dkp",
+    "integration_status",
+    "measurement_method"
+   ],
+   "criterion": "No measurable constraint change caused by DKP removal implies not yet integrated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system constraint measurements before and after removal"
+   ],
+   "gap": "A counterfactual comparison method and a definition of measurable change are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the removal experiment and measurement resolution for constraint changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.6-01",
+   "section": "5.6",
+   "title": "Resilience Preserves Core Rules",
+   "quote": "Resilience mechanisms must not alter core axioms or enforcement logic",
+   "interpretation": "Compare core axioms and enforcement logic before and after resilience mechanisms act. Identifying the protected scope requires the referenced scope rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "resilience_changes",
+    "core_axioms",
+    "enforcement_logic",
+    "scope_rules"
+   ],
+   "criterion": "Resilience mechanisms make no alteration to core axioms or enforcement logic.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "core axiom baseline",
+    "enforcement logic baseline",
+    "scope classification"
+   ],
+   "gap": "The protected scope and a complete account of semantic alterations require definitions absent from this text. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply scope rules and define how changes to axioms and enforcement logic are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.7-01",
+   "section": "5.7",
+   "title": "Entry Points Preserve Required Metadata",
+   "quote": "All Entry Points must preserve minimum PTL metadata completeness",
+   "interpretation": "Validate every entry point against the minimum PTL metadata requirements. The required fields and completeness rules are delegated to the referenced data document.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "entry_point_outputs",
+    "ptl_metadata_requirements"
+   ],
+   "criterion": "Every entry point preserves minimum PTL metadata completeness.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-PTL-REG-DATA-001"
+   ],
+   "data_dependencies": [
+    "PTL metadata schema and completeness requirements",
+    "entry-point outputs"
+   ],
+   "gap": "The referenced minimum metadata requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the required metadata fields and completeness rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.7-02",
+   "section": "5.7",
+   "title": "Entry Points Preserve State Fidelity",
+   "quote": "- no partial state exposure\n- no semantic filtering\n- no aggregation that hides variance",
+   "interpretation": "Compare exposed states with their PTL sources and inspect filtering and aggregation. Partial exposure and semantic filtering are prohibited; aggregation is prohibited when it hides variance.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "source_ptl_states",
+    "exposed_states",
+    "filtering_rules",
+    "aggregation_rules"
+   ],
+   "criterion": "Entry points expose no partial state, perform no semantic filtering, and perform no aggregation that hides variance.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-PTL-REG-DATA-001"
+   ],
+   "data_dependencies": [
+    "complete PTL source states",
+    "entry-point transformations",
+    "variance information"
+   ],
+   "gap": "State completeness, semantic filtering, and preservation of variance lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define complete exposure, semantic filtering, and when aggregation hides variance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.7-03",
+   "section": "5.7",
+   "title": "Interface Violations Cause Local Invalidation",
+   "quote": "Violation leads to:\n\nlocal invalidation of entry point",
+   "interpretation": "For an established interface-integrity violation, check that the affected entry point becomes locally invalid. Detection timing, invalidation timing, and recovery are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "interface_violations",
+    "entry_point_state_history"
+   ],
+   "criterion": "Violation of section 5.7 leads to local invalidation of the affected entry point.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-PTL-REG-DATA-001"
+   ],
+   "data_dependencies": [
+    "interface-integrity validation results",
+    "entry-point validity states"
+   ],
+   "gap": "Violation detection depends on absent integrity definitions, and the invalidation deadline is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply interface violation rules and define when the resulting invalidation must be observable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.8-01",
+   "section": "5.8",
+   "title": "Node Concentration Stays Within Limits",
+   "quote": "Node concentration must not exceed limits defined in DKP-0-ORACLE-001",
+   "interpretation": "Compute node concentration under the oracle rules and compare it with every applicable limit. Neither the concentration metric nor the limits appear here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "node_distribution",
+    "concentration_metric",
+    "concentration_limits"
+   ],
+   "criterion": "Node concentration does not exceed the limits defined in DKP-0-ORACLE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "node distribution",
+    "oracle concentration metrics and limits"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Supply the referenced concentration calculation and applicable limits."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "node_concentration"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-5.8-02",
+   "section": "5.8",
+   "title": "Independence Prevents Artificial Influence Growth",
+   "quote": "- distributed nodes must remain statistically independent\n- artificial scaling does not increase influence",
+   "interpretation": "Evaluate statistical independence of distributed nodes and verify that artificial scaling leaves influence unincreased. The text does not specify pairwise versus joint independence, the meaning of artificial scaling, or an influence measure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "node_observations",
+    "scaling_events",
+    "influence_before",
+    "influence_after"
+   ],
+   "criterion": "Distributed nodes remain statistically independent, and artificial scaling does not increase influence.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "node observation histories",
+    "scaling provenance",
+    "oracle influence assignments"
+   ],
+   "gap": "Influence measured as N_eff; depends on the counting basis (H-SL-1).",
+   "hypotheses_needed": [
+    "Specify pairwise or joint independence and its test method.",
+    "Define artificial scaling and the influence measure."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_influence_from_scaling"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-6.1-01",
+   "section": "6.1",
+   "title": "Distributed Entry Point Pattern Conditions",
+   "quote": "- multiple independent implementations\n- no canonical interface required\n- MUST comply with 5.7 (metadata completeness)",
+   "interpretation": "For deployments using this allowed pattern, check for multiple independent implementations, operation without a required canonical interface, and compliance with section 5.7. A canonical interface is not expressly forbidden; requiring one is excluded.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deployment_pattern",
+    "implementation_inventory",
+    "interface_dependencies",
+    "interface_integrity_results"
+   ],
+   "criterion": "The distributed entry-point pattern has multiple independent implementations, requires no canonical interface, and complies with section 5.7.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "implementation inventory and dependencies",
+    "section 5.7 validation results"
+   ],
+   "gap": "Implementation independence and the referenced internal completeness checks require additional definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat these conditions as conditional on using the allowed pattern.",
+    "Define implementation independence and supply section 5.7 validation rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-6.2-01",
+   "section": "6.2",
+   "title": "Microlevel Functionality Precedes Scaling",
+   "quote": "system functional at micro-level before scaling",
+   "interpretation": "For local-first deployment, verify that microlevel functionality is established before scaling begins. Neither microlevel nor functional success is defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "deployment_pattern",
+    "microlevel_validation",
+    "scaling_events"
+   ],
+   "criterion": "Microlevel functionality precedes scaling in local-first deployment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deployment validation results",
+    "scaling event history"
+   ],
+   "gap": "The scope of microlevel deployment and the functionality test are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define microlevel and functional success.",
+    "Treat the timing rule as conditional on local-first deployment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-6.3-01",
+   "section": "6.3",
+   "title": "Passive Adoption Relies On Utility",
+   "quote": "adoption via utility, not mandate",
+   "interpretation": "For the passive adoption pattern, determine whether adoption occurs through utility rather than mandate. Causal attribution of adoption is not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deployment_pattern",
+    "adoption_events",
+    "adoption_incentives",
+    "mandates"
+   ],
+   "criterion": "Passive adoption occurs via utility and not mandate.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "adoption records",
+    "mandates and incentive records"
+   ],
+   "gap": "Utility, mandate, and the causal test for adoption are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define utility-driven and mandate-driven adoption.",
+    "Treat the condition as applying to the passive adoption pattern."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-6.4-01",
+   "section": "6.4",
+   "title": "Interaction Uses Only Measurable Limits",
+   "quote": "behavior influenced only via measurable limits",
+   "interpretation": "For constraint-driven interaction, trace mechanisms influencing behavior and check that each operates through measurable limits. The scope of behavior and the influence attribution method are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "interaction_pattern",
+    "influence_mechanisms",
+    "measurable_limits",
+    "behavior_traces"
+   ],
+   "criterion": "Constraint-driven interaction influences behavior only via measurable limits.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interaction mechanism specifications",
+    "limit measurements",
+    "behavior observations"
+   ],
+   "gap": "A causal model of behavioral influence and a definition of measurable limits are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define behavioral scope, measurable limits, and causal attribution.",
+    "Treat the condition as applying to constraint-driven interaction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-7.1-01",
+   "section": "7.1",
+   "title": "Central Authority Nodes Are Forbidden",
+   "quote": "#### 7.1 Central Authority Node",
+   "interpretation": "The enclosing 'Forbidden Structural Patterns' heading makes this named pattern a prohibition. Check whether any node acts as a central authority under a declared architectural definition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "node_roles",
+    "authority_topology"
+   ],
+   "criterion": "The system contains no central authority node.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "node roles",
+    "decision and authority topology"
+   ],
+   "gap": "Central authority is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which node powers constitute central authority."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-7.2-01",
+   "section": "7.2",
+   "title": "Identity Bound Trust Is Forbidden",
+   "quote": "#### 7.2 Identity-bound Trust",
+   "interpretation": "The enclosing forbidden-patterns heading prohibits identity-bound trust. Inspect trust rules for dependence on identity, while recognizing that the text does not distinguish identity-based authentication from identity-based trust.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "trust_rules",
+    "identity_dependencies"
+   ],
+   "criterion": "The system does not use identity-bound trust.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "trust assignment rules",
+    "identity usage records"
+   ],
+   "gap": "Identity-bound trust is undefined, including its relationship to authentication. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define identity-bound trust and distinguish it from other identity uses."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-7.3-01",
+   "section": "7.3",
+   "title": "Narrative Dependence Is Forbidden",
+   "quote": "#### 7.3 Narrative Dependence",
+   "interpretation": "The enclosing forbidden-patterns heading prohibits narrative dependence. Evaluate whether any operational dependency is narrative-based under a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operational_dependencies",
+    "narrative_classifications"
+   ],
+   "criterion": "The system has no narrative dependence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational dependency records",
+    "decision inputs"
+   ],
+   "gap": "Narrative and narrative dependence lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define narrative inputs and when system operation depends on them."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-7.4-01",
+   "section": "7.4",
+   "title": "Enforcement Through Interpretation Is Forbidden",
+   "quote": "#### 7.4 Enforcement via Interpretation",
+   "interpretation": "The enclosing forbidden-patterns heading prohibits enforcement via interpretation. The text does not specify whether interpretation means human discretion or includes other semantic processing.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_rules",
+    "enforcement_provenance"
+   ],
+   "criterion": "Enforcement does not occur via interpretation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement decision rules and provenance"
+   ],
+   "gap": "The prohibited meaning of interpretation is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define interpretation and whether the prohibition covers human discretion, semantic processing, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-8.4-01",
+   "section": "8.4",
+   "title": "Statistical Collapse Produces Null Output",
+   "quote": "→ oracle inconsistency\n→ enforcement invalid\n→ system enters null-output state",
+   "interpretation": "The immediately preceding trigger is N_eff < N_eff_min. Check the specified progression to oracle inconsistency, invalid enforcement, and null-output state; the arrows may denote causal implications or distinct sequential states.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "n_eff",
+    "n_eff_min",
+    "oracle_state",
+    "enforcement_state",
+    "system_output_state"
+   ],
+   "criterion": "N_eff < N_eff_min implies oracle inconsistency, invalid enforcement, and entry into null-output state.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "oracle effective node count and threshold",
+    "oracle consistency status",
+    "enforcement and output states"
+   ],
+   "gap": "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
+   "hypotheses_needed": [
+    "Supply N_eff and N_eff_min definitions.",
+    "Define null-output and whether the arrows represent simultaneous implications or sequential transitions."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "statistical_collapse_null_output"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-8.5-01",
+   "section": "8.5",
+   "title": "Incomplete Exposure Cascades To Capture",
+   "quote": "Entry Points provide incomplete PTL state\n→ local distortion\n→ cascade to soft capture",
+   "interpretation": "Model whether incomplete entry-point PTL exposure produces local distortion and a cascade to soft capture. The text states a causal chain without specifying its dynamics or whether it is inevitable.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "entry_point_states",
+    "complete_ptl_states",
+    "distortion_history",
+    "capture_state"
+   ],
+   "criterion": "Incomplete PTL exposure leads to local distortion and a cascade to soft capture.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL source and exposed states",
+    "system behavior over time"
+   ],
+   "gap": "Local distortion, soft capture, cascade dynamics, and their timing are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define distortion and soft capture.",
+    "Specify whether the cascade is deterministic or a possible failure trajectory and provide its dynamics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-9-01",
+   "section": "9",
+   "title": "Suppression Resistance Uses Structural Mechanisms",
+   "quote": "DKP resists suppression through:",
+   "interpretation": "Evaluate resistance through the listed absence of target, absence of override layer, PTL binding, distributed enforcement, and statistical validity constraints. The document does not establish whether the list is jointly sufficient or merely identifies required mechanisms.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "suppression_scenarios",
+    "target_structure",
+    "override_architecture",
+    "ptl_bindings",
+    "enforcement_topology",
+    "statistical_validity"
+   ],
+   "criterion": "Suppression resistance operates through absence of target and override layer, PTL binding, distributed enforcement, and statistical validity constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system architecture",
+    "PTL enforcement bindings",
+    "enforcement distribution",
+    "statistical validity results"
+   ],
+   "gap": "A suppression model and operational definitions connecting the listed mechanisms to resistance are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define suppression, target absence, distributed enforcement, and successful resistance.",
+    "Specify whether the mechanism list is necessary, sufficient, or descriptive of an asserted causal model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-10.1-01",
+   "section": "10.1",
+   "title": "Resilience Cannot Override Crisis Or Scope",
+   "quote": "Resilience does not override:",
+   "interpretation": "The following list names DKP-4-CRISIS-001 and DKP-7-SCOPE-001. Check that resilience rules and actions do not supersede their requirements; those requirements are unavailable here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "resilience_rules",
+    "resilience_actions",
+    "crisis_requirements",
+    "scope_requirements"
+   ],
+   "criterion": "Resilience does not override DKP-4-CRISIS-001 or DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "crisis requirements",
+    "scope requirements",
+    "rule precedence and action records"
+   ],
+   "gap": "The referenced requirements and conflict-resolution semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced requirements and define what constitutes overriding them."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-10.1-02",
+   "section": "10.1",
+   "title": "Crisis Actions Avoid Precedent And Centralization",
+   "quote": "- no precedent\n- no centralization",
+   "interpretation": "Check that crisis actions neither establish precedent nor centralize the system. 'No precedent' could prohibit treating an action as binding authority later or prohibit any subsequent reliance on it.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "later_action_justifications",
+    "authority_topology_history"
+   ],
+   "criterion": "Crisis actions create no precedent and no centralization.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "crisis action records",
+    "later decision provenance",
+    "authority distribution history"
+   ],
+   "gap": "Precedent, centralization, and the period over which their absence must hold are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define precedent and centralization.",
+    "Specify how later decisions are evaluated for reliance on crisis actions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-10.2-01",
+   "section": "10.2",
+   "title": "Actor Threats Use Nondependence Mitigation",
+   "quote": "Physical threat to actors not handled directly\n→ mitigated via 5.1 (non-dependence)",
+   "interpretation": "Check that physical threats to actors are addressed through section 5.1 nondependence, without direct threat handling by this protocol. This defines the protocol's scope rather than a general prohibition on actors receiving protection elsewhere.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "physical_threat_scenarios",
+    "protocol_responses",
+    "functional_dependencies"
+   ],
+   "criterion": "This protocol does not directly handle physical threats to actors; it mitigates them through section 5.1 nondependence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical threat scenarios",
+    "mitigation specifications",
+    "functional dependency model"
+   ],
+   "gap": "Direct handling and successful mitigation through nondependence are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define direct threat handling and evaluate mitigation using a section 5.1 dependency model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-11-01",
+   "section": "11",
+   "title": "System Resilience Validation Conditions",
+   "quote": "System is resilient if:",
+   "interpretation": "Evaluate all five listed conditions together: zero functional impact from any actor's removal, N_eff above threshold, no entry-point PTL distortion, automatic measurable enforcement, and continuity under access restriction. 'If' states sufficiency without expressly stating necessity; 'above' may mean strict inequality, unlike the inclusive bound in 5.1.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "actor_removal_impacts",
+    "n_eff_history",
+    "n_eff_threshold",
+    "entry_point_fidelity",
+    "enforcement_mode",
+    "enforcement_measurements",
+    "access_restriction_traces"
+   ],
+   "criterion": "All listed conditions imply resilience: every actor removal has zero functional impact; N_eff remains above threshold; no entry point distorts PTL; enforcement remains automatic and measurable; operation continues under access restriction.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "actor removal experiments",
+    "oracle effective node count and threshold",
+    "PTL fidelity checks",
+    "enforcement records",
+    "restricted-access operation results"
+   ],
+   "gap": "Only the N_eff and removal conditions of §11 are checked.",
+   "hypotheses_needed": [
+    "Resolve strict versus inclusive threshold comparison.",
+    "Define zero functional impact, PTL distortion, automatic measurable enforcement, and continued operation.",
+    "Specify actor removal and access restriction scenarios and whether the conditions are also necessary."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "actor_removal_no_impact"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-12-01",
+   "section": "12",
+   "title": "Resilience Emerges From Structure",
+   "quote": "Resilience must emerge from structure, not protection",
+   "interpretation": "Evaluate whether resilience causally depends on structural properties rather than protection. A removal-of-protection experiment is one possible operationalization, but it is not prescribed.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "structural_features",
+    "protection_measures",
+    "resilience_outcomes"
+   ],
+   "criterion": "Resilience emerges from structure and not from protection.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system architecture",
+    "protection measures",
+    "resilience observations"
+   ],
+   "gap": "Structure, protection, and the causal attribution of resilience are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define structural and protective mechanisms and a causal test distinguishing their contributions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  },
+  {
+   "id": "RESILIENCE-13-01",
+   "section": "13",
+   "title": "Persistent Structural Immunity Without Self Defense",
+   "quote": "DKP does not defend itself\n\nIt remains:",
+   "interpretation": "The following lines require persistent non-targetability, non-overridability, and non-distortability alongside the assertion that DKP does not defend itself. These absolute properties cannot be decided without a bounded threat domain and operational definitions.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "system_behaviors",
+    "targetability_evidence",
+    "override_paths",
+    "distortion_paths"
+   ],
+   "criterion": "DKP does not defend itself and remains non-targetable, non-overridable, and non-distortable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "architecture and behavior records",
+    "targeting, override, and distortion analyses"
+   ],
+   "gap": "Self-defense and the three absolute immunity properties are undefined over an unbounded threat domain.",
+   "hypotheses_needed": [
+    "Define self-defense, targeting, override, and distortion.",
+    "Bound the threat domain and observation scope for a simulation."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": [],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": []
+  }
+ ]
+}
