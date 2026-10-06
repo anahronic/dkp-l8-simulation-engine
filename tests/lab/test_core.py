@@ -68,6 +68,17 @@ def test_same_request_same_ids():
     assert c["input_id"] != a["input_id"] and c["result_id"] != a["result_id"]
 
 
+def test_adding_a_variant_does_not_change_another():
+    """TZ §11.2: another computation must not shift the first one (no shared state or random stream)."""
+    for module in ("work_cycle", "failure_chain", "prevention"):
+        from lab import api
+        ex = api.example_request(module)["variants"]
+        alone = run_request({"schema": "dkp-lab-input/1", "module": module, "variants": ex[:1]})
+        pair = run_request({"schema": "dkp-lab-input/1", "module": module, "variants": ex[1:2] + ex[:1]})
+        name = ex[0]["name"]
+        assert alone["variants"][name]["result_id"] == pair["variants"][name]["result_id"], module
+
+
 def test_package_is_deterministic_and_replays():
     doc = run_request(_req())
     prov = {"fixed": True}
