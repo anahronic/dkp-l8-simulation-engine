@@ -63,18 +63,26 @@
     "N_eff and N_eff_min values",
     "oracle consistency status"
    ],
-   "gap": "N_eff and N_eff_min are not defined in the corpus (F-007): N_eff by hypothesis H-SL-1, N_eff_min declared.",
+   "gap": "calibration_expiry: Checks only that expiry alone does not trigger the null-output state. sensor_loss: N_eff and N_eff_min are not defined in the corpus (F-007): N_eff by hypothesis H-SL-1, N_eff_min declared.",
    "hypotheses_needed": [
     "Declare how N_eff and N_eff_min are supplied.",
     "Declare how oracle consistency is classified as invalid."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "calibration_expiry",
     "version": "1.0.0",
-    "check": "null_output_trigger"
+    "check": "no_global_halt_from_expiry",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "null_output_trigger"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_calibration_expiry_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

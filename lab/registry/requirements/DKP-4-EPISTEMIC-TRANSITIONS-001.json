@@ -237,11 +237,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "revalidation_flag"
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "expiry_downgrade_flags",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "revalidation_flag"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_calibration_expiry_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -597,10 +605,15 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "no_auto_reactivation",
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "no_reactivation_after_recalibration",
     "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "no_auto_reactivation"
+     },
      {
       "module": "sensor_loss",
       "version": "1.0.0",
@@ -609,6 +622,7 @@
     ]
    },
    "tests": [
+    "tests/lab/test_calibration_expiry_module.py",
     "tests/lab/test_failure_chain_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],

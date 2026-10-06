@@ -1,5 +1,6 @@
 """Installed lab modules (the only ones the API and the UI can run)."""
 
+from lab.modules.calibration_expiry import CalibrationExpiryModule
 from lab.modules.contribution import ContributionModule
 from lab.modules.crisis_recovery import CrisisRecoveryModule
 from lab.modules.dispute_correction import DisputeCorrectionModule
@@ -14,4 +15,4 @@ from lab.modules.work_cycle import WorkCycleModule
 MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule(), FailureChainModule(),
                              DisputeCorrectionModule(), ContributionModule(), SensorLossModule(),
                              CrisisRecoveryModule(), ExitIntegrationModule(),
-                             InteropFailureModule())}
+                             InteropFailureModule(), CalibrationExpiryModule())}

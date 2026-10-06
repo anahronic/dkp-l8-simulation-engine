@@ -23,4 +23,5 @@ author decides; `tests/lab/test_findings.py` keeps the documented numbers as reg
 | [F-011](F-011.md) | EXIT delays exit for stability; SCOPE forbids delaying exit for stability | contradiction between protocols | UNRESOLVED |
 | [F-012](F-012.md) | EXIT: exit is never suspended; SCOPE: it may be suspended within Crisis Scope | contradiction between protocols | UNRESOLVED |
 | [F-013](F-013.md) | A failing external oracle mirror: INTEROP forbids a crisis, CRISIS requires one | contradiction between protocols | UNRESOLVED |
+| [F-014](F-014.md) | No Calibration Bundle exists; by SIMULATION §4 every protocol that needs one is non-enforceable | systemic precondition | UNRESOLVED |
 | [F-010](F-010.md) | DEFENSE escalates at D3; CRISIS enters only on "sustained" D3 of undefined duration | rule interaction / missing parameter | UNRESOLVED |

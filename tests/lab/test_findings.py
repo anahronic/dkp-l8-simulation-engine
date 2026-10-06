@@ -109,6 +109,16 @@ def test_f013_mirror_conflict():
     assert v["ptl_rule"]["outputs"]["internal_decisions"] == 16
 
 
+def test_f014_bundle_precondition_text():
+    from lab.tools.check_registry import normalize
+    base = os.path.join(os.path.dirname(__file__), "..", "..", "lab", "corpus", "world-aad3e86", "Dikenocracy", "Protocols")
+    sim = normalize(open(os.path.join(base, "L8_Infrastructure", "DKP-8-SIMULATION-001.md"), encoding="utf-8").read())
+    assert "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition." in sim
+    corpus = os.path.join(os.path.dirname(__file__), "..", "..", "lab", "corpus")
+    names = [f for _, _, fs in os.walk(corpus) for f in fs]
+    assert not any("calibration" in f.lower() and "bundle" in f.lower() for f in names)     # no bundle in the corpus
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [

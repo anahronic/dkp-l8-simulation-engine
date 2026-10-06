@@ -323,8 +323,10 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-035"
+   ]
   },
   {
    "id": "SIMULATION-4-02",
@@ -346,16 +348,24 @@
    "data_dependencies": [
     "L8 bundle attachments and validity records"
    ],
-   "gap": "The document does not fully define bundle validity beyond stated requirements such as expiration. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare complete bundle validation rules, including signature and contextual applicability checks."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "no_enforcement_without_valid_bundle"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-035"
+   ]
   },
   {
    "id": "SIMULATION-5-01",
@@ -823,13 +833,19 @@
     "L8 calibration artifacts",
     "signature verification material"
    ],
-   "gap": "The signature scheme and trusted L8 signer identification are not specified. No lab check implemented yet.",
+   "gap": "The bundle is hypothetical (none exists); its signature is a flag.",
    "hypotheses_needed": [
     "Declare a signature verification scheme and trusted L8 signer identities."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "signed_complete_bundle"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -957,17 +973,25 @@
     "audit divergence records",
     "protocol dependency changes"
    ],
-   "gap": "Drift, regime change, and sustained divergence lack detection criteria and any required persistence values. No lab check implemented yet.",
+   "gap": "Whether a trigger suspends the bundle before expiry is not stated (Q-034).",
    "hypotheses_needed": [
     "Declare drift and regime-change detectors.",
     "Define sustained audit divergence without assuming a duration from this text."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "drift_requires_recalibration"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-034"
+   ]
   },
   {
    "id": "SIMULATION-10-02",
@@ -991,14 +1015,22 @@
     "enforcement dependency mappings",
     "time readings"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "expiry_invalidates_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-034"
+   ]
   },
   {
    "id": "SIMULATION-CalibrationExpirationEpistemicHandling-01",
@@ -1020,11 +1052,17 @@
     "bundle expiration events",
     "output dependency mappings"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "expired_output_metadata"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1050,13 +1088,19 @@
     "recalibration and validation records",
     "dependent output state histories"
    ],
-   "gap": "The restored validity_state value and treatment of other concurrent invalidity causes are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the target validity_state and how restoration interacts with independent invalidity causes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "recalibration_restores"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1083,13 +1127,19 @@
     "calibration value lineage",
     "operational and stored calibration state"
    ],
-   "gap": "The meanings of legacy and persist, including whether archival retention is prohibited, are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the prohibition covers operational use, operational storage, or all retention."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "no_legacy_values"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1211,13 +1261,19 @@
    "data_dependencies": [
     "decision and override provenance"
    ],
-   "gap": "The document does not specify evidence for detecting political discretion or economic pressure behind decisions. No lab check implemented yet.",
+   "gap": "Override is modelled as issuing a bundle after a failed simulation.",
    "hypotheses_needed": [
     "Declare how override events and their grounds are identified and evidenced."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "no_override_of_failed_simulation"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

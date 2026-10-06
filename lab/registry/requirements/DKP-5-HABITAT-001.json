@@ -235,11 +235,17 @@
    "data_dependencies": [
     "Reported SPDI values"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "SPDI by the hypothetical bundle's weighted sum; the corpus defines no SPDI model.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "spdi_range"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -413,13 +419,19 @@
    "data_dependencies": [
     "SPDI values and calibrated SPDI_min"
    ],
-   "gap": "The calibrated SPDI_min value is not supplied. No lab check implemented yet.",
+   "gap": "SPDI_min from the hypothetical bundle.",
    "hypotheses_needed": [
     "An applicable calibrated SPDI_min."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "spdi_threshold"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -445,13 +457,19 @@
    "data_dependencies": [
     "SPDI component values and calibrated critical thresholds"
    ],
-   "gap": "Component definitions and critical survivability thresholds are not supplied. No lab check implemented yet.",
+   "gap": "Component thresholds from the hypothetical bundle.",
    "hypotheses_needed": [
     "Applicable calibrated component thresholds and component scales."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "component_thresholds"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -628,14 +646,20 @@
    "data_dependencies": [
     "L8 Calibration Bundle, confidence bounds, validity window, and audit linkage status"
    ],
-   "gap": "Bundle validity, window applicability, and active audit-linkage criteria are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Predicates for calibration validity and active audit linkage.",
     "A validity-window interpretation supplied by the calibration process."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "activation_gate"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -659,13 +683,19 @@
    "data_dependencies": [
     "Calibration validity status and action logs"
    ],
-   "gap": "The document does not establish how L8 bundle validity is determined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "An authoritative bundle-validity predicate."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "informational_without_bundle"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -688,13 +718,19 @@
    "data_dependencies": [
     "SPDI interpretation and decision provenance"
    ],
-   "gap": "The scope of manual interpretation is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared reading of whether the prohibition covers all human interpretation or operational interpretation only."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "no_manual_interpretation"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1179,13 +1215,19 @@
    "data_dependencies": [
     "Violation confirmations, activation status, and remediation-plan records"
    ],
-   "gap": "Confirmation criteria and the deadline for initiating a plan are unspecified. No lab check implemented yet.",
+   "gap": "Remediation plans are events; their content is not modelled.",
    "hypotheses_needed": [
     "A confirmation predicate and an observation horizon for initiation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "remediation_initiated"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1267,11 +1309,17 @@
    "data_dependencies": [
     "Remediation policy defaults"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "calibration_expiry",
+    "version": "1.0.0",
+    "check": "no_forced_displacement"
+   },
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

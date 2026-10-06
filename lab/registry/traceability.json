@@ -3,6 +3,7 @@
  "corpus": "aad3e86ca293d61c7c6d3a0a05741d23676f0e18",
  "registry_problems": 0,
  "modules": [
+  "calibration_expiry",
   "contribution",
   "crisis_recovery",
   "dispute_correction",
@@ -364,6 +365,36 @@
    "module": "interop_failure",
    "example": "tolerance_missing",
    "kind": "reference"
+  },
+  {
+   "module": "calibration_expiry",
+   "example": "drift_kept_until_expiry",
+   "kind": "reference"
+  },
+  {
+   "module": "calibration_expiry",
+   "example": "drift_suspends",
+   "kind": "alternative"
+  },
+  {
+   "module": "calibration_expiry",
+   "example": "expiry_and_recalibration",
+   "kind": "reference"
+  },
+  {
+   "module": "calibration_expiry",
+   "example": "failed_recalibration",
+   "kind": "reference"
+  },
+  {
+   "module": "calibration_expiry",
+   "example": "faulty_expiry",
+   "kind": "counterexample"
+  },
+  {
+   "module": "calibration_expiry",
+   "example": "never_calibrated",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -371,18 +402,18 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 249,
-  "covered_percent": 14.3,
+  "covered": 265,
+  "covered_percent": 15.3,
   "statuses": {
-   "PASS": 217,
+   "PASS": 232,
    "FAIL": 9,
-   "UNKNOWN": 15,
+   "UNKNOWN": 16,
    "NOT_APPLICABLE": 8,
-   "UNCOVERED": 1488
+   "UNCOVERED": 1472
   },
-  "resolvable": 336,
-  "resolvable_uncovered": 255,
-  "unresolved_decisions": 1401
+  "resolvable": 332,
+  "resolvable_uncovered": 248,
+  "unresolved_decisions": 1405
  },
  "stages": [
   {
@@ -432,18 +463,18 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 249,
-    "covered_percent": 14.3,
+    "covered": 265,
+    "covered_percent": 15.3,
     "statuses": {
-     "PASS": 217,
+     "PASS": 232,
      "FAIL": 9,
-     "UNKNOWN": 15,
+     "UNKNOWN": 16,
      "NOT_APPLICABLE": 8,
-     "UNCOVERED": 1488
+     "UNCOVERED": 1472
     },
-    "resolvable": 336,
-    "resolvable_uncovered": 255,
-    "unresolved_decisions": 1401
+    "resolvable": 332,
+    "resolvable_uncovered": 248,
+    "unresolved_decisions": 1405
    }
   },
   {
@@ -513,18 +544,18 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 67,
-    "covered_percent": 18.4,
+    "covered": 75,
+    "covered_percent": 20.5,
     "statuses": {
-     "PASS": 62,
+     "PASS": 69,
      "FAIL": 3,
-     "UNKNOWN": 0,
+     "UNKNOWN": 1,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 298
+     "UNCOVERED": 290
     },
-    "resolvable": 103,
-    "resolvable_uncovered": 78,
-    "unresolved_decisions": 262
+    "resolvable": 99,
+    "resolvable_uncovered": 73,
+    "unresolved_decisions": 266
    }
   },
   {
@@ -575,17 +606,17 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 16,
-    "covered_percent": 5.5,
+    "covered": 24,
+    "covered_percent": 8.2,
     "statuses": {
-     "PASS": 8,
+     "PASS": 16,
      "FAIL": 5,
      "UNKNOWN": 1,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 277
+     "UNCOVERED": 269
     },
     "resolvable": 43,
-    "resolvable_uncovered": 35,
+    "resolvable_uncovered": 33,
     "unresolved_decisions": 250
    }
   },
@@ -712,13 +743,9 @@
     "DKP-5-HABITAT-001",
     "DKP-4-EPISTEMIC-TRANSITIONS-001"
    ],
-   "module": null,
-   "status": "NOT STARTED",
-   "documents_without_checks": [
-    "DKP-8-SIMULATION-001",
-    "DKP-5-HABITAT-001",
-    "DKP-4-EPISTEMIC-TRANSITIONS-001"
-   ]
+   "module": "calibration_expiry",
+   "status": "DONE",
+   "documents_without_checks": []
   },
   {
    "id": "S-LAB-06",
@@ -953,6 +980,16 @@
   {
    "id": "Q-033",
    "title": "Failure of an external oracle mirror: INTEROP §9 forbids Crisis; CRISIS §4 requires it on PTL loss beyond an undefined tolerance",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-034",
+   "title": "Does a recalibration trigger (SIMULATION §10: drift, regime change, sensor change, audit divergence, dependency update) suspend a Calibration Bundle before its validity window ends",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-035",
+   "title": "No Calibration Bundle exists: which protocols are meant to bind now, and do constants written in the texts (ORACLE §16/§17, ERROR §7, UPGRADE cooling-off) need a bundle",
    "status": "UNRESOLVED"
   }
  ],
@@ -4255,8 +4292,10 @@
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-035"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -4281,8 +4320,10 @@
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-035"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -22944,14 +22985,20 @@
    "kind": "state_transition",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "null_output_trigger",
+   "module": "calibration_expiry",
+   "check": "no_global_halt_from_expiry",
    "tests": [
+    "tests/lab/test_calibration_expiry_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "N_eff and N_eff_min are not defined in the corpus (F-007): N_eff by hypothesis H-SL-1, N_eff_min declared.",
-   "also_checked_by": [],
+   "gap": "calibration_expiry: Checks only that expiry alone does not trigger the null-output state. sensor_loss: N_eff and N_eff_min are not defined in the corpus (F-007): N_eff by hypothesis H-SL-1, N_eff_min declared.",
+   "also_checked_by": [
+    "sensor_loss · null_output_trigger"
+   ],
    "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -22964,17 +23011,18 @@
     "Q-026"
    ],
    "observed": {
-    "PASS": 4,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry",
     "sensor_loss:faulty_recovery"
    ],
    "under_alternative_readings": {
-    "PASS": 3
+    "PASS": 4
    }
   },
   {
@@ -24053,14 +24101,20 @@
    "kind": "state_transition",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "failure_chain",
-   "check": "revalidation_flag",
+   "module": "calibration_expiry",
+   "check": "expiry_downgrade_flags",
    "tests": [
+    "tests/lab/test_calibration_expiry_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "failure_chain · revalidation_flag"
+   ],
    "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -24076,16 +24130,18 @@
     "Q-007"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
    "counterexample_detected_by": [
     "failure_chain:all_faults"
    ],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "ETRANS-4.1-02",
@@ -24414,17 +24470,22 @@
    "kind": "state_transition",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "failure_chain",
-   "check": "no_auto_reactivation",
+   "module": "calibration_expiry",
+   "check": "no_reactivation_after_recalibration",
    "tests": [
+    "tests/lab/test_calibration_expiry_module.py",
     "tests/lab/test_failure_chain_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "gap": null,
    "also_checked_by": [
+    "failure_chain · no_auto_reactivation",
     "sensor_loss · no_auto_reactivation"
    ],
    "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -24443,10 +24504,10 @@
     "Q-019"
    ],
    "observed": {
-    "PASS": 8,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 6
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -24454,7 +24515,7 @@
     "failure_chain:divergence_faulty_adapter"
    ],
    "under_alternative_readings": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 1,
     "NOT_APPLICABLE": 1
    }
@@ -30458,25 +30519,33 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Confirmation criteria and the deadline for initiating a plan are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "remediation_initiated",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "Remediation plans are events; their content is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-10-02",
@@ -30536,25 +30605,35 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "no_forced_displacement",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-10-05",
@@ -31108,25 +31187,33 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "spdi_range",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "SPDI by the hypothetical bundle's weighted sum; the corpus defines no SPDI model.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-4-02",
@@ -31264,25 +31351,33 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The calibrated SPDI_min value is not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "spdi_threshold",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "SPDI_min from the hypothetical bundle.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-5-02",
@@ -31290,25 +31385,33 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Component definitions and critical survivability thresholds are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "component_thresholds",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "Component thresholds from the hypothetical bundle.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-5-03",
@@ -31446,25 +31549,35 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Bundle validity, window applicability, and active audit-linkage criteria are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "activation_gate",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-6-02",
@@ -31472,25 +31585,35 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not establish how L8 bundle validity is determined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "informational_without_bundle",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-6-03",
@@ -31498,25 +31621,33 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of manual interpretation is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "no_manual_interpretation",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "HABITAT-7-01",
@@ -47445,25 +47576,35 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Drift, regime change, and sustained divergence lack detection criteria and any required persistence values. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "drift_requires_recalibration",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "Whether a trigger suspends the bundle before expiry is not stated (Q-034).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-034"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-10-02",
@@ -47471,25 +47612,37 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "expiry_invalidates_enforcement",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-034"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-11-01",
@@ -47575,25 +47728,33 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not specify evidence for detecting political discretion or economic pressure behind decisions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "no_override_of_failed_simulation",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "Override is modelled as issuing a bundle after a failed simulation.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   }
   },
   {
    "id": "SIMULATION-12-02",
@@ -48051,8 +48212,10 @@
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-035"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -48069,25 +48232,37 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not fully define bundle validity beyond stated requirements such as expiration. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "no_enforcement_without_valid_bundle",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-035"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-5-01",
@@ -48459,25 +48634,33 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The signature scheme and trusted L8 signer identification are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "calibration_expiry",
+   "check": "signed_complete_bundle",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": "The bundle is hypothetical (none exists); its signature is a flag.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-CalibrationExpirationEpistemicHandling-01",
@@ -48485,25 +48668,33 @@
    "section": "Calibration Expiration Epistemic Handling",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "expired_output_metadata",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-CalibrationExpirationEpistemicHandling-02",
@@ -48511,25 +48702,33 @@
    "section": "Calibration Expiration Epistemic Handling",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The restored validity_state value and treatment of other concurrent invalidity causes are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "recalibration_restores",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-CalibrationExpirationEpistemicHandling-03",
@@ -48537,25 +48736,35 @@
    "section": "Calibration Expiration Epistemic Handling",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meanings of legacy and persist, including whether archival retention is prohibited, are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "calibration_expiry",
+   "check": "no_legacy_values",
+   "tests": [
+    "tests/lab/test_calibration_expiry_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CE-1",
+    "H-CE-2",
+    "H-CE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "calibration_expiry:faulty_expiry"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "SIMULATION-CompositeIndices-01",
