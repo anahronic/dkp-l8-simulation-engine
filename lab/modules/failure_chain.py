@@ -31,6 +31,7 @@ import os
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
+from lab.core.bus import EventLog, Message
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
 from lab.core.run import canonical_json, sha256_text
@@ -171,6 +172,15 @@ def generate(r: Dict[str, Any]) -> Dict[str, List[Tuple[int, float]]]:
     return out
 
 
+def observation_log(readings: Dict[str, List[Tuple[int, float]]]) -> EventLog:
+    """Generator readings as §6.3 messages: measured and available at the same minute."""
+    log = EventLog("minute", tie_rule="arrival minute; one reading per class and minute")
+    log.extend(Message(event_id=f"obs-{c}-{t}", kind="observation", source=c, arrived_at=t, measured_at=t,
+                       value=v, unit="model unit")
+               for c in CLASSES for t, v in readings[c])
+    return log
+
+
 # adapter ----------------------------------------------------------------------------
 def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
                 ttl: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, Dict[str, Any]]]:
@@ -178,7 +188,7 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
     faults = set(r["faults"])
     step, limit, esc = r["step_minutes"], r["limit"], r["escalation_every_steps"]
     scope = f"scenario/{r['data_type']}"
-    ptr = {c: -1 for c in CLASSES}
+    log = observation_log(readings)                    # the adapter reads only through log.view(now)
     rows: List[Dict[str, Any]] = []
     events: List[Dict[str, Any]] = []
     store: Dict[str, Dict[str, Any]] = {}
@@ -191,6 +201,7 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
         rec = {"id": f"EV-{len(store) + 1:03d}", "step": k, "value": S,
                "inputs": {"S": S, "last_reading_age": {c: cls[c]["age"] for c in CLASSES},
                           "ptl": dict(meta)},
+               "provenance": sorted(cls[c]["event_id"] for c in CLASSES if cls[c]["weight"]),
                "metadata": {**meta, "scope_ref": scope, "revalidation_required": False, "dispute_allowed": True},
                "supersedes": supersedes}
         store[rec["id"]] = rec
@@ -224,17 +235,16 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
         t = k * step
         halt = in_window(r["halt_window"], k)
         cls = {}
+        view = log.view(t)
         for c in CLASSES:
-            lst = readings[c]
-            while ptr[c] + 1 < len(lst) and lst[ptr[c] + 1][0] <= t:
-                ptr[c] += 1
+            m = view.latest("observation", c)
             excluded = c == r["faulty_class"] and 0 <= r["exclude_faulty_at_step"] <= k
-            if ptr[c] < 0:
-                cls[c] = {"age": None, "value": None, "weight": 0, "excluded": excluded}
+            if m is None:
+                cls[c] = {"age": None, "value": None, "weight": 0, "excluded": excluded, "event_id": None}
                 continue
-            lt, v = lst[ptr[c]]
-            fresh = t - lt <= ttl or "stale_weight_kept" in faults
-            cls[c] = {"age": t - lt, "value": v, "weight": 1 if fresh and not excluded else 0, "excluded": excluded}
+            fresh = t - m.measured_at <= ttl or "stale_weight_kept" in faults
+            cls[c] = {"age": t - m.measured_at, "value": m.value, "weight": 1 if fresh and not excluded else 0,
+                      "excluded": excluded, "event_id": m.event_id}
         adm = [c for c in CLASSES if cls[c]["weight"]]
         vals = [cls[c]["value"] for c in adm]
         S = round(sum(vals) / len(vals), 9) if vals else None
@@ -802,7 +812,7 @@ def _window(default=None):
 
 class FailureChainModule(LabModule):
     id = "failure_chain"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Stale and contradictory data (failure chain)",
              "ru": "Устаревшие и противоречивые данные (цепочка отказа)"}
     summary = {"en": "Sensors go silent or disagree: do dependent asset restrictions and penalties stop, wait "
@@ -956,6 +966,8 @@ class FailureChainModule(LabModule):
             "ttl_minutes": ttl,
             "ttl_text_maximum_minutes": TTL_TEXT[r["data_type"]],
             "readings": {c: len(readings[c]) for c in CLASSES},
+            "observation_log": {"time_unit": "minute", "messages": sum(len(v) for v in readings.values()),
+                                "digest": observation_log(readings).digest()},
             "events": [e for e in events if e["type"] != "transaction"],
             "evaluations": [store[i] for i in sorted(store)],
             "totals": {
