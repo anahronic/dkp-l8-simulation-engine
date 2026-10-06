@@ -829,6 +829,7 @@ class DisputeCorrectionModule(LabModule):
                      "harsher_recomputation", "r_polarity_consistent", "impact_example_s13", "dispute_within_ttl_all",
                      "dispute_within_ttl_either"]
     implements = IMPLEMENTS
+    alternative_examples = ["r_polarity_consistent", "dispute_within_ttl_either"]
     tests = ["tests/lab/test_dispute_correction_module.py"]
     causal_note = {"en": "Causal contributions of Subjects are given on input: the lab checks a declared causal binding; "
                          "it does not infer causality from measurements.",
@@ -1057,7 +1058,7 @@ class DisputeCorrectionModule(LabModule):
             "no_attribution": {**base, "attribution_confidence": 0.6, "s1_recorded": 1.0, "s0": 0.0},
             "calibration_missing": {**base, "attribution_threshold": -1},
             "proxy_attribution": {**base, "subjects": proxy, "appellant": "plant", "appeal_after_minutes": -1},
-            "harsher_recomputation": {**base, "s1_recorded": 0.55, "s1_true": 0.95, "r_polarity_reading": "consistent"},
+            "harsher_recomputation": {**base, "s1_recorded": 0.55, "s1_true": 0.95, "irreversible": True},
             "r_polarity_consistent": {**base, "r_polarity_reading": "consistent"},
             "impact_example_s13": {"s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
                                    "uncertainty": 0.01, "appeal_after_minutes": -1},

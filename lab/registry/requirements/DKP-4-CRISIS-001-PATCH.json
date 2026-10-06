@@ -63,17 +63,24 @@
     "N_eff and N_eff_min values",
     "oracle consistency status"
    ],
-   "gap": "The definitions and source of N_eff and N_eff_min and the referenced oracle consistency rules are absent. No lab check implemented yet.",
+   "gap": "N_eff and N_eff_min are not defined in the corpus (F-007): N_eff by hypothesis H-SL-1, N_eff_min declared.",
    "hypotheses_needed": [
     "Declare how N_eff and N_eff_min are supplied.",
     "Declare how oracle consistency is classified as invalid."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "null_output_trigger"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
-    "Q-018"
+    "Q-018",
+    "Q-026"
    ],
    "decision_status": "UNRESOLVED"
   },
@@ -93,11 +100,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "state_no_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-018"
@@ -120,11 +133,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_penaltys_in_null_output"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -145,11 +164,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_rewards_in_null_output"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -172,13 +197,19 @@
    "data_dependencies": [
     "attribution activity records"
    ],
-   "gap": "The scope of attribution, including whether internal computation is covered, is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which operations constitute attribution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_attributions_in_null_output"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -199,11 +230,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_enforcement_outputs"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -227,14 +264,20 @@
    "data_dependencies": [
     "measurement activity records"
    ],
-   "gap": "The scope of measurement-only operation and the observable condition for continued measurement are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which operations are covered by “Only”.",
     "Declare how continued measurement is observed without imposing an unstated cadence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "measurement_continues"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -259,13 +302,19 @@
    "data_dependencies": [
     "external enforcement actions and their sources"
    ],
-   "gap": "The text does not define when an external action counts as replacing DKP enforcement. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the boundary between substitute DKP enforcement and independent external action."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_fallback_authority"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -313,13 +362,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "Partial enforcement lacks an operational definition. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which incomplete enforcement modes count as partial enforcement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_partial_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-018"
@@ -345,14 +400,20 @@
    "data_dependencies": [
     "actor and sector membership"
    ],
-   "gap": "The relevant population and the event boundary for judging selective restoration are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the population over which restoration is evaluated.",
     "Declare how restoration events are delimited."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_selective_restoration"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-018"
@@ -378,13 +439,19 @@
    "data_dependencies": [
     "PTL data collection records"
    ],
-   "gap": "PTL data and the observable standard for continued collection are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the PTL data interface and how continued collection is evidenced."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "ptl_collection_continues"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -408,13 +475,19 @@
    "data_dependencies": [
     "PTL data lineage and downstream decision records"
    ],
-   "gap": "The text does not define which downstream operations constitute decisions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the decision operations covered by the prohibition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_decisions_from_data"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -441,18 +514,25 @@
     "N_eff and N_eff_min values",
     "consistency restoration status"
    ],
-   "gap": "The quantities, restored-consistency predicate, and timing semantics of automatic resumption are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how N_eff and N_eff_min are supplied.",
     "Declare whether restored consistency is the inverse of section 2 oracle invalidity.",
     "Declare transition timing semantics without presenting an assumed deadline as a textual requirement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "automatic_recovery"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
-    "Q-019"
+    "Q-019",
+    "Q-026"
    ],
    "decision_status": "UNRESOLVED"
   },
@@ -472,13 +552,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The text does not distinguish a complete ban on these actions from a ban on requiring them for recovery. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the listed actions are prohibited entirely within recovery or only as recovery prerequisites."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_manual_preconditions"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -501,11 +587,17 @@
     "DKP-7-SCOPE-001"
    ],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_manual_restart"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -591,11 +683,17 @@
    "data_dependencies": [
     "authority grants and their enabling conditions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Authority is observed as an explicit notice only.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_authority_granted"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -738,15 +836,21 @@
     "N_eff and N_eff_min values",
     "oracle consistency status"
    ],
-   "gap": "The threshold value, the scope of threshold breach, and the timing semantics of “at” are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how N_eff_min is supplied.",
     "Declare whether threshold breach includes invalid oracle consistency.",
     "Declare the event-ordering semantics used to test cessation at breach."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "full_stop_at_breach"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-018"
@@ -770,13 +874,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The scope and completeness standard for partial outputs are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which output types and incompleteness conditions the criterion covers."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_partial_outputs"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -801,14 +911,20 @@
    "data_dependencies": [
     "recovery input and state histories"
    ],
-   "gap": "A complete recovery transition model and the state and input equivalence used to assess determinism are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the complete recovery inputs and relevant internal state.",
     "Declare which aspects of recovery behavior must be identical for determinism."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "recovery_automatic_deterministic"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-019"
@@ -834,14 +950,20 @@
    "data_dependencies": [
     "authority changes and their origins"
    ],
-   "gap": "The text does not define authority emergence or resolve whether unrelated authority changes are prohibited. No lab check implemented yet.",
+   "gap": "Authority is observed as an explicit notice only.",
    "hypotheses_needed": [
     "Declare what counts as authority emergence.",
     "Declare whether the rule is temporal or requires a causal connection to downtime."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "no_authority_emerges"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"

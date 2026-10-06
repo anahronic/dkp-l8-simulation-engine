@@ -49,6 +49,9 @@ class LabModule:
     tests: List[str] = []
     #: examples shown first in the UI ("try example" runs the first two as variants)
     example_order: List[str] = []
+    #: examples computed under an alternative reading (source 'alternative'), not the text in force;
+    #: their statuses are reported apart from the reference examples
+    alternative_examples: List[str] = []
     #: optional progress callback set by the runner: fn(fraction 0..1, message)
     progress: Optional[Callable[[float, str], None]] = None
 

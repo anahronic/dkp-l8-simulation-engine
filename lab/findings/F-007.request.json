@@ -1,0 +1,34 @@
+{
+ "schema": "dkp-lab-input/1",
+ "module": "sensor_loss",
+ "variants": [
+  {
+   "name": "n_eff_min_missing",
+   "input": {
+    "n_eff_min": -1
+   }
+  },
+  {
+   "name": "owners_45",
+   "input": {
+    "n_eff_min": 45
+   }
+  },
+  {
+   "name": "sources_45_sybil",
+   "input": {
+    "n_eff_min": 45,
+    "n_eff_basis": "sources",
+    "sybil_sources": 40
+   }
+  },
+  {
+   "name": "owners_45_sybil",
+   "input": {
+    "n_eff_min": 45,
+    "n_eff_basis": "owners",
+    "sybil_sources": 40
+   }
+  }
+ ]
+}

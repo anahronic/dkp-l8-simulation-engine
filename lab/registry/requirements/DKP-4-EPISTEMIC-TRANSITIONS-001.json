@@ -599,10 +599,18 @@
    "implementation": {
     "module": "failure_chain",
     "version": "1.1.0",
-    "check": "no_auto_reactivation"
+    "check": "no_auto_reactivation",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "no_auto_reactivation"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_failure_chain_module.py"
+    "tests/lab/test_failure_chain_module.py",
+    "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [

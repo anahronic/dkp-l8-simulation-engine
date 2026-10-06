@@ -17,3 +17,4 @@ author decides; `tests/lab/test_findings.py` keeps the documented numbers as reg
 | [F-004](F-004.md) | FINANCE §11.2(b) points to a section of ERROR that does not exist | corpus defect | UNRESOLVED |
 | [F-005](F-005.md) | IMPACT: Bᵢ used as a scale, a limit crossed without a flag, §13 example disagrees with §5 | protocol defect / missing definition | UNRESOLVED |
 | [F-006](F-006.md) | Rᵢ means "irreversible" in IMPACT and "reversible" in JUSTICE | cross-protocol defect | UNRESOLVED |
+| [F-007](F-007.md) | N_eff and N_eff_min decide the null-output state but are defined nowhere | missing definition | UNRESOLVED |

@@ -739,11 +739,17 @@
    "data_dependencies": [
     "validated source ownership mapping"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "source_owner_caps"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1375,13 +1381,19 @@
     "systemic oracle integrity findings",
     "governance execution states"
    ],
-   "gap": "Confidence aggregation, global coverage measurement, and systemic compromise criteria are unspecified. No lab check implemented yet.",
+   "gap": "Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled.",
    "hypotheses_needed": [
     "Declare confidence aggregation, global coverage measurement, and systemic integrity predicates."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.0.0",
+    "check": "systemic_halt_on_coverage"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"

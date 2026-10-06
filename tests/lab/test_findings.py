@@ -61,6 +61,16 @@ def test_f005_and_f006_impact_and_reversibility():
     assert (dom["consistent"]["isolation"], dom["consistent"]["restitution"]) == (False, True)
 
 
+def test_f007_n_eff_undefined():
+    with open(os.path.join(FINDINGS, "F-007.request.json"), encoding="utf-8") as f:
+        doc = run_request(json.load(f))
+    nulls = {n: v["outputs"]["null_output_steps"] for n, v in doc["variants"].items()}
+    trig = {n: next(c["status"] for c in v["checks"] if c["requirement_id"] == "CRISISPATCH-2-01")
+            for n, v in doc["variants"].items()}
+    assert nulls == {"n_eff_min_missing": 0, "owners_45": 12, "sources_45_sybil": 0, "owners_45_sybil": 12}
+    assert trig["n_eff_min_missing"] == "UNKNOWN"
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [
