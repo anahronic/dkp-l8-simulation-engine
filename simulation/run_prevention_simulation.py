@@ -98,6 +98,7 @@ def run_simulation(cfg: Dict[str, Any], write: bool = True,
     cbf = CBFRegistry()
     prepared = []
     meta: Dict[str, Dict[str, Any]] = {}
+    seen_ids: set = set()
     stats = {"threats_total": 0, "threats_natural": 0, "threats_induced": 0,
              "ta_valid_consistent": 0, "ta_informational": 0, "ta_invalid": 0,
              "with_responders": 0}
@@ -121,6 +122,9 @@ def run_simulation(cfg: Dict[str, Any], write: bool = True,
                             events.append(ind)
 
             for ev in events:
+                if ev.event_id in seen_ids:     # V21-N2: one id, one physical threat
+                    raise RuntimeError(f"duplicate event id {ev.event_id!r}")
+                seen_ids.add(ev.event_id)
                 stats["threats_total"] += 1
                 stats["threats_induced" if ev.induced_by else "threats_natural"] += 1
 

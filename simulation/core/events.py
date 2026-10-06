@@ -3,7 +3,10 @@ Event engine — generates threat activations from addressed random draws.
 
 Every draw comes from a stream addressed by what it is for (zone, channel,
 tick; for induced threats also the creating actor), never from a shared
-counter.  Changing one channel's parameters therefore leaves every other
+counter.  Event ids are ``<zone>:<tick>:<channel>`` (natural) and
+``<zone>:<tick>:<channel>:induced:<actor>`` (created by an actor); they are
+unambiguous because names cannot contain ":" or "/" (config NAME_PATTERN,
+audit item V21-N2), and the runner refuses a duplicate id.  Changing one channel's parameters therefore leaves every other
 channel's threats unchanged (audit item U5), and event ids are stable
 names rather than sequence numbers.
 

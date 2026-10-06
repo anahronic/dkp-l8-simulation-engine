@@ -1,6 +1,7 @@
 # Audit report — DKP-1-PREVENTION-001 research bench, Phase 3
 
-- **Date:** 2026-10-05, revised for engine 2.1.0 the same day.
+- **Date:** 2026-10-05, revised for engine 2.1.0 the same day. Engine 2.1.1 (2026-10-06)
+  reproduces every `result_id` below unchanged.
 - **Engine:** 2.1.0 (see CHANGELOG.md). Earlier: 2.0.0 = tag `v2.0.0`, v1 = tag `v1.0-a9d3cdf`.
 - **Reproduce:** `python -m simulation.phase3_report` writes `phase3_results.json`. Every variant there
   carries its full resolved input, `input_id` and `result_id`; the document is sealed by

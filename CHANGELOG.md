@@ -1,5 +1,37 @@
 # Changelog
 
+## 2.1.1 — 2026-10-06
+
+Patch after the independent review of 2.1.0 (GPT reply 9, items V21-N1 and V21-N2).
+2.1.0 remains at tag `v2.1.0`. All `result_id` values of the shipped scenarios are
+unchanged (smoke, main, all 38 Phase 3 variants, all 30 comparison runs); `input_id`
+values change because the engine code changed. No protocol text was changed.
+
+### Fixed
+
+- **V21-N1 — block-versus-field conflicts between candidates.** Conflicts were found only
+  for identical dotted paths, so `oracle_bias: null` in one candidate and
+  `oracle_bias.bias: 0.1` in another were merged silently, the winner set by hash order.
+  Conflicts are now decided on tuple paths: same path with different values
+  (`different_values`) or one candidate assigning a whole value where another assigns
+  inside it (`block_vs_field`). Conflicting candidates are reported and never merged;
+  a merge is also refused if its result would depend on the order. Equal assignments
+  and edits of different fields of one block are not conflicts.
+- **V21-N2 — event id collisions.** A natural threat on channel `risk:induced:farmer`
+  and a threat created by actor `farmer` on channel `risk` got the same id, which
+  overwrote diagnostic truth and merged two threats in share grouping. Channel, actor
+  and oracle-class names must now match `[A-Za-z0-9][A-Za-z0-9_-]*`, so the id and
+  random-address separators (`:`, `/`) cannot occur in names; the runner refuses a
+  duplicate event id and `finalize` refuses non-unique ids.
+
+### Changed
+
+- README: what CI covers (tests incl. pinned smoke `result_id`, and a smoke run, on 9
+  combinations) is stated separately from the evidence for the main scenario, Phase 3
+  and the comparison.
+- Comparison report schema `dkp-l8-comparison/3`: conflicts carry `kind`, `paths`
+  (segment lists) and `values`.
+
 ## 2.1.0 — 2026-10-05
 
 Technical release after the independent review of 2.0.0 (GPT reply 7, items U1–U4,

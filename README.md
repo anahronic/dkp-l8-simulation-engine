@@ -17,8 +17,10 @@ What it is not:
   manifest, time base, oracle model), but events, actors and reporting are shaped
   around threats and their suppression.
 
-Version 2.1.0 (2026-10-05) is a technical release after the independent review of 2.0.0
-(tag `v2.0.0`), which itself reworked v1 (tag `v1.0-a9d3cdf`). See
+Version 2.1.1 (2026-10-06) is a patch after the independent review of 2.1.0 (tag
+`v2.1.0`): it rejects ambiguous names and detects block-versus-field conflicts between
+candidates; all results of the shipped scenarios are unchanged. 2.1.0 was a technical
+release after the review of 2.0.0 (tag `v2.0.0`), which reworked v1 (tag `v1.0-a9d3cdf`). See
 [CHANGELOG.md](CHANGELOG.md) and
 [AUDIT_REPORT_PREVENTION_L8_PHASE_3.md](AUDIT_REPORT_PREVENTION_L8_PHASE_3.md).
 
@@ -85,7 +87,9 @@ python -m pytest -q tests/
 ```
 
 Configs use schema version 3: every key is required, unknown keys are rejected, numbers
-must be finite. Mapping order carries no meaning (the engine iterates sorted keys); the one
+must be finite, and channel, actor and oracle-class names are identifiers
+(`[A-Za-z0-9][A-Za-z0-9_-]*`): they become parts of event ids and random-stream
+addresses, so the separators `:` and `/` cannot occur in them. Mapping order carries no meaning (the engine iterates sorted keys); the one
 order that matters, for `attribution_rule: list_order`, is the explicit list
 `domain.actor_order`. A run replayed from its `config_resolved.json`
 (`--config .../config_resolved.json`) reproduces both ids. Schema 2 configs run with tag
@@ -116,11 +120,21 @@ and Linux.
 
 The smoke `result_id` is pinned in `tests/simulation/test_golden.py`.
 
-| Environment | Tests | Smoke result_id |
+What each piece of evidence covers:
+
+- **CI** (`.github/workflows/tests.yml`): on each of 9 combinations (ubuntu-latest,
+  windows-latest, macos-latest × CPython 3.10 / 3.12 / 3.13) it runs the test suite —
+  which includes the pinned smoke `result_id` — and one smoke run. It does not run the
+  30-day main scenario, Phase 3 or the comparison.
+- **Main scenario, Phase 3, comparison**: reproduced locally on the two environments
+  below, and independently by a reviewer on Linux (CPython 3.12.14, glibc 2.39) for
+  2.1.0, with the same `result_id` values and report seals.
+
+| Environment | Tests | Smoke / main result_id |
 |---|---|---|
-| Windows 10 Pro 19045, CPython 3.12.10 | pass (2.1.0) | pinned value |
-| WSL2 Ubuntu 22.04, CPython 3.10.12, glibc 2.35 | pass (2.1.0) | pinned value |
-| GitHub Actions: ubuntu-latest, windows-latest, macos-latest × CPython 3.10 / 3.12 / 3.13 | see the `tests` workflow for the release commit; 2.0.0: 9 of 9 (run 37302799298) | pinned value (golden test) |
+| Windows 10 Pro 19045, CPython 3.12.10 | pass (2.1.1) | pinned / same as 2.1.0 |
+| WSL2 Ubuntu 22.04, CPython 3.10.12, glibc 2.35 | pass (2.1.1) | pinned / same as 2.1.0 |
+| GitHub Actions, 9 combinations | see the `tests` workflow for the release commit; 2.1.0: 9 of 9 (run 37377377441) | pinned (golden test) |
 
 Other environments are unverified.
 
@@ -140,4 +154,5 @@ them. Changes to PREVENTION itself go through DKP-4-UPGRADE-001, not through thi
 
 ## Rollback
 
-2.0.0 is tag `v2.0.0` (commit `f3c48e4`); v1 is tag `v1.0-a9d3cdf`.
+2.1.0 is tag `v2.1.0` (commit `e349e63`); 2.0.0 is tag `v2.0.0` (commit `f3c48e4`);
+v1 is tag `v1.0-a9d3cdf`.

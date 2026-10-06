@@ -5,6 +5,9 @@ Schema version 3 rules:
     - every key listed in SCHEMA is required (no silent defaults);
     - unknown keys are rejected (no declared-but-ignored settings);
     - numbers must be finite (no NaN, no infinity, no booleans);
+    - channel, actor and oracle-class names are identifiers (NAME_PATTERN): they become
+      parts of event ids and of random-stream addresses, whose separators (":" and "/")
+      therefore cannot occur inside a name (audit item V21-N2);
     - cross-field constraints are checked (time partition, TTL per class, ranges);
     - the order of mapping keys carries no meaning: the engine iterates mappings in
       sorted key order; the one order that matters (attribution under list_order)
@@ -22,11 +25,16 @@ import copy
 import hashlib
 import json
 import math
-from typing import Any, Dict, List, Optional
+import re
+from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
 SCHEMA_VERSION = 3
+
+# Names used inside event ids and random-stream addresses: letters, digits, "_" and "-",
+# starting with a letter or digit.  No ":" or "/" (the id and address separators).
+NAME_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
 SECONDS_PER_DAY = 86400
 
 STRATEGIES = ("patrol", "weak", "passive", "adversarial", "optimizer")
@@ -224,6 +232,15 @@ def _cross_checks(cfg: Dict[str, Any], errors: List[str]) -> None:
     if sorted(cfg["domain"]["actor_order"]) != sorted(actors):
         errors.append("domain.actor_order: must list every key of domain.actors exactly once")
 
+    named = [("domain.channels", list(cfg["domain"]["channels"])),
+             ("domain.actors", list(cfg["domain"]["actors"])),
+             ("oracles.classes", list(cfg["oracles"]["classes"]))]
+    for where, names in named:
+        for name in names:
+            if not NAME_PATTERN.fullmatch(name):
+                errors.append(f"{where}: name {name!r} must match {NAME_PATTERN.pattern} "
+                              "(letters, digits, '_' and '-'; no ':' or '/')")
+
     sim, time_cfg, proto = cfg["simulation"], cfg["time"], cfg["protocol"]
     for key in ("num_zones", "num_days", "ticks_per_day"):
         if sim[key] < 1:
@@ -348,13 +365,19 @@ def deep_merge(base: Dict[str, Any], overlay: Dict[str, Any]) -> Dict[str, Any]:
     return out
 
 
-def overlay_paths(overlay: Dict[str, Any], prefix: str = "") -> Dict[str, Any]:
-    """Flatten an overlay into {dotted.path: value} (leaves only)."""
-    flat: Dict[str, Any] = {}
+def overlay_assignments(overlay: Dict[str, Any], prefix: Tuple[str, ...] = ()) -> Dict[Tuple[str, ...], Any]:
+    """What an overlay assigns under deep_merge, as {path tuple: value}.
+
+    A non-empty mapping is merged into the base, so its keys are walked; any other
+    value (scalar, list, null) and an empty mapping (whose effect depends on the base:
+    it replaces a null) is an assignment of that whole value at its path.  Paths are
+    tuples of segments, never dotted strings, because mapping keys are data.
+    """
+    flat: Dict[Tuple[str, ...], Any] = {}
     for key, val in overlay.items():
-        path = f"{prefix}.{key}" if prefix else key
+        path = prefix + (key,)
         if isinstance(val, dict) and val:
-            flat.update(overlay_paths(val, path))
+            flat.update(overlay_assignments(val, path))
         else:
             flat[path] = val
     return flat

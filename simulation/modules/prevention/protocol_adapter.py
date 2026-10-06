@@ -524,6 +524,9 @@ class PreventionProtocolAdapter:
     # second pass
     def finalize(self, prepared: Sequence[PreparedEvent]) -> List[Dict[str, Any]]:
         """Compute Tₖ, shares and SPD for all prepared events; order-independent."""
+        ids = [pe.event_id for pe in prepared]
+        if len(set(ids)) != len(ids):       # V21-N2: shares are grouped by event id
+            raise ValueError("finalize: event ids are not unique")
         history = self.new_history()
         for pe in prepared:
             for key in pe.keys:

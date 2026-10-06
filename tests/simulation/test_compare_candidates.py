@@ -76,7 +76,8 @@ def test_conflicting_overlays_are_not_merged():
     rep = toy({"K1": K1, "K1b": {"params": {"a": 3.0}}})
     (pair,) = rep["pairwise_joint"]
     assert not pair["evaluated"]
-    assert pair["conflicts"][0]["path"] == "params.a"
+    c = pair["conflicts"][0]
+    assert c["kind"] == "different_values" and sorted(map(tuple, c["paths"].values())) == [("params", "a")] * 2
     assert find_conflicts({"x": K1, "y": K2}) == []
 
 

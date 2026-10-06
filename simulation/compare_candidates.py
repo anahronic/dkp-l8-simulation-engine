@@ -20,7 +20,9 @@ What it does not do:
 
 Guarantees tested in tests/simulation/test_compare_candidates.py:
     candidate identity is the digest of its overlay (names are labels); the report
-    does not depend on candidate order; identical overlays are reported as copies
+    does not depend on candidate order; overlays that conflict — same path with
+    different values, or a whole block against a field inside it — are reported and
+    never merged; identical overlays are reported as copies
     and run once; adding a candidate does not change any other candidate's row;
     the baseline is always present; a joint violation of an invariant is detected
     even when each candidate alone passes (r = a·b example).
@@ -38,6 +40,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import itertools
+import json
 import math
 import os
 import sys
@@ -47,7 +50,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from simulation.core.config import (
-    canonical_json, config_digest, deep_merge, load_config, overlay_paths, run_inputs, sha256_text,
+    canonical_json, config_digest, deep_merge, load_config, overlay_assignments, run_inputs, sha256_text,
 )
 from simulation.core.manifest import engine_identity, platform_provenance, seal
 from simulation.modules.prevention.protocol_adapter import POSITIVE
@@ -125,17 +128,48 @@ def _delta(row: Dict[str, Any], base: Dict[str, Any]) -> Dict[str, float]:
 
 
 def find_conflicts(overlays: Dict[str, Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Paths set to different values by different overlays (keyed by digest)."""
-    seen: Dict[str, Dict[str, Any]] = {}
-    for dig in sorted(overlays):
-        for path, val in overlay_paths(overlays[dig]).items():
-            seen.setdefault(path, {})[dig] = val
+    """Conflicts between overlays (keyed by digest), decided on the path structure.
+
+    Each overlay is reduced to its assignments (path tuple -> value, see
+    config.overlay_assignments).  Two overlays conflict when
+      - they assign the same path different values (kind ``different_values``), or
+      - one assigns a whole value at a path and the other assigns something below
+        that path (kind ``block_vs_field``): e.g. ``oracle_bias: null`` against
+        ``oracle_bias.bias: 0.1``.  Applying both would let one silently erase the
+        other (audit item V21-N1).
+    Equal assignments are not conflicts.  The decision does not depend on candidate
+    names or order; conflicting candidates are never merged.
+    """
+    assigned = {d: overlay_assignments(overlays[d]) for d in sorted(overlays)}
+    digests = sorted(assigned)
     out = []
-    for path in sorted(seen):
-        vals = seen[path]
-        if len({canonical_json(v) for v in vals.values()}) > 1:
-            out.append({"path": path, "values": {d: vals[d] for d in sorted(vals)}})
-    return out
+    for i, a in enumerate(digests):
+        for b in digests[i + 1:]:
+            for pa, va in sorted(assigned[a].items()):
+                for pb, vb in sorted(assigned[b].items()):
+                    if pa == pb:
+                        if canonical_json(va) == canonical_json(vb):
+                            continue
+                        kind = "different_values"
+                    elif pa == pb[:len(pa)] or pb == pa[:len(pb)]:
+                        kind = "block_vs_field"
+                    else:
+                        continue
+                    out.append({"kind": kind,
+                                "paths": {a: list(pa), b: list(pb)},
+                                "values": {a: va, b: vb}})
+    return sorted(out, key=canonical_json)
+
+
+def merge_overlays(overlays: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    """Merge non-conflicting overlays; None if the result would depend on the order."""
+    forward: Dict[str, Any] = {}
+    for ov in overlays:
+        forward = deep_merge(forward, ov)
+    backward: Dict[str, Any] = {}
+    for ov in reversed(overlays):
+        backward = deep_merge(backward, ov)
+    return forward if canonical_json(forward) == canonical_json(backward) else None
 
 
 def compare(baseline_cfg: Dict[str, Any], candidates: Dict[str, Dict[str, Any]], seeds: List[int],
@@ -168,12 +202,12 @@ def compare(baseline_cfg: Dict[str, Any], candidates: Dict[str, Dict[str, Any]],
         subset = {d: by_digest[d] for d in digests}
         conflicts = find_conflicts(subset)
         entry: Dict[str, Any] = {"members": digests, "conflicts": conflicts}
-        if conflicts:
+        merged = None if conflicts else merge_overlays([by_digest[d] for d in digests])
+        if merged is None:
+            if not conflicts:   # defensive: structurally clean but order-dependent
+                entry["conflicts"] = [{"kind": "order_dependent_merge", "paths": {}, "values": {}}]
             entry["evaluated"] = False
             return entry
-        merged: Dict[str, Any] = {}
-        for d in digests:
-            merged = deep_merge(merged, by_digest[d])
         row = _evaluate(deep_merge(baseline_cfg, merged), seeds, run_fn, metrics, invariants)
         row["delta_vs_baseline"] = _delta(row, base)
         row["interaction"] = {m: row["delta_vs_baseline"][m] - math.fsum(rows[d]["delta_vs_baseline"][m]
@@ -190,7 +224,7 @@ def compare(baseline_cfg: Dict[str, Any], candidates: Dict[str, Dict[str, Any]],
     all_joint = joint(digests) if len(digests) > 2 else None
 
     return seal({
-        "schema": "dkp-l8-comparison/2",
+        "schema": "dkp-l8-comparison/3",
         "package": {**engine_identity(), "generator": "simulation.compare_candidates"},
         "baseline": base,
         "seeds": seeds,
@@ -219,8 +253,9 @@ def report_text(rep: Dict[str, Any]) -> str:
     for p in rep["pairwise_joint"]:
         tag = " + ".join(rep["candidates"][d]["names"][0] for d in p["members"])
         if not p["evaluated"]:
-            lines.append(f"joint {tag}: not evaluated, conflicts on "
-                         + ", ".join(c["path"] for c in p["conflicts"]))
+            lines.append(f"joint {tag}: not evaluated, conflicts: "
+                         + "; ".join(c["kind"] + " " + " vs ".join(json.dumps(v) for v in c["paths"].values())
+                                     for c in p["conflicts"]))
         elif p["joint_breaks_invariant"]:
             lines.append(f"joint {tag}: BREAKS {', '.join(p['joint_breaks_invariant'])}")
     lines.append("")
