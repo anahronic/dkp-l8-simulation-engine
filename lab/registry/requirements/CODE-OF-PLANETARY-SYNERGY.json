@@ -1,0 +1,2986 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "CODE-OF-PLANETARY-SYNERGY",
+ "doc_sha256": "c7bafa9e2365588e093c5e96f89404730006d3a3d66025a6668f7f88f71d05b0",
+ "prefix": "CODEX",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. The supplied prefix contains a carriage return, represented as \\r in requirement ids. Main-text provisions use their printed clause numbers; appendix provisions use their containing appendix headings, including A.1a. Unnumbered headings retain their title text. Closely related fields or conjunctive conditions are grouped where they define one contract or rule. Narrative aspirations and asserted historical measurements are not independently treated as obligations. The text leaves conflicts unresolved between algorithm immutability and calibration/upgrades, simultaneous biosphere Kill Switch activation and Mercy suspension, stake burning and redistribution, and six-node signatures versus the additional Wild Node. The phrase 'grows exponentially' conflicts with the explicit quadratic formula. The Genesis example contains comments, abbreviated cryptographic values, and an empty signature placeholder, so it is not a complete executable JSON block or verifiable cryptographic artifact. Referenced DKP documents were not supplied.",
+ "requirements": [
+  {
+   "id": "CODEX-Preamble-01",
+   "section": "Preamble",
+   "title": "Public Algorithmic Governance Requirements",
+   "quote": "- Open and immutable algorithms,\n- Public metrics and transparent data,\n- Automated liability procedures,",
+   "interpretation": "Check algorithm accessibility and change history, metric and data publication, and automated liability execution. The text does not define openness, transparency, or the permitted relationship between immutability and later parameter changes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "algorithm_versions",
+    "publication_records",
+    "liability_execution_records"
+   ],
+   "criterion": "Governance algorithms are open and immutable, metrics are public, data are transparent, and liability procedures are automated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "algorithm publication and version history",
+    "metric and data access records",
+    "liability execution logs"
+   ],
+   "gap": "Operational definitions of openness, transparency, and immutability are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define publication and transparency tests.",
+    "Define which changes are compatible with immutability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-02",
+   "section": "Preamble",
+   "title": "Algorithms Excluded From Subjecthood",
+   "quote": "Algorithms define binding decision rules and execution constraints, but do not constitute Subjects and do not bear causal or legal responsibility.",
+   "interpretation": "Check that algorithmic rules are binding while algorithms are excluded from Subject and responsibility assignments. Identifying algorithms and Subjects requires a classification scheme.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "entity_classifications",
+    "decision_rules",
+    "responsibility_assignments"
+   ],
+   "criterion": "Algorithms define binding rules and constraints but are never classified as Subjects or assigned causal or legal responsibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity classifications",
+    "responsibility registry"
+   ],
+   "gap": "The text does not provide operational entity classifications or a test of binding force. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define algorithm classification and how binding rules are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-03",
+   "section": "Preamble",
+   "title": "Originating Subjects Retain Responsibility",
+   "quote": "All responsibility for the deployment, funding, and effects of algorithmic execution remains fully attributable to the originating Subjects, as defined in DKP-1-IDENTITY-001.",
+   "interpretation": "Check that responsibility for deployment, funding, and execution effects is fully assigned to originating Subjects. Subject identity and attribution cannot be resolved from this document alone.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deployment_records",
+    "funding_records",
+    "execution_effects",
+    "originating_subjects",
+    "responsibility_assignments"
+   ],
+   "criterion": "All responsibility for algorithm deployment, funding, and effects is attributable to originating Subjects.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "Subject identity records",
+    "causal attribution records"
+   ],
+   "gap": "The referenced identity specification and responsibility attribution procedure are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how originating Subjects and shared responsibility are determined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-04",
+   "section": "Preamble",
+   "title": "Justice Function Political Independence",
+   "quote": "The function δίκη is appointed by no one and can never be altered by the will of those in power.",
+   "interpretation": "Audit the origin and authorization of changes to the justice function. Whether a change expresses the will of those in power requires an external decision model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_function_changes",
+    "change_authorizations",
+    "governance_roles"
+   ],
+   "criterion": "No person appoints δίκη, and no alteration is made by the will of those in power.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance roles and change provenance"
+   ],
+   "gap": "Appointment and alteration by political will are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define prohibited appointment and political-control relationships."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-05",
+   "section": "Preamble",
+   "title": "Justice Function Axiomatic Basis",
+   "quote": "Derived from predefined axioms, such as:",
+   "interpretation": "The justice function is to derive from predefined axioms, illustrated by reciprocal harm acceptance, avoidance of unnecessary and non-compensable suffering, sustainability maximization, nature preservation, and truth and transparency priority. The phrase 'such as' leaves the axiom set open, and no formal derivation or conflict resolution is supplied.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "justice_function",
+    "predefined_axioms",
+    "derivation_evidence"
+   ],
+   "criterion": "δίκη is derived from predefined axioms consistent with the listed principles.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "formalized axioms and derivation evidence"
+   ],
+   "gap": "The axiom set, formal meanings, and rules for resolving conflicts between principles are undefined.",
+   "hypotheses_needed": [
+    "Formalize the axioms and whether the examples are individually mandatory.",
+    "Define harm acceptance, avoidable suffering, sustainability, preservation, and priority."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-06",
+   "section": "Preamble",
+   "title": "Open Consensus Calibration Participation",
+   "quote": "And is constantly calibrated by an open consensus mechanism, where participation is distributed according to competence, reputation, and proven accuracy.",
+   "interpretation": "Check that calibration uses an open consensus process and that participation depends on all three named attributes. No cadence, weighting formula, or reconciliation with A.1a's ban on continuous parameter adjustment is given.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "calibration_history",
+    "consensus_participants",
+    "competence",
+    "reputation",
+    "proven_accuracy"
+   ],
+   "criterion": "δίκη is constantly calibrated through open consensus with participation distributed according to competence, reputation, and proven accuracy.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "participant competence, reputation, and accuracy records",
+    "consensus logs"
+   ],
+   "gap": "Calibration cadence and participation allocation rules are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define 'constantly' and the participation allocation function.",
+    "Declare how this calibration differs from prohibited continuous Equation adjustment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-07",
+   "section": "Preamble",
+   "title": "Damage Automatically Generates Liability",
+   "quote": "- A self-regulating political system, where damage automatically generates liability;",
+   "interpretation": "Check that each recognized damage event automatically creates liability. Recognition, attribution, and the extent of liability require additional definitions.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "damage_events",
+    "liability_records"
+   ],
+   "criterion": "Every damage event automatically generates liability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "damage determinations",
+    "liability creation logs"
+   ],
+   "gap": "Damage recognition and liability attribution rules are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define qualifying damage events and automatic liability creation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-08",
+   "section": "Preamble",
+   "title": "Profit Linked To Social Benefit",
+   "quote": "- A self-auditing economic system, where a subject's profit is mathematically linked to society's benefit;",
+   "interpretation": "A check would evaluate the mathematical relationship between Subject profit and social benefit. Neither the benefit measure nor the linking function is supplied.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "subject_profit",
+    "societal_benefit"
+   ],
+   "criterion": "A mathematical relationship links each subject's profit to society's benefit.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "profit accounting",
+    "societal benefit measurements"
+   ],
+   "gap": "The benefit measure and profit-benefit relationship are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the social benefit measure and linking function."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-09",
+   "section": "Preamble",
+   "title": "Lies Must Be Economically Unprofitable",
+   "quote": "- A self-correcting information system, where lies are economically unprofitable;",
+   "interpretation": "Compare the economic gains and costs of lying under a declared behavior and enforcement model. The text does not specify whether unprofitability applies to every realized lie or expected returns.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "false_statement_events",
+    "economic_gains",
+    "economic_costs"
+   ],
+   "criterion": "Lies are economically unprofitable.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "statement truth determinations",
+    "economic outcomes and sanctions"
+   ],
+   "gap": "Lie classification, accounting horizon, and realized-versus-expected profitability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define lying, economic return, and the evaluation horizon.",
+    "Choose realized or expected unprofitability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Preamble-10",
+   "section": "Preamble",
+   "title": "Nature Exploitation Requires Invisible Impact",
+   "quote": "- A self-sustaining ecological system, where the exploitation of nature is permitted only within the framework of invisible impact.",
+   "interpretation": "Check that every permitted exploitation activity satisfies an invisible-impact condition. The preamble does not define that condition; Article 13 gives a narrower surface-integrity rule for reserves.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "nature_exploitation_activities",
+    "environmental_impacts"
+   ],
+   "criterion": "Nature exploitation is permitted only within invisible impact.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "environmental impact observations"
+   ],
+   "gap": "Invisible impact is undefined for the general scope of nature exploitation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define invisible impact and whether Article 13's surface-integrity test applies outside reserves."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-1.1-01",
+   "section": "SECTION I. FINANCIAL PHYSICS",
+   "title": "Separate Basic And Venture Circuits",
+   "quote": "1.1. The global economy is divided into two independent circuits: Basic (consumption, resources, land) and Venture (space, fundamental science, AI).",
+   "interpretation": "Check economic classification into Basic and Venture and their independence. Mixed activities and permitted interactions between the circuits are not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "economic_activities",
+    "circuit_assignments",
+    "cross_circuit_relationships"
+   ],
+   "criterion": "The economy has two independent circuits with the listed Basic and Venture domains.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "economic activity classifications",
+    "cross-circuit transactions"
+   ],
+   "gap": "Independence and classification of mixed or unlisted activities are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define circuit independence and classification rules."
+   ],
+   "section_label": "1.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-1.2-01",
+   "section": "SECTION I. FINANCIAL PHYSICS",
+   "title": "Basic Circuit Development Growth Peg",
+   "quote": "1.2. Law of Dynamic Standard (Mirror Peg): The value of currencies and assets in the Basic circuit of developed nations is rigidly pegged to the 5-year moving average of economic growth in the bottom 20% of countries (Development Quintile).",
+   "interpretation": "Compute the specified moving average after identifying the Development Quintile, then test the peg. Country ranking, growth aggregation, developed-nation classification, and the conversion from growth to asset values are missing.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "country_growth_history",
+    "country_rankings",
+    "developed_nations",
+    "basic_asset_values"
+   ],
+   "criterion": "Basic-circuit currencies and assets of developed nations are rigidly pegged to the 5-year moving average of economic growth in the bottom 20% of countries.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "national growth time series",
+    "country development classifications",
+    "asset and currency valuations"
+   ],
+   "gap": "The ranking basis, aggregation method, and numerical peg function are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define quintile membership, country weighting, moving-average sampling, and the peg function."
+   ],
+   "section_label": "1.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-1.3-01",
+   "section": "SECTION I. FINANCIAL PHYSICS",
+   "title": "Venture Exemption And Disclosure Pledge",
+   "quote": "1.3. Venture Gateway: Capital in the Venture circuit is exempt from the Mirror Peg and taxes, provided the \"Open Tech Pledge\" is signed — requiring the release of developments to the public domain after 5 years.",
+   "interpretation": "Check that exemptions depend on a signed pledge and that covered developments enter the public domain after five years. The event starting that period is not given here; patent registration appears in 4.1 but is not expressly imported.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "venture_capital",
+    "pledge_signatures",
+    "tax_treatment",
+    "peg_treatment",
+    "development_release_dates"
+   ],
+   "criterion": "Signed Open Tech Pledge permits Venture capital exemption from taxes and the Mirror Peg and requires public-domain release after 5 years.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "pledge registry",
+    "tax and peg records",
+    "development rights records"
+   ],
+   "gap": "The five-year clock origin, scope of developments, and consequences of breach are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the clock origin and developments covered by each pledge."
+   ],
+   "section_label": "1.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-1.4-01",
+   "section": "SECTION I. FINANCIAL PHYSICS",
+   "title": "Regional Decline Triggers Snap Protocol",
+   "quote": "1.4. Snap Protocol (Emergency Transparency): In the event of a sharp drop (more than 10% per month) in indicators in any region (war, repression), smoothing is disabled, and the aggressor's quotes in the Basic circuit crash instantly.",
+   "interpretation": "Detect a monthly indicator decline exceeding ten percent, then check smoothing disablement and the aggressor's immediate quote decline. The indicators, aggressor attribution, and crash magnitude are undefined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "regional_indicator_history",
+    "aggressor_attribution",
+    "smoothing_state",
+    "basic_quotes"
+   ],
+   "criterion": "A regional indicator drop greater than 10% per month disables smoothing and instantly crashes the aggressor's Basic-circuit quotes.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "regional indicators",
+    "aggression attribution",
+    "market and smoothing state"
+   ],
+   "gap": "Indicator selection, decline calculation, crash magnitude, and instant-execution semantics are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define qualifying indicators, aggressor attribution, and crash behavior.",
+    "Specify interaction with Mercy suspension."
+   ],
+   "section_label": "1.4",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-2.1-01",
+   "section": "SECTION I. FINANCIAL PHYSICS",
+   "title": "Global Financing Through Targeted Contracts",
+   "quote": "2.1. Financing from global funds is carried out exclusively through targeted smart contracts.",
+   "interpretation": "Check that every financing transaction from a global fund executes through a smart contract with a declared target. The meaning of a qualifying target is not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "global_fund_transactions",
+    "smart_contracts",
+    "contract_targets"
+   ],
+   "criterion": "Every global-fund financing transaction uses a targeted smart contract.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "global-fund ledger",
+    "contract metadata"
+   ],
+   "gap": "The scope of global funds and the required targeting semantics are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the global-fund registry and qualifying contract targets."
+   ],
+   "section_label": "2.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-2.2-01",
+   "section": "SECTION I. FINANCIAL PHYSICS",
+   "title": "Verified KPIs Gate Tranche Unlocking",
+   "quote": "2.2. Funds are unlocked algorithmically (in tranches) only upon the completion of physically verifiable KPIs (built, cured, educated).",
+   "interpretation": "Check that each algorithmic tranche unlock follows completion of the relevant physically verifiable KPI. KPI definitions and evidence acceptance are external inputs.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "tranche_unlocks",
+    "kpi_definitions",
+    "kpi_completion_evidence"
+   ],
+   "criterion": "Funds unlock algorithmically in tranches only when the corresponding physically verifiable KPIs are complete.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical KPI verification",
+    "tranche execution logs"
+   ],
+   "gap": "KPI completion criteria and tranche-to-KPI mappings are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare KPI verification rules and tranche mappings."
+   ],
+   "section_label": "2.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-3.1-01",
+   "section": "SECTION II. PRODUCTION AND RESOURCES",
+   "title": "Raw Exports Require Chain Participation",
+   "quote": "3.1. Direct export of raw materials is permitted only if the exporter participates in the value-added chain.",
+   "interpretation": "Check chain participation before permitting a direct raw-material export. The qualifying form or extent of participation is unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "raw_material_exports",
+    "exporter_chain_participation"
+   ],
+   "criterion": "Every permitted direct raw-material export has an exporter participating in the value-added chain.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "export records",
+    "value-chain participation records"
+   ],
+   "gap": "Qualifying value-added-chain participation is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define participation and the relevant value-added chain."
+   ],
+   "section_label": "3.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-3.2-01",
+   "section": "SECTION II. PRODUCTION AND RESOURCES",
+   "title": "Exporting Countries Receive Processing Equity",
+   "quote": "3.2. The resource-exporting country automatically receives equity tokens (shares) in the processing enterprises using this resource, regardless of their geography.",
+   "interpretation": "Trace exported resources to processing enterprises and check automatic equity allocation to the exporting country. The share quantity and allocation timing are missing; 3.3 describes the intended downstream profit consequence.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "resource_provenance",
+    "processing_enterprises",
+    "equity_allocations"
+   ],
+   "criterion": "Each resource-exporting country automatically receives equity in enterprises processing its resource, without a geographic restriction.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "resource provenance",
+    "enterprise processing records",
+    "equity token ledger"
+   ],
+   "gap": "Equity amounts, resource tracing rules, and allocation timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the equity allocation function and resource provenance model."
+   ],
+   "section_label": "3.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-4.1-01",
+   "section": "SECTION II. PRODUCTION AND RESOURCES",
+   "title": "Mandatory Technology Public Domain Transition",
+   "quote": "4.1. Any technology necessary for life support or created within the preferential Venture circuit enters the Public Domain 5 years after patent registration.",
+   "interpretation": "For technology meeting either eligibility condition, check public-domain entry five years after patent registration. Unpatented technologies have no specified clock origin.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "technology_classifications",
+    "venture_creation_records",
+    "patent_registration_dates",
+    "public_domain_dates"
+   ],
+   "criterion": "Life-support technology or technology created within the preferential Venture circuit enters the Public Domain 5 years after patent registration.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "technology classifications",
+    "patent and public-domain records"
+   ],
+   "gap": "Life-support necessity and treatment of unpatented technology are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define life-support necessity and treatment of technology lacking patent registration."
+   ],
+   "section_label": "4.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-5.1-01",
+   "section": "SECTION III. HUMAN CAPITAL",
+   "title": "Planetary Competence And Diploma Recognition",
+   "quote": "5.1. A single planetary standard of competence is introduced. Diplomas are confirmed by passing a standardized AI exam and are recognized in all jurisdictions.",
+   "interpretation": "Check use of a common competence standard, exam-based diploma confirmation, and recognition across jurisdictions. The standard, exam, and pass requirements are not supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "competence_standards",
+    "exam_results",
+    "diploma_confirmations",
+    "jurisdiction_recognition"
+   ],
+   "criterion": "One planetary competence standard applies; passing the standardized AI exam confirms diplomas, which all jurisdictions recognize.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "competence standard",
+    "exam results",
+    "diploma recognition records"
+   ],
+   "gap": "The competence standard and exam specification are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the common exam, pass criteria, and recognition test."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-6.1-01",
+   "section": "SECTION III. HUMAN CAPITAL",
+   "title": "Absolute Right To Leave Jurisdictions",
+   "quote": "6.1. Right to Exit: Citizens have the absolute right to leave any jurisdiction.",
+   "interpretation": "Check that citizens face no jurisdictional restriction on leaving. The text does not define how to distinguish a prohibited restriction from a practical inability to travel.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "citizenship_records",
+    "exit_requests",
+    "exit_restrictions"
+   ],
+   "criterion": "Every citizen has an unrestricted right to leave any jurisdiction.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit policies and decisions",
+    "citizenship records"
+   ],
+   "gap": "An operational test of an absolute exit right is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which policies and actions constitute restrictions on exit."
+   ],
+   "section_label": "6.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-6.1-02",
+   "section": "SECTION III. HUMAN CAPITAL",
+   "title": "Funded Relocation From Depressed Zones",
+   "quote": "Relocation costs from depressed zones are covered by a global fund.",
+   "interpretation": "Check that the global fund covers qualifying relocation costs for departures from depressed zones. Neither zone eligibility nor eligible cost categories are defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "origin_zones",
+    "relocation_costs",
+    "global_fund_payments"
+   ],
+   "criterion": "A global fund covers relocation costs from depressed zones.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "zone classifications",
+    "relocation invoices",
+    "fund disbursements"
+   ],
+   "gap": "Depressed-zone classification and covered-cost rules are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define depressed zones and covered relocation costs."
+   ],
+   "section_label": "6.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-6.2-01",
+   "section": "SECTION III. HUMAN CAPITAL",
+   "title": "Annual Specialist Relocation Lease Fee",
+   "quote": "6.2. Talent Leasing: Upon the relocation of a specialist, the recipient country pays an annual commission (Lease Fee) to the donor country.",
+   "interpretation": "Check that specialist relocation establishes an annual payment obligation from the recipient country to the donor country. Amount, duration, and the relation between donor-country entitlement and the Education Fund destination in 6.4 are not fully specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "specialist_relocations",
+    "recipient_countries",
+    "donor_countries",
+    "lease_payments"
+   ],
+   "criterion": "Specialist relocation entails an annual Lease Fee paid by the recipient country to the donor country.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "specialist relocation registry",
+    "Lease Fee payments"
+   ],
+   "gap": "Fee calculation, specialist eligibility, and obligation duration are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define specialist eligibility, fee calculation, and payment duration."
+   ],
+   "section_label": "6.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-6.3-01",
+   "section": "SECTION III. HUMAN CAPITAL",
+   "title": "Successful Work Precedes Lease Payment",
+   "quote": "6.3. Post-Factum Principle: Payment is made only after a year of successful work by the specialist, preventing the creation of \"fake diploma factories.\"",
+   "interpretation": "Check that payment does not occur before a year of successful specialist work. The success criterion and whether this gate repeats for every annual payment are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "work_periods",
+    "work_success_evaluations",
+    "lease_payment_dates"
+   ],
+   "criterion": "A Lease Fee payment occurs only after a year of successful work by the specialist.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "employment history",
+    "work success determinations",
+    "payment dates"
+   ],
+   "gap": "Successful work and application of the gate to recurring payments are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define successful work and whether each payment requires a separate successful year."
+   ],
+   "section_label": "6.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-6.4-01",
+   "section": "SECTION III. HUMAN CAPITAL",
+   "title": "Lease Revenue Education Fund Destination",
+   "quote": "6.4. Educational DAO: Lease funds do not go to the government budget but to a transparent Education Fund in the region of origin.",
+   "interpretation": "Check payment destinations and fund transparency. The region-of-origin rule and transparency standard require interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "lease_payments",
+    "destination_accounts",
+    "origin_regions",
+    "education_fund_disclosures"
+   ],
+   "criterion": "Lease funds enter a transparent Education Fund in the region of origin and never the government budget.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "account classifications",
+    "origin records",
+    "Education Fund disclosures"
+   ],
+   "gap": "Region of origin and fund transparency are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define origin assignment and transparency requirements."
+   ],
+   "section_label": "6.4",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-7.1-01",
+   "section": "SECTION IV. SECURITY AND LIABILITY",
+   "title": "Trade Access Requires Proportional Stake",
+   "quote": "7.1. To access the Global Trade Network, a state deposits a pledge (Stake) into an Escrow smart contract. The stake size is proportional to GDP.",
+   "interpretation": "Check a state's escrow deposit before trade access and compare the stake with GDP using a declared proportionality coefficient. The coefficient and GDP reference period are missing.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "trade_access",
+    "escrow_deposits",
+    "state_gdp"
+   ],
+   "criterion": "Trade access requires an Escrow smart-contract Stake whose size is proportional to the state's GDP.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "trade access registry",
+    "escrow balances",
+    "national GDP"
+   ],
+   "gap": "The stake-to-GDP coefficient and GDP measurement convention are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the proportionality coefficient and GDP reference period."
+   ],
+   "section_label": "7.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-7.2-01",
+   "section": "SECTION IV. SECURITY AND LIABILITY",
+   "title": "Peaceful States Accrue Growth Dividends",
+   "quote": "7.2. As long as the state maintains peace, dividends from global GDP growth accrue on the stake.",
+   "interpretation": "Check dividend accrual during intervals classified as peaceful. The dividend formula and treatment of zero or negative global growth are unspecified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "state_peace_status",
+    "stake_balances",
+    "global_gdp_growth",
+    "dividend_accruals"
+   ],
+   "criterion": "While a state maintains peace, dividends from global GDP growth accrue on its Stake.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "peace determinations",
+    "global GDP growth",
+    "stake and dividend ledger"
+   ],
+   "gap": "Peace classification and dividend calculation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define peaceful intervals and dividend accrual, including nonpositive growth."
+   ],
+   "section_label": "7.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-7.3-01",
+   "section": "SECTION IV. SECURITY AND LIABILITY",
+   "title": "Aggression Automatically Burns Peace Stake",
+   "quote": "7.3. In the event of aggression, the stake is automatically burned (Slashing).",
+   "interpretation": "Given an aggression determination, check automatic destruction of the state's stake. Aggression detection and the execution deadline are not defined here.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "aggression_events",
+    "stake_balances",
+    "slashing_records"
+   ],
+   "criterion": "Aggression automatically causes the aggressor's Stake to be burned.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "aggression determinations",
+    "stake ledger"
+   ],
+   "gap": "Aggression classification and automatic-execution timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define aggression recognition and the execution event."
+   ],
+   "section_label": "7.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-8.1-01",
+   "section": "SECTION IV. SECURITY AND LIABILITY",
+   "title": "Aggression Or Exhaustion Triggers Disconnection",
+   "quote": "8.1. In the event of military aggression recorded by independent monitoring, or upon exhaustion of the Peace Stake, the violating region is automatically disconnected from the global financial, energy, and logistical infrastructure.",
+   "interpretation": "Check automatic disconnection from all three infrastructure categories when either trigger occurs. Monitoring independence and the extent of regional disconnection need operational definitions.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "independent_aggression_reports",
+    "peace_stake_balances",
+    "regional_infrastructure_connections"
+   ],
+   "criterion": "Independently recorded military aggression or Peace Stake exhaustion automatically disconnects the violating region from global financial, energy, and logistical infrastructure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "monitoring reports and provenance",
+    "stake balances",
+    "infrastructure connection states"
+   ],
+   "gap": "Independent monitoring, violating-region assignment, and complete disconnection are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define accepted monitoring and regional disconnection.",
+    "Specify interaction with Mercy suspension."
+   ],
+   "section_label": "8.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-8.2-01",
+   "section": "SECTION IV. SECURITY AND LIABILITY",
+   "title": "Weapon Damage Tenfold Asset Writeoff",
+   "quote": "8.2. The use of weapons entails the write-off of the aggressor's assets in an amount 10 times the damage caused.",
+   "interpretation": "Given a weapons-use event, attributed aggressor, and damage value, compare the required write-off with ten times that value. Damage valuation and insufficient-asset handling are not specified.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "weapons_use_events",
+    "aggressor_attribution",
+    "damage_value",
+    "asset_writeoffs"
+   ],
+   "criterion": "The aggressor's asset write-off equals 10 × damage caused by weapons use.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "weapons-use attribution",
+    "damage valuation",
+    "asset ledger"
+   ],
+   "gap": "The document supplies no damage valuation or insufficient-assets procedure. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define damage valuation, attribution, and treatment of asset shortfalls."
+   ],
+   "section_label": "8.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-9.1-01",
+   "section": "SECTION V. POLITICAL MECHANICS",
+   "title": "Removable Regional Operator Governance",
+   "quote": "9.1. The institution of irremovable power is abolished. Territories are managed by Regional Operators.",
+   "interpretation": "Check that territory management is assigned to Regional Operators and that no governing office has irremovable authority. Removal must be defined beyond merely naming a termination mechanism.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "territorial_management_assignments",
+    "governance_offices",
+    "removal_rules"
+   ],
+   "criterion": "Territories are managed by Regional Operators, and no institution of irremovable power exists.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance structure",
+    "appointment and removal rules"
+   ],
+   "gap": "The scope of power and the operational meaning of removability are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define governing offices and an effective removability test."
+   ],
+   "section_label": "9.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-9.2-01",
+   "section": "SECTION V. POLITICAL MECHANICS",
+   "title": "KPI Bound Operator Contract Termination",
+   "quote": "9.2. An Operator is hired for the duration of a specific KPI. Failure to meet the KPI leads to automatic contract termination.",
+   "interpretation": "Check that each Operator contract is tied to a specific KPI duration and automatically terminates upon KPI failure. The document does not define how KPI duration or failure is determined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "operator_contracts",
+    "kpi_definitions",
+    "kpi_durations",
+    "kpi_outcomes",
+    "termination_events"
+   ],
+   "criterion": "Operator employment lasts for a specific KPI's duration, and KPI failure automatically terminates the contract.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Operator contracts",
+    "KPI schedules and evaluations"
+   ],
+   "gap": "KPI duration, evaluation, and failure criteria are external to the text. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare KPI deadlines and failure conditions."
+   ],
+   "section_label": "9.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-10.1-01",
+   "section": "SECTION V. POLITICAL MECHANICS",
+   "title": "Public Real Time Budget Disclosure",
+   "quote": "10.1. All state/regional budget transactions are displayed on a public blockchain in real-time. Secret expenditure items are prohibited.",
+   "interpretation": "Reconcile budget transactions and expenditure items with public blockchain records. A latency convention is needed to test real-time publication.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "budget_transactions",
+    "expenditure_items",
+    "public_blockchain_records",
+    "publication_times"
+   ],
+   "criterion": "Every state or regional budget transaction is publicly displayed on a blockchain in real time, and no expenditure item is secret.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "complete budget ledger",
+    "public blockchain and publication timestamps"
+   ],
+   "gap": "Real-time latency and sufficient disclosure of expenditure items are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define real-time publication and disclosure completeness."
+   ],
+   "section_label": "10.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-11.1-01",
+   "section": "SECTION V. POLITICAL MECHANICS",
+   "title": "Covert Capital Interaction Criminal Classification",
+   "quote": "11.1. Any covert interaction of private capital with legislative algorithms or operators is a criminal offense.",
+   "interpretation": "Check that every qualifying interaction is classified as a criminal offense. Detecting covert interaction and identifying private-capital influence require definitions and evidence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "interaction_records",
+    "private_capital_links",
+    "disclosure_status",
+    "offense_classifications"
+   ],
+   "criterion": "Any covert interaction between private capital and legislative algorithms or operators is classified as a criminal offense.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interaction evidence",
+    "capital affiliation and disclosure records",
+    "offense registry"
+   ],
+   "gap": "Covert interaction and private-capital participation are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define qualifying interactions, disclosure, and capital affiliations."
+   ],
+   "section_label": "11.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-12.1-01",
+   "section": "SECTION VI. BIOSPHERE BALANCE",
+   "title": "Prices Include Complete Environmental Costs",
+   "quote": "12.1. The cost of full disposal and environmental damage restoration is algorithmically included in the price of any good.",
+   "interpretation": "Check that each good's price calculation includes full disposal and restoration costs. The text supplies no method for estimating either cost or separating them from other price components.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "goods",
+    "price_calculations",
+    "full_disposal_costs",
+    "restoration_costs"
+   ],
+   "criterion": "Every good's price algorithm includes its full disposal cost and environmental damage restoration cost.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "product lifecycle assessments",
+    "disposal and restoration valuations",
+    "pricing algorithms"
+   ],
+   "gap": "Full disposal and environmental restoration valuation methods are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare lifecycle boundaries and environmental cost estimation methods."
+   ],
+   "section_label": "12.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-13.1-01",
+   "section": "SECTION VI. BIOSPHERE BALANCE",
+   "title": "Forty Percent Biosphere Reserve Coverage",
+   "quote": "13.1. 40% of land is declared a Biosphere Reserve.",
+   "interpretation": "Calculate declared reserve land area divided by total land area and compare with forty percent. The text says forty percent rather than a minimum; boundary and denominator conventions require data.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "reserve_land_area",
+    "total_land_area"
+   ],
+   "criterion": "reserve_land_area / total_land_area = 40%.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "land and reserve area inventory"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "13.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-13.2-01",
+   "section": "SECTION VI. BIOSPHERE BALANCE",
+   "title": "Reserve Extraction Surface Integrity Requirement",
+   "quote": "13.2. Invisible Extraction: Resource extraction in reserves is permitted exclusively by methods that do not disturb the surface layer integrity (robotized tunnels, bio-leaching). Open pits and logging are prohibited.",
+   "interpretation": "Check that reserve extraction preserves surface-layer integrity and excludes open pits and logging. The named methods are examples, not an express exhaustive whitelist; the geographic scope of the last sentence could be reserve-only or general.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "extraction_locations",
+    "extraction_methods",
+    "surface_integrity_observations"
+   ],
+   "criterion": "Reserve extraction does not disturb surface-layer integrity; open pits and logging are prohibited.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reserve boundaries",
+    "extraction activity records",
+    "surface integrity measurements"
+   ],
+   "gap": "Surface integrity and the scope of the open-pit and logging prohibition are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a surface-integrity test.",
+    "Declare whether the categorical bans apply only within reserves."
+   ],
+   "section_label": "13.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-13.3-01",
+   "section": "SECTION VI. BIOSPHERE BALANCE",
+   "title": "Reserve Residents Receive Sensor Based Income",
+   "quote": "13.3. Residents of reserves receive the status of Biosphere Operators. Their income is generated by a smart contract based on sensor data (biomass index, CO2 levels, biodiversity).",
+   "interpretation": "Check Biosphere Operator status for reserve residents and sensor-dependent smart-contract income. Residency and the income function are undefined.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "reserve_residents",
+    "operator_status",
+    "income_contracts",
+    "biomass_index",
+    "co2_levels",
+    "biodiversity"
+   ],
+   "criterion": "Reserve residents are Biosphere Operators whose income is generated by a smart contract based on biomass, CO2, and biodiversity sensor data.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "residency registry",
+    "environmental sensors",
+    "income contract execution"
+   ],
+   "gap": "Residency eligibility and the sensor-to-income function are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define residency and the income calculation."
+   ],
+   "section_label": "13.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-14.1-01",
+   "section": "SECTION VII. INFORMATION HYGIENE",
+   "title": "Decentralized Verification Of Official Statements",
+   "quote": "14.1. Public statements by officials are verified by a decentralized network of validators.",
+   "interpretation": "Check that public official statements receive verification from a qualifying validator network. Statement scope, verification completion, and decentralization are undefined.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "official_public_statements",
+    "verification_records",
+    "validator_network_structure"
+   ],
+   "criterion": "Public statements by officials are verified by a decentralized validator network.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "official statement corpus",
+    "verification records",
+    "validator network ownership and control"
+   ],
+   "gap": "The text lacks statement coverage, verification, and decentralization criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define covered statements and a decentralized verification procedure."
+   ],
+   "section_label": "14.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-14.2-01",
+   "section": "SECTION VII. INFORMATION HYGIENE",
+   "title": "Quadratic Validator Vote Purchase Cost",
+   "quote": "14.2. Quadratic Protection: The cost of buying validator votes grows exponentially (Cost = Votes²), making a capital attack economically impossible.",
+   "interpretation": "Evaluate Cost = Votes² using consistently represented quantities. The explicit formula is quadratic, despite the prose saying exponential; the claimed impossibility of a capital attack does not follow from a specified attack model.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "votes",
+    "cost"
+   ],
+   "criterion": "Cost = Votes².",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "vote quantities and purchase costs"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "14.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-14.3-01",
+   "section": "SECTION VII. INFORMATION HYGIENE",
+   "title": "Domain Reputation Weights Validator Votes",
+   "quote": "14.3. Competence Weight: A validator's vote is weighted by their reputation in a specific field of knowledge (EigenTrust algorithm).",
+   "interpretation": "Check that vote weighting uses reputation for the relevant knowledge field through EigenTrust. The document gives no EigenTrust implementation or domain-assignment rule.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "validator_votes",
+    "knowledge_fields",
+    "field_reputations",
+    "vote_weights"
+   ],
+   "criterion": "Each validator vote is weighted using the validator's reputation in the specific knowledge field through EigenTrust.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "field-specific reputation",
+    "knowledge-domain assignments",
+    "EigenTrust implementation"
+   ],
+   "gap": "The EigenTrust calculation and mapping from reputation to vote weight are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the EigenTrust implementation and field-to-vote mapping."
+   ],
+   "section_label": "14.3",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-15.1-01",
+   "section": "SECTION VII. INFORMATION HYGIENE",
+   "title": "Influential Algorithms Require Open Source",
+   "quote": "15.1. The source code of all algorithms influencing resource allocation, social rating, or news feeds must be Open Source.",
+   "interpretation": "Identify algorithms influencing any listed function and check their source-code status. The influence boundary and qualifying Open Source standard are not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "algorithm_inventory",
+    "algorithm_influences",
+    "source_publications",
+    "source_licenses"
+   ],
+   "criterion": "All algorithms influencing resource allocation, social rating, or news feeds have Open Source source code.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "algorithm dependency inventory",
+    "source repositories and licenses"
+   ],
+   "gap": "The document does not define influence coverage or qualifying Open Source conditions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define influence tracing and the Open Source acceptance rule."
+   ],
+   "section_label": "15.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-16.1-01",
+   "section": "SECTION VIII. SOCIAL JUSTICE",
+   "title": "Personal Assets Are Inheritable",
+   "quote": "16.1. Personal assets are heritable.",
+   "interpretation": "Check that personal assets are eligible for inheritance. This general permission requires reconciliation with the ultra-large-fortune transfer rule in the same clause.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "estate_assets",
+    "asset_classifications",
+    "inheritance_eligibility"
+   ],
+   "criterion": "Personal assets are eligible for inheritance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "estate and asset classifications"
+   ],
+   "gap": "Personal-asset classification and precedence of the ultra-large-fortune rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define personal assets and interaction with mandatory fortune transfers."
+   ],
+   "section_label": "16.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-16.1-02",
+   "section": "SECTION VIII. SOCIAL JUSTICE",
+   "title": "Infrastructure And Power Cannot Be Inherited",
+   "quote": "Infrastructure capital and power are not subject to inheritance.",
+   "interpretation": "Check that inheritance transfers exclude infrastructure capital and power. The categories and treatment of indirect ownership or control are undefined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "inheritance_transfers",
+    "asset_classifications",
+    "control_rights"
+   ],
+   "criterion": "No infrastructure capital or power is inherited.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "estate transfers",
+    "infrastructure ownership and governance rights"
+   ],
+   "gap": "Infrastructure capital and power are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define prohibited asset and control categories, including indirect transfers."
+   ],
+   "section_label": "16.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-16.1-03",
+   "section": "SECTION VIII. SOCIAL JUSTICE",
+   "title": "Ultra Large Fortunes Revert At Death",
+   "quote": "Ultra-large fortunes return to the Global Development Fund after the owner's death.",
+   "interpretation": "Check mandatory transfer to the Global Development Fund after an eligible owner's death. The fortune threshold, transferred portion, and transfer deadline are missing.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "owner_deaths",
+    "estate_values",
+    "fund_transfers"
+   ],
+   "criterion": "After the owner's death, an ultra-large fortune returns to the Global Development Fund.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "death registry",
+    "estate valuations",
+    "Global Development Fund receipts"
+   ],
+   "gap": "Ultra-large eligibility, transfer scope, and timing are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the fortune threshold, whether the whole fortune transfers, and the transfer deadline."
+   ],
+   "section_label": "16.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-17.1-01",
+   "section": "SECTION VIII. SOCIAL JUSTICE",
+   "title": "Universal Survival Resource Entitlement",
+   "quote": "17.1. Every human is guaranteed a minimum set of resources for survival (food, shelter, connectivity) by right of birth.",
+   "interpretation": "Check that every human has a birth-based entitlement covering food, shelter, and connectivity. Resource quantities and whether the guarantee requires actual delivery are not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "human_population",
+    "resource_entitlements",
+    "resource_provision"
+   ],
+   "criterion": "Every human has a right by birth to minimum survival resources including food, shelter, and connectivity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "population registry",
+    "resource entitlements and delivery"
+   ],
+   "gap": "Minimum resource levels and the operational meaning of guaranteed provision are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define minimum levels and whether entitlement, availability, or delivery satisfies the guarantee."
+   ],
+   "section_label": "17.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-18.1-01",
+   "section": "SECTION VIII. SOCIAL JUSTICE",
+   "title": "UBR Receipt Requires Social Participation",
+   "quote": "18.1. Receipt of UBR imposes an obligation to participate in education, creativity, or socially useful activity.",
+   "interpretation": "Check that UBR recipients participate in at least one listed category. Participation sufficiency, assessment period, and exemptions are not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ubr_receipts",
+    "participation_records",
+    "activity_classifications"
+   ],
+   "criterion": "A UBR recipient participates in education, creativity, or socially useful activity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "UBR recipient registry",
+    "activity participation records"
+   ],
+   "gap": "Qualifying activity and sufficient participation over time are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define activity eligibility, participation requirements, and assessment periods."
+   ],
+   "section_label": "18.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-18.1-02",
+   "section": "SECTION VIII. SOCIAL JUSTICE",
+   "title": "Total Passivity Reduces Benefit Rating",
+   "quote": "Total passivity leads to a reduced rating for access to additional benefits.",
+   "interpretation": "Check a downward rating transition after total passivity is determined. The text specifies reduced access rating for additional benefits, without specifying removal of UBR.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "activity_history",
+    "passivity_determinations",
+    "benefit_access_ratings"
+   ],
+   "criterion": "Total passivity causes a reduction in the rating used for access to additional benefits.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity histories",
+    "rating change logs"
+   ],
+   "gap": "Total passivity, assessment duration, and rating reduction magnitude are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define total passivity and the rating reduction rule."
+   ],
+   "section_label": "18.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1-01",
+   "section": "A.1",
+   "title": "Continuous Civilization Motion Inequality",
+   "quote": "At any moment in time *t*, the Network must maintain:\n\n<div class=\"formula\">dW/dt ≥ k · E(t) · T(t) · B(t)<sup>2.83</sup></div>",
+   "interpretation": "Evaluate the inequality over time using a declared continuous model or numerical approximation. W, E, and T are described but not given complete measurement or aggregation functions.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "welfare_biosphere_history",
+    "egoistic_activity_history",
+    "technological_expansion_history",
+    "biosphere_index_history",
+    "k_history"
+   ],
+   "criterion": "At every time t, dW/dt ≥ k · E(t) · T(t) · B(t)^2.83.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "welfare and biosphere measurements",
+    "agent activity totals",
+    "available energy and compute",
+    "Physical Truth Layer B readings"
+   ],
+   "gap": "Operational variable definitions and a method for checking the derivative at every moment are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define W, E, and the energy-and-compute logarithm used for T.",
+    "Declare time units, interpolation, and derivative estimation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1-02",
+   "section": "A.1",
+   "title": "Physical Truth Biosphere Index Bounds",
+   "quote": "- B(t) — Biosphere Health Index (0...1, measured by Physical Truth Layer)",
+   "interpretation": "Check that B is within the inclusive zero-to-one range and has Physical Truth Layer provenance. The computation of B from physical measurements is not supplied.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "biosphere_index",
+    "measurement_provenance"
+   ],
+   "criterion": "0 ≤ B(t) ≤ 1, and B(t) is measured by the Physical Truth Layer.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer B values and provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1-03",
+   "section": "A.1",
+   "title": "Independent Triennial Coefficient Calibration",
+   "quote": "- k = 0.94...1.06 (calibrated every 3 years by independent audit)",
+   "interpretation": "Check the coefficient range and a three-year independent calibration cycle. The calibration method, first cycle origin, and independence standard are absent; modifications are also constrained by A.1a.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "k_history",
+    "calibration_dates",
+    "audit_records",
+    "auditor_relationships"
+   ],
+   "criterion": "0.94 ≤ k ≤ 1.06, and k is calibrated every 3 years by independent audit.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "calibration results",
+    "independent audit records"
+   ],
+   "gap": "The calibration method, schedule origin, and independence test are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the calibration method, schedule origin, and auditor independence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1-04",
+   "section": "A.1",
+   "title": "Critical Biosphere Activates Every Switch",
+   "quote": "- B<sub>min</sub> = 0.68 - Hard threshold; if B(t) < B<sub>min</sub>, all Kill Switches activate simultaneously.",
+   "interpretation": "Compare B with the strict threshold and check simultaneous activation of every Kill Switch. A.4 also suspends all Kill Switches for a natural B decline, leaving priority unresolved.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "biosphere_index",
+    "kill_switch_states",
+    "activation_times",
+    "mercy_state"
+   ],
+   "criterion": "B_min = 0.68; if B(t) < 0.68, all Kill Switches activate simultaneously.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer B readings",
+    "Kill Switch event logs",
+    "Mercy state"
+   ],
+   "gap": "Simultaneity semantics and priority against Mercy suspension are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define simultaneous activation and precedence when A.4 also applies."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1a-01",
+   "section": "A.1a Parameter Governance Invariant",
+   "title": "No Operational Equation Parameter Tuning",
+   "quote": "All coefficients, bounds, and calibration parameters of the Main Equation SHALL NOT be optimized, tuned, or adjusted on-chain or through continuous execution.",
+   "interpretation": "Inspect parameter-change provenance and reject optimization, tuning, or adjustment performed on-chain or through continuous execution. The text leaves unclear whether recording an externally approved change on-chain counts as prohibited adjustment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "equation_parameter_changes",
+    "change_execution_paths"
+   ],
+   "criterion": "No Main Equation coefficient, bound, or calibration parameter is optimized, tuned, or adjusted on-chain or through continuous execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "parameter registry",
+    "change execution traces"
+   ],
+   "gap": "The boundary between prohibited on-chain adjustment and recording an approved upgrade is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define parameter adjustment and on-chain execution boundaries."
+   ],
+   "section_label": "A.1a",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1a-02",
+   "section": "A.1a Parameter Governance Invariant",
+   "title": "Validated Upgrade Exclusively Changes Parameters",
+   "quote": "Any modification of these parameters MUST be performed exclusively via DKP-4-UPGRADE-001 and SHALL require prior validation under DKP-8-SIMULATION-001.",
+   "interpretation": "Check that every Equation parameter modification follows the specified upgrade process and has earlier simulation validation. Compliance with either process cannot be determined without the referenced documents.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "parameter_modifications",
+    "upgrade_records",
+    "simulation_validations",
+    "validation_times",
+    "modification_times"
+   ],
+   "criterion": "Every parameter modification occurs exclusively via DKP-4-UPGRADE-001 and is preceded by validation under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "upgrade authorization records",
+    "simulation validation evidence"
+   ],
+   "gap": "The upgrade and simulation specifications are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how compliance evidence for the two referenced processes is represented."
+   ],
+   "section_label": "A.1a",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1a-03",
+   "section": "A.1a Parameter Governance Invariant",
+   "title": "Operational Protocols Cannot Modify Parameters",
+   "quote": "No operational, financial, crisis, or enforcement protocol MAY directly or indirectly modify Equation parameters.",
+   "interpretation": "Trace direct changes and indirect causal paths from the named protocol categories to Equation parameters. An indirect modification test requires a declared dependency or causality model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_classifications",
+    "parameter_writes",
+    "execution_dependency_graph"
+   ],
+   "criterion": "Operational, financial, crisis, and enforcement protocols never directly or indirectly modify Equation parameters.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol classifications",
+    "parameter write logs",
+    "execution dependency graph"
+   ],
+   "gap": "Indirect modification and protocol-category boundaries are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define protocol categories and indirect parameter influence."
+   ],
+   "section_label": "A.1a",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.1a-04",
+   "section": "A.1a Parameter Governance Invariant",
+   "title": "Persistent Violation Triggers Manual Control",
+   "quote": "Violation for more than 180 consecutive days = System Failure → Temporary manual control by the consortium of the first six nodes.",
+   "interpretation": "Track uninterrupted violation duration and trigger System Failure and temporary consortium control after more than 180 days. 'Violation' may mean the Main Equation inequality or the immediately preceding parameter-governance rules; no exit condition is given.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "violation_history",
+    "system_state",
+    "control_assignments",
+    "node_order"
+   ],
+   "criterion": "Violation lasting more than 180 consecutive days causes System Failure and temporary manual control by the first six nodes' consortium.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "violation monitoring",
+    "node registration order",
+    "control-state logs"
+   ],
+   "gap": "The violation referent, first-six-node selection, and termination of temporary control are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Choose the violation referent and first-six-node interpretation.",
+    "Define restoration from temporary manual control."
+   ],
+   "section_label": "A.1a",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-01",
+   "section": "A.2",
+   "title": "Smart Contract Data Stack Exclusivity",
+   "quote": "All data upon which Code smart contracts depend is accepted only through the following stack:",
+   "interpretation": "Trace every accepted contract input through the prescribed Physical Truth Layer stack. The text does not say whether every individual datum must traverse all levels or whether the stack combines heterogeneous sources.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "contract_data_dependencies",
+    "accepted_inputs",
+    "data_provenance"
+   ],
+   "criterion": "All data accepted for Code smart contracts arrives through the specified Physical Truth Layer stack.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "contract input provenance",
+    "Physical Truth Layer processing records"
+   ],
+   "gap": "Required routing through individual stack levels is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define valid stack provenance and whether all levels are required for each input."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-02",
+   "section": "A.2",
+   "title": "Space Oracle Weight Range",
+   "quote": "Level 0 — Space (Weight 65–75%)",
+   "interpretation": "Check that the declared Level 0 weight lies within the printed range. The document does not impose an explicit joint normalization rule for all levels.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "level_0_weight"
+   ],
+   "criterion": "65% ≤ Level 0 weight ≤ 75%.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle ensemble weights"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-03",
+   "section": "A.2",
+   "title": "Continuous Global Satellite Sensor Coverage",
+   "quote": "- Constant monitoring of 100% land and ocean via SAR satellites + hyperspectral cameras.",
+   "interpretation": "Check land and ocean coverage by both named sensing technologies over time. 'Constant' monitoring lacks a revisit or interruption tolerance.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "land_ocean_geometry",
+    "sar_coverage_history",
+    "hyperspectral_coverage_history"
+   ],
+   "criterion": "SAR satellites and hyperspectral cameras constantly monitor 100% of land and ocean.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "satellite observation coverage and timestamps"
+   ],
+   "gap": "Temporal coverage and acceptable monitoring interruptions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define constant monitoring and combined sensor coverage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-04",
+   "section": "A.2",
+   "title": "Minimum Low Orbit Satellite Fleet",
+   "quote": "- ≥ 28,000 LEO satellites by 2030.",
+   "interpretation": "Count qualifying LEO satellites against the minimum by the stated year. The precise deadline within 2030 and whether counted satellites must be operational are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "leo_satellite_inventory",
+    "satellite_status",
+    "observation_date"
+   ],
+   "criterion": "The LEO satellite fleet reaches at least 28,000 by 2030.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "satellite inventory and operational status"
+   ],
+   "gap": "The within-year deadline and qualifying satellite status are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the 2030 deadline and satellite counting eligibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-05",
+   "section": "A.2",
+   "title": "Onboard Signing And Proof Upload",
+   "quote": "- Raw cryptographic signing of data on board + zk-proof upload (Starling Lab + SpaceKnow + ESA open-source stack).",
+   "interpretation": "Check onboard signing of raw satellite data and uploaded zero-knowledge proofs. The signature format, proof statement, and required stack configuration are absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "raw_satellite_data",
+    "onboard_signatures",
+    "uploaded_zk_proofs",
+    "stack_configuration"
+   ],
+   "criterion": "Raw data is cryptographically signed on board, and zk-proofs are uploaded using the named open-source stack.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "signed satellite payloads",
+    "proof uploads",
+    "implementation configuration"
+   ],
+   "gap": "Signature, proof, and named-stack interoperability specifications are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare accepted signature formats, proof semantics, and stack configuration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-06",
+   "section": "A.2",
+   "title": "Drone And Ground Oracle Weight",
+   "quote": "Level 1 — Autonomous Drones and Ground Sensors (Weight 15–25%)",
+   "interpretation": "Check the declared Level 1 contribution against its inclusive range. No additional normalization condition is inferred.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "level_1_weight"
+   ],
+   "criterion": "15% ≤ Level 1 weight ≤ 25%.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle ensemble weights"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-07",
+   "section": "A.2",
+   "title": "Ground Observation Sensor Payload Requirements",
+   "quote": "- Geohashed 4K video + thermal imaging + LiDAR with RTK-GPS (±2 cm).",
+   "interpretation": "Check Level 1 observations for the listed modalities, geohashing, and RTK-GPS accuracy. The exact 4K format and measurement interpretation of the accuracy figure are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "video_metadata",
+    "geohashes",
+    "thermal_data",
+    "lidar_data",
+    "rtk_gps_accuracy"
+   ],
+   "criterion": "Level 1 supplies geohashed 4K video, thermal imaging, and LiDAR with RTK-GPS accuracy of ±2 cm.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "drone and ground sensor payloads",
+    "position accuracy validation"
+   ],
+   "gap": "The 4K format and statistical or geometric meaning of ±2 cm are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define qualifying 4K video and the RTK-GPS accuracy test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-08",
+   "section": "A.2",
+   "title": "Drone Evidence Uploaded Before Return",
+   "quote": "- Hash and signature uploaded before drone return (Zipline/Rwanda, Wing/Alphabet).",
+   "interpretation": "Compare upload times of the observation hash and signature with the drone's return time. Both uploads must precede return.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "hash_upload_time",
+    "signature_upload_time",
+    "drone_return_time"
+   ],
+   "criterion": "Hash upload time and signature upload time are both earlier than drone return time.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "upload receipts",
+    "drone mission timestamps"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-09",
+   "section": "A.2",
+   "title": "Human Validator Oracle Weight Ceiling",
+   "quote": "Level 2 — Decentralized Human Validators (Weight ≤ 10%)",
+   "interpretation": "Check the declared Level 2 weight against the stated ceiling. The text does not state a positive minimum contribution.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "level_2_weight"
+   ],
+   "criterion": "Level 2 weight ≤ 10%.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle ensemble weights"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-10",
+   "section": "A.2",
+   "title": "Human Validator Funding And Reputation",
+   "quote": "- Quadratic funding + EigenTrust reputation.",
+   "interpretation": "Check that the human-validator layer uses quadratic funding and EigenTrust reputation. The text does not provide either implementation or explain their combination.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "validator_funding_rules",
+    "validator_reputation_rules",
+    "funding_records",
+    "reputation_records"
+   ],
+   "criterion": "Level 2 uses quadratic funding and EigenTrust reputation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "funding mechanism",
+    "EigenTrust implementation and inputs"
+   ],
+   "gap": "Quadratic-funding and EigenTrust specifications are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare both algorithms and their integration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-11",
+   "section": "A.2",
+   "title": "Human Validator Lying Stake Range",
+   "quote": "- Stake for lying: $10–100M (Kleros + UMA).",
+   "interpretation": "Check the amount assigned to the lying-related stake against the stated range. It is unclear whether this is per validator, per dispute, or another unit, and whether it denotes collateral or a penalty.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "lying_stake_amounts",
+    "stake_scope",
+    "stake_purpose"
+   ],
+   "criterion": "The stake for lying lies between $10M and $100M.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validator or dispute collateral records"
+   ],
+   "gap": "The stake's unit of application and collateral-versus-penalty meaning are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define stake scope, currency interpretation, and lying determination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.2-12",
+   "section": "A.2",
+   "title": "Oracle Ensemble Arbitration And Freeze",
+   "quote": "- Bayesian ensemble of all levels. Divergence > 7% → automatic arbitration with a $500M stake. All related tranches are frozen until resolution (max 14 days).",
+   "interpretation": "Check Bayesian combination of all levels and trigger arbitration and tranche freezing when divergence exceeds seven percent. The divergence metric, stake provider, and whether fourteen days caps resolution time or freezing duration are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "oracle_level_outputs",
+    "ensemble_outputs",
+    "divergence",
+    "arbitration_records",
+    "arbitration_stake",
+    "related_tranches",
+    "resolution_times"
+   ],
+   "criterion": "A Bayesian ensemble combines all levels; divergence > 7% triggers automatic arbitration with a $500M stake and freezes all related tranches until resolution, with a maximum of 14 days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle outputs",
+    "arbitration ledger",
+    "tranche dependency and freeze records"
+   ],
+   "gap": "The ensemble, divergence metric, tranche relationship, and unresolved-at-deadline behavior are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define ensemble and divergence calculations and the stake provider.",
+    "Choose whether fourteen days bounds resolution, freezing, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.3-01",
+   "section": "A.3",
+   "title": "Prebootstrap Geopolitical Node Distribution",
+   "quote": "3.1. Critical nodes are physically distributed across at least 5 different geopolitical blocks possessing nuclear weapons or their equivalent.",
+   "interpretation": "While the network has not reached eighteen percent of World GDP, check that critical nodes occupy at least five qualifying geopolitical blocks. The approximate 2031–2032 date is an estimate rather than an independent sunset.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "network_world_gdp_share",
+    "critical_node_locations",
+    "geopolitical_blocks",
+    "block_capabilities"
+   ],
+   "criterion": "Until the network reaches 18% of World GDP, critical nodes span at least 5 geopolitical blocks possessing nuclear weapons or their equivalent.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "network and World GDP",
+    "node locations",
+    "geopolitical and capability classifications"
+   ],
+   "gap": "Network GDP attribution, geopolitical blocks, and nuclear-equivalent capability are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define GDP membership, qualifying blocks, and equivalent capability.",
+    "Declare whether reaching the threshold permanently ends the shield requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.3-02",
+   "section": "A.3",
+   "title": "Autonomous Node Energy Minimum",
+   "quote": "3.2. Each node must have a fully autonomous energy source ≥ 800 MWh/year of one of the following types (by priority):",
+   "interpretation": "During the prebootstrap period, check autonomous annual energy availability for every node. The text does not define autonomy or whether annual output means rated capability or measured production.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "network_world_gdp_share",
+    "node_energy_sources",
+    "annual_energy",
+    "energy_dependencies"
+   ],
+   "criterion": "Until the network reaches 18% of World GDP, each node has a fully autonomous energy source providing at least 800 MWh/year.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "node energy specifications",
+    "energy output and dependency records"
+   ],
+   "gap": "Autonomy and the annual-energy measurement basis are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define fully autonomous supply and rated-versus-realized annual output."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.3-03",
+   "section": "A.3",
+   "title": "Eligible Energy Types And Priority",
+   "quote": "3.2. Each node must have a fully autonomous energy source ≥ 800 MWh/year of one of the following types (by priority):",
+   "interpretation": "Check the source against the enumerated geothermal, Gen-IV SMR, hydrogen-bromine-plus-orbital, or combination options and their conditions. 'By priority' could require choosing the earliest feasible option or merely express a preference.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "network_world_gdp_share",
+    "energy_source_types",
+    "geothermal_depth",
+    "reactor_generation",
+    "safety_code_access",
+    "fuel_custody",
+    "orbital_energy_configuration",
+    "source_feasibility"
+   ],
+   "criterion": "During the prebootstrap period, source types are, in priority order: ultra-deep geothermal at ≥15 km; SMR Gen-IV with open safety code and fuel in an IAEA bank; closed hydrogen-bromine cycle plus orbital microwave energy; or a combination of these.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "energy installation specifications",
+    "safety code publication",
+    "fuel custody",
+    "source feasibility"
+   ],
+   "gap": "Priority enforcement, type equivalence, and combination compliance are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define whether priority is mandatory and how feasibility is assessed.",
+    "Define compliance of combined energy systems."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.3-04",
+   "section": "A.3",
+   "title": "Physical Verification Of Energy Status",
+   "quote": "    Status confirmed by Physical Truth Layer Levels 0–1.",
+   "interpretation": "Check confirmation of the node energy status through Physical Truth Layer Levels 0 and 1 while A.3 applies. The antecedent could mean all listed energy sources or only the immediately preceding combination option.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "network_world_gdp_share",
+    "node_energy_status",
+    "level_0_confirmations",
+    "level_1_confirmations"
+   ],
+   "criterion": "The applicable energy status is confirmed by Physical Truth Layer Levels 0–1.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Level 0 and Level 1 energy verification"
+   ],
+   "gap": "The scope and acceptance criteria of the status confirmation are ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Choose the confirmation scope and required evidence from both levels."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.3-05",
+   "section": "A.3",
+   "title": "Node Seizure Triggers Global Stake Action",
+   "quote": "Upon physical seizure or destruction of any node, ≥ 50% of all Peace Stakes globally are automatically burned and distributed to the remaining nodes.",
+   "interpretation": "During the prebootstrap period, detect seizure or destruction and check automatic action on at least half of global Peace Stakes. The text combines burning with distribution without explaining how destroyed value is transferred or how remaining nodes share it.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "network_world_gdp_share",
+    "node_seizure_destruction_events",
+    "global_peace_stakes",
+    "stake_burns",
+    "node_distributions"
+   ],
+   "criterion": "Seizure or destruction of any node automatically burns and distributes to remaining nodes at least 50% of all global Peace Stakes while A.3 applies.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical incident confirmations",
+    "global stake ledger",
+    "remaining-node registry"
+   ],
+   "gap": "Burn-and-distribute accounting, the percentage denominator, and recipient allocation are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define burning versus redistribution and whether the percentage applies to value or stake count.",
+    "Declare recipient allocation and repeated-trigger behavior."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-01",
+   "section": "A.4",
+   "title": "Natural Disaster Enforcement Suspension",
+   "quote": "The Snap Protocol and all Kill Switches are automatically suspended for 180 days in the event of:",
+   "interpretation": "Apply the 180-day suspension when any listed trigger occurs: eruption above VEI-6, asteroid above 200 m, pandemic lethality above fifteen percent, or a Physical Truth Layer-confirmed natural, non-anthropogenic B decline. Asteroid dimension, lethality measurement, repeated triggers, and priority against A.1 are not specified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "eruption_vei",
+    "asteroid_size",
+    "pandemic_lethality",
+    "biosphere_decline",
+    "natural_cause_confirmation",
+    "event_times",
+    "protocol_suspensions"
+   ],
+   "criterion": "Automatically suspend the Snap Protocol and every Kill Switch for 180 days if eruption > VEI-6, asteroid > 200 m, pandemic lethality > 15%, or a natural non-anthropogenic B(t) decline is confirmed by Physical Truth Layer.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "disaster measurements",
+    "pandemic mortality data",
+    "Physical Truth Layer causal verification"
+   ],
+   "gap": "Trigger measurement conventions, overlapping-event timing, and precedence over biosphere emergency activation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define asteroid size and pandemic lethality measurements.",
+    "Define overlapping suspension periods and conflict precedence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-02",
+   "section": "A.4",
+   "title": "Crisis Mercy Council Control Transfer",
+   "quote": "Control transfers to the \"Council of Crisis Mercy\" (9 people, sortition from 1000 scientists with EigenTrust > 0.97).",
+   "interpretation": "Check control transfer and selection of nine people by sortition from a pool of one thousand scientists whose EigenTrust exceeds 0.97. Eligibility, randomness, and the transferred control powers are not defined here.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "mercy_trigger",
+    "control_assignments",
+    "council_members",
+    "scientist_pool",
+    "eigentrust_scores",
+    "sortition_records"
+   ],
+   "criterion": "Upon the Mercy event, control transfers to a 9-person council selected by sortition from 1000 scientists with EigenTrust > 0.97.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scientist eligibility and reputation",
+    "sortition evidence",
+    "control assignment records"
+   ],
+   "gap": "The eligible scientist pool, EigenTrust calculation, sortition procedure, and extent of control are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define scientist eligibility, score calculation, and sortition.",
+    "Define transferred powers within the declared Crisis Scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-03",
+   "section": "A.4",
+   "title": "Mercy Actions Bound By Scope",
+   "quote": "All Mercy actions, suspensions, and discretionary decisions SHALL operate strictly within the boundaries defined by DKP-7-SCOPE-001.",
+   "interpretation": "Check every Mercy action, suspension, and discretionary decision against the referenced scope boundaries. Those boundaries cannot be reconstructed from the supplied document.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mercy_actions",
+    "mercy_suspensions",
+    "discretionary_decisions",
+    "scope_boundaries"
+   ],
+   "criterion": "All Mercy actions, suspensions, and discretionary decisions remain within DKP-7-SCOPE-001 boundaries.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope declarations",
+    "Mercy decision logs"
+   ],
+   "gap": "DKP-7-SCOPE-001 and its boundary definitions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the applicable scope boundaries and membership test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-04",
+   "section": "A.4",
+   "title": "Mercy Cannot Expand System Applicability",
+   "quote": "Mercy SHALL NOT:\n\n- expand system applicability,",
+   "interpretation": "Compare system applicability before and during Mercy and reject expansion. Applicability requires the scope definition referenced in the preceding sentence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_applicability",
+    "mercy_applicability",
+    "mercy_actions"
+   ],
+   "criterion": "Mercy never expands system applicability.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "applicability scope definitions",
+    "Mercy action effects"
+   ],
+   "gap": "The applicable scope model is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how applicability before and after Mercy is compared."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-05",
+   "section": "A.4",
+   "title": "Mercy Preserves Domain Prohibitions",
+   "quote": "- override S2 or S3 domain prohibitions,",
+   "interpretation": "Under the preceding 'Mercy SHALL NOT' operator, check that Mercy never overrides an S2 or S3 prohibition. Neither domain is defined in the supplied text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mercy_actions",
+    "s2_prohibitions",
+    "s3_prohibitions"
+   ],
+   "criterion": "Mercy does not override S2 or S3 domain prohibitions.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "S2 and S3 domain restrictions",
+    "Mercy decisions"
+   ],
+   "gap": "S2 and S3 domain definitions and prohibitions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the domain prohibitions and what constitutes an override."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-06",
+   "section": "A.4",
+   "title": "Mercy Creates No Governance Powers",
+   "quote": "- create new rights, authorities, or governance powers,",
+   "interpretation": "Under the preceding 'Mercy SHALL NOT' operator, compare rights, authorities, and governance powers before and after Mercy decisions. Existing entitlements and authority boundaries require an external registry.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_rights",
+    "baseline_authorities",
+    "baseline_governance_powers",
+    "mercy_decision_effects"
+   ],
+   "criterion": "Mercy creates no new rights, authorities, or governance powers.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "rights and authority registry",
+    "Mercy decision effects"
+   ],
+   "gap": "The baseline rights and powers and their formal scope are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the baseline authority registry and a new-power test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-07",
+   "section": "A.4",
+   "title": "Mercy Ends Within Declared Crisis Scope",
+   "quote": "- persist beyond explicitly declared Crisis Scope.",
+   "interpretation": "Under the preceding 'Mercy SHALL NOT' operator, check that Mercy does not persist outside the explicitly declared Crisis Scope. 'Beyond' may include temporal, geographic, and subject-matter limits.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_scope_declaration",
+    "mercy_activity_history"
+   ],
+   "criterion": "Mercy does not persist beyond the explicitly declared Crisis Scope.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Crisis Scope declaration",
+    "Mercy activity logs"
+   ],
+   "gap": "Crisis Scope structure and its temporal and substantive boundary semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how Crisis Scope limits persistence and how it relates to the 180-day suspension."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.4-08",
+   "section": "A.4",
+   "title": "Mercy Changes Response Severity Only",
+   "quote": "Mercy modifies response severity only. It SHALL NOT extend jurisdiction or normative authority.",
+   "interpretation": "Check that Mercy changes only response severity and leaves jurisdiction and normative authority unextended. A decision-effect classification is needed to distinguish severity from other changes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_responses",
+    "mercy_responses",
+    "jurisdiction_changes",
+    "authority_changes"
+   ],
+   "criterion": "Mercy modifies only response severity and never extends jurisdiction or normative authority.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "response and authority baselines",
+    "Mercy action effects"
+   ],
+   "gap": "Severity, jurisdiction, and normative-authority effect models are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which response changes count solely as severity modifications."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.5-01",
+   "section": "A.5",
+   "title": "Simultaneous Startup Cluster Launch Finality",
+   "quote": "The Network is considered irreversibly launched upon simultaneous online status of:",
+   "interpretation": "Check concurrent online status of all six listed startup entries and one qualifying Wild Node, then latch the launched state. Whether paired place names denote separate nodes or one combined entry and what counts as online are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "startup_node_identities",
+    "node_online_history",
+    "wild_node_qualification",
+    "network_launch_state"
+   ],
+   "criterion": "The Network becomes irreversibly launched when Zanzibar; Prospera / Roatán; NEOM-2 or any SAR of Saudi Arabia; Abu Dhabi Global Tech Zone; Tallinn + Tartu; Kigali + Bugesera Tech City; and one qualifying Wild Node are simultaneously online.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "node identity and online status",
+    "Wild Node compliance evidence"
+   ],
+   "gap": "Online status, simultaneity, and paired-location node identity are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define each startup entry, online status, and simultaneity.",
+    "Treat launch as irreversible once the condition is met."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.5-02",
+   "section": "A.5",
+   "title": "Startup Wild Node Implementation Deadline",
+   "quote": "- One \"Wild\" Node (any entity that fully implements the Code + Appendix A within ≤ 24 months).",
+   "interpretation": "Check full Code and Appendix A implementation within twenty-four months for the startup Wild Node. The clock origin and method for determining full compliance are absent.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "wild_node_entity",
+    "implementation_start",
+    "implementation_completion",
+    "code_compliance"
+   ],
+   "criterion": "The startup Wild Node fully implements the Code and Appendix A within ≤ 24 months.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "implementation milestones",
+    "Code and Appendix A compliance evidence"
+   ],
+   "gap": "The deadline origin and full-implementation acceptance test are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the twenty-four-month clock origin and full implementation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.5-03",
+   "section": "A.5",
+   "title": "Postlaunch Territorial Admission Conditions",
+   "quote": "After this, new territories connect only via a referendum of 67% of the adult population + deposit of a Peace Stake.",
+   "interpretation": "Check referendum evidence and Peace Stake deposit before a postlaunch connection. The wording could require affirmative support from sixty-seven percent of all adults, or a referendum participation condition; a minimum versus exact percentage is also unstated.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "network_launch_state",
+    "territory_connections",
+    "adult_population",
+    "referendum_results",
+    "peace_stake_deposits"
+   ],
+   "criterion": "After irreversible launch, new territorial connection requires a referendum of 67% of the adult population and a deposited Peace Stake.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "adult population register",
+    "referendum results",
+    "Peace Stake escrow"
+   ],
+   "gap": "The referendum percentage's support-versus-turnout meaning and minimum-versus-exact interpretation are unclear. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the referendum numerator and percentage comparison.",
+    "Define adult population eligibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.6-01",
+   "section": "A.6",
+   "title": "Critical Infrastructure Ownership Concentration Limits",
+   "quote": "- 0.7% of Level 0 satellites\n- 2% of geothermal wells or power units of critical nodes",
+   "interpretation": "Apply the preceding ownership prohibition to aggregate direct and indirect holdings of every natural or legal person. Denominators, indirect ownership aggregation, and whether wells and power units form separate pools are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "persons",
+    "ownership_graph",
+    "level_0_satellite_inventory",
+    "critical_geothermal_wells",
+    "critical_power_units"
+   ],
+   "criterion": "No natural or legal person directly or indirectly owns more than 0.7% of Level 0 satellites or more than 2% of geothermal wells or power units of critical nodes.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "beneficial ownership graph",
+    "critical infrastructure inventory"
+   ],
+   "gap": "Ownership aggregation and asset-pool denominator rules are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define indirect ownership aggregation and whether each limit uses asset count or ownership value.",
+    "Define separate or combined well and power-unit pools."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-A.6-02",
+   "section": "A.6",
+   "title": "Ownership Breach Burns Stakes And Excludes",
+   "quote": "Violation = instant burning of all violator's stakes + 20-year ban on network participation.",
+   "interpretation": "After an A.6 ownership violation, check immediate burning of all stakes belonging to the violator and a twenty-year participation ban. Instant execution, ban start, and participation scope require operational conventions.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ownership_violations",
+    "violator_stakes",
+    "burn_events",
+    "network_bans",
+    "participation_events"
+   ],
+   "criterion": "An ownership-limit violation instantly burns all of the violator's stakes and imposes a 20-year network participation ban.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "ownership violation decisions",
+    "stake ownership",
+    "network access and ban records"
+   ],
+   "gap": "Instant timing, the ban's start event, and participation coverage are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the violation trigger, instant execution, and covered participation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-ClosingProvision-01",
+   "section": "Closing Provision",
+   "title": "Appendix Supremacy In Participating Jurisdictions",
+   "quote": "This Appendix A is an integral part of the Code of Planetary Synergy and holds supreme legal force over any national laws in participating jurisdictions.",
+   "interpretation": "Check that the normative hierarchy includes Appendix A in the Code and gives it precedence over conflicting national laws in participating jurisdictions. Detecting substantive legal conflicts requires a formal rule model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participating_jurisdictions",
+    "normative_hierarchy",
+    "national_laws",
+    "appendix_rules",
+    "conflict_resolutions"
+   ],
+   "criterion": "Appendix A forms part of the Code and prevails over national law in participating jurisdictions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "jurisdiction participation",
+    "formalized national laws and conflict decisions"
+   ],
+   "gap": "The document does not supply a machine-checkable legal conflict model. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define conflicts between rules and the representation of legal precedence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-ClosingProvision-02",
+   "section": "Closing Provision",
+   "title": "Six Startup Node Digital Signatures",
+   "quote": "Signed with irreversible digital signatures of the six startup nodes",
+   "interpretation": "Check signature evidence from the six startup nodes. The text does not define irreversible signatures, provide full signatures, or explain the additional Wild Node signature slot in Genesis.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "signed_code_payload",
+    "startup_node_keys",
+    "digital_signatures"
+   ],
+   "criterion": "The Code bears irreversible digital signatures of the six startup nodes.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "node public keys",
+    "complete signatures",
+    "signed payload"
+   ],
+   "gap": "Complete cryptographic artifacts and the meaning of signature irreversibility are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the signed payload, signature verification scheme, and irreversibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-GenesisBlock_0_TechnicalSpecification_-01",
+   "section": "Genesis Block #0 (Technical Specification)",
+   "title": "Genesis Header Required Literal Fields",
+   "quote": "  \"consensus_protocol\": \"Proof-of-Synergy v1.0 (Physical Truth Layer + Peace Staking)\",\n  \"difficulty_target\": \"0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\",\n  \"nonce\": 0,",
+   "interpretation": "Treat the technical block as a literal required header and compare its fields with the supplied values. This verifies template conformance, not that the block satisfies a cryptographic consensus process.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "genesis_header"
+   ],
+   "criterion": "Require block_height = 0, timestamp = '2025-12-10T23:59:59.000Z', previous_hash = '0x0000000000000000000000000000000000000000000000000000000000000000', consensus_protocol = 'Proof-of-Synergy v1.0 (Physical Truth Layer + Peace Staking)', difficulty_target = '0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', and nonce = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis block header"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-GenesisBlock_0_TechnicalSpecification_-02",
+   "section": "Genesis Block #0 (Technical Specification)",
+   "title": "Genesis Initial Equation Parameter Values",
+   "quote": "    \"alpha\": 2.83,\n    \"B_min\": 0.68,\n    \"B_current_at_genesis\": 0.7104",
+   "interpretation": "Compare initial_parameters with all four values in the supplied block. The initial coefficient is a numeric value of one; its printed trailing zeros do not establish a separate precision requirement.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "genesis_initial_parameters"
+   ],
+   "criterion": "initial_parameters contains k = 1.000000000000000, alpha = 2.83, B_min = 0.68, and B_current_at_genesis = 0.7104.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis initial_parameters object"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-GenesisBlock_0_TechnicalSpecification_-03",
+   "section": "Genesis Block #0 (Technical Specification)",
+   "title": "Genesis Physical Anchor Required Values",
+   "quote": "    \"mauna_loa_co2_ppm\": 426.91,                          // NOAA measurement, Dec 10, 2025\n    \"global_temperature_anomaly_C\": \"+1.48\",              // Copernicus ECMWF, Dec 2025\n    \"living_planet_index_2024_baseline\": 0.312,           // WWF/ZSL 2024 -> converted to B(t)",
+   "interpretation": "Check literal conformance of the physical_anchors fields, including the string-valued temperature anomaly and boundary fraction. This does not validate the asserted measurements or the conversion of the living-planet baseline to B.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "genesis_physical_anchors"
+   ],
+   "criterion": "physical_anchors contains mauna_loa_co2_ppm = 426.91, global_temperature_anomaly_C = '+1.48', living_planet_index_2024_baseline = 0.312, planetary_boundaries_safe_space_violated = '6/9', and hash_of_codex_v1.3_plus_appendix_A = 'sha256:9f2a7c8e1d4b6f91a3e8c7d5b9f0e1a2c4d6e8f0a1b2c3d4e5f60718293a4b5c'.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis physical_anchors object"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-GenesisBlock_0_TechnicalSpecification_-04",
+   "section": "Genesis Block #0 (Technical Specification)",
+   "title": "Genesis Immutable Message Literal Content",
+   "quote": "  \"immutable_message\": \"We do not ask the dying world for permission. We build the next one beside it, faster and cleaner. Let the Equation run forever.\",",
+   "interpretation": "Compare the Genesis immutable_message field exactly with the specified text. The annotation and glossary additionally require its preservation for the network's lifetime.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "genesis_immutable_message"
+   ],
+   "criterion": "immutable_message equals 'We do not ask the dying world for permission. We build the next one beside it, faster and cleaner. Let the Equation run forever.'.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis immutable_message field"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-GenesisBlock_0_TechnicalSpecification_-05",
+   "section": "Genesis Block #0 (Technical Specification)",
+   "title": "Genesis Signatories And Stake Root",
+   "quote": "    \"wild_node_alpha_ed25519:0x????...\"          // Reserved for the first decentralized sovereign node\n  ],\n  \"merkle_root_of_first_six_peace_stakes\": \"0x7e9f4a1b...\"",
+   "interpretation": "Check that Genesis includes the six named startup signatory entries, the reserved Wild Node Alpha slot, and the first-six-stakes Merkle-root field. Abbreviated signatures and root values support a template check but not cryptographic verification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "genesis_signatories",
+    "genesis_stake_merkle_root",
+    "first_six_peace_stakes",
+    "startup_node_keys"
+   ],
+   "criterion": "Include zanzibar_node_01_ed25519, prospera_node_01_ed25519, neom_node_01_ed25519, abudhabi_node_01_ed25519, tallinn_node_01_ed25519, kigali_node_01_ed25519, the reserved wild_node_alpha_ed25519 slot, and merkle_root_of_first_six_peace_stakes.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "complete node signatures and keys",
+    "first six Peace Stakes",
+    "complete Merkle root"
+   ],
+   "gap": "The provided signatures and Merkle root are abbreviated placeholders, with no complete verification specification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define signature payload encoding, Merkle construction, and treatment of placeholder entries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-2-01",
+   "section": "2",
+   "title": "Reserved Independent Wild Node Signature",
+   "quote": "- Wild Node Alpha: The signature slot is intentionally left empty (0x????...). This is an open vacancy for the first independent jurisdiction or city-state to fully implement the Code without prior agreements, confirming the decentralized nature of the network.",
+   "interpretation": "Check that the slot remains empty until assigned to the first qualifying independent jurisdiction or city-state. This annotation is narrower than A.5's 'any entity' and the glossary's inclusion of corporations and communities.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "wild_signature_slot",
+    "candidate_entities",
+    "implementation_completion_times",
+    "prior_agreements",
+    "independence_records"
+   ],
+   "criterion": "The empty Wild Node Alpha signature slot is reserved for the first independent jurisdiction or city-state fully implementing the Code without prior agreements.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "candidate identity and independence",
+    "implementation compliance",
+    "agreement history",
+    "signature-slot state"
+   ],
+   "gap": "Qualification, first-completion ordering, and eligibility conflicts with the broader Wild Node definitions are unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define independence, full implementation, and first-candidate ordering.",
+    "Resolve jurisdiction-only versus broader entity eligibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-3-01",
+   "section": "3",
+   "title": "Genesis Manifesto Permanent Embedding",
+   "quote": "- The text of the manifesto is embedded in the Genesis Block forever, declaring the refusal to attempt to \"fix\" the old system in favor of building a new parallel reality based on physical laws (TIU).",
+   "interpretation": "Check that the manifesto is embedded in Genesis and remains unchanged throughout network history. Finite history can establish observed preservation but cannot prove forever without a formal transition model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "genesis_message",
+    "network_history",
+    "allowed_block_mutations"
+   ],
+   "criterion": "The manifesto remains embedded in the Genesis Block forever.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis payload",
+    "chain history",
+    "protocol mutation rules"
+   ],
+   "gap": "A complete transition model establishing permanent immutability is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the protocol transition and adversary model used to prove preservation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-01",
+   "section": "Glossary & Definitions",
+   "title": "Genesis Origin And Reference Immutability",
+   "quote": "- Genesis Block: The primary data block in the chain (Block Height 0), having no predecessor. It rigidly fixes the system's initial parameters, physical constants, and the planet's state at the moment of launch. It serves as an immutable reference point for the entire subsequent transaction history.",
+   "interpretation": "Check that Genesis has height zero, no predecessor, and immutable initial-state contents across the observed history. An all-future guarantee needs a complete protocol model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "genesis_block",
+    "chain_links",
+    "initial_state_snapshot",
+    "transaction_history",
+    "protocol_transition_rules"
+   ],
+   "criterion": "Genesis is Block Height 0 with no predecessor and fixes initial parameters, physical constants, and launch-time planetary state as an immutable reference for subsequent history.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis and chain history",
+    "protocol state-transition rules"
+   ],
+   "gap": "A formal protocol model proving immutable reference preservation is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how the no-predecessor condition relates to the zero previous_hash field.",
+    "Declare immutable-state transition rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-02",
+   "section": "Glossary & Definitions",
+   "title": "Contribution Based Block Validation",
+   "quote": "Block validation occurs not through burning electricity or accumulating capital, but based on proven contribution to reducing system entropy (biosphere restoration, social stability, technological efficiency).",
+   "interpretation": "Check that block-validation eligibility depends on proven contributions of the stated kind rather than electricity expenditure or accumulated capital. No entropy metric, proof format, or consensus decision procedure is supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "block_validation_rules",
+    "contribution_proofs",
+    "entropy_effects",
+    "validation_decisions"
+   ],
+   "criterion": "Proof-of-Synergy validates blocks based on proven contribution to reducing system entropy, including biosphere restoration, social stability, or technological efficiency, rather than electricity burning or capital accumulation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "contribution measurements and proofs",
+    "consensus implementation"
+   ],
+   "gap": "Contribution valuation, entropy reduction, proof validation, and consensus rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define contribution evidence and entropy reduction.",
+    "Declare how validated contributions determine block acceptance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-03",
+   "section": "Glossary & Definitions",
+   "title": "Verified Hardware Direct Blockchain Reporting",
+   "quote": "A network of verified hardware oracles (satellites, sensors, IoT) that transmit data about the physical world's state (temperature, CO2, sea level) directly to the blockchain.",
+   "interpretation": "Check hardware verification and direct blockchain transmission of physical-state observations. 'Verified' and 'directly' are not technically defined, and the subsequent claim that falsification is impossible lacks a threat model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "hardware_oracle_registry",
+    "hardware_verification",
+    "physical_observations",
+    "transmission_paths"
+   ],
+   "criterion": "Physical Truth Layer hardware oracles are verified and transmit physical-state observations directly to the blockchain.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "hardware attestation",
+    "sensor observations",
+    "blockchain ingestion provenance"
+   ],
+   "gap": "Hardware verification and direct-transmission acceptance criteria are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define accepted hardware verification and allowable transmission intermediaries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-04",
+   "section": "Glossary & Definitions",
+   "title": "Peace Collateral And Violation Remedies",
+   "quote": "- Peace Staking: An economic collateral mechanism where assets are \"frozen\" not for passive income, but as a guarantee of non-aggression and Code compliance. In case of violation (aggression or ecocide), the stake is automatically burned or redistributed to repair damage.",
+   "interpretation": "Check that Peace Stakes are frozen as compliance collateral and automatically burned or redistributed after aggression or ecocide. The glossary adds ecocide and a redistribution alternative to Article 7's aggression-and-burning rule; it does not necessarily prohibit the dividends expressly allowed in 7.2.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "peace_stake_lock_states",
+    "aggression_events",
+    "ecocide_events",
+    "code_violations",
+    "stake_remedies",
+    "repair_allocations"
+   ],
+   "criterion": "Peace Stakes are frozen to guarantee non-aggression and Code compliance; aggression or ecocide triggers automatic burning or redistribution to repair damage.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "collateral ledger",
+    "violation determinations",
+    "damage-repair disbursements"
+   ],
+   "gap": "Ecocide, the scope of other Code violations, and selection between burning and redistribution are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define ecocide and qualifying violations.",
+    "Resolve remedy selection and its relationship to Article 7."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-05",
+   "section": "Glossary & Definitions",
+   "title": "Independent Fully Compliant Wild Node",
+   "quote": "- Wild Node: A network node launched by an independent party (city, corporation, or community) without prior coordination with the founders, but in full compliance with the protocol.",
+   "interpretation": "Check independent launch, absence of prior founder coordination, and complete protocol compliance. This general definition does not itself repeat A.5's twenty-four-month condition and is broader than the signature-slot annotation.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "node_founders",
+    "party_independence",
+    "prior_coordination_records",
+    "protocol_compliance"
+   ],
+   "criterion": "A Wild Node is launched by an independent party without prior founder coordination and fully complies with the protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "node provenance",
+    "founder relationships and agreements",
+    "protocol compliance evidence"
+   ],
+   "gap": "Independence, prior coordination, and full protocol compliance are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define independence, prohibited coordination, and full compliance.",
+    "Distinguish general Wild Node status from startup and signature-slot eligibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-06",
+   "section": "Glossary & Definitions",
+   "title": "Immutable Message Cryptographic Preservation",
+   "quote": "- Immutable Message: A text message cryptographically embedded in the Genesis Block code. It is the philosophical manifesto and \"constitution\" of the system, which is technically impossible to delete or edit as long as the network exists.",
+   "interpretation": "Check cryptographic embedding and prove that no permitted network transition can delete or edit the message while the network exists. This adds a technical impossibility requirement to the annotation's permanent-embedding rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "genesis_message",
+    "cryptographic_commitments",
+    "network_transition_rules",
+    "network_existence_state"
+   ],
+   "criterion": "The Immutable Message is cryptographically embedded in Genesis and cannot be deleted or edited while the network exists.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis commitments",
+    "protocol implementation and transition model"
+   ],
+   "gap": "Cryptographic construction and the complete model needed to establish impossibility are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare cryptographic assumptions, allowed transitions, and network existence conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

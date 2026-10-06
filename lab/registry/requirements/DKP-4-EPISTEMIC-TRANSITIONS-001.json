@@ -1,0 +1,857 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+ "doc_sha256": "7b303df339cb5c60adfb7e91800451d02c2d53319a2a8a710439fc2adab37046",
+ "prefix": "ETRANS",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "The requested identifier prefix contains a carriage return, preserved as \\r in requirement IDs. The unnumbered introductory provision uses its containing heading title as the section. Section 1 describes purposes restated as operative rules later; section 5 describes prevention objectives without adding distinct requirements. The document-wide dependency list names DKP-1-EPISTEMIC-BOUNDARIES-001, DKP-1-JUSTICE-001, DKP-2-FINANCE-001, DKP-2-ASSETS-001 and DKP-4-CRISIS-001, but does not assign their provisions to individual checks. Only the supplied document was used. Propagation deadlines, escalation semantics and the full epistemic metadata schema are unspecified. Section 7's 'Any modification' requirement must be read alongside its presentation-only correction exception; the boundary of that exception requires a normative-content assessment.",
+ "requirements": [
+  {
+   "id": "ETRANS-EpistemicStateTransitionProtocol-01",
+   "section": "Epistemic State Transition Protocol",
+   "title": "Protocol Override Is Prohibited",
+   "quote": "Override: Not permitted",
+   "interpretation": "Reject an action explicitly classified as overriding this protocol. The text does not define how an override is distinguished from an authorized protocol change.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_action",
+    "action_classification"
+   ],
+   "criterion": "No action overrides this protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol action classifications"
+   ],
+   "gap": "A rule distinguishing overrides from authorized changes is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how actions are classified as overrides."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-2-01",
+   "section": "2",
+   "title": "Epistemic Protocol Coverage Is Universal",
+   "quote": "Applies to all protocols producing or consuming epistemic outputs.",
+   "interpretation": "Check that every protocol identified as producing or consuming epistemic outputs falls within this protocol's application. Classification of outputs as epistemic is not defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_inventory",
+    "protocol_output_types",
+    "protocol_input_types",
+    "application_scope"
+   ],
+   "criterion": "Every producer or consumer of epistemic outputs is included in application_scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol interfaces and epistemic output classifications"
+   ],
+   "gap": "A complete protocol inventory and a definition of epistemic outputs are needed. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which output types are epistemic."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-3-01",
+   "section": "3",
+   "title": "Operational Lifetime Requires Epistemic Validity",
+   "quote": "No output remains operational beyond its epistemic validity.",
+   "interpretation": "Compare an output's operational status against its supplied epistemic validity at each evaluated time. This checks compliance with validity determinations rather than independently establishing their correctness.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "output_id",
+    "operational_status",
+    "epistemic_validity",
+    "evaluation_time"
+   ],
+   "criterion": "An output is not operational at any evaluated time beyond its epistemic validity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output validity determinations",
+    "output operational status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-3-02",
+   "section": "3",
+   "title": "Epistemic Degradation Propagates Downstream",
+   "quote": "Epistemic degradation MUST propagate downstream.",
+   "interpretation": "Trace degradation events through output dependencies and check downstream responses. Section 4.1 specifies responses for listed changes, but this broader invariant does not define every degradation or a propagation deadline.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "epistemic_state_history",
+    "dependency_graph",
+    "downstream_response_history"
+   ],
+   "criterion": "Every epistemic degradation propagates to dependent downstream outputs.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output dependency graph",
+    "epistemic state and downstream response histories"
+   ],
+   "gap": "A complete degradation classification, propagation semantics and timing model are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which changes count as degradation.",
+    "Declare downstream reachability and propagation timing semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-3-03",
+   "section": "3",
+   "title": "Historical Validity Grants No Authority",
+   "quote": "No historical VALID state creates persistent authority.",
+   "interpretation": "Inspect the provenance of operational authority to identify authority retained because of historical VALID status. The text does not define an authority representation or the boundary between historical and current validity.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "validity_history",
+    "authority_state",
+    "authority_provenance"
+   ],
+   "criterion": "Historical VALID status does not create persistent authority.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority provenance",
+    "validity histories"
+   ],
+   "gap": "An operational definition of persistent authority and its provenance is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how persistent authority and historical validity are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-3-04",
+   "section": "3",
+   "title": "State Dependent Enforcement Requires Reevaluation",
+   "quote": "Re-evaluation is required for any state-dependent enforcement.",
+   "interpretation": "Associate each state-dependent enforcement decision with a re-evaluation record. The text permits readings requiring re-evaluation for each action or only after relevant state changes, without specifying freshness.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_actions",
+    "state_dependencies",
+    "reevaluation_records"
+   ],
+   "criterion": "Every state-dependent enforcement has the required re-evaluation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement state dependencies",
+    "re-evaluation records"
+   ],
+   "gap": "The re-evaluation trigger and its required relationship to individual enforcement actions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether re-evaluation is required per action or per relevant state change."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.1-01",
+   "section": "4.1",
+   "title": "Downgrades Require Downstream Revalidation Flags",
+   "quote": "- set revalidation_required = TRUE",
+   "interpretation": "For upstream VALID → CONDITIONAL or INVALID, CONSISTENT → ORACLE_CONFLICT, or SUFFICIENT_DATA → DEGRADED_SIGNAL transitions, check that every dependent output sets the flag to TRUE. This tests the transition response without adding a wall-clock deadline.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "upstream_state_before",
+    "upstream_state_after",
+    "dependent_outputs",
+    "revalidation_required"
+   ],
+   "criterion": "Each listed upstream transition causes revalidation_required = TRUE for all dependent outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "upstream epistemic transitions",
+    "output dependency relationships",
+    "downstream revalidation flags"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.1-02",
+   "section": "4.1",
+   "title": "Downgrades Suspend Dependent Output Execution",
+   "quote": "- enter execution suspension or status quo mode",
+   "interpretation": "For each upstream transition listed in section 4.1, check that all dependent outputs enter one of the two permitted modes. This checks the declared mode; section 4.3 separately constrains status quo behavior.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "upstream_state_before",
+    "upstream_state_after",
+    "dependent_outputs",
+    "output_execution_mode"
+   ],
+   "criterion": "Each listed upstream transition places every dependent output in execution suspension or status quo mode.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "upstream epistemic transitions",
+    "output dependency relationships",
+    "downstream execution modes"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.1-03",
+   "section": "4.1",
+   "title": "Downgrades Block Further Enforcement Escalation",
+   "quote": "- prevent further enforcement escalation",
+   "interpretation": "Following each upstream transition listed in section 4.1, inspect dependent outputs for further enforcement escalation. A checker needs a declared classification or ordering of enforcement actions.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "upstream_transitions",
+    "dependent_outputs",
+    "enforcement_history",
+    "escalation_classification"
+   ],
+   "criterion": "No dependent output further escalates enforcement following a listed upstream transition while the restriction applies.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output dependency relationships",
+    "enforcement histories and escalation classifications"
+   ],
+   "gap": "Enforcement escalation and the precise duration of the restriction are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which enforcement changes constitute escalation.",
+    "Declare how section 4.4 re-entry ends the restriction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.2-01",
+   "section": "4.2",
+   "title": "Past Validity Cannot Sustain Enforcement",
+   "quote": "No enforcement output SHALL remain active solely based on past VALID state if:",
+   "interpretation": "When epistemic state degrades, new admissible data arrives, or consistency is lost, reject continued enforcement supported solely by past VALID status. The listed conditions are read as alternative triggers; admissibility and sole reliance need external classifications.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_active",
+    "enforcement_justification",
+    "epistemic_degradation",
+    "new_admissible_data",
+    "consistency_maintained"
+   ],
+   "criterion": "If any listed condition holds, an active enforcement output must not rely solely on past VALID status.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data admissibility decisions",
+    "epistemic and consistency states",
+    "enforcement justification provenance"
+   ],
+   "gap": "Admissibility and the test for sole reliance on past validity are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat the listed conditions as alternative triggers.",
+    "Declare how admissibility and sole reliance are established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.3-01",
+   "section": "4.3",
+   "title": "Uncertainty Requires Current State Preservation",
+   "quote": "- system SHALL preserve current state",
+   "interpretation": "During epistemic uncertainty or dispute, compare protected system state with its reference state. The text leaves open whether preservation covers all system state or only enforcement-relevant state, which matters because flags and modes must still change under section 4.1.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "uncertainty_intervals",
+    "dispute_intervals",
+    "system_state_history",
+    "reference_state"
+   ],
+   "criterion": "The current state is preserved throughout epistemic uncertainty or dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "uncertainty and dispute status",
+    "system state history"
+   ],
+   "gap": "The protected state scope, reference instant and uncertainty or dispute classifications are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the preserved state scope and reference instant.",
+    "Declare how uncertainty and dispute intervals are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.3-02",
+   "section": "4.3",
+   "title": "Uncertainty Requires Enforcement Escalation Halt",
+   "quote": "- SHALL halt escalation",
+   "interpretation": "Check that escalation ceases during epistemic uncertainty or dispute. This requires declared uncertainty and dispute intervals and an escalation classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "uncertainty_intervals",
+    "dispute_intervals",
+    "enforcement_events",
+    "escalation_classification"
+   ],
+   "criterion": "No escalation occurs during epistemic uncertainty or dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "uncertainty and dispute status",
+    "enforcement escalation events"
+   ],
+   "gap": "Uncertainty, dispute and escalation are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare uncertainty and dispute detection rules and escalation semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.3-03",
+   "section": "4.3",
+   "title": "Uncertainty Prevents Penalty Accumulation",
+   "quote": "- SHALL prevent penalty accumulation",
+   "interpretation": "Inspect penalty accrual events during epistemic uncertainty or dispute. The text does not specify whether accumulation means gross new accrual or a net increase in a penalty balance.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "uncertainty_intervals",
+    "dispute_intervals",
+    "penalty_accrual_events",
+    "penalty_balances"
+   ],
+   "criterion": "Penalties do not accumulate during epistemic uncertainty or dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "uncertainty and dispute status",
+    "penalty ledgers"
+   ],
+   "gap": "The trigger classifications and gross-accrual versus net-balance meaning of accumulation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare uncertainty and dispute intervals.",
+    "Declare whether accumulation is measured by accrual events or net balance changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.3-04",
+   "section": "4.3",
+   "title": "Uncertainty Requires Awaiting Deterministic Recomputation",
+   "quote": "- SHALL await deterministic recomputation",
+   "interpretation": "Check that the system remains in its waiting behavior until deterministic recomputation completes. The text does not define the relevant recomputation scope or how determinism is established.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "uncertainty_status",
+    "dispute_status",
+    "waiting_state_history",
+    "recomputation_records"
+   ],
+   "criterion": "The system awaits deterministic recomputation during epistemic uncertainty or dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "uncertainty and dispute status",
+    "recomputation completion and execution records"
+   ],
+   "gap": "Waiting-state semantics, recomputation scope and determinism criteria are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the relevant recomputation and its determinism test.",
+    "Declare which actions are permitted while awaiting recomputation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.4-01",
+   "section": "4.4",
+   "title": "Enforcement Reentry Requires Fresh Validated Inputs",
+   "quote": "- new valid output\n- full epistemic metadata\n- recomputation under updated inputs",
+   "interpretation": "At enforcement resumption, require all three listed prerequisites. The text does not supply the metadata schema or precise tests for output newness, validity and updated-input coverage.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "resumption_event",
+    "new_output",
+    "output_validity",
+    "epistemic_metadata",
+    "updated_inputs",
+    "recomputation_record"
+   ],
+   "criterion": "Enforcement resumes only with a new valid output, full epistemic metadata and recomputation under updated inputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output validity determinations",
+    "epistemic metadata schema",
+    "input versions and recomputation provenance"
+   ],
+   "gap": "The full metadata schema and the criteria for newness, validity and updated-input coverage are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the required metadata fields.",
+    "Declare how output newness, validity and updated-input coverage are verified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.4-02",
+   "section": "4.4",
+   "title": "Previous Outputs Cannot Automatically Reactivate",
+   "quote": "Previous outputs SHALL NOT auto-reactivate.",
+   "interpretation": "Check output activation histories for automatic reactivation of previous outputs. Given output identity and activation-cause records, this prohibition can be tested directly.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "output_identity",
+    "output_activation_history",
+    "activation_cause"
+   ],
+   "criterion": "No previous output undergoes automatic reactivation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output identity and activation event logs"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.5-01",
+   "section": "4.5",
+   "title": "Later Defects Defeat Historical Correctness Evidence",
+   "quote": "Past VALID outputs SHALL NOT be treated as evidence of correctness if later:",
+   "interpretation": "If conflict later emerges, data is invalidated, or scope is violated, inspect evidence use for reliance on past VALID outputs as evidence of correctness. The listed conditions are read as alternative triggers, and the rule does not itself assert that the historical output was false.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "past_valid_outputs",
+    "later_conflicts",
+    "data_invalidations",
+    "scope_violations",
+    "evidence_use_records"
+   ],
+   "criterion": "After any listed later defect, past VALID outputs are not used as evidence of correctness.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "conflict determinations",
+    "data invalidations",
+    "scope violation findings",
+    "evidence provenance"
+   ],
+   "gap": "Conflict, scope violation and treatment as evidence of correctness require operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat the listed conditions as alternative triggers.",
+    "Declare defect classifications and how evidence use is recorded."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-4.5-02",
+   "section": "4.5",
+   "title": "Every Output Remains Open To Reclassification",
+   "quote": "All outputs remain subject to epistemic reclassification.",
+   "interpretation": "Check that no output is exempt from the epistemic reclassification mechanism. This requires eligibility, without requiring every output to change classification.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "output_inventory",
+    "reclassification_eligibility"
+   ],
+   "criterion": "Every output remains eligible for epistemic reclassification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output inventory",
+    "reclassification eligibility rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-6-01",
+   "section": "6",
+   "title": "L8 Tests Downgrade Propagation Correctness",
+   "quote": "L8 MUST test:\n\n- downgrade propagation correctness",
+   "interpretation": "Require L8 test evidence addressing correctness of downgrade propagation. The document does not define sufficient test coverage or an acceptance standard.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l8_test_records",
+    "test_coverage",
+    "propagation_test_assertions"
+   ],
+   "criterion": "L8 tests downgrade propagation correctness.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 test specifications and execution records"
+   ],
+   "gap": "A criterion for adequate propagation-correctness testing is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare test adequacy and coverage criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-6-02",
+   "section": "6",
+   "title": "L8 Tests Enforcement Suspension Behavior",
+   "quote": "- enforcement suspension behavior",
+   "interpretation": "Require L8 test evidence addressing enforcement suspension behavior under the section's MUST-test obligation. Test scenarios and sufficiency criteria are not specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l8_test_records",
+    "test_coverage",
+    "suspension_test_assertions"
+   ],
+   "criterion": "L8 tests enforcement suspension behavior.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 test specifications and execution records"
+   ],
+   "gap": "A criterion for adequate suspension-behavior testing is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare test adequacy and coverage criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-6-03",
+   "section": "6",
+   "title": "L8 Tests Epistemic Revalidation Triggers",
+   "quote": "- revalidation triggers",
+   "interpretation": "Require L8 test evidence addressing revalidation triggers under the section's MUST-test obligation. The text does not specify the complete test scenario set.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l8_test_records",
+    "test_coverage",
+    "revalidation_test_assertions"
+   ],
+   "criterion": "L8 tests revalidation triggers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 test specifications and execution records"
+   ],
+   "gap": "A criterion for adequate revalidation-trigger testing is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare test adequacy and coverage criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-6-04",
+   "section": "6",
+   "title": "L8 Tests Prevention Of State Persistence",
+   "quote": "- prevention of state persistence",
+   "interpretation": "Require L8 test evidence addressing prevention of state persistence. Context suggests prohibited persistence of historical epistemic or enforcement states; interpreting this as preventing all persistence would conflict with section 4.3.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l8_test_records",
+    "test_coverage",
+    "persistence_test_assertions"
+   ],
+   "criterion": "L8 tests prevention of state persistence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 test specifications and execution records"
+   ],
+   "gap": "The targeted persistence behavior and adequate test coverage are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which state persistence is prohibited.",
+    "Declare test adequacy and coverage criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-01",
+   "section": "7",
+   "title": "Protocol Changes Require Controlled Upgrade Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check protocol changes against the named procedure and evidence for each listed component. Presentation-only corrections are separately excepted, and detailed procedural requirements are in documents not supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "change_record",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_record"
+   ],
+   "criterion": "Every protocol change subject to Upgrade follows DKP-4-UPGRADE-001, including the listed simulation, audit, acceptance, activation and rollback components.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "simulation results",
+    "audit results",
+    "activation and rollback records"
+   ],
+   "gap": "The referenced procedures, acceptance rules and activation-window requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced procedural requirements.",
+    "Declare whether rollback requires a capability, plan or executed action in the relevant change state."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-02",
+   "section": "7",
+   "title": "Modifications Require New Protocol Identifiers",
+   "quote": "Any modification requires:\n\n- a new protocol identifier,",
+   "interpretation": "For a modification subject to Upgrade, compare its protocol identifier with prior identifiers. The later presentation-only correction exception limits the otherwise broad phrase 'Any modification'.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "upgrade_applicability",
+    "new_protocol_identifier",
+    "prior_protocol_identifiers"
+   ],
+   "criterion": "Every modification subject to Upgrade has a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "change classification"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-03",
+   "section": "7",
+   "title": "Modifications Require Explicit Incompatibility Declarations",
+   "quote": "- explicit incompatibility declaration,",
+   "interpretation": "Check that a modification subject to Upgrade includes an explicit incompatibility declaration. The text requires the declaration but provides no schema or method for verifying its substantive correctness.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "upgrade_applicability",
+    "incompatibility_declaration"
+   ],
+   "criterion": "Every modification subject to Upgrade includes an explicit incompatibility declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "change classification",
+    "upgrade declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-04",
+   "section": "7",
+   "title": "Modifications Require Full System Simulation",
+   "quote": "- full-system simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "Require simulation evidence covering the full system for every modification subject to Upgrade. Compliance with the named simulation protocol cannot be established from this document alone.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "upgrade_applicability",
+    "simulation_record",
+    "simulation_scope",
+    "system_inventory"
+   ],
+   "criterion": "Every modification subject to Upgrade undergoes full-system simulation under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "system inventory",
+    "simulation configuration and results",
+    "change classification"
+   ],
+   "gap": "The simulation protocol and the definition of full-system coverage are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply simulation compliance requirements and declare the full-system boundary."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-05",
+   "section": "7",
+   "title": "Modifications Declare Epistemic Boundary Compatibility",
+   "quote": "- explicit compatibility declaration with DKP-1-EPISTEMIC-BOUNDARIES-001.",
+   "interpretation": "Check that every modification subject to Upgrade contains an explicit compatibility declaration naming the specified protocol. This tests the required declaration, not whether compatibility actually holds.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "upgrade_applicability",
+    "compatibility_declaration",
+    "declared_compatible_protocol"
+   ],
+   "criterion": "Every modification subject to Upgrade explicitly declares compatibility with DKP-1-EPISTEMIC-BOUNDARIES-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "change classification",
+    "upgrade compatibility declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-06",
+   "section": "7",
+   "title": "Presentation Corrections Receive Limited Change Treatment",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "For corrections established to be presentation-only and normatively unchanged, check that they are not classified as Upgrades and are recorded only through the document's Last updated date. Establishing unchanged normative content requires a decision rule, and the named field may refer to the front matter's last_updated field.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "normative_change_assessment",
+    "upgrade_classification",
+    "change_record",
+    "last_updated_date"
+   ],
+   "criterion": "Presentation-only corrections with no normative change are not Upgrades and are recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document revisions",
+    "normative change assessments",
+    "edition metadata"
+   ],
+   "gap": "The referenced classification rule, normative-equivalence test and exact metadata-field mapping are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes and normative equivalence are determined.",
+    "Declare the mapping between Last updated and last_updated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ETRANS-7-07",
+   "section": "7",
+   "title": "Published Editions Require Canonical Source Digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its identified canonical source bytes and compare it with the corresponding entry in the specified repository file. This requires a supplied mapping between editions, canonical source bytes and manifest entries.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "sha256sums_entries",
+    "repository_identity"
+   ],
+   "criterion": "For every published edition, SHA256(canonical_source_bytes) equals its listed digest in SHA256SUMS.txt at github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source bytes",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

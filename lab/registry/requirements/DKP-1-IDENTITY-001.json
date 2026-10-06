@@ -1,0 +1,1200 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-1-IDENTITY-001",
+ "doc_sha256": "d9aa018f7f2578ce2e6479dcb5e79e57f499fbce3516e3584ce812f0245a877a",
+ "prefix": "IDENTITY",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "The supplied requirement prefix contains a carriage return, preserved in ids as JSON \\r. Quotes omit Markdown bold markers and backslash escapes where applicable. Section 4.1 explicitly limits Section 4: epistemic boundaries may require NO_ATTRIBUTION despite the critical-violation rule. Section 5 treats artificial intelligences and automated systems as Subjects but prohibits independent Subject status for several overlapping categories of automated mechanisms; the category boundary is unresolved. Section 14 distinguishes presentation-only corrections from Upgrades, qualifying its reference to any modification. DKP-8-SIMULATION and DKP-8-SIMULATION-001 are preserved as distinct reference spellings; their equivalence is not established. Referenced documents, calibrations, confidence thresholds, and measurement methods were not supplied or consulted.",
+ "requirements": [
+  {
+   "id": "IDENTITY-1-01",
+   "section": "1",
+   "title": "Restrict Protocol To Attribution",
+   "quote": "This protocol establishes attribution, not punishment. It performs identity binding and responsibility linkage only.",
+   "interpretation": "A program could audit declared operations and outputs for restriction to identity binding and responsibility linkage. The section also excludes impact measurement, justice calculation, sanctions, compensation, and interpretation of intent, motive, or moral value; detecting these functions inside arbitrary implementations requires a declared classification method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "protocol_outputs",
+    "operation_classification"
+   ],
+   "criterion": "Every protocol operation performs only attribution, identity binding, or responsibility linkage, with none of the excluded functions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation and output audit records"
+   ],
+   "gap": "The text does not define a machine-readable classification of permitted and prohibited operations. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A method for classifying operations by function."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-2-01",
+   "section": "2",
+   "title": "Precede Downstream Protocol Operation",
+   "quote": "- prior to all economic, governance, security, and enforcement protocols.",
+   "interpretation": "A program could inspect execution order or protocol dependencies to ensure identity processing precedes the listed categories. The text does not resolve whether prior means temporal execution order or logical dependency; above, alongside, and below likewise describe placement without defining scheduling semantics.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_categories",
+    "protocol_dependency_graph",
+    "execution_trace"
+   ],
+   "criterion": "Identity protocol operation is prior to every economic, governance, security, and enforcement protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol category registry",
+    "cross-protocol execution or dependency records"
+   ],
+   "gap": "The meaning of prior and the mapping of protocols to the listed categories are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Whether priority is temporal, logical, or both.",
+    "A classification of downstream protocols."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-2-02",
+   "section": "2",
+   "title": "Use Impact Outputs Exclusively",
+   "quote": "All attribution performed by this protocol MUST rely exclusively on outputs produced by DKP-1-IMPACT-001.",
+   "interpretation": "A program can inspect attribution input provenance and reject reliance on inputs that are not outputs of the named protocol. Applying this literally to every attribution input may constrain how identity and delegation records enter the process; no exception is stated.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "attribution_input_lineage",
+    "input_producer_ids"
+   ],
+   "criterion": "Every input relied upon for attribution is an output produced by DKP-1-IMPACT-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "impact outputs with producer provenance",
+    "attribution dependency records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-3.1-01",
+   "section": "3.1",
+   "title": "Determine Functional Subject Eligibility",
+   "quote": "A Subject is any entity capable of initiating, amplifying, sustaining, or failing to prevent a state transition that is measurable under DKP-1-IMPACT-001.",
+   "interpretation": "A program could classify an entity as a Subject when evidence establishes any listed capability concerning a measurable state transition. Subject status is functional rather than moral or legal, but capability and failure-to-prevent tests are not supplied.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "entity_capabilities",
+    "state_transitions",
+    "impact_measurability"
+   ],
+   "criterion": "Subject eligibility follows capability to initiate, amplify, sustain, or fail to prevent a state transition measurable under DKP-1-IMPACT-001, without requiring moral or legal status.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "measurable state transitions from the impact protocol",
+    "entity capability evidence"
+   ],
+   "gap": "Operational tests for capability and failure to prevent are absent, and impact measurability is delegated to an unavailable protocol. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A capability and prevention-opportunity model.",
+    "An implementation of the referenced impact measurability test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-3.2-01",
+   "section": "3.2",
+   "title": "Identify Measurable Subject Actions",
+   "quote": "An Action is any intervention, omission, or sustained process attributable to a Subject that produces a measurable change in the Physical State Vector S(t).",
+   "interpretation": "A program could classify an intervention, omission, or sustained process as an Action when Subject attribution and a resulting measurable change are established. The state vector, measurability test, and causal production test are not defined here.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "candidate_process",
+    "subject_attribution",
+    "physical_state_history",
+    "causal_evidence"
+   ],
+   "criterion": "An Action is an intervention, omission, or sustained process attributable to a Subject that produces a measurable change in S(t).",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical State Vector observations",
+    "Subject attribution and causal evidence"
+   ],
+   "gap": "The components and measurement rules of S(t), and the test for producing a change, are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A representation and measurement model for S(t).",
+    "A causal attribution model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-3.2-02",
+   "section": "3.2",
+   "title": "Classify Causal Omissions As Actions",
+   "quote": "Failure to act SHALL be treated as an Action when omission contributes causally to measurable impact.",
+   "interpretation": "A program could require an Action record for each omission established to contribute causally to measurable impact. Establishing contribution from a failure to act requires a causal or counterfactual model that the text does not provide.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "omission_records",
+    "measurable_impacts",
+    "omission_causal_contributions",
+    "action_records"
+   ],
+   "criterion": "Every omission contributing causally to measurable impact is treated as an Action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "omission evidence",
+    "impact measurements",
+    "causal contribution assessments"
+   ],
+   "gap": "The causal test linking omissions to measured impacts is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A counterfactual or other causal model for omission contributions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-3.3-01",
+   "section": "3.3",
+   "title": "Define Persistent Causal Responsibility",
+   "quote": "Responsibility is the persistence of causal linkage between a Subject and measurable impacts arising from its actions or omissions, independent of intent, awareness, foresight, or justification.",
+   "interpretation": "A program could represent responsibility through persistent links between Subjects, their actions or omissions, and resulting measurable impacts. Intent, awareness, foresight, and justification must not determine whether such a link constitutes responsibility.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_action_links",
+    "action_impact_links",
+    "causal_link_history",
+    "responsibility_records",
+    "decision_reasons"
+   ],
+   "criterion": "Responsibility records preserve causal linkage to measurable impacts independently of intent, awareness, foresight, or justification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "causal linkage history",
+    "measurable impact records"
+   ],
+   "gap": "A method for establishing and maintaining causal linkage is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A causal linkage model and representation of persistence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4-01",
+   "section": "4",
+   "title": "Maintain Auditable Impact Attribution",
+   "quote": "- at least one Subject SHALL be causally attributable,\n- attribution MUST be traceable through an auditable causal chain,\n- absence of intent, prediction, or awareness SHALL NOT invalidate attribution.",
+   "interpretation": "For every detected impact vector from DKP-1-IMPACT-001, a program could check for at least one Subject link, an auditable causal chain, and absence of disallowed invalidation reasons. Section 4.1 expressly prevents this invariant from forcing attribution across epistemic boundaries.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detected_impact_vectors",
+    "attributed_subjects",
+    "causal_chains",
+    "attribution_decision_reasons",
+    "epistemic_boundary_status"
+   ],
+   "criterion": "Each detected impact vector has at least one causally attributable Subject and an auditable causal chain; absence of intent, prediction, or awareness does not invalidate attribution, subject to Section 4.1.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "detected impact vectors",
+    "causal chain evidence",
+    "attribution confidence and boundary status"
+   ],
+   "gap": "Causal validity and auditability criteria are unspecified, and Section 4.1 requires external confidence and boundary rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A causal-chain validation and auditability model.",
+    "An implementation of Section 4.1 admissibility rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4-02",
+   "section": "4",
+   "title": "Classify Missing Attribution Violations",
+   "quote": "Unattributed or untraceable impacts constitute a critical system violation.",
+   "interpretation": "A program can classify an impact with missing attribution or traceability as a critical system violation. This classification must not be used to override Section 4.1; the text does not clearly say whether an epistemically required NO_ATTRIBUTION event retains the violation label.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "impact_attribution_status",
+    "impact_traceability_status",
+    "no_attribution_reason",
+    "violation_classification"
+   ],
+   "criterion": "Unattributed or untraceable impacts are classified as critical system violations without overriding epistemic boundary requirements.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attribution and traceability statuses",
+    "epistemic failure reasons"
+   ],
+   "gap": "The treatment of the violation label for epistemically required NO_ATTRIBUTION events is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Whether required NO_ATTRIBUTION retains the critical-violation label while prohibiting forced attribution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4.1-01",
+   "section": "4.1",
+   "title": "Emit Insufficient Confidence Output",
+   "quote": "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:",
+   "interpretation": "A program could compare attribution confidence with the calibrated minimum and require NO_ATTRIBUTION, confidence_state: INSUFFICIENT_DATA, and a reason identifying the specific confidence failure. The strict below condition does not determine treatment at equality, and the calibration is absent.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "attribution_confidence",
+    "minimum_admissibility_threshold",
+    "attribution_output",
+    "confidence_state",
+    "confidence_failure_reason"
+   ],
+   "criterion": "If attribution confidence is below the calibrated minimum admissibility threshold, emit NO_ATTRIBUTION with confidence_state equal to INSUFFICIENT_DATA and a specific confidence-failure reason instead of forced degraded attribution.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "calibrated minimum attribution confidence",
+    "attribution confidence and failure diagnostics"
+   ],
+   "gap": "The calibrated threshold, confidence scale, and criteria for a sufficiently specific failure reason are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "The applicable calibration and confidence scale.",
+    "A structured representation of specific confidence failures."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4.1-02",
+   "section": "4.1",
+   "title": "Block Unattributed Enforcement Cascades",
+   "quote": "NO_ATTRIBUTION events SHALL NOT trigger enforcement cascades in downstream protocols.",
+   "interpretation": "A program can inspect event-to-enforcement trigger links and reject any enforcement cascade triggered by a NO_ATTRIBUTION event. The prohibition concerns such events as triggers and does not itself prohibit unrelated enforcement.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "event_states",
+    "enforcement_cascade_trigger_links"
+   ],
+   "criterion": "No downstream enforcement cascade has a NO_ATTRIBUTION event as its trigger.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "downstream enforcement trigger provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4.1-03",
+   "section": "4.1",
+   "title": "Handle Unattributed Events Safely",
+   "quote": "- Log the event for L8 audit\n- Defer enforcement pending attribution resolution\n- NOT impute attribution from circumstantial factors",
+   "interpretation": "For each receiving system, a program could check for an L8 audit log, deferred enforcement until attribution resolution, and no attribution imputed from circumstantial factors. The text does not define resolution or distinguish circumstantial factors from admissible causal evidence.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "received_no_attribution_events",
+    "l8_audit_logs",
+    "enforcement_history",
+    "attribution_resolution_status",
+    "attribution_evidence_types"
+   ],
+   "criterion": "Each received NO_ATTRIBUTION event is logged for L8 audit, enforcement is deferred pending attribution resolution, and circumstantial factors are not used to impute attribution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "receiving-system event logs",
+    "L8 audit records",
+    "enforcement and attribution-resolution histories",
+    "attribution evidence provenance"
+   ],
+   "gap": "Attribution resolution and circumstantial factors lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A criterion for attribution resolution.",
+    "A classification separating circumstantial factors from admissible causal evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4.1-04",
+   "section": "4.1",
+   "title": "Escalate Significant Unattributed Investigations",
+   "quote": "NO_ATTRIBUTION for significant impact events SHALL trigger elevated investigation priority under DKP-8-AUDIT-001 without pre-determining attribution outcome.",
+   "interpretation": "A program could check that significant impacts receiving NO_ATTRIBUTION obtain elevated investigation priority and that escalation does not fix an attribution outcome. Significance, priority elevation, and the test for prejudgment are not specified here.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "impact_significance",
+    "attribution_state",
+    "investigation_priority",
+    "investigation_initial_outcome"
+   ],
+   "criterion": "A significant impact event with NO_ATTRIBUTION triggers elevated investigation priority without a predetermined attribution outcome.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "impact significance assessment",
+    "audit investigation priority and outcome records"
+   ],
+   "gap": "Significance criteria, priority rules, and outcome-independence checks are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A significance criterion and investigation-priority ordering.",
+    "A test for whether escalation predetermines attribution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-4.1-05",
+   "section": "4.1",
+   "title": "Prefer No Attribution At Boundaries",
+   "quote": "In accordance with DKP-1-EPISTEMIC-BOUNDARIES-001 Section 10 (No-Output Priority Rule), NO_ATTRIBUTION is preferred over attribution with confidence_state: DEGRADED_SIGNAL when applicability boundary is violated.\n\nThis clause prevents the \"critical system violation\" characterization in Section 4 from overriding epistemic boundary requirements.",
+   "interpretation": "A program could check that applicability-boundary violations favor NO_ATTRIBUTION over DEGRADED_SIGNAL attribution and that Section 4 does not override epistemic requirements. Preferred expresses an ordering, while the referenced rule may impose stronger obligations unavailable in this text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "applicability_boundary_status",
+    "candidate_attribution_outputs",
+    "selected_attribution_output",
+    "decision_rule_trace"
+   ],
+   "criterion": "When an applicability boundary is violated, prefer NO_ATTRIBUTION to DEGRADED_SIGNAL attribution and do not use Section 4 to override epistemic boundary requirements.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "applicability boundary evaluations",
+    "epistemic output-selection rules"
+   ],
+   "gap": "Applicability boundaries and the full No-Output Priority Rule are absent, including whether preferred permits exceptions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An applicability-boundary model.",
+    "Whether the preference is mandatory whenever both outputs are available."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-5-01",
+   "section": "5",
+   "title": "Retain Responsibility Through Delegation",
+   "quote": "the originating Subject SHALL retain causal responsibility unless an explicit, auditable counter-binding is recorded and validated.",
+   "interpretation": "A program could prevent delegation, automation deployment, or operation through intermediaries from removing originating responsibility unless a qualifying counter-binding exists. Delegation transfers execution; the text does not specify validation or auditability criteria for the exception.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "originating_subject",
+    "delegation_records",
+    "automation_deployments",
+    "intermediary_relationships",
+    "responsibility_records",
+    "counter_bindings",
+    "counter_binding_validations"
+   ],
+   "criterion": "For delegation, automation deployment, or intermediary operation, originating causal responsibility remains unless an explicit, auditable counter-binding has been recorded and validated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "delegation and deployment provenance",
+    "counter-binding records and validation results"
+   ],
+   "gap": "The form, validator, and substantive validity and auditability requirements for counter-bindings are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A counter-binding schema and validation procedure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-5-02",
+   "section": "5",
+   "title": "Attribute Automated Subjects Without Privileges",
+   "quote": "Artificial intelligences and automated systems SHALL be treated as Subjects for attribution purposes but SHALL NOT acquire exemption, immunity, or sovereignty.",
+   "interpretation": "A program could require Subject treatment for classified artificial intelligences and automated systems and disallow the listed privileges. The overlap with the subsequent prohibition on independent Subjects leaves ordinary Subject status versus proxy-subject status unresolved.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "entity_classifications",
+    "subject_status",
+    "attribution_treatment",
+    "exemption_status",
+    "immunity_status",
+    "sovereignty_status"
+   ],
+   "criterion": "Artificial intelligences and automated systems receive Subject treatment for attribution and acquire no exemption, immunity, or sovereignty.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity classification and Subject registry",
+    "privilege and exemption records"
+   ],
+   "gap": "The relationship between automated Subject status and the independent-Subject prohibition is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification distinguishing Subject treatment, independent Subject status, and proxy-subject status."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-5-03",
+   "section": "5",
+   "title": "Restrict Execution Mechanisms To Proxies",
+   "quote": "Smart contracts, autonomous agents, scripts, and algorithmic execution mechanisms SHALL NOT be considered independent Subjects under any circumstances.\n\nSuch mechanisms operate exclusively as proxy-subjects, executing delegated intent or predefined logic on behalf of an originating Subject.",
+   "interpretation": "A program could require each listed mechanism to have only proxy-subject status and an originating Subject on whose behalf it executes delegated intent or predefined logic. The prohibition has no stated exception, but the boundary between these mechanisms and other automated systems is undefined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "mechanism_classifications",
+    "subject_status",
+    "originating_subject_links",
+    "execution_basis"
+   ],
+   "criterion": "Every listed execution mechanism is exclusively a proxy-subject, never an independent Subject, and executes delegated intent or predefined logic on behalf of an originating Subject.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "mechanism classification",
+    "originating Subject and execution provenance"
+   ],
+   "gap": "The classification boundary and formal meaning of independent versus proxy-subject status are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An entity taxonomy resolving overlap with artificial intelligences and automated systems.",
+    "A formal proxy-subject representation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-5-04",
+   "section": "5",
+   "title": "Bind Automated Actions To Originators",
+   "quote": "All actions performed by smart contracts or automated agents SHALL be causally and legally attributed to the originating Subject(s) who deployed, authorized, funded, or materially benefited from their execution, unless an explicit, auditable counter-binding assigns responsibility to another identifiable Subject.",
+   "interpretation": "A program could link automated actions to originating Subjects satisfying the listed relationships, unless a qualifying counter-binding names another identifiable Subject. The text does not resolve whether every qualifying deployer, authorizer, funder, and beneficiary must receive attribution, and it does not define material benefit or legal attribution.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "automated_action_records",
+    "deployment_records",
+    "authorization_records",
+    "funding_records",
+    "material_benefit_records",
+    "causal_attribution",
+    "legal_attribution",
+    "counter_bindings",
+    "subject_identifiers"
+   ],
+   "criterion": "Each smart-contract or automated-agent action is causally and legally attributed to qualifying originating Subjects unless an explicit, auditable counter-binding assigns responsibility to another identifiable Subject.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deployment, authorization, funding, and benefit provenance",
+    "legal attribution records",
+    "counter-binding and Subject identity records"
+   ],
+   "gap": "Material benefit, legal attribution, selection among multiple qualifying originators, and counter-binding auditability are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A material-benefit criterion.",
+    "Whether all qualifying originating Subjects must be included.",
+    "A legal-attribution representation and counter-binding validation model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-6-01",
+   "section": "6",
+   "title": "Distribute Collective Responsibility Proportionally",
+   "quote": "- responsibility MAY be distributed across multiple Subjects,\n- distribution SHALL be proportional to measurable causal contribution,\n- collective attribution SHALL NOT erase individual responsibility.",
+   "interpretation": "A program could permit distribution for coordinated, collective, or emergent actions while checking proportionality to measured causal contributions and preservation of individual responsibility. The text supplies no contribution measurement method or distribution normalization.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "collective_action_records",
+    "subject_causal_contributions",
+    "responsibility_distribution",
+    "individual_responsibility_records"
+   ],
+   "criterion": "If responsibility is distributed, the distribution is proportional to measurable causal contribution; collective attribution preserves individual responsibility.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "per-Subject causal contribution measurements",
+    "collective and individual responsibility records"
+   ],
+   "gap": "Causal contribution measurement, distribution scale, and treatment of overlapping contributions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A common causal-contribution measure.",
+    "A responsibility scale and handling of overlapping contributions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-6-02",
+   "section": "6",
+   "title": "Recognize Temporarily Coordinated Subjects",
+   "quote": "Temporary coalitions, swarms, and decentralized collectives constitute valid Subjects for the duration of their active coordination.",
+   "interpretation": "A program could require valid Subject status throughout active coordination intervals for the listed collective forms. The sentence does not independently establish what happens to Subject status after coordination ends, and historical attribution remains protected by Section 7.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "collective_type",
+    "coordination_history",
+    "subject_status_history"
+   ],
+   "criterion": "Temporary coalitions, swarms, and decentralized collectives have valid Subject status throughout active coordination.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "collective membership and coordination observations"
+   ],
+   "gap": "Active coordination and its start and end conditions are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A detection rule for active coordination intervals."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-7-01",
+   "section": "7",
+   "title": "Persist Responsibility While Conditions Hold",
+   "quote": "Responsibility SHALL persist across time as long as at least one of the following holds:\n\na) downstream impacts remain measurable, b) the Subject continues to benefit from the originating action, c) the Subject retains the capacity to mitigate, reverse, or limit further harm.",
+   "interpretation": "A program could require responsibility to persist whenever any listed condition remains true. The rule does not require termination when all conditions are false, and its relationship to the confidence-based decay rule in Section 10 is not specified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "responsibility_history",
+    "downstream_impact_measurability",
+    "subject_benefit_history",
+    "mitigation_capacity_history"
+   ],
+   "criterion": "Responsibility persists while downstream impacts remain measurable, the Subject continues to benefit, or the Subject retains capacity to mitigate, reverse, or limit further harm.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "longitudinal impact measurements",
+    "Subject benefit observations",
+    "mitigation, reversal, and harm-limitation capacity assessments"
+   ],
+   "gap": "Benefit and mitigation-capacity tests, observation timing, and interaction with confidence-based decay are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Operational benefit and mitigation-capacity tests.",
+    "A temporal observation model.",
+    "A reconciliation of persistence with Section 10 confidence-based decay."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-7-02",
+   "section": "7",
+   "title": "Preserve Attribution Through Subject Changes",
+   "quote": "Termination, dissolution, or transformation of a Subject SHALL NOT invalidate historical attribution.",
+   "interpretation": "A program can inspect Subject lifecycle events and attribution invalidation reasons to ensure none of the listed events invalidates historical attribution. This does not prohibit changes justified by other grounds.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "subject_lifecycle_events",
+    "historical_attribution_records",
+    "attribution_invalidation_reasons"
+   ],
+   "criterion": "No historical attribution is invalidated because its Subject terminates, dissolves, or transforms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject lifecycle and attribution audit records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-8-01",
+   "section": "8",
+   "title": "Attribute Qualifying Downstream Impacts",
+   "quote": "A Subject SHALL be considered causally responsible not only for direct first-order impacts, but also for downstream impacts when all of the following conditions are satisfied:\n\na) the downstream impact is causally linked through a traceable chain of state transitions measured under DKP-1-IMPACT-001, b) the impact occurs within a declared or logically inferred impact horizon Δt, c) the impact exceeds or materially contributes to at least one axiom-defined reference bound Bᵢ.",
+   "interpretation": "A program could require downstream responsibility when all three conditions hold, in addition to direct first-order responsibility. The text does not supply horizon-inference rules, reference-bound values, or a definition of materially contributes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_impact_links",
+    "measured_transition_chains",
+    "impact_times",
+    "impact_horizon",
+    "reference_bounds",
+    "bound_contributions",
+    "responsibility_records"
+   ],
+   "criterion": "Attribute direct first-order impacts and require downstream attribution when there is a traceable measured causal chain, the impact is within Δt, and it exceeds or materially contributes to at least one Bᵢ.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "measured causal transition chains",
+    "declared or inferred impact horizons",
+    "axiom-defined reference bounds",
+    "impact contributions to reference bounds"
+   ],
+   "gap": "The external measurement rules and reference bounds are absent, and horizon inference and material contribution are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An impact-horizon origin and inference method.",
+    "Applicable axiom-defined reference bounds.",
+    "A material-contribution test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-8-02",
+   "section": "8",
+   "title": "Reject Foresight Based Responsibility Negation",
+   "quote": "Lack of foresight, predictability, or statistical expectation SHALL NOT negate responsibility.",
+   "interpretation": "A program can reject responsibility-removal decisions that rely on lack of foresight, predictability, or statistical expectation. This check presumes responsibility is otherwise established.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "responsibility_decisions",
+    "responsibility_negation_reasons"
+   ],
+   "criterion": "Responsibility is never negated on grounds of absent foresight, predictability, or statistical expectation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "responsibility decision audit records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-9-01",
+   "section": "9",
+   "title": "Identify Nonlinear Cascade Events",
+   "quote": "A Nonlinear Cascade Event is a state transition in which a small or localized initial impact produces a disproportionately large system-level effect through known physical, ecological, social, or informational feedback mechanisms.",
+   "interpretation": "A program could classify a transition using evidence of an initial small or localized impact, a disproportionately large system effect, and a known feedback mechanism. No scale comparison, localization rule, or standard of known mechanisms is supplied.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "initial_impact",
+    "initial_impact_extent",
+    "system_level_effect",
+    "feedback_mechanism_evidence"
+   ],
+   "criterion": "A small or localized initial impact produces a disproportionately large system-level effect through a known physical, ecological, social, or informational feedback mechanism.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "initial and system-level impact measurements",
+    "feedback mechanism evidence"
+   ],
+   "gap": "Small, localized, disproportionately large, and known feedback mechanisms lack operational criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Scale and localization criteria.",
+    "A disproportion criterion.",
+    "An admissibility standard for feedback mechanism evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-9-02",
+   "section": "9",
+   "title": "Bind Responsibility For Detected Cascades",
+   "quote": "- the originating Subject SHALL be fully causally linked to the cascade origin,\n- responsibility MAY be distributed if multiple initiating actions are detected,\n- rarity, novelty, or statistical improbability SHALL NOT constitute exemption.",
+   "interpretation": "For a detected nonlinear cascade, a program could require full causal linkage to its origin and reject the listed exemption grounds. Distribution is permitted when multiple initiating actions are detected; the text supplies no meaning of fully or cascade-specific distribution method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detected_cascade_events",
+    "cascade_origin",
+    "originating_subjects",
+    "initiating_actions",
+    "causal_links",
+    "responsibility_distribution",
+    "exemption_reasons"
+   ],
+   "criterion": "A detected cascade has its originating Subject fully causally linked to the cascade origin; distribution is permitted if multiple initiating actions are detected, and rarity, novelty, or statistical improbability creates no exemption.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cascade detection and causal origin records",
+    "initiating-action evidence",
+    "responsibility and exemption records"
+   ],
+   "gap": "Full causal linkage is undefined and depends on an unspecified causal model. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A test for full linkage to a cascade origin."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-10-01",
+   "section": "10",
+   "title": "Classify Reaction And Adaptation Effects",
+   "quote": "Second-order effects arise from immediate reactions to an action. Third-order effects arise from adaptive responses to second-order effects.",
+   "interpretation": "A program could classify effect chains according to immediate reaction and adaptive-response relationships. Immediate has no temporal bound, and adaptive response is not operationally defined.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "action_effect_graph",
+    "reaction_times",
+    "response_classifications"
+   ],
+   "criterion": "Classify effects arising from immediate reactions to an action as second-order and effects arising from adaptive responses to second-order effects as third-order.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reaction and adaptation causal records"
+   ],
+   "gap": "Immediate reaction and adaptive response lack operational definitions or timing criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Whether immediate denotes temporal proximity or direct causal succession.",
+    "An adaptive-response classification rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-10-02",
+   "section": "10",
+   "title": "Attribute Measurable Higher Order Effects",
+   "quote": "Such effects SHALL be attributed to the originating Subject when:\n\na) the effects are physically or informationally measurable, and b) attribution does not require speculative modeling of intent or belief.",
+   "interpretation": "A program could require attribution when both measurability and freedom from speculative intent or belief modeling are established. Such effects clearly refers to second- and third-order effects; the heading suggests broader higher-order coverage without defining further orders.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "effect_order",
+    "effect_measurability",
+    "originating_subject",
+    "attribution_model_dependencies",
+    "attribution_records"
+   ],
+   "criterion": "Attribute the covered effects to the originating Subject when they are physically or informationally measurable and attribution requires no speculative modeling of intent or belief.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical or informational effect measurements",
+    "attribution model provenance"
+   ],
+   "gap": "Measurability, speculative modeling, and coverage beyond third-order effects are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A measurability test and a classification of speculative model dependencies.",
+    "Whether the condition extends to all higher-order effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-10-03",
+   "section": "10",
+   "title": "Gate Responsibility Decay By Confidence",
+   "quote": "Responsibility decays only when causal linkage falls below Physical Truth Layer confidence thresholds.",
+   "interpretation": "A program could reject responsibility decay unless causal-link confidence has fallen below the applicable Physical Truth Layer thresholds. Only when supplies a necessary condition, not a mandatory decay trigger, and no decay rate is specified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "causal_link_confidence_history",
+    "physical_truth_confidence_thresholds",
+    "responsibility_history"
+   ],
+   "criterion": "Responsibility may decay only when causal linkage is below the applicable Physical Truth Layer confidence thresholds.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer confidence thresholds",
+    "causal-link confidence histories",
+    "responsibility histories"
+   ],
+   "gap": "The thresholds, their aggregation rule, and the meaning and dynamics of responsibility decay are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "The applicable Physical Truth Layer thresholds and comparison rule.",
+    "A responsibility-decay model consistent with Section 7."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-11-01",
+   "section": "11",
+   "title": "Recognize Measured Cultural Cognitive Harm",
+   "quote": "Cultural and cognitive harm constitutes valid systemic impact when measurable indicators demonstrate:\n\na) persistent degradation of shared symbolic systems, language coherence, or knowledge transmission, or b) sustained increases in population-level cognitive distortion, disinformation persistence, or loss of epistemic capacity.",
+   "interpretation": "A program could recognize systemic impact when measurable indicators establish either listed branch. Indicator definitions, baselines, and the durations required for persistent or sustained changes are absent.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "symbolic_system_indicators",
+    "language_coherence_indicators",
+    "knowledge_transmission_indicators",
+    "cognitive_distortion_indicators",
+    "disinformation_persistence_indicators",
+    "epistemic_capacity_indicators",
+    "indicator_histories"
+   ],
+   "criterion": "Recognize valid systemic impact when measurable indicators demonstrate either persistent degradation in a listed shared-system dimension or sustained increases in a listed population-level cognitive harm dimension.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "longitudinal cultural and cognitive indicators",
+    "population-level measurement baselines"
+   ],
+   "gap": "Indicator measurement methods, comparison baselines, and persistence and duration criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Operational definitions and baselines for the listed indicators.",
+    "Criteria for persistent degradation and sustained increases."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-11-02",
+   "section": "11",
+   "title": "Classify Harm Without Physical Damage",
+   "quote": "Such harm SHALL be treated as a systemic externality even in the absence of immediate physical damage.",
+   "interpretation": "Given harm qualifying under the preceding definition, a program can check that it receives systemic-externality classification regardless of whether immediate physical damage exists. Establishing qualifying harm remains a separate check.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "qualifying_cultural_cognitive_harm",
+    "systemic_externality_classification",
+    "immediate_physical_damage_status"
+   ],
+   "criterion": "Every qualifying cultural or cognitive harm is treated as a systemic externality, including when immediate physical damage is absent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "qualifying cultural and cognitive harm determinations",
+    "impact classification records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-11-03",
+   "section": "11",
+   "title": "Scale Cultural Cognitive Harm Attribution",
+   "quote": "Attribution SHALL be proportional to:",
+   "interpretation": "A program could compare attribution with the contributing action's reach, persistence, and amplification potential. The text does not specify whether proportionality applies separately to each factor or to a combined function, and provides no combination rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_reach",
+    "action_persistence",
+    "action_amplification_potential",
+    "attribution_allocation"
+   ],
+   "criterion": "Attribution is proportional to reach, persistence, and amplification potential of the contributing action.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reach, persistence, and amplification-potential measurements",
+    "attribution allocations"
+   ],
+   "gap": "The three factor measures and their proportional combination rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Measurement definitions for reach, persistence, and amplification potential.",
+    "Whether proportionality is separate or combined, and the corresponding allocation rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-12-01",
+   "section": "12",
+   "title": "Reject Listed Attribution Exemptions",
+   "quote": "No Subject SHALL be exempt from attribution based on:",
+   "interpretation": "A program can inspect exemption rules and decision reasons for reliance on any listed ground. The list covers status, authority, jurisdiction, ideology, cultural or moral justification, automation delegation, and temporal delay between action and effect.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "attribution_exemption_rules",
+    "attribution_exemption_reasons"
+   ],
+   "criterion": "No attribution exemption is based on status, authority, jurisdiction, ideology, cultural or moral justification, delegation to automation, or temporal delay between action and effect.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attribution exemption rules and decision records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-13-01",
+   "section": "13",
+   "title": "Enforce Cross Layer Functional Isolation",
+   "quote": "This protocol SHALL NOT:\n\n- measure impact magnitude,",
+   "interpretation": "A program could audit operations for prohibited impact measurement, justice or proportionality evaluation, sanctions or compensation assignment, and override or reinterpretation of impact-protocol outputs. Section 6 and Section 11 require proportional attribution, so a check must distinguish that from the prohibited proportionality evaluation, a distinction the text does not explicitly define.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "protocol_outputs",
+    "impact_protocol_outputs",
+    "output_transformation_lineage",
+    "operation_classification"
+   ],
+   "criterion": "The protocol does not measure impact magnitude, evaluate justice or proportionality, assign sanctions or compensation, or override or reinterpret DKP-1-IMPACT-001 outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "impact-protocol outputs and transformation provenance",
+    "protocol operation audit records"
+   ],
+   "gap": "Operation classification, reinterpretation, and the distinction between prohibited proportionality evaluation and required proportional attribution are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A functional classification of protocol operations.",
+    "A rule distinguishing proportional attribution from prohibited proportionality evaluation.",
+    "A criterion for output reinterpretation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-13-02",
+   "section": "13",
+   "title": "Classify Isolation Violations As Breaches",
+   "quote": "Violation constitutes a critical architectural breach.",
+   "interpretation": "Given a confirmed violation of the preceding isolation prohibitions, a program can require the critical architectural breach classification. Determining the underlying violation is handled by the isolation check.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "confirmed_isolation_violations",
+    "breach_classifications"
+   ],
+   "criterion": "Every confirmed Section 13 isolation violation is classified as a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-layer isolation violation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-14-01",
+   "section": "14",
+   "title": "Use Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "A program could require a change record to demonstrate compliance with the named controlled procedure and its listed components. The text does not define acceptance conditions, activation timing, or whether rollback denotes an available mechanism rather than an action performed for every change.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change_records",
+    "proposal_records",
+    "simulation_records",
+    "audit_records",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_records"
+   ],
+   "criterion": "Protocol changes follow the controlled upgrade procedure covering proposal, simulation, audit, acceptance conditions, activation window, and rollback, subject to the presentation-only correction exception.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "simulation and audit results",
+    "acceptance, activation, and rollback evidence"
+   ],
+   "gap": "The referenced procedure, acceptance criteria, timing rules, and rollback requirements are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "The external upgrade procedure and its stage-completion criteria.",
+    "Whether rollback requires readiness, testing, or actual execution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-14-02",
+   "section": "14",
+   "title": "Require Modification Identity And Simulation",
+   "quote": "Any modification requires:",
+   "interpretation": "A program could require a new protocol identifier, an explicit incompatibility declaration, and full-system simulation for a modification. The following presentation-only exception qualifies the scope of any modification, and DKP-8-SIMULATION appears here without the -001 suffix used elsewhere.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_classification",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "full_system_simulation_record"
+   ],
+   "criterion": "Each modification covered by the upgrade requirements has a new protocol identifier, an explicit declaration of incompatibility, and full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "incompatibility declarations",
+    "full-system simulation records"
+   ],
+   "gap": "Full-system simulation requirements and the identity of the unsuffixed reference are unavailable, while modification scope depends on the presentation-only exception. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Whether DKP-8-SIMULATION denotes DKP-8-SIMULATION-001.",
+    "A criterion for full-system simulation coverage.",
+    "A classification of normative modifications versus presentation-only corrections."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-14-03",
+   "section": "14",
+   "title": "Handle Presentation Only Corrections",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "A program could classify a correction as outside the Upgrade process when normative content is unchanged and check that its change marker is only the Last updated date. Determining normative equivalence may require judgment; the document metadata uses last_updated rather than the quoted display label.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "change_metadata"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only through the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document version comparison",
+    "change classification and metadata records"
+   ],
+   "gap": "Normative equivalence and the precise scope of recorded only are undefined, and the referenced Upgrade definition is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A normative-equivalence review or model.",
+    "Whether recorded only refers to edition metadata or all repository records.",
+    "A mapping between Last updated and last_updated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IDENTITY-14-04",
+   "section": "14",
+   "title": "List Canonical Published Edition Digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Given identified canonical source bytes for every published edition and the canonical repository manifest, a program can compute each SHA-256 digest and verify its presence. This checks the listing requirement without assuming an unstated signing or publication procedure.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_edition_inventory",
+    "canonical_edition_source_bytes",
+    "canonical_repository_sha256sums"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in github.com/anahronic/World lists the SHA-256 digest of that edition's canonical source.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical edition sources",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

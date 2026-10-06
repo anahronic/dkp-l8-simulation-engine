@@ -1,0 +1,1220 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-2-LABOR-001",
+ "doc_sha256": "3aa766a8770b1ecfed7138e5aa3d98b7790cf6dd20e6334d30937b807af7627f",
+ "prefix": "LABOR",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. IDs preserve the carriage return in the supplied prefix as the JSON escape \\r. Quotes are contiguous excerpts; grouped provisions may include additional conditions from the same section in their interpretations and criteria. Section 2 invalidates all participation rules during a PTL systemic halt or unresolved divergence. The relationship between unconditional prohibitions on coercion and the crisis exception is not fully specified. The hierarchy placing this protocol above all L1 protocols is retained as written. Axioms A1 and A2 are referenced without document IDs. Section 13 uses both DKP-8-SIMULATION-001 and DKP-8-SIMULATION; neither spelling is normalized here. Its presentation-only exception qualifies the otherwise broad requirement applying to any modification. Referenced documents were not supplied.",
+ "requirements": [
+  {
+   "id": "LABOR-1-01",
+   "section": "1",
+   "title": "No Labor Requirement for Survival",
+   "quote": "This protocol ensures that no Subject is forced into labor to preserve life, while preserving accountability for measurable impact.",
+   "interpretation": "Check whether preserving a Subject's life depends on compelled labor. Determining which resources or circumstances preserve life requires a declared assessment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject",
+    "survival_conditions",
+    "labor_requirements"
+   ],
+   "criterion": "No Subject must perform labor as a condition of preserving life.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "life-preservation needs and access conditions"
+   ],
+   "gap": "The text does not specify how life-preservation needs or indirect compulsion are determined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A model identifying life-preserving conditions and direct or indirect labor compulsion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-2-01",
+   "section": "2",
+   "title": "Required Protocol Layer Position",
+   "quote": "- strictly downstream of DKP-0-ORACLE-001 (Physical Truth Layer),\n- above all L1 protocols (AXIOMS, IMPACT, IDENTITY, JUSTICE),\n- alongside DKP-2-FINANCE-001 and DKP-2-ASSETS-001,",
+   "interpretation": "Compare the system's declared protocol relationships with the stated downstream, above, alongside, and below relationships. The additional below relationship covers crisis, security, social, and education protocols at L3–L5; the operational meaning of these relationships is unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_relationships",
+    "protocol_layer_assignments"
+   ],
+   "criterion": "The protocol is strictly downstream of DKP-0-ORACLE-001, above all L1 protocols, alongside DKP-2-FINANCE-001 and DKP-2-ASSETS-001, and below the listed L3–L5 protocols.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-2-FINANCE-001",
+    "DKP-2-ASSETS-001"
+   ],
+   "data_dependencies": [
+    "system protocol hierarchy and dependency graph"
+   ],
+   "gap": "Operational semantics for downstream, above, alongside, and below are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A mapping from each stated layer relationship to a checkable architectural relation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-2-02",
+   "section": "2",
+   "title": "PTL Conditions Invalidate Participation Rules",
+   "quote": "All participation rules are invalid during a PTL systemic halt or unresolved divergence.",
+   "interpretation": "Given authoritative PTL status, test that participation rules are treated as invalid whenever either condition holds. The text does not prescribe the fallback behavior while those rules are invalid.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ptl_systemic_halt",
+    "ptl_unresolved_divergence",
+    "participation_rule_validity"
+   ],
+   "criterion": "If PTL systemic halt or unresolved divergence holds, every participation rule is invalid.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "PTL halt and divergence status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-3.1-01",
+   "section": "3.1",
+   "title": "Conditions for Recognizing Labor",
+   "quote": "Labor is any voluntary, sustained activity that:\n\n- produces measurable impact under DKP-1-IMPACT-001,",
+   "interpretation": "Labor classification requires voluntary and sustained activity, measurable impact under the referenced protocol, a contribution to restoration, maintenance, or protection of physical, social, or informational stability, and causal attribution to a Subject. The illustrative activity categories do not independently establish eligibility.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "activity",
+    "voluntariness",
+    "activity_duration",
+    "measured_impact",
+    "stability_contribution",
+    "causal_attribution"
+   ],
+   "criterion": "An activity qualifies as labor when it is voluntary and sustained, produces the required measurable impact, contributes to the specified forms of stability, and can be causally attributed to a Subject.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "impact measurements",
+    "causal attribution",
+    "Subject consent and activity history"
+   ],
+   "gap": "The impact protocol and operational definitions of sustained activity, stability contribution, and causal attribution are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An operational definition of sustained activity.",
+    "A model for stability contribution and causal attribution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-3.2-01",
+   "section": "3.2",
+   "title": "Voluntary Engagement Defines Participation",
+   "quote": "Participation is the voluntary engagement of a Subject in recognized labor or restorative activity.",
+   "interpretation": "Check that an engagement classified as participation is voluntary and involves recognized labor or restorative activity. The text does not define the recognition process or independently specify restorative activity.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject",
+    "engagement",
+    "voluntariness",
+    "recognized_labor",
+    "restorative_activity"
+   ],
+   "criterion": "Participation requires voluntary Subject engagement in recognized labor or restorative activity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity recognition decisions",
+    "consent records"
+   ],
+   "gap": "Recognition, restorative activity, and verification of voluntariness lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A recognition procedure and a definition of restorative activity.",
+    "A method for establishing voluntary engagement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-3.2-02",
+   "section": "3.2",
+   "title": "Impact Exclusively Determines Participation Evaluation",
+   "quote": "Participation is evaluated exclusively through measured impact. Intent, belief, ideology, or declared motivation are irrelevant.",
+   "interpretation": "Inspect evaluation rules for dependence exclusively on measured impact. Evaluations with identical measured impact must not differ because of intent, belief, ideology, or declared motivation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "evaluation_rule",
+    "measured_impact",
+    "intent",
+    "belief",
+    "ideology",
+    "declared_motivation"
+   ],
+   "criterion": "Participation evaluation depends exclusively on measured impact and is invariant to the listed non-impact attributes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measured impact outputs"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-3.3-01",
+   "section": "3.3",
+   "title": "Immutable Time Indexed Contribution Entries",
+   "quote": "A Contribution Record is an immutable, time-indexed entry linking:",
+   "interpretation": "Check that each Contribution Record has a time index and that its content remains unchanged after creation. The document does not mandate a particular timestamp format or storage technology.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "contribution_records",
+    "record_history",
+    "time_indices"
+   ],
+   "criterion": "Every Contribution Record is time-indexed and immutable after creation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-3.3-02",
+   "section": "3.3",
+   "title": "Required Contribution Record Links",
+   "quote": "- a participation activity,\n- measured impact outputs,\n- resulting justice adjustment.",
+   "interpretation": "Validate links from each Contribution Record to a Subject, a participation activity, measured impact outputs, and the resulting justice adjustment. This checks required associations without prescribing field names or serialization.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "contribution_record",
+    "subject_link",
+    "activity_link",
+    "impact_output_links",
+    "justice_adjustment_link"
+   ],
+   "criterion": "Each Contribution Record links all four required entities or outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject identity records",
+    "measured impact outputs",
+    "justice adjustments"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-4.1-01",
+   "section": "4.1",
+   "title": "Universal Minimum Survival Resource Access",
+   "quote": "Every Subject SHALL retain access to minimum life-preserving resources, independent of labor participation, in accordance with Axiom A1 (Preservation of Life).",
+   "interpretation": "Check that every Subject retains minimum life-preserving access, including basic nutrition, shelter from lethal exposure, and emergency medical assistance. Required adequacy and availability must be supplied by a needs assessment or the referenced axiom.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subjects",
+    "resource_access",
+    "nutrition_needs",
+    "exposure_conditions",
+    "emergency_medical_needs"
+   ],
+   "criterion": "Every Subject retains minimum life-preserving resources and is deprived of none of the three listed resource categories.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "resource availability",
+    "life-preservation needs",
+    "emergency medical assessments"
+   ],
+   "gap": "Axiom A1 and measurable standards for minimum life-preserving resources are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A model defining sufficient nutrition, protection from lethal exposure, and emergency medical access."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-4.1-02",
+   "section": "4.1",
+   "title": "Forbidden Baseline Access Conditions",
+   "quote": "Baseline survival access SHALL NOT be contingent on labor, obedience, loyalty, or economic productivity.",
+   "interpretation": "Inspect access rules to ensure none of the listed attributes is a prerequisite for baseline survival access. This is a rule-dependency check, separate from assessing whether the resources themselves are sufficient.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "baseline_access_rule",
+    "labor_status",
+    "obedience",
+    "loyalty",
+    "economic_productivity"
+   ],
+   "criterion": "Baseline survival access does not depend on labor, obedience, loyalty, or economic productivity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "baseline access policies"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-4.2-01",
+   "section": "4.2",
+   "title": "Baseline Access Preserves Harm Responsibility",
+   "quote": "Baseline access preserves life only. It does NOT neutralize negative justice balance or eliminate responsibility for harm.",
+   "interpretation": "Check that granting baseline access does not itself clear a negative justice balance or remove harm responsibility. Independent contribution or restitution events must be distinguished from the baseline-access event.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "baseline_access_event",
+    "justice_state_before",
+    "justice_state_after",
+    "harm_responsibility_before",
+    "harm_responsibility_after",
+    "concurrent_events"
+   ],
+   "criterion": "Baseline access alone neither neutralizes negative justice balance nor eliminates responsibility for harm.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice state history",
+    "harm responsibility records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-4.2-02",
+   "section": "4.2",
+   "title": "Conditions for Restoring Full Access",
+   "quote": "Restoration of full participation and access requires measurable contribution or restitution.",
+   "interpretation": "Check that restoration of full participation and access has supporting measurable contribution or restitution. This establishes a necessary condition without defining how much contribution or restitution is sufficient.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "restoration_event",
+    "participation_rights",
+    "access_state",
+    "measurable_contribution",
+    "restitution"
+   ],
+   "criterion": "Full participation and access are restored only when measurable contribution or restitution supports the transition.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "contribution measurements",
+    "restitution records",
+    "participation and access states"
+   ],
+   "gap": "The scope of full participation and access and the qualifying relationship to contribution or restitution are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of full participation, full access, and qualifying contribution or restitution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-5.1-01",
+   "section": "5.1",
+   "title": "Voluntary Recovery Pathways Must Exist",
+   "quote": "Subjects in a negative justice state SHALL be offered voluntary participation pathways enabling recovery through contribution.",
+   "interpretation": "For every Subject in a negative justice state, check that offered recovery pathways are voluntary, transparent, non-punitive, non-humiliating, and scaled to capacity and context. Recovery capability and the qualitative conditions require an assessment model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_state",
+    "pathway_offers",
+    "pathway_properties",
+    "subject_capacity",
+    "subject_context",
+    "recovery_model"
+   ],
+   "criterion": "Every Subject in a negative justice state is offered contribution-based recovery pathways satisfying all stated voluntary and qualitative conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice states",
+    "capacity and context assessments",
+    "available recovery pathways"
+   ],
+   "gap": "The text does not operationalize recovery capability, transparency, humiliation, punishment, or scaling to capacity and context. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A model for whether a pathway enables recovery.",
+    "Assessment rules for the required pathway qualities and capacity scaling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-5.1-02",
+   "section": "5.1",
+   "title": "Plural Diverse Participation Opportunities",
+   "quote": "Participation opportunities SHALL be plural and diverse, preventing exploitation, monoculture, or forced specialization.",
+   "interpretation": "Inspect available opportunities for plurality and diversity and assess whether they prevent the named adverse conditions. The text gives no diversity metric or test for prevention.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participation_opportunities",
+    "opportunity_types",
+    "assignment_conditions",
+    "exploitation_assessment"
+   ],
+   "criterion": "Participation opportunities are plural and diverse and prevent exploitation, monoculture, and forced specialization.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "opportunity inventory",
+    "assignment and dependency patterns"
+   ],
+   "gap": "Diversity, monoculture, exploitation, and the adequacy of preventive measures are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A diversity measure and adequacy criterion.",
+    "Definitions and detection models for exploitation, monoculture, and forced specialization."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-5.2-01",
+   "section": "5.2",
+   "title": "Deterministic Contribution Based Justice Recovery",
+   "quote": "- measured impact of participation,\n- relevance to harmed impact channels,\n- time horizon of contribution.",
+   "interpretation": "Check that justice recovery is a deterministic function of the three listed inputs. Repeated identical inputs must yield identical recovery, but the text supplies no function for calculating the correct amount.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "measured_participation_impact",
+    "harmed_channel_relevance",
+    "contribution_time_horizon",
+    "justice_recovery_function",
+    "justice_recovery"
+   ],
+   "criterion": "Justice recovery is computed deterministically from measured participation impact, relevance to harmed impact channels, and contribution time horizon.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact measurements",
+    "harmed impact channels",
+    "contribution time horizons"
+   ],
+   "gap": "The deterministic recovery function and the representation of channel relevance are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An explicit recovery function using the stated inputs.",
+    "A representation of relevance to harmed impact channels."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-5.2-02",
+   "section": "5.2",
+   "title": "Excluded Activities Cannot Qualify",
+   "quote": "Symbolic, performative, or purely declarative activity SHALL NOT be recognized as labor.",
+   "interpretation": "Reject labor recognition for activities classified in any of the listed categories. The text does not resolve whether symbolic or performative activity with measurable stabilizing impact remains excluded.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activity",
+    "activity_classification",
+    "labor_recognition"
+   ],
+   "criterion": "Symbolic, performative, and purely declarative activities are not recognized as labor.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity classification evidence"
+   ],
+   "gap": "The excluded categories and their treatment when measurable impact exists are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of symbolic, performative, and purely declarative activity.",
+    "A precedence rule for activities also satisfying the labor definition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-6-01",
+   "section": "6",
+   "title": "Prohibited Labor Participation Conditions",
+   "quote": "Labor participation SHALL NOT:\n\n- be compulsory for survival,",
+   "interpretation": "Check participation conditions for survival compulsion, punishment, debt bondage, open-ended obligation, required ideological, cultural, or political alignment, and assignment based on status, origin, or identity. Classification of these conditions requires operational definitions; the crisis exception also needs reconciliation with this section.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participation_conditions",
+    "assignment_rule",
+    "obligation_terms",
+    "alignment_requirements",
+    "subject_attributes",
+    "crisis_status"
+   ],
+   "criterion": "Labor participation has none of the conditions prohibited in section 6.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "assignment policies",
+    "obligation and debt terms",
+    "crisis status"
+   ],
+   "gap": "Several prohibited conditions lack operational definitions, and their relationship to crisis compulsion is not explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Operational definitions of punishment, debt bondage, open-ended obligation, and compelled alignment.",
+    "A rule reconciling this prohibition with section 9.2."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-6-02",
+   "section": "6",
+   "title": "Forced Labor Is Critical Violation",
+   "quote": "Forced labor constitutes a critical violation of axiomatic constraints.",
+   "interpretation": "Given a forced-labor finding, check that the violation is classified as critical and axiomatic. The text defines no resulting sanction or remediation transition.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "forced_labor_finding",
+    "violation_classification"
+   ],
+   "criterion": "Every forced-labor finding is classified as a critical violation of axiomatic constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "forced-labor findings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-7-01",
+   "section": "7",
+   "title": "Required Opportunity Allocation Bases",
+   "quote": "- system needs derived from impact deficits,\n- Subject capacity and explicit consent,\n- avoidance of concentration, exploitation, or dependency.",
+   "interpretation": "Check that allocation uses impact-deficit-derived system needs, Subject capacity, and explicit consent, while avoiding concentration, exploitation, and dependency. No priority order, optimization function, or permissible concentration level is supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "allocation_rule",
+    "allocation_decisions",
+    "impact_deficits",
+    "system_needs",
+    "subject_capacity",
+    "explicit_consent",
+    "allocation_patterns"
+   ],
+   "criterion": "Opportunity allocation is based on all stated factors, includes explicit Subject consent, and avoids the listed adverse patterns.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact deficits",
+    "system needs",
+    "capacity assessments",
+    "consent records",
+    "allocation history"
+   ],
+   "gap": "The derivation of needs and tests for avoiding concentration, exploitation, and dependency are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A mapping from impact deficits to system needs.",
+    "An allocation model and criteria for the prohibited allocation patterns."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-7-02",
+   "section": "7",
+   "title": "Assignment Monopoly Is Forbidden",
+   "quote": "No centralized authority MAY monopolize assignment.",
+   "interpretation": "Inspect assignment authority and control to determine whether a centralized authority monopolizes assignment. The text does not define centralization, monopoly, or the scope over which monopoly is evaluated.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "assignment_authorities",
+    "assignment_control",
+    "assignment_scope"
+   ],
+   "criterion": "No centralized authority monopolizes participation assignment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance and assignment-control records"
+   ],
+   "gap": "Centralized authority, monopoly, and the relevant assignment scope are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of centralization and monopoly over a declared assignment scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-7-03",
+   "section": "7",
+   "title": "Transparent Auditable Rule Based Allocation",
+   "quote": "All allocation procedures MUST be transparent, auditable, and rule-based.",
+   "interpretation": "Assess every allocation procedure for accessible rules, audit evidence, and conformity of decisions to those rules. The document does not specify disclosure audiences or minimum audit evidence.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "allocation_procedures",
+    "allocation_rules",
+    "rule_disclosures",
+    "allocation_audit_evidence"
+   ],
+   "criterion": "Every allocation procedure is transparent, auditable, and rule-based.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "allocation rules and audit records"
+   ],
+   "gap": "Transparency and auditability have no specified disclosure or evidence standard. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A disclosure standard and minimum evidence needed to audit allocation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-8.1-01",
+   "section": "8.1",
+   "title": "Permitted Forms of Participation Compensation",
+   "quote": "Compensation for participation MAY include:\n\n- Capital Units (CU),",
+   "interpretation": "Recognize Capital Units, asset or service access, relaxation of justice-derived restrictions, and partial or full restoration of participation rights as permitted compensation forms. The phrase 'MAY include' neither requires any particular form nor explicitly excludes other forms.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "compensation_form",
+    "compensation_policy"
+   ],
+   "criterion": "The listed compensation forms are permitted options; no listed form is mandatory.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "compensation policies"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-8.1-02",
+   "section": "8.1",
+   "title": "Impact Proportional Compensation",
+   "quote": "Compensation is proportional to measured impact, not hours worked, status, or bargaining power.",
+   "interpretation": "Check compensation dependence on measured impact and independence from hours, status, and bargaining power. Strict mathematical proportionality and a looser commensurateness reading are both possible because the text supplies neither a coefficient nor a common scale for different compensation forms.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "measured_impact",
+    "compensation",
+    "compensation_form",
+    "hours_worked",
+    "status",
+    "bargaining_power"
+   ],
+   "criterion": "Compensation is proportional to measured impact and is not determined by hours worked, status, or bargaining power.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact measurements",
+    "compensation records"
+   ],
+   "gap": "The proportionality interpretation, coefficient, and measurement scales for impact and compensation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interpretation of proportionality.",
+    "Compatible impact and compensation scales and any required proportionality parameters."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-8.2-01",
+   "section": "8.2",
+   "title": "Recognition of Stabilizing Nonmarket Contributions",
+   "quote": "Non-market contributions SHALL be recognized as valid labor when they produce measurable stabilizing impact, including:",
+   "interpretation": "Check recognition of non-market contributions producing measurable stabilizing impact and verify evaluation through appropriate physical or informational proxies under DKP-1-IMPACT-001. Listed examples include caregiving, social continuity, knowledge preservation and transmission, and prevention of degradation missed by markets; their inclusion does not remove the impact condition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "nonmarket_contribution",
+    "stabilizing_impact",
+    "evaluation_proxies",
+    "labor_recognition"
+   ],
+   "criterion": "Non-market contributions with measurable stabilizing impact are recognized as labor and evaluated using appropriate physical or informational proxies under DKP-1-IMPACT-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "stabilizing impact measurements",
+    "physical or informational proxy readings"
+   ],
+   "gap": "The referenced impact protocol and criteria for stabilizing impact and appropriate proxies are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A model identifying stabilizing impact and suitable proxies for each contribution type."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-9.1-01",
+   "section": "9.1",
+   "title": "No Compulsion Outside Declared Crisis",
+   "quote": "Outside formally declared crisis conditions, no Subject SHALL be compelled to participate in labor.",
+   "interpretation": "Given formal crisis status and a compulsion finding, check that no compelled participation occurs outside formally declared crisis conditions. A declaration alone does not satisfy the additional conditions for constrained refusal in section 9.2.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "formal_crisis_status",
+    "compelled_participation"
+   ],
+   "criterion": "When no formally declared crisis applies, no Subject is compelled to participate in labor.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "formal crisis status",
+    "compulsion findings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-9.1-02",
+   "section": "9.1",
+   "title": "Refusal Has No Punitive Consequences",
+   "quote": "- does not constitute a violation,\n- does not trigger punishment,\n- does not affect baseline survival access.",
+   "interpretation": "Check that refusal does not cause a violation classification, punishment, or baseline-access change. The section opens with an outside-crisis qualifier, but it is ambiguous whether that qualifier also limits all three listed protections.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "refusal_event",
+    "violation_findings",
+    "punishment_events",
+    "baseline_access_history",
+    "formal_crisis_status",
+    "event_causation"
+   ],
+   "criterion": "Within the applicable scope of the refusal protection, refusal causes no violation, punishment, or change to baseline survival access.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "violation and punishment records",
+    "baseline access history",
+    "crisis status"
+   ],
+   "gap": "The crisis scope of the listed protections and attribution of consequences to refusal are not fully specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A reading of whether the outside-crisis qualifier governs the refusal list.",
+    "A causal attribution method for consequences of refusal."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-9.2-01",
+   "section": "9.2",
+   "title": "Conditional Temporary Restriction of Refusal",
+   "quote": "During a formally declared crisis under DKP-4-CRISIS-001, where failure of participation would threaten systemic survival or collapse, the right to refuse participation MAY be temporarily constrained.",
+   "interpretation": "Check that any crisis-based constraint on refusal has a formal declaration under the referenced protocol and an assessment that nonparticipation threatens systemic survival or collapse. Satisfying those conditions permits a temporary constraint without making it mandatory.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_declaration",
+    "refusal_constraint",
+    "nonparticipation_threat_assessment",
+    "constraint_period"
+   ],
+   "criterion": "A temporary refusal constraint is permitted during a formally declared crisis under DKP-4-CRISIS-001 when failure of participation would threaten systemic survival or collapse.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "formal crisis declaration",
+    "system survival or collapse threat assessment"
+   ],
+   "gap": "The crisis protocol and a model connecting nonparticipation to systemic survival or collapse are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A counterfactual model of the systemic effects of nonparticipation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-9.2-02",
+   "section": "9.2",
+   "title": "Limits on Crisis Participation Constraints",
+   "quote": "- be proportionate to the declared threat,\n- preserve Axiom A1 (Preservation of Life),\n- prioritize Axiom A2 (Systemic Sustainability).",
+   "interpretation": "Check that constraints have strict time limits, are proportionate to the declared threat, preserve A1, and prioritize A2. The text specifies no maximum duration, proportionality rule, or operational method for prioritizing A2 while preserving A1.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_constraints",
+    "constraint_time_limits",
+    "declared_threat",
+    "life_preservation_assessment",
+    "systemic_sustainability_assessment"
+   ],
+   "criterion": "Every crisis constraint is strictly time-limited, proportionate to the declared threat, preserves A1, and prioritizes A2.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "declared threat assessments",
+    "life-preservation and sustainability assessments"
+   ],
+   "gap": "The axioms and operational criteria for strict time limits, proportionality, and prioritization are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A proportionality model and interpretation of strict time limitation.",
+    "A decision rule preserving A1 while prioritizing A2."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-9.2-03",
+   "section": "9.2",
+   "title": "No Permanent Crisis Labor Consequences",
+   "quote": "Crisis modulation SHALL NOT create permanent obligations or post-crisis penalties.",
+   "interpretation": "Inspect obligations and penalties attributable to crisis modulation. Reject permanent obligations and penalties imposed after the crisis; no specific administrative termination procedure is prescribed.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_modulation_events",
+    "resulting_obligations",
+    "obligation_terms",
+    "resulting_penalties",
+    "penalty_times",
+    "crisis_end"
+   ],
+   "criterion": "Crisis modulation creates neither permanent obligations nor penalties after the crisis ends.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis end status",
+    "obligation and penalty records with provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-10-01",
+   "section": "10",
+   "title": "Permitted Participation During Restricted States",
+   "quote": "Subjects under Restriction or Isolation per DKP-1-JUSTICE-001:\n\n- MAY participate in limited or supervised activities,",
+   "interpretation": "Given an authoritative Restriction or Isolation state, recognize limited or supervised activities as permitted participation. The clause does not expressly say that every other activity is forbidden.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "justice_state",
+    "activity_limits",
+    "activity_supervision",
+    "participation_permissions"
+   ],
+   "criterion": "For Subjects under Restriction or Isolation, limited or supervised activities are permitted participation options.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "Restriction or Isolation status",
+    "activity supervision and limits"
+   ],
+   "gap": "The referenced justice states and standards for limited or supervised activity are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Operational definitions of limited and supervised activities."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-10-02",
+   "section": "10",
+   "title": "Recovery Pathways Survive Justice Restrictions",
+   "quote": "- MUST retain pathways for justice recovery,",
+   "interpretation": "For every Subject under Restriction or Isolation, check continued availability of pathways capable of justice recovery. A nominally listed pathway may not establish recovery capability without a recovery model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_state",
+    "available_recovery_pathways",
+    "recovery_model"
+   ],
+   "criterion": "Every Subject under Restriction or Isolation retains pathways for justice recovery.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "justice restriction states",
+    "recovery pathway availability"
+   ],
+   "gap": "The justice protocol and criteria establishing that a pathway can produce recovery are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A model of pathway accessibility and justice recovery."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-10-03",
+   "section": "10",
+   "title": "Protection Against Restricted Subject Exploitation",
+   "quote": "- SHALL NOT be exploited or coerced.\n\nParticipation remains voluntary outside crisis conditions.",
+   "interpretation": "Check that Subjects under Restriction or Isolation are not exploited or coerced and that participation outside crisis conditions is voluntary. The unqualified coercion prohibition may either continue during crises or be qualified by the following crisis language.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_state",
+    "participation_conditions",
+    "voluntariness",
+    "exploitation_assessment",
+    "coercion_assessment",
+    "crisis_status"
+   ],
+   "criterion": "Restricted or isolated Subjects are not exploited or coerced, and their participation remains voluntary outside crisis conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "justice states",
+    "consent and participation assessments",
+    "crisis status"
+   ],
+   "gap": "Exploitation and coercion are undefined, and the crisis scope of the coercion prohibition is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of exploitation, coercion, and voluntary participation.",
+    "A declared interpretation of the crisis exception for restricted or isolated Subjects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-11-01",
+   "section": "11",
+   "title": "Identity Bound Auditable Impact Records",
+   "quote": "All participation and contribution records MUST be:\n\n- directly bindable to identifiable Subjects",
+   "interpretation": "Check every participation and contribution record for direct binding to identifiable Subjects under DKP-1-IDENTITY-001, public auditability, and traceability to measured impact outputs. The text requires bindability, which may mean an available binding capability rather than an already materialized public identity link.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "participation_records",
+    "contribution_records",
+    "subject_identity_bindings",
+    "public_audit_access",
+    "impact_output_links"
+   ],
+   "criterion": "Every participation and contribution record is directly bindable to identifiable Subjects, publicly auditable, and traceable to measured impact outputs.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "Subject identity bindings",
+    "impact outputs",
+    "public audit interfaces"
+   ],
+   "gap": "The identity protocol, the meaning of direct bindability, and public audit access standards are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A reading of bindability as an existing link or available binding capability.",
+    "An operational public-audit standard."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-11-02",
+   "section": "11",
+   "title": "Forbidden Proxy Fictitious Obscured Participation",
+   "quote": "Proxy, fictitious, or obscured participation is forbidden.",
+   "interpretation": "Reject participation found to be proxy, fictitious, or obscured. The document supplies neither classification definitions nor a verification procedure for detecting these conditions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participation_claim",
+    "participant_identity",
+    "activity_evidence",
+    "participation_classification"
+   ],
+   "criterion": "No participation is proxy, fictitious, or obscured.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "identity and activity verification evidence"
+   ],
+   "gap": "The prohibited participation categories and methods for establishing them are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions and detection rules for proxy, fictitious, and obscured participation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-12-01",
+   "section": "12",
+   "title": "Cross Layer Interference Is Forbidden",
+   "quote": "- override impact measurements,\n- function as punishment or discipline,\n- introduce ideological criteria.",
+   "interpretation": "Inspect protocol rules and behavior for redefinition of justice logic, overrides of impact measurements, punitive or disciplinary operation, and ideological criteria. Behavioral compliance requires reference justice logic, impact outputs, and operational definitions of the prohibited roles.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "labor_protocol_rules",
+    "reference_justice_logic",
+    "impact_measurements",
+    "effective_impact_values",
+    "protocol_behavior",
+    "decision_criteria"
+   ],
+   "criterion": "The protocol neither redefines justice logic nor overrides impact measurements, functions as punishment or discipline, or introduces ideological criteria.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authoritative justice logic",
+    "authoritative impact measurements",
+    "protocol execution evidence"
+   ],
+   "gap": "Reference justice logic and operational boundaries for punishment, discipline, and ideological criteria are not provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A method for comparing effective behavior with authoritative justice logic and impact outputs.",
+    "Definitions of punitive, disciplinary, and ideological operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-12-02",
+   "section": "12",
+   "title": "Isolation Violations Are Critical Breaches",
+   "quote": "Violation constitutes a critical architectural breach.",
+   "interpretation": "Given a violation of a section 12 prohibition, check that it is classified as a critical architectural breach. No automatic halt, penalty, or recovery procedure is specified.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "cross_layer_violation",
+    "breach_classification"
+   ],
+   "criterion": "Every violation of section 12 is classified as a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-layer violation findings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-13-01",
+   "section": "13",
+   "title": "Controlled Procedure for Protocol Changes",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check normative changes for compliance with the referenced upgrade procedure and evidence covering proposal, simulation, audit, acceptance conditions, activation window, and rollback. The text does not establish whether rollback means a required capability or an executed step for every change.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_provisions",
+    "upgrade_procedure"
+   ],
+   "criterion": "Each normative protocol change follows DKP-4-UPGRADE-001 with all listed procedural elements, using the specified simulation and audit protocols.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "activation and rollback records"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, sequencing rules, and rollback requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An interpretation of rollback as a capability, conditional action, or mandatory executed step."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-13-02",
+   "section": "13",
+   "title": "Required Modification Identifier Declaration Simulation",
+   "quote": "- a new protocol identifier,\n- explicit incompatibility declaration,\n- full-system simulation under DKP-8-SIMULATION.",
+   "interpretation": "Check applicable modifications for a new protocol identifier, an explicit incompatibility declaration, and full-system simulation under the reference exactly as written. Read together with the following paragraph, presentation-only corrections appear exempt, although the phrase 'Any modification' is broader.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "previous_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "full_system_simulation_record",
+    "normative_content_change"
+   ],
+   "criterion": "Every applicable modification has a new identifier, an explicit incompatibility declaration, and full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "protocol identifier history",
+    "incompatibility declarations",
+    "full-system simulation evidence"
+   ],
+   "gap": "DKP-8-SIMULATION is not supplied, and the scope of any modification must be reconciled with the presentation-only exception. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A rule treating presentation-only corrections as exempt from the modification requirements, or a declared alternative reading."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-13-03",
+   "section": "13",
+   "title": "Presentation Correction Upgrade Exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "For corrections established to affect presentation only and preserve normative content, check that they are not classified as Upgrades and are recorded only through the document's Last updated date. The text uses that label while the supplied metadata field is last_updated.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "change_classification",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_record"
+   ],
+   "criterion": "A presentation-only correction preserving normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition differences",
+    "upgrade classification records"
+   ],
+   "gap": "The referenced upgrade section and a method for deciding preservation of normative content are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A normative-content equivalence test.",
+    "A mapping from the Last updated label to the last_updated metadata field."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "LABOR-13-04",
+   "section": "13",
+   "title": "Published Edition Canonical Digest Listing",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Given the canonical source bytes for each published edition and the designated repository manifest, compute SHA-256 and compare it with the listed digest. This check assumes the supplied source is already identified as canonical and does not invent a normalization procedure.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "canonical_repository_identity",
+    "sha256sums_manifest"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in github.com/anahronic/World lists the SHA-256 digest matching that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical edition sources",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

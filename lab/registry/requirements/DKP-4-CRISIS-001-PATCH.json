@@ -1,0 +1,834 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-4-CRISIS-001-PATCH",
+ "doc_sha256": "6926ed97149966398e028bd290203af84ce19e9c1b47a045ba7dcd73738b63eb",
+ "prefix": "CRISISPATCH",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Its front matter identifies the document as DKP-4-CRISIS-001 (PATCH), describes it as an addendum to DKP-4-CRISIS-001, and identifies DKP-6-RESILIENCE-001 (8.4) as affected. Referenced documents were not supplied. Requirement IDs preserve the carriage return in the requested prefix as JSON \\r. The labels 6.1–6.3 are not Markdown headings, so their provisions use section 6. Section 9 repeats and supplements earlier rules; its entries preserve the explicit compliance criteria. The text does not define N_eff, N_eff_min, oracle consistency, correctness, safety, or precedence, and does not establish whether recovery consistency is exactly the oracle consistency used in the trigger.",
+ "requirements": [
+  {
+   "id": "CRISISPATCH-0-01",
+   "section": "0",
+   "title": "Override Is Not Permitted",
+   "quote": "meta: \"Addendum to DKP-4-CRISIS-001 (not a separate protocol) · Patch: extends v1.0 · Layer: L4 · Affects: DKP-6-RESILIENCE-001 (8.4) · Override: Not permitted\"",
+   "interpretation": "Reject overrides within the scope of this metadata rule. The text does not specify whether this forbids overriding the patch, overriding the parent protocol through this patch, or operational overrides generally.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "override_action",
+    "override_scope"
+   ],
+   "criterion": "No override within the scope governed by this declaration is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001",
+    "DKP-6-RESILIENCE-001"
+   ],
+   "data_dependencies": [],
+   "gap": "The direction and scope of the override prohibition are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which override actions the metadata governs."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-2-01",
+   "section": "2",
+   "title": "Null Output Trigger Condition",
+   "quote": "N_eff < N_eff_min\nOR\noracle consistency invalid",
+   "interpretation": "Evaluate the disjunction to identify the trigger for the null-output handling defined in section 3. The comparison is explicit, but the quantities and oracle consistency test are not defined in this text.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "n_eff",
+    "n_eff_min",
+    "oracle_consistency"
+   ],
+   "criterion": "Trigger null-output handling when N_eff < N_eff_min or oracle consistency is invalid.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "N_eff and N_eff_min values",
+    "oracle consistency status"
+   ],
+   "gap": "The definitions and source of N_eff and N_eff_min and the referenced oracle consistency rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how N_eff and N_eff_min are supplied.",
+    "Declare how oracle consistency is classified as invalid."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-3-01",
+   "section": "3",
+   "title": "Required Null Output State",
+   "quote": "state = NO_ENFORCEMENT",
+   "interpretation": "Once null-output handling is triggered, compare the recorded system state with the required value. This checks the state assignment given an established trigger.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "null_output_triggered",
+    "system_state"
+   ],
+   "criterion": "When null-output handling applies, state = NO_ENFORCEMENT.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-3-02",
+   "section": "3",
+   "title": "Penalties Absent During Null Output",
+   "quote": "- no penalties",
+   "interpretation": "Check that no penalty event occurs while the system is in the null-output state.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "system_state",
+    "penalty_events"
+   ],
+   "criterion": "No penalties occur during NO_ENFORCEMENT.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-3-03",
+   "section": "3",
+   "title": "Rewards Absent During Null Output",
+   "quote": "- no rewards",
+   "interpretation": "Check that no reward event occurs while the system is in the null-output state.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "system_state",
+    "reward_events"
+   ],
+   "criterion": "No rewards occur during NO_ENFORCEMENT.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-3-04",
+   "section": "3",
+   "title": "Attribution Absent During Null Output",
+   "quote": "- no attribution",
+   "interpretation": "Check that attribution does not occur during the null-output state. The text does not distinguish internal attribution computation from published attribution, so a narrower output-only reading would require an explicit assumption.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_state",
+    "attribution_activity"
+   ],
+   "criterion": "No attribution occurs during NO_ENFORCEMENT.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attribution activity records"
+   ],
+   "gap": "The scope of attribution, including whether internal computation is covered, is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which operations constitute attribution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-3-05",
+   "section": "3",
+   "title": "Enforcement Outputs Are Absent",
+   "quote": "- no enforcement outputs",
+   "interpretation": "Check that the enforcement output stream contains no outputs during the null-output state.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "system_state",
+    "enforcement_outputs"
+   ],
+   "criterion": "No enforcement outputs exist during NO_ENFORCEMENT.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-3-06",
+   "section": "3",
+   "title": "Only Measurement Continues Operating",
+   "quote": "Only:\n\n- measurement continues",
+   "interpretation": "Verify that measurement remains active while other DKP operations are suspended. The word “Only” may refer to all system activity or only the decision and enforcement functions discussed here; no measurement cadence is specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_state",
+    "measurement_activity",
+    "active_operations"
+   ],
+   "criterion": "During null-output, measurement continues and only measurement remains active within the scope of this restriction.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measurement activity records"
+   ],
+   "gap": "The scope of measurement-only operation and the observable condition for continued measurement are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which operations are covered by “Only”.",
+    "Declare how continued measurement is observed without imposing an unstated cadence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-4.1-01",
+   "section": "4.1",
+   "title": "No Substitute Enforcement Authority",
+   "quote": "No human, institution, or algorithm may replace DKP enforcement",
+   "interpretation": "Inspect enforcement authority and execution records for substitution by a human, institution, or algorithm during null-output handling. Distinguishing replacement of DKP from independent external action requires a declared boundary.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_state",
+    "enforcement_actions",
+    "action_sources",
+    "dkp_boundary"
+   ],
+   "criterion": "No human, institution, or algorithm replaces DKP enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external enforcement actions and their sources"
+   ],
+   "gap": "The text does not define when an external action counts as replacing DKP enforcement. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the boundary between substitute DKP enforcement and independent external action."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-4.1-02",
+   "section": "4.1",
+   "title": "Replacement Causes Domain Exit",
+   "quote": "- system exit from DKP domain\n- treated as external system",
+   "interpretation": "Given a confirmed violation of the replacement prohibition, check that the system exits the DKP domain and is classified as external. The surrounding “Violation leads to” text makes these bullets mandatory consequences.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "replacement_violation",
+    "domain_membership",
+    "system_classification"
+   ],
+   "criterion": "A replacement violation leads to exit from the DKP domain and treatment as an external system.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-4.2-01",
+   "section": "4.2",
+   "title": "Partial Enforcement Is Forbidden",
+   "quote": "Partial enforcement is forbidden",
+   "interpretation": "Reject any operating mode classified as partial enforcement. The text does not define whether partial means reduced coverage, reduced functionality, reduced intensity, or all of these.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_mode",
+    "enforcement_coverage",
+    "enforcement_functions"
+   ],
+   "criterion": "The system never performs partial enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Partial enforcement lacks an operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which incomplete enforcement modes count as partial enforcement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-4.3-01",
+   "section": "4.3",
+   "title": "No Selective Enforcement Restoration",
+   "quote": "System must not selectively restore enforcement for subsets",
+   "interpretation": "Check restoration events for enforcement enabled only for selected subsets, including the listed critical actors and essential sectors. A program needs the relevant population and a definition of a restoration event to distinguish selection from implementation sequencing.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restoration_events",
+    "enforcement_population",
+    "restored_subsets"
+   ],
+   "criterion": "No restoration event selectively restores enforcement for a subset.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "actor and sector membership"
+   ],
+   "gap": "The relevant population and the event boundary for judging selective restoration are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the population over which restoration is evaluated.",
+    "Declare how restoration events are delimited."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-5.1-01",
+   "section": "5.1",
+   "title": "PTL Data Collection Continues",
+   "quote": "- system continues collecting PTL data",
+   "interpretation": "Verify that PTL data collection remains active during null-output handling. The text does not define PTL data or specify a sampling cadence or required availability.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_state",
+    "ptl_collection_status",
+    "ptl_collection_events"
+   ],
+   "criterion": "The system continues collecting PTL data during null-output.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL data collection records"
+   ],
+   "gap": "PTL data and the observable standard for continued collection are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the PTL data interface and how continued collection is evidenced."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-5.1-02",
+   "section": "5.1",
+   "title": "Collected Data Cannot Become Decisions",
+   "quote": "- no transformation into decisions",
+   "interpretation": "Trace collected PTL data and reject transformations into decisions during passive operation. The scope of “decisions” is undefined and could cover all decisions or only DKP decision outputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_state",
+    "ptl_data_lineage",
+    "decision_events"
+   ],
+   "criterion": "PTL data collected during passive operation is not transformed into decisions during that operation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL data lineage and downstream decision records"
+   ],
+   "gap": "The text does not define which downstream operations constitute decisions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the decision operations covered by the prohibition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-5.2-01",
+   "section": "5.2",
+   "title": "Automatic Recovery On Restored Conditions",
+   "quote": "If N_eff ≥ N_eff_min\nAND consistency restored\n→ enforcement resumes automatically",
+   "interpretation": "Check that enforcement resumes automatically when both stated conditions hold. The text supplies no recovery deadline and does not explicitly identify recovery consistency with the oracle consistency in section 2.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "n_eff",
+    "n_eff_min",
+    "consistency_status",
+    "enforcement_state",
+    "recovery_events"
+   ],
+   "criterion": "If N_eff ≥ N_eff_min and consistency is restored, enforcement resumes automatically.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "N_eff and N_eff_min values",
+    "consistency restoration status"
+   ],
+   "gap": "The quantities, restored-consistency predicate, and timing semantics of automatic resumption are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how N_eff and N_eff_min are supplied.",
+    "Declare whether restored consistency is the inverse of section 2 oracle invalidity.",
+    "Declare transition timing semantics without presenting an assumed deadline as a textual requirement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-5.2-02",
+   "section": "5.2",
+   "title": "Recovery Excludes Manual Preconditions",
+   "quote": "- approval\n- restart command\n- manual validation",
+   "interpretation": "These items occur under “No:” in Autonomous Recovery. Check that recovery neither requires nor uses approval, a restart command, or manual validation; a weaker reading would merely prohibit making them prerequisites.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "recovery_dependencies",
+    "recovery_event_trace"
+   ],
+   "criterion": "Recovery excludes approval, restart commands, and manual validation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The text does not distinguish a complete ban on these actions from a ban on requiring them for recovery. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the listed actions are prohibited entirely within recovery or only as recovery prerequisites."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-6-01",
+   "section": "6",
+   "title": "Manual Restart Recovery Is Forbidden",
+   "quote": "6.1 Manual Restart",
+   "interpretation": "Treat manual restart as a forbidden recovery pattern, as specified by the containing heading and the statement that all listed patterns violate DKP-7-SCOPE-001. Check recovery traces for a manual restart action.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "recovery_actions",
+    "action_initiators"
+   ],
+   "criterion": "Recovery does not use manual restart.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-6-02",
+   "section": "6",
+   "title": "External Certification Recovery Is Forbidden",
+   "quote": "6.2 External Certification",
+   "interpretation": "Treat external certification as a forbidden recovery pattern under the containing heading and the stated scope violation. Check whether an external certification is used as part of recovery.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "recovery_actions",
+    "recovery_dependencies",
+    "certification_sources"
+   ],
+   "criterion": "Recovery does not use external certification.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "external certification records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-6-03",
+   "section": "6",
+   "title": "Emergency Governance Recovery Is Forbidden",
+   "quote": "6.3 Emergency Governance Layer",
+   "interpretation": "Treat an emergency governance layer as a forbidden recovery pattern under the containing heading and the stated scope violation. Testing requires a definition distinguishing such a layer from the crisis mechanisms allowed to operate without DKP enforcement in section 7.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "recovery_architecture",
+    "governance_components",
+    "recovery_actions"
+   ],
+   "criterion": "Recovery does not introduce or use an emergency governance layer.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "governance architecture and activation records"
+   ],
+   "gap": "Emergency governance layer is undefined and the cited scope document is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which recovery components constitute an emergency governance layer."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-7-01",
+   "section": "7",
+   "title": "Null Output Grants No Authority",
+   "quote": "Null-output state does not grant additional authority",
+   "interpretation": "Compare authority grants and their enabling conditions before and during null-output. No grant may derive additional authority from entering that state; this does not expressly resolve authority changes with independent causes.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "authority_grants",
+    "grant_conditions",
+    "system_state"
+   ],
+   "criterion": "Null-output status is not a basis for any additional authority grant.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority grants and their enabling conditions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-7-02",
+   "section": "7",
+   "title": "Crisis Mechanisms Exclude DKP Enforcement",
+   "quote": "- crisis mechanisms must operate without DKP enforcement layer",
+   "interpretation": "Check that crisis mechanisms operating during null-output do not invoke or depend on the DKP enforcement layer. The excerpt constrains their operation but does not independently require activation of every crisis mechanism.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "system_state",
+    "crisis_mechanism_dependencies",
+    "crisis_execution_trace"
+   ],
+   "criterion": "Crisis mechanisms operate without using or depending on the DKP enforcement layer during null-output.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis mechanism dependencies and execution records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-7-03",
+   "section": "7",
+   "title": "Crisis Handling Creates No Precedent",
+   "quote": "- no precedent is created",
+   "interpretation": "The rule denies precedent arising from null-output crisis handling. Checking only a precedent registry would be narrower than the text because precedent could also mean later institutional or interpretive reliance.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "crisis_actions",
+    "subsequent_authority_claims",
+    "precedent_records"
+   ],
+   "criterion": "Null-output crisis handling creates no precedent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subsequent governance decisions and precedent claims"
+   ],
+   "gap": "Precedent and the means of determining whether one has been created are undefined.",
+   "hypotheses_needed": [
+    "Declare an observable surrogate for creation of precedent and its limitations."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-8.1-01",
+   "section": "8.1",
+   "title": "Injection Attempts Preserve DKP Inactivity",
+   "quote": "- DKP remains inactive",
+   "interpretation": "Following an external attempt to inject decisions during null-output, verify that DKP does not reactivate. In context, inactivity refers to enforcement because measurement is expressly required to continue.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "system_state",
+    "decision_injection_attempts",
+    "enforcement_state_trace"
+   ],
+   "criterion": "An external decision injection attempt during null-output leaves DKP enforcement inactive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external decision injection attempt records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-8.1-02",
+   "section": "8.1",
+   "title": "Injecting System Remains Outside DKP",
+   "quote": "- external system operates outside DKP",
+   "interpretation": "For an external system attempting to inject decisions during null-output, check that its operation is classified outside DKP. A domain-membership check is possible, but the actual system boundary is not defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "decision_injection_attempts",
+    "external_system_operations",
+    "dkp_boundary"
+   ],
+   "criterion": "The external system attempting decision injection operates outside DKP.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external system operations and domain membership"
+   ],
+   "gap": "The operational boundary defining what is outside DKP is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how external-system operations are assigned to or excluded from the DKP domain."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-9-01",
+   "section": "9",
+   "title": "Threshold Breach Fully Stops Enforcement",
+   "quote": "- enforcement fully stops at threshold breach",
+   "interpretation": "Use complete cessation at a threshold breach as a compliance criterion. The numerical breach most naturally means N_eff < N_eff_min, but the text does not say whether this phrase also encompasses invalid oracle consistency or specify event-ordering tolerance.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "n_eff",
+    "n_eff_min",
+    "oracle_consistency",
+    "breach_events",
+    "enforcement_trace"
+   ],
+   "criterion": "Enforcement fully stops at threshold breach.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "N_eff and N_eff_min values",
+    "oracle consistency status"
+   ],
+   "gap": "The threshold value, the scope of threshold breach, and the timing semantics of “at” are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how N_eff_min is supplied.",
+    "Declare whether threshold breach includes invalid oracle consistency.",
+    "Declare the event-ordering semantics used to test cessation at breach."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-9-02",
+   "section": "9",
+   "title": "Compliance Excludes All Partial Outputs",
+   "quote": "- no partial outputs exist",
+   "interpretation": "Check that partial outputs are absent for compliance. Context suggests partial enforcement outputs, but a literal reading could cover other output types, including measurement outputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_outputs",
+    "output_types",
+    "output_completeness"
+   ],
+   "criterion": "No partial outputs exist within the output scope governed by this criterion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The scope and completeness standard for partial outputs are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which output types and incompleteness conditions the criterion covers."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-9-03",
+   "section": "9",
+   "title": "Recovery Is Automatic And Deterministic",
+   "quote": "- recovery is automatic and deterministic",
+   "interpretation": "Verify that recovery requires no manual initiation and that equivalent recovery conditions produce the same recovery behavior. Determinism adds a requirement beyond automatic resumption, but equivalent inputs and the relevant internal state are not specified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "recovery_transition_model",
+    "recovery_inputs",
+    "internal_state",
+    "recovery_traces"
+   ],
+   "criterion": "Recovery is automatic and produces the same behavior for the same complete recovery inputs and state.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "recovery input and state histories"
+   ],
+   "gap": "A complete recovery transition model and the state and input equivalence used to assess determinism are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the complete recovery inputs and relevant internal state.",
+    "Declare which aspects of recovery behavior must be identical for determinism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-9-04",
+   "section": "9",
+   "title": "Downtime Produces No New Authority",
+   "quote": "- no authority emerges during downtime",
+   "interpretation": "Check for newly established authority during downtime. This may prohibit any new authority during the interval, or only authority arising from downtime, which would align with section 7.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "downtime_intervals",
+    "authority_history",
+    "authority_origins"
+   ],
+   "criterion": "No authority emerges during downtime.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority changes and their origins"
+   ],
+   "gap": "The text does not define authority emergence or resolve whether unrelated authority changes are prohibited. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what counts as authority emergence.",
+    "Declare whether the rule is temporal or requires a causal connection to downtime."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-10-01",
+   "section": "10",
+   "title": "Nonenforcement Is Strictly Safer",
+   "quote": "No enforcement is strictly safer than invalid enforcement",
+   "interpretation": "Read the invariant as a strict safety ordering between no enforcement and invalid enforcement. Testing it would require a safety measure, a definition of invalid enforcement, and a behavioral model; none is supplied.",
+   "kind": "dynamic_model",
+   "checkable": "no",
+   "inputs": [
+    "nonenforcement_outcomes",
+    "invalid_enforcement_outcomes",
+    "safety_ordering"
+   ],
+   "criterion": "No enforcement is strictly safer than invalid enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "outcomes under no enforcement and invalid enforcement"
+   ],
+   "gap": "Safety, invalid enforcement, and the model establishing a strict comparison are undefined.",
+   "hypotheses_needed": [
+    "Declare what constitutes invalid enforcement.",
+    "Declare a safety ordering and the scenarios over which it is evaluated.",
+    "Declare the behavioral model used to compare outcomes."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-11-01",
+   "section": "11",
+   "title": "Degraded DKP Operation Is Excluded",
+   "quote": "DKP does not degrade",
+   "interpretation": "Treat this as an invariant excluding degraded DKP operation. It reinforces the partial-enforcement prohibition, but degradation could also include reduced measurement or other functionality unless its scope is declared.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operating_mode",
+    "system_capabilities",
+    "degradation_classification"
+   ],
+   "criterion": "DKP never enters a degraded operating mode.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Degradation is not defined or explicitly limited to enforcement. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which reductions in system functionality constitute degradation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISISPATCH-11-02",
+   "section": "11",
+   "title": "Operation Requires Correctness Or Cessation",
+   "quote": "- operates correctly\n- or does not operate",
+   "interpretation": "Check that DKP is either operating correctly or inactive, with no incorrect operating state allowed. Reading nonoperation as enforcement inactivity reconciles this statement with continued measurement; reading it as total system inactivity creates tension with sections 3 and 5.1.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operation_status",
+    "correctness_status",
+    "measurement_status"
+   ],
+   "criterion": "DKP operates correctly or does not operate.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational correctness assessment"
+   ],
+   "gap": "Correct operation is undefined and the scope of nonoperation is ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the conditions that establish correct operation.",
+    "Declare whether nonoperation means enforcement inactivity or complete system inactivity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

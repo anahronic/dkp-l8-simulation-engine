@@ -1,0 +1,1081 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-1-IMPACT-001",
+ "doc_sha256": "f26209c09c6a1bc007fba6b5ffedfbc3f3aef0c5dd1690caae67f6809cc9422b",
+ "prefix": "IMPACT",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. The supplied requirement prefix contains a carriage return, retained as \\r in every id. Unnumbered definition headings are used verbatim as section identifiers. Referenced documents and Genesis Block constants were not supplied. DKP-8-SIMULATION and DKP-8-SIMULATION-001 are distinct reference spellings in the text; neither has been silently corrected. Boundary approach, bounded impact ranges, reversibility criteria, uncertainty propagation, and full externality exposure lack complete operational definitions. The relationship between reference-bound crossing and system-boundary crossing is ambiguous. Section 13 is expressly non-normative and generates no requirements: its stated impact of approximately 0.004 differs from the Section 5 calculation, (427.00 − 426.91)/450 = 0.0002, and its uncertainty output uses ppm while impact is described as dimensionless. The document has no separately titled Failure Modes section.",
+ "requirements": [
+  {
+   "id": "IMPACT-1-01",
+   "section": "1",
+   "title": "Restrict operation to measurement",
+   "quote": "This protocol performs measurement only. It does not interpret value, intent, utility, justice, responsibility, or policy.",
+   "interpretation": "Check the protocol's operations for measurement-only behavior and prohibited interpretive operations. The text does not formally distinguish measurement from interpretation, so an operation classification is needed.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "operation_classification"
+   ],
+   "criterion": "Every operation performs measurement; none interprets value, intent, utility, justice, responsibility, or policy.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "A formal classification of measurement and prohibited interpretation is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how operations are classified as measurement or interpretation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-2-01",
+   "section": "2",
+   "title": "Require physical truth input provenance",
+   "quote": "All inputs to this protocol MUST originate exclusively from Physical Truth Layer outputs.",
+   "interpretation": "Verify that every input has provenance identifying it as a Physical Truth Layer output. The universal wording also covers externally supplied horizons and boundary parameters, although later sections permit higher-layer involvement without explaining this provenance requirement.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_inputs",
+    "input_provenance"
+   ],
+   "criterion": "Every protocol input originates exclusively from a Physical Truth Layer output.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Physical Truth Layer output provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-2-02",
+   "section": "2",
+   "title": "Import authorized reference bounds",
+   "quote": "All reference bounds Bᵢ MUST be explicitly imported from:",
+   "interpretation": "Check explicit import records for every bound against the subsequent permitted sources: DKP-1-AXIOMS-001 or normatively defined Physical Truth Layer indices. This checks declared provenance, not the correctness of the unavailable source values.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "reference_bounds",
+    "bound_import_records",
+    "source_types"
+   ],
+   "criterion": "Each Bᵢ has an explicit import from DKP-1-AXIOMS-001 or a normatively defined Physical Truth Layer index.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001",
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Reference-bound import records",
+    "Normative Physical Truth Layer index declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-2-03",
+   "section": "2",
+   "title": "Bind protocol to genesis block",
+   "quote": "This protocol is bound to Genesis Block #0 (2025-12-10).",
+   "interpretation": "Check that the protocol declares the specified block and date as its anchor. Testing the substantive consequences of being bound requires the block's contents and a definition of the binding relationship.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_anchor",
+    "genesis_block"
+   ],
+   "criterion": "The protocol is bound to Genesis Block #0 dated 2025-12-10.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis Block #0 contents and anchor metadata"
+   ],
+   "gap": "The Genesis Block contents and operational meaning of binding are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how Genesis Block binding is represented and enforced."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-3-01",
+   "section": "3",
+   "title": "Exclude nonmeasurement protocol functions",
+   "quote": "This protocol explicitly excludes:",
+   "interpretation": "Check operations against the ensuing exclusions: optimization, scoring, weighting, channel aggregation, decision-making, enforcement, responsibility attribution, compensation, utility, and justice calculations. A declared operation taxonomy is needed to classify implementations consistently.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "operation_classification"
+   ],
+   "criterion": "No protocol operation performs any function in the explicit exclusion list.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The excluded operation categories lack formal recognition criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an operation taxonomy covering all explicitly excluded functions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-PhysicalStateVectorS_t_-01",
+   "section": "Physical State Vector S(t)",
+   "title": "Define immutable measured state vectors",
+   "quote": "An immutable, time-indexed vector of measured physical variables produced by DKP-0-ORACLE-001.",
+   "interpretation": "Validate that each state vector is time-indexed, contains measured physical variables, has the specified producer, and remains unchanged after production. This checks structured measurement metadata and recorded versions.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "state_vector",
+    "measurement_metadata",
+    "producer_id",
+    "state_versions"
+   ],
+   "criterion": "S(t) is time-indexed, consists of measured physical variables, originates from DKP-0-ORACLE-001, and is immutable.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Oracle state vectors, measurement metadata, timestamps, provenance, and version history"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-BaselineStateS_t__-01",
+   "section": "Baseline State S(t₀)",
+   "title": "Locate baseline before evaluated change",
+   "quote": "The reference physical state prior to an evaluated change.",
+   "interpretation": "Given the evaluated change's temporal location, verify that the designated reference state precedes it. The text does not require a particular baseline-selection algorithm or sampling distance.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "baseline_state",
+    "baseline_time",
+    "evaluated_change_time"
+   ],
+   "criterion": "S(t₀) is the reference physical state prior to the evaluated change.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Time-indexed physical states",
+    "Temporal location of the evaluated change"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ObservedStateS_t__-01",
+   "section": "Observed State S(t₁)",
+   "title": "Locate observation after evaluated change",
+   "quote": "The measured physical state after the evaluated change.",
+   "interpretation": "Given the evaluated change's temporal location, verify that the observed state is measured after it. No maximum observation delay is specified.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "observed_state",
+    "observation_time",
+    "evaluated_change_time",
+    "measurement_metadata"
+   ],
+   "criterion": "S(t₁) is a measured physical state after the evaluated change.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Time-indexed physical measurements",
+    "Temporal location of the evaluated change"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ImpactHorizon_t-01",
+   "section": "Impact Horizon Δt",
+   "title": "Supply external impact evaluation horizon",
+   "quote": "A time interval supplied as an external parameter defining the evaluation window.",
+   "interpretation": "Check that an external time-interval parameter is supplied and used to define the evaluation window. The text does not explicitly require Δt = t₁ − t₀ or specify how it affects the impact formula.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "impact_horizon",
+    "parameter_provenance",
+    "evaluation_window"
+   ],
+   "criterion": "Δt is an externally supplied time interval defining the evaluation window.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Externally supplied evaluation horizon"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ImpactChannel-01",
+   "section": "Impact Channel",
+   "title": "Define independent normative impact channels",
+   "quote": "A logically independent dimension of physical or informational impact.\n\nNormatively declared impact channels include, but are not limited to:",
+   "interpretation": "Check that the declared channel registry includes the seven listed channels and permits additional channels. Logical independence needs a formal model; the text also does not clearly distinguish mandatory channel support from mandatory evaluation of every channel on every run.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "channel_registry",
+    "channel_definitions",
+    "channel_independence_model"
+   ],
+   "criterion": "Channels represent logically independent physical or informational dimensions; the normative declarations include Biosphere Integrity, Atmospheric Composition, Human Health Proxies, Resource Depletion, Energy Balance, Cognitive Integrity Proxies, and Cultural Continuity Indicators.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Definitions of physical and informational channel variables"
+   ],
+   "gap": "Logical independence and the runtime applicability of the declared channel list are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a test for logical independence.",
+    "Declare whether all named channels must be evaluated on every run."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ImpactVectorI__t__t___t_-01",
+   "section": "Impact Vector Iᵢ(t₀ → t₁, Δt)",
+   "title": "Define bounded channel impact metrics",
+   "quote": "A channel-specific, bounded impact metric defined as normalized physical change.",
+   "interpretation": "Check that each impact metric belongs to a channel and represents normalized physical change. The boundedness requirement lacks an admissible range; the crossing threshold does not establish a clipping rule.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "impact_metrics",
+    "channel_ids",
+    "normalized_physical_changes",
+    "impact_ranges"
+   ],
+   "criterion": "Each Iᵢ is channel-specific, represents normalized physical change, and is bounded.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Channel-specific physical changes"
+   ],
+   "gap": "The permissible range and meaning of bounded impact are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the impact range and whether boundedness refers to metric values or reference bounds."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ReferenceBoundsB_-01",
+   "section": "Reference Bounds Bᵢ",
+   "title": "Define invariant imported physical limits",
+   "quote": "Invariant physical limits imported from DKP-1-AXIOMS-001 or Physical Truth Layer indices.",
+   "interpretation": "Check bound metadata, import provenance, and version history for physical-limit status and invariance. This definition says physical limits, while Section 6 also permits informationally defined bounds.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "reference_bounds",
+    "bound_metadata",
+    "bound_provenance",
+    "bound_history"
+   ],
+   "criterion": "Each Bᵢ is an invariant physical limit imported from DKP-1-AXIOMS-001 or a Physical Truth Layer index.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001",
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Imported limit declarations, provenance, and version history"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ReversibilityFlagR_-01",
+   "section": "Reversibility Flag Rᵢ",
+   "title": "Define boolean irreversibility indicator",
+   "quote": "A boolean indicator of physical or informational irreversibility.",
+   "interpretation": "Validate that Rᵢ has boolean type and represents an irreversibility classification. Despite the heading's use of reversibility, the definition names irreversibility and does not explicitly assign meanings to True and False.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "reversibility_flag",
+    "flag_semantics"
+   ],
+   "criterion": "Rᵢ is a boolean indicator of physical or informational irreversibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-ExternalityFlagX_-01",
+   "section": "Externality Flag Xᵢ",
+   "title": "Define boolean boundary crossing indicator",
+   "quote": "A boolean indicator of boundary-crossing impact.",
+   "interpretation": "Validate that Xᵢ has boolean type and represents boundary-crossing impact. Section 8 separately requires True when a crossing is detected.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "externality_flag",
+    "flag_semantics"
+   ],
+   "criterion": "Xᵢ is a boolean indicator of boundary-crossing impact.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-UncertaintyEnvelopeU_-01",
+   "section": "Uncertainty Envelope Uᵢ",
+   "title": "Define bounded propagated confidence intervals",
+   "quote": "A bounded confidence interval propagated from Physical Truth Layer uncertainty.",
+   "interpretation": "Check that Uᵢ is a bounded confidence interval with derivation lineage to Physical Truth Layer uncertainty. Verifying its numerical validity requires a confidence level and propagation method that the text does not prescribe.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "uncertainty_envelope",
+    "input_uncertainty",
+    "uncertainty_lineage",
+    "propagation_method",
+    "confidence_level"
+   ],
+   "criterion": "Uᵢ is a bounded confidence interval propagated from Physical Truth Layer uncertainty.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Physical Truth Layer uncertainty estimates"
+   ],
+   "gap": "A required confidence level and numerical propagation method are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the confidence level and interval construction method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-5-01",
+   "section": "5",
+   "title": "Compute normalized channel state differences",
+   "quote": "Iᵢ = ( Sᵢ(t₁) − Sᵢ(t₀) ) / Bᵢ",
+   "interpretation": "For each channel, compare the reported impact with the stated quotient using the supplied state projections and bound. The formula is undefined for Bᵢ = 0, and the text supplies neither a zero-bound policy nor a separate dependence on Δt.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "baseline_channel_value",
+    "observed_channel_value",
+    "reference_bound",
+    "reported_impact"
+   ],
+   "criterion": "Iᵢ equals (Sᵢ(t₁) − Sᵢ(t₀)) / Bᵢ wherever the quotient is defined.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer state projections",
+    "Imported channel reference bounds"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-5-02",
+   "section": "5",
+   "title": "Preserve measurable impact output properties",
+   "quote": "- unaggregated,\n- dimensionless,\n- auditable.",
+   "interpretation": "Verify channel separation and cancellation of physical units in the impact calculation. Auditability additionally needs an evidence standard, which the text does not specify.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "impact_outputs",
+    "channel_lineage",
+    "state_units",
+    "bound_units",
+    "audit_evidence"
+   ],
+   "criterion": "Each resulting impact value is unaggregated, dimensionless, and auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "State and bound units",
+    "Calculation provenance"
+   ],
+   "gap": "The evidence necessary to establish auditability is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the records required to reproduce and audit an impact value."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-5-03",
+   "section": "5",
+   "title": "Flag normalized boundary crossing threshold",
+   "quote": "If |Iᵢ| ≥ 1, a boundary crossing SHALL be flagged.",
+   "interpretation": "Check that every channel whose absolute impact reaches or exceeds one has a boundary-crossing flag. This is a one-way implication and does not prohibit flagging crossings through other detection rules.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "channel_impact",
+    "boundary_crossing_flag"
+   ],
+   "criterion": "|Iᵢ| ≥ 1 implies that a boundary crossing is flagged.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-5-04",
+   "section": "5",
+   "title": "Prohibit aggregation across impact channels",
+   "quote": "No aggregation across channels is permitted.",
+   "interpretation": "Inspect computation lineage for operations combining impacts from different channels into an aggregate. The prohibition applies to internal computation as well as emitted scores.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "computation_operations",
+    "channel_lineage"
+   ],
+   "criterion": "No operation aggregates across impact channels.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-6-01",
+   "section": "6",
+   "title": "Declare qualified bounds per channel",
+   "quote": "Each impact channel SHALL declare its applicable reference bounds Bᵢ.",
+   "interpretation": "Verify a bound declaration for every channel and the subsequent requirements that bounds be physically or informationally defined, immutable within this protocol, and traceable to an authorized source. Source correctness is separate from declaration and traceability checks.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "channel_registry",
+    "bound_declarations",
+    "bound_definitions",
+    "bound_history",
+    "bound_provenance"
+   ],
+   "criterion": "Every channel declares applicable Bᵢ that are physically or informationally defined, immutable within this protocol, and traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001",
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Normative bound definitions and provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-6-02",
+   "section": "6",
+   "title": "Detect boundary approach and crossing",
+   "quote": "The protocol SHALL detect:\n\n- boundary approach,",
+   "interpretation": "Check that detection covers both boundary approach and boundary crossing, as listed after the quoted obligation. Section 5 supplies a crossing trigger, but approach lacks a threshold, distance rule, or temporal model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "channel_states",
+    "reference_bounds",
+    "channel_impacts",
+    "boundary_detection_results",
+    "approach_criterion"
+   ],
+   "criterion": "The protocol detects boundary approach and boundary crossing.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Channel states and imported reference bounds"
+   ],
+   "gap": "Boundary approach is undefined, and the completeness of crossing detection beyond the Section 5 trigger is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what constitutes boundary approach.",
+    "Declare whether crossing detection is exhausted by |Iᵢ| ≥ 1."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-6-03",
+   "section": "6",
+   "title": "Preserve bounds without reinterpretation",
+   "quote": "Bounds SHALL NOT be modified, normalized, or reinterpreted.",
+   "interpretation": "Compare bound values and meanings against their imports and inspect operations applied to them. The text gives no exception for normalization or reinterpretation within this protocol.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "imported_bounds",
+    "used_bounds",
+    "bound_semantics",
+    "bound_operations"
+   ],
+   "criterion": "No bound is modified, normalized, or reinterpreted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Original imported bounds and their definitions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-7-01",
+   "section": "7",
+   "title": "Evaluate formal binary reversibility criteria",
+   "quote": "For each impact channel, the protocol SHALL evaluate reversibility using formal criteria.",
+   "interpretation": "Verify that every channel has evaluated criteria that are explicit, physically or informationally grounded, and binary in output. The examples are optional and do not supply a complete required classification algorithm.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "channel_registry",
+    "reversibility_criteria",
+    "physical_evidence",
+    "reversibility_results"
+   ],
+   "criterion": "Every channel evaluates explicit, physically or informationally grounded formal reversibility criteria yielding binary output.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer evidence relevant to reversibility"
+   ],
+   "gap": "The required reversibility criteria and a test for their physical or informational grounding are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare formal reversibility criteria for each channel.",
+    "Declare how evidence establishes the criteria's grounding and boolean interpretation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-7-02",
+   "section": "7",
+   "title": "Exclude subjective reversibility assessments",
+   "quote": "Subjective or intent-based assessments are forbidden.",
+   "interpretation": "Inspect reversibility assessment inputs and rules for subjective or intent-based judgments. Intent-based dependencies can be traced, but identifying all subjective assessments requires an explicit classification rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "assessment_rules",
+    "assessment_inputs",
+    "assessment_provenance",
+    "subjectivity_classification"
+   ],
+   "criterion": "No reversibility assessment is subjective or intent-based.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Assessment input provenance"
+   ],
+   "gap": "Subjectivity is not given a formal recognition criterion. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how subjective and intent-based assessments are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-8-01",
+   "section": "8",
+   "title": "Distinguish internal and external impact",
+   "quote": "The protocol SHALL distinguish between internal and external impact.",
+   "interpretation": "Check impact classification against the applicable system boundary. The text does not specify how spatial, informational, or mixed impacts are mapped to internal and external categories.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detected_impacts",
+    "system_boundary",
+    "impact_extent",
+    "externality_classification"
+   ],
+   "criterion": "Detected impacts are distinguished as internal or external relative to the applicable system boundary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact extent data",
+    "Applicable system boundary"
+   ],
+   "gap": "A boundary-relative classification method and impact extent representation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the internal and external classification rule, including treatment of impacts spanning both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-8-02",
+   "section": "8",
+   "title": "Default system boundary to planetary",
+   "quote": "System boundary SHALL default to planetary scale unless explicitly narrowed by higher-layer protocols.",
+   "interpretation": "Verify that the boundary is planetary unless an explicit higher-layer narrowing exists. This checks declared boundary scope and authorization; the text does not provide a planetary geometry.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "system_boundary",
+    "boundary_scope",
+    "higher_layer_narrowing"
+   ],
+   "criterion": "Without explicit higher-layer narrowing, system boundary scope is planetary; any narrowing is explicitly supplied by a higher-layer protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Higher-layer boundary narrowing declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-8-03",
+   "section": "8",
+   "title": "Set externality upon detected crossing",
+   "quote": "Any detected boundary crossing SHALL set Xᵢ = True.",
+   "interpretation": "Verify that a detected crossing sets the corresponding channel's externality flag to True. The text does not clearly state whether boundary crossing includes every reference-bound threshold crossing, every system-boundary crossing, or both.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "detected_crossings",
+    "crossing_types",
+    "channel_ids",
+    "externality_flags"
+   ],
+   "criterion": "Every applicable detected boundary crossing sets the corresponding Xᵢ to True.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Boundary-crossing detection results"
+   ],
+   "gap": "The relationship between reference-bound crossings and system-boundary crossings is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which crossing types trigger Xᵢ = True."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-8-04",
+   "section": "8",
+   "title": "Assume exposure without explicit boundary",
+   "quote": "Absence of an explicit boundary definition SHALL be treated as full externality exposure.",
+   "interpretation": "Check that missing explicit boundary definitions trigger full externality exposure. The text does not define that exposure state or establish whether it means setting all Xᵢ to True, and it does not explain how this rule interacts with the planetary default.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "explicit_boundary_definition",
+    "externality_exposure",
+    "externality_flags"
+   ],
+   "criterion": "If an explicit boundary definition is absent, the protocol treats the case as full externality exposure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Boundary definition declarations"
+   ],
+   "gap": "Full externality exposure and its interaction with the planetary default are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the representation and consequences of full externality exposure.",
+    "Declare whether the planetary default counts as an explicit boundary definition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-9-01",
+   "section": "9",
+   "title": "Propagate uncertainty into every channel",
+   "quote": "Measurement uncertainty from Physical Truth Layer inputs SHALL be propagated into each impact channel.",
+   "interpretation": "Verify uncertainty lineage for every channel and recompute envelopes under a declared propagation method. The listed methods and ±3σ example are illustrative permissions, not mandatory algorithms or confidence levels.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "input_uncertainties",
+    "channel_registry",
+    "channel_uncertainty_envelopes",
+    "propagation_method"
+   ],
+   "criterion": "Each channel receives propagated measurement uncertainty from its Physical Truth Layer inputs.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Physical Truth Layer measurement uncertainties and dependence information"
+   ],
+   "gap": "The propagation method, dependence treatment, and required confidence level are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an uncertainty propagation method, dependence assumptions, and confidence level."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-9-02",
+   "section": "9",
+   "title": "Require deterministic uncertainty propagation",
+   "quote": "Propagation SHALL be deterministic.",
+   "interpretation": "Compare propagation outputs for identical complete inputs and fixed configuration. Repeated-run comparison checks observed determinism; establishing determinism for all possible inputs additionally requires a specified computational model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "propagation_inputs",
+    "propagation_configuration",
+    "propagation_outputs",
+    "propagation_model"
+   ],
+   "criterion": "Identical complete propagation inputs and configuration always produce identical uncertainty outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Complete uncertainty propagation inputs"
+   ],
+   "gap": "A propagation model and definition of its complete input and configuration state are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare all propagation state, including any random seeds, and the scope over which determinism is tested."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-9-03",
+   "section": "9",
+   "title": "Preserve detected impact despite uncertainty",
+   "quote": "Uncertainty SHALL NOT be used to suppress, downgrade, or invalidate detected impact.",
+   "interpretation": "Trace whether uncertainty causes a detected impact to be omitted, reduced in status, or invalidated. Suppression can be checked through lineage, but downgrade and invalidation need declared impact-status semantics.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detected_impacts",
+    "reported_impacts",
+    "impact_status_history",
+    "uncertainty_decision_lineage"
+   ],
+   "criterion": "No detected impact is suppressed, downgraded, or invalidated because of uncertainty.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Measurement uncertainty provenance"
+   ],
+   "gap": "Impact status ordering and the meanings of downgrade and invalidation are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how suppression, downgrade, and invalidation are recognized and causally attributed to uncertainty."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-10-01",
+   "section": "10",
+   "title": "Emit required fields per channel",
+   "quote": "For each impact channel *i*, the protocol outputs:",
+   "interpretation": "Validate that every channel output includes all five subsequently listed fields: Iᵢ, Bᵢ, Rᵢ, Xᵢ, and Uᵢ. This checks required field presence; their substantive correctness is governed by the other provisions.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "channel_registry",
+    "channel_outputs"
+   ],
+   "criterion": "For every channel i, output Iᵢ, Bᵢ, Rᵢ, Xᵢ, and Uᵢ.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-10-02",
+   "section": "10",
+   "title": "Exclude aggregated impact score outputs",
+   "quote": "No aggregated impact score SHALL be produced.",
+   "interpretation": "Inspect output fields and their derivation for aggregated impact scores. This specifically constrains produced outputs in addition to the broader aggregation prohibition.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_outputs",
+    "output_derivation"
+   ],
+   "criterion": "No produced output is an aggregated impact score.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-11-01",
+   "section": "11",
+   "title": "Prevent prohibited higher layer interference",
+   "quote": "- suppress impact channels,\n- override reversibility or externality flags,\n- inject valuation, weighting, responsibility, or optimization logic.",
+   "interpretation": "Check higher-layer actions for all four listed prohibitions, including alteration of reference bounds in the preceding bullet. Detecting injected valuation, responsibility, or optimization logic requires a declared classification of such logic.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "higher_layer_actions",
+    "bound_history",
+    "channel_history",
+    "flag_history",
+    "injected_logic",
+    "logic_classification"
+   ],
+   "criterion": "No higher-layer protocol alters bounds, suppresses channels, overrides Rᵢ or Xᵢ, or injects valuation, weighting, responsibility, or optimization logic.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Higher-layer action logs and interface payloads"
+   ],
+   "gap": "The prohibited logic categories lack formal recognition criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how higher-layer actions and injected logic are classified against each prohibition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-11-02",
+   "section": "11",
+   "title": "Classify isolation violations as critical",
+   "quote": "Violation constitutes a critical architectural breach.",
+   "interpretation": "Given a detected violation of the cross-layer isolation invariant, verify classification as a critical architectural breach. The text prescribes no additional response, recovery action, or shutdown.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "isolation_violations",
+    "breach_classifications"
+   ],
+   "criterion": "Every violation of the Section 11 isolation prohibitions constitutes a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Detected higher-layer isolation violations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-12-01",
+   "section": "12",
+   "title": "Use controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check normative changes for evidence of the named upgrade procedure and its listed components. The referenced documents are needed to determine acceptance, activation timing, and rollback rules; the text does not require every upgrade actually to be rolled back.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal_record",
+    "simulation_record",
+    "audit_record",
+    "acceptance_record",
+    "activation_window",
+    "rollback_procedure"
+   ],
+   "criterion": "Every normative protocol change follows DKP-4-UPGRADE-001, including proposal, specified simulation and audit, acceptance conditions, activation window, and rollback provisions.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Upgrade workflow records",
+    "Simulation and audit results",
+    "Acceptance, activation, and rollback records"
+   ],
+   "gap": "The referenced upgrade, simulation, and audit procedures and their conditions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "If simulating without the references, declare provisional workflow, acceptance, activation-window, and rollback rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-12-02",
+   "section": "12",
+   "title": "Require modification identity and revalidation",
+   "quote": "- a new protocol identifier,\n- explicit declaration of incompatibility,\n- full-system revalidation under DKP-8-SIMULATION.",
+   "interpretation": "For each modification, verify a new identifier, an explicit incompatibility declaration, and full-system revalidation. The later presentation-only exception appears to limit the otherwise universal wording, and the revalidation reference is spelled DKP-8-SIMULATION without the -001 suffix.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "prior_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "full_system_revalidation"
+   ],
+   "criterion": "Every applicable modification has a new protocol identifier, explicitly declares incompatibility, and undergoes full-system revalidation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "Protocol identifier history",
+    "Incompatibility declaration",
+    "Full-system simulation revalidation records"
+   ],
+   "gap": "DKP-8-SIMULATION and its full-system revalidation requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat presentation-only corrections satisfying the later exception as outside these modification requirements.",
+    "Declare provisional full-system revalidation criteria if the referenced procedure is unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-12-03",
+   "section": "12",
+   "title": "Record presentation corrections by date",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Determine whether a correction changes normative content; qualifying corrections must be excluded from Upgrades and recorded through the document's update date. The document has a last_updated front-matter field but no literal Last updated field, and semantic equivalence of normative content is not mechanically defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "prior_document",
+    "corrected_document",
+    "change_classification",
+    "upgrade_records",
+    "last_updated_date"
+   ],
+   "criterion": "A presentation-only correction preserving normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "Edition differences",
+    "Upgrade classification records"
+   ],
+   "gap": "Normative-content equivalence, the referenced Section 3, and the exact update-field mapping are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes are distinguished from normative changes.",
+    "Treat last_updated as the referenced Last updated date.",
+    "Declare how date-only correction recording coexists with edition digest publication."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "IMPACT-12-04",
+   "section": "12",
+   "title": "Publish canonical edition integrity digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its identified canonical source and compare it with the repository manifest entry. This is decidable when the canonical source bytes, edition inventory, and manifest are supplied.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_manifest",
+    "repository_identity"
+   ],
+   "criterion": "For each published edition, SHA256(canonical source) is listed in SHA256SUMS.txt in github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Canonical source bytes for every published edition",
+    "SHA256SUMS.txt from the canonical repository",
+    "Published edition inventory"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

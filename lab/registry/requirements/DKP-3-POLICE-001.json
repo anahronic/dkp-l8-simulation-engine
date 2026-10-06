@@ -1,0 +1,1323 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-3-POLICE-001",
+ "doc_sha256": "86fef808134f00c0c2c03589c67673baa264c65c6dc36d17c6ba228cbb2dfb1c",
+ "prefix": "POLICE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. The requested prefix contains a carriage return, preserved as \\r in requirement IDs. Section numbers follow the printed headings: the trigger subsections restart at 1, 2 and 3, so those numbers also identify provisions outside the earlier sections with identical numbers. Counters remain unique within each section number. The printed subheadings 5.1 and 5.2 are treated as sections. Purpose statements and descriptive framing are not separately registered. External protocols were not supplied. PTL confirmation applies even where an execution order or infrastructure threat supplies the trigger. Immediate intervention and prevention of immediate recurrence coexist with prohibitions on preventive or pre-emptive enforcement; their boundary is undefined. The general requirement for a new identifier on any modification appears qualified by the presentation-only correction exception. The correction clause names a \"Last updated\" date, while the front matter uses last_updated.",
+ "requirements": [
+  {
+   "id": "POLICE-0-01",
+   "section": "0",
+   "title": "Exclusive Police Function Boundary",
+   "quote": "The sole function of police within DKP is to:",
+   "interpretation": "Classify each police function against the following closed list: preventing immediate physical harm, enforcing PTL-verified prohibitions, executing decisions already determined by higher layers, and preserving public order without interpreting intent, belief or ideology. The text does not define how mixed-purpose actions are classified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "police_function",
+    "harm_immediacy",
+    "ptl_verification",
+    "higher_layer_decision",
+    "interpretive_basis"
+   ],
+   "criterion": "Every police function falls within at least one of the four listed functions and satisfies that function's qualifications.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL verification",
+    "higher-layer decisions",
+    "police activity records"
+   ],
+   "gap": "A classification model for police functions, immediacy and interpretation is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how actions and mixed purposes map to the four permitted functions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-0-02",
+   "section": "0",
+   "title": "No Foundational Determination Authority",
+   "quote": "Police do not define law, policy, justice, guilt, or truth.",
+   "interpretation": "Inspect police outputs and authority assignments for determinations defining any listed category. Distinguishing execution of an existing determination from defining one requires a classification of institutional acts.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "police_outputs",
+    "authority_assignments",
+    "existing_determinations"
+   ],
+   "criterion": "Police do not define law, policy, justice, guilt or truth.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority registry",
+    "existing system determinations"
+   ],
+   "gap": "The boundary between defining and executing a determination is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which institutional acts count as defining each listed category."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-2-01",
+   "section": "2",
+   "title": "Required System Layer Position",
+   "quote": "upstream of DKP-4-CRISIS-001 (only for escalation),",
+   "interpretation": "Check that policing is downstream of the four listed foundational protocols and upstream of the crisis protocol only for escalation. Downstream and upstream could denote authority precedence, information flow or execution order; the document does not select one.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_relationships",
+    "interaction_types"
+   ],
+   "criterion": "Policing is downstream of DKP-0-ORACLE-001, DKP-1-AXIOMS-001, DKP-1-IDENTITY-001 and DKP-1-IMPACT-001, and upstream of DKP-4-CRISIS-001 only for escalation.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-1-AXIOMS-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-1-IMPACT-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "protocol architecture",
+    "interprotocol interaction records"
+   ],
+   "gap": "The operational meaning of the layer relationships is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether layer relationships constrain authority, information flow, execution order or a combination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-2-02",
+   "section": "2",
+   "title": "Applicable Scope Protocol Constraints",
+   "quote": "constrained by DKP-7-SCOPE-001.",
+   "interpretation": "Evaluate policing against the constraints of the named scope protocol. Those constraints are absent from the supplied document.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "police_actions",
+    "scope_constraints"
+   ],
+   "criterion": "Policing satisfies DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope constraints and applicability decisions"
+   ],
+   "gap": "DKP-7-SCOPE-001 is required to determine the applicable constraints. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-2-03",
+   "section": "2",
+   "title": "No Normative Authority Creation",
+   "quote": "reinterpret axioms,\n\ndefine guilt or liability,",
+   "interpretation": "Reject police actions that create new norms, reinterpret axioms, or define guilt or liability, as listed under Police SHALL NOT. Checking whether an action has these effects requires a semantic classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "police_action",
+    "norm_changes",
+    "axiom_interpretations",
+    "guilt_liability_determinations"
+   ],
+   "criterion": "No police action creates new norms, reinterprets axioms, or defines guilt or liability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "norm registry",
+    "axiom interpretations",
+    "guilt and liability determinations"
+   ],
+   "gap": "The text supplies no method for classifying normative creation, reinterpretation or determination. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how action effects are classified into the prohibited categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-2-04",
+   "section": "2",
+   "title": "PTL Confirmed Operating Conditions",
+   "quote": "operate outside PTL-confirmed conditions.",
+   "interpretation": "Match each police action to PTL-confirmed conditions under the preceding SHALL NOT. The required match, temporal validity and geographic coverage of confirmation are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "police_action",
+    "ptl_confirmed_conditions"
+   ],
+   "criterion": "Every police action operates within PTL-confirmed conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmations linked to action conditions"
+   ],
+   "gap": "The scope and validity rules for applying a PTL confirmation to an action are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the relation between confirmed conditions and the actions they cover."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-3-01",
+   "section": "3",
+   "title": "Temporary Localized Execution Authority",
+   "quote": "Police authority is defined as temporary, localized, and execution-only.",
+   "interpretation": "Check authority grants for temporal and local limits and for restriction to execution. Neither the permitted duration nor the meaning of localized or execution-only is operationally defined.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "authority_grant",
+    "authority_duration",
+    "authority_location",
+    "authority_functions"
+   ],
+   "criterion": "Every police authority grant is temporary, localized and execution-only.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority grants"
+   ],
+   "gap": "Operational definitions of temporary, localized and execution-only are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define acceptable temporal and local boundaries and the execution-only function class."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-3-02",
+   "section": "3",
+   "title": "Conditional Permitted Police Operations",
+   "quote": "physically intervene to stop ongoing or imminent PTL-verified harm,\n\nenforce access restrictions already determined by system protocols,",
+   "interpretation": "Apply the qualifications attached to the four permissions: intervention against ongoing or imminent PTL-verified harm, execution of already determined access restrictions, detention under this protocol, and scene security for PTL capture. These permissions remain subject to the document's general trigger and force constraints.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operation_type",
+    "harm_status",
+    "ptl_verification",
+    "access_restriction_decision",
+    "detention_conditions",
+    "scene_security_purpose"
+   ],
+   "criterion": "An operation invoking one of the four permissions satisfies the qualification attached to that permission.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL harm verification",
+    "system access decisions",
+    "detention records",
+    "PTL capture plans"
+   ],
+   "gap": "Imminence and the classification of operation purposes are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define harm imminence and the evidence needed to classify each operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-3-03",
+   "section": "3",
+   "title": "Forbidden Enforcement Bases",
+   "quote": "conduct ideological, moral, or preventive enforcement,\n\nact on suspicion, profiling, or predictive scoring,",
+   "interpretation": "Identify whether enforcement has any of the listed prohibited bases. Preventive enforcement is not distinguished from permitted intervention against imminent harm or prevention of immediate recurrence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_basis",
+    "decision_inputs",
+    "enforcement_purpose"
+   ],
+   "criterion": "Police do not conduct ideological, moral or preventive enforcement or act on suspicion, profiling or predictive scoring.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision provenance",
+    "enforcement records"
+   ],
+   "gap": "The prohibited bases and their boundary with permitted immediate-harm prevention require definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define prohibited bases and distinguish preventive enforcement from the expressly permitted immediate interventions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-3-04",
+   "section": "3",
+   "title": "No Interpretation Or Judgments",
+   "quote": "interpret intent, belief, loyalty, or motivation,\n\nissue binding judgments.",
+   "interpretation": "Check police reasoning and outputs for interpretation of the listed mental or ideological attributes and for issuance of binding judgments. The text does not define what makes a judgment binding.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "decision_reasoning",
+    "police_outputs",
+    "output_binding_effect"
+   ],
+   "criterion": "Police neither interpret intent, belief, loyalty or motivation nor issue binding judgments.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision records",
+    "authority and legal-effect records"
+   ],
+   "gap": "A classification of interpretation and binding judgments is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which recorded reasoning and outputs constitute the prohibited acts."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-4-01",
+   "section": "4",
+   "title": "At Least One Action Trigger",
+   "quote": "Police action is permitted only when at least one of the following holds:",
+   "interpretation": "Evaluate the disjunction of the three following trigger predicates. This is a necessary condition rather than a complete authorization, since PTL confirmation and other constraints also apply.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "active_physical_harm_trigger",
+    "system_execution_order_trigger",
+    "critical_infrastructure_trigger"
+   ],
+   "criterion": "Police action implies active_physical_harm_trigger OR system_execution_order_trigger OR critical_infrastructure_trigger.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "evaluated trigger predicates"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-1-01",
+   "section": "1",
+   "title": "Verified Physical Harm Trigger",
+   "quote": "Ongoing or imminent physical harm verified by PTL inputs.",
+   "interpretation": "The Active Physical Harm trigger requires both ongoing or imminent physical harm and PTL verification. The text supplies no test for imminence or for verification sufficiency.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "physical_harm_status",
+    "ptl_inputs",
+    "ptl_verification"
+   ],
+   "criterion": "The trigger holds only for PTL-verified physical harm that is ongoing or imminent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL harm observations and verification"
+   ],
+   "gap": "The meanings of imminent harm and sufficient PTL verification are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the harm-imminence classifier and PTL verification acceptance rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-2-05",
+   "section": "2",
+   "title": "Valid System Execution Order",
+   "quote": "A valid enforcement order produced by L2 or L4 protocols.",
+   "interpretation": "Check the producing protocol's layer and the enforcement order's validity. L2 and L4 are named as layers without protocol identifiers or order-validation rules.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_order",
+    "producing_protocol_layer",
+    "order_validity"
+   ],
+   "criterion": "The trigger holds only for a valid enforcement order produced by an L2 or L4 protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement orders",
+    "protocol-layer registry",
+    "order validation results"
+   ],
+   "gap": "Order validity and membership in L2 or L4 are not defined in the document. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the protocol-layer mapping and the rule for validating enforcement orders."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-3-05",
+   "section": "3",
+   "title": "Critical Infrastructure Threat Trigger",
+   "quote": "Immediate threat to PTL infrastructure, identity continuity, or essential biospheric systems.",
+   "interpretation": "Test for an immediate threat to at least one listed protected category. Threat immediacy and membership in the protected categories require external classifications.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "threat_assessment",
+    "threat_target",
+    "protected_system_classification"
+   ],
+   "criterion": "The trigger holds only for an immediate threat to PTL infrastructure, identity continuity or essential biospheric systems.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "threat assessments",
+    "infrastructure and biospheric-system classifications",
+    "identity continuity status"
+   ],
+   "gap": "Immediate threat and essential biospheric systems lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define immediate threat and the membership rules for protected targets."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-3-06",
+   "section": "3",
+   "title": "Default To Non Intervention",
+   "quote": "Absence of PTL confirmation SHALL default to non-intervention.",
+   "interpretation": "When confirmation is absent, check that the default decision is non-intervention. The text supplies no override, although the word default does not itself define an exception procedure.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "ptl_confirmation_present",
+    "default_intervention_decision"
+   ],
+   "criterion": "If PTL confirmation is absent, the default decision is non-intervention.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmation presence",
+    "intervention decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.1-01",
+   "section": "5",
+   "title": "Exclusive Temporary Detention Purposes",
+   "quote": "Temporary detention is permitted only to:\n\nstop active harm,",
+   "interpretation": "Check that detention serves a listed purpose: stopping active harm, preventing immediate recurrence or ensuring identity attribution. The list can be read as alternative permitted purposes; the text does not specify whether multiple purposes must ever hold together.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detention_purpose",
+    "active_harm",
+    "recurrence_assessment",
+    "identity_attribution_need"
+   ],
+   "criterion": "Temporary detention serves only the purposes of stopping active harm, preventing immediate recurrence or ensuring identity attribution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm assessments",
+    "recurrence assessments",
+    "identity attribution status",
+    "detention decisions"
+   ],
+   "gap": "Purpose attribution, immediate recurrence and the required relation between listed purposes are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat the listed purposes as alternatives and define evidence for each purpose."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.1-02",
+   "section": "5",
+   "title": "Detention Must Have Time Limit",
+   "quote": "Detention SHALL:\n\nbe time-limited,",
+   "interpretation": "Check that each detention has a finite applicable time limit and does not exceed it. The text does not provide a maximum duration, a start event or rules for extension.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detention_start",
+    "detention_end",
+    "detention_time_limit",
+    "current_time"
+   ],
+   "criterion": "Each detention is subject to and remains within a finite time limit.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "detention timing records"
+   ],
+   "gap": "The applicable duration limit, clock origin and extension rules are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the detention time limit, clock origin and treatment of extensions."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.1-03",
+   "section": "5",
+   "title": "Immutable Detention Log Requirement",
+   "quote": "be logged immutably,",
+   "interpretation": "Check that each detention produces a log record protected against alteration. The document does not specify a log schema or a technical standard for immutability.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "detention_records",
+    "log_records",
+    "log_integrity_evidence"
+   ],
+   "criterion": "Every detention is recorded in an immutable log.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "detention logs",
+    "log integrity evidence"
+   ],
+   "gap": "The required log contents and immutability assurance standard are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define an adequate detention record and an accepted immutability mechanism."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.1-04",
+   "section": "5",
+   "title": "Automatic Higher Layer Review",
+   "quote": "trigger automatic review by higher layers.",
+   "interpretation": "Check that detention automatically initiates review by a higher layer. No review deadline or required review outcome is given.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "detention_event",
+    "review_trigger_event",
+    "trigger_mode",
+    "reviewing_layer"
+   ],
+   "criterion": "Every detention triggers review automatically by a higher layer.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "review workflow events",
+    "protocol-layer registry"
+   ],
+   "gap": "The eligible higher layers and the event constituting initiation of review are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define higher-layer eligibility and the observable automatic review trigger."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.1-05",
+   "section": "5",
+   "title": "Forbidden Detention Categories",
+   "quote": "Preventive or indefinite detention is forbidden.",
+   "interpretation": "Reject detention classified as preventive or indefinite. The preventive category must be reconciled with the explicit permission to prevent immediate recurrence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detention_purpose",
+    "detention_duration_basis",
+    "detention_classification"
+   ],
+   "criterion": "No detention is preventive or indefinite.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "detention decisions and duration rules"
+   ],
+   "gap": "Preventive detention is undefined relative to permitted prevention of immediate recurrence. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define preventive detention and distinguish it from immediate-recurrence detention."
+   ],
+   "section_label": "5.1",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.2-01",
+   "section": "5",
+   "title": "Non Forceful Alternatives Condition",
+   "quote": "Use of force is permitted only when:\n\nnon-forceful alternatives are unavailable or ineffective,",
+   "interpretation": "Check that non-forceful alternatives are unavailable or ineffective before force is permitted. The relevant alternative set and effectiveness test are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "force_action",
+    "non_forceful_alternatives",
+    "alternative_availability",
+    "alternative_effectiveness"
+   ],
+   "criterion": "Use of force implies that non-forceful alternatives are unavailable or ineffective.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "alternative-action assessments"
+   ],
+   "gap": "The alternatives to consider and the standard of effectiveness are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the relevant alternatives and their availability and effectiveness tests."
+   ],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.2-02",
+   "section": "5",
+   "title": "Force Proportionality To Threat",
+   "quote": "force is proportional to the verified physical threat,",
+   "interpretation": "Compare the force used with the verified physical threat. No scale, ratio or proportionality decision rule is supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "force_used",
+    "verified_physical_threat",
+    "proportionality_model"
+   ],
+   "criterion": "Force is proportional to the verified physical threat.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "verified threat assessments",
+    "force-use records"
+   ],
+   "gap": "A proportionality relation between force and threat is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a proportionality model without treating its parameters as document-specified values."
+   ],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.2-03",
+   "section": "5",
+   "title": "Minimize Irreversible Harm",
+   "quote": "action minimizes irreversible harm (Axiom A4).",
+   "interpretation": "Compare the action's irreversible harm with relevant alternatives. The text names Axiom A4 but supplies neither its content nor the harm metric and feasible comparison set.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action",
+    "alternative_actions",
+    "irreversible_harm_assessments"
+   ],
+   "criterion": "An action using force minimizes irreversible harm.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action outcome assessments",
+    "Axiom A4 requirements"
+   ],
+   "gap": "Axiom A4, an irreversible-harm measure and the comparison set are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define feasible alternatives, irreversible harm and whether minimization uses predicted or realized outcomes."
+   ],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-5.2-04",
+   "section": "5",
+   "title": "Exclusive Lethal Force Conditions",
+   "quote": "Lethal force is permitted only under Axiom A1 minimum-required conditions, as defined exclusively by DKP-4-CRISIS-001.",
+   "interpretation": "Permit lethal force only if the Axiom A1 minimum-required conditions defined by the named crisis protocol are satisfied. The text does not independently define those conditions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "lethal_force_action",
+    "a1_minimum_required_conditions",
+    "condition_evidence"
+   ],
+   "criterion": "Lethal force implies satisfaction of the Axiom A1 minimum-required conditions defined exclusively by DKP-4-CRISIS-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "crisis-protocol lethal-force conditions",
+    "condition evaluations"
+   ],
+   "gap": "The exclusively authoritative lethal-force conditions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "section_label": "5.2",
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-6-01",
+   "section": "6",
+   "title": "Identity Attribution For Actions",
+   "quote": "MUST be identity-attributed under DKP-1-IDENTITY-001,",
+   "interpretation": "Check that every police action has attribution satisfying the named identity protocol. Merely having an identifier cannot establish compliance without that protocol's requirements.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "police_action",
+    "identity_attribution",
+    "identity_protocol_requirements"
+   ],
+   "criterion": "Every police action is identity-attributed under DKP-1-IDENTITY-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "identity attribution records",
+    "identity validation results"
+   ],
+   "gap": "The attribution requirements of DKP-1-IDENTITY-001 are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-6-02",
+   "section": "6",
+   "title": "PTL Logging And Retrospective Audit",
+   "quote": "MUST be PTL-logged,\n\nMUST be auditable post-facto.",
+   "interpretation": "Require a PTL log record for every action and sufficient retained evidence for retrospective audit. The text does not specify record contents, retention or audit criteria.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "police_actions",
+    "ptl_log_records",
+    "audit_evidence"
+   ],
+   "criterion": "Every police action is PTL-logged and auditable after the action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL action logs",
+    "audit evidence and access records"
+   ],
+   "gap": "The PTL logging interface and the standard for post-facto auditability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define required log evidence and the conditions for retrospective auditability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-6-03",
+   "section": "6",
+   "title": "Complete Action Responsibility Trace",
+   "quote": "Police officers are not sovereign actors. Responsibility for any action is always traceable to:",
+   "interpretation": "Trace each action to its executing officer and issuing protocol or authority, and to its originating Subject where applicable. The document does not define when Subject attribution is applicable or whether traceability requires a particular record structure.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "police_action",
+    "executing_officer",
+    "issuing_protocol_or_authority",
+    "originating_subject",
+    "subject_applicability"
+   ],
+   "criterion": "Every action has traceable responsibility to the executing officer, the issuing protocol or authority, and the originating Subject where applicable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "officer identities",
+    "order provenance",
+    "originating Subject links"
+   ],
+   "gap": "The applicability rule for originating Subjects and the traceability standard are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define when an originating Subject is applicable and what evidence establishes each responsibility link."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-7-01",
+   "section": "7",
+   "title": "Predictive Policing And Profiling Ban",
+   "quote": "predictive policing,\n\nprofiling based on ideology, religion, culture, or belief,",
+   "interpretation": "Check police functions and decision inputs for predictive policing or profiling based on any listed attribute. Operational definitions of prediction and profiling are not supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "policing_function",
+    "decision_inputs",
+    "profiling_basis"
+   ],
+   "criterion": "No predictive policing or profiling based on ideology, religion, culture or belief occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "policing decision provenance",
+    "model and feature usage records"
+   ],
+   "gap": "The document does not define predictive policing or profiling. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the prohibited function classes and how use of a listed profiling basis is detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-7-02",
+   "section": "7",
+   "title": "Morality And Unnecessary Surveillance Ban",
+   "quote": "enforcement of morality or social norms,\n\nsurveillance not anchored in PTL necessity,",
+   "interpretation": "Reject enforcement of morality or social norms and surveillance lacking a PTL-necessity basis. PTL necessity is not defined and cannot be assumed equivalent to the existence of any PTL observation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "enforcement_basis",
+    "surveillance_activity",
+    "ptl_necessity_basis"
+   ],
+   "criterion": "No morality or social-norm enforcement occurs, and every surveillance activity is anchored in PTL necessity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement grounds",
+    "surveillance records",
+    "PTL necessity assessments"
+   ],
+   "gap": "The boundary of morality or social-norm enforcement and the test for PTL necessity are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define prohibited enforcement grounds and an evidentiary test for PTL necessity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-7-03",
+   "section": "7",
+   "title": "No Discretionary Authority Expansion",
+   "quote": "discretionary expansion of authority.",
+   "interpretation": "Compare authority changes with their authorization basis and reject discretionary expansion. The distinction between prohibited discretion and explicitly scoped crisis extension is not operationally defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "authority_before",
+    "authority_after",
+    "expansion_authorization"
+   ],
+   "criterion": "No authority expansion is discretionary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority change records",
+    "authorization provenance"
+   ],
+   "gap": "The text does not define discretionary expansion. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define discretion and distinguish it from authorized crisis extension."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-7-04",
+   "section": "7",
+   "title": "Critical Integrity Breach Classification",
+   "quote": "Violation constitutes a critical integrity breach.",
+   "interpretation": "Classify a detected violation of the preceding prohibited functions as a critical integrity breach. The immediate context supports section-local application; the sentence does not explicitly say whether all protocol violations also qualify.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "prohibited_function_violation",
+    "breach_classification"
+   ],
+   "criterion": "A violation of a function prohibition in section 7 is classified as a critical integrity breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "prohibited-function violation findings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-8-01",
+   "section": "8",
+   "title": "Temporary Crisis Authority Extension",
+   "quote": "During a formally declared Crisis under DKP-4-CRISIS-001:\n\npolice authority MAY be temporarily extended,",
+   "interpretation": "Validate an extension invoking this permission against a formal crisis declaration and a temporary duration. The declaration requirements and the permissible duration or expiry event are not supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_declaration",
+    "authority_extension",
+    "extension_start",
+    "extension_end"
+   ],
+   "criterion": "An extension under this clause occurs during a formally declared Crisis under DKP-4-CRISIS-001 and is temporary.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "formal crisis status",
+    "authority extension records"
+   ],
+   "gap": "Crisis-declaration validity and the temporal bounds of an extension are undefined in the supplied text. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how temporary duration is represented and whether extension authority expires with the crisis."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-8-02",
+   "section": "8",
+   "title": "Explicit Scope For Extensions",
+   "quote": "such extension MUST be explicitly scoped,",
+   "interpretation": "Check that every crisis authority extension has an explicit scope declaration. The required dimensions and level of detail of that declaration are unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "authority_extension",
+    "scope_declaration"
+   ],
+   "criterion": "Every crisis authority extension has an explicit scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "authority extensions and scope declarations"
+   ],
+   "gap": "The fields and completeness standard for an explicit scope are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the minimum content needed for an explicit scope declaration."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-8-03",
+   "section": "8",
+   "title": "Crisis Actions Create No Precedent",
+   "quote": "no crisis action creates precedent.",
+   "interpretation": "Check whether a crisis policing action is assigned precedential authority or later used as such. The text does not define precedent or distinguish it from nonbinding historical evidence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_action",
+    "precedent_records",
+    "later_authority_bases"
+   ],
+   "criterion": "No crisis policing action creates precedent.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "precedent registry",
+    "later decision provenance"
+   ],
+   "gap": "The institutional meaning and observable representation of precedent are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define what constitutes creating or assigning precedent."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-8-04",
+   "section": "8",
+   "title": "Scope Constraints Survive Crisis",
+   "quote": "All crisis policing actions remain constrained by DKP-7-SCOPE-001.",
+   "interpretation": "Apply the scope protocol to every crisis policing action, including actions under extended authority. The content of the surviving constraints is external.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_policing_action",
+    "scope_constraints"
+   ],
+   "criterion": "Every crisis policing action satisfies DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope constraints",
+    "crisis policing records"
+   ],
+   "gap": "DKP-7-SCOPE-001 is absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-9-01",
+   "section": "9",
+   "title": "Public Aggregates Preserve Privacy",
+   "quote": "SHALL be publicly auditable in aggregated form,\n\nSHALL preserve individual privacy,",
+   "interpretation": "Check that policing statistics are publicly auditable as aggregates while preserving individual privacy. The document supplies no aggregation rule, privacy standard or audit-access specification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "policing_statistics",
+    "public_aggregate_views",
+    "audit_access",
+    "privacy_assessment"
+   ],
+   "criterion": "All policing statistics are publicly auditable in aggregated form and preserve individual privacy.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "policing statistics",
+    "public audit interfaces",
+    "privacy assessments"
+   ],
+   "gap": "Aggregation, public auditability and individual privacy lack operational standards. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define aggregation, public audit access and privacy tests."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-9-02",
+   "section": "9",
+   "title": "Support Post Incident Reconstruction",
+   "quote": "SHALL support post-incident causal reconstruction.",
+   "interpretation": "Assess whether policing statistics provide adequate information for causal reconstruction after an incident. The text does not define the causal model, reconstruction method or success criterion.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "policing_statistics",
+    "incident_records",
+    "causal_reconstruction_model"
+   ],
+   "criterion": "Policing statistics support post-incident causal reconstruction.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "incident records",
+    "causal links and event histories"
+   ],
+   "gap": "The required reconstruction capability and its evaluation method are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a causal reconstruction method and the evidence needed for it to succeed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-9-03",
+   "section": "9",
+   "title": "No Secret Policing Authority",
+   "quote": "No secret policing authority is permitted.",
+   "interpretation": "Compare actual policing authority with disclosed authority records. The text does not define the audience, disclosure channel or timing needed to make authority nonsecret.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "policing_authority_registry",
+    "authority_disclosures",
+    "disclosure_access"
+   ],
+   "criterion": "No policing authority is secret.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authority grants",
+    "public disclosure records"
+   ],
+   "gap": "The disclosure conditions distinguishing secret from nonsecret authority are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the required disclosure audience, content, channel and timing."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-10-01",
+   "section": "10",
+   "title": "Protected Domains And Judicial Roles",
+   "quote": "regulate belief, speech, or culture,\n\nsubstitute judicial or justice protocols,",
+   "interpretation": "Check protocol provisions and their application for regulation of the listed domains or substitution for judicial or justice protocols. The boundaries of regulation and substitution require interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_provisions",
+    "protocol_applications",
+    "regulated_domains",
+    "judicial_role_assignments"
+   ],
+   "criterion": "DKP-3-POLICE-001 does not regulate belief, speech or culture or substitute judicial or justice protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol effects",
+    "judicial and justice role assignments"
+   ],
+   "gap": "The tests for regulating a protected domain and substituting another protocol are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define regulation and substitution using observable institutional effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-10-02",
+   "section": "10",
+   "title": "Punishment And Continuity Scope Limits",
+   "quote": "define long-term punishment or rehabilitation,\n\noverride exit rights or identity continuity.",
+   "interpretation": "Reject protocol provisions or applications that define long-term punishment or rehabilitation or override either listed protection. Long-term, exit rights and identity continuity are not defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_provisions",
+    "punishment_or_rehabilitation_terms",
+    "exit_rights",
+    "identity_continuity",
+    "protocol_effects"
+   ],
+   "criterion": "DKP-3-POLICE-001 does not define long-term punishment or rehabilitation or override exit rights or identity continuity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "punishment and rehabilitation decisions",
+    "exit-rights status",
+    "identity continuity records"
+   ],
+   "gap": "The protected rights, continuity conditions and meaning of long-term are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define long-term, exit rights, identity continuity and the effects constituting an override."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-11-01",
+   "section": "11",
+   "title": "Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check changes against the named upgrade procedure and its listed components, subject to the presentation-only exception below. The clause requires rollback within the procedure but does not establish that every change must actually be rolled back.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_provisions"
+   ],
+   "criterion": "A protocol change follows DKP-4-UPGRADE-001, including the listed proposal, simulation, audit, acceptance, activation-window and rollback components.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "acceptance evaluations",
+    "activation and rollback records"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation rules and rollback semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-11-02",
+   "section": "11",
+   "title": "New Identifier For Modifications",
+   "quote": "any modification requires a new protocol identifier,",
+   "interpretation": "Check that a modification receives a new protocol identifier. Read with the final sentence, presentation-only corrections appear exempt; a literal reading of any modification would instead include them.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "presentation_only_status",
+    "previous_protocol_identifier",
+    "new_protocol_identifier"
+   ],
+   "criterion": "A modification subject to this clause receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol identifier registry",
+    "change classification"
+   ],
+   "gap": "The relationship between any modification and the presentation-only exception needs resolution. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat qualifying presentation-only corrections as exempt and define the applicable identifier namespace."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-11-03",
+   "section": "11",
+   "title": "Mandatory Simulation Of Modifications",
+   "quote": "mandatory simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "Require simulation for modifications governed by the upgrade rules and validate it under the named simulation protocol. The content and success requirements of that protocol are absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "change_classification",
+    "simulation_record",
+    "simulation_compliance"
+   ],
+   "criterion": "Every modification subject to the upgrade rules undergoes simulation under DKP-8-SIMULATION-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "simulation execution and compliance records",
+    "change classification"
+   ],
+   "gap": "Simulation requirements and the exact reach of the presentation-only exception are not fully specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat qualifying presentation-only corrections as exempt from the modification simulation requirement."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-11-04",
+   "section": "11",
+   "title": "Explicit Protocol Compatibility Declaration",
+   "quote": "explicit compatibility declaration with DKP-1-AXIOMS-001 and DKP-7-SCOPE-001.",
+   "interpretation": "Check that a modification requiring upgrade treatment includes an explicit declaration of compatibility with both named protocols. This provision requires the declaration; its presence alone does not establish substantive compatibility.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "modification_subject_to_upgrade",
+    "compatibility_declaration",
+    "declared_compatible_protocols"
+   ],
+   "criterion": "Every modification subject to upgrade treatment includes an explicit compatibility declaration naming DKP-1-AXIOMS-001 and DKP-7-SCOPE-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001",
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "modification classification",
+    "compatibility declarations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "POLICE-11-05",
+   "section": "11",
+   "title": "Presentation Correction Exception And Record",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction as outside Upgrades only when it is presentation-only and leaves normative content unchanged, then check that its change record consists only of the document's Last updated date. The text does not provide a semantic equivalence test or specify how this label maps to the last_updated front-matter field.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "correction_classification",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "change_record"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document revisions",
+    "change records",
+    "upgrade classifications"
+   ],
+   "gap": "Normative-content equivalence, the referenced upgrade definition and the date-field mapping are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a normative-content equivalence test and map Last updated to the document's date field."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

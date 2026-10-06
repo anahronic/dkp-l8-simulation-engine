@@ -1,0 +1,1352 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-1-PREVENTION-001",
+ "doc_sha256": "c05d460d9c84724172cb6eac2f6ac6658fef4bf4b21d06af9f9ca2657dfa8114",
+ "prefix": "PREV",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Requirement identifiers preserve the carriage return in the supplied prefix as JSON \\r. Repeated rules are consolidated: §9.2 repeats §3.11; §9.5 reinforces §3.3; the oracle-inconsistency rule in §12 repeats §3.3.2; invariants 1, 2, 4, 5 and 7 in §13 repeat §§1, 4, 6 and 7. Separate entries capture the additional §13 prohibitions and requirements. The front matter lists DKP-0-ORACLE-001, DKP-1-IMPACT-001 and DKP-1-IDENTITY-001 as document-wide dependencies without assigning them to specific provisions; their contents were not supplied. §2 states a system-position sequence but no independently testable obligation. §4 requires positive SPDₖ when its antecedent holds, whereas §§3.6 and 5 permit zero; no precedence rule resolves this conflict. Informational SPDₖ is not defined as a numeric value, and its treatment in aggregation is unspecified. The aggregation domain for Σ Aₖ is also unspecified.",
+ "requirements": [
+  {
+   "id": "PREV-0-01",
+   "section": "0",
+   "title": "Protocol override is prohibited",
+   "quote": "Override: Not permitted",
+   "interpretation": "A checker could reject operations classified as overrides of this protocol. The text does not define an override or distinguish it operationally from the controlled changes permitted by §15.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "operation_classification"
+   ],
+   "criterion": "No operation classified as an override is permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol change and override records"
+   ],
+   "gap": "An operational definition of override is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how overrides differ from amendments under §15."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-1-01",
+   "section": "1",
+   "title": "Recognition requires measured risk suppression",
+   "quote": "Preventive contribution is recognized only through measurable suppression of activated risk processes, not through absence of realized harm and not through hypothetical projections.",
+   "interpretation": "Recognition records must cite measured suppression of an activated risk process. Absence of harm or hypothetical projections cannot supply the recognition basis; deciding whether evidence measures actual suppression requires an evidence model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "recognition_records",
+    "activation_evidence",
+    "suppression_evidence",
+    "recognition_basis"
+   ],
+   "criterion": "Every recognized preventive contribution is supported by measured suppression of activated risk, rather than absence of harm or hypothetical projections.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "risk activation measurements",
+    "suppression measurements",
+    "recognition provenance"
+   ],
+   "gap": "The text does not specify how measurements establish activation and suppression. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an evidence model for activated risk and measured suppression."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.1-01",
+   "section": "3.1",
+   "title": "Protected zones have physical boundaries",
+   "quote": "Physically bounded domain of evaluation.",
+   "interpretation": "A protected-zone record must identify a physically bounded evaluation domain. Testing that condition requires a representation connecting the recorded boundary to physical space.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "protected_zone",
+    "physical_boundary"
+   ],
+   "criterion": "Z is a physically bounded domain used for evaluation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical zone boundaries"
+   ],
+   "gap": "The representation and validation of physical boundaries are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a spatial representation and a method for validating physical boundaries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.2-01",
+   "section": "3.2",
+   "title": "Risk channels derive from PTL",
+   "quote": "PTL-derived measurable risk exposure channel.",
+   "interpretation": "Risk-channel records must carry PTL provenance and represent measurable risk exposure. PTL and the measurement requirements are not defined in this document.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "risk_channel",
+    "ptl_provenance",
+    "risk_exposure_measurements"
+   ],
+   "criterion": "Each Rcᵢ is PTL-derived and represents measurable risk exposure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL risk-channel provenance",
+    "risk exposure measurements"
+   ],
+   "gap": "PTL provenance validation and measurable risk exposure are not operationally specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare valid PTL provenance and an exposure measurement model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.3-01",
+   "section": "3.3",
+   "title": "Activation requires independent oracle classes",
+   "quote": "TAₖ valid ⇔ confirmations ≥ 2 independent oracle classes",
+   "interpretation": "Given confirmation records and an explicit independence relation between oracle classes, validity must equal the result of the class-count test. Two confirmations from a single class do not satisfy the stated condition.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "confirmations",
+    "oracle_classes",
+    "class_independence",
+    "ta_valid"
+   ],
+   "criterion": "TAₖ is valid if and only if confirmations come from at least 2 independent oracle classes.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle confirmations",
+    "oracle class identities and independence attestations"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "ta_two_classes"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.3-02",
+   "section": "3.3",
+   "title": "Compute oracle intensity spread",
+   "quote": "Δ_oracle = max(intensity) − min(intensity)",
+   "interpretation": "Compute the maximum minus the minimum over the relevant intensity set. The text does not specify whether this set includes all oracle readings or only valid readings, and it gives no empty-set behavior.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "oracle_intensities",
+    "delta_oracle"
+   ],
+   "criterion": "Δ_oracle equals max(intensity) − min(intensity) over the applicable oracle intensity set.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle intensity readings"
+   ],
+   "gap": "The included oracle population and behavior for an empty intensity set are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which readings enter the spread calculation and how an empty set is handled."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.3.1-01",
+   "section": "3.3.1",
+   "title": "Consistent activation uses minimum intensity",
+   "quote": "TAₖ_intensity = min(valid oracle intensities)",
+   "interpretation": "When Δ_oracle ≤ ε_consistency, the activation intensity must equal the minimum valid oracle intensity. The consistency threshold comes from §14, and valid-reading selection must be supplied.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "delta_oracle",
+    "epsilon_consistency",
+    "valid_oracle_intensities",
+    "ta_intensity"
+   ],
+   "criterion": "If Δ_oracle ≤ ε_consistency, TAₖ_intensity equals min(valid oracle intensities).",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validated oracle intensities",
+    "L8 consistency threshold"
+   ],
+   "gap": "The calibrated threshold and the rule selecting valid oracle intensities are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the valid-reading selection rule and behavior when no valid intensity exists."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.3.2-01",
+   "section": "3.3.2",
+   "title": "Inconsistent signals become informational",
+   "quote": "SPDₖ = informational",
+   "interpretation": "When Δ_oracle > ε_consistency, the event contribution must receive informational status. This rule is repeated in §12; the document does not specify the encoding or downstream arithmetic treatment of that status.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "delta_oracle",
+    "epsilon_consistency",
+    "spd_status"
+   ],
+   "criterion": "If Δ_oracle > ε_consistency, SPDₖ is informational.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle intensity spread",
+    "L8 consistency threshold"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare how informational SPDₖ is represented."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "informational_no_reward"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.4-01",
+   "section": "3.4",
+   "title": "Interventions are measured and windowed",
+   "quote": "Measured Subject action within valid space-time window.",
+   "interpretation": "An SIₖ must identify a measured action by a Subject within a valid spatial and temporal window. The text does not establish whether this window is the same as the TAₖ-to-SEₖ alignment window in §3.6.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_action",
+    "action_measurements",
+    "action_location",
+    "action_time",
+    "valid_space_time_window"
+   ],
+   "criterion": "SIₖ represents a measured Subject action occurring within the valid space-time window.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subject-linked action measurements",
+    "valid intervention window"
+   ],
+   "gap": "The valid space-time window and action-measurement acceptance rules are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the intervention window and whether its temporal component uses Δt_int.",
+    "Declare what evidence establishes a measured Subject action."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.5-01",
+   "section": "3.5",
+   "title": "Suppression events concern active risk",
+   "quote": "Measured reduction/interruption of active risk.",
+   "interpretation": "An SEₖ must be supported by measurement of a reduction or interruption of risk that was active. A checker needs a model relating the measurements to active risk and suppression.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "active_risk_evidence",
+    "suppression_measurements",
+    "suppression_event"
+   ],
+   "criterion": "SEₖ represents measured reduction or interruption of active risk.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "active risk measurements",
+    "risk reduction or interruption measurements"
+   ],
+   "gap": "The measurement model establishing active risk and reduction or interruption is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how measurements establish active risk and its reduction or interruption."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.6-01",
+   "section": "3.6",
+   "title": "Suppression follows activation within window",
+   "quote": "TAₖ @ t₀\nSEₖ @ t₁, where 0 < (t₁ − t₀) ≤ Δt_int",
+   "interpretation": "Compare matched activation and suppression timestamps. Suppression must occur strictly after activation and no later than the calibrated interval limit.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "activation_time",
+    "suppression_time",
+    "delta_t_int"
+   ],
+   "criterion": "0 < t₁ − t₀ ≤ Δt_int.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "matched event timestamps",
+    "L8 intervention interval"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare a common time basis for the matched signals."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "temporal_alignment"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.6-02",
+   "section": "3.6",
+   "title": "Compute clamped suppression completeness",
+   "quote": "Sₖ = clamp(0,1, (TAₖ_intensity − SEₖ_intensity) / TAₖ_intensity )",
+   "interpretation": "Calculate the stated relative reduction and clamp it between 0 and 1. The quotient is undefined for zero activation intensity unless the separate zero-completeness branch applies, and branch precedence is not explicit.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "ta_intensity",
+    "se_intensity",
+    "suppression_completeness"
+   ],
+   "criterion": "Where the quotient is defined, Sₖ equals clamp(0,1,(TAₖ_intensity − SEₖ_intensity)/TAₖ_intensity).",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activation intensity",
+    "suppression-event intensity"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare zero-denominator handling and the precedence of the conditional Sₖ = 0 rule."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "suppression_formula"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.6-03",
+   "section": "3.6",
+   "title": "Nondecreasing intensity gives zero contribution",
+   "quote": "Sₖ = 0\nSPDₖ = 0",
+   "interpretation": "If suppression-event intensity is at least activation intensity, both completeness and contribution must be zero. This is directly checkable, although §4 can simultaneously demand a positive contribution.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ta_intensity",
+    "se_intensity",
+    "suppression_completeness",
+    "spd"
+   ],
+   "criterion": "SEₖ_intensity ≥ TAₖ_intensity implies Sₖ = 0 and SPDₖ = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activation and suppression-event intensities",
+    "event contribution"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "no_reduction_zero"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.7-01",
+   "section": "3.7",
+   "title": "Severity weights are nonnegative scalars",
+   "quote": "Non-negative scalar.",
+   "interpretation": "Check that each supplied severity weight is a scalar with a value at least zero. Its actual calibrated value is governed separately by §14.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "severity_weight"
+   ],
+   "criterion": "Wₖ is a scalar and Wₖ ≥ 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "severity weights"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "weights_nonnegative"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.8-01",
+   "section": "3.8",
+   "title": "Attribution factors remain within bounds",
+   "quote": "Aₖ ∈ [0,1]",
+   "interpretation": "Check each attribution factor against the inclusive interval from 0 to 1.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "attribution_factor"
+   ],
+   "criterion": "0 ≤ Aₖ ≤ 1.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attribution factors"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "attribution_unit_interval"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-3.9-01",
+   "section": "3.9",
+   "title": "Confidence derives from PTL coverage",
+   "quote": "Derived from PTL coverage.",
+   "interpretation": "Confidence must be derived from PTL coverage, so provenance can be checked against coverage inputs. The document provides no function that determines the resulting confidence value.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "confidence_factor",
+    "ptl_coverage",
+    "confidence_derivation"
+   ],
+   "criterion": "Cₖ is derived from PTL coverage.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL coverage",
+    "confidence derivation provenance"
+   ],
+   "gap": "The mapping from PTL coverage to Cₖ is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a coverage-to-confidence function."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.10-01",
+   "section": "3.10",
+   "title": "Tamper factors derive from detection",
+   "quote": "Derived from manipulation detection.",
+   "interpretation": "The tamper-resistance factor must depend on manipulation-detection results. Apart from later directional and zeroing rules, no mapping is specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "tamper_resistance_factor",
+    "manipulation_detection",
+    "tamper_factor_derivation"
+   ],
+   "criterion": "Tₖ is derived from manipulation detection.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "manipulation-detection results",
+    "tamper-factor provenance"
+   ],
+   "gap": "The mapping from manipulation detection to Tₖ is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a manipulation-detection model and its mapping to Tₖ."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-3.11-01",
+   "section": "3.11",
+   "title": "Contextual baselines serve audit only",
+   "quote": "Audit-only reference, non-reward.",
+   "interpretation": "CBFᵢ may serve as an audit reference and must not produce reward. §9.2 repeats the non-reward requirement; whether any indirect influence on reward is forbidden is not specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_uses",
+    "reward_derivations",
+    "audit_records"
+   ],
+   "criterion": "CBFᵢ is used only as an audit reference and is non-reward.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "baseline use provenance",
+    "reward calculation provenance"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare whether non-reward prohibits indirect as well as direct reward influence."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "cbf_audit_only"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-4-01",
+   "section": "4",
+   "title": "Recognition requires the signal conjunction",
+   "quote": "TAₖ(valid, consistent) ∧ SIₖ ∧ SEₖ ⇒ SPDₖ > 0",
+   "interpretation": "For supplied validity, consistency and event predicates, the conjunction requires positive SPDₖ; otherwise SPDₖ must be zero or informational. The positive branch conflicts with zero factors allowed elsewhere, and the text does not choose between zero and informational in the general fallback.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ta_valid",
+    "ta_consistent",
+    "si_present",
+    "se_present",
+    "spd",
+    "spd_status"
+   ],
+   "criterion": "If TAₖ is valid and consistent and SIₖ and SEₖ exist, SPDₖ > 0; otherwise SPDₖ = 0 or SPDₖ is informational.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validated signal predicates",
+    "event contribution and status"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "recognition_rule"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-5-01",
+   "section": "5",
+   "title": "Multiply preventive contribution factors",
+   "quote": "SPDₖ = Wₖ × Sₖ × Aₖ × Cₖ × Tₖ",
+   "interpretation": "For numeric contribution records, compare SPDₖ with the product of the five supplied factors. This arithmetic check does not resolve how informational records interact with the formula.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "severity_weight",
+    "suppression_completeness",
+    "attribution_factor",
+    "confidence_factor",
+    "tamper_resistance_factor",
+    "spd"
+   ],
+   "criterion": "For numeric SPDₖ, SPDₖ = Wₖ × Sₖ × Aₖ × Cₖ × Tₖ.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "severity weights",
+    "suppression completeness",
+    "attribution factors",
+    "confidence factors",
+    "tamper-resistance factors"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "spd_product"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-5-02",
+   "section": "5",
+   "title": "Aggregate contributions for each subject",
+   "quote": "PS_subject = Σ SPDₖ",
+   "interpretation": "Compare a subject's score with the sum of that subject's applicable event contributions. The event inclusion period, duplicate handling and treatment of informational records are unspecified.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "subject_id",
+    "subject_event_contributions",
+    "ps_subject"
+   ],
+   "criterion": "PS_subject equals Σ SPDₖ over the applicable contributions for the subject.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subject-to-event attribution records",
+    "event contributions and statuses"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare the aggregation period, event inclusion and duplicate rules, and treatment of informational SPDₖ."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "subject_aggregate"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-6-01",
+   "section": "6",
+   "title": "Positive attribution requires traceable causality",
+   "quote": "Aₖ > 0 ⇔ causal linkage traceable",
+   "interpretation": "Positive attribution and traceable causal linkage must imply each other. A checker can apply the equivalence after a declared evidence model determines whether causal linkage is traceable.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "attribution_factor",
+    "causal_linkage_evidence",
+    "causal_linkage_traceable"
+   ],
+   "criterion": "Aₖ > 0 if and only if causal linkage is traceable.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "causal linkage evidence",
+    "attribution factors"
+   ],
+   "gap": "Checks the bench's formalization (A > 0 only for recognized interventions); causal linkage itself is a scenario input, not inferred from measurements.",
+   "hypotheses_needed": [
+    "Declare a causal attribution model and evidence requirements for traceability."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "causal_linkage_formalized"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-6-02",
+   "section": "6",
+   "title": "Cap attribution and preserve residual",
+   "quote": "Σ Aₖ ≤ 1\n\nResidual remains unallocated.",
+   "interpretation": "Within the applicable attribution pool, factors must sum to at most 1 and any residual must remain unallocated. The text does not state whether the pool spans subjects for one event, events for one subject, or another grouping.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "attribution_pool",
+    "attribution_factors",
+    "residual_allocations"
+   ],
+   "criterion": "Σ Aₖ ≤ 1 within the applicable pool, and the residual remains unallocated.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attribution allocation ledger"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare the attribution pool over which the cap and residual rule apply."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "attribution_budget"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-7-01",
+   "section": "7",
+   "title": "Attribution cannot create justice consequences",
+   "quote": "Preventive attribution shall not create:",
+   "interpretation": "Check that preventive attribution creates none of the listed consequences: obligation, liability or duty presumption. This requires a model that identifies those consequences and traces their creation to attribution.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "preventive_attribution_records",
+    "obligation_records",
+    "liability_records",
+    "duty_presumption_records",
+    "effect_provenance"
+   ],
+   "criterion": "Preventive attribution creates no obligation, liability or duty presumption.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice-state changes",
+    "provenance linking consequences to attribution"
+   ],
+   "gap": "The representation of prohibited consequences and the test for their creation by attribution are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a justice-state model and causal provenance rules for attribution effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-8-01",
+   "section": "8",
+   "title": "Prove interventions without exposing logs",
+   "quote": "Subject-linked intervention must be provable via:\n\nZKP(SIₖ, linkage) without exposing raw behavioral logs",
+   "interpretation": "Verify that a zero-knowledge proof can establish SIₖ and linkage without disclosing raw behavioral logs. The text does not identify the proof statement, proof system or disclosure model.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "intervention_record",
+    "linkage_record",
+    "zkp_proof",
+    "zkp_public_inputs",
+    "proof_verifier",
+    "disclosed_data"
+   ],
+   "criterion": "SIₖ and linkage are provable via ZKP(SIₖ, linkage) without exposure of raw behavioral logs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "intervention and linkage proofs",
+    "proof verification interface",
+    "disclosure records"
+   ],
+   "gap": "The bench has a ZKP placeholder only; the check reports UNKNOWN.",
+   "hypotheses_needed": [
+    "Declare a proof system, its intervention-and-linkage statement, and a disclosure threat model."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "zkp_proof"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-8-02",
+   "section": "8",
+   "title": "Protect raw behavioral log access",
+   "quote": "- encrypted\n- access-restricted\n- audit-gated",
+   "interpretation": "Raw logs must simultaneously be encrypted, access-restricted and audit-gated. Configuration and access records could support checks after the encryption, authorization and audit-gate requirements are defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "raw_log_inventory",
+    "encryption_configuration",
+    "access_controls",
+    "audit_gate_policy",
+    "access_records"
+   ],
+   "criterion": "All raw logs are encrypted, access-restricted and audit-gated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "log storage configuration",
+    "authorization policies",
+    "audit-gate and access records"
+   ],
+   "gap": "Acceptable encryption, access restrictions and audit-gate behavior are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare encryption requirements, authorized access and the audit-gate mechanism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-9.1-01",
+   "section": "9.1",
+   "title": "Self-induced risk eliminates tamper factor",
+   "quote": "if linkage(subject, TAₖ) > θ → Tₖ = 0",
+   "interpretation": "If the subject-to-activation linkage score exceeds θ, Tₖ must be zero. Equality does not trigger this particular rule; linkage scoring is undefined and θ is assigned to L8.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_activation_linkage",
+    "theta",
+    "tamper_resistance_factor"
+   ],
+   "criterion": "linkage(subject, TAₖ) > θ implies Tₖ = 0.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "subject-to-threat linkage scores",
+    "L8 linkage thresholds",
+    "tamper-resistance factors"
+   ],
+   "gap": "Checks T = 0 for observed linkage > θ; how linkage is measured is a scenario hypothesis (H-L).",
+   "hypotheses_needed": [
+    "Declare how linkage(subject, TAₖ) is measured."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "self_induced_zero"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-9.3-01",
+   "section": "9.3",
+   "title": "Recurring threat patterns reduce resistance",
+   "quote": "repeat(TAₖ pattern) → Tₖ ↓",
+   "interpretation": "A repeated activation pattern must reduce Tₖ. Testing this requires a definition of pattern recurrence and a comparison baseline; the text gives neither the reduction magnitude nor behavior at a lower bound.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "activation_pattern_history",
+    "recurrence_detection",
+    "tamper_factor_history"
+   ],
+   "criterion": "When a TAₖ pattern repeats, Tₖ decreases.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activation pattern history",
+    "tamper-factor history"
+   ],
+   "gap": "Pattern equivalence, recurrence window, comparison baseline and reduction rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a recurrence detector, comparison baseline and Tₖ reduction model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-9.4-01",
+   "section": "9.4",
+   "title": "Low coverage reduces confidence",
+   "quote": "low coverage → Cₖ ↓",
+   "interpretation": "Low coverage must reduce Cₖ relative to an appropriate reference. The reference could be a preceding value or a higher-coverage comparison, and neither reading is selected by the text.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "coverage",
+    "confidence_factor",
+    "reference_confidence"
+   ],
+   "criterion": "Low coverage causes Cₖ to decrease.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "coverage assessments",
+    "confidence values"
+   ],
+   "gap": "The low-coverage criterion, comparison reference and confidence adjustment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare what counts as low coverage and the reference and rule for decreasing Cₖ."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-9.4-02",
+   "section": "9.4",
+   "title": "Absent data forces zero contribution",
+   "quote": "no data → SPDₖ = 0",
+   "interpretation": "An event with no applicable data must receive zero SPDₖ. The text does not specify whether no data means no readings at all, no valid readings, or absence of any required input.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "event_data_availability",
+    "spd"
+   ],
+   "criterion": "No data implies SPDₖ = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "event data availability and validity"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare which data absence triggers zero SPDₖ."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "no_data_zero"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-10-01",
+   "section": "10",
+   "title": "Peer signals cannot generate reward",
+   "quote": "Peer signals non-reward.",
+   "interpretation": "Reward provenance must exclude peer signals as a reward basis. The document does not define peer signals or clarify whether indirect reward influence is prohibited.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "signal_provenance",
+    "peer_signal_classification",
+    "reward_derivations"
+   ],
+   "criterion": "Peer signals are non-reward.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "signal source classifications",
+    "reward calculation provenance"
+   ],
+   "gap": "Peer signals and the scope of non-reward influence are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare peer-signal classification and whether indirect reward influence is excluded."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-10-02",
+   "section": "10",
+   "title": "Enforce the global floors",
+   "quote": "Global floors enforced.",
+   "interpretation": "A checker would verify that applicable values never violate the global floors. The document supplies neither the floors nor the quantities and scope to which they apply.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "global_floors",
+    "governed_values",
+    "floor_scope"
+   ],
+   "criterion": "Every value governed by a global floor satisfies that floor.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "global floor configuration",
+    "values subject to floors"
+   ],
+   "gap": "The governed quantities, floor values and enforcement scope are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the global floors, their governed quantities and enforcement scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-11-01",
+   "section": "11",
+   "title": "Output contribution and attribution fields",
+   "quote": "- SPDₖ\n- PS_subject\n- attribution",
+   "interpretation": "Check that the protocol output includes event contribution, subject aggregate and attribution information. Field types and encoding are unspecified, but presence of these semantic fields is testable on a supplied structured output.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_output"
+   ],
+   "criterion": "The output includes SPDₖ, PS_subject and attribution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "event contribution",
+    "subject aggregate",
+    "attribution records"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "output_fields"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-11-02",
+   "section": "11",
+   "title": "Output confidence and tamper flags",
+   "quote": "- confidence\n- tamper flags",
+   "interpretation": "Check that the protocol output includes confidence information and tamper flags. The required presence is explicit, although their detailed schemas are not supplied.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "protocol_output"
+   ],
+   "criterion": "The output includes confidence and tamper flags.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "confidence information",
+    "tamper-detection flags"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "output_flags"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-11-03",
+   "section": "11",
+   "title": "Outputs are deterministic and auditable",
+   "quote": "Deterministic and auditable.",
+   "interpretation": "Repeated evaluation with identical complete inputs and configuration should produce identical outputs, and records should permit an audit. The document does not specify the complete input boundary or the evidence needed for auditability.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "evaluation_inputs",
+    "evaluation_configuration",
+    "evaluation_outputs",
+    "audit_evidence"
+   ],
+   "criterion": "Outputs are deterministic for identical complete inputs and are auditable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "evaluation and configuration records",
+    "audit evidence"
+   ],
+   "gap": "The deterministic input boundary and auditability acceptance criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare all state treated as evaluation input and the evidence required for an audit."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-12-01",
+   "section": "12",
+   "title": "Ambiguous attribution yields zero contribution",
+   "quote": "- attribution ambiguity → SPDₖ = 0",
+   "interpretation": "When attribution is classified as ambiguous, SPDₖ must be zero. The classification requires an ambiguity criterion absent from this text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "attribution_evidence",
+    "attribution_ambiguity",
+    "spd"
+   ],
+   "criterion": "Attribution ambiguity implies SPDₖ = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attribution evidence and ambiguity assessments"
+   ],
+   "gap": "Checks the bench reading H-A-2 (ambiguity := claims of eligible subjects sum above 1).",
+   "hypotheses_needed": [
+    "Declare an attribution ambiguity criterion."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "ambiguity_zero"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "PREV-12-02",
+   "section": "12",
+   "title": "Sensor degradation reduces confidence",
+   "quote": "- sensor degradation → Cₖ ↓",
+   "interpretation": "Sensor degradation must reduce Cₖ. A checker needs a degradation assessment and a reference confidence value; no reduction magnitude or functional relationship is given.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "sensor_condition",
+    "sensor_degradation",
+    "confidence_factor",
+    "reference_confidence"
+   ],
+   "criterion": "Sensor degradation causes Cₖ to decrease.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sensor health assessments",
+    "confidence values"
+   ],
+   "gap": "Sensor degradation, the comparison reference and the confidence reduction rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a sensor degradation model and the reference and rule for confidence reduction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-13-01",
+   "section": "13",
+   "title": "Hypothetical states are prohibited",
+   "quote": "3.  No hypothetical states",
+   "interpretation": "A checker could reject hypothetical states in the protocol's evidence or calculations after the applicable state domain is defined. The literal wording could prohibit all hypothetical states, while its context could limit the prohibition to attribution and reward states; §14 separately contemplates simulation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "state_records",
+    "state_provenance",
+    "state_usage"
+   ],
+   "criterion": "No hypothetical states are used within the scope of this invariant.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "state provenance",
+    "state usage in attribution and simulation"
+   ],
+   "gap": "The scope of the prohibition and classification of hypothetical states are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the invariant applies only to operational attribution or also to simulation states."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-13-02",
+   "section": "13",
+   "title": "Anti-gaming enforcement remains mandatory",
+   "quote": "6.  Anti-gaming enforced",
+   "interpretation": "The specific anti-manipulation provisions can be checked through their individual entries. This broader invariant has no defined completeness criterion for deciding whether anti-gaming is enforced beyond those provisions.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "anti_gaming_controls",
+    "enforcement_records"
+   ],
+   "criterion": "Anti-gaming is enforced.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "anti-gaming control definitions",
+    "enforcement evidence"
+   ],
+   "gap": "The document does not define what constitutes sufficient anti-gaming enforcement.",
+   "hypotheses_needed": [
+    "Declare whether compliance with §§9–10 exhausts this invariant or whether an additional adversarial model is required."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-14-01",
+   "section": "14",
+   "title": "Simulation layer defines operative parameters",
+   "quote": "- ε_consistency\n- Δt_int\n- θ thresholds",
+   "interpretation": "The simulation layer must define ε_consistency, Δt_int, θ thresholds and Wₖ weights. Their provenance can be checked, but the text provides neither the values nor a simulation procedure for deriving them.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_parameter_definitions",
+    "epsilon_consistency",
+    "delta_t_int",
+    "theta",
+    "severity_weights",
+    "parameter_provenance"
+   ],
+   "criterion": "L8 defines ε_consistency, Δt_int, θ thresholds and Wₖ weights.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 parameter definitions and provenance"
+   ],
+   "gap": "The simulation outputs and parameter derivation procedure are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the simulation model used to define the listed parameters."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-15-01",
+   "section": "15",
+   "title": "Changes follow the controlled procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Normative protocol changes require the listed controlled-procedure elements and conformance to the referenced upgrade, simulation and audit documents. The presentation-only exception appears later in this section; the external procedural requirements are unavailable.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal_record",
+    "simulation_record",
+    "audit_record",
+    "acceptance_record",
+    "activation_window",
+    "rollback_provision"
+   ],
+   "criterion": "Every normative protocol change follows DKP-4-UPGRADE-001 with proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "acceptance evidence",
+    "activation scheduling",
+    "rollback provisions"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation-window rules and rollback requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "If simulating without the referenced documents, explicitly declare substitute workflow, acceptance, activation and rollback rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-15-02",
+   "section": "15",
+   "title": "Changes require versioning and migration",
+   "quote": "- version increment\n- compatibility audit\n- migration path",
+   "interpretation": "For a normative change, verify a version increment, a compatibility audit and a migration path. The text does not define version ordering or standards for the audit and migration path.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "previous_version",
+    "new_version",
+    "compatibility_audit",
+    "migration_path"
+   ],
+   "criterion": "A normative change includes a version increment, compatibility audit and migration path.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "version history",
+    "compatibility audit artifact",
+    "migration specification"
+   ],
+   "gap": "The version-increment convention and adequacy requirements for compatibility audit and migration path are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare version ordering and acceptance criteria for compatibility audits and migration paths."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "PREV-15-03",
+   "section": "15",
+   "title": "Presentation corrections use date recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "A correction classified as presentation-only and normatively unchanged is exempt from Upgrade classification and is recorded only through the document's Last updated date. Determining normative equivalence requires a classification method or review, and the referenced upgrade definition is absent.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "change_classification",
+    "normative_equivalence_assessment",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_record"
+   ],
+   "criterion": "If a correction is presentation-only and changes no normative content, it is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document revisions",
+    "normative-content review",
+    "document date metadata",
+    "upgrade classification records"
+   ],
+   "gap": "A method for determining normative equivalence and DKP-4-UPGRADE-001 §3 are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes and normative equivalence are established.",
+    "Declare whether the front-matter last_updated field implements the quoted Last updated date."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

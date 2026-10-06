@@ -1,5 +1,29 @@
 # Changelog
 
+## Lab 0.1.0 — 2026-10-06 (engine unchanged: 2.1.1)
+
+Protocol Lab, stage A–B of the lab specification (`audit rt/ТЗ_Клоду_лаборатория_всех_протоколов.md`).
+`simulation/` is not modified: PREVENTION results and `input_id` values equal v2.1.1.
+
+- Corpus: byte copies of the 39 Markdown documents of anahronic/World `aad3e86`,
+  pinned in `lab/corpus/CORPUS.json`; any change stops catalog and lab runs.
+- Catalog (`lab/registry/protocol_catalog.json`): computed counts (35 protocols,
+  4 accompanying documents), sections, references, unresolved dependencies
+  (DKP-2-ECONOMIC-001, DKP-PTL-REG-DATA-001) and the ambiguous reference DKP-7.
+- Requirement registry: one file per document, drafted by an OpenAI Codex agent with a
+  fixed prompt and schema, machine-checked for verbatim quotes, sections and ids.
+- Core: strict inputs (finite numbers, no unknown keys, visible defaults), check statuses
+  PASS / FAIL / UNKNOWN / NOT_APPLICABLE with uncovered provisions listed, run identity
+  (input_id, result_id), deterministic replay packages, reports in English and Russian.
+- Modules: `prevention` (wraps the bench; independent re-checks of 19 provisions),
+  `time` (DTI conversions; §9 vectors; the §10 reference code executed from the pinned
+  text; the 2000-01-01 row reported as a corpus inconsistency), `work_cycle` (Cycle6
+  rosters and 24/7 coverage, S-LAB-08).
+- Coverage is declared by modules and synced into the registry; a test checks that every
+  declared check is emitted.
+- Browser runtime: deterministic bundle for Pyodide; results in the browser equal CPython.
+- CLI `python -m lab` (catalog, modules, example, run, replay).
+
 ## 2.1.1 — 2026-10-06
 
 Patch after the independent review of 2.1.0 (GPT reply 9, items V21-N1 and V21-N2).

@@ -1,0 +1,1318 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-2-FINANCE-001",
+ "doc_sha256": "82c4b1a877194f10cf8619169906826a3b7d7894e5ffe353c8fead51c5a00a0c",
+ "prefix": "FINANCE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The supplied requirement prefix contains a carriage return, preserved as \\r in requirement IDs. Provisions under the unnumbered heading 'Explicit Time Preference Prohibition' use that heading as their section; its prohibition also covers the repeated statement in 4.2. External protocols were not supplied. DKP-8-SIMULATION and DKP-8-SIMULATION-001 are distinct reference spellings in the source and are preserved. Unspecified functions, bounds, measurement methods and timing units remain gaps rather than invented parameters.",
+ "requirements": [
+  {
+   "id": "FINANCE-1-01",
+   "section": "1",
+   "title": "Limit Financial Protocol Scope",
+   "quote": "- create or manage fiat monetary regimes,\n- override justice outcomes,\n- perform subjective valuation or preference aggregation,",
+   "interpretation": "Check protocol operations against all four exclusions introduced by 'It does not', including substitution for governance or social support layers. Identifying subjective valuation or substitution requires an operational classification of those activities.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_operations",
+    "operation_classifications",
+    "justice_outcomes"
+   ],
+   "criterion": "The protocol does not create or manage fiat regimes, override justice outcomes, perform subjective valuation or preference aggregation, or substitute for governance or social support layers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice outcomes",
+    "governance and social support responsibilities"
+   ],
+   "gap": "Operational definitions of the excluded activities are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how operations are classified against each excluded activity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-2-01",
+   "section": "2",
+   "title": "Trace Every Financial Computation",
+   "quote": "All financial computations MUST be traceable to:",
+   "interpretation": "For every computation, inspect provenance links to measured impact outputs, responsibility bindings, justice outcomes and axiomatic constraints. A program can check the presence and resolvability of these four categories of links, while substantive validity belongs to the referenced protocols.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "financial_computations",
+    "provenance_links",
+    "source_records"
+   ],
+   "criterion": "Every financial computation has resolvable provenance to all four listed source categories.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-1-JUSTICE-001",
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "measured impact outputs",
+    "responsibility bindings",
+    "justice outcomes",
+    "axiomatic constraints"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-3.1-01",
+   "section": "3.1",
+   "title": "Define Capital Unit Properties",
+   "quote": "Capital Units (CU) are unitless, fungible representations of deployable economic capacity within the system.",
+   "interpretation": "Inspect the CU representation for absence of a physical denomination and for interchangeability between equivalent quantities. Full fungibility requires a definition of which transaction contexts must treat CU identically.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "cu_schema",
+    "cu_balances",
+    "transaction_rules"
+   ],
+   "criterion": "CU are unitless and fungible representations of deployable economic capacity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The operational scope of fungibility and the measurement of deployable capacity are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define equivalent CU holdings and the transaction contexts used to test interchangeability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-3.1-02",
+   "section": "3.1",
+   "title": "Represent Net Productive Capability",
+   "quote": "CU represent productive capability net of justice-weighted externalities, not nominal wealth.",
+   "interpretation": "Compare CU valuation with productive capability after accounting for justice-weighted externalities. The text does not give a conversion, weighting or netting formula.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "cu_values",
+    "productive_capability",
+    "justice_weighted_externalities",
+    "valuation_method"
+   ],
+   "criterion": "CU valuation represents productive capability net of justice-weighted externalities rather than nominal wealth.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "productive capability measurements",
+    "justice-weighted externalities"
+   ],
+   "gap": "The mapping from productive capability and externalities to CU is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a CU valuation and netting model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-3.1-03",
+   "section": "3.1",
+   "title": "Record All Capital Flows",
+   "quote": "All CU flows are recorded on a deterministic, auditable ledger.",
+   "interpretation": "Reconcile CU flows against ledger records and replay ledger processing. Completeness is testable from a complete flow inventory, but the text supplies no auditability standard.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "cu_flows",
+    "ledger_records",
+    "ledger_transition_rules",
+    "replay_inputs"
+   ],
+   "criterion": "Every CU flow is recorded, identical ledger inputs produce identical results, and ledger records support audit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "CU flow records"
+   ],
+   "gap": "A complete flow inventory and an operational auditability standard are required. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define ledger audit evidence and the input state required for deterministic replay."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-3.2-01",
+   "section": "3.2",
+   "title": "Compute Deterministic Capital Cost",
+   "quote": "The cost of capital is determined as a deterministic function of:",
+   "interpretation": "Check that capital cost is reproducibly computed from Subject justice history, projected channel risks, and axiomatic bounds and safety margins. The dependency list is explicit, but the function is not.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "subject_justice_history",
+    "projected_impact_risks",
+    "axiomatic_reference_bounds",
+    "safety_margins",
+    "cost_of_capital"
+   ],
+   "criterion": "Cost of capital is a deterministic function of all three listed input categories.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "historical justice outcomes",
+    "projected channel risks",
+    "axiomatic reference bounds and safety margins"
+   ],
+   "gap": "The pricing function and numerical bounds are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a deterministic pricing function and the applicable bounds and margins."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-3.2-02",
+   "section": "3.2",
+   "title": "Enforce Justice Pricing Direction",
+   "quote": "Positive justice contribution reduces cost of capital. Negative or risky impact exposure increases cost of capital.",
+   "interpretation": "Compare capital costs under changes in positive contribution and negative or risky exposure. The text leaves the comparison baseline and treatment of simultaneous changes unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_contribution",
+    "negative_impact_exposure",
+    "risky_impact_exposure",
+    "cost_of_capital",
+    "comparison_cases"
+   ],
+   "criterion": "Positive justice contribution reduces capital cost; negative or risky impact exposure increases it.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice contributions",
+    "impact exposure measurements"
+   ],
+   "gap": "The comparison baseline and pricing response to interacting inputs are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether directional comparisons hold other inputs fixed and how competing changes are handled."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-3.2-03",
+   "section": "3.2",
+   "title": "Prohibit Discretionary Risk Pricing",
+   "quote": "There is no discretionary pricing of risk.",
+   "interpretation": "Inspect pricing rules and execution records for discretionary overrides or discretionary risk inputs. A complete structured description of those controls permits a direct check.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "risk_pricing_rules",
+    "pricing_inputs",
+    "pricing_override_records"
+   ],
+   "criterion": "No risk price is selected or altered through discretion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-4.1-01",
+   "section": "4.1",
+   "title": "Compute Justice Anchored Interest",
+   "quote": "Interest rates are computed as a function of:",
+   "interpretation": "Verify that the rate function uses borrower justice burden, impact volatility and externality exposure, and reversibility and mitigation capacity. The paragraph defining interest further requires its basis to be measured risk and justice imbalance rather than compensation for impatience.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "borrower_justice_burden",
+    "impact_volatility",
+    "externality_exposure",
+    "reversibility",
+    "mitigation_capacity",
+    "interest_rate",
+    "rate_function"
+   ],
+   "criterion": "Interest rates are computed from the listed factors as pricing of measured risk and justice imbalance, without compensation for impatience.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "borrower justice burden",
+    "impact volatility and exposure",
+    "reversibility and mitigation measurements"
+   ],
+   "gap": "No interest-rate function or measurement mapping is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a rate function using the required factors."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-ExplicitTimePreferenceProhibition-01",
+   "section": "Explicit Time Preference Prohibition",
+   "title": "Exclude Subjective Temporal Valuation",
+   "quote": "Subjective time preference, impatience discounting, or utility-based devaluation of future outcomes SHALL NOT be used in any financial computation within this protocol.",
+   "interpretation": "Inspect every financial computation and its inputs for the three prohibited valuation mechanisms. This also operationalizes the rejection stated in 4.2; semantic classification of an unfamiliar valuation model may require a declared taxonomy.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "financial_computation_models",
+    "valuation_inputs",
+    "valuation_method_classifications"
+   ],
+   "criterion": "No financial computation uses subjective time preference, impatience discounting or utility-based devaluation of future outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [],
+   "gap": "The text does not supply a formal classifier for prohibited valuation mechanisms. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how valuation models are classified as subjective preference, impatience discounting or utility-based devaluation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-ExplicitTimePreferenceProhibition-02",
+   "section": "Explicit Time Preference Prohibition",
+   "title": "Restrict Permitted Temporal Discounting",
+   "quote": "Temporal discounting is permitted exclusively as a consequence of measurable changes in projected impact channels over time, as defined by DKP-1-IMPACT-001.",
+   "interpretation": "Require each temporal discount to be attributable exclusively to measurable projected impact-channel changes. The impact-channel definitions and permissible mapping from those changes to discounts depend on the absent impact protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "temporal_discounts",
+    "projected_impact_channel_trajectories",
+    "discount_derivations"
+   ],
+   "criterion": "Every temporal discount results exclusively from measurable changes in projected impact channels over time.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001",
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "projected impact channels over time",
+    "impact-channel definitions"
+   ],
+   "gap": "The referenced impact definitions and discount derivation rules are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a discount mapping based solely on measurable impact-channel changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-ExplicitTimePreferenceProhibition-03",
+   "section": "Explicit Time Preference Prohibition",
+   "title": "Evaluate Physical Temporal Effects",
+   "quote": "Time remains a structurally relevant dimension through impact evolution, risk accumulation, reversibility decay, and exposure duration, all of which are evaluated via physically measurable impact channels rather than subjective preference functions.",
+   "interpretation": "Inspect time-dependent financial models for evaluation of the four listed temporal effects through physically measurable channels. The text does not prescribe their dynamics or require any particular nonzero sensitivity in every case.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "impact_evolution",
+    "risk_accumulation",
+    "reversibility_decay",
+    "exposure_duration",
+    "physical_channel_measurements",
+    "temporal_model"
+   ],
+   "criterion": "The listed temporal effects are evaluated through physically measurable impact channels rather than subjective preference functions.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001",
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "physical impact-channel measurements and projections"
+   ],
+   "gap": "Measurement methods and temporal dynamics are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare physical channel mappings and models for the four temporal effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-5.1-01",
+   "section": "5.1",
+   "title": "Gate Credit On Three Conditions",
+   "quote": "Credit MAY be issued only if:\n\na) projected justice-weighted productive output is sufficient for repayment, b) expected impact does not violate axiomatic bounds, c) aggregate exposure remains within systemic safety margins.",
+   "interpretation": "Permit issuance only when all three conditions hold. Meeting them permits issuance but does not require it; repayment sufficiency and the relevant bounds are not quantified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "credit_issuance",
+    "projected_justice_weighted_output",
+    "repayment_obligations",
+    "expected_impact",
+    "axiomatic_bounds",
+    "aggregate_exposure",
+    "systemic_safety_margins"
+   ],
+   "criterion": "Credit issuance implies sufficient projected justice-weighted output for repayment, expected impact within axiomatic bounds, and aggregate exposure within systemic safety margins.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "productive output projections",
+    "expected impact",
+    "axiomatic bounds",
+    "systemic exposure and margins"
+   ],
+   "gap": "Repayment sufficiency, axiomatic bounds and systemic safety margins lack operational values or tests. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare repayment sufficiency criteria, applicable bounds and systemic safety margins."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-5.1-02",
+   "section": "5.1",
+   "title": "Treat Credit As Temporary Imbalance",
+   "quote": "Credit is a temporary imbalance, not a right.",
+   "interpretation": "Check that credit is represented as an imbalance intended to end and that issuance rules do not establish an unconditional entitlement. The text does not define a maximum duration or the exact terminal condition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "credit_states",
+    "credit_lifecycle_rules",
+    "credit_entitlement_rules"
+   ],
+   "criterion": "Credit is temporary and does not confer a right to issuance.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The duration and termination criteria for a temporary credit imbalance are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how a credit imbalance ends and what temporal interpretation of 'temporary' is used."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-5.2-01",
+   "section": "5.2",
+   "title": "Recompute Dynamic Credit Limits",
+   "quote": "Credit limits are dynamically computed based on:",
+   "interpretation": "Inspect credit-limit calculations over changing justice history, projected impact correlation and systemic stress indicators. Neither the limit function nor the timing of updates is specified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "subject_justice_history",
+    "projected_impact_correlation",
+    "systemic_stress_indicators",
+    "credit_limit_history"
+   ],
+   "criterion": "Credit limits are dynamically computed using all three listed input categories.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject justice history",
+    "projected impact correlations",
+    "systemic stress indicators"
+   ],
+   "gap": "The limit function and update policy are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a credit-limit function and its update triggers or cadence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-5.2-02",
+   "section": "5.2",
+   "title": "Block Risk Increasing Leverage",
+   "quote": "No Subject may increase leverage if doing so raises the probability of axiom-bound violation.",
+   "interpretation": "Compare the probability of axiom-bound violation before and after a proposed leverage increase. Any increase in that probability prohibits the leverage increase, but the probability model and evaluation horizon are unspecified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_leverage",
+    "proposed_leverage",
+    "violation_probability_before",
+    "violation_probability_after",
+    "axiom_bounds"
+   ],
+   "criterion": "A leverage increase is forbidden when the resulting probability of axiom-bound violation exceeds the prior probability.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom bounds",
+    "exposure and risk projections"
+   ],
+   "gap": "A probability model, comparison scenario and evaluation horizon are required. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how violation probabilities are estimated for the current and proposed leverage states."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-6.1-01",
+   "section": "6.1",
+   "title": "Define Savings And Return Basis",
+   "quote": "Savings are CU held in reserve and may generate returns derived from:",
+   "interpretation": "Check that savings consist of reserve-held CU and that any generated returns derive from deployment duration, justice-weighted deployed-capital performance and measured systemic risk. Returns are permitted rather than guaranteed, and no return function is given.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "savings_holdings",
+    "reserve_status",
+    "deployment_duration",
+    "justice_weighted_performance",
+    "measured_systemic_risk",
+    "savings_returns"
+   ],
+   "criterion": "Savings are CU held in reserve; generated returns derive from the three listed factors.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "capital deployment records",
+    "justice-weighted performance",
+    "measured systemic risk"
+   ],
+   "gap": "The return function and relationship between reserve holdings and deployed capital are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a savings-return function and the mapping between savings holdings and capital deployment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-6.1-02",
+   "section": "6.1",
+   "title": "Make Savings Returns Auditable",
+   "quote": "Savings returns are deterministic and fully auditable.",
+   "interpretation": "Replay return calculations from their recorded inputs and inspect supporting evidence. Determinism can be checked for supplied cases, but full auditability lacks a defined evidence standard.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "return_calculation_rules",
+    "return_inputs",
+    "return_outputs",
+    "return_audit_records"
+   ],
+   "criterion": "Identical complete inputs produce identical savings returns, and each return can be fully audited.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "return calculation provenance"
+   ],
+   "gap": "The required evidence and scope of full auditability are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an auditability standard for return calculations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-6.2-01",
+   "section": "6.2",
+   "title": "Size Reserves By Impact",
+   "quote": "Reserve sizing is impact-based, not percentage-based.",
+   "interpretation": "Inspect the reserve-sizing rule for derivation from impact rather than a percentage rule. The text does not clarify whether an impact-derived amount may subsequently be expressed as a percentage.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "reserve_sizing_rule",
+    "impact_inputs",
+    "reserve_size"
+   ],
+   "criterion": "Reserve sizing is based on impact and is not based on percentages.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact measurements and projections"
+   ],
+   "gap": "No impact-based sizing function or precise boundary for percentage-based sizing is provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an impact-based sizing function and how percentage-based rules are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-7-01",
+   "section": "7",
+   "title": "Ground Capital Allocation Decisions",
+   "quote": "Capital allocation decisions SHALL be driven by:",
+   "interpretation": "Inspect decision provenance for expected net justice output, impact risk envelopes and alignment with axiomatic priorities. The text gives no weighting or ordering for conflicts among these factors.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "capital_allocation_decisions",
+    "expected_net_justice_output",
+    "impact_risk_envelopes",
+    "axiomatic_priorities",
+    "allocation_rules"
+   ],
+   "criterion": "Capital allocation decisions are driven by all three listed considerations.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "net justice output projections",
+    "impact risk envelopes",
+    "axiomatic priorities"
+   ],
+   "gap": "The decision rule and the meaning of alignment with axiomatic priorities are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how the three considerations determine allocation and resolve conflicts."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-7-02",
+   "section": "7",
+   "title": "Prohibit Speculative Capital Allocation",
+   "quote": "Speculative or purely price-driven allocation is forbidden.",
+   "interpretation": "Reject allocations classified as speculative or whose decision basis is exclusively price. The document does not define speculative allocation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "allocation_decisions",
+    "allocation_drivers",
+    "speculation_classifications"
+   ],
+   "criterion": "No allocation is speculative or purely price-driven.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "An operational definition of speculative allocation is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classifier for speculative allocation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-8.1-01",
+   "section": "8.1",
+   "title": "Determine Financial Default Conditions",
+   "quote": "- repayment cannot be achieved within a justice-defined horizon, and\n- continued exposure threatens axiomatic bounds.",
+   "interpretation": "Detect default when both repayment impossibility within the justice-defined horizon and a threat from continued exposure hold. The heading and introductory sentence suggest a definition, but 'occurs when' does not expressly state whether other default grounds are excluded.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "repayment_feasibility",
+    "justice_defined_horizon",
+    "continued_exposure",
+    "axiomatic_bounds",
+    "default_state"
+   ],
+   "criterion": "The conjunction of repayment impossibility within the justice-defined horizon and continued exposure threatening axiomatic bounds triggers default.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice-defined repayment horizon",
+    "repayment projections",
+    "axiomatic bounds",
+    "continued exposure projections"
+   ],
+   "gap": "The horizon, feasibility test, threat criterion and exclusivity of the default definition are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the horizon and threat model, and whether the two conditions are necessary as well as sufficient."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-8.1-02",
+   "section": "8.1",
+   "title": "Trigger Justice Outcomes On Default",
+   "quote": "Defaults trigger justice-defined outcomes, not punishment.",
+   "interpretation": "Match each default to resulting justice-defined outcomes and check that the mechanism does not introduce punishment. The document does not define punishment or provide the outcome mapping.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "default_events",
+    "justice_defined_outcomes",
+    "executed_default_outcomes",
+    "outcome_classifications"
+   ],
+   "criterion": "Every default triggers justice-defined outcomes rather than punishment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice-defined default outcomes"
+   ],
+   "gap": "The default-to-outcome mapping and operational distinction between restitution and punishment are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare permitted justice-defined outcomes and a punishment classification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-8.2-01",
+   "section": "8.2",
+   "title": "Permit Listed Restitution Mechanisms",
+   "quote": "Restitution MAY include:\n\n- reserve deployment,",
+   "interpretation": "Treat reserve deployment, obligation restructuring and proportional loss allocation as permitted restitution mechanisms. 'May include' neither mandates their use nor establishes an exhaustive whitelist; proportionality lacks a specified allocation basis.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restitution_actions",
+    "loss_allocations",
+    "allocation_basis"
+   ],
+   "criterion": "Restitution may use reserve deployment, obligation restructuring or proportional loss allocation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reserve deployment records",
+    "obligation records",
+    "loss allocation records"
+   ],
+   "gap": "The basis of proportional loss allocation is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the quantity relative to which loss allocation is proportional."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-8.2-02",
+   "section": "8.2",
+   "title": "Bound Financial Restitution Outcomes",
+   "quote": "Restitution is bounded by measurable damage and justice outcomes.",
+   "interpretation": "Compare restitution against constraints derived from measured damage and justice outcomes. The text does not specify a scalar cap, ordering or method for comparing different forms of restitution with damage.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restitution",
+    "measured_damage",
+    "justice_outcomes",
+    "restitution_bounds"
+   ],
+   "criterion": "Restitution stays within the bounds established by measurable damage and justice outcomes.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measured damage",
+    "justice outcomes"
+   ],
+   "gap": "The mapping from damage and justice outcomes to restitution bounds is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare compatible measures and a bounding rule for restitution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-9-01",
+   "section": "9",
+   "title": "Constrain Leverage Impact Amplification",
+   "quote": "- amplification of negative impact remains below safety thresholds,\n- correlated failures cannot cascade beyond reserve capacity.",
+   "interpretation": "Evaluate leverage against both the negative-impact amplification threshold and the reserve capacity needed to contain correlated failures. 'Below' requires a strict comparison, while 'cannot cascade' needs a defined set of failure scenarios.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "leverage",
+    "negative_impact_amplification",
+    "safety_thresholds",
+    "correlated_failure_scenarios",
+    "reserve_capacity"
+   ],
+   "criterion": "Negative-impact amplification is strictly below safety thresholds, and correlated failure cascades do not exceed reserve capacity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact amplification projections",
+    "safety thresholds",
+    "failure correlations",
+    "reserve capacity"
+   ],
+   "gap": "Safety thresholds, cascade dynamics and the scenario universe are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare amplification thresholds, a cascade model and the scenarios over which containment must hold."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-9-02",
+   "section": "9",
+   "title": "Base Leverage Limits On Impact",
+   "quote": "Leverage limits are impact-based, not volatility-based.",
+   "interpretation": "Inspect the leverage-limit calculation for an impact basis rather than a volatility basis. The text does not settle whether volatility may be an intermediate input to an impact model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "leverage_limit_rules",
+    "impact_inputs",
+    "volatility_inputs",
+    "leverage_limits"
+   ],
+   "criterion": "Leverage limits derive from impact rather than volatility.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact measurements and projections"
+   ],
+   "gap": "The impact-based limit function and treatment of indirect volatility inputs are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the limit function and whether indirect volatility inputs are compatible with an impact basis."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-10-01",
+   "section": "10",
+   "title": "Translate All External Financial Values",
+   "quote": "- all values MUST be translated into justice-weighted internal equivalents,",
+   "interpretation": "For every value entering through an external interface, require a corresponding justice-weighted internal equivalent. Coverage is directly checkable, but correctness requires an unspecified conversion rule.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "external_interface_values",
+    "internal_equivalents",
+    "translation_records",
+    "translation_rules"
+   ],
+   "criterion": "Every external value has been translated into a justice-weighted internal equivalent.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external financial values",
+    "justice weighting inputs"
+   ],
+   "gap": "No conversion rule or equivalence test is provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare translation rules for external values."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-10-02",
+   "section": "10",
+   "title": "Internalize External Risk Before Deployment",
+   "quote": "- external risk MUST be fully internalized before deployment.",
+   "interpretation": "Gate deployment on completed internalization of all associated external risk. The required ordering is clear, but neither risk completeness nor internalization is defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "external_risk_inventory",
+    "risk_internalization_records",
+    "deployment_events"
+   ],
+   "criterion": "Full external-risk internalization occurs before deployment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "external risk assessments",
+    "internalization evidence"
+   ],
+   "gap": "The scope of external risk and the completion criterion for full internalization are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a complete risk inventory and a test for completed internalization."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-10-03",
+   "section": "10",
+   "title": "Prevent External Justice Constraint Bypass",
+   "quote": "No external financial structure may bypass justice constraints.",
+   "interpretation": "Check that external structures remain subject to the applicable justice constraints on every financial execution path. The constraints and a complete representation of external structures must be supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "external_financial_structures",
+    "financial_execution_paths",
+    "justice_constraints"
+   ],
+   "criterion": "No external financial structure permits an execution path that bypasses applicable justice constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "applicable justice constraints",
+    "external financial structure descriptions"
+   ],
+   "gap": "The applicable justice constraints and structural model are not specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how external structures and their execution paths are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.1-01",
+   "section": "11.1",
+   "title": "Suspend Financial Access Upon Exclusion",
+   "quote": "If a Subject is assigned to the Exclusion Domain under DKP-1-JUSTICE-001, all financial access governed by this protocol SHALL be automatically suspended.",
+   "interpretation": "An Exclusion Domain assignment must cause suspension of every governed financial access path without discretion or an independent financial evaluation. The clause supplies no separate reaction deadline; section 11.2 adds polling and synchronization requirements.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_domain_events",
+    "financial_access_inventory",
+    "access_states",
+    "suspension_events",
+    "suspension_rules"
+   ],
+   "criterion": "Assignment to the Exclusion Domain automatically causes suspension of all governed financial access without an independent financial evaluation.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "Justice Domain assignments"
+   ],
+   "gap": "The authoritative domain interface and precise event-to-suspension timing semantics are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the authoritative domain event source and how suspension timing relates to section 11.2 polling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.1-02",
+   "section": "11.1",
+   "title": "Forbid Financial Exclusion Workarounds",
+   "quote": "- override exclusion outcomes,\n- re-enable access under alternative criteria,\n- provide compensatory financial pathways.",
+   "interpretation": "Inspect access rules and execution paths for overriding exclusions, restoring access under alternative criteria or providing compensatory financial access. The first two are explicit control prohibitions; the scope of a compensatory pathway is undefined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exclusion_outcomes",
+    "access_restoration_rules",
+    "financial_pathways"
+   ],
+   "criterion": "The protocol does not override exclusion outcomes, re-enable access under alternative criteria or provide compensatory financial pathways.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "exclusion outcomes",
+    "formal exclusion exit determinations"
+   ],
+   "gap": "The text does not define which pathways count as compensatory. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classifier for compensatory financial pathways."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.1-03",
+   "section": "11.1",
+   "title": "Require Formal Exit Before Restoration",
+   "quote": "Financial access MAY be restored only upon formal exit from the Exclusion Domain as determined by DKP-1-JUSTICE-001.",
+   "interpretation": "Every restoration of access suspended under exclusion must be supported by a formal exit determination. This is a necessary condition for restoration, while section 11.2 imposes automatic restoration in specified circumstances.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "access_restoration_events",
+    "formal_exclusion_exit_events"
+   ],
+   "criterion": "Every restoration of exclusion-suspended access occurs only upon an authoritative formal exit from the Exclusion Domain.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "formal Exclusion Domain exit determinations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.2-01",
+   "section": "11.2",
+   "title": "Restore Access After Successful Dispute",
+   "quote": "a) Upon successful dispute resolution under DKP-4-ERROR-001 that results in exit from Exclusion Domain, financial access SHALL be automatically restored within one (1) DTI-Day.",
+   "interpretation": "For a successful dispute resolution resulting in exit, verify automatic restoration within one DTI-Day. The duration of a DTI-Day is absent, and the clock origin could mean the resolution event or the resulting exit event if those differ.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "dispute_resolution_events",
+    "exclusion_exit_events",
+    "access_restoration_events",
+    "dti_day_duration"
+   ],
+   "criterion": "A successful dispute resolution resulting in exclusion exit causes automatic access restoration within one DTI-Day.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001",
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "successful dispute resolutions",
+    "Justice Domain exits",
+    "DTI-Day time definition"
+   ],
+   "gap": "DTI-Day duration and the clock origin when resolution and exit differ are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare DTI-Day duration and the triggering timestamp for the restoration deadline."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.2-02",
+   "section": "11.2",
+   "title": "Preserve Suspension During Pending Disputes",
+   "quote": "b) Pending dispute proceedings SHALL NOT automatically restore access, but SHALL suspend accumulation of any interest, penalties, or additional restrictions during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1.",
+   "interpretation": "Check that pending proceedings alone do not trigger automatic access restoration. This does not prohibit restoration following a separate formal exclusion exit.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "pending_dispute_events",
+    "access_restoration_events",
+    "restoration_trigger_records"
+   ],
+   "criterion": "Pending dispute proceedings alone never cause automatic access restoration.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001",
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "dispute proceeding states"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.2-03",
+   "section": "11.2",
+   "title": "Freeze Accumulation During Status Quo",
+   "quote": "b) Pending dispute proceedings SHALL NOT automatically restore access, but SHALL suspend accumulation of any interest, penalties, or additional restrictions during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1.",
+   "interpretation": "Within each applicable Status Quo Suspension period, verify that interest and penalties do not accrue and that additional restrictions do not accumulate. Existing obligations are not explicitly cancelled, and the scope of covered accounts and restrictions is not stated.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "status_quo_suspension_periods",
+    "interest_accrual_events",
+    "penalty_accrual_events",
+    "restriction_events",
+    "affected_accounts"
+   ],
+   "criterion": "No interest, penalties or additional restrictions accumulate during the applicable Status Quo Suspension period.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001",
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "Status Quo Suspension periods under DKP-4-ERROR-001 Section 4.1",
+    "dispute scope"
+   ],
+   "gap": "The referenced period definition and scope of affected financial obligations are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the period boundaries and which accounts and restriction events are covered."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-11.2-04",
+   "section": "11.2",
+   "title": "Poll And Synchronize Justice Status",
+   "quote": "c) The Financial System Protocol SHALL poll Justice Domain status at intervals not exceeding the minimum PTL TTL for Identity-related measurements, and SHALL auto-adjust suspension state upon Domain change.",
+   "interpretation": "Verify that polling intervals do not exceed the applicable minimum PTL TTL and that detected Domain changes automatically adjust suspension state. The opening continuous-synchronization requirement could mean immediate event synchronization or bounded detection through polling; the text does not resolve that distinction.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "justice_domain_history",
+    "poll_timestamps",
+    "identity_measurement_ptl_ttls",
+    "suspension_state_history"
+   ],
+   "criterion": "Every polling interval is at most the minimum PTL TTL for Identity-related measurements, and Domain changes automatically produce the corresponding suspension-state adjustment.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "Justice Domain status",
+    "PTL TTL values for Identity-related measurements"
+   ],
+   "gap": "PTL TTL definitions, the applicable measurement set and synchronization latency semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the TTL selection rule and whether continuous synchronization means immediate updates or updates upon polling detection."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-12-01",
+   "section": "12",
+   "title": "Require Reproducible Auditable Financial Mechanisms",
+   "quote": "All financial mechanisms MUST be:",
+   "interpretation": "Inspect every mechanism for determinism, reproducibility, full auditability and provenance to L1 outputs. Replay and provenance checks are possible, but full auditability and reproducibility require an evidence and environment specification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "financial_mechanisms",
+    "mechanism_inputs",
+    "mechanism_outputs",
+    "execution_environments",
+    "audit_records",
+    "l1_provenance"
+   ],
+   "criterion": "Every financial mechanism is deterministic, reproducible, fully auditable and traceable to L1 protocol outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L1 protocol outputs and provenance"
+   ],
+   "gap": "The auditability standard and required reproducibility environment are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the evidence required for full auditability and the environment used to assess reproducibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-12-02",
+   "section": "12",
+   "title": "Exclude Opaque Proprietary Financial Logic",
+   "quote": "Opaque, discretionary, or proprietary financial logic is forbidden.",
+   "interpretation": "Inspect financial logic, access conditions, ownership or licensing status, and override controls for any prohibited category. The text does not define opacity or whether proprietary refers to ownership, licensing or restricted access.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "financial_logic",
+    "logic_access_conditions",
+    "logic_ownership",
+    "logic_licenses",
+    "discretionary_controls"
+   ],
+   "criterion": "No financial logic is opaque, discretionary or proprietary.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "Operational definitions of opaque and proprietary logic are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the opacity test and the intended meaning of proprietary."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-13-01",
+   "section": "13",
+   "title": "Enforce Cross Layer Isolation",
+   "quote": "- override identity attribution,\n- override justice outcomes,\n- inject policy, ideology, or moral judgment.",
+   "interpretation": "Check that financial execution neither reinterprets impact measurements nor overrides identity attribution or justice outcomes, and does not inject policy, ideology or moral judgment. Any detected violation must be classified as a critical architectural breach; semantic injection requires an operational definition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "upstream_impact_measurements",
+    "upstream_identity_attributions",
+    "upstream_justice_outcomes",
+    "financial_execution_rules",
+    "breach_classifications"
+   ],
+   "criterion": "None of the four prohibited cross-layer actions occurs; any violation constitutes a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact measurements",
+    "identity attributions",
+    "justice outcomes"
+   ],
+   "gap": "Reinterpretation and injection of policy, ideology or moral judgment lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare tests for measurement reinterpretation and prohibited semantic injection."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-14-01",
+   "section": "14",
+   "title": "Require Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Require protocol changes to follow the named upgrade procedure with evidence for every listed component. The text does not provide acceptance conditions, activation-window rules or whether rollback means capability or actual execution.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change_records",
+    "upgrade_proposals",
+    "simulation_records",
+    "audit_records",
+    "acceptance_evidence",
+    "activation_windows",
+    "rollback_records"
+   ],
+   "criterion": "Every protocol change follows the controlled upgrade procedure with proposal, simulation, audit, acceptance conditions, activation window and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation requirements"
+   ],
+   "gap": "The referenced procedure and the operational meaning of rollback are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how the listed stages and rollback requirement are represented pending the referenced protocols."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-14-02",
+   "section": "14",
+   "title": "Require Modification Identity And Evidence",
+   "quote": "- a new protocol identifier,\n- explicit declaration of incompatibility,\n- full-system simulation under DKP-8-SIMULATION.",
+   "interpretation": "For each modification, check for a changed protocol identifier, an explicit incompatibility declaration and full-system simulation evidence. Read this together with the following exemption for presentation-only corrections; simulation compliance cannot be established without the referenced protocol.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification_records",
+    "prior_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "full_system_simulation_evidence",
+    "normative_change_classification"
+   ],
+   "criterion": "Every modification subject to upgrade requirements has a new identifier, an explicit incompatibility declaration and full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "full-system simulation evidence"
+   ],
+   "gap": "DKP-8-SIMULATION is not supplied and its relationship to DKP-8-SIMULATION-001 is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether DKP-8-SIMULATION denotes the same protocol as DKP-8-SIMULATION-001."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-14-03",
+   "section": "14",
+   "title": "Exempt Presentation Only Corrections",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction as exempt only when it changes presentation without changing normative content, then check that its change record uses only the document's Last updated date. The prose label differs from the front-matter key last_updated, and 'recorded only' may refer to change metadata rather than mandatory edition digests.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "prior_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "change_metadata"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not classified as Upgrades and are recorded only by the Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "upgrade classification rules under DKP-4-UPGRADE-001 §3"
+   ],
+   "gap": "Normative equivalence, date-field mapping and the scope of 'recorded only' are not formally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-equivalence test, map Last updated to document metadata, and reconcile date-only recording with edition integrity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "FINANCE-14-04",
+   "section": "14",
+   "title": "Publish Canonical Edition Integrity Digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, hash the canonical source bytes with SHA-256 and compare the result with its entry in the canonical repository's SHA256SUMS.txt. This is decidable given an authoritative edition inventory and canonical source bytes.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_edition_inventory",
+    "canonical_source_bytes",
+    "canonical_repository_sha256sums"
+   ],
+   "criterion": "Each published edition has an entry in the canonical repository's SHA256SUMS.txt equal to the SHA-256 digest of its canonical source.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "canonical repository edition sources",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

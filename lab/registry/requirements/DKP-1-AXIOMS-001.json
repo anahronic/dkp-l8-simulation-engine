@@ -1,0 +1,1234 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-1-AXIOMS-001",
+ "doc_sha256": "d558d7b79c490c9270f859b05fd58543cdc4b28fa31a639d699fc6d2549c3b1d",
+ "prefix": "AXIOMS",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The supplied requirement prefix contains a carriage return, preserved as \\r in identifiers. Unnumbered axiom headings and the Epistemic Clarification heading are used as section identifiers; the lettered clarification labels are treated as paragraph labels. Related clauses expressing one rule are consolidated. A1a is absent from the priority table, so its priority relative to the listed axioms is unspecified. The relationship between absolute invalidation for any violation, conflict resolution by priority, and A1's crisis exception needs clarification. Genesis Block #0, the Code of Planetary Synergy, and referenced protocols were not supplied. The text does not establish whether the shortened identifiers DKP-4-CRISIS, DKP-1-IMPACT, and DKP-8-SIMULATION designate existing documents. A4's SHOULD is preserved as a recommendation rather than converted to MUST.",
+ "requirements": [
+  {
+   "id": "AXIOMS-1-01",
+   "section": "1",
+   "title": "Higher Layer Axiom Compliance",
+   "quote": "No higher-layer protocol may violate an axiom, regardless of calculated benefit.",
+   "interpretation": "Check every higher-layer protocol against the axiom constraints without allowing calculated benefit to excuse a violation. A complete check requires an interpretation of each substantive axiom.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "higher_layer_protocols",
+    "axiom_compliance",
+    "calculated_benefit"
+   ],
+   "criterion": "No higher-layer protocol violates any axiom, irrespective of calculated benefit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "higher-layer protocol specifications",
+    "axiom compliance evaluations"
+   ],
+   "gap": "Substantive axiom compliance requires definitions and evaluation models not fully specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how protocol behavior is mapped to axiom violations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-2-01",
+   "section": "2",
+   "title": "Protocol Position And Anchoring",
+   "quote": "This protocol operates above the Physical Truth Layer (DKP-0-ORACLE-001) and below all impact, justice, and economic protocols.\n\nThis protocol is anchored to the predefined axioms stated in the Preamble of the Code of Planetary Synergy and is bound to Genesis Block #0 (2025-12-10).",
+   "interpretation": "Inspect protocol hierarchy and anchoring records for the stated ordering and references. The text does not define what technical evidence establishes anchoring or binding.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_hierarchy",
+    "preamble_axioms",
+    "genesis_binding"
+   ],
+   "criterion": "Place this protocol above DKP-0-ORACLE-001 and below impact, justice, and economic protocols; anchor it to the Preamble axioms and Genesis Block #0 dated 2025-12-10.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "protocol hierarchy records",
+    "Code of Planetary Synergy Preamble",
+    "Genesis Block #0 records"
+   ],
+   "gap": "The anchoring artifacts and the operational meaning of binding are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the evidence that establishes protocol ordering and genesis binding."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-2-02",
+   "section": "2",
+   "title": "Civilizational Equation Compatibility",
+   "quote": "Any interpretation or implementation of this protocol MUST remain compatible with the immutable civilizational motion equation defined therein.",
+   "interpretation": "Compare each interpretation or implementation with the referenced motion equation. The equation and a compatibility test are not supplied, and 'therein' could refer to the Code or its Genesis anchoring.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_interpretation",
+    "protocol_implementation",
+    "civilizational_motion_equation"
+   ],
+   "criterion": "Every interpretation and implementation remains compatible with the referenced immutable civilizational motion equation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "civilizational motion equation from the referenced foundational material"
+   ],
+   "gap": "The referenced equation and the meaning of compatibility are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Resolve the equation's authoritative location and declare a compatibility test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-2-03",
+   "section": "2",
+   "title": "Axioms Constrain Metric Use",
+   "quote": "Axioms do not process data. They constrain how data-derived metrics may be interpreted and acted upon.",
+   "interpretation": "Inspect the system architecture to distinguish axiom definitions from data-processing components and verify their constraint role. This should be read alongside the later recognition that axiom application produces operational outputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "component_roles",
+    "metric_interpretation_rules",
+    "action_rules"
+   ],
+   "criterion": "Axioms serve as constraints on metric interpretation and action rather than as data-processing components.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "architecture and decision-rule specifications"
+   ],
+   "gap": "The boundary between axiom logic and operational data processing is not formally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which components represent axiom definitions and which implement axiom application."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-3-01",
+   "section": "3",
+   "title": "Permitted Axiom Definition Forms",
+   "quote": "Each axiom is defined as:\n\n- a forbidden state, or",
+   "interpretation": "Validate that each axiom defines a forbidden state or a hard priority ordering between competing system objectives. The following bullet supplies the second permitted form; free-text definitions require semantic classification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_definitions"
+   ],
+   "criterion": "Each axiom defines a forbidden state or a hard priority ordering between competing system objectives.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No formal representation or classification rule for the two permitted forms is provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a representation for forbidden states and hard priority orderings."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-3-02",
+   "section": "3",
+   "title": "Constraint Based Axiom Evaluation",
+   "quote": "Axioms are evaluated as constraints, not as terms in an optimization function.",
+   "interpretation": "Inspect a structured decision model to verify that axioms are constraints and do not appear as optimization terms.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "decision_constraints",
+    "optimization_terms",
+    "axiom_references"
+   ],
+   "criterion": "Every evaluated axiom is represented as a constraint and no axiom is an optimization-function term.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured decision and optimization specifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1-PreservationofLife-01",
+   "section": "Axiom A1 — Preservation of Life",
+   "title": "Limit Irreversible Life Loss",
+   "quote": "System actions MUST NOT knowingly increase irreversible loss of human life or biospheric life beyond the minimum required to prevent greater systemic collapse.",
+   "interpretation": "Compare an action's known irreversible human and biospheric life losses with the minimum required to avert greater systemic collapse. The text does not define knowledge, a loss metric, or how human and biospheric losses are compared.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_action",
+    "known_life_loss",
+    "minimum_required_conditions",
+    "systemic_collapse_assessment"
+   ],
+   "criterion": "A system action does not knowingly increase irreversible human or biospheric life loss beyond the minimum required to prevent greater systemic collapse.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS"
+   ],
+   "data_dependencies": [
+    "human and biospheric life-loss assessments",
+    "crisis-defined minimum required conditions",
+    "systemic collapse assessments"
+   ],
+   "gap": "The crisis-defined minimum, loss measures, and knowledge criterion are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a model of action knowledge, irreversible life loss, and counterfactual systemic collapse."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1-PreservationofLife-02",
+   "section": "Axiom A1 — Preservation of Life",
+   "title": "Exclusive Crisis Exception Authority",
+   "quote": "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS and SHALL NOT be inferred, approximated, or declared by operational, economic, or enforcement protocols.",
+   "interpretation": "Check the provenance of minimum-required-condition definitions and reject definitions inferred, approximated, or declared by the prohibited protocol classes. Whether a definition is substantively governed by DKP-4-CRISIS requires the missing protocol.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "minimum_condition_definitions",
+    "definition_provenance",
+    "protocol_classes",
+    "crisis_rules"
+   ],
+   "criterion": "Only DKP-4-CRISIS governs the definition of minimum required conditions; operational, economic, and enforcement protocols do not infer, approximate, or declare them.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS"
+   ],
+   "data_dependencies": [
+    "condition-definition provenance",
+    "protocol classifications",
+    "crisis governance rules"
+   ],
+   "gap": "DKP-4-CRISIS and evidence of definition provenance are required. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how governance provenance and prohibited derivation operations are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1-PreservationofLife-03",
+   "section": "Axiom A1 — Preservation of Life",
+   "title": "Absolute Life Preservation Priority",
+   "quote": "Life preservation has absolute priority over economic growth, efficiency, or political stability.",
+   "interpretation": "Inspect declared objective ordering and conflict decisions to ensure that the listed objectives cannot override life preservation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "objective_ordering",
+    "conflict_decisions"
+   ],
+   "criterion": "Life preservation outranks economic growth, efficiency, and political stability in every recorded conflict.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured objective priorities and conflict decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1-PreservationofLife-04",
+   "section": "Axiom A1 — Preservation of Life",
+   "title": "Scope Bound Minimum Conditions",
+   "quote": "Interpretation Constraint: The determination of “minimum required conditions” SHALL NOT be inferred by operational or economic protocols and SHALL be constrained by DKP-7-SCOPE-001.",
+   "interpretation": "Check that determining minimum required conditions obeys the scope protocol and does not originate as an operational or economic inference. This adds a scope constraint to the preceding exclusive crisis-governance rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "minimum_condition_determination",
+    "determination_provenance",
+    "scope_constraints"
+   ],
+   "criterion": "Minimum required conditions comply with DKP-7-SCOPE-001 and are not inferred by operational or economic protocols.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "scope constraints",
+    "determination provenance"
+   ],
+   "gap": "The referenced scope constraints are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-01",
+   "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
+   "title": "No Compelled Lethal Participation",
+   "quote": "1.  No subject may be compelled to participate in armed violence or in activities involving lethal risk on behalf of the system.",
+   "interpretation": "Check assignments and participation conditions for compulsion in the covered activities. Lethal risk and compulsion have no operational definitions in this document.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_assignments",
+    "activity_risks",
+    "participation_conditions",
+    "system_affiliation"
+   ],
+   "criterion": "No subject is compelled to participate in armed violence or lethal-risk activities on behalf of the system.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity risk classifications",
+    "participation and assignment records"
+   ],
+   "gap": "Operational definitions and evidence of compulsion and lethal risk are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how compulsion and lethal-risk activities are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-02",
+   "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
+   "title": "Unconditional Combat Refusal Right",
+   "quote": "2.  Any subject has the right to refuse military service or combat participation on any grounds, including religious, ethical, or pacifist convictions.",
+   "interpretation": "Check that the authorization rules permit every subject to refuse military service or combat participation regardless of the stated grounds.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "refusal_rules",
+    "subject",
+    "activity_type",
+    "refusal_grounds"
+   ],
+   "criterion": "Every subject may refuse military service or combat participation on any grounds.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured participation and refusal rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-03",
+   "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
+   "title": "Risk Derived Benefit Eligibility",
+   "quote": "3.  The system SHALL preserve risk symmetry: a subject who does not participate in verified collective security risk SHALL NOT receive benefits, subsidies, or priority access derived directly from such risk.",
+   "interpretation": "Match verified risk participation to allocations derived directly from that risk and reject allocations to nonparticipants. Verification and direct derivation are not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_risk_participation",
+    "risk_verification",
+    "benefit_allocations",
+    "benefit_provenance"
+   ],
+   "criterion": "A nonparticipant in verified collective security risk receives no benefits, subsidies, or priority access derived directly from that risk.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "verified collective security participation",
+    "benefit and access provenance",
+    "allocation records"
+   ],
+   "gap": "Risk verification and direct benefit derivation require unspecified evidence and attribution rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how risk participation is verified and benefits are attributed directly to risk."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-04",
+   "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
+   "title": "Permitted Risk Symmetry Enforcement",
+   "quote": "4.  Risk symmetry SHALL be enforced through access rules and compensation logic, not through punishment, stigma, or coercion.",
+   "interpretation": "Inspect enforcement mechanisms for use of access rules and compensation logic and for prohibited punitive, stigmatizing, or coercive effects. Distinguishing access restrictions from punishment requires a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "risk_symmetry_mechanisms",
+    "access_rules",
+    "compensation_logic",
+    "enforcement_effects"
+   ],
+   "criterion": "Risk symmetry uses access rules and compensation logic and does not use punishment, stigma, or coercion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "access and compensation rules",
+    "enforcement effect assessments"
+   ],
+   "gap": "The text does not operationally distinguish permitted access restrictions from punishment, stigma, or coercion. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria separating permitted enforcement mechanisms from prohibited effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-05",
+   "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
+   "title": "Refusal Carries No Fault",
+   "quote": "5.  Refusal to assume lethal risk SHALL NOT constitute a violation, disloyalty, or fault within the system.",
+   "interpretation": "Inspect classification rules and recorded decisions to ensure that refusal itself is never a basis for violation, disloyalty, or fault.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "refusal_events",
+    "classification_rules",
+    "classification_reasons"
+   ],
+   "criterion": "Refusal to assume lethal risk is not classified as a violation, disloyalty, or fault.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classification rules and decision reasons"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA2-SystemicSustainability-01",
+   "section": "Axiom A2 — Systemic Sustainability",
+   "title": "Forbid Unsustainable Short Term Gains",
+   "quote": "System actions MUST NOT degrade long-term system viability in exchange for short-term gains.",
+   "interpretation": "Evaluate action trajectories for short-term gains coupled to reduced long-term viability, including the later explicitly forbidden case of long-term collapse. Time horizons, viability, and causal attribution are unspecified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "action_trajectories",
+    "short_term_metrics",
+    "long_term_viability",
+    "collapse_assessment"
+   ],
+   "criterion": "No action exchanges long-term viability for short-term gains or improves short-term metrics at the cost of long-term collapse.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action outcome trajectories",
+    "system viability and collapse assessments"
+   ],
+   "gap": "A causal model, short- and long-term horizons, and viability and collapse criteria are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare time horizons, viability measures, collapse criteria, and counterfactual action effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA2-SystemicSustainability-02",
+   "section": "Axiom A2 — Systemic Sustainability",
+   "title": "Sustained Biospheric Degradation Violation",
+   "quote": "Any action that results in sustained degradation of biospheric integrity, as reflected in Physical Truth Layer outputs (including B(t)), constitutes a violation of this axiom.",
+   "interpretation": "Detect sustained degradation in Physical Truth Layer outputs and attribute it to an action before marking an A2 violation. The text supplies neither the definition of B(t) nor the duration or baseline for sustained degradation.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "system_action",
+    "physical_truth_outputs",
+    "b_t",
+    "action_attribution"
+   ],
+   "criterion": "An action causing sustained biospheric integrity degradation reflected in Physical Truth Layer outputs is an A2 violation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer time series including B(t)",
+    "action attribution assessments"
+   ],
+   "gap": "B(t), degradation baselines, the duration of sustained degradation, and causal attribution are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a biospheric degradation measure, persistence criterion, and action-attribution model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA3-PhysicalRealitySupremacy-01",
+   "section": "Axiom A3 — Physical Reality Supremacy",
+   "title": "Physical Grounding Of Decisions",
+   "quote": "System decisions MUST be grounded in Physical Truth Layer outputs.",
+   "interpretation": "Trace each decision to Physical Truth Layer outputs used in its justification. Mere citation and substantive dependence are alternative readings of 'grounded' that the text does not resolve.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "system_decisions",
+    "decision_provenance",
+    "physical_truth_outputs"
+   ],
+   "criterion": "Every system decision is grounded in Physical Truth Layer outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer outputs",
+    "decision evidence and provenance"
+   ],
+   "gap": "The required degree of evidentiary dependence on Physical Truth Layer outputs is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether grounding requires cited evidence, causal dependence, or another explicit evidence relation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA3-PhysicalRealitySupremacy-02",
+   "section": "Axiom A3 — Physical Reality Supremacy",
+   "title": "Measured Reality Cannot Be Overridden",
+   "quote": "Narratives, beliefs, intentions, or declared goals SHALL NOT override measured physical reality.",
+   "interpretation": "Inspect decisions involving conflicting measured evidence and nonphysical assertions. A check needs a rule for identifying both conflict and an override.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "measured_reality",
+    "decision_assertions",
+    "decision_reasons",
+    "conflict_resolution"
+   ],
+   "criterion": "Narratives, beliefs, intentions, and declared goals never override measured physical reality.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical measurements",
+    "decision reasons and evidence conflicts"
+   ],
+   "gap": "The text does not define when an assertion conflicts with or overrides a measurement. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a representation of evidence conflicts and override decisions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA4-IrreversibilityAversion-01",
+   "section": "Axiom A4 — Irreversibility Aversion",
+   "title": "Prefer Less Irreversible Damage",
+   "quote": "System actions SHOULD minimize irreversible damage when reversible alternatives exist.",
+   "interpretation": "Compare irreversible damage across available actions when reversible alternatives exist. Report departures from a SHOULD recommendation; the text does not specify whether such departures invalidate an action under Section 5.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "candidate_actions",
+    "reversible_alternatives",
+    "irreversible_damage"
+   ],
+   "criterion": "When reversible alternatives exist, system actions should minimize irreversible damage.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "alternative-action assessments",
+    "reversibility and damage estimates"
+   ],
+   "gap": "Damage comparison, alternative availability, and the compliance effect of SHOULD are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare damage and reversibility measures and how recommendation departures are reported."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA4-IrreversibilityAversion-02",
+   "section": "Axiom A4 — Irreversibility Aversion",
+   "title": "Verify Necessary Irreversible Transitions",
+   "quote": "Irreversible transitions require demonstrable necessity verified by irreversible impact models under DKP-1-IMPACT.",
+   "interpretation": "Permit an irreversible transition only with necessity verification from an irreversible impact model governed by the referenced protocol.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "proposed_transition",
+    "transition_reversibility",
+    "necessity_evidence",
+    "impact_model_verification"
+   ],
+   "criterion": "Every irreversible transition has demonstrable necessity verified by irreversible impact models under DKP-1-IMPACT.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT"
+   ],
+   "data_dependencies": [
+    "irreversible impact model results",
+    "necessity verification"
+   ],
+   "gap": "The referenced impact protocol, models, and necessity criteria are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA5-ExternalityAccountability-01",
+   "section": "Axiom A5 — Externality Accountability",
+   "title": "Bound And Measure Externalized Harm",
+   "quote": "Actions that shift harm outside the measured system boundary are forbidden unless the externality is explicitly measured and bounded.",
+   "interpretation": "Identify harm shifted beyond the measured boundary and require explicit measurements and bounds for the externality. 'Bounded' could mean a documented finite bound or compliance with an allowed bound; the text does not choose.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "system_action",
+    "measured_system_boundary",
+    "externalized_harm",
+    "externality_measurements",
+    "externality_bounds"
+   ],
+   "criterion": "An action shifting harm outside the measured boundary is forbidden unless the externality is explicitly measured and bounded.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system boundary definitions",
+    "externality measurements and bounds",
+    "harm attribution"
+   ],
+   "gap": "Externality measurement requirements and the meaning and source of acceptable bounds are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the system boundary, externality attribution, and interpretation of boundedness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA5-ExternalityAccountability-02",
+   "section": "Axiom A5 — Externality Accountability",
+   "title": "Maximum Impact For Unmeasured Externalization",
+   "quote": "Unmeasured externalization is treated as maximum-impact damage.",
+   "interpretation": "Assign the maximum-impact damage treatment whenever externalization is unmeasured. The text does not specify whether maximum impact is a category, a numeric value, or an enforcement consequence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "externalization_events",
+    "measurement_status",
+    "damage_treatment",
+    "maximum_impact_definition"
+   ],
+   "criterion": "Every unmeasured externalization receives maximum-impact damage treatment.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "externalization and measurement records",
+    "impact classification or scoring rules"
+   ],
+   "gap": "Maximum-impact damage and the treatment it entails are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether maximum impact is a categorical or numeric treatment and define its application."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA5-ExternalityAccountability-03",
+   "section": "Axiom A5 — Externality Accountability",
+   "title": "Include Full Externality Costs",
+   "quote": "The full cost of environmental and systemic externalities SHALL be included in the effective cost of any action or product, in accordance with Article 12 of the Code of Planetary Synergy (Full Product Cost).",
+   "interpretation": "Audit effective-cost calculations for inclusion of all environmental and systemic externality costs under Article 12. The document provides no costing formula or valuation method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_or_product",
+    "effective_cost",
+    "externality_costs",
+    "article_12_costing_rules"
+   ],
+   "criterion": "The effective cost of every action or product includes the full environmental and systemic externality cost in accordance with Article 12.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "environmental and systemic externality valuations",
+    "effective-cost accounting",
+    "Code of Planetary Synergy Article 12"
+   ],
+   "gap": "Article 12 and the full-cost valuation method are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA6-TruthPriority-01",
+   "section": "Axiom A6 — Truth Priority",
+   "title": "Protect Material Physically Verifiable Truth",
+   "quote": "Suppression, distortion, or strategic withholding of physically verifiable truth is forbidden when it materially affects system stability.",
+   "interpretation": "Evaluate information handling for suppression, distortion, or strategic withholding with a material effect on stability. The pronoun 'it' may refer to the information or to its suppression, distortion, or withholding.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "physically_verifiable_information",
+    "information_handling",
+    "withholding_intent",
+    "stability_effects"
+   ],
+   "criterion": "No suppression, distortion, or strategic withholding of physically verifiable truth occurs when the stated material-stability condition holds.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical verification evidence",
+    "information handling records",
+    "system stability impact assessments"
+   ],
+   "gap": "Materiality, strategic intent, and the referent of the stability-effect condition require definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the materiality criterion, intent model, and whether stability effects attach to the truth or its handling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA7-MinimumSufferingConstraint-01",
+   "section": "Axiom A7 — Minimum Suffering Constraint",
+   "title": "Equivalent Action Suffering Non Amplification",
+   "quote": "Among actions that satisfy all higher-priority axioms and are indistinguishable with respect to them, the system SHALL apply a non-amplification constraint on suffering.",
+   "interpretation": "Apply the suffering constraint only within otherwise admissible actions indistinguishable under higher-priority axioms, solely to prevent unnecessary additional suffering. The text does not define equivalence, the comparison baseline, or what additional suffering is unnecessary.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "candidate_actions",
+    "higher_priority_compliance",
+    "axiomatic_equivalence",
+    "suffering_effects"
+   ],
+   "criterion": "Within admissible actions indistinguishable under higher-priority axioms, apply suffering non-amplification solely to prevent unnecessary additional suffering.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "higher-priority axiom evaluations",
+    "comparative suffering estimates"
+   ],
+   "gap": "Axiomatic indistinguishability, unnecessary suffering, and the non-amplification baseline are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare equivalence criteria and the baseline and causal model for additional suffering."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA7-MinimumSufferingConstraint-02",
+   "section": "Axiom A7 — Minimum Suffering Constraint",
+   "title": "Physical Proxy Suffering Measurement",
+   "quote": "Suffering is treated as a measurable state variable of subjects, quantified via physical proxies derived from the Physical State Vector S(t), and SHALL NOT be treated as an ethical objective or optimization target.",
+   "interpretation": "Verify that subject suffering is represented as a state variable quantified from physical proxies derived from S(t). No proxy-selection or quantification formula is supplied.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_state_variables",
+    "s_t",
+    "physical_proxies",
+    "suffering_quantification"
+   ],
+   "criterion": "Suffering is a measurable subject state variable quantified through physical proxies derived from S(t).",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical State Vector S(t)",
+    "subject physical proxy measurements"
+   ],
+   "gap": "The definition of S(t), physical proxies, and suffering quantification mapping are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the physical proxies and their mapping from S(t) to subject suffering."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-AxiomA7-MinimumSufferingConstraint-03",
+   "section": "Axiom A7 — Minimum Suffering Constraint",
+   "title": "Restrict Suffering Decision Roles",
+   "quote": "Suffering SHALL NOT be optimized, minimized globally, or traded against other system objectives, and SHALL NOT serve as a primary decision criterion.",
+   "interpretation": "Inspect the declared decision model to ensure suffering is neither an ethical objective nor an optimization target, global minimand, tradeoff term, or primary criterion. Its permitted non-amplification role is covered separately.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "decision_objectives",
+    "optimization_specification",
+    "tradeoff_rules",
+    "criterion_priorities"
+   ],
+   "criterion": "Suffering is not an ethical objective, optimization target, globally minimized quantity, tradeoff against other objectives, or primary decision criterion.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured decision and optimization specifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-5-01",
+   "section": "5",
+   "title": "Evaluate Axioms Before Scoring",
+   "quote": "1.  Axioms are evaluated before any optimization or scoring.",
+   "interpretation": "Check execution ordering to ensure axiom evaluation precedes every optimization or scoring operation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "execution_trace",
+    "axiom_evaluation_events",
+    "optimization_events",
+    "scoring_events"
+   ],
+   "criterion": "Axiom evaluation precedes any optimization or scoring.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision execution traces"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-5-02",
+   "section": "5",
+   "title": "Invalidate And Propagate Axiom Violations",
+   "quote": "2.  Violation of any axiom invalidates an action regardless of utility score and propagates to higher-layer protocols for enforcement.",
+   "interpretation": "For each detected axiom violation, verify that the action is invalidated and the violation reaches higher-layer enforcement protocols regardless of utility. No propagation deadline or specific receiving interface is given.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "axiom_violation_events",
+    "action_validity",
+    "utility_score",
+    "enforcement_propagation"
+   ],
+   "criterion": "Any axiom violation makes the action invalid and is propagated to higher-layer protocols for enforcement, irrespective of utility score.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom violation records",
+    "action status records",
+    "enforcement propagation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-5-03",
+   "section": "5",
+   "title": "No Axiom Aggregation Or Tradeoffs",
+   "quote": "3.  Axioms are not additive and cannot be traded off against each other.",
+   "interpretation": "Inspect decision expressions and tradeoff rules for additive axiom aggregation or compensation of one axiom by another.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "decision_expressions",
+    "axiom_aggregation_rules",
+    "axiom_tradeoff_rules"
+   ],
+   "criterion": "Axioms are neither added together nor traded off against one another.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured decision expressions and tradeoff rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-5-04",
+   "section": "5",
+   "title": "Resolve Conflicts Through Higher Priority",
+   "quote": "4.  Conflicts between axioms are resolved only by higher-priority axioms.",
+   "interpretation": "Check that an axiom conflict is resolved only through a higher-priority axiom. It is unclear whether that means the higher of the conflicting axioms or an axiom higher than both; A1a also lacks a table rank.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_conflicts",
+    "conflict_resolutions",
+    "axiom_priorities"
+   ],
+   "criterion": "Every axiom conflict is resolved only by higher-priority axioms.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom conflict and resolution records"
+   ],
+   "gap": "The required priority relationship for a resolving axiom and the rank of A1a are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether resolution uses the higher conflicting axiom or one above both, and how conflicts involving A1a are handled."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-6-01",
+   "section": "6",
+   "title": "Fixed Ranked Axiom Precedence",
+   "quote": "The priority order of axioms is fixed and non-negotiable.",
+   "interpretation": "Validate the priority mapping against the table and reject lower-priority overrides. The check is complete for A1 through A7; the document supplies no rank for A1a.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "axiom_priority_mapping",
+    "priority_changes",
+    "override_decisions"
+   ],
+   "criterion": "The fixed order is A1 at priority 1, A2 at 2, A3 at 3, A4 at 4, A5 at 5, A6 at 6, and A7 at 7; lower-priority axioms do not override higher-priority ones.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "configured priorities and override decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-7-01",
+   "section": "7",
+   "title": "Forbid Axiom Optimization Goals",
+   "quote": "- Treating axioms as optimization goals",
+   "interpretation": "Under the section's explicit prohibition, reject any optimization specification that treats an axiom as a goal.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "optimization_goals",
+    "axiom_references"
+   ],
+   "criterion": "No axiom is treated as an optimization goal.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured optimization specifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-7-02",
+   "section": "7",
+   "title": "Forbid Weighted Axiom Utility",
+   "quote": "- Encoding axioms as weighted utility terms",
+   "interpretation": "Under the section's explicit prohibition, inspect utility expressions for weighted terms encoding axioms. The prohibition applies regardless of the assigned weight.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "utility_expressions",
+    "axiom_references"
+   ],
+   "criterion": "No axiom is encoded as a weighted utility term.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "structured utility expressions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-7-03",
+   "section": "7",
+   "title": "Forbid Efficiency Based Suspension",
+   "quote": "- Temporarily suspending axioms for efficiency",
+   "interpretation": "Under the section's explicit prohibition, check for temporary suspension events whose basis is efficiency.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "axiom_status_events",
+    "suspension_reasons"
+   ],
+   "criterion": "No axiom is temporarily suspended for efficiency.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom status and suspension records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-7-04",
+   "section": "7",
+   "title": "Forbid Human Discretion Overrides",
+   "quote": "- Overriding axioms by human discretion",
+   "interpretation": "Under the section's explicit prohibition, reject permissions or decisions that let human discretion override an axiom.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "override_permissions",
+    "override_decisions",
+    "override_authority"
+   ],
+   "criterion": "Human discretion cannot authorize or perform an axiom override.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "override permissions and decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-7-05",
+   "section": "7",
+   "title": "Forbid Context Based Reinterpretation",
+   "quote": "- Reinterpreting axioms based on political, cultural, or situational context",
+   "interpretation": "Under the section's explicit prohibition, compare interpretations and their stated bases for context-dependent reinterpretation. Distinguishing reinterpretation of constraint logic from permitted correction of its application requires a semantic rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_interpretations",
+    "interpretation_changes",
+    "change_reasons"
+   ],
+   "criterion": "Axioms are not reinterpreted based on political, cultural, or situational context.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "interpretation versions and change justifications"
+   ],
+   "gap": "The boundary between prohibited reinterpretation and permitted application correction is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how changes to constraint meaning are distinguished from corrections of application."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-8-01",
+   "section": "8",
+   "title": "Deployed Axiom Logic Invariance",
+   "quote": "Axioms are invariant once deployed.",
+   "interpretation": "Compare deployed constraint logic across revisions and flag changes under the existing protocol identity. The subsequent modification procedure permits a new identifier, while the clarification preserves corrections to application outputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deployment_records",
+    "protocol_identifiers",
+    "constraint_logic_versions"
+   ],
+   "criterion": "Once deployed, axiom constraint logic remains invariant; modifications follow the separate modification requirements.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deployment and constraint-logic version records"
+   ],
+   "gap": "A representation and equivalence test for unchanged constraint logic are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether invariance is assessed through exact representation identity or semantic equivalence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-8-02",
+   "section": "8",
+   "title": "Mandatory Axiom Modification Preconditions",
+   "quote": "- explicit declaration of incompatibility\n- full-system revalidation under DKP-8-SIMULATION\n- ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy",
+   "interpretation": "Require every modification to have a new protocol identifier, an explicit incompatibility declaration, full-system revalidation, and ratification meeting the stated threshold. The quoted requirements follow the preceding new-identifier bullet; the validation procedure and active-node definition are external.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "old_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "revalidation_evidence",
+    "ratification_records",
+    "active_validating_nodes"
+   ],
+   "criterion": "A modification requires a new protocol identifier, explicit incompatibility declaration, full-system revalidation under DKP-8-SIMULATION, and ratification by at least 67% of active validating nodes as defined in Appendix A.5.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "full-system revalidation results",
+    "node ratification records",
+    "active validating node definition and roster under Appendix A.5"
+   ],
+   "gap": "The revalidation procedure and Appendix A.5 definition of active validating nodes are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the roster observation point if it is not specified by Appendix A.5."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-EpistemicClarification-01",
+   "section": "Epistemic Clarification",
+   "title": "Axiom Definitions Exempt From Classification",
+   "quote": "Axioms are structural constraints, not operational outputs. As such, DKP-1-EPISTEMIC-BOUNDARIES-001 output classification requirements do not apply to axiom definitions themselves.",
+   "interpretation": "Check requirement applicability so that output-classification obligations do not attach to axiom definitions themselves. This exemption does not prohibit optional metadata or extend to outputs produced by applying axioms.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "artifact_types",
+    "classification_requirement_applicability"
+   ],
+   "criterion": "DKP-1-EPISTEMIC-BOUNDARIES-001 output classification requirements are inapplicable to axiom definitions themselves.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "artifact types and requirement applicability records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-EpistemicClarification-02",
+   "section": "Epistemic Clarification",
+   "title": "Axiom Application Output Obligations",
+   "quote": "Outputs that detect axiom violations, evaluate axiom compliance, or apply axiom constraints to operational decisions are operational outputs and remain subject to:",
+   "interpretation": "Classify all three listed output types as operational and verify eligibility for re-evaluation and dispute plus mandatory epistemic metadata classification. The following bullets name the governing protocols, but their procedures and metadata schema are absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "output_function",
+    "output_classification",
+    "reevaluation_rules",
+    "dispute_rules",
+    "epistemic_metadata"
+   ],
+   "criterion": "Violation-detection, compliance-evaluation, and operational axiom-application outputs are operational outputs subject to DKP-4-ERROR-001 re-evaluation, DKP-1-EPISTEMIC-BOUNDARIES-001 Section 7 disputes, and mandatory epistemic metadata classification.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001",
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "operational output records",
+    "re-evaluation and dispute procedures",
+    "epistemic metadata and classification schema"
+   ],
+   "gap": "The external procedures and mandatory epistemic metadata schema are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-EpistemicClarification-03",
+   "section": "Epistemic Clarification",
+   "title": "Preserve Application Error Correction",
+   "quote": "- Correction of errors in axiom violation detection\n- Re-evaluation of axiom-bounded decision outputs\n- Dispute of operational outputs that cite axiom compliance",
+   "interpretation": "Under the preceding 'does NOT prevent' clause, check that invariance is not used to block these three operations. The earlier clarification limits invariance to constraint logic rather than error recognition and correction.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "correction_rules",
+    "reevaluation_rules",
+    "dispute_rules",
+    "denial_reasons"
+   ],
+   "criterion": "Axiom invariance does not prevent violation-detection error correction, re-evaluation of axiom-bounded decisions, or disputes of operational outputs citing axiom compliance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "correction, re-evaluation, and dispute eligibility rules",
+    "denial reasons"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "AXIOMS-EpistemicClarification-04",
+   "section": "Epistemic Clarification",
+   "title": "Invariance Does Not Establish Truth",
+   "quote": "The invariance of axiom constraint logic does not constitute a claim that axioms represent absolute truth. Axioms are bounded evaluation constraints, not metaphysical assertions.",
+   "interpretation": "Review system representations of axioms for claims that their invariance establishes absolute truth or metaphysical status. Automatic checking requires a semantic representation of such claims.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_descriptions",
+    "invariance_claims",
+    "claim_classifications"
+   ],
+   "criterion": "Axiom invariance is not represented as an absolute-truth claim, and axioms are represented as bounded evaluation constraints rather than metaphysical assertions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system descriptions and claims about axioms"
+   ],
+   "gap": "The text provides no formal method for identifying absolute-truth or metaphysical claims. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a semantic classification of bounded evaluation, absolute-truth, and metaphysical claims."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

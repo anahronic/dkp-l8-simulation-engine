@@ -24,6 +24,14 @@ release after the review of 2.0.0 (tag `v2.0.0`), which reworked v1 (tag `v1.0-a
 [CHANGELOG.md](CHANGELOG.md) and
 [AUDIT_REPORT_PREVENTION_L8_PHASE_3.md](AUDIT_REPORT_PREVENTION_L8_PHASE_3.md).
 
+## Protocol Lab
+
+`lab/` builds on this bench: a registry of the provisions of all 35 protocols and the
+accompanying documents (exact quotes, machine-checked), modules that check computable
+provisions (PREVENTION through this bench, TIME, WORK-CYCLE so far), replay packages,
+and a browser runtime for the site. See [lab/README.md](lab/README.md) and
+[lab/MODEL_GAPS.md](lab/MODEL_GAPS.md). The bench itself is unchanged by the lab.
+
 ## Pipeline
 
 ```

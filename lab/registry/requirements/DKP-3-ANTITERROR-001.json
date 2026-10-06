@@ -1,0 +1,1270 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-3-ANTITERROR-001",
+ "doc_sha256": "65b33617f8e6826e21c2b80ec3822bef5864764bc233471796aa921415da863b",
+ "prefix": "ANTITERROR",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The carriage return in the required identifier prefix is preserved as the JSON escape \\r. Related conditions and prohibitions are grouped where they form one check. The preamble makes intent part of the terrorism definition, while section 2 prohibits inferring intent; the permitted evidentiary treatment of intent is unspecified. Section 5 requires continuous PTL refresh even though T0 represents absence of confirmed activity; refresh timing and expiration transitions are undefined. Section 9 permits downstream economic isolation, while section 11 prohibits ANTITERROR itself from modifying economic protocols or imposing sanctions. Named concepts such as PTL, DTI, RED, axioms, acceptable thresholds, and Defense capacity are not fully specified here. Dependency arrays contain only document identifiers explicitly cited in the relevant provision; references by protocol name alone are not expanded into identifiers.",
+ "requirements": [
+  {
+   "id": "ANTITERROR-0-01",
+   "section": "0",
+   "title": "Functional terrorism classification criteria",
+   "quote": "- deliberate targeting of life (A1),\n- asymmetric delivery of violence,\n- intent to induce systemic instability beyond the immediate physical damage.",
+   "interpretation": "A classifier would require the three listed characteristics and classify a harm pattern rather than ideology, identity, belief, or affiliation. Determining deliberateness and intent is unresolved because section 2 forbids inferring intent.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "life_targeting",
+    "violence_delivery",
+    "systemic_instability_intent",
+    "classification_basis"
+   ],
+   "criterion": "The functional pattern has deliberate targeting of life, asymmetric violence delivery, and intent to induce instability beyond immediate physical damage; ideology, belief, identity, or affiliation does not itself establish terrorism.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm-pattern evidence",
+    "evidence of deliberateness and intent"
+   ],
+   "gap": "The text supplies no admissible method for establishing intent or deliberateness consistently with the ban on intent inference. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an admissible evidence rule for deliberateness and intent that respects section 2."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-0-02",
+   "section": "0",
+   "title": "Defensive containment operating scope",
+   "quote": "This protocol is strictly defensive and containment-oriented.",
+   "interpretation": "Review protocol actions against a defensive containment classification. The text does not define how to classify mixed-purpose actions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_purpose",
+    "action_effects"
+   ],
+   "criterion": "Every protocol action is defensive and containment-oriented.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action plans and effects"
+   ],
+   "gap": "An operational definition of defensive and containment-oriented conduct is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria for classifying actions and mixed purposes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-1-01",
+   "section": "1",
+   "title": "Nonpunitive relationship with Justice",
+   "quote": "ANTITERROR is not punitive and does not replace Justice.",
+   "interpretation": "Check that ANTITERROR actions do not implement punishment or take over Justice functions. Neither punishment nor the boundary of Justice functions is specified here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_purpose",
+    "action_function",
+    "justice_function_assignments"
+   ],
+   "criterion": "ANTITERROR actions are nonpunitive and do not replace Justice.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action records",
+    "Justice function assignments"
+   ],
+   "gap": "The classification of punitive actions and the division of Justice responsibilities are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how punitive conduct and replacement of Justice are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-2-01",
+   "section": "2",
+   "title": "Required protocol execution ordering",
+   "quote": "- after DKP-3-INTERNAL-SEC-001,\n- after and in coordination with DKP-3-DEFENSE-001,\n- upstream of DKP-4-CRISIS-001.",
+   "interpretation": "Check a dependency graph or execution trace for the prescribed upstream and downstream relationships, including Oracle, Time, Impact, Identity, and Justice. The text does not establish whether downstream means data dependency, temporal completion, or both, nor what Defense coordination requires.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_dependency_graph",
+    "execution_trace",
+    "defense_coordination_records"
+   ],
+   "criterion": "ANTITERROR is downstream of Oracle, Time, Impact, Identity, and Justice; follows Internal Security and Defense; coordinates with Defense; and is upstream of Crisis.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-0-TIME-001",
+    "DKP-1-IMPACT-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-1-JUSTICE-001",
+    "DKP-3-INTERNAL-SEC-001",
+    "DKP-3-DEFENSE-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "protocol execution and dependency records",
+    "Defense coordination records"
+   ],
+   "gap": "Dependency semantics and the required coordination interface are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether ordering concerns execution, data dependencies, or both.",
+    "Declare evidence sufficient to establish coordination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-2-02",
+   "section": "2",
+   "title": "Inference and collective responsibility bans",
+   "quote": "- SHALL NOT infer ideology, intent, belief, or affiliation.\n- SHALL NOT apply collective responsibility.",
+   "interpretation": "Inspect decision inputs, inference outputs, and responsibility assignments for prohibited reasoning. A classifier or decision ontology is needed to identify indirect inference and collective responsibility.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "inference_trace",
+    "decision_basis",
+    "responsibility_assignments"
+   ],
+   "criterion": "No ideology, intent, belief, or affiliation is inferred, and no collective responsibility is applied.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision traces",
+    "responsibility assignments"
+   ],
+   "gap": "The text does not operationalize inference or collective responsibility. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification of prohibited inferences and collective responsibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-2-03",
+   "section": "2",
+   "title": "Evidence and institutional boundary constraints",
+   "quote": "- SHALL NOT operate without PTL-confirmed harm.\n- SHALL NOT substitute Justice or Defense protocols.",
+   "interpretation": "Require PTL-confirmed harm for operation and check that ANTITERROR does not replace Justice or Defense functions. The evidence prerequisite is directly testable from confirmation records, but substitution needs an external allocation of responsibilities.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operation_records",
+    "ptl_harm_confirmations",
+    "protocol_function_assignments"
+   ],
+   "criterion": "Every operation has PTL-confirmed harm and does not substitute Justice or Defense protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL harm confirmations",
+    "Justice and Defense responsibility definitions"
+   ],
+   "gap": "The boundary between specialization and substitution of Justice or Defense is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare institutional responsibility boundaries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-3.1-01",
+   "section": "3.1",
+   "title": "Terror event qualification criteria",
+   "quote": "- targets non-combatant subjects or protected civilian domains,\n- produces high systemic destabilization relative to physical scale,\n- employs non-linear delivery methods (randomized, concealed, decentralized).",
+   "interpretation": "Require a PTL-confirmed asymmetric harm stream satisfying all three listed conditions. Terror classification attaches to the harm pattern rather than the actor; the threshold for high destabilization relative to physical scale is absent.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_confirmation",
+    "asymmetric_harm_stream",
+    "target_classification",
+    "systemic_destabilization",
+    "physical_scale",
+    "delivery_method",
+    "classification_subject"
+   ],
+   "criterion": "A Terror Event is a PTL-confirmed asymmetric harm stream targeting non-combatants or protected civilian domains, producing high systemic destabilization relative to physical scale, and using non-linear delivery; the designation applies to the harm pattern.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmations",
+    "target classifications",
+    "Impact measurements",
+    "delivery-method evidence"
+   ],
+   "gap": "The relative destabilization measure and its high threshold are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a measure and threshold for high destabilization relative to physical scale.",
+    "Declare how non-linear delivery methods are classified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-3.1-02",
+   "section": "3.1",
+   "title": "Measurable systemic destabilization requirement",
+   "quote": "Systemic destabilization is defined functionally and MUST be measurable via DKP-1-IMPACT-001, including but not limited to:",
+   "interpretation": "Check that destabilization can be measured through Impact using functional indicators. The listed entropy, mobility, and response-channel indicators are non-exhaustive; the text does not say every event must exhibit every indicator.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "impact_measurement_interface",
+    "entropy_measurements",
+    "population_mobility_vectors",
+    "ptl_response_channel_overload"
+   ],
+   "criterion": "Systemic destabilization is functionally measurable via DKP-1-IMPACT-001, with the listed indicator types supported as applicable.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "social or informational entropy measurements",
+    "population mobility vectors",
+    "PTL-confirmed civilian response or emergency-channel overload"
+   ],
+   "gap": "The referenced Impact measurement specification and criteria for sharp, abrupt, and overload are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare applicable indicator selection and measurement semantics pending the Impact specification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-3.2-01",
+   "section": "3.2",
+   "title": "Asymmetric harm stream definition",
+   "quote": "- the attacker is not a symmetric system participant,\n- the harm delivery does not require territorial control,\n- the damage propagates through fear, uncertainty, or infrastructure cascades.",
+   "interpretation": "Classify a sequence of harm events using all three conditions. The territorial-control condition concerns whether delivery requires control, not merely whether the attacker happens to possess territory.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "harm_event_sequence",
+    "attacker_participation",
+    "territorial_control_requirements",
+    "damage_propagation"
+   ],
+   "criterion": "The event sequence has a nonsymmetric attacker, delivery independent of territorial control, and damage propagation through fear, uncertainty, or infrastructure cascades.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "attacker participation evidence",
+    "delivery mechanism analysis",
+    "damage propagation observations"
+   ],
+   "gap": "Symmetric participation and causal propagation tests are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare symmetric-participant classification.",
+    "Declare a causal model for delivery requirements and damage propagation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-3.3-01",
+   "section": "3.3",
+   "title": "Protected civilian domain inclusion",
+   "quote": "- civilian transport systems,\n- hospitals, schools, shelters,\n- food, water, and energy distribution nodes serving civilians.",
+   "interpretation": "Treat the listed domain classes, including civilian populations and public spaces, as protected. Because the text says include, the list does not establish that unlisted classes are unprotected.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "domain_type",
+    "serves_civilians"
+   ],
+   "criterion": "Civilian populations, public spaces, civilian transport, hospitals, schools, shelters, and food, water, or energy distribution nodes serving civilians are included as protected civilian domains.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "domain classifications",
+    "civilian-service designations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-4.1-01",
+   "section": "4.1",
+   "title": "Ongoing harm evidence prerequisite",
+   "quote": "No anti-terror action may occur without PTL-confirmed evidence of an ongoing terror event or asymmetric harm stream.",
+   "interpretation": "For each action, require PTL evidence confirming an ongoing qualifying event or stream at the time of action. This checks the supplied PTL status without independently reconstructing physical truth.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "action_times",
+    "ptl_confirmed_event_status"
+   ],
+   "criterion": "At every anti-terror action time, PTL-confirmed evidence establishes an ongoing terror event or asymmetric harm stream.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "time-indexed PTL event confirmations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-4.2-01",
+   "section": "4.2",
+   "title": "Nonideological decision input restrictions",
+   "quote": "- profile beliefs, religions, ethnicities, or political views,\n- infer intent from speech or association,\n- treat identity as a risk signal.",
+   "interpretation": "Audit features and decision traces against these prohibitions and require qualification through physical or system harm patterns. Indirect proxies and the boundary of physical or system harm need an explicit classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "profiling_features",
+    "inference_trace",
+    "risk_features",
+    "qualification_basis"
+   ],
+   "criterion": "No prohibited profiling, speech- or association-based intent inference, or identity risk signal is used; only physical/system harm patterns qualify.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "model features and decision traces",
+    "harm-pattern evidence"
+   ],
+   "gap": "The text does not define proxy detection or a complete physical/system harm classification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare prohibited feature and proxy classifications.",
+    "Declare qualifying physical/system harm categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-4.3-01",
+   "section": "4.3",
+   "title": "Exclusive containment action objectives",
+   "quote": "- stop ongoing harm,\n- prevent immediate recurrence,\n- protect civilian life.",
+   "interpretation": "Check that action objectives are confined to these purposes. Objective declarations alone cannot establish actual purpose, and immediate recurrence has no specified horizon.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_objectives",
+    "objective_evidence",
+    "recurrence_horizon"
+   ],
+   "criterion": "ANTITERROR actions aim solely to stop ongoing harm, prevent immediate recurrence, or protect civilian life.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action plans",
+    "objective evidence",
+    "recurrence assessments"
+   ],
+   "gap": "The immediate-recurrence horizon and method for verifying exclusive objectives are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the meaning of immediate recurrence.",
+    "Declare evidence sufficient to classify action objectives."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-4.3-02",
+   "section": "4.3",
+   "title": "Prohibited retaliatory action objectives",
+   "quote": "They do not seek punishment, deterrence through fear, or symbolic retaliation.",
+   "interpretation": "Assess whether any action seeks one of the prohibited objectives. Programmatic checking requires a declared method for evaluating purpose, including mixed purposes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_objectives",
+    "objective_evidence"
+   ],
+   "criterion": "No action seeks punishment, deterrence through fear, or symbolic retaliation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action plans and objective evidence"
+   ],
+   "gap": "The text does not provide an operational test for these purposes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how prohibited and mixed objectives are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-4.4-01",
+   "section": "4.4",
+   "title": "Proportional and localized action limits",
+   "quote": "- proportional to the measured harm,\n- localized to the threat vector,",
+   "interpretation": "Compare the scale of each action with measured harm and its scope with the threat vector. Neither proportionality nor localization is given a metric or acceptance rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_scale",
+    "measured_harm",
+    "action_scope",
+    "threat_vector"
+   ],
+   "criterion": "Every action is proportional to measured harm and localized to the threat vector.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm measurements",
+    "threat-vector assessments",
+    "action scope and effects"
+   ],
+   "gap": "A proportionality rule and a localization test are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare proportionality and threat-localization criteria without treating them as text-defined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-4.4-02",
+   "section": "4.4",
+   "title": "Reversibility and immediate termination capability",
+   "quote": "- reversible where possible,\n- immediately terminable when PTL confirms harm cessation.",
+   "interpretation": "Require reversibility whenever feasible and the capability to terminate upon PTL-confirmed cessation. This is a capability requirement, while section 8 separately requires actual automatic termination.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_reversibility",
+    "reversal_feasibility",
+    "termination_capability",
+    "ptl_harm_cessation"
+   ],
+   "criterion": "Actions are reversible where possible and immediately terminable when PTL confirms harm cessation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reversal feasibility assessments",
+    "action-control capabilities",
+    "PTL cessation signals"
+   ],
+   "gap": "Feasibility criteria and the operational timing meaning of immediately are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a reversal-feasibility model.",
+    "Declare timing semantics for immediate termination capability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-5-01",
+   "section": "5",
+   "title": "No terror activity state",
+   "quote": "T0 – No Terror Activity\n\n  * No PTL-confirmed asymmetric harm streams.",
+   "interpretation": "Check that a T0 state has no PTL-confirmed asymmetric harm streams. The text supplies no complete transition table or precedence rule between states.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "state",
+    "ptl_confirmed_asymmetric_harm_streams"
+   ],
+   "criterion": "If state is T0, no PTL-confirmed asymmetric harm streams are present.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL asymmetric harm stream status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-5-02",
+   "section": "5",
+   "title": "Active event state authorization",
+   "quote": "  *PTL confirms an ongoing asymmetric harm stream targeting civilians.* Immediate localized containment actions permitted.",
+   "interpretation": "Validate the T1 evidence condition and permit immediate localized containment. This provision grants permission rather than requiring that containment actions occur.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "state",
+    "ptl_stream_status",
+    "target_classification",
+    "action_scope",
+    "action_timing"
+   ],
+   "criterion": "T1 requires PTL confirmation of an ongoing asymmetric harm stream targeting civilians and permits immediate localized containment actions.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL stream confirmations",
+    "civilian target classifications",
+    "containment action records"
+   ],
+   "gap": "Immediate timing and localization criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the timing and spatial semantics of immediate localized containment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-5-03",
+   "section": "5",
+   "title": "Sustained threat state authorization",
+   "quote": "  *Multiple or continuous terror events confirmed.* Coordinated multi-domain containment permitted.",
+   "interpretation": "Validate that T2 has confirmed multiple or continuous events and authorize coordinated containment across domains. The event counting window, continuity rule, and coordination requirements are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "state",
+    "confirmed_terror_events",
+    "event_timeline",
+    "containment_domains",
+    "coordination_records"
+   ],
+   "criterion": "T2 requires confirmed multiple or continuous terror events and permits coordinated multi-domain containment.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "confirmed terror event records",
+    "event timing",
+    "multi-domain coordination records"
+   ],
+   "gap": "The aggregation window, continuity criterion, and coordination semantics are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the event counting window and continuity criterion.",
+    "Declare what establishes coordinated multi-domain containment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-5-04",
+   "section": "5",
+   "title": "Systemic terror escalation state",
+   "quote": "  *PTL confirms threat exceeding Defense capacity or mass-casualty risk.* Mandatory escalation to DKP-4-CRISIS-001.",
+   "interpretation": "Require escalation for the T3 condition. The sentence can mean a threat exceeding Defense capacity or a confirmed mass-casualty risk; its grammar also leaves unclear whether an exceedance comparison is intended for both branches.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "state",
+    "ptl_threat_confirmation",
+    "defense_capacity",
+    "mass_casualty_risk",
+    "crisis_escalation"
+   ],
+   "criterion": "When PTL confirms the T3 threat condition, escalation to DKP-4-CRISIS-001 is mandatory.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "PTL threat confirmation",
+    "Defense capacity assessments",
+    "mass-casualty risk assessments",
+    "Crisis escalation records"
+   ],
+   "gap": "Defense capacity measurement, mass-casualty qualification, and the scope of the exceedance comparison are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the interpretation of the alternative triggers.",
+    "Declare capacity and mass-casualty qualification models."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-5-05",
+   "section": "5",
+   "title": "Continuous state evidence refresh",
+   "quote": "States require continuous PTL refresh to persist.",
+   "interpretation": "Check that persisted states remain supported by refreshed PTL information. The text neither exempts T0 nor specifies a refresh interval, stale-data timeout, or destination state after refresh failure.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "state_history",
+    "ptl_refresh_history"
+   ],
+   "criterion": "A state may persist only while continuous PTL refresh is maintained.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL refresh timestamps and statuses",
+    "state history"
+   ],
+   "gap": "Refresh cadence, freshness limits, and the transition on refresh loss are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare continuous-refresh semantics and stale-evidence handling.",
+    "Declare how refresh applies to T0."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-6-01",
+   "section": "6",
+   "title": "Permitted physical containment measures",
+   "quote": "- rapid neutralization of active harm sources,\n- temporary spatial lockdowns strictly limited to the threat zone,\n- emergency medical response coordination,",
+   "interpretation": "Recognize the listed physical and medical response categories as permitted subject to the protocol's other constraints. The list is introduced by include, so it does not by itself prohibit every unlisted action.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_type",
+    "attacker_active_status",
+    "harm_source_active_status",
+    "attack_vectors",
+    "civilian_status",
+    "lockdown_extent",
+    "threat_zone",
+    "lockdown_duration"
+   ],
+   "criterion": "Permitted categories include interdiction of active attackers, isolation of attack vectors, civilian evacuation and sheltering, rapid neutralization of active harm sources, temporary lockdowns strictly within the threat zone, and emergency medical response coordination.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "active attacker and source assessments",
+    "attack-vector and threat-zone data",
+    "action records"
+   ],
+   "gap": "Rapid response, temporary duration, and threat-zone determination have no operational specifications. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare timing criteria for rapid and temporary actions.",
+    "Declare how threat zones and active harm sources are determined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-6-02",
+   "section": "6",
+   "title": "Reactive event scope requirement",
+   "quote": "- Actions are reactive and event-scoped.",
+   "interpretation": "Require each action to respond to and remain scoped to an identified event. Causal responsiveness and permissible event scope require a declared model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_records",
+    "event_links",
+    "action_trigger",
+    "action_scope"
+   ],
+   "criterion": "Every action is reactive and scoped to its event.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "event records",
+    "action triggers and event associations"
+   ],
+   "gap": "Reactive causation and the boundaries of event scope are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria linking action triggers and scope to a specific event."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-6-03",
+   "section": "6",
+   "title": "Technical information isolation limits",
+   "quote": "- temporary technical isolation of local information propagation channels to limit nonlinear panic amplification (signal amplitude containment, not content control).",
+   "interpretation": "Permit local technical isolation for panic amplification containment only within the stated temporary, non-content-based scope. The accompanying note also excludes ideological isolation, but no duration or signal-amplitude model is specified.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "isolated_channels",
+    "channel_locality",
+    "isolation_mechanism",
+    "isolation_duration",
+    "selection_basis",
+    "panic_amplification_objective"
+   ],
+   "criterion": "Information isolation is local, technical, temporary and time-limited, aims to limit nonlinear panic amplification through signal amplitude containment, and is neither ideological nor content-based.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "channel topology",
+    "technical isolation configuration",
+    "isolation timing and selection rules"
+   ],
+   "gap": "Locality, time limits, and the distinction between signal amplitude containment and content control lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare locality and duration criteria.",
+    "Declare a technical classification separating amplitude containment from content control."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-6-04",
+   "section": "6",
+   "title": "Long term control prohibition",
+   "quote": "- No long-term occupation or control is permitted.",
+   "interpretation": "Check occupation and control actions against the prohibition on long-term duration. The text provides no duration boundary.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "occupation_records",
+    "control_records",
+    "action_duration"
+   ],
+   "criterion": "No occupation or control is long-term.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "occupation and control histories"
+   ],
+   "gap": "The duration or condition that makes occupation or control long-term is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the meaning of long-term occupation or control."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-7-01",
+   "section": "7",
+   "title": "Screening surveillance and punishment bans",
+   "quote": "- conduct ideological screening,\n- implement mass surveillance,\n- impose collective punishment,",
+   "interpretation": "Reject actions classified as any of these three prohibited practices. The text supplies no scale criterion for mass surveillance or classification rules for the other practices.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_records",
+    "screening_basis",
+    "surveillance_scope",
+    "punishment_assignments"
+   ],
+   "criterion": "ANTITERROR conducts no ideological screening, implements no mass surveillance, and imposes no collective punishment.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "screening records",
+    "surveillance scope",
+    "punishment decisions"
+   ],
+   "gap": "Operational classifications, including the boundary of mass surveillance, are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare screening, mass-surveillance, and collective-punishment classifications."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-7-02",
+   "section": "7",
+   "title": "Detention dissent and retrospective bans",
+   "quote": "- detain subjects without PTL-confirmed active harm,\n- use terror designation to suppress dissent,\n- apply retrospective justification.",
+   "interpretation": "Require PTL-confirmed active harm for detention and prohibit dissent suppression and retrospective justification. It is unclear whether detention requires subject-specific active-harm confirmation or only confirmation of an active event.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "detention_records",
+    "ptl_active_harm_confirmation",
+    "subject_harm_links",
+    "designation_use",
+    "justification_history"
+   ],
+   "criterion": "No subject is detained without PTL-confirmed active harm; terror designation is not used to suppress dissent; retrospective justification is not applied.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL active-harm evidence",
+    "detention and designation records",
+    "decision justifications"
+   ],
+   "gap": "The required subject-to-harm linkage and tests for dissent suppression and retrospective justification are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether detention confirmation must be subject-specific.",
+    "Declare prohibited designation-use and justification classifications."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-7-03",
+   "section": "7",
+   "title": "Success cannot cure initial violations",
+   "quote": "No successful containment outcome may be used to justify violation of axioms or absence of PTL evidence at the moment an action was initiated.",
+   "interpretation": "Evaluate initiation-time evidence and axiom compliance independently of later containment success. Missing initiation evidence remains a violation even when the outcome is successful.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_initiation_time",
+    "ptl_evidence_history",
+    "axiom_compliance",
+    "containment_outcome",
+    "justification_records"
+   ],
+   "criterion": "Successful containment never justifies an axiom violation or missing PTL evidence at action initiation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "initiation-time PTL evidence",
+    "axiom compliance findings",
+    "outcome and justification records"
+   ],
+   "gap": "The applicable axioms and an operational test for outcome-based justification are not provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare applicable axiom checks and how forbidden outcome-based justification is detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-8-01",
+   "section": "8",
+   "title": "Defense specialization and protection roles",
+   "quote": "- ANTITERROR is a specialization of Defense for asymmetric civilian-targeted harm.\n- Defense provides infrastructure shielding; ANTITERROR provides rapid civilian protection.",
+   "interpretation": "Check that ANTITERROR operates within the stated specialization and that the two protection roles are assigned accordingly. The statement does not explicitly make either role exclusive.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "harm_classification",
+    "defense_service_records",
+    "antiterror_service_records",
+    "civilian_protection_timing"
+   ],
+   "criterion": "ANTITERROR specializes in asymmetric civilian-targeted harm and provides rapid civilian protection; Defense provides infrastructure shielding.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Defense shielding records",
+    "civilian protection records",
+    "harm classifications"
+   ],
+   "gap": "Required service coverage and the timing meaning of rapid are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare service fulfillment criteria and the timing meaning of rapid protection."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-8-02",
+   "section": "8",
+   "title": "Complete Impact data forwarding",
+   "quote": "- All harm stream data and containment logs SHALL be forwarded to DKP-1-IMPACT-001 for damage assessment and externality accounting.",
+   "interpretation": "Compare the complete inventory of harm stream data and containment logs with records forwarded to Impact. The text requires completeness and purpose but supplies no delivery deadline or transport format.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "harm_stream_data_inventory",
+    "containment_log_inventory",
+    "impact_forwarding_records",
+    "forwarding_purpose"
+   ],
+   "criterion": "Every harm stream data item and containment log is forwarded to DKP-1-IMPACT-001 for damage assessment and externality accounting.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "source data and log inventories",
+    "Impact forwarding records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-8-03",
+   "section": "8",
+   "title": "Post factum Justice evidence consumption",
+   "quote": "- Justice consumes PTL evidence and logs post-factum.",
+   "interpretation": "Check that Justice receives and uses PTL evidence and logs after the relevant occurrence. The text does not identify whether the temporal reference is the event, the individual action, or completion of containment.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_evidence",
+    "logs",
+    "justice_consumption_records",
+    "event_times",
+    "action_times"
+   ],
+   "criterion": "Justice consumes PTL evidence and logs post-factum.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL evidence",
+    "containment logs",
+    "Justice consumption records"
+   ],
+   "gap": "The reference occurrence for post-factum timing and evidence of consumption are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the temporal reference for post-factum and what constitutes consumption."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-8-04",
+   "section": "8",
+   "title": "Automatic termination on threat cessation",
+   "quote": "- ANTITERROR actions terminate automatically when PTL confirms threat cessation.",
+   "interpretation": "In an event trace, PTL confirmation of threat cessation must trigger automatic termination of the associated actions. The text specifies the triggering event but no physical execution-latency allowance.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "ptl_threat_cessation_events",
+    "associated_active_actions",
+    "action_transition_trace",
+    "termination_trigger"
+   ],
+   "criterion": "A PTL threat-cessation confirmation automatically transitions associated ANTITERROR actions to terminated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL cessation events",
+    "action lifecycle records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-9-01",
+   "section": "9",
+   "title": "Mandatory Crisis escalation triggers",
+   "quote": "- terror events propagate system-wide,\n- asymmetric threat overwhelms containment capacity,\n- PTL signals systemic destabilization.",
+   "interpretation": "Require Crisis escalation when any listed trigger occurs, including civilian casualty risk exceeding acceptable thresholds. The list is read as alternative triggers, but casualty thresholds, system-wide propagation, and capacity exceedance are not operationalized.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "civilian_casualty_risk",
+    "acceptable_thresholds",
+    "event_propagation",
+    "containment_capacity",
+    "asymmetric_threat",
+    "ptl_destabilization_signal",
+    "crisis_escalation_records"
+   ],
+   "criterion": "Escalate to DKP-4-CRISIS-001 when civilian casualty risk exceeds acceptable thresholds, events propagate system-wide, asymmetric threat overwhelms containment capacity, or PTL signals systemic destabilization.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "casualty risk assessments",
+    "event propagation data",
+    "containment capacity assessments",
+    "PTL destabilization signals",
+    "Crisis escalation records"
+   ],
+   "gap": "Acceptable thresholds, system boundaries, and the capacity comparison model are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare casualty thresholds and their authority.",
+    "Declare system-wide propagation and capacity-overwhelm criteria.",
+    "Treat the listed conditions as alternative escalation triggers."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-9-02",
+   "section": "9",
+   "title": "Conditional downstream economic isolation permission",
+   "quote": "If PTL confirms systematic use of civilian or transport infrastructure for asymmetric harm delivery, RED-based economic isolation mechanisms MAY be triggered via downstream protocols, rendering such logistics economically non-viable.",
+   "interpretation": "Recognize a permission to trigger downstream RED mechanisms when PTL confirms the stated infrastructure use; invocation is optional. Economic non-viability may be an intended outcome or a required result, and the text does not resolve that distinction.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_infrastructure_use_confirmation",
+    "systematic_use_classification",
+    "red_trigger",
+    "executing_protocol",
+    "logistics_economic_viability"
+   ],
+   "criterion": "PTL confirmation of systematic civilian or transport infrastructure use for asymmetric harm delivery permits RED-based isolation through downstream protocols to render those logistics economically non-viable.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL infrastructure-use confirmations",
+    "downstream RED mechanism records",
+    "logistics economic data"
+   ],
+   "gap": "RED mechanisms, systematic-use criteria, and the meaning and normative force of economic non-viability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare systematic-use criteria.",
+    "Declare a downstream RED and logistics viability model.",
+    "Declare whether economic non-viability is an objective or required result."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-10-01",
+   "section": "10",
+   "title": "Action audit metadata and review",
+   "quote": "- indexed by DTI-Day,\n- reviewable post-event,\n- subject to Justice review.",
+   "interpretation": "Require every action to have a PTL-anchored log, DTI-Day indexing, post-event review access, and Justice review applicability. The text does not require a completed Justice review for every action or define the anchoring and review interfaces.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "action_inventory",
+    "action_logs",
+    "ptl_anchors",
+    "dti_day_index",
+    "post_event_review_access",
+    "justice_review_applicability"
+   ],
+   "criterion": "Every action is logged with PTL anchoring, indexed by DTI-Day, reviewable post-event, and subject to Justice review.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL anchors",
+    "DTI-Day values",
+    "audit access records",
+    "Justice review interface"
+   ],
+   "gap": "Valid PTL anchoring, DTI-Day indexing, and reviewability requirements are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare metadata validity and review-access checks."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-11-01",
+   "section": "11",
+   "title": "Economic protocol and sanctions isolation",
+   "quote": "- modify economic protocols,\n- impose sanctions,",
+   "interpretation": "Reject economic protocol changes or sanctions imposed by ANTITERROR. Section 9 permits downstream mechanisms, so the executor must be distinguishable from the triggering protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "economic_protocol_changes",
+    "sanction_records",
+    "executing_protocol",
+    "triggering_protocol"
+   ],
+   "criterion": "DKP-3-ANTITERROR-001 neither modifies economic protocols nor imposes sanctions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "economic protocol change records",
+    "sanction and execution attribution records"
+   ],
+   "gap": "The boundary between triggering downstream isolation and imposing a sanction is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare executor attribution and the distinction between permitted downstream triggering and prohibited sanctions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-11-02",
+   "section": "11",
+   "title": "Speech and decision authority isolation",
+   "quote": "- regulate speech or ideology,\n- override Defense or Justice decisions.",
+   "interpretation": "Check that ANTITERROR actions neither regulate speech or ideology nor supersede Defense or Justice decisions. Regulation and override need an operational classification, especially for technical information isolation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_effects",
+    "regulatory_rules",
+    "defense_decisions",
+    "justice_decisions",
+    "decision_execution_trace"
+   ],
+   "criterion": "ANTITERROR does not regulate speech or ideology and does not override Defense or Justice decisions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action and regulatory records",
+    "Defense and Justice decisions"
+   ],
+   "gap": "The operational boundaries of regulation and decision override are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare regulation and override classifications consistent with the technical isolation permission."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-12-01",
+   "section": "12",
+   "title": "Controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Require normative changes to follow the referenced upgrade process and include the listed procedural elements. The text names these elements but does not supply their validity rules, acceptance conditions, or activation timing.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal_record",
+    "simulation_record",
+    "audit_record",
+    "acceptance_conditions",
+    "activation_window",
+    "rollback_provision",
+    "upgrade_process_trace"
+   ],
+   "criterion": "A normative protocol change occurs only through DKP-4-UPGRADE-001 with proposal, required simulation and audit, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation and audit results",
+    "acceptance and activation records",
+    "rollback provision"
+   ],
+   "gap": "The referenced procedural specifications and acceptance and activation rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare provisional workflow validity rules only where the referenced specifications are unavailable."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-12-02",
+   "section": "12",
+   "title": "Change identity and declaration requirements",
+   "quote": "- changes require a new protocol identifier,\n- mandatory simulation under DKP-8-SIMULATION-001,\n- explicit incompatibility declaration.",
+   "interpretation": "For each normative change, check for a new identifier, a simulation under the named protocol, and an explicit incompatibility declaration. Presentation-only corrections are excluded by the following paragraph; the declaration's required content and simulation compliance rules are absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "normative_change",
+    "previous_protocol_id",
+    "new_protocol_id",
+    "simulation_record",
+    "incompatibility_declaration"
+   ],
+   "criterion": "Every normative change has a new protocol identifier, mandatory simulation under DKP-8-SIMULATION-001, and an explicit incompatibility declaration.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "protocol identifier records",
+    "simulation records",
+    "incompatibility declaration"
+   ],
+   "gap": "Simulation validity and incompatibility declaration content requirements are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare required declaration content and simulation compliance evidence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-12-03",
+   "section": "12",
+   "title": "Presentation correction recording exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "If a correction preserves normative content and affects presentation only, classify it outside the Upgrade process and record it only through the document's Last updated date. Determining unchanged normative meaning requires a semantic decision or declared comparison method.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_record"
+   ],
+   "criterion": "Presentation-only corrections with unchanged normative content are not Upgrades and are recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition comparison",
+    "change classification",
+    "document date metadata"
+   ],
+   "gap": "A method for deciding normative equivalence and the referenced exception procedure are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how presentation-only changes and normative equivalence are established.",
+    "Treat the front-matter last_updated field as the referenced Last updated date."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ANTITERROR-12-04",
+   "section": "12",
+   "title": "Published edition digest integrity",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For every published edition, compute SHA-256 over its designated canonical source and compare it with the corresponding repository manifest entry. This checks source bytes supplied as canonical without independently determining which artifact has canonical authority.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_edition_inventory",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "sha256sums_entries",
+    "manifest_repository"
+   ],
+   "criterion": "Each published edition has a corresponding SHA256SUMS.txt entry in github.com/anahronic/World equal to SHA-256 of its canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical edition sources",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

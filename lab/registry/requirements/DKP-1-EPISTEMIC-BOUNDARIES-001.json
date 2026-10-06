@@ -1,0 +1,1090 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+ "doc_sha256": "daffd549a33c6eb2fffbbd0a82bb3c5e1f049ff9db78227a5d1a5a672dced0c8",
+ "prefix": "EB",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. The supplied requirement prefix contains a carriage return, preserved as \\r in JSON ids. Unnumbered subsection headings in section 5 supply their own section identifiers. Document-wide dependencies are DKP-0-ORACLE-001, DKP-1-AXIOMS-001, DKP-7-SCOPE-001, DKP-8-AUDIT-001, and DKP-8-SIMULATION-001; individual provisions do not explicitly assign these document ids, so their normative_dependencies arrays are empty. Section 5.x refers to metadata defined 'in this section'; the registry interprets this as the set enumerated under section 5. Repeated rules are consolidated: section 4 items 3 and 5 are covered by sections 6 and 5.x respectively; section 14 repeats the bounded-evaluation and no-truth rules. Section 1 contains purpose statements rather than additional operational requirements. Section 4's persistent-output degradation statement is potentially in tension with section 9's exclusive degradation conditions and stable-environment exception. Dispute trigger combination, metadata field types, admissibility criteria, and reliability dynamics are not specified.",
+ "requirements": [
+  {
+   "id": "EB-0-01",
+   "section": "0",
+   "title": "Overrides Are Not Permitted",
+   "quote": "Override: Not permitted",
+   "interpretation": "Check that no override mechanism authorizes bypassing this protocol. The text supplies no exceptions.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "override_rules"
+   ],
+   "criterion": "No override rule permits bypassing this protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol override rules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-0-02",
+   "section": "0",
+   "title": "Outputs Require Bounded Measurement",
+   "quote": "All DKP outputs are bounded evaluations of measured signals under defined conditions.",
+   "interpretation": "Check output provenance for measured signals and defined evaluation conditions. Determining whether an evaluation is adequately bounded requires a definition of the permitted bounds.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "output",
+    "measurement_provenance",
+    "evaluation_conditions",
+    "evaluation_bounds"
+   ],
+   "criterion": "Every DKP output evaluates measured signals under defined conditions and within declared evaluation bounds.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measurement provenance",
+    "evaluation conditions and boundaries"
+   ],
+   "gap": "The text does not define how boundedness or adequate evaluation conditions are established. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a predicate for an evaluation being bounded under its declared conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-2-01",
+   "section": "2",
+   "title": "Universal Constraint And Enforcement",
+   "quote": "- constrains all output-producing protocols\n- does not implement execution mechanisms\n- is enforced via L7 (scope, transparency) and L8 (audit, simulation)",
+   "interpretation": "Inspect protocol coverage and architecture to verify that the constraint applies across L1–L8, with enforcement through L7 and L8 and execution mechanisms outside this protocol. Architectural compliance needs a declared mapping of implementations to layers and responsibilities.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_inventory",
+    "layer_assignments",
+    "enforcement_architecture",
+    "execution_architecture"
+   ],
+   "criterion": "All output-producing protocols across L1–L8 are constrained; enforcement operates through L7 and L8; this protocol implements no execution mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol and layer inventory",
+    "enforcement and execution architecture"
+   ],
+   "gap": "No implementation mapping or test for architectural responsibility is provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how implementation components map to layers and enforcement or execution responsibilities."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-3-01",
+   "section": "3",
+   "title": "Dispute Event Qualification Rule",
+   "quote": "Dispute Event\nSubmission of new admissible data or conflict signal.",
+   "interpretation": "Classify a submission as a dispute event when it supplies new admissible data or a conflict signal. The text does not specify admissibility, novelty, or conflict-signal validation.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "submission",
+    "prior_data",
+    "admissibility_result",
+    "conflict_signal"
+   ],
+   "criterion": "A dispute event is a submission of new admissible data or a conflict signal.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "input admissibility decisions",
+    "conflict signals",
+    "previously available data"
+   ],
+   "gap": "Novelty, admissibility, and conflict-signal qualification criteria are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare novelty, admissibility, and conflict-signal predicates."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-3-02",
+   "section": "3",
+   "title": "Reevaluation Requires Deterministic Recomputation",
+   "quote": "Re-evaluation\nDeterministic recomputation under updated admissible inputs.",
+   "interpretation": "Check that an operation identified as re-evaluation recomputes with updated admissible inputs and behaves deterministically. Determinism requires a declared account of all inputs and relevant system state.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "reevaluation_operation",
+    "previous_inputs",
+    "updated_inputs",
+    "admissibility_result",
+    "evaluation_state"
+   ],
+   "criterion": "Re-evaluation is deterministic recomputation under updated admissible inputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "admissibility decisions",
+    "evaluation inputs and state"
+   ],
+   "gap": "Admissibility and the complete computational state governing deterministic recomputation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare admissibility rules and the full input and state model for determinism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-3-03",
+   "section": "3",
+   "title": "Stale Output Classification Condition",
+   "quote": "Stale Output\nOutput not revalidated under evolving conditions.",
+   "interpretation": "Classify an output as stale when relevant conditions have evolved without corresponding revalidation. Age or missing new data alone is not the stated definition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "output",
+    "condition_history",
+    "revalidation_history"
+   ],
+   "criterion": "An output is stale when conditions evolve and the output has not been revalidated under those conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "condition change history",
+    "output revalidation records"
+   ],
+   "gap": "The text does not define relevant condition evolution or what constitutes completed revalidation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define relevant condition changes and the revalidation coverage needed for each change."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-4-01",
+   "section": "4",
+   "title": "Outputs Never Represent Truth",
+   "quote": "1.  No DKP output represents truth.",
+   "interpretation": "A program can flag explicit truth labels, but cannot decide the unrestricted semantic claim that an output represents truth. This invariant is also reflected in sections 0, 12, and 14.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "output",
+    "output_semantics"
+   ],
+   "criterion": "No DKP output represents truth.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output representations and semantic context"
+   ],
+   "gap": "The meaning of representing truth is not operationally defined.",
+   "hypotheses_needed": [
+    "A simulation would need an explicit proxy for representing truth, such as specified labels or asserted semantic status."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-4-02",
+   "section": "4",
+   "title": "Authority Remains Within Scope",
+   "quote": "2.  No DKP output has authority outside its declared scope.",
+   "interpretation": "Compare each authoritative use of an output with its declared scope. This requires machine-readable scope membership and an operational definition of authority.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "output",
+    "declared_scope",
+    "use_context",
+    "authority_use"
+   ],
+   "criterion": "An output has no authority in any context outside its declared scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope declarations",
+    "output use records"
+   ],
+   "gap": "Authority and scope membership are not given executable definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define authoritative use and a scope-membership predicate."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-4-03",
+   "section": "4",
+   "title": "Reversibility Means Reevaluation And Correction",
+   "quote": "4.  Reversibility is defined as the ability to re-evaluate and correct system state under new admissible inputs, not as guaranteed rollback of past actions.",
+   "interpretation": "Inspect the state model for the ability to re-evaluate and correct system state when new admissible inputs arrive. Historical action rollback is not required by this definition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "state_transition_model",
+    "new_inputs",
+    "admissibility_result",
+    "correction_operations"
+   ],
+   "criterion": "Reversibility requires the ability to re-evaluate and correct system state under new admissible inputs; it does not require guaranteed rollback of past actions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system state transition model",
+    "admissibility decisions"
+   ],
+   "gap": "The admissibility rules and the meaning of a corrected system state are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define admissibility and successful correction within the state model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-4-04",
+   "section": "4",
+   "title": "Unrevalidated Persistence Degrades Reliability",
+   "quote": "6.  Persistent outputs without revalidation degrade in reliability.",
+   "interpretation": "Track reliability of persistent outputs lacking revalidation. Read literally this requires degradation from unrevalidated persistence, but section 9 limits degradation to specified signal or environmental conditions.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "output_history",
+    "revalidation_history",
+    "reliability_history",
+    "condition_history"
+   ],
+   "criterion": "Persistent outputs without revalidation degrade in reliability, subject to resolution of the qualification imposed by section 9.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output persistence and revalidation history",
+    "reliability assessments",
+    "environmental and signal condition history"
+   ],
+   "gap": "Persistence and reliability dynamics are undefined, and the relationship to section 9 needs an explicit reading. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define persistence and an ordering of reliability states.",
+    "Declare whether section 9 qualifies this invariant or whether persistence alone causes degradation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-ValidityState-01",
+   "section": "Validity State",
+   "title": "Required Validity State Classification",
+   "quote": "- VALID\n- CONDITIONAL\n- INVALID",
+   "interpretation": "Under section 5's mandatory inclusion rule, check that every operational output carries a validity state selected from the listed values. The singular state heading is read as requiring one value; assignment criteria are not supplied.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "operational_output",
+    "validity_state"
+   ],
+   "criterion": "Every operational output includes a validity state of VALID, CONDITIONAL, or INVALID.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational output metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-ConfidenceState-01",
+   "section": "Confidence State",
+   "title": "Required Confidence State Classification",
+   "quote": "- SUFFICIENT_DATA\n- INSUFFICIENT_DATA\n- DEGRADED_SIGNAL",
+   "interpretation": "Under section 5's mandatory inclusion rule, check that every operational output carries a confidence state selected from the listed values. This checks presence and vocabulary, not whether the underlying assessment is correct.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "operational_output",
+    "confidence_state"
+   ],
+   "criterion": "Every operational output includes a confidence state of SUFFICIENT_DATA, INSUFFICIENT_DATA, or DEGRADED_SIGNAL.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational output metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-ConsistencyState-01",
+   "section": "Consistency State",
+   "title": "Required Consistency State Classification",
+   "quote": "- CONSISTENT\n- ORACLE_CONFLICT\n- UNRESOLVED",
+   "interpretation": "Under section 5's mandatory inclusion rule, check that every operational output carries a consistency state selected from the listed values. This checks the interface vocabulary without supplying criteria for source agreement.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "operational_output",
+    "consistency_state"
+   ],
+   "criterion": "Every operational output includes a consistency state of CONSISTENT, ORACLE_CONFLICT, or UNRESOLVED.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational output metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-AdditionalFields-01",
+   "section": "Additional Fields",
+   "title": "Required Additional Metadata Fields",
+   "quote": "- scope_ref\n- revalidation_required\n- dispute_allowed",
+   "interpretation": "Check that every operational output includes all three named fields. Their types, permitted values, and assignment rules are not defined, so this provision alone supports a field-presence check.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "operational_output",
+    "metadata_field_names"
+   ],
+   "criterion": "Every operational output includes scope_ref, revalidation_required, and dispute_allowed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operational output metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-01",
+   "section": "5.x",
+   "title": "Complete Metadata Across Operational Uses",
+   "quote": "SHALL include the full mandatory epistemic metadata set defined in this section.",
+   "interpretation": "Apply the complete metadata requirement to outputs from any DKP protocol used for enforcement, restriction, revocation, allocation, exclusion, dispute processing, or any operational decision-making. The referenced set is read as the preceding section 5 classification states and additional fields.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "output",
+    "operational_use",
+    "epistemic_metadata"
+   ],
+   "criterion": "Every output used for any listed purpose or other operational decision-making includes validity, confidence, and consistency states plus scope_ref, revalidation_required, and dispute_allowed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output use classifications",
+    "epistemic metadata"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.0.0",
+    "check": "epistemic_metadata"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ]
+  },
+  {
+   "id": "EB-5.x-02",
+   "section": "5.x",
+   "title": "Incomplete Metadata Forces Invalidity",
+   "quote": "Outputs with missing, partial, or undefined epistemic metadata SHALL be classified as INVALID for operational use, regardless of their computed result.",
+   "interpretation": "Check that an operational output with absent, incomplete, or explicitly undefined mandatory metadata receives INVALID classification. A computed result cannot exempt it; this also implements section 4's metadata-absence invariant.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "epistemic_metadata",
+    "validity_state",
+    "computed_result"
+   ],
+   "criterion": "Missing, partial, or undefined mandatory epistemic metadata implies INVALID for operational use, independently of the computed result.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output metadata and operational validity classification"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-03",
+   "section": "5.x",
+   "title": "Incomplete Outputs Cannot Execute",
+   "quote": "- SHALL NOT be executed",
+   "interpretation": "Check execution records or execution permissions for outputs identified as having missing, partial, or undefined epistemic metadata. Such outputs must never be executed.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "output_id",
+    "metadata_completeness",
+    "execution_records"
+   ],
+   "criterion": "No output with incomplete or undefined mandatory epistemic metadata is executed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metadata completeness results",
+    "execution records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-04",
+   "section": "5.x",
+   "title": "Incomplete Outputs Cannot Propagate",
+   "quote": "- SHALL NOT be propagated",
+   "interpretation": "Check that outputs with incomplete epistemic metadata are not propagated. The text does not clarify whether propagation includes audit reporting and diagnostic transport or only operational distribution.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "output_id",
+    "metadata_completeness",
+    "transfer_records",
+    "transfer_purpose"
+   ],
+   "criterion": "No output with incomplete or undefined mandatory epistemic metadata is propagated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metadata completeness results",
+    "output transfer records"
+   ],
+   "gap": "The boundary of prohibited propagation, including diagnostic and audit transfers, is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which transfers constitute propagation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-05",
+   "section": "5.x",
+   "title": "Incomplete Outputs Cannot Be Conditional",
+   "quote": "- SHALL NOT be treated as conditionally valid",
+   "interpretation": "Check classification and consumption decisions to ensure an incomplete output is never accepted as conditionally valid. Merely recording INVALID is insufficient if a consumer nevertheless grants conditional validity.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "metadata_completeness",
+    "validity_state",
+    "consumer_validity_decisions"
+   ],
+   "criterion": "Outputs with incomplete or undefined mandatory epistemic metadata receive neither CONDITIONAL classification nor conditional-validity acceptance.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "metadata completeness results",
+    "consumer validity decisions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-06",
+   "section": "5.x",
+   "title": "Downstream Metadata Repair Is Forbidden",
+   "quote": "- SHALL NOT be repaired by downstream systems",
+   "interpretation": "Inspect downstream processing for attempts to repair outputs produced with incomplete epistemic metadata. Applying the prohibition requires identifying downstream systems and distinguishing repair from a new evaluation event.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "output_provenance",
+    "metadata_completeness",
+    "processing_operations",
+    "system_topology"
+   ],
+   "criterion": "Downstream systems do not repair outputs having missing, partial, or undefined epistemic metadata.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output provenance",
+    "processing records",
+    "system topology"
+   ],
+   "gap": "The distinction between forbidden repair and a separately produced new evaluation is not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define downstream system relationships and which operations constitute repair."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-07",
+   "section": "5.x",
+   "title": "Audit Detection Cannot Be Primary",
+   "quote": "Detection of incomplete metadata MAY be performed by L8 (Audit), but SHALL NOT be relied upon as the primary enforcement mechanism.",
+   "interpretation": "Audit detection is permitted, but inspect the enforcement architecture to verify it is not the primary mechanism. The text gives no metric for determining primacy.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "completeness_enforcement_architecture",
+    "audit_detection_role"
+   ],
+   "criterion": "L8 detection of incomplete metadata is not relied upon as the primary completeness enforcement mechanism.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "completeness enforcement architecture",
+    "audit responsibilities"
+   ],
+   "gap": "Primary enforcement is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define how enforcement primacy is determined from architecture and failure behavior."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-5.x-08",
+   "section": "5.x",
+   "title": "Producers Must Enforce Metadata Completeness",
+   "quote": "Completeness enforcement MUST occur at the output production layer.",
+   "interpretation": "Check that every output-producing component enforces mandatory metadata completeness at production. With the production boundary and enforcement locations represented explicitly, this is an architectural placement check.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "output_producers",
+    "production_boundaries",
+    "completeness_enforcement_locations"
+   ],
+   "criterion": "Mandatory epistemic metadata completeness is enforced at each output production layer.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "producer inventory",
+    "production boundaries and enforcement locations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-6-01",
+   "section": "6",
+   "title": "Outputs Remain Epistemically Revisable",
+   "quote": "Outputs do not create irreversible epistemic states.",
+   "interpretation": "Inspect the state model to ensure outputs remain eligible for supersession, re-evaluation, and correction under new admissible inputs, also covering section 4's non-finality invariant. These are retained possibilities rather than mandatory transitions on every input; automatic rollback is not implied and execution-layer reversibility is defined outside L1.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "epistemic_state_model",
+    "allowed_transitions",
+    "new_inputs",
+    "admissibility_result"
+   ],
+   "criterion": "No output creates an irreversible epistemic state; outputs remain subject to supersession, re-evaluation, and correction under new admissible inputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "epistemic state transition model",
+    "admissibility decisions"
+   ],
+   "gap": "The state model, admissibility rules, and conditions for available correction transitions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define epistemic states and admissible inputs.",
+    "Distinguish epistemic correction from rollback of executed consequences."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-7-01",
+   "section": "7",
+   "title": "Dispute Process Must Be Deterministic",
+   "quote": "Dispute is a deterministic system process.",
+   "interpretation": "Check that identical dispute inputs and relevant initial state lead to the same process result. The requirement covers the dispute process as a whole, beyond recomputation alone.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dispute_process_model",
+    "dispute_inputs",
+    "initial_state",
+    "process_results"
+   ],
+   "criterion": "The dispute process is deterministic under identical inputs and relevant initial state.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute process specification",
+    "dispute inputs and state"
+   ],
+   "gap": "The complete dispute input and state model is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare all inputs, relevant state, and result equivalence used to assess determinism."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-7.1-01",
+   "section": "7.1",
+   "title": "Recognized Dispute Trigger Conditions",
+   "quote": "- oracle inconsistency\n- scope violation\n- measurement integrity challenge",
+   "interpretation": "Recognize new admissible data, oracle inconsistency, scope violation, and measurement integrity challenge as dispute trigger conditions. The heading and list do not specify whether each independently initiates a dispute, requires a submission, or merely makes a dispute eligible.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "new_data",
+    "admissibility_result",
+    "oracle_consistency",
+    "scope_status",
+    "measurement_integrity_challenge",
+    "dispute_events"
+   ],
+   "criterion": "Dispute triggering recognizes new admissible data, oracle inconsistency, scope violation, and measurement integrity challenge.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "admissibility decisions",
+    "oracle consistency signals",
+    "scope assessments",
+    "measurement integrity challenges"
+   ],
+   "gap": "Trigger predicates, combination logic, and whether triggering is automatic are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define each trigger predicate.",
+    "Declare whether triggers are independently sufficient and whether a submission is required."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-7.2-01",
+   "section": "7.2",
+   "title": "Disputes Preserve Original Outputs",
+   "quote": "1.  Preserve original output unchanged",
+   "interpretation": "Compare the original output before and after dispute processing and reject any in-place change. The section's explicit prohibition of in-place mutation reinforces this requirement.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "original_output_before",
+    "original_output_after",
+    "mutation_records"
+   ],
+   "criterion": "The original output remains unchanged throughout dispute processing, with no in-place mutation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "original output snapshots",
+    "mutation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-7.2-02",
+   "section": "7.2",
+   "title": "Disputes Create New Evaluation Events",
+   "quote": "2.  Create a new evaluation event",
+   "interpretation": "Check that processing a dispute creates a distinct evaluation event. The text does not specify an event schema or require a particular identifier format.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "dispute_event",
+    "evaluation_events_before",
+    "evaluation_events_after",
+    "event_associations"
+   ],
+   "criterion": "Every processed dispute creates a new evaluation event associated with that dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute and evaluation event records",
+    "event associations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-7.2-03",
+   "section": "7.2",
+   "title": "Disputes Recompute With Updated Inputs",
+   "quote": "3.  Recompute deterministically with updated inputs",
+   "interpretation": "Check that dispute processing performs recomputation using updated inputs and that repeated computation from the same relevant inputs and state is deterministic. The definition of re-evaluation additionally requires admissible inputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "previous_inputs",
+    "updated_inputs",
+    "admissibility_result",
+    "recomputation_model",
+    "evaluation_state",
+    "recomputation_results"
+   ],
+   "criterion": "Dispute processing deterministically recomputes using updated inputs, with re-evaluation inputs satisfying admissibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "evaluation inputs and state",
+    "admissibility decisions",
+    "recomputation records"
+   ],
+   "gap": "Input admissibility and the complete deterministic recomputation model are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare admissibility rules and the input and state model required for deterministic recomputation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-7.2-04",
+   "section": "7.2",
+   "title": "Disputes Produce Comparative Deltas",
+   "quote": "4.  Produce comparative delta between outputs",
+   "interpretation": "Check that dispute processing produces a comparison between the original and newly evaluated outputs. Presence is testable, but correctness requires a defined delta representation and comparison rule.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "original_output",
+    "reevaluated_output",
+    "comparative_delta"
+   ],
+   "criterion": "Dispute processing produces a comparative delta between the original and reevaluated outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "original and reevaluated outputs",
+    "comparison artifact"
+   ],
+   "gap": "The delta's fields, comparison semantics, and representation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define which output differences the comparative delta represents and how."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-8-01",
+   "section": "8",
+   "title": "Protocols Must Define Applicability Boundaries",
+   "quote": "All output-producing protocols MUST define:",
+   "interpretation": "Inspect each output-producing protocol for definitions of valid scope, invalid scope, no-output conditions, and minimum admissibility conditions. Presence of these four definitions can be checked without deciding their substantive adequacy.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "output_producing_protocols",
+    "protocol_boundary_definitions"
+   ],
+   "criterion": "Every output-producing protocol defines valid scope, invalid scope, no-output conditions, and minimum admissibility conditions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol applicability and admissibility definitions"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-8-02",
+   "section": "8",
+   "title": "Missing Scope Prevents Enforcement",
+   "quote": "Outputs without scope metadata are non-enforceable.",
+   "interpretation": "Check that outputs lacking scope metadata are never eligible for enforcement and are not enforced. This is a specific application of the broader incomplete-metadata restrictions.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "scope_metadata",
+    "enforcement_eligibility",
+    "enforcement_records"
+   ],
+   "criterion": "Absence of scope metadata implies non-enforceability and no enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output scope metadata",
+    "enforcement eligibility and records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-9-01",
+   "section": "9",
+   "title": "Reliability Degradation Requires Listed Conditions",
+   "quote": "Output reliability degrades only under:",
+   "interpretation": "For every observed reliability degradation, check for detected environmental change, loss of measurement integrity, or emergence of conflicting signals. 'Only under' supplies necessary conditions; it does not state that every such event must cause degradation.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "reliability_history",
+    "environmental_change_detections",
+    "measurement_integrity_history",
+    "conflicting_signal_history"
+   ],
+   "criterion": "Reliability degradation implies detected environmental change, loss of measurement integrity, or emergence of conflicting signals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reliability assessments",
+    "environmental change detections",
+    "measurement integrity assessments",
+    "conflicting signals"
+   ],
+   "gap": "Reliability ordering, condition detection, and temporal association between conditions and degradation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define reliability degradation and each listed condition.",
+    "Declare how condition events are associated with a degradation event."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-9-02",
+   "section": "9",
+   "title": "Stable Data Absence Preserves Validity",
+   "quote": "Absence of new data alone does NOT invalidate output if:",
+   "interpretation": "Check that missing new data is not the sole reason for invalidation when the environment is stable and no conflicting signals exist. This does not prevent invalidation for an independent reason.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "new_data_status",
+    "environment_stability",
+    "conflicting_signals",
+    "validity_state",
+    "invalidation_reasons"
+   ],
+   "criterion": "If the environment is stable and no conflicting signals exist, absence of new data alone does not invalidate the output.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "environment stability assessments",
+    "conflict detection results",
+    "validity decisions and reasons"
+   ],
+   "gap": "Environmental stability and the evidentiary basis for absence of conflicts are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define environmental stability and conflict-detection coverage.",
+    "Represent the reasons responsible for an invalidation decision."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-9-03",
+   "section": "9",
+   "title": "Distinguish Activity From Stable Absence",
+   "quote": "Protocols MUST distinguish between:\n\n- data absence under activity",
+   "interpretation": "Check that protocol logic distinguishes data absence under activity from data absence under stability. The text does not prescribe a representation or define activity and stability.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_logic",
+    "data_absence_events",
+    "activity_state",
+    "stability_state"
+   ],
+   "criterion": "Protocols distinguish data absence under activity from data absence under stability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity and stability assessments",
+    "protocol data-absence handling"
+   ],
+   "gap": "Activity, stability, and the required observable distinction are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define activity and stability states and how protocol behavior or metadata expresses their distinction."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-10-01",
+   "section": "10",
+   "title": "Prefer No Output In Critical Contexts",
+   "quote": "NO_OUTPUT is preferred over DEGRADED_SIGNAL",
+   "interpretation": "Check output selection policy in critical or safety-relevant contexts when data is insufficient, consistency unresolved, or the applicability boundary violated. 'Preferred' establishes priority but does not expressly make DEGRADED_SIGNAL forbidden; the list also leaves trigger combination implicit.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "context_classification",
+    "data_sufficiency",
+    "consistency_state",
+    "applicability_status",
+    "output_selection_policy",
+    "selected_output"
+   ],
+   "criterion": "In critical or safety-relevant contexts with the listed adverse conditions, output selection gives NO_OUTPUT preference over DEGRADED_SIGNAL.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "criticality and safety classifications",
+    "data sufficiency assessments",
+    "consistency assessments",
+    "applicability assessments",
+    "output selection decisions"
+   ],
+   "gap": "Criticality, preference strength, trigger combination, and the representation of NO_OUTPUT are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define critical and safety-relevant contexts.",
+    "Declare whether any listed condition is sufficient or their conjunction is required.",
+    "Define how the preference affects selection and whether exceptions exist."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-11-01",
+   "section": "11",
+   "title": "Measurements Bound Output Approximation",
+   "quote": "Therefore all outputs are approximations, not absolute states.",
+   "interpretation": "Assess output representations against measurement models that account for loss, delay, and instrument limits. A program cannot establish the approximation boundary without those models, and the text supplies no error bounds.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "measurement_model",
+    "measurement_provenance",
+    "output_representation"
+   ],
+   "criterion": "All outputs are represented as approximations derived from lossy, delayed, instrument-bounded measurements rather than as absolute states.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measurement loss, delay, and instrument limitation models",
+    "output representations"
+   ],
+   "gap": "Measurement limitation models and a machine-testable distinction between approximation and absolute-state representation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare measurement loss, delay, and instrument limitations.",
+    "Define how output representations express approximate status."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-12-01",
+   "section": "12",
+   "title": "Prohibited Treatment Of System Outputs",
+   "quote": "System outputs MUST NOT be treated as:",
+   "interpretation": "Evaluate whether uses of outputs treat them as truth, guilt, moral judgment, an irreversible decision basis, or authority outside scope. Explicit machine labels can be flagged, but the unrestricted prohibition includes semantic and human uses that the text does not operationalize.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "output_use_records",
+    "interpretive_context",
+    "decision_basis",
+    "declared_scope"
+   ],
+   "criterion": "System outputs are never treated as truth, guilt, moral judgment, an irreversible decision basis, or authority outside scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output use and decision records",
+    "interpretive context",
+    "scope declarations"
+   ],
+   "gap": "The prohibited forms of treatment lack operational definitions sufficient to decide all real-world uses.",
+   "hypotheses_needed": [
+    "A simulation would need explicit proxies for each prohibited interpretation and for output-based irreversible decisions."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "EB-13-01",
+   "section": "13",
+   "title": "Required Audit And Simulation Coverage",
+   "quote": "L8 MUST test:",
+   "interpretation": "Inspect L8 test coverage for missing epistemic metadata, stale output reuse, authority drift, dispute suppression, scope violations, and misuse of degraded signals. Named coverage is checkable, but substantive adequacy requires operational definitions and test oracles for the listed failures.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "l8_test_catalog",
+    "test_cases",
+    "test_oracles",
+    "test_execution_records"
+   ],
+   "criterion": "L8 tests missing epistemic metadata, stale output reuse, authority drift, dispute suppression, scope violations, and misuse of degraded signals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 test specifications and execution records",
+    "failure detection criteria"
+   ],
+   "gap": "Failure predicates, test adequacy criteria, and several named failure concepts are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define a test oracle for each required failure category.",
+    "Declare what evidence establishes substantive coverage; no testing frequency is specified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

@@ -1,0 +1,1532 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-4-ERROR-001",
+ "doc_sha256": "3d000b4bf72dd14a4f2fdb10eddf5b37a6998d39032a286c14096fd11b568328",
+ "prefix": "ERROR",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The carriage return in the supplied requirement prefix is preserved as \\r in identifiers. Referenced protocols were not supplied. The document does not specify timeout durations, the minimal bond amount, admissible parameters, or the systemic-error threshold. It does not provide a complete state-transition graph. Section 7 associates formal appeal validation with R1, whereas section 5 describes R1 as suspicion with verification initiated; their precise relationship is unspecified. The 30-DTI-Day limit is read subject to the explicit E1 exception. Provisions are separated beyond the typical count to preserve distinct classification conditions, states, obligations, and prohibitions.",
+ "requirements": [
+  {
+   "id": "ERROR-0-01",
+   "section": "0",
+   "title": "Treat errors as system states",
+   "quote": "Errors in DKP are treated as system states, not as moral failures or intent-based misconduct.",
+   "interpretation": "Check that error records and handling classify errors as system states. Detecting moral or intent-based treatment requires an operational definition of those forms of treatment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "error_records",
+    "handling_actions",
+    "treatment_classification"
+   ],
+   "criterion": "Errors are treated as system states and not as moral failures or intent-based misconduct.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error case records",
+    "handling action classifications"
+   ],
+   "gap": "The text does not define a machine-readable boundary for moral or intent-based treatment. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how records and actions are classified as moral or intent-based treatment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-1-01",
+   "section": "1",
+   "title": "Require procedural nonpunitive handling",
+   "quote": "ERROR handling is strictly procedural and non-punitive.",
+   "interpretation": "Compare handling actions with an authorized procedure and a classification of punitive actions. The document does not completely define either classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "handling_actions",
+    "authorized_procedure",
+    "punitive_action_classification"
+   ],
+   "criterion": "Every ERROR handling action is procedural and non-punitive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "handling execution traces",
+    "procedure definitions"
+   ],
+   "gap": "Complete procedural rules and an operational definition of punitive handling are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the authorized procedure and the test for punitive handling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-2-01",
+   "section": "2",
+   "title": "Respect upstream protocol ordering",
+   "quote": "- strictly downstream of DKP-0-ORACLE-001 (PTL) and DKP-0-TIME-001,\n- downstream of DKP-1-IDENTITY-001, DKP-1-IMPACT-001, DKP-1-JUSTICE-001,\n- downstream of all L3 protocols (INTERNAL-SEC, DEFENSE, ANTITERROR),",
+   "interpretation": "Check the system dependency graph or execution trace for the stated ordering. The text does not say whether downstream means dependency precedence, execution order, or both.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_dependency_graph",
+    "execution_trace",
+    "l3_protocol_registry"
+   ],
+   "criterion": "ERROR operates downstream of all named upstream protocols and all L3 protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-0-TIME-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-1-IMPACT-001",
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "protocol dependency graph",
+    "L3 protocol inventory",
+    "execution ordering"
+   ],
+   "gap": "The meaning of downstream and complete identifiers for the L3 protocols are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether downstream constrains dependencies, execution order, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-2-02",
+   "section": "2",
+   "title": "Precede crisis protocol operation",
+   "quote": "- upstream of DKP-4-CRISIS-001.",
+   "interpretation": "Check ERROR's ordering relative to CRISIS in the declared protocol architecture. Upstream is not defined as a specific graph or temporal relation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_dependency_graph",
+    "execution_trace"
+   ],
+   "criterion": "ERROR operates upstream of DKP-4-CRISIS-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "protocol dependency graph",
+    "execution ordering"
+   ],
+   "gap": "The operational meaning of upstream is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the dependency or execution relation represented by upstream."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-2-03",
+   "section": "2",
+   "title": "Prohibit new coercive measures",
+   "quote": "- DKP-4-ERROR-001 SHALL NOT introduce new coercive measures.",
+   "interpretation": "Compare measures introduced by ERROR with an existing-measures baseline and a coercion classification. Neither the baseline nor the classification is defined here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "error_measures",
+    "existing_measures",
+    "coercion_classification"
+   ],
+   "criterion": "No new measure introduced by ERROR is coercive.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "existing measure registry",
+    "measure effects"
+   ],
+   "gap": "The baseline for new measures and the definition of coercive measures are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the baseline and operational classification of coercive measures."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-2-04",
+   "section": "2",
+   "title": "Prohibit axiom and truth reinterpretation",
+   "quote": "- DKP-4-ERROR-001 SHALL NOT reinterpret axioms or Physical Truth.",
+   "interpretation": "Compare ERROR actions with authoritative axiom and Physical Truth representations. A check needs a distinction between prohibited reinterpretation and permitted correction of an E1 error.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "error_actions",
+    "axiom_versions",
+    "physical_truth_records",
+    "reinterpretation_classification"
+   ],
+   "criterion": "ERROR does not reinterpret axioms or Physical Truth.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authoritative axioms",
+    "Physical Truth records",
+    "correction provenance"
+   ],
+   "gap": "Reinterpretation is undefined, including its boundary with permitted E1 correction. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how reinterpretation differs from correcting a measurement or oracle error."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-2-05",
+   "section": "2",
+   "title": "Restrict intervention in Justice outcomes",
+   "quote": "- DKP-4-ERROR-001 SHALL NOT override Justice outcomes, only request recomputation.",
+   "interpretation": "Inspect ERROR operations affecting Justice outcomes. They must be recomputation requests rather than direct outcome overrides.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "justice_outcome_operations",
+    "operation_origin",
+    "operation_type"
+   ],
+   "criterion": "Every ERROR intervention in a Justice outcome is a request for recomputation, and none is an override.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Justice operation audit trail"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-3.1-01",
+   "section": "3.1",
+   "title": "Define qualifying system errors",
+   "quote": "An Error is any PTL-confirmed deviation between:",
+   "interpretation": "Check PTL confirmation, a deviation involving intended behavior, execution, or recorded state, and at least one listed incorrect result. The phrase between followed by or does not specify exactly which comparisons are required.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_confirmation",
+    "intended_behavior",
+    "actual_execution",
+    "recorded_state",
+    "incorrect_results"
+   ],
+   "criterion": "An Error is a PTL-confirmed deviation involving intended protocol behavior, actual execution, or recorded state that results in incorrect restriction or action, attribution, impact calculation, or application of protocol rules.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmation",
+    "protocol behavior specifications",
+    "execution and state records",
+    "result correctness assessments"
+   ],
+   "gap": "The required comparison relation and the standards for incorrect results are not fully specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which comparisons establish a deviation and which specifications determine correctness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-3.2-01",
+   "section": "3.2",
+   "title": "Define decisions eligible for appeal",
+   "quote": "- affects a Subject’s rights, access, assets, or status,\n- is derived from protocol execution,\n- is not explicitly marked as irreversible by higher-layer rules.",
+   "interpretation": "Evaluate all three conditions on a DKP action or outcome. Eligibility depends on supplied impact metadata, protocol provenance, and explicit higher-layer irreversibility markings.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "is_dkp_action_or_outcome",
+    "affected_subject_interests",
+    "protocol_execution_provenance",
+    "higher_layer_irreversible_marking"
+   ],
+   "criterion": "A DKP action or outcome is appealable if it affects a Subject's rights, access, assets, or status, derives from protocol execution, and is not explicitly marked irreversible by higher-layer rules.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "decision impact metadata",
+    "execution provenance",
+    "higher-layer irreversibility markings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-3.3-01",
+   "section": "3.3",
+   "title": "Define qualifying formal appellants",
+   "quote": "- is directly affected by an Appealable Decision, and\n- submits a formal error claim under this protocol.",
+   "interpretation": "A Subject qualifies only when directly affected by an appealable decision and submitting a formal claim. The direct-effect relationship must be supplied because the document gives no attribution test for it.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_record",
+    "appealable_decision",
+    "direct_effect_relation",
+    "formal_claim"
+   ],
+   "criterion": "An Appellant is a Subject directly affected by an Appealable Decision who submits a formal error claim under this protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject records",
+    "decision effect attribution",
+    "formal claim records"
+   ],
+   "gap": "The document does not define how to establish that a Subject is directly affected. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the test for a direct effect on a Subject."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-4-01",
+   "section": "4",
+   "title": "Classify measurement and oracle errors",
+   "quote": "- E1 – Measurement Error\n\n  PTL sensor, data ingestion, or oracle misreporting.",
+   "interpretation": "Assign E1 to the specified measurement-related errors. The wording leaves open whether PTL sensor and data ingestion refer to any malfunction or specifically misreporting.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "error_source",
+    "error_behavior"
+   ],
+   "criterion": "E1 covers PTL sensor, data ingestion, or oracle misreporting errors.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sensor diagnostics",
+    "ingestion diagnostics",
+    "oracle reports"
+   ],
+   "gap": "The exact qualifying sensor and ingestion behaviors are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether misreporting qualifies all three sources or only oracle errors."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-4-02",
+   "section": "4",
+   "title": "Classify incorrect protocol execution",
+   "quote": "- E2 – Execution Error\n\n  Protocol logic executed incorrectly or out of order.",
+   "interpretation": "Compare execution traces with the protocol's logic and required ordering. Either incorrect logic execution or an ordering violation qualifies as E2.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "execution_trace",
+    "protocol_logic",
+    "required_execution_order"
+   ],
+   "criterion": "E2 applies when protocol logic executes incorrectly or out of order.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol specifications",
+    "execution traces"
+   ],
+   "gap": "The applicable logic and ordering specifications are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the protocol specification used as the execution reference."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-4-03",
+   "section": "4",
+   "title": "Classify incorrect identity attribution",
+   "quote": "- E3 – Attribution Error\n\n  Incorrect Identity binding or responsibility assignment.",
+   "interpretation": "Compare Identity bindings and responsibility assignments with their correctness criteria. Either kind of incorrect assignment qualifies as E3.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "identity_binding",
+    "responsibility_assignment",
+    "attribution_reference"
+   ],
+   "criterion": "E3 applies when an Identity binding or responsibility assignment is incorrect.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Identity bindings",
+    "responsibility assignments",
+    "attribution correctness evidence"
+   ],
+   "gap": "Correct binding and responsibility-assignment criteria are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the reference used to establish attribution correctness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-4-04",
+   "section": "4",
+   "title": "Classify incorrect impact computations",
+   "quote": "- E4 – Impact Computation Error\n\n  Incorrect impact magnitude, scope, or channel mapping.",
+   "interpretation": "Compare impact outputs with an authoritative computation. An incorrect magnitude, scope, or channel mapping qualifies as E4.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "impact_magnitude",
+    "impact_scope",
+    "impact_channel_mapping",
+    "impact_reference"
+   ],
+   "criterion": "E4 applies when impact magnitude, scope, or channel mapping is incorrect.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact computation rules",
+    "impact inputs and outputs"
+   ],
+   "gap": "The impact computation and mapping rules needed to establish correctness are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the reference computation and mapping rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-4-05",
+   "section": "4",
+   "title": "Classify procedural rule violations",
+   "quote": "- E5 – Procedural Error\n\n  Violation of timing (DTI), escalation rules, or isolation constraints.",
+   "interpretation": "Evaluate execution against applicable timing, escalation, and isolation requirements. A violation in any of these categories qualifies as E5.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "execution_trace",
+    "dti_timing_rules",
+    "escalation_rules",
+    "isolation_constraints"
+   ],
+   "criterion": "E5 applies when timing, escalation rules, or isolation constraints are violated.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DTI timing rules",
+    "escalation rules",
+    "isolation rules",
+    "execution traces"
+   ],
+   "gap": "The complete applicable procedural rules are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the applicable timing, escalation, and isolation requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-5-01",
+   "section": "5",
+   "title": "Define normal operating state",
+   "quote": "- R0 – No Error\n\n  * System operating within admissible parameters.",
+   "interpretation": "Check that a system labeled R0 operates within its admissible parameters. The document does not supply those parameters.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "error_state",
+    "system_parameters",
+    "admissible_parameters"
+   ],
+   "criterion": "R0 denotes system operation within admissible parameters.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system operating measurements",
+    "admissible parameter definitions"
+   ],
+   "gap": "Admissible parameters and their bounds are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare admissible parameters and any associated bounds."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-5-02",
+   "section": "5",
+   "title": "Define suspected error state",
+   "quote": "- R1 – Error Suspected\n\n  * Error signal detected; non-coercive verification initiated.",
+   "interpretation": "Check that R1 records contain a detected error signal and initiation of non-coercive verification. The verification action requires a supplied coercion classification.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "error_state",
+    "error_signal",
+    "verification_start",
+    "verification_coercion_classification"
+   ],
+   "criterion": "R1 denotes a detected error signal with non-coercive verification initiated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error signals",
+    "verification execution records"
+   ],
+   "gap": "The document does not operationally define non-coercive verification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which verification actions qualify as non-coercive."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-5-03",
+   "section": "5",
+   "title": "Define confirmed error state",
+   "quote": "- R2 – Error Confirmed\n\n  * Error validated via PTL and protocol audit.",
+   "interpretation": "Check that an R2 designation has both PTL validation and protocol-audit validation. This tests recorded validation status rather than independently establishing its correctness.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "error_state",
+    "ptl_validation",
+    "protocol_audit_validation"
+   ],
+   "criterion": "R2 requires error validation via both PTL and protocol audit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL validation records",
+    "protocol audit results"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-5-04",
+   "section": "5",
+   "title": "Define applied correction state",
+   "quote": "- R3 – Correction Applied\n\n  * Corrective action executed.",
+   "interpretation": "Check that a case labeled R3 has an executed corrective action. The state description does not itself require appeal resolution.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "error_state",
+    "corrective_action_execution"
+   ],
+   "criterion": "R3 requires execution of corrective action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "corrective action execution records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-5-05",
+   "section": "5",
+   "title": "Define residual dispute state",
+   "quote": "- R4 – Residual Dispute\n\n  * Correction completed, but appeal unresolved.",
+   "interpretation": "Check that R4 has both completed correction and an unresolved appeal. The text does not specify a priority rule for overlapping R3 and R4 conditions.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "error_state",
+    "correction_completed",
+    "appeal_resolved"
+   ],
+   "criterion": "R4 requires completed correction and an unresolved appeal.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "correction completion records",
+    "appeal resolution status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-5-06",
+   "section": "5",
+   "title": "Index states and enforce timeouts",
+   "quote": "All states are indexed by DTI-Day and subject to timeouts.",
+   "interpretation": "Require a DTI-Day index and an applicable timeout for every state. Timeout durations, starting events, and expiry consequences are not specified, including for R0.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "state_records",
+    "dti_day_indices",
+    "timeout_policy",
+    "current_dti_day"
+   ],
+   "criterion": "Every state has a DTI-Day index and is governed by a timeout.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DTI-Day values",
+    "state history",
+    "timeout policy"
+   ],
+   "gap": "Timeout durations, clocks, and expiry behavior are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare timeout durations, start events, and expiry behavior for every state."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-6-01",
+   "section": "6",
+   "title": "Authorize review initiation pathways",
+   "quote": "- PTL-detected inconsistency,\n- internal protocol audit,\n- formal appeal submission by an Appellant accompanied by a minimal economic bond.",
+   "interpretation": "Recognize the three permitted initiation pathways and require a minimal economic bond for the formal-appeal pathway. MAY does not require every trigger to start a review, and the wording does not expressly declare the list exhaustive.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "review_trigger",
+    "appellant_status",
+    "formal_appeal",
+    "economic_bond",
+    "minimal_bond_rule"
+   ],
+   "criterion": "Review may start from a PTL inconsistency, internal audit, or formal Appellant appeal accompanied by a minimal economic bond.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL inconsistency events",
+    "internal audits",
+    "appeal submissions",
+    "bond ledger"
+   ],
+   "gap": "The minimal bond amount or determination rule is not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the minimal bond rule and whether the listed initiation pathways are exhaustive."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-6-02",
+   "section": "6",
+   "title": "Refund bonds for confirmed errors",
+   "quote": "The bond SHALL be returned in full if the error is confirmed (R2).",
+   "interpretation": "For a bonded appeal whose error reaches R2, check that the full bond is returned. The amount condition is explicit, but no refund deadline is given.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "error_state_history",
+    "bond_amount",
+    "bond_refunds",
+    "refund_observation_window"
+   ],
+   "criterion": "If the error is confirmed in R2, the entire bond is returned.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error confirmation history",
+    "bond and refund ledger"
+   ],
+   "gap": "No deadline establishes when an outstanding refund constitutes a violation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a settlement point or observation window for evaluating refund completion."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-6-03",
+   "section": "6",
+   "title": "Allocate unfounded appeal bonds",
+   "quote": "If the appeal is rejected as unfounded, the bond SHALL be used to cover system audit costs.",
+   "interpretation": "Check the disposition of a bond after rejection as unfounded. The text does not specify treatment of a surplus, audit costs exceeding the bond, or procedural rejection without an unfounded finding.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "appeal_disposition",
+    "bond_amount",
+    "bond_allocations",
+    "system_audit_costs"
+   ],
+   "criterion": "A bond associated with an appeal rejected as unfounded is used to cover system audit costs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "appeal disposition records",
+    "bond ledger",
+    "audit cost accounting"
+   ],
+   "gap": "The required allocation amount and treatment of any bond surplus are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the entire bond is allocated to audit costs or only the amount needed to cover those costs."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-6-04",
+   "section": "6",
+   "title": "Prohibit prediction and intent inference",
+   "quote": "No prediction or intent inference is permitted.",
+   "interpretation": "Inspect review inputs and operations for prediction or intent inference. The text does not delimit whether this prohibition applies specifically to initiation or to all ERROR handling.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "review_operations",
+    "input_provenance",
+    "operation_classification"
+   ],
+   "criterion": "No operation within the applicable scope performs prediction or intent inference.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation audit trails",
+    "input provenance"
+   ],
+   "gap": "The prohibited operation classes and the scope of the prohibition are not precisely defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare prediction and intent-inference classifications and whether the prohibition applies to initiation or all handling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-7-01",
+   "section": "7",
+   "title": "Require structured appeal submission fields",
+   "quote": "- reference the specific Appealable Decision,\n- include PTL-indexed evidence or pointers,\n- be submitted within 30 DTI-Days from the moment the decision was recorded in PTL,",
+   "interpretation": "Validate that an appeal references a specific appealable decision, contains PTL-indexed evidence or pointers, and specifies an alleged category E1–E5. The timing requirement in the excerpt is checked separately.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "decision_reference",
+    "decision_appealability",
+    "ptl_indexed_evidence_or_pointers",
+    "alleged_error_category"
+   ],
+   "criterion": "The appeal identifies a specific Appealable Decision, includes PTL-indexed evidence or pointers, and specifies an alleged category in E1–E5.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "appealable decision registry",
+    "PTL evidence indices"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-7-02",
+   "section": "7",
+   "title": "Enforce ordinary appeal filing deadline",
+   "quote": "- be submitted within 30 DTI-Days from the moment the decision was recorded in PTL,",
+   "interpretation": "Compare submission time with the decision's PTL recording time using DTI-Day elapsed time. Read with the following E1 exemption, ordinary appeals must arrive no later than 30 DTI-Days after recording.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "decision_ptl_recording_time",
+    "appeal_submission_time",
+    "elapsed_dti_days",
+    "error_category"
+   ],
+   "criterion": "For appeals outside the E1 exception, submission occurs within 30 DTI-Days after PTL recording of the decision.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL recording timestamps",
+    "appeal submission timestamps",
+    "DTI elapsed-time values"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-7-03",
+   "section": "7",
+   "title": "Exempt oracle errors from limitations",
+   "quote": "Errors of category E1 (Oracle / Physical Truth error) are not subject to any statute of limitations.",
+   "interpretation": "Ensure an E1 error is not time-barred. The document does not say whether alleging E1 suffices for exemption or whether the category must first be validated.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "alleged_error_category",
+    "validated_error_category",
+    "time_bar_decision"
+   ],
+   "criterion": "Errors qualifying as E1 are not rejected or barred because a limitations period has elapsed.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error category determinations",
+    "appeal rejection reasons"
+   ],
+   "gap": "The category status required to activate the exemption is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether an E1 allegation or a validated E1 classification activates the exemption."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-7-04",
+   "section": "7",
+   "title": "Bound optional contested decision suspension",
+   "quote": "Upon formal validation of an appeal (state R1), execution of the contested decision, if reversible, MAY be temporarily suspended for up to 7 DTI-Days (Status Quo Suspension) pending verification.",
+   "interpretation": "If this optional suspension is used, check formal validation in R1, decision reversibility, pending verification, and a duration no greater than 7 DTI-Days. The text does not specify how reversibility is established or whether repeated suspensions are permitted.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "formal_appeal_validation",
+    "error_state",
+    "decision_reversibility",
+    "verification_status",
+    "suspension_duration_dti_days",
+    "suspension_history"
+   ],
+   "criterion": "A Status Quo Suspension follows formal appeal validation in R1, concerns a reversible decision, remains pending verification, and lasts at most 7 DTI-Days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "appeal validation records",
+    "reversibility assessments",
+    "verification status",
+    "DTI suspension history"
+   ],
+   "gap": "Reversibility criteria and the treatment of repeated suspensions are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how reversibility is determined and whether the seven-day cap applies per suspension or cumulatively."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-7-05",
+   "section": "7",
+   "title": "Reject formally deficient appeals procedurally",
+   "quote": "Appeals that do not meet formal requirements SHALL be rejected procedurally, without prejudice.",
+   "interpretation": "Check that a formally deficient appeal receives a procedural rejection without prejudice. The phrase without prejudice requires a declared effect on future filings and substantive review.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "formal_validation_result",
+    "appeal_disposition",
+    "rejection_effects"
+   ],
+   "criterion": "Failure to meet formal requirements results in procedural rejection without prejudice.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "formal validation results",
+    "appeal disposition and eligibility records"
+   ],
+   "gap": "The operational consequences of rejection without prejudice are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the effects of without-prejudice rejection on refiling and substantive adjudication."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-8-01",
+   "section": "8",
+   "title": "Recompute outputs after error confirmation",
+   "quote": "Upon confirmation of an error:\n\n- affected protocol outputs SHALL be recomputed,",
+   "interpretation": "For a confirmed error, identify affected protocol outputs and verify recomputation. The document does not define the affected-output dependency boundary or a completion deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "error_confirmation",
+    "affected_protocol_outputs",
+    "recomputation_records"
+   ],
+   "criterion": "Confirmation of an error requires recomputation of all affected protocol outputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol output dependency graph",
+    "recomputation execution records"
+   ],
+   "gap": "The affected-output rule and the recomputation completion deadline are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how affected outputs are identified and when recomputation completion is evaluated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-8-02",
+   "section": "8",
+   "title": "Roll back reversible error effects",
+   "quote": "- reversible effects SHALL be rolled back,",
+   "interpretation": "Following error confirmation, verify rollback of effects classified as reversible. Classification and successful rollback require an effect model and a restoration reference.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "error_confirmation",
+    "error_effects",
+    "effect_reversibility",
+    "rollback_records",
+    "restoration_reference"
+   ],
+   "criterion": "Upon error confirmation, reversible effects are rolled back.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "effect provenance",
+    "reversibility assessments",
+    "rollback execution and restored state"
+   ],
+   "gap": "Reversibility, restoration criteria, and rollback timing are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare reversibility and successful restoration criteria and the rollback evaluation horizon."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-8-03",
+   "section": "8",
+   "title": "Record and compensate irreversible effects",
+   "quote": "- irreversible effects SHALL be logged and compensated where possible,",
+   "interpretation": "Following confirmation, require logs for irreversible effects and compensation when feasible. Logging is directly testable; feasibility and adequate compensation need additional rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "error_confirmation",
+    "irreversible_effects",
+    "effect_logs",
+    "compensation_feasibility",
+    "compensation_records"
+   ],
+   "criterion": "Irreversible effects are logged and, where compensation is possible, compensated.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "irreversible effect assessments",
+    "effect logs",
+    "compensation feasibility and payment records"
+   ],
+   "gap": "The document does not define possible compensation, its required extent, or its timing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare compensation feasibility, adequacy, and completion criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-8-04",
+   "section": "8",
+   "title": "Permit Justice reinvocation with corrections",
+   "quote": "- Justice MAY be re-invoked using corrected inputs.",
+   "interpretation": "Following confirmation, Justice reinvocation is optional. When exercised under this clause, inspect input provenance to verify use of corrected inputs.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "error_confirmation",
+    "justice_reinvocation",
+    "corrected_inputs",
+    "reinvocation_inputs"
+   ],
+   "criterion": "An optional Justice reinvocation following error confirmation uses corrected inputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "corrected input records",
+    "Justice invocation payloads"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-8-05",
+   "section": "8",
+   "title": "Prohibit penalties introduced by handling",
+   "quote": "ERROR handling never introduces new penalties.",
+   "interpretation": "Compare penalties attributable to ERROR handling with the preceding penalty state. A supplied penalty classification is needed to distinguish penalties from other effects.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "handling_actions",
+    "prior_penalties",
+    "resulting_penalties",
+    "penalty_classification"
+   ],
+   "criterion": "ERROR handling introduces no new penalties.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "penalty state history",
+    "action provenance"
+   ],
+   "gap": "The definition of a penalty and the baseline for new penalties are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the penalty classification and comparison baseline."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-9-01",
+   "section": "9",
+   "title": "Minimize correction secondary impact",
+   "quote": "All corrections MUST:\n\n- minimize secondary impact,",
+   "interpretation": "Compare a correction's secondary impact with feasible alternatives using a declared impact model. The text supplies neither an objective function nor the set of alternatives.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "correction",
+    "feasible_corrections",
+    "secondary_impact_model"
+   ],
+   "criterion": "The correction minimizes secondary impact.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "correction alternatives",
+    "secondary impact estimates"
+   ],
+   "gap": "The secondary-impact measure and feasible comparison set are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the secondary-impact objective, evaluation horizon, and feasible alternatives."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-9-02",
+   "section": "9",
+   "title": "Preserve truth ledger consistency",
+   "quote": "- preserve PTL consistency,",
+   "interpretation": "Evaluate PTL consistency before and after each correction and, if required by the consistency model, during execution. The document does not state the relevant PTL invariants.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "correction_trace",
+    "ptl_state_history",
+    "ptl_consistency_rules"
+   ],
+   "criterion": "Every correction preserves PTL consistency.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL state history",
+    "PTL consistency invariants"
+   ],
+   "gap": "PTL consistency rules and their temporal scope are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the PTL consistency invariant and whether intermediate states must satisfy it."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-9-03",
+   "section": "9",
+   "title": "Prefer reversal over compensation",
+   "quote": "- prefer reversibility over compensation,",
+   "interpretation": "Check the choice among available corrections for preference toward reversal. The wording does not specify whether this is an absolute priority or a preference that can be outweighed by other principles.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "correction_options",
+    "reversibility_assessments",
+    "compensation_options",
+    "selected_correction"
+   ],
+   "criterion": "Correction selection prefers reversibility over compensation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "correction alternatives",
+    "reversibility and compensation assessments"
+   ],
+   "gap": "The strength of the preference and its interaction with other correction principles are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether reversal has absolute priority or a defeasible preference."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-9-04",
+   "section": "9",
+   "title": "Avoid cascades beyond error scope",
+   "quote": "- avoid cascading changes outside the error scope.",
+   "interpretation": "Trace changes caused by a correction and compare their scope with the error boundary. The text does not define the scope boundary or whether avoid requires zero external cascading changes or a best-effort choice.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "error_scope",
+    "correction",
+    "change_dependency_graph",
+    "resulting_changes"
+   ],
+   "criterion": "Corrections avoid cascading changes outside the error scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error scope assessments",
+    "causal change traces"
+   ],
+   "gap": "Error scope, cascade identification, and the strictness of avoid are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the error boundary, cascade model, and whether avoidance is absolute or best effort."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-9-05",
+   "section": "9",
+   "title": "Automatically escalate systemic error detection",
+   "quote": "If a systemic or cascading error is detected (impacting more than a protocol-defined threshold of Subjects or cross-layer execution), DKP-4-ERROR-001 SHALL automatically escalate to DKP-4-CRISIS-001 for Systemic Rollback and coordinated recovery.",
+   "interpretation": "Check automatic escalation when the affected-Subject count exceeds the protocol-defined threshold or cross-layer execution is affected. The parenthetical could instead mean that a protocol-defined threshold also applies to cross-layer effects; the text does not resolve this.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "detected_error",
+    "affected_subject_count",
+    "protocol_defined_threshold",
+    "cross_layer_execution_impact",
+    "crisis_escalation"
+   ],
+   "criterion": "Detection of a systemic or cascading error triggers automatic escalation to DKP-4-CRISIS-001 for Systemic Rollback and coordinated recovery; the Subject-count condition uses strictly more than the protocol-defined threshold.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "affected Subject counts",
+    "cross-layer impact assessments",
+    "protocol-defined threshold",
+    "escalation event logs"
+   ],
+   "gap": "The threshold, its defining protocol, the cross-layer trigger semantics, and escalation timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the threshold source, cross-layer trigger interpretation, and timing criterion for automatic escalation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-10-01",
+   "section": "10",
+   "title": "Anchor and date error case logs",
+   "quote": "All error cases MUST be:\n\n- logged with PTL anchoring,",
+   "interpretation": "For every error case, check for a log with a PTL anchor and a DTI-Day index, as required by the following indexing bullet. The text does not prescribe a record serialization.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "error_case_registry",
+    "case_logs",
+    "ptl_anchors",
+    "dti_day_indices"
+   ],
+   "criterion": "Every error case is logged with PTL anchoring and indexed by DTI-Day.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "complete error case inventory",
+    "PTL anchors",
+    "DTI-Day indices"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-10-02",
+   "section": "10",
+   "title": "Enable retrospective error case review",
+   "quote": "- reviewable post-factum,",
+   "interpretation": "Test whether error cases can be retrieved and reviewed after the events. The document does not define authorized reviewers, retention duration, or the information necessary for review.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "case_records",
+    "review_access",
+    "record_retention",
+    "review_information_requirements"
+   ],
+   "criterion": "Every error case remains reviewable post-factum.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "case archives",
+    "access controls",
+    "retention policy"
+   ],
+   "gap": "Review access, required review information, and retention duration are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare who can review cases, the necessary information, and the retention horizon."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-10-03",
+   "section": "10",
+   "title": "Include cases in reliability metrics",
+   "quote": "- included in system reliability metrics.",
+   "interpretation": "Reconcile the error case inventory with the cases contributing to reliability metrics. The document does not supply metric definitions or inclusion timing.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "error_case_registry",
+    "reliability_metrics",
+    "metric_contribution_provenance",
+    "metric_reporting_period"
+   ],
+   "criterion": "Every error case is included in system reliability metrics.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "reliability metric definitions",
+    "metric contribution records"
+   ],
+   "gap": "Metric computation rules and the reporting period for inclusion are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the metric contribution rule and reporting period."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-11-01",
+   "section": "11",
+   "title": "Prohibit suppression of valid appeals",
+   "quote": "This protocol SHALL NOT:\n\n- suppress valid appeals,",
+   "interpretation": "Compare valid appeal submissions with intake and processing records to detect suppression. The text does not define suppression or whether validity means formal sufficiency or a substantively founded claim.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "appeal_submissions",
+    "appeal_validity",
+    "intake_records",
+    "processing_actions"
+   ],
+   "criterion": "The protocol does not suppress valid appeals.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "appeal submission and intake records",
+    "validity determinations",
+    "processing traces"
+   ],
+   "gap": "Valid appeal and suppression lack precise operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether validity is formal or substantive and which acts or omissions constitute suppression."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-11-02",
+   "section": "11",
+   "title": "Prohibit retaliation against appellants",
+   "quote": "- retaliate against Appellants,",
+   "interpretation": "Inspect actions affecting Appellants for a prohibited retaliatory relationship to their appeals. The text supplies no observable test for retaliation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "appellant_records",
+    "appeal_history",
+    "actions_affecting_appellants",
+    "action_causality"
+   ],
+   "criterion": "The protocol does not retaliate against Appellants.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "actions affecting Appellants",
+    "action provenance and causal evidence"
+   ],
+   "gap": "Retaliation is not defined in observable, machine-checkable terms. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a retaliation criterion consistent with the prohibition on intent inference."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-11-03",
+   "section": "11",
+   "title": "Prohibit hiding error statistics",
+   "quote": "- hide error statistics,",
+   "interpretation": "Compare available error statistics with stored statistics and access rules. The prohibition does not identify an audience or a required publication schedule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "stored_error_statistics",
+    "available_error_statistics",
+    "statistics_access_rules"
+   ],
+   "criterion": "The protocol does not hide error statistics.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "error statistics inventory",
+    "statistics access and disclosure records"
+   ],
+   "gap": "The required audience, disclosure scope, and meaning of hiding are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the visibility obligations used to identify hidden statistics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-11-04",
+   "section": "11",
+   "title": "Prohibit discretionary protocol overrides",
+   "quote": "- introduce discretionary overrides.",
+   "interpretation": "Inspect changes and execution paths for overrides based on discretion. A check requires a definition distinguishing discretionary overrides from authorized procedural decisions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "override_operations",
+    "override_authorization",
+    "decision_rules"
+   ],
+   "criterion": "The protocol introduces no discretionary overrides.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "override audit trails",
+    "authorization and decision rules"
+   ],
+   "gap": "Discretionary override is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the distinction between discretionary overrides and authorized procedural actions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-12-01",
+   "section": "12",
+   "title": "Require controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "For normative changes, verify evidence of the named controlled procedure, including mandatory simulation and audit. The presentation-only exception is checked separately; the referenced documents are needed to determine acceptance, activation, rollback, and whether rollback means capability or actual execution.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_record_or_plan"
+   ],
+   "criterion": "A normative protocol change follows DKP-4-UPGRADE-001 with proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation records",
+    "rollback evidence"
+   ],
+   "gap": "The referenced procedures and their acceptance, activation, and rollback requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare surrogate procedural criteria if simulating without the referenced documents, including the meaning of rollback."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-12-02",
+   "section": "12",
+   "title": "Assign modified protocols new identifiers",
+   "quote": "- modifications require a new protocol identifier,",
+   "interpretation": "Compare the protocol identifier before and after a normative modification. Read with the presentation-only exception, changes without normative effects do not trigger this requirement.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "old_protocol_identifier",
+    "new_protocol_identifier",
+    "change_classification",
+    "identifier_registry"
+   ],
+   "criterion": "A modification subject to upgrade requirements receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol version records",
+    "identifier registry",
+    "normative change assessment"
+   ],
+   "gap": "The boundary between normative modification and presentation-only correction requires a content assessment. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how normative changes are identified and whether new means changed from the prior identifier or globally unused."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-12-03",
+   "section": "12",
+   "title": "Require explicit compatibility declaration",
+   "quote": "- explicit compatibility declaration.",
+   "interpretation": "For modifications subject to upgrade requirements, check that an explicit compatibility declaration is present. The document does not prescribe its fields or compatibility targets.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "modification_record",
+    "compatibility_declaration"
+   ],
+   "criterion": "Every modification subject to upgrade requirements includes an explicit compatibility declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "modification package",
+    "compatibility declaration"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-12-04",
+   "section": "12",
+   "title": "Handle presentation corrections by date",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Check that a correction with unchanged normative content is not classified as an Upgrade and uses only the Last updated date as its change record. The text does not define normative equivalence or explain whether the front-matter last_updated key is the intended date field.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "old_document",
+    "new_document",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_metadata"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only through the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document versions",
+    "change classification records"
+   ],
+   "gap": "Normative-equivalence criteria, the referenced exception details, and the exact date-field mapping are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-equivalence test and map Last updated to the document's date metadata."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ERROR-12-05",
+   "section": "12",
+   "title": "Publish canonical edition integrity digests",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its canonical source and compare it with the corresponding repository manifest entry. The text does not identify source files, byte canonicalization rules, or the mapping from editions to entries.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_edition_inventory",
+    "canonical_source_bytes",
+    "sha256sums_manifest",
+    "edition_manifest_mapping"
+   ],
+   "criterion": "Every published edition has its canonical-source SHA-256 digest correctly listed in SHA256SUMS.txt in github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source files",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "Canonical source identification, byte representation, and edition-to-manifest mapping are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which exact source bytes and manifest entry correspond to each published edition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

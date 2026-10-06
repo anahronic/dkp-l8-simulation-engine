@@ -1,0 +1,1134 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-5-WORK-CYCLE-001",
+ "doc_sha256": "e74ab4ffe7089f8a567b3b119d59f3e0141dbdfa382151ab66054bfd6cdf6126",
+ "prefix": "WORKCYCLE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Uses only the supplied text. Recommendations and explicit permissions are recorded with their advisory or permissive force preserved. Sections 0, 1, and 12 contain framing or summary statements without additional independent checks. The unconditional maximum in 4.2 and the compensation alternative in 7 leave the priority of those rules ambiguous. Section 8.2 fixes presence at 10 hours and productive work at 8 hours while recommending 3–4 hours of recovery; this is incompatible with additive, non-overlapping accounting unless another allocation changes. The mapping of CycleDay residues to the displayed W/R sequence is not explicit. DKP-0-TIME-001 is referenced but not supplied. The crisis protocols are unnamed, so no document identifiers are inferred for them.",
+ "requirements": [
+  {
+   "id": "WORKCYCLE-2-01",
+   "section": "2",
+   "title": "Protocol application across labor sectors",
+   "quote": "- all standard labor arrangements under DKP,\n- public services and private enterprises,\n- critical and non-critical sectors.",
+   "interpretation": "Check that implementation coverage includes every listed category. Determining which arrangements are standard labor under DKP requires an external classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "labor_arrangements",
+    "sector_classifications",
+    "protocol_coverage"
+   ],
+   "criterion": "Every arrangement within the stated scope is covered by the protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "labor arrangement and sector classifications"
+   ],
+   "gap": "The text does not define standard labor arrangements under DKP. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the classification of arrangements within the protocol's scope."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-2-02",
+   "section": "2",
+   "title": "Adaptations must preserve all invariants",
+   "quote": "Sector-specific adaptations are permitted only if all invariants defined herein are preserved.",
+   "interpretation": "Evaluate each sector adaptation against the document's invariants. The text does not resolve whether every quantitative rule is an invariant or only the rule explicitly labeled as such in section 7.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "sector_adaptation",
+    "invariant_evaluations"
+   ],
+   "criterion": "Permit a sector adaptation only when all applicable invariants remain satisfied.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sector adaptation specifications",
+    "recovery safety assessments"
+   ],
+   "gap": "The complete invariant set and the test for safe equivalent compensation are not fully specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which provisions constitute invariants and how equivalent compensation is evaluated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-3-01",
+   "section": "3",
+   "title": "DTI day indexing dependency",
+   "quote": "A physical day indexed under DKP-0-TIME-001.",
+   "interpretation": "Check that each DTI-Day identifier conforms to the referenced time protocol. Its indexing rules cannot be derived from this document.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "physical_day",
+    "dti_day_index"
+   ],
+   "criterion": "The physical day's index conforms to DKP-0-TIME-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DTI day indices"
+   ],
+   "gap": "The referenced time protocol and its indexing rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the authoritative DTI indexing rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-3-02",
+   "section": "3",
+   "title": "Cycle day modulo formula",
+   "quote": "A 6-day overlay cycle defined as: `CycleDay = DTI-Day mod 6`",
+   "interpretation": "Compute CycleDay from the supplied DTI-Day index using modulo 6. This formula does not itself assign W or R to the resulting residues.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "cycle_day"
+   ],
+   "criterion": "CycleDay = DTI-Day mod 6.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DTI day indices"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "cycle_day"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-3-03",
+   "section": "3",
+   "title": "Workday classification by mandatory obligation",
+   "quote": "A day containing a mandatory productive work obligation.",
+   "interpretation": "Classify a day as W when its obligation records contain mandatory productive work. Actual attendance or voluntary activity is not the stated classification basis.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "daily_work_obligations",
+    "day_classification"
+   ],
+   "criterion": "A day is W if it contains a mandatory productive work obligation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "daily productive work obligations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-3-04",
+   "section": "3",
+   "title": "Restday excludes productive work obligations",
+   "quote": "A day containing no productive work obligation.",
+   "interpretation": "Classify a day as R only when no productive work obligation is recorded. The definition does not prohibit voluntary productive activity.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "daily_work_obligations",
+    "day_classification"
+   ],
+   "criterion": "A day is R if it contains no productive work obligation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "daily productive work obligations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-3-05",
+   "section": "3",
+   "title": "Presence measures scheduled availability",
+   "quote": "The total time a worker is scheduled to be available on a workday.",
+   "interpretation": "Calculate presence from the worker's scheduled availability intervals on the workday. It measures scheduled availability rather than productive task duration.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "scheduled_availability_intervals",
+    "presence_window"
+   ],
+   "criterion": "Presence Window equals total scheduled availability time on the workday.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "worker availability schedules"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-3-06",
+   "section": "3",
+   "title": "Productive time measures direct labor",
+   "quote": "Time spent on direct labor tasks.",
+   "interpretation": "Aggregate durations of activities classified as direct labor tasks. The text supplies no classification rule for distinguishing direct labor from other activity.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "activity_intervals",
+    "direct_labor_classifications",
+    "productive_work_time"
+   ],
+   "criterion": "Productive Work Time equals time spent on direct labor tasks.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "activity durations and task classifications"
+   ],
+   "gap": "A definition or authoritative classification of direct labor tasks is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which activities count as direct labor."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-3-07",
+   "section": "3",
+   "title": "Recovery block classification conditions",
+   "quote": "Mandatory non-working time within a workday dedicated to recovery.",
+   "interpretation": "Check that a recovery block is mandatory, occurs within a workday, and contains no working time. Whether an activity is dedicated to recovery requires a classification beyond the examples supplied later.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "recovery_intervals",
+    "workday_intervals",
+    "work_intervals",
+    "recovery_activity_classifications"
+   ],
+   "criterion": "Each Recovery Block is mandatory non-working time within a workday dedicated to recovery.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "work schedules",
+    "recovery activity classifications"
+   ],
+   "gap": "The text does not completely define which activities qualify as dedicated to recovery. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a recovery activity classification consistent with the permitted examples."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-4.1-01",
+   "section": "4.1",
+   "title": "Default six day work sequence",
+   "quote": "The normative default cycle is a 6-day cycle:\n\n`[W, W, R, W, W, R]`",
+   "interpretation": "Compare each default cycle with the stated ordered sequence. Applying it to absolute DTI dates requires a declared mapping between sequence positions and CycleDay residues.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "daily_day_types",
+    "cycle_day",
+    "cycle_phase"
+   ],
+   "criterion": "The default schedule repeats [W, W, R, W, W, R] over six days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "worker schedules",
+    "DTI day indices"
+   ],
+   "gap": "A non-default cycle gives UNKNOWN: the text does not say whether it is allowed.",
+   "hypotheses_needed": [
+    "Declare the correspondence between CycleDay residues and sequence positions."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "default_cycle"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-4.2-01",
+   "section": "4.2",
+   "title": "Maximum consecutive workday limit",
+   "quote": "- Maximum consecutive workdays: 2",
+   "interpretation": "Scan workday runs, including runs crossing cycle and year boundaries, and reject runs exceeding two. Section 7 introduces an alternative involving compensation whose priority over this statement is unclear.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ordered_daily_day_types"
+   ],
+   "criterion": "Every consecutive workday run has length ≤ 2.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "worker schedules across accounting boundaries"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "max_consecutive"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-4.2-02",
+   "section": "4.2",
+   "title": "Rest frequency upper bound",
+   "quote": "- Rest frequency: every ≤ 3 days",
+   "interpretation": "A schedule check can require a restday in every three-day window. The wording could alternatively be implemented as a maximum spacing between restdays, which needs explicit handling of schedule boundaries.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ordered_daily_day_types",
+    "schedule_boundary_context"
+   ],
+   "criterion": "Rest occurs at a frequency of every ≤ 3 days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "worker schedules across accounting boundaries"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare whether to use rolling three-day windows or spacing between restdays."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "rest_frequency"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-4.2-03",
+   "section": "4.2",
+   "title": "Exact cycles per DTI year",
+   "quote": "* 360 / 6 = 60 exact cycles per year",
+   "interpretation": "Verify that the specified 360-day year contains exactly sixty six-day cycles. This is an arithmetic compatibility check.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "cycles_per_year"
+   ],
+   "criterion": "Cycles per year = 360 / 6 = 60.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-4.2-04",
+   "section": "4.2",
+   "title": "Seven day week authority restriction",
+   "quote": "The 7-day week is explicitly non-normative and may exist only as a local cultural overlay without legal or computational authority.",
+   "interpretation": "Inspect legal rules and scheduling computations for authoritative use of the seven-day week. Cultural display or observance is permitted, but the meaning of computational authority needs an implementation-specific dependency model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "calendar_overlays",
+    "legal_rule_dependencies",
+    "computational_rule_dependencies"
+   ],
+   "criterion": "Any seven-day week exists only as a local cultural overlay and has no legal or computational authority.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal rule metadata",
+    "calendar and scheduling dependency records"
+   ],
+   "gap": "The text does not provide an operational definition of legal or computational authority. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which rule dependencies constitute authority."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-5.1-01",
+   "section": "5.1",
+   "title": "Mandatory daily time allocation",
+   "quote": "- Total Presence Window: 10 hours\n- Productive Work Time: 8 hours\n- Mandatory Recovery Block: 2 hours",
+   "interpretation": "For every workday, compare the three time totals with the prescribed allocation. These are exact allocations in this section.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "workday_presence_hours",
+    "workday_productive_hours",
+    "workday_recovery_hours"
+   ],
+   "criterion": "Each workday has Presence = 10h, Work = 8h, and Recovery = 2h.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "daily scheduled time allocations"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "workday_allocation"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-5.2-01",
+   "section": "5.2",
+   "title": "Recommended work recovery work layout",
+   "quote": "- 4 hours productive work\n- 2 hours recovery\n- 4 hours productive work",
+   "interpretation": "An advisory check can compare the day's ordered blocks with the 4–2–4 layout. The section explicitly makes this recommendation nonmandatory, so deviation alone is not a violation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "ordered_workday_blocks"
+   ],
+   "criterion": "Recommended layout: 4h productive work, then 2h recovery, then 4h productive work.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "ordered daily schedule blocks"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "recommended_layout"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-5.3-01",
+   "section": "5.3",
+   "title": "Recovery excluded from work accounting",
+   "quote": "*is not counted as work time,* cannot be removed, reduced, or monetized, * does not require justification.",
+   "interpretation": "Check that recovery durations are excluded from reported work time. This preserves the explicit separation between recovery and productive work.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "recovery_intervals",
+    "work_time_accounting"
+   ],
+   "criterion": "No recovery block time is counted as work time.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "time accounting records"
+   ],
+   "gap": "Holds by construction of the coverage model.",
+   "hypotheses_needed": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "recovery_not_work"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-5.3-02",
+   "section": "5.3",
+   "title": "Recovery protection against removal or monetization",
+   "quote": "*is not counted as work time,* cannot be removed, reduced, or monetized, * does not require justification.",
+   "interpretation": "Check that mandatory recovery is retained in full and that no policy converts it into a monetary substitute. Removal and reduction are directly measurable, while monetization needs a defined policy classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "required_recovery_allocation",
+    "actual_recovery_allocation",
+    "recovery_payment_policies"
+   ],
+   "criterion": "Recovery is neither removed nor reduced nor monetized.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "recovery allocations",
+    "compensation policies"
+   ],
+   "gap": "The text does not define the complete set of practices that constitute monetization. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which payment or exchange arrangements count as monetization."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-5.3-03",
+   "section": "5.3",
+   "title": "Recovery requires no individual justification",
+   "quote": "*is not counted as work time,* cannot be removed, reduced, or monetized, * does not require justification.",
+   "interpretation": "Inspect recovery access rules and forms to ensure that taking the mandatory recovery block is not conditional on providing a justification.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "recovery_access_rules",
+    "required_recovery_fields"
+   ],
+   "criterion": "No justification is required to receive the recovery block.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "recovery access policies and form requirements"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-5.3-04",
+   "section": "5.3",
+   "title": "Permitted recovery activity categories",
+   "quote": "- Permitted recovery activities include:\n\n  *meals,* sleep or rest, *personal or family needs,* non-work mobility.",
+   "interpretation": "Check that activity policies permit all listed categories during recovery. The word 'include' makes this an open list and does not prohibit unlisted activities.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "recovery_activity_permissions"
+   ],
+   "criterion": "Meals, sleep or rest, personal or family needs, and non-work mobility are permitted recovery activities.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "recovery activity permission policies"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-6-01",
+   "section": "6",
+   "title": "Cycle day and productive totals",
+   "quote": "- Workdays: 4\n- Restdays: 2\n- Productive work: 32 hours",
+   "interpretation": "Aggregate the standard six-day cycle and compare its workday, restday, and productive-hour totals with the stated values. The text does not explain how exception cycles should be reported against these totals.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "cycle_workdays",
+    "cycle_restdays",
+    "cycle_productive_hours"
+   ],
+   "criterion": "Per standard six-day cycle: 4 workdays, 2 restdays, and 32 productive hours.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cycle schedule and time totals"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "cycle_accounting_days"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-6-02",
+   "section": "6",
+   "title": "Cycle presence and recovery totals",
+   "quote": "- Presence: 40 hours\n- Recovery: 8 hours",
+   "interpretation": "Aggregate presence and recovery across the standard six-day cycle and compare them with the prescribed totals.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "cycle_presence_hours",
+    "cycle_recovery_hours"
+   ],
+   "criterion": "Per standard six-day cycle: 40 presence hours and 8 recovery hours.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cycle time totals"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "cycle_accounting_hours"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-6-03",
+   "section": "6",
+   "title": "Annual work and presence totals",
+   "quote": "- Workdays: 240\n- Productive work: 1,920 hours\n- Presence: 2,400 hours",
+   "interpretation": "Compare standard schedule totals over a 360-day DTI year with the stated annual quantities. These totals follow the standard cycle; adjustments for exceptions are unspecified.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "annual_workdays",
+    "annual_productive_hours",
+    "annual_presence_hours"
+   ],
+   "criterion": "Per 360-day DTI year: 240 workdays, 1,920 productive hours, and 2,400 presence hours.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "annual schedule and time totals"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "year_accounting"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-6-04",
+   "section": "6",
+   "title": "Annual mandatory recovery total",
+   "quote": "- Mandatory recovery: 480 hours",
+   "interpretation": "Aggregate mandatory recovery for the standard schedule over a 360-day DTI year and compare it with 480 hours.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "annual_mandatory_recovery_hours"
+   ],
+   "criterion": "Mandatory recovery per 360-day DTI year equals 480 hours.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "annual recovery time totals"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-7-01",
+   "section": "7",
+   "title": "Recovery invariant with compensation alternative",
+   "quote": "- An equivalent, demonstrably safe recovery compensation must be provided.",
+   "interpretation": "For each system-approved schedule, require either no assignment exceeding two consecutive workdays without a restday or equivalent, demonstrably safe recovery compensation. The OR allows a compensation alternative, but equivalence, safety, timing, and its relationship to section 4.2 are undefined.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "system_approved_schedule",
+    "ordered_daily_day_types",
+    "recovery_compensation",
+    "compensation_safety_evidence"
+   ],
+   "criterion": "No worker is assigned more than 2 consecutive workdays without a restday, OR equivalent, demonstrably safe recovery compensation is provided.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "approved worker schedules",
+    "compensation delivery records",
+    "recovery safety evidence"
+   ],
+   "gap": "Declared compensation cannot be shown to be 'demonstrably safe' here: UNKNOWN.",
+   "hypotheses_needed": [
+    "Declare a recovery equivalence and safety model.",
+    "Declare compensation timing and the priority of this alternative relative to section 4.2."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "recovery_invariant"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-7-02",
+   "section": "7",
+   "title": "Invariant violation assigned to planning",
+   "quote": "Violation of this invariant constitutes a system planning failure, not individual misconduct.",
+   "interpretation": "Given a determined invariant violation, check that its recorded classification is system planning failure and not individual misconduct. This attribution check does not independently determine whether the invariant was violated.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "invariant_violation",
+    "failure_classification",
+    "misconduct_classification"
+   ],
+   "criterion": "An invariant violation is classified as system planning failure and is not classified as individual misconduct.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "invariant violation findings",
+    "failure attribution records"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "planning_failure"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-8.1-01",
+   "section": "8.1",
+   "title": "Continuous service through staffing mechanisms",
+   "quote": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through:",
+   "interpretation": "Check that continuous-service plans achieve coverage through multiple shifts, workforce scaling, shift overlap, and capacity buffering. The list may require all four mechanisms or identify available mechanisms; the text does not specify this or their sufficient capacity.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "service_demand",
+    "shift_plan",
+    "workforce_capacity",
+    "shift_overlaps",
+    "capacity_buffers"
+   ],
+   "criterion": "Continuous operation is achieved through the listed staffing and capacity mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "service demand profiles",
+    "staffing and capacity plans"
+   ],
+   "gap": "Coverage is computed under hypotheses H-WC-1..4.",
+   "hypotheses_needed": [
+    "Declare the demand and capacity model.",
+    "Declare whether all listed mechanisms are mandatory."
+   ],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "continuity_by_shifts"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-8.1-02",
+   "section": "8.1",
+   "title": "Individual exhaustion cannot sustain continuity",
+   "quote": "Continuous service SHALL NOT be achieved through exhaustion of individual workers.",
+   "interpretation": "Assess whether continuous service depends on exhausting workers. The document supplies neither an exhaustion definition nor a method for establishing that service continuity depends on it.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "service_continuity_plan",
+    "worker_fatigue_evidence",
+    "staffing_dependency_assessment"
+   ],
+   "criterion": "Continuous service is not achieved through exhaustion of individual workers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "worker fatigue evidence",
+    "service staffing dependency assessments"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare an exhaustion model and a test for service dependence on exhausted workers."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "no_exhaustion"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-8.2-01",
+   "section": "8.2",
+   "title": "Mandatory shift time allocation",
+   "quote": "- a 10-hour presence window,\n- 8 hours productive work,\n- minimum 2 hours recovery per shift.",
+   "interpretation": "Check each shift for exactly ten presence hours, exactly eight productive hours, and at least two recovery hours. If work and recovery are disjoint and contained within presence, only two recovery hours fit these totals.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "shift_presence_hours",
+    "shift_productive_hours",
+    "shift_recovery_hours"
+   ],
+   "criterion": "For each shift: presence = 10h, productive work = 8h, recovery ≥ 2h.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "shift time allocations"
+   ],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "shift_allocation"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-8.2-02",
+   "section": "8.2",
+   "title": "Recommended high intensity recovery allocation",
+   "quote": "- 3–4 hours recovery per shift is recommended, potentially fragmented.",
+   "interpretation": "For shifts classified as high intensity, report whether total recovery is within three to four hours; fragmented recovery is expressly contemplated. This is advisory, and the text does not define high intensity or reconcile this recommendation with the fixed shift totals.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "shift_intensity_classification",
+    "shift_recovery_intervals"
+   ],
+   "criterion": "For high-intensity shifts, recommended total recovery is 3–4 hours per shift and may be fragmented.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "shift intensity classifications",
+    "recovery interval schedules"
+   ],
+   "gap": null,
+   "hypotheses_needed": [
+    "Declare which environments are high intensity.",
+    "Declare how additional recovery fits the presence and work allocations."
+   ],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.0.0",
+    "check": "high_intensity_recovery"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ]
+  },
+  {
+   "id": "WORKCYCLE-8.3-01",
+   "section": "8.3",
+   "title": "Peak overlap permitted as capacity",
+   "quote": "*explicitly permitted,* treated as capacity design, not inefficiency.",
+   "interpretation": "Check that policies permit overlapping shifts during peak hours and classify such overlap as capacity design rather than inefficiency. Simultaneous multi-shift presence is encouraged, so its absence is not itself a violation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "peak_hours",
+    "shift_overlaps",
+    "overlap_permissions",
+    "overlap_classifications"
+   ],
+   "criterion": "Overlapping shifts during peak hours are permitted and treated as capacity design, not inefficiency.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "peak demand classifications",
+    "shift schedules",
+    "capacity accounting policies"
+   ],
+   "gap": "The text does not define how peak hours are identified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a rule or authoritative source for peak-hour classification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-9-01",
+   "section": "9",
+   "title": "Minimum monitoring metric coverage",
+   "quote": "Implementations SHALL monitor at least:",
+   "interpretation": "Check that monitoring covers error and incident rates, sick leave frequency, staff attrition, output per productive hour, and recovery compliance rate. Metric names establish required coverage, but their definitions and collection cadence are absent.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "monitoring_configuration",
+    "metric_observations"
+   ],
+   "criterion": "Monitor all five listed metric categories; additional metrics are permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "incident records",
+    "sick leave records",
+    "staff attrition records",
+    "output and productive time records",
+    "recovery compliance records"
+   ],
+   "gap": "Metric operational definitions and monitoring cadence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare metric definitions and a collection cadence for each required category."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-9-02",
+   "section": "9",
+   "title": "Persistent degradation triggers schedule review",
+   "quote": "Persistent degradation in these metrics SHALL trigger mandatory schedule review.",
+   "interpretation": "Detect persistent degradation in the monitored metrics and verify that it triggers a mandatory schedule review. The text does not define persistence, deterioration thresholds, aggregation across metrics, or a review deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "metric_history",
+    "degradation_determinations",
+    "schedule_review_events"
+   ],
+   "criterion": "Persistent degradation in the monitored metrics triggers mandatory schedule review.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "monitoring time series",
+    "schedule review records"
+   ],
+   "gap": "The degradation trigger, persistence duration, cross-metric logic, and review timing are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare deterioration criteria and persistence rules.",
+    "Declare whether degradation in any metric or a combined assessment triggers review.",
+    "Declare an observable review initiation rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-10-01",
+   "section": "10",
+   "title": "Exceptions restricted to defined crises",
+   "quote": "Exceptions are permitted only:\n\n- in clearly defined crisis scopes,",
+   "interpretation": "Check that an exception is confined to a documented crisis scope. Deciding whether a scope qualifies as a crisis and is clearly defined requires criteria not supplied here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exception_scope",
+    "crisis_scope",
+    "crisis_classification"
+   ],
+   "criterion": "An exception is permitted only within a clearly defined crisis scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis declarations and scope records"
+   ],
+   "gap": "The text does not define crisis qualification or sufficient scope clarity. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare crisis qualification and scope completeness criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-10-02",
+   "section": "10",
+   "title": "Exceptions require limited duration",
+   "quote": "- for limited duration,",
+   "interpretation": "Check that every exception has a bounded duration or termination condition. The text does not specify a maximum duration or whether a contingent termination condition is sufficient.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exception_start",
+    "exception_end",
+    "exception_termination_condition"
+   ],
+   "criterion": "Every exception operates for limited duration.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exception validity and termination records"
+   ],
+   "gap": "The text does not define the acceptable duration bound or termination convention. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how limited duration is established and checked."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-10-03",
+   "section": "10",
+   "title": "Exceptions require recovery compensation",
+   "quote": "- with mandatory recovery compensation,",
+   "interpretation": "Check that every exception entails and delivers required recovery compensation. The text does not state its amount, form, or delivery deadline, or explicitly say whether section 7's equivalence test governs it.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exception_record",
+    "recovery_compensation_obligation",
+    "recovery_compensation_delivery"
+   ],
+   "criterion": "Every permitted exception includes mandatory recovery compensation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exception compensation obligations",
+    "compensation delivery records"
+   ],
+   "gap": "Compensation amount, form, timing, and its relationship to section 7 are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the required compensation and delivery rules for exceptions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-10-04",
+   "section": "10",
+   "title": "Exceptions require full crisis traceability",
+   "quote": "- and with full traceability under DKP crisis protocols.",
+   "interpretation": "Check each exception's traceability against the applicable DKP crisis protocols. Those protocols are neither identified by document id nor supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "exception_trace_records",
+    "crisis_traceability_requirements"
+   ],
+   "criterion": "Every permitted exception has full traceability under DKP crisis protocols.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis protocol traceability requirements",
+    "exception audit records"
+   ],
+   "gap": "The applicable crisis protocols and their required traceability fields are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Identify the applicable crisis protocols and supply their traceability requirements."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-10-05",
+   "section": "10",
+   "title": "Exceptions cannot establish precedent",
+   "quote": "No exception may establish precedent.",
+   "interpretation": "Inspect subsequent rules and decisions for reliance on an exception as precedent. A program needs a representation of precedential reliance, which the text does not define.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exception_records",
+    "subsequent_decisions",
+    "decision_dependency_classifications"
+   ],
+   "criterion": "No exception establishes precedent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance decision records",
+    "decision dependency records"
+   ],
+   "gap": "Precedent and the evidence sufficient to establish precedential reliance are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which forms of reliance on an exception constitute precedent."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "WORKCYCLE-11-01",
+   "section": "11",
+   "title": "Three layer human time model",
+   "quote": "1.  Productive Work\n2.  Mandatory Recovery\n3.  Full Rest",
+   "interpretation": "Check that the human time model represents the three stated layers separately. The section does not supply additional rules for their exclusivity or exhaustiveness.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "human_time_model_layers"
+   ],
+   "criterion": "The human time model has the three layers Productive Work, Mandatory Recovery, and Full Rest.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "human time model schema"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

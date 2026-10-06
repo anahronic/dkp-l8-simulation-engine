@@ -1,0 +1,1196 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-1-JUSTICE-001",
+ "doc_sha256": "38fab8c0091608f7909c7f9d56c3e94154f2f77421a69af79c252545ccb6797b",
+ "prefix": "JUSTICE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Requirement identifiers preserve the carriage return in the supplied prefix as JSON escape \\r. Unnumbered provisions under Dispute Exception Clause use that heading title as their section. Section 2's exclusive input-source rule conflicts with Section 3.3's required inputs from DKP-1-AXIOMS-001. The dispute clause limits the TTL restriction to scheduled periodic cycles; the treatment of other unscheduled triggers is not fully specified. Section 15's requirements for any modification are qualified by its presentation-only correction exception. DKP-8-SIMULATION and DKP-8-SIMULATION-001 are preserved as distinct reference spellings; their equivalence is not established. No referenced document was supplied. Structural checks do not establish the correctness of real-world impact, attribution, feasibility, or risk assessments.",
+ "requirements": [
+  {
+   "id": "JUSTICE-1-01",
+   "section": "1",
+   "title": "Binding Consequences Without Punishment",
+   "quote": "This protocol computes consequences, not punishment. It produces binding justice outputs, not discretionary decisions.",
+   "interpretation": "Check that outputs have binding status and are generated as consequences. Distinguishing a consequence from punishment requires a declared classification rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_outputs",
+    "binding_status",
+    "decision_rules"
+   ],
+   "criterion": "Justice outputs are binding, non-discretionary consequences and do not constitute punishment.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "downstream handling of justice outputs"
+   ],
+   "gap": "The text does not operationally define binding effect or the distinction between consequences and punishment. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification of punishment and a model of binding downstream effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-2-01",
+   "section": "2",
+   "title": "Required Architectural Layer Position",
+   "quote": "- above DKP-1-IMPACT-001 (Impact Measurement Protocol),\n- above DKP-1-IDENTITY-001 (Identity & Subject Protocol),\n- below all economic, governance, security, and enforcement protocols.",
+   "interpretation": "Compare the protocol's position with an architectural ordering. The text does not specify whether above and below mean dependency direction, execution order, or authority.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_layer_order",
+    "protocol_categories"
+   ],
+   "criterion": "Justice is above Impact and Identity and below every economic, governance, security, and enforcement protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001",
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "system architecture and protocol classification"
+   ],
+   "gap": "The architectural ordering relation and complete downstream protocol inventory are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A precise meaning of above and below and a complete classification of protocols."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-2-02",
+   "section": "2",
+   "title": "Prohibit Direct Raw Data Access",
+   "quote": "This protocol SHALL NOT access raw Physical Truth Layer data directly.",
+   "interpretation": "Inspect data-access traces and provenance for direct reads of raw Physical Truth Layer data.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "data_access_trace",
+    "data_provenance"
+   ],
+   "criterion": "No direct access by this protocol targets raw Physical Truth Layer data.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth Layer provenance and access records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-2-03",
+   "section": "2",
+   "title": "Exclusive Imported Input Sources",
+   "quote": "All inputs MUST be imported exclusively from:",
+   "interpretation": "Check that every imported input is an Impact output or an Identity attribution binding, as listed immediately after this sentence. This literal rule conflicts with the Axioms input requirement in Section 3.3.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "imported_inputs",
+    "input_provenance",
+    "input_categories"
+   ],
+   "criterion": "Every input originates from DKP-1-IMPACT-001 outputs or DKP-1-IDENTITY-001 attribution bindings.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001",
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "Impact output provenance",
+    "Identity attribution-binding provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-3.1-01",
+   "section": "3.1",
+   "title": "Channel Separated Impact Input Contract",
+   "quote": "A channel-separated, unaggregated set of impact outputs produced by DKP-1-IMPACT-001:",
+   "interpretation": "For each evaluated action, verify Impact provenance, preservation of channel separation, and the presence of Iᵢ, Bᵢ, Rᵢ, Xᵢ, and Uᵢ. This checks the declared interface rather than the physical validity of its values.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "action_instance",
+    "impact_outputs",
+    "impact_provenance",
+    "channel_lineage"
+   ],
+   "criterion": "Each action has unaggregated channel-specific impact magnitude, reference bounds, reversibility flags, externality flags, and uncertainty envelopes from DKP-1-IMPACT-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "channel-level Impact outputs and lineage"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-3.2-01",
+   "section": "3.2",
+   "title": "Required Responsibility Binding Fields",
+   "quote": "- responsibility weights per Subject,\n- temporal persistence indicators,\n- cascading and higher-order attribution flags.",
+   "interpretation": "For each evaluated action, check that the Identity binding identifies Subjects and includes every listed responsibility field. The text does not prescribe a serialization or weight normalization.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "action_instance",
+    "responsibility_binding",
+    "binding_provenance"
+   ],
+   "criterion": "Each binding from DKP-1-IDENTITY-001 contains identified Subjects, weights per Subject, temporal persistence indicators, and cascading and higher-order attribution flags.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "Identity responsibility bindings"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-3.3-01",
+   "section": "3.3",
+   "title": "Required Axiom Constraint Inputs",
+   "quote": "- absolute prohibitions,\n- minimum survival and stability thresholds,\n- non-negotiable axiom-defined bounds.",
+   "interpretation": "Check that the Axioms input supplies protected-domain priority ordering and all listed constraints. Field presence and provenance can be checked, but their substantive values require the referenced document.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_constraints",
+    "constraint_provenance"
+   ],
+   "criterion": "Inputs from DKP-1-AXIOMS-001 provide protected-domain priorities, absolute prohibitions, minimum survival and stability thresholds, and non-negotiable bounds.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "Axioms priorities, prohibitions, thresholds, and bounds"
+   ],
+   "gap": "The referenced Axioms document and its required threshold values are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An explicit resolution of the conflict with Section 2's exclusive source rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-4-01",
+   "section": "4",
+   "title": "Deterministic Justice Mapping Contract",
+   "quote": "Justice (δίκη) is defined as a deterministic mapping:\n\n`δίκη : (Impact, Responsibility, Axioms) → Consequence Vector C`",
+   "interpretation": "Verify that the mapping consumes Impact, Responsibility, and Axioms and returns a consequence vector. Repeated identical inputs must produce identical outputs, but the document supplies no algorithm determining the vector's values.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "impact",
+    "responsibility",
+    "axioms",
+    "justice_implementation",
+    "consequence_vector"
+   ],
+   "criterion": "The same Impact, Responsibility, and Axioms inputs determine the same consequence vector C.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact outputs",
+    "Identity bindings",
+    "Axioms constraints"
+   ],
+   "gap": "The mapping algorithm and consequence-vector schema are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared consequence mapping and vector representation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-4-02",
+   "section": "4",
+   "title": "Exclude Interpretive Output Content",
+   "quote": "The output vector C SHALL contain no:",
+   "interpretation": "Inspect output content and its derivation for the listed exclusions: moral language, intent interpretation, discretionary adjustment, and subjective weighting. A field-name check alone cannot establish their semantic absence.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "consequence_vector",
+    "computation_trace",
+    "weighting_rules"
+   ],
+   "criterion": "C contains no moral language, intent interpretation, discretionary adjustment, or subjective weighting.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The four prohibited categories lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Explicit classifiers for prohibited content and computation practices."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-5-01",
+   "section": "5",
+   "title": "Independent Evaluation Of All Domains",
+   "quote": "Justice SHALL be evaluated independently across the following domains:",
+   "interpretation": "Check for separate evaluations of Restitution, Restriction, Isolation, and Exclusion. Independence could mean separate records or absence of computational dependence between domains; the text does not resolve this.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "domain_evaluations",
+    "domain_dependency_graph"
+   ],
+   "criterion": "Restitution, Restriction, Isolation, and Exclusion are each evaluated independently.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The required form of independence is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A definition of independence between domain evaluations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-5-02",
+   "section": "5",
+   "title": "Evaluate Every Triggered Domain",
+   "quote": "No domain SHALL be skipped if its triggering conditions are met.",
+   "interpretation": "Given established trigger results, verify an evaluation record for every triggered domain. The separate domain provisions govern whether those triggers are substantively satisfied.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "domain_trigger_results",
+    "domain_evaluation_records"
+   ],
+   "criterion": "Every domain whose trigger is satisfied has an evaluation record.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-6-01",
+   "section": "6",
+   "title": "Restitution Domain Trigger Conditions",
+   "quote": "- impact is reversible (Rᵢ = True), and\n- mitigation or repair is physically possible.",
+   "interpretation": "Trigger restitution when reversibility is true and mitigation or repair is physically possible. The text does not specify how physical feasibility is established or how channel-level triggers map to an action-level result.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "reversibility_flags",
+    "mitigation_feasibility",
+    "repair_feasibility"
+   ],
+   "criterion": "Rᵢ = True and physical possibility of mitigation or repair imply restitution applies.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact reversibility flags",
+    "physical mitigation and repair assessments"
+   ],
+   "gap": "Physical feasibility and the channel-to-action trigger rule are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A physical feasibility model and a channel-to-action trigger rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-6-02",
+   "section": "6",
+   "title": "Required Restitution Computation Outputs",
+   "quote": "- required mitigation scope,\n- proportional restitution obligations per Subject,\n- time constraints for restitution completion.",
+   "interpretation": "Check that restitution computation supplies mitigation scope, obligations per Subject, and completion time constraints. Their actual values cannot be derived from this text alone.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "restitution_output",
+    "impact_outputs",
+    "responsibility_weights"
+   ],
+   "criterion": "Restitution computation produces required mitigation scope, proportional obligations for each Subject, and completion time constraints.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact measurements",
+    "Identity responsibility weights",
+    "mitigation capability data"
+   ],
+   "gap": "Rules for computing mitigation scope, obligation quantities, and completion deadlines are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A restitution computation model and a rule for setting completion deadlines."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-6-03",
+   "section": "6",
+   "title": "Restitution Limited By Measurable Impact",
+   "quote": "Restitution SHALL NOT exceed the measurable impact.",
+   "interpretation": "Compare restitution with measurable impact in compatible units. The text leaves open whether this bound applies separately to channels, Subjects, or the overall restitution outcome.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restitution_obligations",
+    "measurable_impact"
+   ],
+   "criterion": "Restitution ≤ measurable impact.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measurable Impact outputs"
+   ],
+   "gap": "A common comparison measure and the scope of the cap are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A comparison rule preserving the required separation of impact channels and an explicit scope for the cap."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-7-01",
+   "section": "7",
+   "title": "Restriction Domain Trigger Conditions",
+   "quote": "- impact exceeds axiom-defined safe margins, or\n- repeated harmful behavior is detected, or\n- mitigation capacity is insufficient.",
+   "interpretation": "Apply restriction when any listed condition holds. Checking the disjunction requires safe margins, a repeated-harm detection rule, and a mitigation sufficiency assessment.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "impact_outputs",
+    "safe_margins",
+    "harmful_behavior_history",
+    "mitigation_capacity"
+   ],
+   "criterion": "Exceeding safe margins, detected repeated harmful behavior, or insufficient mitigation capacity implies restriction applies.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom-defined safe margins",
+    "Subject behavior history",
+    "mitigation capacity assessments"
+   ],
+   "gap": "Safe margins, repetition criteria, and mitigation sufficiency rules are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A repeated-harm detection rule and a mitigation capacity sufficiency model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-7-02",
+   "section": "7",
+   "title": "Restriction Properties And Continuous Review",
+   "quote": "- proportional,\n- reversible where physically possible,\n- continuously re-evaluated.",
+   "interpretation": "Check restriction proportionality, reversibility when physically possible, and ongoing review. Continuous re-evaluation must be interpreted consistently with Section 11's periodic TTL limit, but no review cadence is specified.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "restriction_history",
+    "impact_outputs",
+    "reversibility_feasibility",
+    "reevaluation_history"
+   ],
+   "criterion": "Restrictions remain proportional, are reversible wherever physically possible, and undergo continuous re-evaluation subject to the temporal rules.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact updates",
+    "physical reversibility assessments",
+    "underlying data TTL metadata"
+   ],
+   "gap": "Proportionality, physical feasibility, and the operational meaning of continuous review are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A proportionality model, a reversibility feasibility model, and a review cadence consistent with Section 11."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-7-03",
+   "section": "7",
+   "title": "Restrictions Solely Prevent Further Harm",
+   "quote": "Restrictions SHALL NOT be used as punitive measures and SHALL exist solely to prevent further harm.",
+   "interpretation": "Assess whether each restriction serves only harm prevention and is not punitive. A declared purpose field alone cannot establish actual use or effects.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "restriction_design",
+    "restriction_use",
+    "projected_harm"
+   ],
+   "criterion": "Every restriction is non-punitive and exists solely to prevent further harm.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "restriction implementation and outcome evidence"
+   ],
+   "gap": "Punitive use and exclusive harm-prevention purpose lack operational tests. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A model distinguishing punitive restrictions from measures serving only harm prevention."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-8-01",
+   "section": "8",
+   "title": "Isolation Domain Trigger Conditions",
+   "quote": "- impact is irreversible (Rᵢ = False), or\n- externality exposure is critical (Xᵢ = True), or\n- Subject behavior presents systemic risk.",
+   "interpretation": "Apply isolation when any listed condition holds. The parenthetical identifies Xᵢ = True with critical exposure, although Section 3.1 describes Xᵢ only as an externality flag; systemic risk remains undefined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "reversibility_flags",
+    "externality_flags",
+    "subject_behavior",
+    "systemic_risk_assessment"
+   ],
+   "criterion": "Rᵢ = False, critical externality exposure expressed as Xᵢ = True, or systemic risk from Subject behavior implies isolation applies.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact reversibility and externality flags",
+    "systemic risk assessments"
+   ],
+   "gap": "The systemic-risk test and the precise critical-exposure semantics of Xᵢ are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A systemic-risk model and an explicit interpretation of the externality flag."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-8-02",
+   "section": "8",
+   "title": "Minimal Functional Harm Prevention Isolation",
+   "quote": "- functional, not punitive,\n- targeted strictly at harm prevention,\n- minimal in scope.",
+   "interpretation": "Compare the selected isolation measure with feasible alternatives that prevent the relevant harm. Testing minimality requires a scope ordering, while functional and punitive require operational definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "isolation_measure",
+    "feasible_alternatives",
+    "harm_prevention_assessment",
+    "scope_comparison"
+   ],
+   "criterion": "Isolation is functional, non-punitive, strictly directed at harm prevention, and minimal in scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "isolation alternatives and feasibility assessments"
+   ],
+   "gap": "The text supplies no scope ordering or operational definitions of functional and punitive isolation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A feasible-alternative model, a scope ordering, and a harm-prevention effectiveness test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-8-03",
+   "section": "8",
+   "title": "Physical Isolation As Last Resort",
+   "quote": "Physical isolation SHALL be treated as a last-resort measure.\n\nIsolation SHALL prioritize functional separation over physical confinement whenever technically feasible.",
+   "interpretation": "Check that technically feasible functional separation receives priority and that physical isolation is used only as a last resort. The text does not specify whether last resort requires failed trials of alternatives or an assessment that they cannot suffice.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "selected_isolation",
+    "functional_separation_feasibility",
+    "alternative_assessments",
+    "prior_measures"
+   ],
+   "criterion": "Functional separation is prioritized whenever technically feasible, and physical isolation is a last-resort measure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "technical feasibility assessments",
+    "records of available or attempted alternatives"
+   ],
+   "gap": "Technical feasibility and the evidence required to establish last resort are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A technical feasibility model and a declared last-resort decision rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-9-01",
+   "section": "9",
+   "title": "Exclusion Domain Trigger Conditions",
+   "quote": "- a Subject persistently violates non-negotiable axioms, or\n- mitigation and isolation fail to contain harm, or\n- the Subject refuses or is incapable of compliance.",
+   "interpretation": "Apply exclusion when any listed condition holds, preserving the conjunction of mitigation and isolation in the second condition. Persistence, containment failure, refusal, and incapacity require operational determinations.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "axiom_violation_history",
+    "mitigation_results",
+    "isolation_results",
+    "compliance_assessment"
+   ],
+   "criterion": "Persistent non-negotiable axiom violations, failure of mitigation and isolation to contain harm, or refusal or incapacity to comply implies exclusion applies.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom compliance records",
+    "mitigation and isolation outcomes",
+    "Subject compliance capability assessments"
+   ],
+   "gap": "The text defines no persistence threshold or tests for containment failure, refusal, and incapacity. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A persistence rule and operational tests for containment failure and compliance status."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-9-02",
+   "section": "9",
+   "title": "Required Exclusion State Changes",
+   "quote": "- removal from system participation,\n- loss of system-provided privileges,\n- persistence of historical attribution.",
+   "interpretation": "Compare participation, system privilege, and attribution records before and after exclusion. Exclusion removes participation and system-provided privileges while retaining historical attribution.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "exclusion_event",
+    "participation_state",
+    "system_privileges",
+    "historical_attribution_before",
+    "historical_attribution_after"
+   ],
+   "criterion": "After exclusion, system participation and system-provided privileges are removed, and historical attribution persists.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "participation registry",
+    "system privilege registry",
+    "historical Identity attribution records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-9-03",
+   "section": "9",
+   "title": "Exclusion Must Preserve Life",
+   "quote": "Exclusion SHALL NOT entail physical harm, lethal deprivation, or conditions leading to loss of life.\n\nAll exclusion outcomes MUST remain consistent with Axiom A1 (Preservation of Life) as defined in DKP-1-AXIOMS-001.",
+   "interpretation": "Evaluate exclusion outcomes for physical harm, lethal deprivation, and conditions causing loss of life, and check consistency with A1. Prospective compliance requires a causal outcome model and the referenced axiom.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exclusion_outcomes",
+    "physical_harm_assessment",
+    "deprivation_assessment",
+    "life_risk_assessment",
+    "axiom_a1"
+   ],
+   "criterion": "Every exclusion outcome is consistent with A1 and entails no physical harm, lethal deprivation, or conditions leading to loss of life.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "Axiom A1",
+    "physical harm and survival impact assessments"
+   ],
+   "gap": "Axiom A1 and a causal method for assessing exclusion's life and harm consequences are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A causal model of exclusion effects, including deprivation and survival conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-9-04",
+   "section": "9",
+   "title": "Limit Exclusion Authority And Meaning",
+   "quote": "Exclusion terminates system participation and access to system-provided privileges only. It SHALL NOT authorize annihilation, abandonment, or indirect lethal exposure.\n\nExclusion is not annihilation and does not imply moral condemnation.",
+   "interpretation": "Check that exclusion grants only the stated termination authority and grants no authority for the prohibited outcomes. Detecting abandonment, indirect lethal exposure, or moral condemnation requires semantic and causal interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exclusion_authorizations",
+    "exclusion_effects",
+    "exclusion_statements"
+   ],
+   "criterion": "Exclusion terminates only participation and system-provided privilege access, authorizes no annihilation, abandonment, or indirect lethal exposure, and implies no moral condemnation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "enforcement authorizations",
+    "exclusion effect assessments"
+   ],
+   "gap": "The prohibited semantic and causal categories are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Definitions of abandonment and moral condemnation and a model of indirect lethal exposure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-10-01",
+   "section": "10",
+   "title": "Proportional Distribution And Individual Cap",
+   "quote": "- consequences SHALL be distributed proportionally to responsibility weights,\n- no Subject SHALL absorb consequences exceeding its attributable contribution.",
+   "interpretation": "When multiple Subjects are responsible, compare their assigned consequences with responsibility weights and attributable contributions. The text does not explain proportional allocation or contribution caps for heterogeneous consequence-vector components.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "responsible_subjects",
+    "responsibility_weights",
+    "subject_consequences",
+    "attributable_contributions"
+   ],
+   "criterion": "For multiple responsible Subjects, consequence allocations are proportional to responsibility weights and each allocation does not exceed that Subject's attributable contribution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Identity responsibility weights and attributable contributions"
+   ],
+   "gap": "A comparison and allocation rule for consequence-vector components and attributable contribution is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A component-wise or otherwise explicitly declared proportional allocation and contribution comparison model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-10-02",
+   "section": "10",
+   "title": "Preserve Individual Accountability Under Collectives",
+   "quote": "Collective responsibility SHALL NOT nullify individual accountability.",
+   "interpretation": "Check that assigning collective responsibility does not eliminate accountability for responsible individuals. Retaining attribution records may be necessary but does not alone establish accountability.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "collective_responsibility",
+    "individual_attribution",
+    "individual_accountability_state"
+   ],
+   "criterion": "Collective responsibility does not nullify any responsible individual's accountability.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "collective and individual Identity attribution"
+   ],
+   "gap": "Individual accountability and what constitutes its nullification are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An operational representation of individual accountability and its preservation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-11-01",
+   "section": "11",
+   "title": "Required Adaptive ReEvaluation Triggers",
+   "quote": "Justice outputs SHALL be re-evaluated when:",
+   "interpretation": "Check that impact changes, mitigation, uncertainty-reducing new data, and shifted system boundaries each generate a re-evaluation obligation. The text says justice is adaptive but non-discretionary, yet gives no completion deadline or precise boundary-change test.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "impact_metric_history",
+    "mitigation_events",
+    "uncertainty_history",
+    "system_boundary_history",
+    "reevaluation_records"
+   ],
+   "criterion": "Each listed trigger causes non-discretionary re-evaluation of justice outputs, subject to the applicable temporal and dispute rules.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Impact updates and uncertainty envelopes",
+    "mitigation events",
+    "system boundary updates"
+   ],
+   "gap": "Trigger detection semantics and the permitted delay before completing re-evaluation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Rules for detecting the listed changes and a declared re-evaluation response time."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-11-02",
+   "section": "11",
+   "title": "Underlying Data TTL Evaluation Limit",
+   "quote": "Justice outputs MAY NOT be re-evaluated more frequently than the minimum TTL (Time-To-Live) of the underlying Physical Truth Layer data that produced the original impact measurements.",
+   "interpretation": "For periodic re-evaluation, compare elapsed time with the minimum TTL among data underlying the original measurements; the dispute clause limits this rule to scheduled periodic cycles. The preceding temporal-guarantees requirement may impose additional bounds not supplied here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "evaluation_timestamps",
+    "evaluation_type",
+    "original_impact_lineage",
+    "underlying_data_ttls",
+    "temporal_guarantees"
+   ],
+   "criterion": "Scheduled periodic re-evaluations respect Physical Truth Layer temporal guarantees and occur no more frequently than allowed by the minimum underlying data TTL.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "original Impact provenance",
+    "underlying Physical Truth Layer TTL metadata and temporal guarantees"
+   ],
+   "gap": "TTL metadata and other temporal guarantees are not supplied, and the interval anchor for subsequent cycles is not fully explicit. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interval anchor for periodic cycles and a way to import temporal metadata consistently with Section 2."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-11-03",
+   "section": "11",
+   "title": "Invalid Data Preserves Prior Outcomes",
+   "quote": "Any attempt to trigger re-evaluation using incomplete, stale, or selectively withheld data SHALL be treated as continued exposure to prior justice outcomes.",
+   "interpretation": "Check that an attempted re-evaluation using any prohibited data condition leaves prior justice outcomes applicable. Freshness can use provenance metadata, but completeness and selective withholding require knowledge of the expected evidence.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "reevaluation_attempt",
+    "submitted_data",
+    "data_freshness",
+    "expected_data",
+    "prior_justice_outcomes"
+   ],
+   "criterion": "Incomplete, stale, or selectively withheld data in a re-evaluation attempt results in continued exposure to prior justice outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data provenance and freshness",
+    "expected evidence inventory"
+   ],
+   "gap": "Completeness, staleness, and selective withholding are not fully defined or observable from the submission alone. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An evidence completeness model, a freshness rule, and a model for detecting withheld data."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-11-04",
+   "section": "11",
+   "title": "Prevent Manipulative Adaptive Justice Patterns",
+   "quote": "Adaptive justice SHALL NOT permit oscillatory relief, temporary concealment, or strategic delay of mitigation.",
+   "interpretation": "Analyze histories of justice outcomes, disclosures, and mitigation to identify prohibited patterns. The text supplies no temporal windows or definitions distinguishing these patterns from legitimate changes.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "justice_outcome_history",
+    "disclosure_history",
+    "mitigation_history",
+    "subject_action_history"
+   ],
+   "criterion": "Adaptive justice permits no oscillatory relief, temporary concealment, or strategic delay of mitigation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "longitudinal impact, disclosure, and mitigation records"
+   ],
+   "gap": "The prohibited behavioral patterns and their detection windows are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A temporal behavior model defining each prohibited pattern and its observation window."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-DisputeExceptionClause-01",
+   "section": "Dispute Exception Clause",
+   "title": "Limit TTL Rule To Periodic Cycles",
+   "quote": "The TTL-based re-evaluation constraint applies to scheduled periodic re-evaluation cycles only.\n\nDispute events triggered by new admissible data under Section 7.1 of DKP-1-EPISTEMIC-BOUNDARIES-001 SHALL NOT be rejected solely on TTL grounds.",
+   "interpretation": "Check that TTL rejection rules apply only to scheduled periodic cycles and never alone reject a qualifying dispute. Qualification depends on the referenced admissibility rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "reevaluation_type",
+    "dispute_data",
+    "admissibility_result",
+    "rejection_reasons"
+   ],
+   "criterion": "The TTL constraint is confined to scheduled periodic cycles; qualifying disputes under Section 7.1 are never rejected solely because of TTL.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "epistemic admissibility determinations",
+    "dispute rejection records"
+   ],
+   "gap": "Section 7.1's rules for identifying qualifying new admissible data are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-DisputeExceptionClause-02",
+   "section": "Dispute Exception Clause",
+   "title": "Valid Disputes Initiate Immediate Eligibility",
+   "quote": "A valid Dispute Event SHALL initiate re-evaluation regardless of elapsed time since last evaluation, provided:",
+   "interpretation": "Verify that a valid dispute introduces new admissible data absent from the prior evaluation, alleges a listed challenge, and uses the specified appeal mechanism. Such a dispute must initiate re-evaluation without an elapsed-time eligibility condition; no completion deadline is supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "dispute_event",
+    "prior_evaluation_data",
+    "new_data",
+    "admissibility_result",
+    "allegation_type",
+    "submission_route",
+    "reevaluation_initiation"
+   ],
+   "criterion": "A valid dispute with new admissible data, an allegation of oracle inconsistency, scope violation, or measurement integrity challenge, and submission through DKP-4-ERROR-001 initiates re-evaluation regardless of elapsed time.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001",
+    "DKP-4-ERROR-001"
+   ],
+   "data_dependencies": [
+    "admissibility results",
+    "prior evaluation evidence",
+    "appeal submission records"
+   ],
+   "gap": "External admissibility, appeal mechanism, and any additional dispute-validity requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An explicit interpretation of whether the three listed conditions exhaust dispute validity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-DisputeExceptionClause-03",
+   "section": "Dispute Exception Clause",
+   "title": "All Outputs Remain Open To Review",
+   "quote": "This exception preserves Core Invariant #3: No DKP output is final; all outputs remain subject to re-evaluation.",
+   "interpretation": "Check state definitions and reachable states for any permanently final output. Remaining subject to review requires an available re-evaluation path, not constant re-evaluation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "dkp_output_states",
+    "reevaluation_transition_rules"
+   ],
+   "criterion": "No DKP output enters a permanently final state that excludes re-evaluation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DKP output lifecycle states and re-evaluation interfaces"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-12-01",
+   "section": "12",
+   "title": "No Exemptions Based On Standing",
+   "quote": "No Subject SHALL be exempt from justice outcomes based on:",
+   "interpretation": "Inspect exemption rules and decisions for reliance on status, authority, jurisdiction, ideology, or cultural justification. Complete structured decision rules permit checking explicit grounds, while hidden proxies require an additional causal model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_attributes",
+    "exemption_rules",
+    "exemption_decisions",
+    "decision_basis"
+   ],
+   "criterion": "No Subject receives an exemption from justice outcomes based on status, authority, jurisdiction, ideology, or cultural justification.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Subject attributes",
+    "exemption decisions and their grounds"
+   ],
+   "gap": "The prohibited categories and causal meaning of based on are not operationally specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A classification of prohibited exemption grounds and a model for detecting proxy-based exemptions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-13-01",
+   "section": "13",
+   "title": "Preserve Boundaries Between Protocol Layers",
+   "quote": "This protocol SHALL NOT:",
+   "interpretation": "Compare imported metrics, attribution, and axiom bounds with their use in computation, and inspect reasoning inputs for prohibited additions. Detecting reinterpretation or injected policy and moral reasoning requires more than equality checks on stored values.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "imported_impact_metrics",
+    "used_impact_metrics",
+    "imported_attribution",
+    "used_attribution",
+    "axiom_bounds",
+    "computation_rules"
+   ],
+   "criterion": "The protocol does not reinterpret impact metrics, alter identity attribution, override axiom-defined bounds, or inject policy, governance, or moral reasoning.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authoritative Impact metrics",
+    "authoritative Identity attribution",
+    "axiom-defined bounds"
+   ],
+   "gap": "Reinterpretation and prohibited reasoning lack operational definitions, and authoritative bounds are external. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A semantic comparison rule for metric interpretation and a classifier for prohibited reasoning."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-13-02",
+   "section": "13",
+   "title": "Classify Boundary Violations As Critical",
+   "quote": "Violation constitutes a critical architectural breach.",
+   "interpretation": "Given an established violation of Section 13's prohibitions, check that it is classified as a critical architectural breach. The text does not prescribe a further response.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "cross_layer_violation",
+    "breach_classification"
+   ],
+   "criterion": "Every violation of a Section 13 prohibition is a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-14-01",
+   "section": "14",
+   "title": "Deterministic Reproducible Auditable Traceable Computations",
+   "quote": "Opaque, discretionary, or non-reproducible justice mechanisms are forbidden.",
+   "interpretation": "Verify that all computations are deterministic, reproducible, fully auditable, and traceable to inputs, as required by the preceding list. Replay and provenance checks provide evidence, but full auditability and opacity need defined acceptance criteria.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "justice_implementation",
+    "protocol_inputs",
+    "computation_traces",
+    "replay_results",
+    "audit_records"
+   ],
+   "criterion": "Every justice computation is deterministic, reproducible, fully auditable, and input-traceable; no mechanism is opaque, discretionary, or non-reproducible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "input provenance",
+    "audit and reproducibility records"
+   ],
+   "gap": "Full auditability, opacity, and acceptable reproducibility conditions are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An audit evidence standard and a declared reproducibility environment and comparison rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-15-01",
+   "section": "15",
+   "title": "Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check normative protocol changes against the listed controlled procedure and referenced simulation and audit requirements. Presentation-only corrections are excepted later in this section.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_evidence",
+    "activation_window",
+    "rollback_record"
+   ],
+   "criterion": "Every normative protocol change follows DKP-4-UPGRADE-001, including proposal, specified simulation and audit, acceptance conditions, activation window, and rollback provisions.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation parameters",
+    "rollback provisions"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation timing, and meaning of the rollback requirement are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A declared interpretation of rollback as a required capability, plan, or executed action, subject to the referenced procedure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-15-02",
+   "section": "15",
+   "title": "Required Modification Identity And Evidence",
+   "quote": "- a new protocol identifier,\n- explicit incompatibility declaration,\n- full-system simulation under DKP-8-SIMULATION.",
+   "interpretation": "For modifications subject to upgrade requirements, verify a changed protocol identifier, an explicit incompatibility declaration, and a full-system simulation. The simulation reference omits the -001 suffix used elsewhere, and its required coverage is unavailable.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "old_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "full_system_simulation"
+   ],
+   "criterion": "A qualifying modification has a new protocol identifier, an explicit incompatibility declaration, and full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "protocol version registry",
+    "incompatibility declaration",
+    "full-system simulation evidence"
+   ],
+   "gap": "The referenced simulation specification and required full-system coverage are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An explicit scope for full-system simulation and a resolution of the simulation document identifier difference."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-15-03",
+   "section": "15",
+   "title": "Presentation Corrections Use Date Only",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify corrections by whether they change normative content; qualifying presentation corrections are not upgrades and use only the document date as their change record. It is ambiguous whether only prohibits all external records or only additional version-identification changes.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "document_before",
+    "document_after",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_records"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "upgrade classification rules",
+    "document edition and change records"
+   ],
+   "gap": "Normative equivalence, the referenced exception procedure, and the scope of date-only recording are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "A normative-content equivalence test and an explicit scope for date-only recording."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "JUSTICE-15-04",
+   "section": "15",
+   "title": "Published Edition Canonical Digest Record",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For every published edition, compute SHA-256 over the identified canonical source bytes and compare the result with its entry in the specified repository file. This requires an authoritative mapping of editions to canonical source files.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "edition_source_mapping",
+    "sha256sums_file",
+    "repository_identity"
+   ],
+   "criterion": "Every published edition's canonical-source SHA-256 digest is correctly listed in SHA256SUMS.txt in github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "canonical repository edition inventory",
+    "canonical source files",
+    "SHA256SUMS.txt"
+   ],
+   "gap": "Canonical source bytes, edition mappings, and the repository digest manifest are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "An authoritative identification of the canonical source bytes for each published edition."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

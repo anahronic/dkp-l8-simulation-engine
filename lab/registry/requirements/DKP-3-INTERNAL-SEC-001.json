@@ -1,0 +1,1554 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-3-INTERNAL-SEC-001",
+ "doc_sha256": "1e9e0b1fd15046af8447303365c3b609329d6ef6e759c7cbb64ca888830d3f53",
+ "prefix": "INTSEC",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. Requirement identifiers preserve the carriage return in the supplied prefix as the JSON escape \\r. Related conjunctive requirements and state-specific permission sets are grouped; repeated invariants in section 11 are retained. Named protocols without an explicit document identifier are not assigned inferred identifiers. External protocols are unavailable. Section 7 permissions remain subject to section 2's prohibition on direct L3 execution of effects on Subjects. The section 5 general escalation exception may qualify the S1 and S3 duration limits, although their individual descriptions do not state that exception. No complete state-transition graph is provided. Section 12 uses both DKP-8-SIMULATION-001 and DKP-8-SIMULATION; these references are preserved separately. Its presentation-only exception qualifies the otherwise broad phrase 'any modification'.",
+ "requirements": [
+  {
+   "id": "INTSEC-1-01",
+   "section": "1",
+   "title": "Functional Internal Security Scope",
+   "quote": "Internal Security within DKP is not defined as surveillance, prediction, profiling, or ideological control. It is defined strictly as a functional mechanism for:",
+   "interpretation": "Check that the security function is confined to PTL-anchored violation detection, damage containment, prevention of execution distortion, and escalation of unresolved or systemic compromise. Whether an implementation constitutes surveillance or another excluded function requires a declared classification; section 8 separately prohibits mass surveillance without a PTL trigger.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_functions",
+    "function_classifications",
+    "ptl_anchors",
+    "compromise_status",
+    "escalation_records"
+   ],
+   "criterion": "Internal Security performs only the listed integrity functions and does not function as surveillance, prediction, profiling, or ideological control.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL outputs",
+    "integrity incident records",
+    "Fail-Safe escalation records"
+   ],
+   "gap": "The boundary between the permitted integrity functions and excluded surveillance or profiling functions is not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification of security functions and criteria for unresolved or systemic compromise."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-2-01",
+   "section": "2",
+   "title": "Required Cross Layer Position",
+   "quote": "This protocol operates:\n\n- strictly downstream of DKP-0-ORACLE-001 (Physical Truth Layer),",
+   "interpretation": "Check the architecture for the stated downstream relationships to Oracle, Identity, Impact, and Justice; coordination with Finance, Assets, and Labor; and upstream relationships to Defense, Antiterror, Error, and Crisis. The text does not specify whether these relationships mean data dependence, execution order, or authority.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "module_relationships",
+    "dataflow_graph",
+    "authority_graph"
+   ],
+   "criterion": "All downstream, coordination, and upstream relationships listed in section 2 hold.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-1-IMPACT-001",
+    "DKP-1-JUSTICE-001",
+    "DKP-2-FINANCE-001",
+    "DKP-2-ASSETS-001",
+    "DKP-2-LABOR-001",
+    "DKP-3-DEFENSE-001",
+    "DKP-3-ANTITERROR-001",
+    "DKP-4-ERROR-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "module interface and authority specifications"
+   ],
+   "gap": "Operational meanings of downstream, upstream, and coordination are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how each architectural relationship maps to dataflow, execution order, and authority."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-2-02",
+   "section": "2",
+   "title": "Excluded Internal Security Authorities",
+   "quote": "- compute Justice outcomes,\n- revoke rights or privileges autonomously,\n- introduce punishment logic,",
+   "interpretation": "Check that L3 neither redefines Physical Truth, reinterprets Impact measurements, computes Justice outcomes, autonomously revokes rights or privileges, introduces punishment logic, nor overrides axiomatic constraints. A checker needs an authority and operation classification to recognize these activities.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "l3_operations",
+    "operation_classifications",
+    "authority_assignments",
+    "axiomatic_constraints"
+   ],
+   "criterion": "No L3 operation performs any activity prohibited by the section 2 SHALL NOT list.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Physical Truth definitions",
+    "Impact measurement semantics",
+    "Justice authority definitions",
+    "rights and privilege records",
+    "axiomatic constraints"
+   ],
+   "gap": "The prohibited operation categories and applicable axiomatic constraints are not formally specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a mapping from executable operations to prohibited authority categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-2-03",
+   "section": "2",
+   "title": "Subject Effects Require Formal Triggers",
+   "quote": "All restrictive or corrective effects affecting Subjects SHALL occur exclusively via formal input triggers submitted to DKP-1-JUSTICE-001 or DKP-1-IDENTITY-001, never by direct execution at L3.",
+   "interpretation": "Trace each restrictive or corrective effect on a Subject to a formal trigger submitted to Justice or Identity and reject direct execution by L3. The receiving protocols' formal trigger interfaces and the classification of Subject effects are not supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "subject_effects",
+    "effect_classifications",
+    "trigger_submissions",
+    "execution_provenance"
+   ],
+   "criterion": "Every restrictive or corrective Subject effect occurs through a formal Justice or Identity input trigger and none is executed directly at L3.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001",
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "Justice and Identity trigger contracts",
+    "Subject effect execution records"
+   ],
+   "gap": "Formal trigger contracts and a definition of restrictive or corrective Subject effects are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare effect classifications and the provenance required to establish mediated execution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-3.1-01",
+   "section": "3.1",
+   "title": "Integrity Violation Qualification",
+   "quote": "- distorts attribution, impact measurement, justice computation, or execution,\n- enables unaccountable or non-auditable state transitions,\n- or threatens axiomatic bounds.",
+   "interpretation": "Classify a detectable deviation among PTL-confirmed state, protocol-governed state, and executed behavior as an Integrity Violation only when at least one listed consequence holds. The text does not resolve whether divergence between any pair suffices or requires a comparison involving all three representations.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_confirmed_state",
+    "protocol_governed_state",
+    "executed_behavior",
+    "deviation_consequences",
+    "axiomatic_bounds"
+   ],
+   "criterion": "An Integrity Violation is a detectable state or behavior deviation that distorts a listed function, enables an unaccountable or non-auditable transition, or threatens axiomatic bounds.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL-confirmed state",
+    "protocol state specifications",
+    "execution traces",
+    "attribution and measurement records",
+    "axiomatic bounds"
+   ],
+   "gap": "The comparison relation, detectability conditions, and consequence predicates are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the state comparison relation and operational tests for each qualifying consequence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-3.2-01",
+   "section": "3.2",
+   "title": "Internal Threat Qualification",
+   "quote": "and produces or imminently enables an Integrity Violation.",
+   "interpretation": "Require both an attempt in at least one listed category and production or imminent enablement of an Integrity Violation. The categories concern PTL falsification or suppression, Identity attribution interference, Impact manipulation, Justice bypass, and audit or log corruption.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "actor_type",
+    "attempt_records",
+    "attempt_categories",
+    "integrity_violations",
+    "causal_links",
+    "imminence_assessment"
+   ],
+   "criterion": "A Subject, process, or subsystem is an Internal Threat only if a listed attempt produces or imminently enables an Integrity Violation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL input and output records",
+    "Identity attribution records",
+    "Impact pipeline records",
+    "Justice execution records",
+    "audit logs"
+   ],
+   "gap": "Attempt detection, causal enablement, and the horizon or decision rule for imminence are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare attempt classifiers, a causal enablement model, and an imminence rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-3.2-02",
+   "section": "3.2",
+   "title": "Exclude Motivational Threat Factors",
+   "quote": "Intent, ideology, affiliation, or declared motivation SHALL NOT be considered.",
+   "interpretation": "Inspect the inputs and decision dependencies used to classify Internal Threats for use of the four excluded factors. An input audit can check direct use; determining indirect proxy use needs a declared dependency analysis.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "threat_decision_inputs",
+    "threat_decision_logic",
+    "feature_provenance"
+   ],
+   "criterion": "Internal Threat assessment does not depend on intent, ideology, affiliation, or declared motivation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "threat assessment input provenance"
+   ],
+   "gap": "The text provides no method for identifying indirect consideration or proxies for excluded factors. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how direct and indirect decision dependencies are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-3.3-01",
+   "section": "3.3",
+   "title": "Cryptographically Anchored Evidence Definition",
+   "quote": "Evidence is defined exclusively as cryptographically verifiable commitments anchored to the Physical Truth Layer and ultimately to Genesis Block #0.",
+   "interpretation": "Validate a commitment and its anchoring chain through PTL to Genesis Block #0. The listed admissible forms include PTL-signed hashes, immutable-ledger commitments, and execution-trace hashes anchored to PTL time indices; 'includes' does not establish an exhaustive format list.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "evidence_commitment",
+    "cryptographic_proofs",
+    "ptl_anchor_chain",
+    "genesis_anchor",
+    "evidence_format"
+   ],
+   "criterion": "Every evidence item is a cryptographically verifiable commitment anchored to PTL and ultimately to Genesis Block #0.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL signatures and trust anchors",
+    "immutable ledger commitments",
+    "Genesis Block #0 reference"
+   ],
+   "gap": "Commitment formats, cryptographic verification rules, and trusted anchoring data are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare cryptographic verification rules and the trusted PTL and Genesis anchors."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-3.3-02",
+   "section": "3.3",
+   "title": "Required Evidence Integrity Properties",
+   "quote": "- temporally indexed using DTI-Day (DKP-0-TIME-001),\n- immune to discretionary suppression by virtue of cryptographic anchoring,\n- traceable to Genesis Block #0 and Proof-of-Synergy consensus rules.",
+   "interpretation": "Check evidence for auditability, reproducibility, DTI-Day indexing, resistance to discretionary suppression through anchoring, and traceability to Genesis and Proof-of-Synergy rules. Suppression immunity requires an availability or adversary model beyond verifying a stored hash.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "evidence_records",
+    "reproduction_material",
+    "dti_day_indices",
+    "anchor_proofs",
+    "suppression_controls",
+    "consensus_proofs"
+   ],
+   "criterion": "Evidence satisfies all five properties in the section 3.3 MUST list.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DTI-Day time specification",
+    "PTL and Genesis anchoring records",
+    "Proof-of-Synergy consensus rules",
+    "evidence retrieval and reproduction records"
+   ],
+   "gap": "Time and consensus rules, reproducibility criteria, and a model of discretionary suppression are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an evidence reproduction procedure and a suppression adversary and availability model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-4.1-01",
+   "section": "4.1",
+   "title": "PTL Supremacy Over Security Actions",
+   "quote": "No internal security action may redefine or override Physical Truth Layer outputs. Security actions MAY only respond to PTL-confirmed states or PTL-confirmed divergence.",
+   "interpretation": "Trace every action to a PTL-confirmed state or divergence and check that its effects do not redefine or override PTL outputs. Recognizing semantic overrides requires an operation and authority model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "action_triggers",
+    "ptl_confirmations",
+    "action_effects"
+   ],
+   "criterion": "Every security action responds to a PTL-confirmed state or divergence and leaves PTL outputs authoritative.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmations",
+    "PTL output provenance",
+    "security execution traces"
+   ],
+   "gap": "PTL confirmation validation and the semantics of redefining or overriding outputs are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how actions and their effects are mapped to PTL confirmations and authority changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-4.2-01",
+   "section": "4.2",
+   "title": "Non Preemptive Action Triggers",
+   "quote": "Only PTL-evidenced, already occurring integrity violations or active attempts to write invalid or unauthorized state transitions qualify as valid triggers.",
+   "interpretation": "Reject coercive or restrictive actions based on prediction, inferred intent, ideological alignment, statistical profiling, or speculative risk modeling. Validity requires an already occurring violation or an active invalid or unauthorized write attempt; the grammar leaves PTL evidence for the second branch less explicit, although section 11 requires PTL evidence for all coercive action.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_type",
+    "trigger_evidence",
+    "violation_status",
+    "write_attempt_status",
+    "transition_validity",
+    "transition_authorization",
+    "decision_basis"
+   ],
+   "criterion": "Coercive or restrictive action has a qualifying current trigger and is not based on any listed predictive, ideological, or profiling basis.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL evidence",
+    "live violation records",
+    "state transition validity and authorization rules"
+   ],
+   "gap": "Current activity, invalidity, authorization, and prohibited decision dependencies require definitions or external rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare activity detection and decision dependency tests, and whether PTL-evidenced modifies both trigger branches."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-4.3-01",
+   "section": "4.3",
+   "title": "Proportional And Limited Containment",
+   "quote": "- strictly proportional to the detected integrity loss,\n- limited in scope and duration,\n- sufficient only to stop ongoing or imminent damage.",
+   "interpretation": "Compare each action's scope, duration, and effects with the detected integrity loss and the containment needed to stop damage. No proportionality function, scope bound, or criterion for sufficient-only intervention is supplied.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "integrity_loss",
+    "action_scope",
+    "action_duration",
+    "damage_trajectory",
+    "containment_effects"
+   ],
+   "criterion": "Every action is strictly proportional to detected integrity loss, limited in scope and duration, and sufficient only to stop ongoing or imminent damage.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "integrity loss observations",
+    "damage and containment measurements"
+   ],
+   "gap": "A proportionality rule, action-effect model, and scope, duration, and imminence criteria are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare integrity-loss measurement, a damage model, proportionality criteria, and a minimal sufficient action selection rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-4.3-02",
+   "section": "4.3",
+   "title": "Escalation For Expansive Actions",
+   "quote": "Permanent or expansive actions require escalation to higher layers.",
+   "interpretation": "For actions classified as permanent or expansive, verify a corresponding escalation to a higher layer. The text does not define expansive scope, identify the required receiving layer, or specify escalation timing.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "action_permanence",
+    "action_scope",
+    "escalation_records",
+    "layer_order"
+   ],
+   "criterion": "Every permanent or expansive action has escalation to a higher layer.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-layer escalation records"
+   ],
+   "gap": "Expansiveness, the required higher layer, and escalation timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare permanence and expansiveness classifications and how escalation is associated with an action."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-4.4-01",
+   "section": "4.4",
+   "title": "Auditable Traceable Reversible Actions",
+   "quote": "- logged immutably,\n- traceable to triggering evidence,\n- reversible where physically and logically possible.",
+   "interpretation": "Check every action for an immutable log and a link to its triggering evidence, and require a reversal mechanism whenever reversal is physically and logically possible. Feasibility of reversal and immutability need explicit verification models.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "action_logs",
+    "evidence_links",
+    "reversal_mechanisms",
+    "physical_reversibility",
+    "logical_reversibility"
+   ],
+   "criterion": "Every action is immutably logged and evidence-traceable, and is reversible whenever physical and logical reversal are possible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "immutable audit records",
+    "triggering evidence",
+    "physical and logical reversal assessments"
+   ],
+   "gap": "Immutability verification and physical and logical reversal feasibility are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an audit integrity model and tests for physical and logical reversibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-4.4-02",
+   "section": "4.4",
+   "title": "Authorization For Irreversible Actions",
+   "quote": "Irreversible actions require elevated authorization thresholds and justification.",
+   "interpretation": "Require an irreversible action to carry a justification and satisfy an authorization threshold elevated relative to the applicable ordinary threshold. Neither threshold nor the required justification standard is provided.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_reversibility",
+    "authorization_records",
+    "ordinary_authorization_threshold",
+    "elevated_authorization_threshold",
+    "action_justification"
+   ],
+   "criterion": "Every irreversible action has justification and satisfies the applicable elevated authorization threshold.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authorization records",
+    "irreversibility assessments"
+   ],
+   "gap": "Ordinary and elevated authorization thresholds and justification sufficiency are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare authorization thresholds, an irreversibility test, and a justification acceptance rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-5-01",
+   "section": "5",
+   "title": "Finite Security State Representation",
+   "quote": "The Internal Security layer operates as a finite-state system governed by Dikenocratic Time (DKP-0-TIME-001).",
+   "interpretation": "Represent operation using the listed states S0 through S4 with timing governed by Dikenocratic Time. S0 denotes no detected integrity anomalies; other state labels lack complete entry predicates, and the document supplies no exhaustive transition graph.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "detected_anomalies",
+    "state_clock",
+    "state_history"
+   ],
+   "criterion": "The layer operates in the listed finite security states under Dikenocratic Time, with S0 representing no detected integrity anomalies.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "Dikenocratic Time specification and clock",
+    "integrity anomaly detections"
+   ],
+   "gap": "Dikenocratic Time semantics and complete state-entry and transition conditions are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare state-entry predicates and how forced return to S0 interacts with unresolved detected anomalies."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-5-02",
+   "section": "5",
+   "title": "Suspicion State Duration And Conduct",
+   "quote": "Non-coercive evidence collection and heightened verification. Maximum duration: 7 DTI-Days.",
+   "interpretation": "In S1, check that evidence collection is non-coercive, verification is heightened, and the state does not exceed 7 DTI-Days without the section's general escalation exception. Heightened verification has no specified baseline or frequency.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "state_entry_dti",
+    "current_dti",
+    "collection_actions",
+    "verification_activity",
+    "escalation_status"
+   ],
+   "criterion": "S1 uses non-coercive evidence collection and heightened verification and lasts at most 7 DTI-Days unless the general escalation exception applies.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DTI-Day clock",
+    "evidence collection and verification records",
+    "escalation records"
+   ],
+   "gap": "Non-coercive and heightened verification criteria and the effect of escalation on the deadline are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare verification baselines, coercion classifications, and the applicability of the general escalation exception."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-5-03",
+   "section": "5",
+   "title": "Confirmed Violation State Duration",
+   "quote": "Targeted containment actions permitted. Maximum duration: 14 DTI-Days unless escalated.",
+   "interpretation": "Check that S2 containment is targeted and that S2 expires by 14 DTI-Days unless escalated. This permission remains subject to the action list in section 7.2 and the mediated-execution requirement in section 2.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "state_entry_dti",
+    "current_dti",
+    "containment_scope",
+    "affected_targets",
+    "escalation_status"
+   ],
+   "criterion": "S2 permits targeted containment and lasts at most 14 DTI-Days unless escalated.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DTI-Day clock",
+    "affected target records",
+    "containment and escalation records"
+   ],
+   "gap": "Targeted containment and the state or deadline following escalation are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a containment targeting rule and escalation handling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-5-04",
+   "section": "5",
+   "title": "Active Compromise State Duration",
+   "quote": "Partial system isolation or execution throttling permitted. Maximum duration: 3 DTI-Days.",
+   "interpretation": "Check S3 isolation or throttling permissions and a maximum duration of 3 DTI-Days. The general transition sentence allows an escalation exception, although this individual state description states no exception.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "state_entry_dti",
+    "current_dti",
+    "isolation_actions",
+    "throttling_actions",
+    "escalation_status"
+   ],
+   "criterion": "S3 permits partial system isolation or execution throttling and expires by 3 DTI-Days unless the general escalation exception applies.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DTI-Day clock",
+    "system isolation and execution records",
+    "escalation records"
+   ],
+   "gap": "The scope of partial isolation and the applicability and effect of the general escalation exception are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the partial-isolation classification and how escalation affects S3 expiry."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-5-05",
+   "section": "5",
+   "title": "Systemic Compromise Requires Escalation",
+   "quote": "Mandatory escalation to DKP-4-CRISIS-001.",
+   "interpretation": "For each S4 episode, check for an escalation addressed to DKP-4-CRISIS-001. The destination and obligation are explicit, but no maximum delay is stated.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "s4_episodes",
+    "escalation_records"
+   ],
+   "criterion": "Every S4 episode has an escalation to DKP-4-CRISIS-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "Crisis escalation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-5-06",
+   "section": "5",
+   "title": "Evidence Driven Transitions And Expiry",
+   "quote": "State transitions MUST be evidence-driven, auditable, and automatically reverted to S0 upon expiration of the maximum duration unless escalated.",
+   "interpretation": "Check each transition for an evidence basis and audit record, and require automatic return to S0 when a timed state expires without escalation. The text sets no duration for S0 or S4 and does not specify whether escalation pauses, resets, or replaces a deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "state_transitions",
+    "transition_evidence",
+    "transition_audit_records",
+    "state_entry_dti",
+    "current_dti",
+    "escalation_status",
+    "transition_initiator"
+   ],
+   "criterion": "Transitions are evidence-driven and auditable; un-escalated S1, S2, and S3 episodes automatically return to S0 at their stated maximum durations.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DTI-Day clock",
+    "transition evidence",
+    "audit and escalation records"
+   ],
+   "gap": "Evidence sufficiency and the handling of escalated deadlines are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare evidence sufficiency for transitions and how escalation changes timeout processing."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-6-01",
+   "section": "6",
+   "title": "Exclusive Integrity Response Trigger Types",
+   "quote": "Integrity response MAY be triggered only by:\n\n- Identity Integrity Trigger: PTL-confirmed mismatch in attribution or credential binding,",
+   "interpretation": "Require each integrity response to match one of the four listed triggers: Identity mismatch, Impact manipulation or suppression, Justice alteration or bypass, or Audit tampering or opacity. PTL confirmation is explicit for three entries; the Justice entry omits it despite the heading and broader evidence constraints.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "integrity_responses",
+    "trigger_types",
+    "ptl_confirmations",
+    "attribution_mismatches",
+    "impact_interference",
+    "justice_authorization",
+    "audit_integrity_events"
+   ],
+   "criterion": "Every integrity response is triggered by one of the four section 6 conditions, with the required PTL anchoring.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmations",
+    "Identity credential and attribution records",
+    "Impact channel records",
+    "Justice authorization records",
+    "audit integrity records"
+   ],
+   "gap": "Trigger detection rules and whether the Justice trigger independently requires PTL confirmation are not fully specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare trigger classifiers and the PTL evidence requirement for Justice Execution Triggers."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-6-02",
+   "section": "6",
+   "title": "Exclusive Oracle Divergence Handling",
+   "quote": "Any Physical Truth Layer divergence or oracle inconsistency SHALL be handled exclusively by DKP-0-ORACLE-001.",
+   "interpretation": "For events identified as PTL divergence or oracle inconsistency, check that the handling authority is exclusively DKP-0-ORACLE-001. Detection of those event categories requires Oracle semantics absent from this document.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "integrity_events",
+    "event_classifications",
+    "event_handlers"
+   ],
+   "criterion": "Every PTL divergence or oracle inconsistency is handled exclusively by DKP-0-ORACLE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Oracle divergence and inconsistency classifications",
+    "event handling records"
+   ],
+   "gap": "Oracle event definitions and the boundary between handling divergence and responding to its consequences are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the event classification and handling authority model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-6-03",
+   "section": "6",
+   "title": "Suspend Execution On PTL Flags",
+   "quote": "Upon PTL halt or arbitration flag, all L3 execution MUST immediately suspend and defer to L0 resolution.",
+   "interpretation": "Check that a PTL halt or arbitration flag causes suspension of every L3 execution path and deferral to L0 resolution. 'Immediately' may mean an atomic logical response or a bounded implementation delay, but no nonzero delay bound is supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_halt_flag",
+    "ptl_arbitration_flag",
+    "l3_execution_trace",
+    "l0_resolution_records",
+    "event_order"
+   ],
+   "criterion": "A PTL halt or arbitration flag immediately suspends all L3 execution and makes L0 resolution authoritative.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "PTL halt and arbitration flags",
+    "L3 execution traces",
+    "L0 resolution records"
+   ],
+   "gap": "Immediate suspension semantics and the conditions for resuming execution after L0 resolution are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare logical event ordering or an explicit implementation timing interpretation without treating it as a textual deadline."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-7.1-01",
+   "section": "7.1",
+   "title": "Suspicion State Permitted Measures",
+   "quote": "- increased verification frequency,\n- mandatory transaction multi-signature requirement for sensitive or high-impact operations,\n- challenge-response procedures via Identity protocol.",
+   "interpretation": "In S1, recognize evidence preservation, increased verification, imposing transaction multi-signature requirements on sensitive or high-impact operations, and Identity challenge-response as permitted measures. Because these appear under 'Permitted actions', the text can mean permission to impose a mandatory requirement rather than a duty to impose it on every qualifying operation.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "security_actions",
+    "operation_sensitivity",
+    "operation_impact",
+    "signature_requirements",
+    "identity_challenges",
+    "verification_frequency"
+   ],
+   "criterion": "S1 permissions cover the four listed measures, with challenge-response via Identity and transaction multi-signature requirements tied to sensitive or high-impact operations.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Identity challenge-response interface",
+    "transaction signatures",
+    "operation sensitivity and impact classifications",
+    "verification records"
+   ],
+   "gap": "Sensitive and high-impact classifications, multi-signature policy, and the mandatory-versus-permitted reading are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare qualifying operation classifications, a multi-signature policy, and whether imposing that policy is optional in S1."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-7.1-02",
+   "section": "7.1",
+   "title": "Suspicion State Access Protections",
+   "quote": "No artificial throttling, economic slowdown, or discretionary limitation of baseline access is permitted at this stage.",
+   "interpretation": "In S1, reject actions that artificially throttle, cause economic slowdown, or discretionarily limit baseline access. Classifying these effects requires baseline access and performance definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "security_actions",
+    "execution_performance",
+    "economic_activity",
+    "baseline_access",
+    "access_changes"
+   ],
+   "criterion": "S1 actions cause no artificial throttling, economic slowdown, or discretionary limitation of baseline access.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "baseline access entitlements",
+    "execution and economic performance observations"
+   ],
+   "gap": "Artificial throttling, economic slowdown, and baseline access are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare baseline access, performance baselines, and a causal attribution model for action effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-7.2-01",
+   "section": "7.2",
+   "title": "Confirmed Violation Permitted Measures",
+   "quote": "- scoped privilege revocation (Identity-bound),\n- isolation of affected subsystems,\n- temporary freeze of disputed transactions or assets,",
+   "interpretation": "In S2, recognize Identity-bound scoped revocation, affected-subsystem isolation, temporary freezes of disputed transactions or assets, and initiation of Justice workflows as permitted measures. Effects on Subjects must still follow section 2's Justice or Identity trigger route.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "security_actions",
+    "identity_bindings",
+    "revocation_scope",
+    "affected_subsystems",
+    "dispute_records",
+    "freeze_lifetimes",
+    "justice_workflow_records"
+   ],
+   "criterion": "S2 permissions cover the four listed actions with their Identity, scope, affected-target, dispute, and temporary-duration qualifiers.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Identity privilege bindings",
+    "subsystem compromise records",
+    "Finance and Assets dispute and freeze records",
+    "Justice workflow records"
+   ],
+   "gap": "Scope, affected-subsystem identification, dispute status, and temporary-freeze termination semantics are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare target and dispute classifiers and freeze termination conditions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-7.3-01",
+   "section": "7.3",
+   "title": "Active Compromise Permitted Measures",
+   "quote": "- partial execution halt of compromised modules,\n- forced safe-mode execution,\n- mandatory multi-party authorization for sensitive operations.",
+   "interpretation": "In S3, recognize partial halts of compromised modules, forced safe mode, and imposing multi-party authorization on sensitive operations as permitted measures. As in S1, 'mandatory' inside a permission list may describe the imposed policy rather than a universal duty to impose it.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "security_actions",
+    "compromised_modules",
+    "execution_mode",
+    "sensitive_operations",
+    "authorization_parties"
+   ],
+   "criterion": "S3 permissions cover partial halts of compromised modules, forced safe mode, and multi-party authorization requirements for sensitive operations.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "module compromise assessments",
+    "safe-mode specifications",
+    "operation sensitivity classifications",
+    "authorization records"
+   ],
+   "gap": "Safe mode, sensitivity, authorization-party requirements, and the mandatory-versus-permitted reading are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare safe-mode behavior, operation sensitivity, a multi-party policy, and whether imposing that policy is optional in S3."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-7.4-01",
+   "section": "7.4",
+   "title": "Systemic Compromise Mandatory Measures",
+   "quote": "- escalation to DKP-4-CRISIS-001,\n- request for PTL systemic halt where applicable,\n- suspension of non-essential execution paths.",
+   "interpretation": "For S4, require Crisis escalation, a PTL systemic-halt request whenever applicable, and suspension of all non-essential execution paths. The provision requires requesting a PTL halt rather than authorizing L3 to execute one.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "security_state",
+    "crisis_escalation_records",
+    "systemic_halt_applicability",
+    "ptl_halt_requests",
+    "execution_path_essentiality",
+    "execution_path_status"
+   ],
+   "criterion": "S4 causes Crisis escalation, applicable PTL systemic-halt requests, and suspension of non-essential execution paths.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "Crisis escalation records",
+    "PTL halt request interface",
+    "execution path essentiality classifications"
+   ],
+   "gap": "PTL systemic-halt applicability and non-essential execution paths are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare halt-request applicability and execution-path essentiality classifications."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-01",
+   "section": "8",
+   "title": "Mass Surveillance Trigger Restriction",
+   "quote": "This protocol SHALL NOT permit:\n\n- mass surveillance without PTL trigger,",
+   "interpretation": "Reject mass surveillance that lacks a PTL trigger. The presence of a trigger satisfies only this particular prohibition and does not establish permission under the other sections.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "surveillance_classification",
+    "ptl_trigger_links"
+   ],
+   "criterion": "No mass-surveillance action occurs without a PTL trigger.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL trigger records",
+    "surveillance activity records"
+   ],
+   "gap": "Mass surveillance and the required trigger-to-action relationship are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a mass-surveillance classification and valid PTL trigger linkage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-02",
+   "section": "8",
+   "title": "Ban Collective Punishment And Association",
+   "quote": "- collective punishment or guilt by association,",
+   "interpretation": "Inspect action targets and decision grounds for collective punishment or assignment of guilt through association. A checker requires explicit definitions of these categories and access to attribution reasoning.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "action_targets",
+    "decision_grounds",
+    "individual_attribution",
+    "association_records"
+   ],
+   "criterion": "No permitted security action constitutes collective punishment or guilt by association.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "individual attribution and decision records"
+   ],
+   "gap": "Collective punishment and guilt by association lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare tests distinguishing individually attributed effects from association-based punishment or guilt."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-03",
+   "section": "8",
+   "title": "Justice Prerequisite For Permanent Exclusion",
+   "quote": "- permanent exclusion without Justice-domain outcome,",
+   "interpretation": "For every permanent exclusion, require a linked Justice-domain outcome. The text does not specify whether any related outcome suffices or whether that outcome must expressly authorize exclusion.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "exclusion_records",
+    "exclusion_permanence",
+    "justice_outcomes",
+    "outcome_links"
+   ],
+   "criterion": "No permanent exclusion occurs without a Justice-domain outcome.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Justice-domain outcomes",
+    "exclusion execution records"
+   ],
+   "gap": "Permanent exclusion and the required substantive relationship to the Justice outcome are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare exclusion permanence and the Justice-outcome linkage required for compliance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-04",
+   "section": "8",
+   "title": "Ban Secret Rules And Enforcement",
+   "quote": "- secrecy of rules or hidden enforcement logic,",
+   "interpretation": "Compare operative rules and enforcement logic with the material made available for inspection. The text does not identify the audience, disclosure mechanism, or degree of access necessary to avoid secrecy.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "operative_rules",
+    "enforcement_logic",
+    "disclosed_rules",
+    "disclosed_logic",
+    "access_policies"
+   ],
+   "criterion": "No rule is secret and no enforcement logic is hidden.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published rule and enforcement artifacts",
+    "artifact access policies"
+   ],
+   "gap": "Required disclosure audience, access level, and disclosure timing are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the disclosure audience and a completeness and accessibility test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-05",
+   "section": "8",
+   "title": "Ban Ideological Action Justifications",
+   "quote": "- security actions justified by ideology or narrative,",
+   "interpretation": "Inspect security-action justifications for reliance on ideology or narrative. 'Narrative' is not defined, so ordinary descriptions of evidence cannot be mechanically distinguished from prohibited narrative justification using this text alone.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "action_justifications",
+    "justification_dependencies"
+   ],
+   "criterion": "No security action is justified by ideology or narrative.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "security action justification records"
+   ],
+   "gap": "Ideology and narrative lack operational classifiers for evaluating justifications. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare justification classification rules and dependency analysis."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-06",
+   "section": "8",
+   "title": "Execution Control Concentration Limit",
+   "quote": "No Subject, nor any Identity-linked group of Subjects, MAY control more than 4% of nodes executing DKP-3-INTERNAL-SEC-001 logic, as defined by oracle and control concentration limits in DKP-0-ORACLE-001.",
+   "interpretation": "For every Subject and Identity-linked group, compare controlled nodes with the total nodes executing this protocol and require a share no greater than 4%. The preceding general ban on concentrated execution control is given this explicit bound, while control and group aggregation depend on Oracle definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "executing_nodes",
+    "node_control_relations",
+    "subjects",
+    "identity_linked_groups"
+   ],
+   "criterion": "For every Subject and Identity-linked group, controlled executing nodes / total executing nodes ≤ 4%.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Oracle control concentration definitions",
+    "node execution inventory",
+    "Identity-linked group membership",
+    "node control attribution"
+   ],
+   "gap": "Oracle control and aggregation definitions, evaluation timing, and the empty-node case are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare control attribution, group aggregation, evaluation timing, and handling of no executing nodes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-8-07",
+   "section": "8",
+   "title": "Concentration Violation Breach Classification",
+   "quote": "Violation constitutes a critical architectural breach.",
+   "interpretation": "Classify a violation of the immediately preceding node-control limit as a critical architectural breach. The sentence may alternatively refer to every prohibition in section 8, but its immediate antecedent is the 4% limit.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "concentration_limit_violations",
+    "section_8_violations",
+    "breach_classifications"
+   ],
+   "criterion": "A violation within the intended scope of this sentence is classified as a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "control concentration compliance results"
+   ],
+   "gap": "The antecedent of 'Violation' is not explicit enough to determine whether classification covers only concentration breaches or all section 8 bans. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the breach classification applies to the node-control limit alone or all section 8 violations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-9-01",
+   "section": "9",
+   "title": "Required Restrictive Action Disclosures",
+   "quote": "- violated invariant or integrity rule,\n- applied containment scope,\n- reversal and appeal conditions under Justice protocol.",
+   "interpretation": "Require every restrictive action to explicitly identify triggering PTL evidence, the violated invariant or rule, containment scope, and reversal and appeal conditions. Field presence is decidable, but conformity of the conditions to Justice requires the Justice protocol.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "restrictive_actions",
+    "triggering_ptl_evidence",
+    "violated_rule",
+    "containment_scope",
+    "reversal_conditions",
+    "appeal_conditions"
+   ],
+   "criterion": "Every restrictive action explicitly defines all listed information, with reversal and appeal conditions under Justice protocol.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL evidence",
+    "invariant and integrity-rule registry",
+    "Justice reversal and appeal rules"
+   ],
+   "gap": "The Justice requirements governing valid reversal and appeal conditions are not provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how explicit disclosure and correspondence to the violated rule and containment scope are verified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-10-01",
+   "section": "10",
+   "title": "Required Functional Cross Layer Interfaces",
+   "quote": "- Justice: consequence computation and escalation,\n- Finance & Assets: freeze / restore semantics,\n- Infrastructure & Audit (L8): immutability and verification.",
+   "interpretation": "Check that interfaces cover Identity attribution, revocation, and revalidation; Impact pipeline integrity; Justice consequence computation and escalation; Finance and Assets freeze and restore; and L8 immutability and verification. This does not authorize Internal Security to compute Justice consequences itself.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "interface_catalog",
+    "interface_capabilities",
+    "module_authority_assignments"
+   ],
+   "criterion": "The protocol has interfaces covering every module and function pair listed in section 10.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Identity, Impact, Justice, Finance, Assets, and L8 interface specifications"
+   ],
+   "gap": "The listed interfaces have no message schemas, directionality, or conformance tests. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare observable interface capabilities that establish coverage of each listed function."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-11-01",
+   "section": "11",
+   "title": "Evidence Required For Coercion",
+   "quote": "- No PTL evidence → no coercive action,",
+   "interpretation": "Across the execution trace, require every coercive action to have PTL evidence. The implication does not make evidence alone sufficient to authorize coercion.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "coercion_classification",
+    "ptl_evidence_links",
+    "evidence_validity"
+   ],
+   "criterion": "At all times, absence of PTL evidence implies absence of coercive action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL evidence and verification results",
+    "action execution records"
+   ],
+   "gap": "Coercive-action classification and PTL evidence validation rules are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare coercion classification and the evidence-to-action association required by the invariant."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-11-02",
+   "section": "11",
+   "title": "Minimal Sufficient Containment Invariant",
+   "quote": "- Minimal sufficient containment,",
+   "interpretation": "Evaluate containment throughout operation for sufficiency and minimality. The document provides neither an ordering over candidate actions nor a damage model for judging their sufficiency.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "containment_actions",
+    "candidate_actions",
+    "damage_trajectory",
+    "action_effects"
+   ],
+   "criterion": "Containment is always sufficient to stop the relevant damage and minimal among sufficient measures.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "damage observations",
+    "containment effect estimates"
+   ],
+   "gap": "A sufficiency model and a minimality ordering over possible containment actions are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the candidate action set, action-effect model, and minimality ordering."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-11-03",
+   "section": "11",
+   "title": "Complete Audit Trail Invariant",
+   "quote": "- Complete audit trail,",
+   "interpretation": "Compare the audit trail with the complete population of protocol events that must be recorded. Section 4.4 expressly includes all actions, while completeness beyond actions is not specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_events",
+    "security_actions",
+    "audit_records",
+    "required_audit_fields"
+   ],
+   "criterion": "The audit trail is complete throughout operation, including every action under the protocol.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "independent execution event inventory",
+    "audit records"
+   ],
+   "gap": "The complete event scope and required audit fields are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare auditable event coverage and required fields, including all security actions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-11-04",
+   "section": "11",
+   "title": "Preference For Reversibility Invariant",
+   "quote": "- Preference for reversibility,",
+   "interpretation": "Inspect action selection for a preference toward reversible measures. The text does not define how reversibility should be weighed against containment effectiveness or other action attributes.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "candidate_actions",
+    "selected_actions",
+    "action_reversibility",
+    "selection_criteria"
+   ],
+   "criterion": "Action selection always expresses a preference for reversibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "candidate action evaluations",
+    "reversibility assessments",
+    "action selection records"
+   ],
+   "gap": "The ordering or tie-breaking rule that constitutes a preference for reversibility is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how reversibility affects action selection and how competing criteria are resolved."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-11-05",
+   "section": "11",
+   "title": "No Cross Layer Authority Overreach",
+   "quote": "- No cross-layer authority overreach.",
+   "interpretation": "Check every action against its layer's authority, including the explicit section 2 exclusions and routing requirement. A complete check requires the authority boundaries of the other layers.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "security_actions",
+    "executing_layers",
+    "authority_assignments",
+    "trigger_routes"
+   ],
+   "criterion": "No action exceeds Internal Security's cross-layer authority at any time.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-layer authority specifications",
+    "execution provenance",
+    "formal trigger records"
+   ],
+   "gap": "The document gives some authority exclusions but not a complete cross-layer authority specification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a complete authority map consistent with the explicit section 2 restrictions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-12-01",
+   "section": "12",
+   "title": "Exclusive Controlled Protocol Change Procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "For each normative change, verify compliance with the Upgrade procedure and its proposal, simulation, audit, acceptance, activation-window, and rollback components. The text names these components but does not supply their acceptance criteria or determine whether rollback means a capability or an executed reversal.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_changes",
+    "upgrade_records",
+    "proposals",
+    "simulation_results",
+    "audit_results",
+    "acceptance_records",
+    "activation_windows",
+    "rollback_records"
+   ],
+   "criterion": "Every normative protocol change follows DKP-4-UPGRADE-001 with all listed components and the named simulation and audit procedures.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Upgrade procedure",
+    "simulation requirements and results",
+    "audit requirements and results",
+    "acceptance and activation records",
+    "rollback specification"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation-window rules, and rollback semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how change records demonstrate each procedural component until the referenced procedures are available."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-12-02",
+   "section": "12",
+   "title": "Modification Requires New Protocol Identifier",
+   "quote": "- any modification requires a new protocol identifier,",
+   "interpretation": "Compare the modified protocol's identifier with its prior identifier. 'Any modification' is qualified by the later presentation-only exception; 'new' may additionally require corpus-wide uniqueness, which is not expressly defined.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "normative_content_change",
+    "previous_protocol_id",
+    "modified_protocol_id",
+    "identifier_registry"
+   ],
+   "criterion": "Every modification outside the presentation-only exception receives a new protocol identifier.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol edition history",
+    "protocol identifier registry"
+   ],
+   "gap": "Normative-content equivalence and whether new identifiers must be globally unused are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare normative-change classification and the required scope of identifier novelty."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-12-03",
+   "section": "12",
+   "title": "Modification Requires Incompatibility Declaration",
+   "quote": "- explicit incompatibility declaration,",
+   "interpretation": "Require an explicit incompatibility declaration for a modification outside the presentation-only exception. The document does not say whether this is a blanket declaration of incompatibility or a declaration enumerating compatibility boundaries.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "normative_content_change",
+    "incompatibility_declaration"
+   ],
+   "criterion": "Every applicable protocol modification includes an explicit incompatibility declaration.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protocol change metadata",
+    "edition comparison records"
+   ],
+   "gap": "The required declaration content and normative-change classification are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the incompatibility declaration format and its treatment of compatibility boundaries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-12-04",
+   "section": "12",
+   "title": "Modification Requires Full System Simulation",
+   "quote": "- full-system simulation under DKP-8-SIMULATION.",
+   "interpretation": "Require each applicable modification to undergo a full-system simulation under the identifier printed here. The text elsewhere references DKP-8-SIMULATION-001, but does not establish that the two identifiers denote the same document.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modification",
+    "normative_content_change",
+    "simulation_records",
+    "simulation_scope",
+    "simulation_protocol_id"
+   ],
+   "criterion": "Every modification outside the presentation-only exception has a full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "full-system simulation specification",
+    "simulation scope and execution records"
+   ],
+   "gap": "DKP-8-SIMULATION is unavailable and its relationship to DKP-8-SIMULATION-001 and full-system scope are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the two simulation identifiers are aliases and what constitutes full-system coverage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-12-05",
+   "section": "12",
+   "title": "Presentation Correction Upgrade Exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "If a correction affects presentation only and preserves normative content, classify it outside the Upgrade process and record it only through the document's Last updated date. A semantic comparison is required to establish that normative content is unchanged.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_edition",
+    "corrected_edition",
+    "change_classification",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_metadata"
+   ],
+   "criterion": "Presentation-only corrections preserving normative content are not Upgrades and are recorded only by the Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "Upgrade section 3 definitions",
+    "edition history",
+    "document update metadata"
+   ],
+   "gap": "Normative equivalence criteria and the referenced Upgrade exception definition are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-content equivalence test and whether 'recorded only' concerns change metadata rather than required edition digests."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "INTSEC-12-06",
+   "section": "12",
+   "title": "Published Edition Digest Registry",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Given the canonical source bytes for each published edition and the repository manifest, compute SHA-256 and check that the corresponding digest is listed. This checks recorded edition integrity; the text does not specify a canonicalization procedure for deriving canonical bytes from other representations.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_entries",
+    "manifest_repository"
+   ],
+   "criterion": "For every published edition, SHA-256 of its canonical source is listed in SHA256SUMS.txt in github.com/anahronic/World.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source files",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

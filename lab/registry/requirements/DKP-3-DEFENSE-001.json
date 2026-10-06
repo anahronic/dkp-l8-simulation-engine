@@ -1,0 +1,1377 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-3-DEFENSE-001",
+ "doc_sha256": "fd5dd7fee5102c4e1e9c08944102fbf212e9a0b9c028ab2850df70c1684253bc",
+ "prefix": "DEFENSE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The requested carriage return in the requirement prefix is preserved as \\r. The unnumbered epistemic-classification heading supplies its own section identifier. Related list items are grouped where they share one operative rule. Referenced protocols were not supplied, and their existence or contents were not verified. D1.5 permissions remain subject to the PTL harm requirement and other hard constraints; perimeter violation or hostile activation alone does not expressly resolve that requirement. State precedence, refresh timing outside VPI, admissibility criteria, and several risk thresholds are unspecified.",
+ "requirements": [
+  {
+   "id": "DEFENSE-0-01",
+   "section": "0",
+   "title": "Exclusive defensive purpose and axiomatic bounds",
+   "quote": "Within DKP, Defense is not a political instrument, not a military doctrine, not a punitive mechanism, and not a means of ideological or population control. Defense is a strictly functional subsystem whose sole purpose is to prevent, stop, or contain ongoing or physically inevitable Physical Truth Layer (PTL)-confirmed harm affecting protected domains.\n\nDefense exists to preserve admissible physical and systemic states under DKP axioms, primarily Axiom A1 (Preservation of Life) and Axiom A1a (Risk Symmetry and Voluntary Lethal Risk). Defense does not pursue victory, deterrence, punishment, dominance, or territorial outcomes.",
+   "interpretation": "Check that defensive activity targets qualifying PTL-confirmed harm in a protected domain, preserves axiomatic admissibility, and has none of the excluded purposes. Declared objectives can be screened, but actual purpose and axiomatic admissibility require additional interpretation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "defense_activities",
+    "activity_objectives",
+    "ptl_confirmations",
+    "protected_domains",
+    "axiomatic_admissibility"
+   ],
+   "criterion": "Defense serves only prevention, stopping, or containment of ongoing or physically inevitable PTL-confirmed harm in protected domains, preserves admissible states, and pursues none of the listed excluded purposes or outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "PTL harm confirmations",
+    "protected-domain registry",
+    "axiomatic admissibility assessments"
+   ],
+   "gap": "Axiomatic admissibility rules and a method for establishing actual operational purpose are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how operational purposes and axiomatic admissibility are evaluated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-0-02",
+   "section": "0",
+   "title": "Voluntary exposure to severe risk",
+   "quote": "Participation in any defensive activity involving lethal or permanently disabling risk is strictly voluntary and governed by DKP-1-AXIOMS-001.",
+   "interpretation": "For each participant exposed to lethal or permanently disabling risk, verify voluntary participation and compliance with the referenced axioms. Consent records alone do not establish all requirements of the absent axioms.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "participants",
+    "risk_assessments",
+    "consent_records",
+    "axiom_requirements"
+   ],
+   "criterion": "Every participant in defensive activity involving lethal or permanently disabling risk participates voluntarily under DKP-1-AXIOMS-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-AXIOMS-001"
+   ],
+   "data_dependencies": [
+    "participant consent records",
+    "risk assessments",
+    "axiomatic participation requirements"
+   ],
+   "gap": "The referenced axioms and a complete test for voluntary participation are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how voluntariness is established beyond the existence of a consent record."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-1-01",
+   "section": "1",
+   "title": "External response scope and objective",
+   "quote": "The objective of Defense is to stop the harmful interaction and restore admissible system operation with minimal irreversible damage. Defense is not a conflict-resolution mechanism and does not attempt to determine legitimacy, intent, or fault.",
+   "interpretation": "Check that responses concern external physical, technical, or infrastructure violence with active harm or a PTL-confirmed physically inevitable harm event. Evaluate stopping harm, restoration, and irreversible damage against feasible responses, and reject conflict-resolution or legitimacy, intent, or fault determinations.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "external_harm_events",
+    "ptl_confirmations",
+    "response_objectives",
+    "response_outputs",
+    "feasible_responses",
+    "irreversible_damage",
+    "system_admissibility"
+   ],
+   "criterion": "Responses address the stated external violence under one of the two harm conditions, aim to stop harm and restore admissible operation with minimal irreversible damage, and do not resolve conflicts or determine legitimacy, intent, or fault.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL harm confirmations",
+    "system admissibility assessments",
+    "response consequence estimates"
+   ],
+   "gap": "Admissible operation and the comparison method for minimal irreversible damage are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the feasible-response set, damage comparison method, and admissible-operation predicate."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-2-01",
+   "section": "2",
+   "title": "Protocol ordering and synchronized concurrency",
+   "quote": "This protocol operates:",
+   "interpretation": "Inspect orchestration traces for the specified upstream, downstream, and concurrent relationships. Priority synchronization and the applicability of domain-specific protocols need additional rules; downstream could describe architectural dependency or execution ordering.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_dependency_graph",
+    "execution_traces",
+    "priority_synchronization_rules",
+    "applicable_domain_protocols"
+   ],
+   "criterion": "Defense operates strictly downstream of DKP-0-ORACLE-001 and DKP-0-TIME-001; downstream of DKP-1-IDENTITY-001, DKP-1-IMPACT-001, and DKP-1-JUSTICE-001; concurrently with DKP-3-INTERNAL-SEC-001 using priority synchronization; in parallel with applicable domain security protocols; and upstream of DKP-4-ERROR-001 and DKP-4-CRISIS-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-0-TIME-001",
+    "DKP-1-IDENTITY-001",
+    "DKP-1-IMPACT-001",
+    "DKP-1-JUSTICE-001",
+    "DKP-3-INTERNAL-SEC-001",
+    "DKP-4-ERROR-001",
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "protocol orchestration traces",
+    "internal-security priorities",
+    "domain security applicability rules"
+   ],
+   "gap": "Execution semantics, priority synchronization, and domain-protocol applicability rules are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether downstream denotes dependency, temporal ordering, or both, and define synchronization semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-2-02",
+   "section": "2",
+   "title": "Forbidden adjudication and authority overrides",
+   "quote": "- Defense SHALL NOT compute justice outcomes.\n- Defense SHALL NOT assign guilt or interpret intent.\n- Defense SHALL NOT impose punishment, sanctions, or political control.",
+   "interpretation": "Check Defense operations and outputs for the listed adjudicative, punitive, and political functions, and for redefinition of Physical Truth or override of axioms. Structured operation types support screening, but determining semantic effects needs a classification method.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "defense_operations",
+    "defense_outputs",
+    "physical_truth_changes",
+    "axiom_overrides"
+   ],
+   "criterion": "Defense computes no justice outcomes, assigns no guilt, interprets no intent, imposes no punishment, sanctions, or political control, and neither redefines Physical Truth nor overrides axioms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Justice operation records",
+    "PTL change records",
+    "axiom enforcement records"
+   ],
+   "gap": "A method for classifying operations and their effects as the prohibited functions is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an operation and output classification that detects the prohibited functions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.1-01",
+   "section": "3.1",
+   "title": "Qualifying defensive intervention definition",
+   "quote": "A Defensive Action is any physical or technical intervention whose sole function is to:",
+   "interpretation": "Classify an intervention as defensive only if its sole function is one or more of the listed containment functions directed at qualifying harm within a protected domain. Establishing sole function requires a model of the intervention.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "intervention_type",
+    "intervention_functions",
+    "harm_stream",
+    "ptl_confirmation",
+    "protected_domain"
+   ],
+   "criterion": "A Defensive Action is a physical or technical intervention whose sole function is to stop, block, shield, isolate, or neutralize an ongoing or physically inevitable PTL-confirmed harm stream within a protected domain.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL harm confirmations",
+    "protected-domain classifications"
+   ],
+   "gap": "The method for determining an intervention's sole function is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how intervention functions are inferred from operations and effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.2-01",
+   "section": "3.2",
+   "title": "External harm event qualification",
+   "quote": "- the source of harm lies outside the controlled execution boundary of DKP, and\n- the interaction produces or will unavoidably produce measurable harm under DKP-1-IMPACT-001.",
+   "interpretation": "Require both an external source relative to the controlled execution boundary and actual or unavoidable measurable Impact harm. Geopolitical location is not the defining boundary.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "harm_source",
+    "controlled_execution_boundary",
+    "interaction",
+    "impact_harm_assessment"
+   ],
+   "criterion": "An External Harm Event has a source outside the DKP controlled execution boundary and an interaction producing or unavoidably going to produce measurable harm under DKP-1-IMPACT-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IMPACT-001"
+   ],
+   "data_dependencies": [
+    "execution-boundary membership",
+    "Impact harm measurements and inevitability assessments"
+   ],
+   "gap": "The controlled execution boundary and referenced Impact measurement rules are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the functional execution boundary and how unavoidable harm is established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.3-01",
+   "section": "3.3",
+   "title": "Protected domain eligibility and priority",
+   "quote": "Protected Domains are the minimal set of targets for which Defense may be invoked:",
+   "interpretation": "Check that each invocation protects a listed domain, including explicit registration where required. The text identifies life and bodily integrity with A1 priority but does not specify a scheduling or conflict-resolution algorithm.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "protected_target",
+    "target_classification",
+    "criticality_status",
+    "infrastructure_registry",
+    "priority_decisions"
+   ],
+   "criterion": "Eligible targets are subject life and bodily integrity with A1 priority; critical DKP execution infrastructure covering PTL, identity binding, audit, and ledger integrity; critical biospheric nodes defined under Impact protocols; and explicitly registered critical public infrastructure.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "critical infrastructure classifications",
+    "Impact biospheric-node definitions",
+    "public infrastructure registry",
+    "A1 priority rules"
+   ],
+   "gap": "Criticality criteria, the referenced biospheric definitions, and the operational meaning of A1 priority are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criticality and priority rules and whether the listed categories exhaust eligibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.4-01",
+   "section": "3.4",
+   "title": "Verified collective risk qualification",
+   "quote": "A Verified Collective Security Risk exists when PTL confirms that participation in a Defensive Action exposes a subject to a non-trivial probability of:",
+   "interpretation": "Use PTL confirmation of participation-related injury, impairment, or death risk to classify the exposure. A numerical check requires a definition of non-trivial probability.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "subject",
+    "defensive_action",
+    "ptl_risk_confirmation",
+    "injury_probability",
+    "permanent_impairment_probability",
+    "death_probability"
+   ],
+   "criterion": "Verified Collective Security Risk exists when PTL confirms a non-trivial probability of bodily injury, permanent impairment, or death from participation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL participation-risk confirmations"
+   ],
+   "gap": "The threshold for a non-trivial probability is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the non-trivial probability threshold and the treatment of overlapping adverse outcomes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.4-02",
+   "section": "3.4",
+   "title": "Status independent risk verification",
+   "quote": "Risk verification is PTL-anchored and SHALL NOT depend on role labels, institutional affiliation, or declared status.",
+   "interpretation": "Inspect verification dependencies and vary the excluded status inputs while holding PTL evidence fixed. Verification must remain PTL-anchored and unchanged by those inputs.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "risk_verification_logic",
+    "ptl_evidence",
+    "role_labels",
+    "institutional_affiliation",
+    "declared_status"
+   ],
+   "criterion": "Risk verification uses PTL evidence and does not depend on role labels, institutional affiliation, or declared status.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL risk evidence",
+    "risk-verifier dependency records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.5-01",
+   "section": "3.5",
+   "title": "Voluntary participant qualification requirements",
+   "quote": "- has given explicit and revocable consent to participate in a Verified Collective Security Risk,\n- meets qualification and safety thresholds defined by subordinate protocols,\n- is registered under DKP-1-IDENTITY-001 as a voluntary defense actor.",
+   "interpretation": "Require all three conditions for voluntary defense participant status. Consent must explicitly cover the verified risk and be revocable; the qualification and safety checks depend on absent subordinate protocols.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "consent_record",
+    "consent_revocability",
+    "verified_risk",
+    "qualification_results",
+    "safety_results",
+    "identity_registration"
+   ],
+   "criterion": "The subject has explicit revocable consent for participation in Verified Collective Security Risk, satisfies subordinate qualification and safety thresholds, and is registered as a voluntary defense actor under DKP-1-IDENTITY-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "consent records",
+    "subordinate qualification and safety thresholds",
+    "Identity voluntary-defense registration"
+   ],
+   "gap": "Subordinate thresholds and the referenced Identity registration requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which subordinate protocols apply and how consent revocation takes effect."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.6-01",
+   "section": "3.6",
+   "title": "Physical inevitability vector qualification",
+   "quote": "A Vector of Physical Inevitability is a PTL-confirmed state in which current measured physical parameters (including trajectory, velocity, energy, or process initiation state) imply that, absent intervention, a Harm Event will occur with near-certainty within a finite time horizon.",
+   "interpretation": "Project current PTL-confirmed measurements under an absent-intervention scenario and test for near-certain harm within a finite horizon. Neither near-certainty nor the horizon selection is quantified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_confirmation",
+    "current_physical_measurements",
+    "absent_intervention_projection",
+    "harm_probability",
+    "time_horizon"
+   ],
+   "criterion": "Current PTL-confirmed measured physical parameters imply a Harm Event with near-certainty within a finite time horizon absent intervention.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL physical measurements",
+    "trajectory and process-state projections"
+   ],
+   "gap": "The predictive model, near-certainty threshold, and finite-horizon selection rule are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the physical evolution model, near-certainty threshold, and horizon selection rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-3.6-02",
+   "section": "3.6",
+   "title": "Inevitability interruption action classification",
+   "quote": "Actions taken to interrupt or terminate a Vector of Physical Inevitability are classified as Defense actions, not preemptive actions.",
+   "interpretation": "Given a qualified VPI and an action taken to interrupt or terminate it, check the action classification. This rule assigns a classification and does not waive the other authorization constraints.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "qualified_vpi",
+    "action_function",
+    "action_classification"
+   ],
+   "criterion": "An action taken to interrupt or terminate a VPI is classified as a Defense action and not as a preemptive action.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "qualified VPI determinations",
+    "action function records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-01",
+   "section": "Epistemic Classification of Trajectory-Based Authorization",
+   "title": "Trajectory authorization epistemic metadata",
+   "quote": "Vector of Physical Inevitability determinations are predictive extensions of current PTL state and SHALL be epistemically marked accordingly:\n\na) Trajectory-based defensive authorization SHALL carry:",
+   "interpretation": "Validate the presence and values of all seven listed authorization fields. Fixed values are directly checkable, while confidence propagation, multi-oracle consistency, and the PTL trajectory TTL depend on external determinations.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "authorization_metadata",
+    "ptl_trajectory_confidence_interval",
+    "multi_oracle_trajectory_agreement",
+    "ptl_trajectory_ttl"
+   ],
+   "criterion": "Require validity_state = CONDITIONAL; confidence_state propagated from the PTL trajectory confidence interval; consistency_state determined by multi-oracle trajectory agreement; scope_ref = \"DKP-3-DEFENSE-001:VPI\"; revalidation_required = TRUE; revalidation_interval equal to the trajectory TTL defined by PTL; and dispute_allowed = TRUE post-factum.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL trajectory confidence intervals",
+    "multi-oracle trajectory agreement",
+    "PTL trajectory TTL"
+   ],
+   "gap": "Confidence propagation, consistency determination, and PTL TTL rules are not specified here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare confidence and consistency mappings and how the metadata interval relates to the minimum component TTL."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-02",
+   "section": "Epistemic Classification of Trajectory-Based Authorization",
+   "title": "Minimum TTL revalidation interval",
+   "quote": "Defensive authorization based on VPI SHALL be continuously revalidated at intervals not exceeding the minimum TTL of trajectory data components.",
+   "interpretation": "Compare each authorization revalidation interval with the minimum TTL of the trajectory components supporting that interval. Missing TTL data prevents evaluation of a particular authorization.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "authorization_period",
+    "revalidation_timestamps",
+    "trajectory_component_ttls"
+   ],
+   "criterion": "Throughout VPI-based authorization, each revalidation interval is no greater than the minimum TTL of its trajectory data components.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "trajectory component TTLs",
+    "authorization revalidation records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03",
+   "section": "Epistemic Classification of Trajectory-Based Authorization",
+   "title": "Terminate authorization on confirmation cessation",
+   "quote": "Any cessation of PTL trajectory confirmation — whether through measurement expiration, oracle divergence, or trajectory deviation — SHALL immediately terminate VPI-based defensive authorization.",
+   "interpretation": "In a discrete event trace, cessation of trajectory confirmation must terminate authorization in that same transition. The text permits no grace period; it does not specify a physical implementation latency tolerance.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "ptl_confirmation_events",
+    "measurement_expiration_events",
+    "oracle_divergence_events",
+    "trajectory_deviation_events",
+    "authorization_state_trace"
+   ],
+   "criterion": "Every cessation of PTL trajectory confirmation immediately changes VPI-based authorization to terminated, including cessation caused by expiration, divergence, or deviation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL trajectory confirmation lifecycle events"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-04",
+   "section": "Epistemic Classification of Trajectory-Based Authorization",
+   "title": "Measured active vector authorization only",
+   "quote": "- VPI requires continuous measurement of active harm vector\n- Static threat assessments, intelligence projections, or statistical risk models do NOT qualify as VPI",
+   "interpretation": "Check the evidence basis for continuous measurement of an active harm process and reject the listed substitutes. Whether measurements establish an active trajectory rather than inference about an unmeasured future requires a physical and epistemic model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "authorization_evidence",
+    "measurement_series",
+    "active_process_state",
+    "evidence_classifications"
+   ],
+   "criterion": "VPI authorization concerns a confirmed harm trajectory in progress with continuous measurement of the active vector; static threat assessments, intelligence projections, statistical risk models, and speculative future harm do not qualify.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "active-vector measurement series",
+    "evidence provenance and classifications"
+   ],
+   "gap": "The operational distinction between measured active trajectory and unmeasured-future inference is not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the active-process predicate and evidence classification method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.1-01",
+   "section": "4.1",
+   "title": "PTL evidence prerequisite for action",
+   "quote": "No Defensive Action is permitted without PTL-confirmed evidence of an active or physically inevitable harm stream.",
+   "interpretation": "For each defensive action, require a linked PTL confirmation of an active or physically inevitable harm stream. This checks the authorization prerequisite without independently reproducing PTL verification.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "defensive_action",
+    "linked_ptl_evidence",
+    "ptl_confirmation_status",
+    "harm_stream_status"
+   ],
+   "criterion": "Every permitted Defensive Action has PTL-confirmed evidence of an active or physically inevitable harm stream.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL harm evidence and confirmation status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.2-01",
+   "section": "4.2",
+   "title": "Forbidden initiation evidence bases",
+   "quote": "Defense SHALL NOT be initiated based on:\n\n- forecasts or speculative predictions,",
+   "interpretation": "Inspect the grounds for initiation and reject the listed evidence bases. PTL-confirmed VPI is explicitly exempt from classification as preemption, so the check must distinguish it from prohibited forecasting.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "initiation_event",
+    "authorization_basis",
+    "evidence_provenance",
+    "qualified_vpi"
+   ],
+   "criterion": "Defense is not initiated based on forecasts or speculative predictions, intelligence assessments detached from PTL, political claims, statistical risk projections, or narrative threat models; PTL-confirmed VPI does not constitute preemption.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authorization evidence provenance",
+    "PTL-confirmed VPI determinations"
+   ],
+   "gap": "The causal meaning of based on and the classification of mixed evidence bases are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how supporting evidence is distinguished from an operative authorization basis."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.3-01",
+   "section": "4.3",
+   "title": "Containment and restoration objectives only",
+   "quote": "Defense actions are limited to stopping the harmful interaction and restoring admissible operation.\n\nDefense SHALL NOT pursue retaliation, deterrence, territorial gain, or dominance as objectives.",
+   "interpretation": "Check action objectives and effects against stopping harm and restoring admissible operation. Reject the four excluded objectives; actual objective attribution and admissibility require additional criteria.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action_objectives",
+    "action_effects",
+    "harm_interaction",
+    "operation_admissibility"
+   ],
+   "criterion": "Defense actions are limited to stopping harm and restoring admissible operation and have no retaliation, deterrence, territorial gain, or dominance objective.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm-state records",
+    "operation admissibility assessments"
+   ],
+   "gap": "Admissible operation and the method for determining actual objectives are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare admissibility and objective-attribution criteria."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.4-01",
+   "section": "4.4",
+   "title": "Minimal proportionate localized reversible action",
+   "quote": "Defensive Actions MUST be:",
+   "interpretation": "Compare each action with physically and logically feasible alternatives for scope, proportionality, location, and reversibility. Localization permits the protected domain, the physical harm source, or both; no optimization rule or proportionality scale is supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "defensive_action",
+    "feasible_alternatives",
+    "measured_harm",
+    "action_scope",
+    "action_location",
+    "protected_domain",
+    "harm_source_location",
+    "reversibility_assessment"
+   ],
+   "criterion": "Actions are minimal in scope, proportionate to measured harm, localized to the protected domain and/or physical harm source, and reversible where physically and logically possible.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm measurements",
+    "physical feasibility assessments",
+    "reversibility assessments"
+   ],
+   "gap": "Minimality, proportionality, and physical or logical reversibility evaluation rules are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the feasible alternatives, scope ordering, proportionality rule, and reversibility test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.5-01",
+   "section": "4.5",
+   "title": "Evidence output without justice substitution",
+   "quote": "Defense does not replace Justice. It produces evidence, not verdicts.",
+   "interpretation": "Check Defense output interfaces for evidence production and absence of verdict outputs or Justice decision replacement. Semantic classification is required to detect a verdict presented under another label.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "defense_outputs",
+    "output_classifications",
+    "justice_decision_flow"
+   ],
+   "criterion": "Defense produces evidence, produces no verdicts, and does not replace Justice.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Justice decision-flow records"
+   ],
+   "gap": "The boundary between evidence processing and substantive verdict production is not formally specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an output classification and the permitted Defense-to-Justice interface."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.6-01",
+   "section": "4.6",
+   "title": "Consent before risky participation assignment",
+   "quote": "No Defensive Action involving Verified Collective Security Risk may be assigned, imposed, or expected of any subject without explicit consent.",
+   "interpretation": "Require explicit consent before any assignment, imposition, or expectation of participation in a qualifying risky action. Assignments can be checked from records, while informal imposition or expectation needs an observation model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "verified_risk",
+    "subject",
+    "assignment_events",
+    "imposition_events",
+    "participation_expectations",
+    "explicit_consent"
+   ],
+   "criterion": "A subject is assigned, subjected to, or expected to undertake an action involving Verified Collective Security Risk only with explicit consent.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "risk verification",
+    "subject consent records",
+    "participation assignment records"
+   ],
+   "gap": "Imposition and expectation are not operationally defined or tied to a specified observation source. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare observable indicators of imposed or expected participation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-4.6-02",
+   "section": "4.6",
+   "title": "Refusal preserves rights and standing",
+   "quote": "- SHALL NOT trigger sanctions,\n- SHALL NOT reduce baseline civil rights,\n- SHALL NOT constitute disloyalty, violation, or fault.",
+   "interpretation": "Compare subject outcomes and classifications following refusal with baseline rights and sanction records. The check must establish that refusal caused any adverse change, rather than merely preceded it.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "refusal_events",
+    "sanctions",
+    "baseline_civil_rights",
+    "civil_rights_changes",
+    "subject_classifications",
+    "decision_reasons"
+   ],
+   "criterion": "Refusal to participate triggers no sanctions, reduces no baseline civil rights, and is not classified as disloyalty, violation, or fault.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "civil-rights baseline",
+    "sanction records",
+    "subject status decisions and reasons"
+   ],
+   "gap": "The rights baseline and the causal attribution method for adverse outcomes are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the rights baseline and how outcomes are attributed to refusal."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-5-01",
+   "section": "5",
+   "title": "DKP indexed defense state model",
+   "quote": "Defense operates as a finite-state system indexed by DKP time:",
+   "interpretation": "Validate time-indexed state records against the five listed states and their evidence, permissions, and escalation conditions. These are state descriptions rather than a complete transition graph; overlapping conditions have no stated precedence.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "dkp_time",
+    "defense_state_trace",
+    "ptl_confirmations",
+    "perimeter_violations",
+    "hostile_system_activations",
+    "qualified_vpi",
+    "harm_stream_status",
+    "axiomatic_thresholds",
+    "systemic_survival_assessment",
+    "defensive_actions",
+    "crisis_escalations"
+   ],
+   "criterion": "Index the finite-state system by DKP time. D0 has no PTL-confirmed external harm or inevitability vector. D1.5 has PTL-confirmed perimeter violation, hostile system activation, or VPI and permits passive and protective measures without implying lethal engagement. D1 has PTL-confirmed active harm and permits localized defense. D2 has PTL-confirmed repeated or continuous harm and permits expanded containment within hard constraints. D3 has PTL-confirmed harm exceeding A1/A2 thresholds or a threat to systemic survival and requires escalation to DKP-4-CRISIS-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "DKP time indices",
+    "PTL state confirmations",
+    "axiomatic A1/A2 thresholds",
+    "systemic survival assessments",
+    "crisis escalation records"
+   ],
+   "gap": "A1/A2 thresholds, state precedence, transition rules, and several event classifications are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare state selection under overlapping conditions and operational definitions of hostile activation, sustained harm, and systemic survival threat."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-5-02",
+   "section": "5",
+   "title": "Continuously refreshed elevated state confirmation",
+   "quote": "Defense SHALL NOT remain in D1.5, D2, or D3 without continuously refreshed PTL confirmation.",
+   "interpretation": "Check that every period in one of the named states is supported by refreshed PTL confirmation. This clause does not name D1 and does not specify the refresh cadence or destination state when confirmation fails.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "defense_state_trace",
+    "ptl_confirmation_updates",
+    "confirmation_validity"
+   ],
+   "criterion": "Defense remains in D1.5, D2, or D3 only while PTL confirmation is continuously refreshed.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL confirmation update and validity records"
+   ],
+   "gap": "The refresh interval outside the VPI rule and the required exit state are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare confirmation freshness rules and the state selected when freshness fails."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-6-01",
+   "section": "6",
+   "title": "Physical containment action eligibility",
+   "quote": "Allowed actions are strictly those that physically stop or contain harm, including but not limited to:",
+   "interpretation": "Evaluate whether an action physically stops or contains harm. The examples are non-exhaustive and do not automatically authorize an action that fails the other constraints; it is unclear whether demonstrated capability or achieved effect is required.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "action",
+    "harm_stream",
+    "physical_effect_assessment",
+    "observed_action_effects"
+   ],
+   "criterion": "An allowed action physically stops or contains harm; possible forms include shielding or hardening, vector interception or disruption, channel disconnection, isolation or quarantine, evacuation and safe routing, and emergency infrastructure redundancy.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "physical action-effect assessments",
+    "harm-stream observations"
+   ],
+   "gap": "A causal physical-effect model and the distinction between expected capability and achieved containment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether eligibility uses predicted effects, observed effects, or both, and supply a causal model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-6.1-01",
+   "section": "6.1",
+   "title": "Minimal harm source neutralization",
+   "quote": "Neutralization of a harm source is permitted only insofar as it is the minimal physical operation required to terminate an active or inevitable harm stream.",
+   "interpretation": "Compare proposed neutralization with feasible physical operations capable of terminating the qualifying harm stream. The text does not define how to rank operations for minimality.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "neutralization_operation",
+    "harm_stream",
+    "feasible_physical_operations",
+    "termination_assessments"
+   ],
+   "criterion": "Neutralization is permitted only to the extent it is the minimal physical operation required to terminate an active or inevitable harm stream.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm-stream status",
+    "physical operation feasibility and termination assessments"
+   ],
+   "gap": "The feasible-operation set and minimality ordering are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare feasible alternatives and the ordering used to identify a minimal operation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-6.1-02",
+   "section": "6.1",
+   "title": "Source location neutralization condition",
+   "quote": "Neutralization MAY occur at the physical location of the harm source when there is no other physically feasible method to terminate the harm stream within the admissible time horizon.",
+   "interpretation": "For neutralization at the source location, test whether another physically feasible method can terminate harm within the admissible horizon. The clause grants permission under this condition but does not define the horizon or alternative-method search.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "neutralization_location",
+    "harm_source_location",
+    "alternative_methods",
+    "physical_feasibility",
+    "termination_times",
+    "admissible_time_horizon"
+   ],
+   "criterion": "Source-location neutralization is permitted when no other physically feasible method terminates the harm stream within the admissible time horizon.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "harm-source location",
+    "alternative-method feasibility and timing assessments"
+   ],
+   "gap": "The admissible horizon and a complete method for determining feasible alternatives are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the admissible horizon and the alternative-method search domain."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-6.1-03",
+   "section": "6.1",
+   "title": "Neutralization objective and presence limits",
+   "quote": "- create a new independent harm objective,\n- be framed, recorded, or executed as retaliation,\n- include persistent presence, governance, or occupation.",
+   "interpretation": "Review neutralization objectives, records, execution, and subsequent presence for the prohibited properties. Persistent presence lacks a duration boundary, and objective or retaliation classification requires semantic assessment.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "neutralization_objectives",
+    "action_framing",
+    "action_records",
+    "execution_trace",
+    "presence_history",
+    "governance_activities",
+    "occupation_assessment"
+   ],
+   "criterion": "Neutralization creates no new independent harm objective, is not framed, recorded, or executed as retaliation, and includes no persistent presence, governance, or occupation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation records",
+    "post-operation presence and governance observations"
+   ],
+   "gap": "Persistent presence and the semantic boundaries of retaliation, governance, occupation, and independent harm objectives are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare persistence criteria and the prohibited-activity classification method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-6.1-04",
+   "section": "6.1",
+   "title": "Qualified volunteers exclusively execute risk",
+   "quote": "Any action involving Verified Collective Security Risk MAY ONLY be executed by Voluntary Defense Participants.",
+   "interpretation": "For an action classified as involving Verified Collective Security Risk, check every executor's participant status at execution. Qualification of that status is separately governed by section 3.5.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "action_risk_classification",
+    "action_executors",
+    "voluntary_participant_status"
+   ],
+   "criterion": "Every executor of an action involving Verified Collective Security Risk is a Voluntary Defense Participant.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "verified risk classifications",
+    "qualified voluntary participant status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-7-01",
+   "section": "7",
+   "title": "Hard bans constitute protocol breach",
+   "quote": "Any such use constitutes a protocol breach.",
+   "interpretation": "Detect Defense use for any listed prohibited purpose and classify it as a protocol breach. The text supplies no particular remedy or enforcement transition for that breach.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "defense_uses",
+    "operation_objectives",
+    "operation_effects",
+    "breach_classifications"
+   ],
+   "criterion": "Defense is never used for speculative or narrative-based preemptive strikes, collective responsibility or punishment, retaliation as an objective, territorial capture or permanent occupation, economic punishment or sanctions, or forced political alignment or governance; any such use is a protocol breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "operation purpose and effect assessments"
+   ],
+   "gap": "A formal classification method for the prohibited uses is not provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how each prohibited use is recognized in operation traces and effects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-8-01",
+   "section": "8",
+   "title": "Justice usable evidence without adjudication",
+   "quote": "Defense does not determine legitimacy or fault.\n\nDefense produces PTL-anchored evidence usable by DKP-1-JUSTICE-001.",
+   "interpretation": "Check that Defense outputs contain PTL evidence links, are usable by Justice, and make no legitimacy or fault determinations. Justice usability depends on an absent interface specification.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "defense_outputs",
+    "ptl_evidence_links",
+    "justice_evidence_interface",
+    "output_classifications"
+   ],
+   "criterion": "Defense produces PTL-anchored evidence usable by DKP-1-JUSTICE-001 and does not determine legitimacy or fault.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "PTL evidence references",
+    "Justice evidence acceptance requirements"
+   ],
+   "gap": "Justice evidence acceptance requirements and semantic output classification rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the Justice evidence interface and how legitimacy or fault determinations are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-8-02",
+   "section": "8",
+   "title": "Automatic recovery claim routing",
+   "quote": "When PTL confirms an identifiable external harm source, Defense logs SHALL automatically generate a Resource Recovery Claim routed to DKP-1-JUSTICE-001 for adjudication of restitution and cost recovery. Defense itself SHALL NOT pursue compensation.",
+   "interpretation": "Match each qualifying PTL confirmation to automatically generated claim and routing events, and check that compensation pursuit remains outside Defense. The text specifies neither claim fields nor a generation deadline.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "ptl_source_confirmations",
+    "source_identifiability",
+    "defense_log_events",
+    "claim_generation_events",
+    "claim_routes",
+    "compensation_pursuit_actor"
+   ],
+   "criterion": "PTL confirmation of an identifiable external harm source automatically causes Defense logs to generate a Resource Recovery Claim routed to DKP-1-JUSTICE-001 for restitution and cost-recovery adjudication; Defense does not pursue compensation.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "PTL external-source confirmations",
+    "Justice claim receipt records",
+    "compensation process ownership"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-8-03",
+   "section": "8",
+   "title": "Restricted participation accounting data forwarding",
+   "quote": "Participation or non-participation in Verified Collective Security Risk SHALL be forwarded to DKP-1-IDENTITY-001 and DKP-2-FINANCE-001 solely for risk-symmetry accounting and compensation logic, without moral, punitive, or reputational interpretation.",
+   "interpretation": "Verify forwarding of both participation and non-participation to both recipients, then inspect subsequent uses against the exclusive allowed purposes. Full enforcement requires visibility into downstream interpretation and use.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "verified_risk_participation_records",
+    "forwarding_events",
+    "recipient_records",
+    "downstream_processing_purposes",
+    "downstream_interpretations"
+   ],
+   "criterion": "Participation and non-participation records are forwarded to both DKP-1-IDENTITY-001 and DKP-2-FINANCE-001 only for risk-symmetry accounting and compensation logic, with no moral, punitive, or reputational interpretation.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001",
+    "DKP-2-FINANCE-001"
+   ],
+   "data_dependencies": [
+    "Identity and Finance receipt records",
+    "downstream data-use and interpretation records"
+   ],
+   "gap": "Downstream use observability and criteria for prohibited interpretations are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare data-use tracing and interpretation classification rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-8-04",
+   "section": "8",
+   "title": "Automatic defense wind down conditions",
+   "quote": "- PTL confirms the harm stream has ceased or been neutralized, and\n- admissible system states are restored.",
+   "interpretation": "Check that Defense automatically winds down when both conditions hold. The text specifies neither the wind-down sequence nor its completion deadline or terminal state.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_harm_cessation_confirmation",
+    "ptl_neutralization_confirmation",
+    "system_admissibility",
+    "defense_wind_down_trace"
+   ],
+   "criterion": "Defense automatically winds down when PTL confirms cessation or neutralization of the harm stream and admissible system states are restored.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL cessation or neutralization confirmations",
+    "system admissibility assessments"
+   ],
+   "gap": "Admissible-state criteria and the operational meaning and timing of wind down are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare admissible-state predicates and wind-down transition semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-9-01",
+   "section": "9",
+   "title": "Mandatory crisis escalation triggers",
+   "quote": "- axiomatic boundary breach risk,\n- insufficiency of defensive measures,\n- systemic or cascading harm beyond containment capacity.",
+   "interpretation": "Check for escalation to Crisis whenever PTL confirms a listed condition. The natural reading treats each listed condition as independently sufficient, although the list has no explicit logical connective.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_confirmed_escalation_conditions",
+    "axiomatic_boundary_risk",
+    "defensive_measure_sufficiency",
+    "containment_capacity",
+    "systemic_or_cascading_harm",
+    "crisis_escalation_events"
+   ],
+   "criterion": "Defense escalates to DKP-4-CRISIS-001 when PTL confirms axiomatic boundary breach risk, insufficiency of defensive measures, or systemic or cascading harm beyond containment capacity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-4-CRISIS-001"
+   ],
+   "data_dependencies": [
+    "PTL escalation-condition confirmations",
+    "defense sufficiency assessments",
+    "containment capacity assessments"
+   ],
+   "gap": "Trigger assessment criteria and the escalation deadline are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat each listed trigger as independently sufficient and declare the risk, sufficiency, and capacity assessment rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-10-01",
+   "section": "10",
+   "title": "Action time evidence and audit records",
+   "quote": "- indexed by DTI,\n- anchored to PTL evidence,\n- logged in a tamper-evident manner.",
+   "interpretation": "For every Defensive Action, require a DTI index, PTL evidence anchoring, and a log whose alteration is detectable. Presence checks are direct, but the DTI, anchoring, and tamper-evidence validation methods are external or unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "defensive_actions",
+    "dti_indices",
+    "ptl_evidence_anchors",
+    "action_logs",
+    "tamper_evidence"
+   ],
+   "criterion": "Every Defensive Action is indexed by DTI, anchored to PTL evidence, and logged in a tamper-evident manner.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "DTI indices",
+    "PTL evidence records",
+    "audit integrity proofs"
+   ],
+   "gap": "DTI validity, evidence anchoring, and the tamper-evidence verification scheme are not defined here. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the DTI and evidence-reference validators and the log integrity verification method."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-10-02",
+   "section": "10",
+   "title": "Public verification after defensive action",
+   "quote": "Defense logs SHALL be publicly verifiable post-factum under transparency, delay, and redaction rules defined by higher-layer governance and audit protocols.",
+   "interpretation": "Check that public users can verify logs after the relevant events, subject to the applicable publication delays and redactions. The governing protocols are not identified by document ID or reproduced.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "defense_logs",
+    "public_verification_interface",
+    "publication_times",
+    "redactions",
+    "transparency_rules",
+    "delay_rules",
+    "redaction_rules"
+   ],
+   "criterion": "Defense logs are publicly verifiable post-factum in compliance with higher-layer transparency, delay, and redaction rules.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "higher-layer governance and audit publication rules",
+    "public log access and verification records"
+   ],
+   "gap": "The applicable transparency, delay, redaction, and public-verification requirements are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Identify the governing protocols and declare a public-verifiability test."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-11-01",
+   "section": "11",
+   "title": "Cross layer governance isolation",
+   "quote": "DKP-3-DEFENSE-001 SHALL NOT:",
+   "interpretation": "Inspect Defense operations and downstream effects for changes to the listed domains or computations. Structural access controls can support the check, but semantic governance and population-management effects need a declared classification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "defense_operations",
+    "economic_rule_changes",
+    "sanction_events",
+    "information_flow_controls",
+    "population_management_actions",
+    "impact_computation_changes",
+    "justice_computation_changes"
+   ],
+   "criterion": "Defense does not alter economic rules, introduce sanctions, govern information flows, manage populations, or override Impact or Justice computations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "economic rule change records",
+    "sanction records",
+    "information control records",
+    "Impact and Justice computation provenance"
+   ],
+   "gap": "The semantic boundaries of governing information flows and managing populations are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare operation classifications that distinguish prohibited governance effects from permitted containment."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-12-01",
+   "section": "12",
+   "title": "Controlled protocol change procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Validate normative changes against the referenced controlled procedure and its listed stages or controls. The text does not specify acceptance criteria, activation timing, or whether rollback means capability, planning, or execution when necessary.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "upgrade_records",
+    "proposal",
+    "simulation_records",
+    "audit_records",
+    "acceptance_results",
+    "activation_window",
+    "rollback_records"
+   ],
+   "criterion": "Protocol changes use DKP-4-UPGRADE-001 with proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window, and rollback.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "Upgrade procedure records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation controls",
+    "rollback provisions"
+   ],
+   "gap": "The referenced procedures and their acceptance, timing, and rollback requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare rollback semantics and resolve procedural details from the identified protocols."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-12-02",
+   "section": "12",
+   "title": "Modification identity simulation and disclosure",
+   "quote": "- any modification requires a new protocol identifier,\n- explicit incompatibility declaration,\n- mandatory system simulation under DKP-8-SIMULATION-001,",
+   "interpretation": "For each modification covered by the upgrade regime, require a new identifier, explicit incompatibility declaration, system simulation, and public disclosure. Read alongside the presentation-only exception, any modification is most consistently scoped to normative modifications, though the wording is broader in isolation.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "old_protocol_identifier",
+    "new_protocol_identifier",
+    "incompatibility_declaration",
+    "system_simulation_records",
+    "public_disclosure",
+    "transparency_rules"
+   ],
+   "criterion": "A modification requires a new protocol identifier, an explicit incompatibility declaration, mandatory system simulation under DKP-8-SIMULATION-001, and public disclosure under transparency rules, subject to the presentation-only correction exception.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "protocol identifier history",
+    "system simulation records",
+    "transparency and public disclosure requirements"
+   ],
+   "gap": "Simulation and transparency requirements are absent, and the scope of any modification depends on reconciling the subsequent exception. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat presentation-only corrections as exempt from modification requirements and declare applicable disclosure rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-12-03",
+   "section": "12",
+   "title": "Presentation correction upgrade exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Compare editions to establish that a correction changes presentation without changing normative content, then check exclusion from Upgrade treatment and recording by the document date. The relationship between the quoted Last updated label and the front-matter last_updated field is not expressly defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_edition",
+    "corrected_edition",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "correction_records"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade under DKP-4-UPGRADE-001 §3 and is recorded only by the document's Last updated date.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "edition comparison",
+    "Upgrade classification rules"
+   ],
+   "gap": "Normative equivalence criteria, the referenced Upgrade exception, and the date-field mapping are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-equivalence test and the mapping of Last updated to document metadata."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "DEFENSE-12-04",
+   "section": "12",
+   "title": "Published edition canonical digest listing",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "For each published edition, compute SHA-256 over its canonical source and compare it with the corresponding repository manifest entry. The check requires the canonical source and manifest as supplied inputs.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "canonical_repository_sha256sums"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in github.com/anahronic/World lists a digest equal to SHA-256 of that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "canonical source for each published edition",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

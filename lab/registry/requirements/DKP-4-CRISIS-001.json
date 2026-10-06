@@ -1,0 +1,1626 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-4-CRISIS-001",
+ "doc_sha256": "44810ee4570dd84814b774ced648646d1f07d9c3cc5b789375cb1f25ed313bea",
+ "prefix": "CRISIS",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. The supplied requirement prefix contains a carriage return, preserved in ids as the JSON escape \\r. Unnumbered subheadings supply the section names for provisions they contain. Referenced protocols were not supplied. Section 12.3 locates the Non-Precedent Rule in Section 8, but the supplied text places that rule under Section 6. The Axiom A1 Interpretation Constraint combines a categorical prohibition on operational interpretation with permission confined to Crisis Scope; the relationship between those clauses needs clarification. The document specifies crisis states but does not provide a transition graph, numerical persistence windows, or a revalidation schedule. Its numerical-parameter rule delegates authority duration, decay, revalidation cadence, and exit sensitivity to simulation. Compound lists are grouped where they define one action contract, state contract, or invariant.",
+ "requirements": [
+  {
+   "id": "CRISIS-0-01",
+   "section": "0",
+   "title": "Exclusive crisis invocation gate",
+   "quote": "Crisis mode is invoked exclusively when normal protocol execution is insufficient to preserve axiomatic integrity, system survival, or admissible physical states, as confirmed by Physical Truth Layer (PTL) evidence and downstream L3 escalation.",
+   "interpretation": "Check that every invocation has PTL evidence and downstream L3 escalation establishing the stated insufficiency. The text does not define how insufficiency, survival, or admissibility is measured.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_invocations",
+    "ptl_evidence",
+    "l3_escalations",
+    "normal_execution_assessments"
+   ],
+   "criterion": "Crisis invocation implies confirmed insufficiency of normal execution for at least one listed protected condition, supported by both PTL evidence and downstream L3 escalation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL evidence",
+    "L3 escalation records",
+    "normal protocol sufficiency assessments"
+   ],
+   "gap": "The document lacks operational definitions of insufficiency and the protected physical and systemic conditions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare predicates for axiomatic integrity, system survival, admissible physical states, and normal execution insufficiency."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-0-02",
+   "section": "0",
+   "title": "No new crisis powers",
+   "quote": "Crisis mode does not create new powers. It temporarily constrains execution pathways to preserve survival and reversibility.",
+   "interpretation": "Compare powers exercised during crisis with the pre-crisis authorized powers and identify crisis-specific execution restrictions. Testing preservation of survival and reversibility requires a behavioral model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "pre_crisis_powers",
+    "crisis_powers",
+    "execution_restrictions",
+    "restriction_lifetimes",
+    "system_trajectories"
+   ],
+   "criterion": "Crisis powers introduce no power absent from the existing authorization set; crisis restrictions are temporary and preserve survival and reversibility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "existing authorization registry",
+    "execution pathway records"
+   ],
+   "gap": "The baseline powers and tests for preservation of survival and reversibility are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a power-comparison model and survival and reversibility predicates."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-0-03",
+   "section": "0",
+   "title": "No precedent or normalization",
+   "quote": "Any action, restriction, suspension, or authority exercised under this protocol SHALL NOT create precedent, custom, interpretation rule, or future authorization outside an explicitly declared Crisis Scope.\n\nCrisis actions SHALL NOT be interpreted post-factum as evidence of normal system capability, acceptable governance practice, or latent authority. Post-crisis normalization by interpretation is explicitly forbidden.",
+   "interpretation": "Inspect provenance of subsequent authorizations and interpretations for prohibited reliance on crisis execution. A program needs a representation of justification and interpretive effects to distinguish prohibited normalization from historical reporting.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_execution_records",
+    "declared_crisis_scope",
+    "later_authorizations",
+    "interpretation_records",
+    "justification_links"
+   ],
+   "criterion": "Crisis execution creates none of the listed normative effects outside declared Crisis Scope and is never used to normalize crisis actions as ordinary capability, practice, or authority.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "authorization provenance",
+    "protocol interpretation records",
+    "governance justification records"
+   ],
+   "gap": "The text does not define a machine-readable test for precedent, custom, or normalization by interpretation. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how normative reliance and interpretive effects are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-1-01",
+   "section": "1",
+   "title": "Survival containment reversibility priority",
+   "quote": "Crisis mode prioritizes survival, containment, and reversibility over optimization, efficiency, or growth.",
+   "interpretation": "Test decisions involving a conflict between the listed objective groups against the required priority. The text supplies neither numerical weights nor an ordering within either group.",
+   "kind": "dynamic_model",
+   "checkable": "partial",
+   "inputs": [
+    "candidate_actions",
+    "action_outcomes",
+    "selected_actions",
+    "objective_classifications"
+   ],
+   "criterion": "When the objective groups conflict, survival, containment, and reversibility take priority over optimization, efficiency, and growth.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "action outcome estimates",
+    "decision records"
+   ],
+   "gap": "A model identifying objective conflicts and their resolution is missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how actions affect the named objectives and how priority is tested without inventing textual weights."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-1-02",
+   "section": "1",
+   "title": "Crisis scope envelope containment",
+   "quote": "All Crisis execution operates strictly within a Crisis Scope Envelope.\n\nThe Crisis Scope Envelope is a hard operational subset of DKP-7-SCOPE-001 and defines the maximal permissible actions, authorities, and interpretations allowed during Crisis execution.",
+   "interpretation": "Check each executed action, exercised authority, and interpretation against the declared envelope, and check the envelope against the referenced scope protocol. The permitted sets are not supplied here.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_scope_envelope",
+    "crisis_execution_records",
+    "scope_protocol_boundaries"
+   ],
+   "criterion": "Every crisis action, authority, and interpretation belongs to the Crisis Scope Envelope, which is an operational subset of DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "declared scope envelope",
+    "applicability boundaries"
+   ],
+   "gap": "The envelope contents and the referenced scope boundaries are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a representation and membership test for scope envelopes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-1-03",
+   "section": "1",
+   "title": "Envelope expansion and bypass prohibition",
+   "quote": "The Crisis Scope Envelope SHALL NOT be expanded, inferred, or bypassed under any circumstances.",
+   "interpretation": "Compare envelope versions and execution authorization paths to detect expansion, inferred scope, or bypass. Semantic equivalence and inference need an explicit representation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "declared_crisis_scope",
+    "scope_versions",
+    "authorization_paths",
+    "execution_records"
+   ],
+   "criterion": "No crisis operation expands, infers, or bypasses the declared Crisis Scope Envelope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "scope declaration history",
+    "authorization provenance"
+   ],
+   "gap": "The text does not define how scope inference and bypass are detected. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare scope comparison rules and authorization provenance semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-1-04",
+   "section": "1",
+   "title": "S1 applicability ceiling",
+   "quote": "The Crisis Scope Envelope exists exclusively within S1 (Conditionally Applicable Domain) as defined in DKP-7-SCOPE-001.\n\nEntry into Crisis Scope SHALL NOT elevate system applicability beyond S1 under any conditions.",
+   "interpretation": "Verify envelope membership in S1 and ensure entry into crisis does not produce an applicability classification beyond S1. S1 boundaries and the meaning of elevation depend on the referenced protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_scope_envelope",
+    "s1_boundaries",
+    "applicability_before",
+    "applicability_after"
+   ],
+   "criterion": "The Crisis Scope Envelope lies exclusively within S1, and crisis entry never elevates applicability beyond S1.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "S1 applicability classification",
+    "system applicability records"
+   ],
+   "gap": "The definition of S1 and the applicability ordering are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-2-01",
+   "section": "2",
+   "title": "Protocol ordering and escalation gate",
+   "quote": "- only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols,\n- upstream of DKP-4-UPGRADE-001 (when recovery is possible).",
+   "interpretation": "Check that crisis execution follows the stated PTL, time, L1–L3, and error-processing dependencies, and occurs only on qualifying L3 escalation. The section also places crisis before upgrade when recovery is possible, but does not define whether downstream means temporal ordering or dependency ordering.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_dependency_graph",
+    "execution_trace",
+    "l3_escalation",
+    "recovery_assessment"
+   ],
+   "criterion": "Crisis operates downstream of DKP-0-ORACLE-001, DKP-0-TIME-001, all L1–L3 protocols, and DKP-4-ERROR-001; entry requires DKP-3-DEFENSE-001 or equivalent L3 escalation; recoverable execution precedes DKP-4-UPGRADE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-0-TIME-001",
+    "DKP-4-ERROR-001",
+    "DKP-3-DEFENSE-001",
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "protocol dependency graph",
+    "L3 containment escalation",
+    "recovery assessment"
+   ],
+   "gap": "The referenced interfaces, equivalence test for L3 protocols, and meaning of downstream are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether protocol ordering is temporal, logical, or both, and define qualifying equivalent L3 containment protocols."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-2-02",
+   "section": "2",
+   "title": "Axioms and authority remain fixed",
+   "quote": "- DKP-4-CRISIS-001 SHALL NOT redefine axioms.\n- DKP-4-CRISIS-001 SHALL NOT introduce new rights, obligations, or authorities.",
+   "interpretation": "Compare crisis-induced normative changes against the existing axiom, rights, obligation, and authority registries. A semantic comparison is needed where changes do not use identical identifiers.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "baseline_axioms",
+    "baseline_rights",
+    "baseline_obligations",
+    "baseline_authorities",
+    "crisis_normative_changes"
+   ],
+   "criterion": "Crisis execution neither redefines axioms nor introduces rights, obligations, or authorities.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "axiom registry",
+    "rights and obligations registry",
+    "authority registry"
+   ],
+   "gap": "The baseline normative registries and semantic equivalence rules are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how redefinitions and newly introduced normative effects are detected."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-2-03",
+   "section": "2",
+   "title": "Mandatory PTL anchoring",
+   "quote": "- DKP-4-CRISIS-001 SHALL NOT operate without PTL anchoring.",
+   "interpretation": "Require valid PTL evidence links for crisis operation. The meaning and validation procedure for PTL anchoring depend on the upstream oracle protocol.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_execution_records",
+    "ptl_anchors",
+    "anchor_validation_results"
+   ],
+   "criterion": "Every crisis operation has valid PTL anchoring.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "PTL evidence and anchor validation"
+   ],
+   "gap": "The PTL anchoring contract and validity checks are absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-2-04",
+   "section": "2",
+   "title": "Scope boundaries remain binding",
+   "quote": "No Crisis logic, exception, or emergency interpretation may override, reinterpret, or extend system applicability beyond the limits defined in DKP-7-SCOPE-001.\n\nScope Constraint: All actions executed under DKP-4-CRISIS-001 SHALL be strictly limited by the applicability boundaries defined in DKP-7-SCOPE-001.",
+   "interpretation": "Check every crisis action and interpretive exception against the scope protocol's applicability boundaries. The prohibition also covers logical or interpretive changes that would expand applicability.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "crisis_logic",
+    "emergency_interpretations",
+    "applicability_boundaries"
+   ],
+   "criterion": "All crisis actions stay within DKP-7-SCOPE-001 boundaries, and no crisis logic, exception, or interpretation overrides, reinterprets, or extends applicability beyond them.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "applicability boundaries",
+    "interpretation and exception records"
+   ],
+   "gap": "The referenced applicability boundaries and their semantic enforcement rules are unavailable. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how the applicability effects of logic and interpretations are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-2-05",
+   "section": "2",
+   "title": "No scope external reuse",
+   "quote": "No crisis condition, trigger, state, or action SHALL be extrapolated, generalized, or reused outside the explicitly declared Crisis Scope.",
+   "interpretation": "Track uses of crisis conditions, triggers, states, and actions against their declared scope. Detecting extrapolation or generalization requires provenance beyond simple identifier matching.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_artifacts",
+    "declared_crisis_scope",
+    "artifact_use_records",
+    "use_provenance"
+   ],
+   "criterion": "No crisis condition, trigger, state, or action is extrapolated, generalized, or reused outside its explicitly declared Crisis Scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-module artifact use and provenance"
+   ],
+   "gap": "The document lacks a formal test for extrapolation, generalization, and semantic reuse. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare artifact provenance and scope-membership semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-3-01",
+   "section": "3",
+   "title": "Crisis qualification definition",
+   "quote": "A Crisis is a PTL-confirmed system state in which L3 containment and correction mechanisms are insufficient to prevent imminent or ongoing violation of Axiom A1 or Axiom A2.",
+   "interpretation": "Classify a state as crisis only when PTL confirms the specified L3 insufficiency and A1 or A2 threat. Imminence, violation, and insufficiency lack operational tests in this document.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_state_confirmation",
+    "l3_containment_assessment",
+    "l3_correction_assessment",
+    "a1_violation_assessment",
+    "a2_violation_assessment"
+   ],
+   "criterion": "A crisis state is PTL-confirmed and has insufficient L3 containment and correction to prevent an imminent or ongoing A1 or A2 violation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL-confirmed state",
+    "L3 capacity assessments",
+    "axiom violation assessments"
+   ],
+   "gap": "The document does not define imminence or the tests for axiom violation and L3 insufficiency. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare imminence, A1 and A2 violation, and L3 insufficiency predicates."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-3-02",
+   "section": "3",
+   "title": "Recognized crisis condition classes",
+   "quote": "- loss, divergence, or instability of PTL integrity,\n- multi-domain failures threatening life or system survival,\n- undefined or non-deterministic execution states outside protocol specification.",
+   "interpretation": "Recognize the section's listed classes: sustained D3, correction-capacity-exceeding cascades, PTL integrity failures, life- or survival-threatening multi-domain failures, and undefined or non-deterministic out-of-specification execution. The word 'include' makes the list non-exhaustive, and these classes remain subject to the crisis definition.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "defense_state_history",
+    "error_cascades",
+    "correction_capacity",
+    "ptl_integrity",
+    "domain_failures",
+    "execution_states",
+    "protocol_specifications"
+   ],
+   "criterion": "Recognized crisis conditions include every listed class, subject to PTL confirmation and the Section 3 crisis qualification.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001"
+   ],
+   "data_dependencies": [
+    "D3 history",
+    "local and regional correction capacity",
+    "PTL integrity assessments",
+    "multi-domain failures",
+    "execution conformance assessments"
+   ],
+   "gap": "Sustained duration, correction capacity, PTL integrity tests, and survival-threat criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare sustained-state duration and condition-classification predicates; do not assume the list is exhaustive."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-4-01",
+   "section": "4",
+   "title": "PTL confirmed entry triggers",
+   "quote": "Crisis mode SHALL be entered when one or more of the following conditions are PTL-confirmed:",
+   "interpretation": "Evaluate the five listed triggers as alternatives and require crisis entry when any is PTL-confirmed. Sustained D3 and T3, correction tolerance, and survival margins require additional definitions; this mandatory gate must also be reconciled with the exclusive prerequisites in Sections 0 and 2.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_confirmations",
+    "d3_escalation_history",
+    "t3_escalation_history",
+    "systemic_failure_escalations",
+    "ptl_output_divergence",
+    "correction_tolerance",
+    "multi_domain_harm",
+    "axiomatic_survival_margins"
+   ],
+   "criterion": "Enter crisis if PTL confirms sustained D3 escalation, sustained T3 escalation, cascading systemic failure escalated from DKP-4-ERROR-001, verified PTL loss or divergence beyond correction tolerance, or simultaneous multi-domain harm exceeding axiomatic survival margins.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [
+    "DKP-3-DEFENSE-001",
+    "DKP-4-ERROR-001"
+   ],
+   "data_dependencies": [
+    "Defense escalation",
+    "domain-specific Anti-Terror escalation",
+    "error escalation",
+    "PTL output verification",
+    "multi-domain harm measurements"
+   ],
+   "gap": "The trigger thresholds and sustained-state durations are absent, and the text does not explain how every listed trigger satisfies the separate L3 escalation gate. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare sustained durations, correction tolerance, survival margins, and a consistent conjunction of entry prerequisites."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-4-02",
+   "section": "4",
+   "title": "No discretionary crisis initiation",
+   "quote": "Crisis SHALL NOT be initiated by forecast, policy decision, political authority, or human discretion.",
+   "interpretation": "Inspect initiation provenance for the four prohibited initiating causes. This also operationalizes Section 3's distinction between a system condition and a political or discretionary declaration.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_initiation_records",
+    "initiation_causes"
+   ],
+   "criterion": "No crisis initiation has forecast, policy decision, political authority, or human discretion as an initiating cause.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "initiation provenance"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-01",
+   "section": "5",
+   "title": "Finite states indexed by time",
+   "quote": "Crisis operates as a finite-state system indexed by DKP time:",
+   "interpretation": "Check that crisis state records use the enumerated C0–C4 state model and DKP time indexing. The text does not specify allowed transition edges or require sequential traversal.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_state_records",
+    "dkp_time_indices",
+    "time_index_validation"
+   ],
+   "criterion": "Crisis state records use C0, C1, C2, C3, or C4 and are indexed by DKP time.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-0-TIME-001"
+   ],
+   "data_dependencies": [
+    "DKP time indices"
+   ],
+   "gap": "The DKP time-index contract is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-02",
+   "section": "5",
+   "title": "C0 absence of crisis",
+   "quote": "C0 – Normal Operation No crisis conditions present.",
+   "interpretation": "Verify that a C0 classification coincides with absence of crisis conditions. Testing absence depends on the unresolved crisis-condition predicates.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "current_state",
+    "crisis_condition_assessments"
+   ],
+   "criterion": "If current_state is C0, no crisis condition is present.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "crisis condition assessments"
+   ],
+   "gap": "The underlying crisis-condition tests are not fully defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a complete crisis-condition evaluator for the simulated domain."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-03",
+   "section": "5",
+   "title": "C1 emergency containment behavior",
+   "quote": "C1 – Emergency Containment Immediate life-preserving actions activated. Strict prioritization of survival-critical resources.",
+   "interpretation": "Check that entering C1 activates life-preserving actions immediately and prioritizes survival-critical resources. The text does not specify action selection, resource classification, or a numerical meaning of immediate.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "c1_entry_events",
+    "life_preserving_actions",
+    "activation_events",
+    "resource_allocation_decisions",
+    "survival_critical_resources"
+   ],
+   "criterion": "C1 activates life-preserving actions immediately and strictly prioritizes survival-critical resources.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "life-preserving action classifications",
+    "resource criticality and allocation records"
+   ],
+   "gap": "Action and resource classifications and the event semantics of immediate activation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare life-preserving and survival-critical classifications and how immediate activation is represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-04",
+   "section": "5",
+   "title": "C2 degradation and core isolation",
+   "quote": "C2 – System Degradation Mode Non-essential functions suspended. Core execution isolated to preserve determinism and truth continuity.",
+   "interpretation": "Check suspension of non-essential functions and isolation of core execution throughout C2. Establishing preservation of determinism and truth continuity requires a model of the core and its dependencies.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_state",
+    "function_essentiality",
+    "function_status",
+    "core_isolation_status",
+    "execution_behavior",
+    "truth_continuity"
+   ],
+   "criterion": "In C2, non-essential functions are suspended and core execution is isolated to preserve determinism and truth continuity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "function criticality",
+    "core execution topology",
+    "truth continuity evidence"
+   ],
+   "gap": "Essentiality, core isolation, and truth continuity are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare essential functions, the core execution boundary, and determinism and truth-continuity tests."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-05",
+   "section": "5",
+   "title": "C3 containment and propagation halt",
+   "quote": "C3 – Fail-Safe Isolation Maximum containment enforced. External interfaces minimized. Cross-domain propagation halted.",
+   "interpretation": "Check containment configuration, active external interfaces, and cross-domain propagation in C3. Maximum containment and minimized interfaces require a feasible-configuration model; halted propagation can then be checked against an event trace.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "current_state",
+    "containment_configuration",
+    "feasible_configurations",
+    "external_interfaces",
+    "cross_domain_events"
+   ],
+   "criterion": "In C3, containment is maximal, external interfaces are minimized, and cross-domain propagation is halted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "containment configurations",
+    "interface topology",
+    "cross-domain propagation records"
+   ],
+   "gap": "The feasible set and ordering for maximum containment and minimum interfaces are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare feasible containment configurations, interface necessities, and propagation semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-06",
+   "section": "5",
+   "title": "C4 terminal resolution alternatives",
+   "quote": "C4 – Terminal Resolution Controlled shutdown, irreversible isolation, or system partition executed to preserve Physical Truth and prevent uncontrolled collapse.",
+   "interpretation": "Check that C4 executes at least one listed terminal resolution and assess its preservation and collapse-prevention effects. The text does not rank these alternatives or define their completion criteria.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "c4_events",
+    "terminal_resolution_actions",
+    "physical_truth_status",
+    "collapse_assessment"
+   ],
+   "criterion": "C4 executes controlled shutdown, irreversible isolation, or system partition to preserve Physical Truth and prevent uncontrolled collapse.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "shutdown, isolation, or partition execution records",
+    "Physical Truth continuity assessments"
+   ],
+   "gap": "Controlled resolution, preserved Physical Truth, and uncontrolled collapse lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare terminal-action completion criteria and a model of truth preservation and collapse."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-5-07",
+   "section": "5",
+   "title": "Persistent states require revalidation",
+   "quote": "State persistence in C1–C4 requires continuous PTL confirmation and periodic revalidation.",
+   "interpretation": "Check confirmation coverage and revalidation events throughout every C1–C4 interval. The document delegates revalidation cadence to simulation but does not define whether continuous confirmation means fresh readings at every step or uninterrupted validity coverage.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "state_intervals",
+    "ptl_confirmation_intervals",
+    "revalidation_events",
+    "validated_revalidation_cadence"
+   ],
+   "criterion": "Every C1–C4 persistence interval has continuous PTL confirmation and periodic revalidation at the validated cadence.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "PTL confirmation validity intervals",
+    "revalidation records",
+    "simulation-validated cadence"
+   ],
+   "gap": "The validated cadence and the meaning of continuous PTL confirmation are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare confirmation coverage semantics and use a simulation-validated revalidation cadence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-6-01",
+   "section": "6",
+   "title": "Permitted crisis action classes",
+   "quote": "- isolate or quarantine failing subsystems, regions, or interfaces,\n- activate autonomous infrastructure, energy, and sustainment reserves,\n- freeze non-critical state transitions,",
+   "interpretation": "Represent the section's optional permissions for suspending non-essential economic, informational, and optimization functions, isolating failing components, activating reserves, freezing non-critical transitions, and prioritizing PTL, audit, and identity continuity. MAY grants permission rather than requiring every listed action, and all permissions remain constrained by scope and other rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_active",
+    "proposed_action",
+    "function_essentiality",
+    "subsystem_failure_status",
+    "transition_criticality",
+    "crisis_scope_envelope"
+   ],
+   "criterion": "During crisis, the listed action classes are permitted when their stated target qualifications and the Crisis Scope Envelope are satisfied.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "function and transition criticality",
+    "subsystem failure status",
+    "reserve availability"
+   ],
+   "gap": "The text does not define non-essential functions, non-critical transitions, or failing-component classifications. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare action classification and essentiality, criticality, and failure predicates."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-6-02",
+   "section": "6",
+   "title": "Restricted resource rationing purpose",
+   "quote": "- enforce strict resource rationing solely to preserve life and core execution,",
+   "interpretation": "Check that a rationing action is justified exclusively by preservation of life and core execution. Whether both purposes must apply to each action or either protected purpose suffices is ambiguous.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "rationing_actions",
+    "rationing_justifications",
+    "life_preservation_assessments",
+    "core_execution_assessments"
+   ],
+   "criterion": "Crisis resource rationing serves solely preservation of life and core execution.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "resource rationing records",
+    "life and core execution dependency assessments"
+   ],
+   "gap": "The text lacks a purpose-verification model and does not resolve the conjunctive versus collective reading of the two permitted purposes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how purposes are established and whether each rationing action must serve both named purposes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-6-03",
+   "section": "6",
+   "title": "Mercy mode TTL extension",
+   "quote": "- activate Crisis Mercy Mode for non-anthropogenic events (e.g., solar storms, geological phenomena), allowing limited extension of oracle data TTLs to prevent false system halts while preserving life-support continuity.",
+   "interpretation": "Check that Mercy Mode is activated for a non-anthropogenic event and that TTL extensions are limited and serve the stated continuity purpose. The provision supplies no extension limit or test for false halts.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "mercy_mode_events",
+    "event_origin",
+    "original_oracle_ttls",
+    "extended_oracle_ttls",
+    "extension_limits",
+    "halt_assessments",
+    "life_support_status"
+   ],
+   "criterion": "Mercy Mode activation is for non-anthropogenic events; oracle TTL extensions remain limited and prevent false system halts while preserving life-support continuity.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "event origin classification",
+    "oracle data TTLs",
+    "life-support continuity measurements",
+    "halt assessments"
+   ],
+   "gap": "The TTL extension bound, event-origin classifier, and false-halt and continuity tests are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare TTL extension limits and predicates for non-anthropogenic origin, false halt, and life-support continuity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-6-04",
+   "section": "6",
+   "title": "Crisis action quality requirements",
+   "quote": "All Crisis actions MUST be:",
+   "interpretation": "Check every crisis action for proportionality to verified threat, a strict time limit, full auditability, and reversibility wherever physically and logically possible, as listed immediately after the quoted obligation. These are cumulative requirements; only reversibility has an explicit feasibility qualification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "verified_threats",
+    "action_time_limits",
+    "audit_records",
+    "physical_reversibility",
+    "logical_reversibility",
+    "reversal_capabilities"
+   ],
+   "criterion": "Every crisis action is proportional to verified threat, strictly time-limited, fully auditable, and reversible wherever physically and logically possible.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "verified threat assessments",
+    "action execution and audit records",
+    "physical and logical reversibility assessments"
+   ],
+   "gap": "Proportionality, applicable time limits, full auditability, and reversal feasibility lack complete operational criteria. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare proportionality and audit completeness tests, justified action time limits, and physical and logical reversal feasibility."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-Non-PrecedentRule_-01",
+   "section": "Non-Precedent Rule:",
+   "title": "Crisis actions establish no precedent",
+   "quote": "Any action executed under Crisis mode SHALL NOT create normative precedent.\n\nSuch actions SHALL NOT be cited, reused, generalized, or referenced as justification for:",
+   "interpretation": "Inspect normative provenance for use of crisis actions as precedent or justification for the following listed targets: non-crisis operation, protocol interpretation, governance logic, and system upgrades. Unlike the Section 0 rule, this sentence states the precedent ban without an outside-scope qualification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_actions",
+    "normative_precedents",
+    "justification_records",
+    "justification_targets"
+   ],
+   "criterion": "No crisis action creates normative precedent or justifies non-crisis operation, protocol interpretation, governance logic, or system upgrades through citation, reuse, generalization, or reference.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "normative and upgrade justification provenance"
+   ],
+   "gap": "Semantic precedent and justificatory reliance are not formally represented in the text. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a provenance model that distinguishes justificatory reliance from audit or historical reference."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-Non-PrecedentRule_-02",
+   "section": "Non-Precedent Rule:",
+   "title": "Structural authority minimization invariant",
+   "quote": "Authority minimization during Crisis is a structural invariant, not a parameterized control function.",
+   "interpretation": "A structural review would have to determine whether the system architecture enforces authority minimization without making that requirement a tunable control function. The text provides no authority ordering or definition of minimality.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "authority_architecture",
+    "authority_controls",
+    "crisis_execution_design"
+   ],
+   "criterion": "Authority minimization holds structurally throughout crisis and is not itself a parameterized control function.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "system authority architecture"
+   ],
+   "gap": "Authority minimization and the structural-versus-parameterized distinction lack a formal decision criterion.",
+   "hypotheses_needed": [
+    "Declare an authority ordering and an architectural definition of structural enforcement."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-Non-PrecedentRule_-03",
+   "section": "Non-Precedent Rule:",
+   "title": "Protocol numerical definition prohibition",
+   "quote": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol.",
+   "interpretation": "Inspect normative definitions for prohibited numerical specifications. Read literally, the prohibition covers the whole protocol; context also permits a narrower reading confined to authority-control quantities, while identifiers and state labels are not necessarily numerical parameter definitions.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_normative_definitions",
+    "numeric_definition_classifications"
+   ],
+   "criterion": "The protocol defines no numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits within the applicable reading of this prohibition.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The prohibition's scope and the distinction between numerical parameter definitions and numeric identifiers are ambiguous. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the prohibition is protocol-wide or authority-specific and how numerical definitions are classified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-Non-PrecedentRule_-04",
+   "section": "Non-Precedent Rule:",
+   "title": "Exclusive simulation parameter governance",
+   "quote": "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001.",
+   "interpretation": "Check provenance for every numerical parameter in the four named categories and require definition, testing, and validation under the simulation protocol. No numerical values can be recovered from this document.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_parameters",
+    "parameter_categories",
+    "definition_provenance",
+    "test_records",
+    "validation_records"
+   ],
+   "criterion": "Each parameter governing authority duration, decay behavior, revalidation cadence, or exit sensitivity is defined, tested, and validated exclusively under DKP-8-SIMULATION-001.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "simulation parameter definitions",
+    "simulation test and validation records"
+   ],
+   "gap": "The simulation procedure, accepted parameter values, and validation requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-7-01",
+   "section": "7",
+   "title": "Logging and audit remain available",
+   "quote": "- suspend Physical Truth Layer logging,\n- grant discretionary authority to individuals or groups,\n- override Justice axioms or identity attribution,",
+   "interpretation": "Under the section's SHALL NOT introduction, check that crisis execution never suspends PTL logging, grants discretionary individual or group authority, or overrides Justice axioms or identity attribution. These prohibitions remain active in every crisis state.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_logging_status",
+    "authority_grants",
+    "authority_classifications",
+    "justice_axioms",
+    "identity_attribution_rules",
+    "override_events"
+   ],
+   "criterion": "During crisis, PTL logging is never suspended, no discretionary authority is granted to individuals or groups, and Justice axioms and identity attribution are not overridden.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL logging records",
+    "authority grants",
+    "Justice axiom and identity attribution baselines"
+   ],
+   "gap": "The discretionary-authority classification and Justice and identity baselines are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare discretionary authority and semantic override tests."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-7-02",
+   "section": "7",
+   "title": "No concealed or utilitarian governance",
+   "quote": "- conceal actions or decisions from audit,\n- use Crisis as justification for permanent control or emergency governance,\n- apply utilitarian valuation of human life.",
+   "interpretation": "Under the section's hard-ban introduction, inspect audit coverage, governance justification, and life-valuation logic for the three prohibited practices. Determining concealment requires a complete execution source against which audit records can be compared.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "complete_action_records",
+    "complete_decision_records",
+    "audit_records",
+    "governance_justifications",
+    "control_lifetimes",
+    "life_valuation_logic"
+   ],
+   "criterion": "No action or decision is concealed from audit, crisis never justifies permanent control or emergency governance, and human life is not assigned utilitarian valuation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "complete action and decision traces",
+    "audit records",
+    "governance provenance",
+    "allocation and valuation logic"
+   ],
+   "gap": "Complete observability and formal definitions of emergency governance and utilitarian life valuation are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an authoritative execution trace and classifiers for the prohibited governance and valuation practices."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-7-03",
+   "section": "7",
+   "title": "Forbidden allocation priority factors",
+   "quote": "Resource allocation algorithms SHALL NOT prioritize Subjects based on social status, historical impact, or perceived utility.",
+   "interpretation": "Test allocation decisions or algorithm dependencies for priority effects from the three prohibited factors. Proxy use and indirect causal influence require an explicit dependency model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "allocation_algorithm",
+    "allocation_decisions",
+    "subject_attributes",
+    "priority_dependencies"
+   ],
+   "criterion": "Subject priority in resource allocation does not depend on social status, historical impact, or perceived utility.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "resource allocation inputs and outputs",
+    "subject attribute classifications"
+   ],
+   "gap": "The document does not define factor classifications or a test for indirect priority dependence. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how prohibited attributes, proxies, and causal priority effects are identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-7-04",
+   "section": "7",
+   "title": "Permitted resource allocation bases",
+   "quote": "- egalitarian (baseline survival minimum), or\n- strictly determined by physical proximity and feasibility of survival resources.",
+   "interpretation": "Check that allocation follows at least one of the two permitted bases under the preceding MUST. The document defines neither the baseline survival minimum nor the proximity and feasibility decision rule, and does not say whether a hybrid qualifies.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "allocation_decisions",
+    "allocation_rule",
+    "baseline_survival_minimum",
+    "physical_proximity",
+    "survival_resource_feasibility"
+   ],
+   "criterion": "Allocation is egalitarian at the baseline survival minimum or is strictly determined by physical proximity and feasibility of survival resources.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "resource availability",
+    "physical proximity",
+    "survival feasibility assessments",
+    "authorized baseline survival minimum"
+   ],
+   "gap": "The baseline minimum and the allowed decision rules for equality, proximity, and feasibility are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the authorized baseline minimum and the allocation rule, including whether and how the alternatives can be combined."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-AxiomA1InterpretationConstraint-01",
+   "section": "Axiom A1 Interpretation Constraint",
+   "title": "Minimum conditions interpretation boundary",
+   "quote": "Interpretation of “minimum required conditions” under Axiom A1 SHALL NOT be inferred, extended, or operationalized by Crisis execution logic or by any operational, economic, or enforcement mechanism.\n\nSuch interpretation is permitted only within the Crisis Scope explicitly defined in DKP-7-SCOPE-001.",
+   "interpretation": "Check interpretation provenance and scope for outputs concerning A1 minimum required conditions. One reading categorically bars the named mechanisms while allowing a separate interpretive process within scope; another treats the second sentence as a scope-limited exception to the first.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "a1_interpretations",
+    "interpretation_provenance",
+    "interpreting_mechanisms",
+    "declared_crisis_scope",
+    "scope_boundaries"
+   ],
+   "criterion": "Apply the prohibition on inference, extension, or operationalization by the named mechanisms, and permit any allowed interpretation only within the Crisis Scope defined by DKP-7-SCOPE-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "A1 interpretation provenance",
+    "scope applicability boundaries"
+   ],
+   "gap": "The scope protocol is absent and the relationship between the categorical mechanism ban and scope-limited permission is unresolved. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which reading governs and which mechanism, if any, may perform permitted interpretation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-8-01",
+   "section": "8",
+   "title": "Algorithmic predefined crisis governance",
+   "quote": "Crisis governance is algorithmic only.\n\nNo emergency human authority is created.",
+   "interpretation": "Check that all crisis governance and action selection derive from pre-defined protocol logic and create no emergency human authority. The following sentence expressly requires every crisis action to derive from such logic.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_governance_decisions",
+    "crisis_actions",
+    "predefined_protocol_logic",
+    "decision_provenance",
+    "human_authority_grants"
+   ],
+   "criterion": "Crisis governance is exclusively algorithmic, every crisis action derives from pre-defined protocol logic, and no emergency human authority is created.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "pre-existing protocol logic",
+    "action and governance provenance",
+    "authority grant records"
+   ],
+   "gap": "The text supplies no provenance standard for establishing derivation from pre-defined logic. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how algorithmic derivation and pre-definition are verified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-8-02",
+   "section": "8",
+   "title": "Human intervention recording and audit",
+   "quote": "Any human intervention SHALL be logged and treated as an external perturbation subject to post-crisis audit.",
+   "interpretation": "For every recorded human intervention, verify a log entry, external-perturbation classification, and inclusion in post-crisis audit scope. The text does not set an audit completion deadline.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "human_interventions",
+    "intervention_logs",
+    "perturbation_classifications",
+    "post_crisis_audit_scope"
+   ],
+   "criterion": "Every human intervention is logged, classified as an external perturbation, and subject to post-crisis audit.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "human intervention events",
+    "post-crisis audit scope"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-9-01",
+   "section": "9",
+   "title": "Automatic exit on confirmed recovery",
+   "quote": "Crisis mode MUST terminate automatically when PTL confirms that:",
+   "interpretation": "Require automatic termination when PTL confirms the complete following list: restored admissibility, cascades resolved or below crisis thresholds, Defense and Anti-Terror below existential levels, and error-correction completeness. Unlike Section 4, the sentence does not say 'one or more', so the list is read conjunctively.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_exit_confirmations",
+    "physical_admissibility",
+    "system_admissibility",
+    "cascading_failure_status",
+    "crisis_thresholds",
+    "defense_state",
+    "anti_terror_state",
+    "correction_completeness",
+    "crisis_exit_events"
+   ],
+   "criterion": "When PTL confirms all four listed exit conditions, crisis terminates automatically.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001",
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "PTL recovery confirmation",
+    "Defense and Anti-Terror state levels",
+    "error correction completeness",
+    "simulation-validated exit parameters"
+   ],
+   "gap": "Admissibility, existential levels, and calibrated exit thresholds are not provided. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the admissibility and state-level predicates and apply validated exit parameters."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-9-02",
+   "section": "9",
+   "title": "Sequential recovery order and finance",
+   "quote": "- Sequential Recovery (Soft Reset): controlled reactivation in strict order L0 → L1 → L2, where financial execution SHALL NOT resume until Justice confirms closure of crisis-originated claims,",
+   "interpretation": "For a soft reset, check reactivation event order and require Justice confirmation of claim closure before financial execution resumes. The text does not specify whether an entire layer must complete reactivation before the next begins.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_pathway",
+    "layer_reactivation_events",
+    "financial_resume_events",
+    "justice_claim_closure_confirmations"
+   ],
+   "criterion": "Sequential recovery reactivates L0 before L1 before L2, and financial execution resumes only after Justice confirms closure of crisis-originated claims.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "layer reactivation records",
+    "Justice confirmation of crisis claim closure",
+    "financial execution records"
+   ],
+   "gap": "The granularity and completion semantics of strict layer reactivation order are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether ordering applies to layer activation starts or completed layer reactivation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-9-03",
+   "section": "9",
+   "title": "Upgrade and terminal exit pathways",
+   "quote": "- transition to DKP-4-UPGRADE-001,\n- controlled system partition or termination.",
+   "interpretation": "Recognize upgrade transition, controlled partition, and termination as listed exit pathways alongside sequential recovery. 'Include' does not establish an exhaustive exit-path list or define selection criteria.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "selected_exit_pathway",
+    "upgrade_transition_records",
+    "partition_records",
+    "termination_records"
+   ],
+   "criterion": "The listed exit pathways include transition to DKP-4-UPGRADE-001 and controlled system partition or termination.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "upgrade handoff records",
+    "system partition or termination records"
+   ],
+   "gap": "The upgrade handoff contract and controlled partition or termination criteria are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare controlled terminal-exit criteria without treating the listed pathways as exhaustive."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-9-04",
+   "section": "9",
+   "title": "Validated persistence window limit",
+   "quote": "Crisis state persistence beyond validated PTL windows SHALL constitute a protocol violation.",
+   "interpretation": "Compare crisis-state persistence with the PTL windows validated for that persistence and flag any interval extending beyond them. The text does not specify window construction or renewal rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_state_intervals",
+    "validated_ptl_windows",
+    "window_validation_records"
+   ],
+   "criterion": "Any crisis-state persistence beyond validated PTL windows is a protocol violation.",
+   "numeric_source": "calibration",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "validated PTL windows",
+    "crisis state history",
+    "simulation-validated persistence and revalidation parameters"
+   ],
+   "gap": "Validated window values and their construction and renewal semantics are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how validated PTL windows cover and renew state persistence."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-9-05",
+   "section": "9",
+   "title": "Immediate collapse of crisis authority",
+   "quote": "Upon satisfaction of Crisis exit conditions, all Crisis-specific authorities, interpretations, and execution paths SHALL collapse immediately.\n\nDelayed collapse, phased normalization, or post-hoc interpretive continuation of Crisis logic is forbidden.",
+   "interpretation": "At satisfaction of exit conditions, check immediate deactivation of every crisis-specific authority, interpretation, and execution path, with no later continuation. Immediate collapse can be modeled as one atomic transition, but the text does not define implementation timing granularity or require reversal of irreversible physical outcomes.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "exit_condition_satisfaction_events",
+    "crisis_authority_lifetimes",
+    "crisis_interpretation_lifetimes",
+    "crisis_execution_path_lifetimes",
+    "post_exit_execution"
+   ],
+   "criterion": "All crisis-specific authorities, interpretations, and execution paths end immediately upon exit-condition satisfaction; no delayed, phased, or interpretive continuation occurs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "exit-condition events",
+    "authority and execution lifetimes",
+    "post-crisis interpretation records"
+   ],
+   "gap": "The event semantics of immediate collapse and the representation of an interpretation's active lifetime are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare atomic or timestamp-based collapse semantics and how crisis-specific interpretive authority is deactivated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-10-01",
+   "section": "10",
+   "title": "Action evidence and transparency contract",
+   "quote": "- indexed by DTI-Day,\n- cryptographically committed,\n- publicly reviewable post-crisis under transparency, delay, and redaction rules defined by higher-layer audit protocols.",
+   "interpretation": "For every crisis action, require PTL anchoring, a DTI-Day index, a cryptographic commitment, and post-crisis public reviewability subject to the specified audit rules. Those external rules and the commitment scheme are not supplied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_action_records",
+    "ptl_anchors",
+    "dti_day_indices",
+    "cryptographic_commitments",
+    "public_review_records",
+    "audit_transparency_rules"
+   ],
+   "criterion": "Every crisis action is PTL-anchored, indexed by DTI-Day, cryptographically committed, and publicly reviewable post-crisis in accordance with higher-layer transparency, delay, and redaction rules.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "PTL anchors",
+    "DTI-Day indices",
+    "cryptographic commitment verification",
+    "higher-layer audit transparency, delay, and redaction rules"
+   ],
+   "gap": "The commitment scheme and the unnamed higher-layer audit rules are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a cryptographic commitment verification interface and identify the governing audit rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-10-02",
+   "section": "10",
+   "title": "Final state vector broadcast",
+   "quote": "In states C3 and C4, the system SHALL initiate Final State Vector Broadcast, transmitting complete audit logs and system state snapshots to physically isolated external archives to preserve Physical Truth beyond system termination.",
+   "interpretation": "Check that execution in C3 and C4 initiates the required broadcast with complete logs and state snapshots directed to qualifying archives. Completeness, physical isolation, snapshot timing, and persistence beyond termination need additional definitions or measurements.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "state_history",
+    "broadcast_events",
+    "broadcast_payloads",
+    "complete_audit_log_inventory",
+    "system_state_snapshots",
+    "archive_locations",
+    "archive_isolation_evidence",
+    "archive_retention"
+   ],
+   "criterion": "In C3 and C4, initiate Final State Vector Broadcast transmitting complete audit logs and system state snapshots to physically isolated external archives for preservation beyond termination.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "complete audit logs",
+    "system state snapshots",
+    "external archive isolation and retention evidence"
+   ],
+   "gap": "The archive isolation standard, payload completeness criteria, and post-termination preservation test are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare audit and snapshot completeness, archive physical isolation, and preservation semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-11-01",
+   "section": "11",
+   "title": "Controlled protocol modification procedure",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "Check every normative modification for all named upgrade stages and controls, a new protocol identifier, full-system simulation, and an explicit compatibility declaration, as additionally required by this section. The presentation-only exception is handled separately.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_modifications",
+    "modification_classifications",
+    "upgrade_proposals",
+    "full_system_simulation_records",
+    "audit_records",
+    "acceptance_records",
+    "activation_windows",
+    "rollback_provisions",
+    "protocol_identifiers",
+    "compatibility_declarations"
+   ],
+   "criterion": "Each normative modification follows the controlled upgrade procedure, includes proposal, full-system simulation, audit, acceptance conditions, activation window and rollback, receives a new protocol identifier, and carries an explicit compatibility declaration.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade procedure records",
+    "full-system simulation results",
+    "audit and acceptance records",
+    "protocol identifier registry",
+    "compatibility declaration"
+   ],
+   "gap": "The referenced procedures and their acceptance, activation, and rollback requirements are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-11-02",
+   "section": "11",
+   "title": "Presentation correction exception",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction as exempt from upgrade only if it is presentation-only and preserves normative content, then check that its change record is limited to the Last updated date. The text uses that label while the front matter spells the field last_updated.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "change_classification",
+    "change_metadata"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only by the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document version comparison",
+    "upgrade classification rules"
+   ],
+   "gap": "The referenced exemption definition and a formal normative-content equivalence test are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-equivalence test and the mapping between Last updated and last_updated."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-11-03",
+   "section": "11",
+   "title": "Published edition digest listing",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Compute SHA-256 over each supplied canonical edition source and compare it with its entry in the supplied repository checksum file. The algorithm and required listing are explicit; this check requires the actual canonical bytes and checksum entries.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_edition_inventory",
+    "canonical_edition_source_bytes",
+    "sha256sums_entries"
+   ],
+   "criterion": "For every published edition, SHA256SUMS.txt in the canonical repository lists a digest equal to SHA-256 of that edition's canonical source.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "canonical published edition sources",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-12-01",
+   "section": "12",
+   "title": "Mandatory epistemic metadata schema",
+   "quote": "All Crisis state determinations and operational outputs SHALL include mandatory epistemic metadata as defined in DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5.",
+   "interpretation": "Validate every crisis state determination and operational output against the referenced mandatory metadata schema. The local fields in Sections 12.1 and 12.2 do not establish that the entire external schema has been satisfied.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_state_determinations",
+    "crisis_operational_outputs",
+    "epistemic_metadata_schema"
+   ],
+   "criterion": "Every crisis state determination and operational output includes all mandatory epistemic metadata required by DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "mandatory epistemic metadata schema"
+   ],
+   "gap": "Section 5 of the referenced epistemic-boundaries protocol is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-12.1-01",
+   "section": "12.1",
+   "title": "Conditional output validity and confidence",
+   "quote": "- validity_state: CONDITIONAL\n- confidence_state: as propagated from triggering PTL signals\n- consistency_state: as determined by multi-oracle confirmation",
+   "interpretation": "Check every crisis output for the three fields and fixed CONDITIONAL validity, then verify confidence and consistency against PTL propagation and multi-oracle confirmation. The confidence propagation and consistency determination rules are not defined here.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_outputs",
+    "triggering_ptl_signals",
+    "propagated_confidence",
+    "multi_oracle_confirmations",
+    "determined_consistency"
+   ],
+   "criterion": "Each crisis output has validity_state = CONDITIONAL, confidence_state propagated from triggering PTL signals, and consistency_state determined by multi-oracle confirmation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "triggering PTL confidence metadata",
+    "multi-oracle consistency determination"
+   ],
+   "gap": "Confidence propagation and multi-oracle consistency determination procedures are missing. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-12.1-02",
+   "section": "12.1",
+   "title": "State scope and review flags",
+   "quote": "- scope_ref: \"DKP-4-CRISIS-001:C[n]\" where [n] is current Crisis state\n- revalidation_required: TRUE\n- dispute_allowed: TRUE (post-crisis)",
+   "interpretation": "Check every crisis output for a scope reference matching its current C-state and the two required TRUE flags, with dispute allowance qualified as post-crisis. The template is read as producing identifiers such as DKP-4-CRISIS-001:C1 rather than retaining literal brackets.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_outputs",
+    "current_crisis_state",
+    "dispute_phase_metadata"
+   ],
+   "criterion": "Each crisis output references DKP-4-CRISIS-001 followed by its current C-state, sets revalidation_required to TRUE, and sets dispute_allowed to TRUE for post-crisis disputes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "current crisis state"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-12.2-01",
+   "section": "12.2",
+   "title": "Minimum conditions interpretation metadata",
+   "quote": "- interpretation_type: CRISIS_BOUNDED\n- interpretation_authority: DKP-4-CRISIS-001 (not transferable)\n- post_crisis_audit: MANDATORY",
+   "interpretation": "For outputs identified as interpreting A1 minimum required conditions, require these additional fields and reject transfer of interpretation authority. These fields apply in addition to the general crisis-output metadata.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_outputs",
+    "minimum_conditions_interpretation_flags",
+    "interpretation_authority_transfers"
+   ],
+   "criterion": "Every output interpreting A1 minimum required conditions has interpretation_type = CRISIS_BOUNDED, non-transferable interpretation_authority = DKP-4-CRISIS-001, and post_crisis_audit = MANDATORY.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classification of minimum-required-conditions interpretations",
+    "interpretation authority transfer records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "CRISIS-12.3-01",
+   "section": "12.3",
+   "title": "Axiom interpretation epistemic limits",
+   "quote": "Crisis outputs SHALL NOT carry validity_state: VALID or confidence_state: SUFFICIENT_DATA for any determination that constitutes interpretation of axiom application.",
+   "interpretation": "For outputs classified as interpreting axiom application, independently reject either forbidden metadata value. This further restricts propagated confidence from Section 12.1; the document gives no replacement rule if triggering PTL confidence would propagate SUFFICIENT_DATA.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "crisis_outputs",
+    "axiom_application_interpretation_flags"
+   ],
+   "criterion": "Every crisis determination interpreting axiom application has validity_state different from VALID and confidence_state different from SUFFICIENT_DATA.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "classification of axiom-application interpretations"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

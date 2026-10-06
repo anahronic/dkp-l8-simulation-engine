@@ -1,0 +1,908 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-0-TIME-001",
+ "doc_sha256": "165008e143357ba045e228a71cf977a04aeb77c60d3a68c97cf23f2a73bf8879",
+ "prefix": "TIME",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied document was used. IDs preserve the carriage return in the supplied prefix as JSON \\r. Repeated provisions are consolidated where possible: the year definition in Section 3 also covers the exact-length requirement in Section 4.2, and DOY rejection in Section 6.3 covers validation in Section 6.2. Section 1 is purpose text; Section 11 is explicitly non-normative. The 2000-01-01 test vector contradicts Sections 5, 6, and 10: DTI-Day 2451545 yields DY 6809 and DOY 306, not DY 6815 and DOY 26. No precedence rule resolves this contradiction. Section 4.1 names DKP-TIME-001, whereas the document identifies itself as DKP-0-TIME-001; this appears to be a naming inconsistency, not an explicit dependency on another document. The reference implementation supplies Gregorian conversion algorithms but does not specify a timezone, supported input domain, or explicit Gregorian date validation. Python integer annotations are not runtime type checks. SHOULD and MAY are preserved as recommendation and permission rather than mandatory obligations.",
+ "requirements": [
+  {
+   "id": "TIME-2-01",
+   "section": "2",
+   "title": "Exclude event based time anchors",
+   "quote": "Time MUST NOT be anchored to religious, cultural, political, or personal events.",
+   "interpretation": "A review must determine whether the time system's anchor belongs to any prohibited event category. The document provides no executable classification of events or definition of anchoring.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "time_anchor",
+    "anchor_provenance"
+   ],
+   "criterion": "The time anchor is not a religious, cultural, political, or personal event.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "anchor provenance"
+   ],
+   "gap": "Event classification and the meaning of anchoring require an interpretation not supplied by the text.",
+   "hypotheses_needed": [
+    "Declare how anchors and prohibited event categories are identified."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-2-02",
+   "section": "2",
+   "title": "Ensure unique date computation",
+   "quote": "Any date MUST be uniquely computable from its canonical representation.",
+   "interpretation": "Check that each valid canonical representation determines exactly one date using the stated arithmetic and conversion algorithms. Conflicting normative vectors must be reported separately.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "canonical_representation",
+    "computed_date"
+   ],
+   "criterion": "A valid canonical representation determines exactly one date.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-2-03",
+   "section": "2",
+   "title": "Enable independent index recomputation",
+   "quote": "Any record MUST allow independent recomputation of its time index.",
+   "interpretation": "Check whether a record supplies enough information to recompute its time index using the protocol. The text does not specify whether storing DTI-Day alone counts as recomputation or whether independent source-date evidence is required.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "record",
+    "time_index",
+    "recomputation_evidence"
+   ],
+   "criterion": "The record permits independent recomputation of its time index.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "record contents and supporting date evidence"
+   ],
+   "gap": "The required evidence and meaning of independent recomputation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether arithmetic reconstruction from canonical fields is sufficient."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-2-04",
+   "section": "2",
+   "title": "Require governance suitable time units",
+   "quote": "Time units MUST be simple, fixed-length, and suitable for legal, financial, and KPI logic.",
+   "interpretation": "Fixed length can be tested against unit definitions. Simplicity and suitability for the named uses require judgment because no acceptance criteria are supplied.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "time_unit_definitions",
+    "governance_use_requirements"
+   ],
+   "criterion": "Time units are simple, fixed-length, and suitable for legal, financial, and KPI logic.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "legal, financial, and KPI use requirements"
+   ],
+   "gap": "The document does not define simplicity or governance suitability.",
+   "hypotheses_needed": [
+    "Declare operational acceptance criteria for simplicity and each named use."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-2-05",
+   "section": "2",
+   "title": "Provide bidirectional civil conversion rules",
+   "quote": "Explicit conversion rules to and from civil calendars MUST be provided.",
+   "interpretation": "Check for explicit conversion rules in both directions. Gregorian conversion is supplied, but the plural wording could require additional civil calendars whose scope is unspecified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "conversion_rules",
+    "supported_civil_calendars"
+   ],
+   "criterion": "Each civil calendar within the required scope has explicit forward and reverse conversion rules.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The required set of civil calendars is not defined beyond the Gregorian rules. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether Gregorian interoperability alone satisfies this provision."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-3-01",
+   "section": "3",
+   "title": "Define integer civil day indexing",
+   "quote": "An integer count of civil days (midnight-to-midnight) in the proleptic Gregorian calendar.",
+   "interpretation": "Check that JDN values are integers and correspond to proleptic Gregorian civil days under the supplied conversion algorithm. Applying midnight boundaries to timestamps additionally requires a timezone convention.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "jdn",
+    "gregorian_civil_date",
+    "timestamp",
+    "civil_timezone"
+   ],
+   "criterion": "JDN is an integer index of midnight-to-midnight proleptic Gregorian civil days.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "civil-date or timestamp assignment"
+   ],
+   "gap": "No timezone convention is supplied for assigning timestamps to civil days. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the timezone when checking timestamp-to-day boundaries."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-3-02",
+   "section": "3",
+   "title": "Equate canonical day and JDN",
+   "quote": "`DTI-Day = JDN`",
+   "interpretation": "Compare the canonical day index with the JDN for the same civil date. They must be identical without an offset.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "jdn"
+   ],
+   "criterion": "DTI-Day = JDN.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "dti_day_is_jdn"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-3-03",
+   "section": "3",
+   "title": "Define consecutive governance year days",
+   "quote": "A governance year consisting of exactly 360 consecutive DTI-Days.",
+   "interpretation": "Check that each DTI-Year consists of exactly 360 consecutive canonical day indices. This also captures the repeated exact-length obligation in Section 4.2.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "dy",
+    "year_dti_days"
+   ],
+   "criterion": "Each DTI-Year contains exactly 360 consecutive DTI-Days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-3-04",
+   "section": "3",
+   "title": "Define one based year index",
+   "quote": "A 1-based index of a day within a DTI-Year, in the range 1…360.",
+   "interpretation": "Check that DOY is an integer ordinal within the year, beginning at 1 and ending at 360.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "doy",
+    "day_position_within_year"
+   ],
+   "criterion": "DOY is the 1-based day position and belongs to the integers from 1 through 360.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-4.1-01",
+   "section": "4.1",
+   "title": "Use civil day base unit",
+   "quote": "- The base temporal unit of DKP-TIME-001 MUST be the civil day.",
+   "interpretation": "Check that the protocol's declared base temporal unit is the civil day. The identifier differs from the document ID, so this registry treats the sentence as a requirement of the supplied document.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "base_temporal_unit"
+   ],
+   "criterion": "The base temporal unit is the civil day.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-4.1-02",
+   "section": "4.1",
+   "title": "Avoid mandatory subday inputs",
+   "quote": "- Sub-day units (hours, minutes, seconds) MUST NOT be required by this protocol.",
+   "interpretation": "Inspect required inputs and operations to confirm that protocol conformance does not depend on hours, minutes, or seconds. Optional use of such units is not prohibited.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "required_inputs",
+    "required_time_units"
+   ],
+   "criterion": "No protocol requirement requires hours, minutes, or seconds.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-4.2-01",
+   "section": "4.2",
+   "title": "Prohibit governance calendar corrections",
+   "quote": "- Leap days, leap years, or corrective rules MUST NOT exist.",
+   "interpretation": "Check that DTI year construction contains no leap days, leap years, or corrective rules. The heading scopes this prohibition to governance years; applying it to Gregorian conversion would conflict with Section 10.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "governance_calendar_rules"
+   ],
+   "criterion": "DTI governance calendar rules contain no leap days, leap years, or corrections.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-4.2-02",
+   "section": "4.2",
+   "title": "Determine year boundaries arithmetically",
+   "quote": "- Year boundaries MUST be defined purely arithmetically.",
+   "interpretation": "Check that boundaries follow the arithmetic mapping in Section 5 without event-based adjustments. Under that mapping, a year begins when the day index is divisible by 360.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "year_boundary_rule"
+   ],
+   "criterion": "Year boundaries are determined by the Section 5 arithmetic, with DOY = 1 when DTI-Day mod 360 = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-5.1-01",
+   "section": "5.1",
+   "title": "Compute governance year index",
+   "quote": "`DY = floor(DTI-Day / 360)`",
+   "interpretation": "Recompute DY by mathematical floor division. For negative day indices, truncation toward zero does not implement the specified formula.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "dy"
+   ],
+   "criterion": "DY = floor(DTI-Day / 360).",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "dy_formula"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-5.1-02",
+   "section": "5.1",
+   "title": "Compute day within governance year",
+   "quote": "`DOY = (DTI-Day mod 360) + 1`",
+   "interpretation": "Recompute DOY from the remainder plus one. Section 10's Python implementation resolves negative-input remainder behavior to a value from 0 through 359 before adding one.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "doy"
+   ],
+   "criterion": "DOY = (DTI-Day mod 360) + 1, using the nonnegative remainder demonstrated by Section 10.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "doy_formula"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-5.2-01",
+   "section": "5.2",
+   "title": "Use canonical date string structure",
+   "quote": "`DY<dy>-<doy>`",
+   "interpretation": "Check that the serialized date has the literal DY prefix, the year value, a separating hyphen, and the day value. Section 10 supplies the exact canonical formatter.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "dy",
+    "doy",
+    "canonical_string"
+   ],
+   "criterion": "The canonical string equals f\"DY{dy}-{doy:03d}\" as shown in Section 10.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "string_form"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-5.2-02",
+   "section": "5.2",
+   "title": "Constrain canonical date string fields",
+   "quote": "- `<dy>` is a signed integer year index,\n- `<doy>` is a zero-padded three-digit day index (001–360).",
+   "interpretation": "Check that the year represents a signed integer and that the day uses exactly three digits in the stated range. Signed integer permits negative years; the example and canonical code show that positive years do not require an explicit plus sign.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "year_field",
+    "day_field"
+   ],
+   "criterion": "The year field represents an integer; the day field is zero-padded to three digits and ranges from 001 through 360.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-6.1-01",
+   "section": "6.1",
+   "title": "Convert Gregorian dates through JDN",
+   "quote": "1.  Compute the JDN using a standard astronomical algorithm.\n2.  Set `DTI-Day = JDN`.\n3.  Compute `(DY, DOY)` using Section 5.",
+   "interpretation": "For a valid Gregorian civil date, compute JDN, copy it to DTI-Day, and apply the Section 5 formulas. Section 10 supplies a canonical astronomical algorithm, making this pipeline executable.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "year",
+    "month",
+    "day",
+    "dti_day",
+    "dy",
+    "doy"
+   ],
+   "criterion": "Compute JDN with Section 10; require DTI-Day = JDN and DY and DOY to equal the Section 5 results.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-6.2-01",
+   "section": "6.2",
+   "title": "Reconstruct day and Gregorian date",
+   "quote": "    `DTI-Day = DY × 360 + (DOY − 1)`\n\n3.  Convert `DTI-Day (JDN)` to Gregorian `(year, month, day)`.",
+   "interpretation": "After validating DOY, reconstruct the absolute day and apply the inverse Gregorian conversion. This check uses Section 10 for the inverse algorithm.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "dy",
+    "doy",
+    "dti_day",
+    "year",
+    "month",
+    "day"
+   ],
+   "criterion": "DTI-Day = DY × 360 + (DOY − 1), and the Gregorian output equals jdn_to_gregorian(DTI-Day) from Section 10.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "roundtrip"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-6.3-01",
+   "section": "6.3",
+   "title": "Reject invalid day indices",
+   "quote": "- Invalid `DOY` values MUST be rejected.",
+   "interpretation": "Check that values outside the integer day-index domain 1 through 360 are rejected. This consolidates Section 6.2's validation step; Section 10 explicitly checks the range but relies on type annotations for integer inputs.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "doy",
+    "validation_result"
+   ],
+   "criterion": "Reject DOY unless it is an integer in [1, 360].",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "invalid_doy_rejected"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-6.3-02",
+   "section": "6.3",
+   "title": "Permit negative governance years",
+   "quote": "- `DY` MAY be negative.",
+   "interpretation": "Negative integer years are permitted by the protocol. A conformance validator must not classify a date as invalid solely because DY is negative.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "dy",
+    "validation_result",
+    "rejection_reason"
+   ],
+   "criterion": "A negative integer DY is not itself a protocol violation.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-6.3-03",
+   "section": "6.3",
+   "title": "Prevent derived field overrides",
+   "quote": "- Derived fields MUST NOT override `DTI-Day`.",
+   "interpretation": "For records containing DTI-Day and derived values, check that processing preserves DTI-Day as the controlling value. Conflicting derived fields cannot change it.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "derived_fields",
+    "resolved_dti_day"
+   ],
+   "criterion": "Derived fields do not replace or alter the authoritative DTI-Day.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-7-01",
+   "section": "7",
+   "title": "Permit Gregorian readability displays",
+   "quote": "- Gregorian dates MAY be shown for human readability.",
+   "interpretation": "Displaying Gregorian dates is permitted but not required. Their presence does not grant them authority over the canonical representation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "displayed_date_formats"
+   ],
+   "criterion": "Both displaying and omitting Gregorian dates are permitted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-7-02",
+   "section": "7",
+   "title": "Include an authoritative date representation",
+   "quote": "- Any authoritative record MUST include:\n\n  - `DTI-Day`, or",
+   "interpretation": "Check that every record designated authoritative contains DTI-Day or a complete canonical DY and DOY pair, as specified by the following alternative in the document. The text does not require both representations.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "is_authoritative_record",
+    "record_fields"
+   ],
+   "criterion": "An authoritative record includes DTI-Day or canonical (DY, DOY).",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "record authority designation"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-7-03",
+   "section": "7",
+   "title": "Resolve conflicts using canonical day",
+   "quote": "- In case of conflict, DTI-Day is authoritative.",
+   "interpretation": "When a record's representations disagree and DTI-Day is present, check that the resolved date follows DTI-Day. No conflict-resolution procedure is given for records lacking that field.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "dti_day",
+    "other_date_representations",
+    "resolved_date"
+   ],
+   "criterion": "If DTI-Day conflicts with another date representation, the resolved date is the date represented by DTI-Day.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-8-01",
+   "section": "8",
+   "title": "Recommend canonical day in signatures",
+   "quote": "- Signed records SHOULD store:\n\n  - `DTI-Day` (authoritative),",
+   "interpretation": "Check signed records for the recommended authoritative DTI-Day field. The following bullet permits an optional derived DY and DOY pair; absence of DTI-Day is a departure from SHOULD, not automatically a MUST violation.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "is_signed_record",
+    "record_fields",
+    "field_roles"
+   ],
+   "criterion": "A signed record should store authoritative DTI-Day and may additionally store (DY, DOY) as derived fields.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "signed record metadata"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-8-02",
+   "section": "8",
+   "title": "Reference canonical day during audits",
+   "quote": "- Audits and dispute resolution MUST reference `DTI-Day`.",
+   "interpretation": "Check audit and dispute-resolution records for a reference to DTI-Day. The protocol does not prescribe a particular storage schema for that reference.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "process_type",
+    "referenced_time_fields"
+   ],
+   "criterion": "Every audit or dispute-resolution process references DTI-Day.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "audit and dispute-resolution references"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-9-01",
+   "section": "9",
+   "title": "Reproduce first January test vector",
+   "quote": "| 2026-01-01     | 2461042       | 6836 | 83  | DY6836-083 |",
+   "interpretation": "Compare implementation results for 2026-01-01 with every listed value. Section 9 requires exact reproduction and classifies any mismatch as a protocol violation.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "computed_jdn",
+    "computed_dy",
+    "computed_doy",
+    "computed_canonical"
+   ],
+   "criterion": "For 2026-01-01, JDN = DTI-Day = 2461042, DY = 6836, DOY = 83, and canonical = DY6836-083.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "normative_vector"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-9-02",
+   "section": "9",
+   "title": "Reproduce second January test vector",
+   "quote": "| 2026-01-02     | 2461043       | 6836 | 84  | DY6836-084 |",
+   "interpretation": "Compare implementation results for 2026-01-02 with every listed value. Any mismatch is a protocol violation under Section 9.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "computed_jdn",
+    "computed_dy",
+    "computed_doy",
+    "computed_canonical"
+   ],
+   "criterion": "For 2026-01-02, JDN = DTI-Day = 2461043, DY = 6836, DOY = 84, and canonical = DY6836-084.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "normative_vector"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-9-03",
+   "section": "9",
+   "title": "Reproduce nineteen seventy test vector",
+   "quote": "| 1970-01-01     | 2440588       | 6779 | 149 | DY6779-149 |",
+   "interpretation": "Compare implementation results for 1970-01-01 with every listed value. Any mismatch is a protocol violation under Section 9.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "computed_jdn",
+    "computed_dy",
+    "computed_doy",
+    "computed_canonical"
+   ],
+   "criterion": "For 1970-01-01, JDN = DTI-Day = 2440588, DY = 6779, DOY = 149, and canonical = DY6779-149.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "normative_vector"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-9-04",
+   "section": "9",
+   "title": "Reproduce year two thousand vector",
+   "quote": "| 2000-01-01     | 2451545       | 6815 | 26  | DY6815-026 |",
+   "interpretation": "Check exact equality with the printed vector, whose mismatch is declared a protocol violation. This condition is decidable but contradicts the arithmetic and canonical code, which yield DY 6809, DOY 306, and DY6809-306 for the listed JDN.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "computed_jdn",
+    "computed_dy",
+    "computed_doy",
+    "computed_canonical"
+   ],
+   "criterion": "For 2000-01-01, the printed vector requires JDN = DTI-Day = 2451545, DY = 6815, DOY = 26, and canonical = DY6815-026.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "normative_vector"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-10-01",
+   "section": "10",
+   "title": "Apply canonical Gregorian conversion arithmetic",
+   "quote": "    a = (14 - month) // 12\n    y = year + 4800 - a\n    m = month + 12 * a - 3",
+   "interpretation": "Reproduce the forward conversion function using Python floor-division semantics. This specifies the arithmetic underlying Section 6.1 but does not add validation for invalid Gregorian dates.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "year",
+    "month",
+    "day",
+    "computed_jdn"
+   ],
+   "criterion": "Set a = (14 - month) // 12, y = year + 4800 - a, and m = month + 12 * a - 3; require JDN = day + (153 * m + 2) // 5 + 365 * y + y // 4 - y // 100 + y // 400 - 32045.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "reference_forward"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-10-02",
+   "section": "10",
+   "title": "Apply canonical inverse conversion arithmetic",
+   "quote": "    day = e - (153 * m + 2) // 5 + 1\n    month = m + 3 - 12 * (m // 10)\n    year = 100 * b + d - 4800 + (m // 10)",
+   "interpretation": "Reproduce the inverse conversion function with its preceding intermediate values and Python floor division. The text provides no explicit supported JDN range.",
+   "kind": "formula",
+   "checkable": "yes",
+   "inputs": [
+    "jdn",
+    "computed_year",
+    "computed_month",
+    "computed_day"
+   ],
+   "criterion": "Set a = jdn + 32044; b = (4 * a + 3) // 146097; c = a - (146097 * b) // 4; d = (4 * c + 3) // 1461; e = c - (1461 * d) // 4; m = (5 * e + 2) // 153. Require day = e - (153 * m + 2) // 5 + 1, month = m + 3 - 12 * (m // 10), and year = 100 * b + d - 4800 + (m // 10).",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": null,
+   "hypotheses_needed": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.1.0",
+    "check": "reference_inverse"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ]
+  },
+  {
+   "id": "TIME-10-03",
+   "section": "10",
+   "title": "Freeze reference date object fields",
+   "quote": "@dataclass(frozen=True)\nclass DikenocraticDate:",
+   "interpretation": "The canonical Python reference class prevents ordinary reassignment of instance fields after construction. This is a property of the reference object, not an explicit requirement that all stored records be immutable.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "date_instance",
+    "field_assignment_attempt",
+    "assignment_result"
+   ],
+   "criterion": "Ordinary reassignment of fields on a constructed DikenocraticDate instance is rejected.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "TIME-10-04",
+   "section": "10",
+   "title": "Raise reference day validation error",
+   "quote": "    def __post_init__(self):\n        if not (1 <= self.doy <= DTI_YEAR_LENGTH):\n            raise ValueError(\"DOY must be in 1..360\")",
+   "interpretation": "Check that constructing the canonical reference object with an out-of-range integer DOY raises the specified ValueError. The reference range check does not independently enforce the integer type annotation.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "dy",
+    "doy",
+    "construction_exception"
+   ],
+   "criterion": "For integer DOY outside [1, 360], construction raises ValueError with message \"DOY must be in 1..360\".",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

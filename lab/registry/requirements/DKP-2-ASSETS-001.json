@@ -1,0 +1,1374 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-2-ASSETS-001",
+ "doc_sha256": "283fd2ba1dc7a5dd27eab3c0d0b26e85d601da2d9f30db6a8a952498246d21cb",
+ "prefix": "ASSETS",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. The supplied requirement prefix contains a carriage return, preserved as \\r in identifiers. Unnumbered subheadings are used verbatim as section identifiers. Some provisions group closely related conditions or required fields. External documents were not supplied; their requirements are not inferred. Section 2 places this protocol above L1 protocols, while other sections subordinate asset decisions to justice and axiomatic constraints; the meaning of this ordering needs clarification. Section 14 references both DKP-8-SIMULATION-001 and DKP-8-SIMULATION, preserved as distinct spellings. Its presentation-only exception is read as qualifying the otherwise universal modification requirements.",
+ "requirements": [
+  {
+   "id": "ASSETS-1-01",
+   "section": "1",
+   "title": "Conditional and revocable property allocation",
+   "quote": "Property is not treated as an absolute or intrinsic right. It is defined as a conditional, revocable allocation of control, justified exclusively by measurable contribution and bounded by justice and physical reality.",
+   "interpretation": "Check that property allocations are conditional and revocable and that their justification records measurable contribution and applicable justice and physical limits. The text does not define the contribution measure or how those limits are determined.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "property_allocation",
+    "contribution_evidence",
+    "justice_constraints",
+    "physical_constraints"
+   ],
+   "criterion": "Every property allocation is conditional and revocable, justified exclusively by measurable contribution, and within justice and physical constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "contribution measurements",
+    "justice constraints",
+    "physical constraints"
+   ],
+   "gap": "The contribution measure and operational justice and physical limits are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how measurable contribution and applicable justice and physical limits are established."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-1-02",
+   "section": "1",
+   "title": "Property system outcome constraints",
+   "quote": "- accumulation cannot externalize harm,\n- assets cannot be used to bypass axiomatic limits,\n- property remains subordinate to impact, causality, and truth.",
+   "interpretation": "Check that ownership reflects net justice contribution, accumulation does not externalize harm, asset use respects axiomatic limits, and property decisions remain subordinate to impact, causality, and truth. These relationships require operational definitions beyond this text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ownership_allocations",
+    "net_justice_contribution",
+    "accumulation_impacts",
+    "asset_use",
+    "axiomatic_limits",
+    "decision_basis"
+   ],
+   "criterion": "Ownership reflects net justice contribution; accumulation externalizes no harm; assets bypass no axiomatic limit; property decisions respect impact, causality, and truth.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "net justice contribution",
+    "impact and causal attribution records",
+    "axiomatic limits",
+    "physical truth records"
+   ],
+   "gap": "The text does not operationalize reflection of contribution, externalized harm, or subordination to impact, causality, and truth. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare tests for these outcome relationships and the boundary across which harm is externalized."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-2-01",
+   "section": "2",
+   "title": "Required protocol layer positioning",
+   "quote": "- strictly downstream of DKP-0-ORACLE-001 (Physical Truth Layer),\n- above all L1 protocols (AXIOMS, IMPACT, IDENTITY, JUSTICE),\n- alongside DKP-2-FINANCE-001,",
+   "interpretation": "Compare the protocol's dependency and precedence relations with the specified positioning, including placement below social, labor, security, crisis, and infrastructure protocols at L3–L5. The operational meanings of above, below, and alongside are not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_dependency_graph",
+    "protocol_layers",
+    "precedence_relations"
+   ],
+   "criterion": "The protocol is strictly downstream of DKP-0-ORACLE-001, above all L1 protocols, alongside DKP-2-FINANCE-001, and below the specified L3–L5 protocols.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001",
+    "DKP-2-FINANCE-001"
+   ],
+   "data_dependencies": [
+    "system architecture and protocol dependency graph"
+   ],
+   "gap": "The text does not define how its spatial layer terminology maps to dependency or precedence relations. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the meanings of above, below, alongside, and downstream without overriding explicit justice subordination."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-2-02",
+   "section": "2",
+   "title": "Physical truth invalidates asset decisions",
+   "quote": "All asset-related decisions are invalid in the presence of a Physical Truth Layer systemic halt or unresolved divergence.",
+   "interpretation": "For each asset decision, inspect the contemporaneous Physical Truth Layer flags. Either a systemic halt or unresolved divergence requires the decision to be invalid.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "asset_decision",
+    "systemic_halt",
+    "unresolved_divergence",
+    "decision_validity"
+   ],
+   "criterion": "If systemic_halt or unresolved_divergence is true, the asset decision is invalid.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-0-ORACLE-001"
+   ],
+   "data_dependencies": [
+    "Physical Truth Layer halt and divergence status"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-3.1-01",
+   "section": "3.1",
+   "title": "Asset qualification conditions",
+   "quote": "- can be controlled, excluded, or transferred,\n- produces measurable impact across one or more impact channels,\n- enables production, accumulation, or systemic influence.",
+   "interpretation": "Classify an entity as an Asset when it is physical, informational, or infrastructural and satisfies all three listed conditions. Each condition contains alternatives, but the three conditions themselves are conjunctive.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "entity_type",
+    "control_capabilities",
+    "impact_channels",
+    "measurable_impacts",
+    "enabled_functions"
+   ],
+   "criterion": "An eligible entity can be controlled, excluded, or transferred; produces measurable impact in at least one channel; and enables production, accumulation, or systemic influence.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "entity characteristics",
+    "impact measurements",
+    "production and influence assessments"
+   ],
+   "gap": "The text does not specify measurement methods or tests for controllability, exclusion, and systemic influence. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare classifiers for entity capabilities, measurable impact, and enabled functions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-3.2-01",
+   "section": "3.2",
+   "title": "Property right permission conditions",
+   "quote": "A Property Right is a system-granted, conditional permission to control, use, or derive benefit from an Asset.",
+   "interpretation": "Verify that a Property Right is system-granted and permits control, use, or benefit from an Asset. Its terms must also be non-absolute, non-permanent, continuously impact-contingent, and subordinate to justice outcomes and axiomatic constraints; continuous compliance requires a monitoring model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "right_grant",
+    "granting_authority",
+    "asset_reference",
+    "permissions",
+    "right_conditions",
+    "impact_history",
+    "justice_outcomes",
+    "axiomatic_constraints"
+   ],
+   "criterion": "A Property Right is a conditional system permission over an Asset, with no absolute or permanent entitlement, and remains contingent on impact, justice outcomes, and axiomatic constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "asset registry",
+    "impact history",
+    "justice outcomes",
+    "axiomatic constraints"
+   ],
+   "gap": "Continuous impact contingency and the applicable justice and axiomatic constraints are not operationally specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how continuous contingency is monitored and how constraint changes affect active rights."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-4-01",
+   "section": "4",
+   "title": "Necessary conditions for ownership grants",
+   "quote": "a) the Subject demonstrates non-negative net justice contribution, b) projected asset use remains within impact bounds, c) axiomatic priorities are not violated, d) the Subject retains capacity for harm mitigation and restitution.",
+   "interpretation": "Permit a grant only when all four conditions hold. These are necessary conditions and do not require granting ownership whenever they are satisfied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "grant_decision",
+    "net_justice_contribution",
+    "projected_asset_use",
+    "impact_bounds",
+    "axiomatic_compliance",
+    "mitigation_capacity",
+    "restitution_capacity"
+   ],
+   "criterion": "A grant implies net justice contribution ≥ 0, projected use within impact bounds, no violation of axiomatic priorities, and retained capacity for harm mitigation and restitution.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice contribution",
+    "projected impacts and bounds",
+    "axiomatic compliance",
+    "mitigation and restitution capacity"
+   ],
+   "gap": "The non-negative threshold is explicit, but impact bounds, projection methods, and capacity sufficiency tests are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare impact bounds, a use projection model, and sufficiency tests for mitigation and restitution capacity."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-4-02",
+   "section": "4",
+   "title": "Insufficient grounds for ownership grants",
+   "quote": "Ownership SHALL NOT be granted solely on the basis of:",
+   "interpretation": "Inspect grant justifications for exclusive reliance on prior possession, inheritance without obligation transfer, or contractual abstraction detached from measurable impact. The wording does not prohibit these circumstances from appearing alongside an independently sufficient justification.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "grant_decision",
+    "grant_justifications",
+    "obligation_transfer",
+    "contract_impact_link"
+   ],
+   "criterion": "Ownership is not granted solely on prior possession, inheritance without obligation transfer, or contractual abstraction detached from measurable impact.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "grant justification records",
+    "inheritance obligation transfers",
+    "contract impact evidence"
+   ],
+   "gap": "Exclusive reliance and detachment from measurable impact require a declared representation of grant justifications. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how exclusive reliance on prohibited grounds and contractual impact linkage are classified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-5-01",
+   "section": "5",
+   "title": "Conditions for continued property rights",
+   "quote": "- justice contribution remains non-negative,\n- asset use complies with impact constraints,\n- restitution obligations are satisfied.",
+   "interpretation": "Check these three conditions throughout the period in which a right persists, and reject any permanent entitlement. The text does not define monitoring frequency or whether an obligation under an active payment schedule counts as satisfied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "right_status_history",
+    "justice_contribution_history",
+    "asset_use_history",
+    "impact_constraints",
+    "restitution_obligations",
+    "satisfaction_status",
+    "permanence_terms"
+   ],
+   "criterion": "A persisting Property Right requires justice contribution ≥ 0, compliant asset use, and satisfied restitution obligations; no Property Right is permanent.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice contribution history",
+    "impact compliance",
+    "restitution obligation status"
+   ],
+   "gap": "Monitoring semantics, impact compliance rules, and the meaning of satisfied restitution obligations are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare monitoring semantics and whether satisfaction means complete discharge or compliance with currently due obligations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-5-02",
+   "section": "5",
+   "title": "Automatic response to persistence failure",
+   "quote": "Failure of any condition SHALL trigger automatic degradation, restriction, or suspension of the Property Right.",
+   "interpretation": "When any persistence condition fails, verify an automatically triggered degradation, restriction, or suspension. The text neither selects among these responses nor sets a response deadline.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "persistence_condition_failures",
+    "right_state_history",
+    "transition_triggers"
+   ],
+   "criterion": "Every persistence-condition failure automatically triggers degradation, restriction, or suspension of the affected right.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "persistence-condition evaluations",
+    "asset right transition logs"
+   ],
+   "gap": "The response-selection rule, degradation state, and temporal meaning of trigger are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare transition semantics and response selection without inventing a normative deadline."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-6-01",
+   "section": "6",
+   "title": "Prohibited uses of assets",
+   "quote": "Assets MUST NOT be used to:",
+   "interpretation": "Check asset use against the four prohibited outcomes: amplifying irreversible harm, externalizing damage beyond system boundaries, bypassing justice or identity attribution, and violating axiomatic priorities. These checks require causal attribution and defined system boundaries.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "asset_use",
+    "causal_impacts",
+    "system_boundaries",
+    "justice_attribution",
+    "identity_attribution",
+    "axiomatic_priorities"
+   ],
+   "criterion": "Asset use does not amplify irreversible harm, externalize damage beyond system boundaries, bypass justice or identity attribution, or violate axiomatic priorities.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "causal impact assessments",
+    "justice and identity attribution",
+    "axiomatic priorities"
+   ],
+   "gap": "The text does not define the system boundary or operational tests for the prohibited outcomes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare system boundaries and classifiers for irreversible harm, attribution bypass, and axiomatic violations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-6-02",
+   "section": "6",
+   "title": "Risk grounds for asset intervention",
+   "quote": "Asset use that increases systemic risk or irreversible damage constitutes grounds for restriction or revocation.",
+   "interpretation": "Mark restriction or revocation as supported when asset use increases systemic risk or irreversible damage. This establishes grounds for intervention rather than an explicit obligation to execute it.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "asset_use",
+    "systemic_risk_change",
+    "irreversible_damage_change",
+    "intervention_grounds"
+   ],
+   "criterion": "An increase in systemic risk or irreversible damage caused by asset use establishes grounds for restriction or revocation.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "systemic risk assessments",
+    "irreversible damage assessments",
+    "causal attribution"
+   ],
+   "gap": "Risk and damage measures and the baseline against which an increase is assessed are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare measures, comparison baselines, and attribution methods for risk and damage increases."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-7-01",
+   "section": "7",
+   "title": "Accumulation triggers concentration interventions",
+   "quote": "the protocol SHALL trigger:\n\n- graduated restrictions,",
+   "interpretation": "Apply impact-based concentration constraints and trigger the listed interventions when accumulation increases systemic fragility, enables coercive dominance, or amplifies irreversible or cascading harm. Unlike clauses using or, the response list does not clarify whether graduated restrictions, enforced divestment, and reallocation are cumulative, alternative, or staged.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "asset_accumulation",
+    "concentration_impacts",
+    "systemic_fragility",
+    "coercive_dominance",
+    "harm_amplification",
+    "intervention_history"
+   ],
+   "criterion": "Accumulation meeting any listed harmful condition triggers graduated restrictions, enforced divestment, and partial or full reallocation according to the applicable interpretation of the response list.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "accumulation and concentration records",
+    "systemic fragility and harm assessments",
+    "intervention records"
+   ],
+   "gap": "Trigger classifiers, restriction graduation, and the relationship among the listed responses are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare trigger classifiers and whether responses are cumulative, alternative, or sequential."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-7-02",
+   "section": "7",
+   "title": "Impact basis for concentration thresholds",
+   "quote": "Concentration thresholds are derived from impact metrics, not nominal valuation or market price.",
+   "interpretation": "Inspect each concentration threshold's derivation and input provenance. The source restriction is explicit, but no threshold formula or numerical value is supplied.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "concentration_thresholds",
+    "threshold_derivations",
+    "impact_metrics",
+    "derivation_input_provenance"
+   ],
+   "criterion": "Concentration thresholds derive from impact metrics and not from nominal valuation or market price.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "impact metrics",
+    "threshold derivation records"
+   ],
+   "gap": "The impact-to-threshold derivation and threshold values are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a threshold derivation using impact metrics and excluding nominal valuation and market price."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.1-01",
+   "section": "8.1",
+   "title": "Mandatory property right revocation triggers",
+   "quote": "- justice outcomes mandate Restriction, Isolation, or Exclusion,\n- asset use causes irreversible or systemic harm,\n- restitution obligations cannot be fulfilled.",
+   "interpretation": "Check that each listed trigger leads to revocation of the affected Property Rights. The natural reading treats each trigger as independently sufficient, but no execution deadline or method of determining impossibility of restitution is supplied.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "justice_outcomes",
+    "asset_use_impacts",
+    "restitution_feasibility",
+    "right_state_history"
+   ],
+   "criterion": "Revoke Property Rights when justice mandates Restriction, Isolation, or Exclusion, when asset use causes irreversible or systemic harm, or when restitution obligations cannot be fulfilled.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice outcomes",
+    "causal harm assessments",
+    "restitution feasibility assessments"
+   ],
+   "gap": "Harm and infeasibility tests and the temporal semantics of mandatory revocation are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Treat each listed trigger as sufficient and declare harm, restitution infeasibility, and transition semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.2-01",
+   "section": "8.2",
+   "title": "Authorized destinations for revoked assets",
+   "quote": "Revoked assets MAY be:",
+   "interpretation": "Recognize public stewardship, alternative Subjects, and reserve or mitigation pools as permitted destinations for revoked assets. The permissive wording does not expressly establish that the list is exhaustive or require reallocation in every case.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "asset_revocation_status",
+    "proposed_destination_type"
+   ],
+   "criterion": "For a revoked asset, public stewardship, reassignment to alternative Subjects, and transfer to reserve or mitigation pools are permitted destinations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "asset revocation status",
+    "destination classifications"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.2-02",
+   "section": "8.2",
+   "title": "Required priorities during asset reallocation",
+   "quote": "- harm mitigation,\n- continuity of essential services,\n- protection of axiomatic priorities.",
+   "interpretation": "Evaluate reallocation decisions against the required priorities of harm mitigation, essential-service continuity, and axiomatic protection. The list does not establish weights or an ordering among these priorities.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "reallocation_decision",
+    "reallocation_alternatives",
+    "mitigation_effects",
+    "essential_service_effects",
+    "axiomatic_effects"
+   ],
+   "criterion": "Reallocation prioritizes harm mitigation, continuity of essential services, and protection of axiomatic priorities.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "projected reallocation impacts",
+    "essential-service requirements",
+    "axiomatic priorities"
+   ],
+   "gap": "The text does not specify how to compare alternatives or resolve conflicts among the required priorities. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare essential services and a decision rule for evaluating the stated priorities without treating their list order as a prescribed ranking."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-ReallocationTransparencyConstraint-01",
+   "section": "Reallocation Transparency Constraint",
+   "title": "Transparent and deterministic reallocation processes",
+   "quote": "- fully auditable,\n- traceable to justice outcomes and impact constraints,\n- executed via deterministic, rule-based procedures.",
+   "interpretation": "Check public observability, audit evidence, references to justice outcomes and impact constraints, and reproducibility under the applicable rules. Audit completeness and what the public must be able to observe are not specified.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "reallocation_process",
+    "public_access",
+    "audit_records",
+    "justice_references",
+    "impact_constraint_references",
+    "procedure_rules",
+    "procedure_inputs",
+    "procedure_outputs"
+   ],
+   "criterion": "Every reallocation process is publicly observable, fully auditable, traceable to justice outcomes and impact constraints, and deterministic under rule-based procedures.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice outcomes",
+    "impact constraints",
+    "public process records",
+    "execution and audit logs"
+   ],
+   "gap": "Public observability, audit completeness, and the complete deterministic procedure are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare required public records, audit coverage, and complete inputs for deterministic replay."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-ReallocationTransparencyConstraint-02",
+   "section": "Reallocation Transparency Constraint",
+   "title": "Prohibited authorities over asset reallocation",
+   "quote": "No discretionary authority, closed committee, or opaque administrative body MAY control or override asset reallocation.",
+   "interpretation": "Inspect permissions and actual interventions to ensure that actors in the prohibited categories cannot control or override reallocation. Classifying an authority as discretionary, closed, or opaque requires criteria absent from the text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "reallocation_permissions",
+    "actor_classifications",
+    "control_actions",
+    "override_actions"
+   ],
+   "criterion": "No discretionary authority, closed committee, or opaque administrative body has or exercises control or override authority over asset reallocation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance actor records",
+    "authorization policies",
+    "control and override logs"
+   ],
+   "gap": "Operational definitions of discretionary authority, closed committee, and opaque administrative body are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare actor classification criteria for the three prohibited categories."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-ReallocationTransparencyConstraint-03",
+   "section": "Reallocation Transparency Constraint",
+   "title": "Algorithmic meaning of public stewardship",
+   "quote": "Public stewardship denotes algorithmic custodianship under open rules, not bureaucratic management.",
+   "interpretation": "Check that a public stewardship arrangement uses algorithmic custody governed by open rules. The boundary between permitted administration of an algorithm and prohibited bureaucratic management is undefined.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "stewardship_arrangement",
+    "custody_implementation",
+    "rule_accessibility",
+    "management_controls"
+   ],
+   "criterion": "Public stewardship consists of algorithmic custodianship under open rules and does not constitute bureaucratic management.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "custodial implementation",
+    "published rules",
+    "management authority records"
+   ],
+   "gap": "Open rules and bureaucratic management lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria distinguishing algorithmic custodianship from bureaucratic management and determining rule openness."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-01",
+   "section": "8.3",
+   "title": "Required revocation dispute window",
+   "quote": "a) Dispute Window: Revocation may be disputed within thirty (30) DTI-Days of execution under DKP-4-ERROR-001.",
+   "interpretation": "Ensure every revocation supports a dispute within the stated period after execution. DTI-Day calculation and boundary inclusion depend on definitions not supplied, and the clause does not expressly prohibit later disputes.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "revocation_event",
+    "execution_time",
+    "dispute_filing_time",
+    "dti_time_mapping",
+    "dispute_availability"
+   ],
+   "criterion": "Every revocation supports dispute proceedings within 30 DTI-Days of execution under DKP-4-ERROR-001.",
+   "numeric_source": "text",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001"
+   ],
+   "data_dependencies": [
+    "DTI timekeeping",
+    "revocation execution records",
+    "dispute filing records"
+   ],
+   "gap": "The DTI-Day definition, endpoint convention, and referenced dispute procedure are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare DTI-Day conversion and endpoint handling consistent with the referenced dispute procedure."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-02",
+   "section": "8.3",
+   "title": "Escrow preservation during validated disputes",
+   "quote": "b) Escrow Preservation: Upon validated dispute filing, any reallocation proceeds or asset value equivalents SHALL be held in escrow until dispute resolution.",
+   "interpretation": "On a validated filing, check escrow placement and uninterrupted holding of applicable proceeds or asset value equivalents until resolution. The text does not specify valuation or how to choose between proceeds and equivalents.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "validated_filing",
+    "filing_time",
+    "reallocation_proceeds",
+    "asset_value_equivalents",
+    "escrow_history",
+    "resolution_time"
+   ],
+   "criterion": "Upon validated filing, the applicable reallocation proceeds or asset value equivalents remain in escrow until the dispute is resolved.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute validation and resolution status",
+    "reallocation proceeds",
+    "asset valuations",
+    "escrow ledger"
+   ],
+   "gap": "The text lacks the valuation method and selection rule for the property to be preserved in escrow. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how asset value equivalents are computed and when proceeds or equivalents are used."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-03",
+   "section": "8.3",
+   "title": "Preservation of disputed restitution claims",
+   "quote": "c) Restitution Claims: Disputed revocations SHALL preserve Subject's restitution claims. If dispute succeeds:",
+   "interpretation": "Compare the Subject's restitution claims before and during a disputed revocation to ensure the dispute does not extinguish them. This preservation requirement applies independently of whether the dispute ultimately succeeds.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "disputed_revocation",
+    "subject_id",
+    "restitution_claims_before",
+    "restitution_claims_during",
+    "claim_change_reasons"
+   ],
+   "criterion": "A disputed revocation preserves the Subject's restitution claims throughout the dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute records",
+    "restitution claim ledger"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-04",
+   "section": "8.3",
+   "title": "Remedies following a successful dispute",
+   "quote": "- Physical assets SHALL be returned where possible\n- Where return is impossible, equivalent value restitution SHALL be computed and allocated",
+   "interpretation": "For a successful dispute, require return of physical assets when possible and computation and allocation of equivalent value restitution when return is impossible. Neither return feasibility nor equivalent value is defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "dispute_outcome",
+    "physical_assets",
+    "return_feasibility",
+    "asset_return_records",
+    "equivalent_value",
+    "restitution_computation",
+    "restitution_allocation"
+   ],
+   "criterion": "If the dispute succeeds, return physical assets where possible; where return is impossible, compute and allocate equivalent value restitution.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute outcomes",
+    "asset availability",
+    "valuation data",
+    "return and restitution records"
+   ],
+   "gap": "Return feasibility, equivalent-value calculation, and remedy execution timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare return-feasibility criteria and a valuation method without adding a normative execution deadline."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-05",
+   "section": "8.3",
+   "title": "Dispute filing cannot justify prejudice",
+   "quote": "d) No Prejudice: Filing a revocation dispute SHALL NOT constitute grounds for additional restrictions or negative justice attribution.",
+   "interpretation": "Inspect grounds for subsequent restrictions and negative justice attribution to ensure dispute filing is not a basis. Temporal sequence alone cannot establish a violation because independently justified actions are not prohibited.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "dispute_filing",
+    "additional_restrictions",
+    "negative_justice_attributions",
+    "decision_grounds"
+   ],
+   "criterion": "No additional restriction or negative justice attribution is grounded in the act of filing a revocation dispute.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "dispute filings",
+    "restriction decisions and grounds",
+    "justice attribution decisions and grounds"
+   ],
+   "gap": "Determining actual reliance on dispute filing requires complete causal or justification records. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how decision grounds are represented and how concealed or indirect reliance on dispute filing is tested."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-06",
+   "section": "8.3",
+   "title": "Mandatory revocation order epistemic metadata",
+   "quote": "e) Epistemic Metadata: All revocation orders SHALL carry mandatory epistemic classification per DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5:",
+   "interpretation": "Check the six listed fields and their provenance: validity_state from triggering Justice output; confidence_state propagated from Impact measurements; consistency_state from triggering Justice output or upstream metadata; scope_ref referencing a specific Justice outcome; and both revalidation_required and dispute_allowed set to TRUE. Full compliance with the referenced classification cannot be established from this text alone.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "revocation_order",
+    "validity_state",
+    "confidence_state",
+    "consistency_state",
+    "scope_ref",
+    "revalidation_required",
+    "dispute_allowed",
+    "triggering_justice_output",
+    "impact_measurements",
+    "upstream_epistemic_metadata"
+   ],
+   "criterion": "Each revocation order carries the listed fields with the specified inheritance, propagation, reference, and TRUE values, and satisfies DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "triggering Justice output and metadata",
+    "Impact measurements and confidence metadata",
+    "upstream epistemic metadata"
+   ],
+   "gap": "The referenced metadata specification and confidence propagation rule are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced metadata schema and declare confidence propagation semantics where that schema leaves them open."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-07",
+   "section": "8.3",
+   "title": "Metadata gates asset control enforceability",
+   "quote": "Any revocation, suspension, reallocation, or dispute-related asset control output SHALL be considered non-operational and non-enforceable unless the full mandatory epistemic metadata set defined in DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5 is present.",
+   "interpretation": "For every covered output, require the full referenced metadata set before operational use or enforcement. Presence is a necessary condition and does not by itself establish that an output is otherwise valid.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "asset_control_output",
+    "output_type",
+    "epistemic_metadata",
+    "mandatory_metadata_schema",
+    "operational_status",
+    "enforceability_status"
+   ],
+   "criterion": "If the full mandatory metadata set is absent, a covered asset control output is both non-operational and non-enforceable.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "mandatory epistemic metadata schema",
+    "asset control output metadata",
+    "operation and enforcement status"
+   ],
+   "gap": "The full mandatory metadata set in the referenced document is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Use an explicitly supplied authoritative metadata schema rather than assuming the six locally listed fields exhaust it."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-8.3-08",
+   "section": "8.3",
+   "title": "Immediate invalidation of partial metadata",
+   "quote": "Partial epistemic metadata SHALL invalidate the output at the point of emission. This condition SHALL NOT be deferred to audit or downstream validation layers.",
+   "interpretation": "Check metadata validation and validity status at the emission event. An output with partial metadata must already be invalid when emitted, even if later audit or validation also detects the defect.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "asset_control_output",
+    "metadata_completeness",
+    "emission_event",
+    "validity_at_emission",
+    "validation_stage",
+    "mandatory_metadata_schema"
+   ],
+   "criterion": "Partial epistemic metadata causes invalidity at emission, with enforcement of that condition occurring before any deferred audit or downstream validation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "mandatory metadata schema",
+    "emission and validation logs"
+   ],
+   "gap": "Determining partial metadata requires the absent full mandatory metadata specification. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the authoritative metadata schema and identify the output emission event."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-9-01",
+   "section": "9",
+   "title": "Protected natural and critical designations",
+   "quote": "Certain assets are designated as Non-Privatizable or Conditionally Privatizable, including:",
+   "interpretation": "Check that biosphere-critical systems, water, air, ecological infrastructure, and essential cognitive and informational commons receive one of the two protective designations. The text does not choose the designation for each category or exhaustively identify all covered assets.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "asset_category",
+    "criticality_assessment",
+    "essentiality_assessment",
+    "privatization_designation"
+   ],
+   "criterion": "Assets in the listed protected categories are designated Non-Privatizable or Conditionally Privatizable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "asset classifications",
+    "ecological criticality assessments",
+    "commons essentiality assessments"
+   ],
+   "gap": "Category boundaries and the rule selecting between the two designations are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare category membership criteria and a designation-selection rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-9-02",
+   "section": "9",
+   "title": "Revocable stewardship for protected assets",
+   "quote": "Such assets MAY only be held under strict stewardship conditions and SHALL always remain revocable.",
+   "interpretation": "For every protected asset, verify that holding is subject to stewardship conditions and that revocation remains possible throughout the holding period. The required strictness and content of stewardship conditions are not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "protected_asset",
+    "holding_terms",
+    "stewardship_conditions",
+    "revocability_history"
+   ],
+   "criterion": "A protected asset is held only under strict stewardship conditions and its holding remains revocable at all times.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "protected asset registry",
+    "stewardship terms",
+    "right status history"
+   ],
+   "gap": "The text does not specify what constitutes strict stewardship conditions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare qualifying stewardship conditions and how continuing revocability is represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-10-01",
+   "section": "10",
+   "title": "Conditions for all property transfers",
+   "quote": "- explicit transfer of justice obligations,\n- acceptance of ongoing responsibility,\n- compliance with current impact constraints.",
+   "interpretation": "Before recognizing a property-right transfer, including inheritance, check explicit obligation transfer, acceptance of ongoing responsibility, and current impact compliance. The text does not specify whether impact compliance is assessed against the transferred asset's use, the recipient, or the transaction as a whole.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "property_transfer",
+    "justice_obligation_transfer",
+    "responsibility_acceptance",
+    "current_impact_constraints",
+    "impact_compliance"
+   ],
+   "criterion": "Every property-right transfer includes explicit justice-obligation transfer, acceptance of ongoing responsibility, and compliance with current impact constraints.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice obligation ledger",
+    "acceptance records",
+    "current impact constraints and compliance assessments"
+   ],
+   "gap": "Applicable impact constraints and the scope of their application to a transfer are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the subject and scope of impact compliance at transfer time."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-10-02",
+   "section": "10",
+   "title": "Inheritance preserves attribution and accountability",
+   "quote": "Inheritance SHALL NOT erase historical attribution or exempt the recipient from justice outcomes.",
+   "interpretation": "Compare attribution records and justice applicability before and after inheritance. Inheritance must neither delete historical attribution nor introduce an exemption from justice outcomes for the recipient; the clause does not automatically assign every predecessor outcome to that recipient.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "inheritance_event",
+    "historical_attribution_before",
+    "historical_attribution_after",
+    "recipient_justice_exemptions",
+    "exemption_grounds"
+   ],
+   "criterion": "Inheritance preserves historical attribution and creates no inheritance-based exemption for the recipient from justice outcomes.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "historical attribution records",
+    "inheritance records",
+    "justice exemption rules and grounds"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-11-01",
+   "section": "11",
+   "title": "Justice status constrains asset control",
+   "quote": "- control over non-essential assets SHALL be restricted or suspended,\n\n- asset-derived benefits MAY be limited,",
+   "interpretation": "When a Subject is under Restriction, Isolation, or Exclusion under DKP-1-JUSTICE-001, require restriction or suspension of non-essential asset control. Limiting asset-derived benefits is permitted rather than mandatory.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "subject_justice_status",
+    "asset_essentiality",
+    "asset_control_status",
+    "asset_derived_benefit_limits"
+   ],
+   "criterion": "A Subject under Restriction, Isolation, or Exclusion has control of non-essential assets restricted or suspended; asset-derived benefits may also be limited.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "Subject justice status",
+    "asset essentiality classifications",
+    "asset control and benefit records"
+   ],
+   "gap": "Non-essential assets and the scope and timing of restrictions are undefined; section 8.1 also requires revocation for the same named justice outcomes. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare asset essentiality and how restriction or suspension under section 11 relates to mandatory revocation under section 8.1."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-11-02",
+   "section": "11",
+   "title": "Preserve access necessary for life",
+   "quote": "- access necessary for preservation of life SHALL be maintained\n\n  in accordance with Axiom A1.",
+   "interpretation": "For a Subject under the specified justice statuses, verify continued access to assets needed to preserve life. Axiom A1 is referenced without its text or a document identifier, and life-preserving necessity is not defined.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "subject_justice_status",
+    "life_preserving_access_needs",
+    "asset_access_history",
+    "axiom_a1_requirements"
+   ],
+   "criterion": "During Restriction, Isolation, or Exclusion, maintain access necessary for preservation of life in accordance with Axiom A1.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "life-preserving access assessments",
+    "Subject justice status",
+    "asset access records",
+    "Axiom A1 requirements"
+   ],
+   "gap": "Axiom A1 and the criteria determining access necessary for preservation of life are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply Axiom A1 and declare how necessary life-preserving access is identified."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-11-03",
+   "section": "11",
+   "title": "Justice outcomes cannot be overridden",
+   "quote": "This protocol SHALL NOT override justice outcomes.",
+   "interpretation": "Compare asset protocol decisions with applicable justice outcomes and reject decisions that override them. The text does not define conflict resolution when an asset-access requirement appears inconsistent with a justice outcome.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "asset_protocol_decisions",
+    "applicable_justice_outcomes",
+    "decision_effects"
+   ],
+   "criterion": "No asset protocol decision overrides an applicable justice outcome.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-JUSTICE-001"
+   ],
+   "data_dependencies": [
+    "applicable justice outcomes",
+    "asset decision effects"
+   ],
+   "gap": "A formal representation of justice outcome requirements and an override test are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how decision effects are compared with justice outcomes and how apparent conflicts are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-12-01",
+   "section": "12",
+   "title": "Registered auditable Subject binding",
+   "quote": "All asset ownership and control structures MUST be:",
+   "interpretation": "Check registration, public audit access, and a direct, unambiguous binding of every ownership and control structure to Subjects defined by DKP-1-IDENTITY-001. Public audit completeness and valid Subject binding require specifications not present here.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "ownership_structures",
+    "control_structures",
+    "registration_records",
+    "public_audit_access",
+    "subject_bindings",
+    "subject_registry"
+   ],
+   "criterion": "Every asset ownership and control structure is registered, publicly auditable, and directly and unambiguously bindable to Subjects under DKP-1-IDENTITY-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "ownership and control registry",
+    "identity Subject registry",
+    "public audit interfaces"
+   ],
+   "gap": "The referenced Subject definition and operational requirements for public auditability and unambiguous binding are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the Subject identity specification and declare auditability and binding validation rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-12-02",
+   "section": "12",
+   "title": "Forbidden ownership and attribution obstruction",
+   "quote": "Hidden ownership, shell abstractions, offshore structures, or any form of control that prevents causal attribution of impact or responsibility are forbidden.",
+   "interpretation": "Inspect ownership and control structures for prohibited categories and obstruction of causal attribution. The syntax can prohibit all named categories categorically or be read as targeting those categories when they prevent attribution; the text does not resolve that scope.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ownership_structures",
+    "control_structures",
+    "structure_classifications",
+    "causal_attribution_capability"
+   ],
+   "criterion": "Reject the listed prohibited ownership or control structures and any control form preventing causal attribution of impact or responsibility, using a declared reading of the list's scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "ownership and control graph",
+    "structure classifications",
+    "impact and responsibility attribution records"
+   ],
+   "gap": "The category definitions and whether attribution obstruction qualifies all named categories are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether named categories are categorically forbidden or forbidden when obstructive, and define causal attribution capability."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-IdentityBindingRequirement-01",
+   "section": "Identity Binding Requirement",
+   "title": "Nonwaivable invalidity of obstructive abstractions",
+   "quote": "Any ownership abstraction that obstructs causal attribution SHALL be treated as invalid within the system.\n\nThis requirement is a necessary condition for the operation of DKP-1-IDENTITY-001 and cannot be waived.",
+   "interpretation": "Invalidate ownership abstractions classified as obstructing causal attribution and reject any waiver of that requirement. The rule is a prerequisite for operation of the named identity protocol, but the text does not specify a separate halt procedure.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ownership_abstraction",
+    "attribution_obstruction",
+    "system_validity",
+    "waiver_records",
+    "identity_operation_status"
+   ],
+   "criterion": "An ownership abstraction obstructing causal attribution is invalid; no waiver permits it to be treated as valid, including during operation of DKP-1-IDENTITY-001.",
+   "numeric_source": "none",
+   "normative_dependencies": [
+    "DKP-1-IDENTITY-001"
+   ],
+   "data_dependencies": [
+    "ownership abstractions",
+    "causal attribution assessments",
+    "validity and waiver records"
+   ],
+   "gap": "The test for obstruction of causal attribution is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an obstruction classifier without introducing waiver exceptions."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-13-01",
+   "section": "13",
+   "title": "Cross-layer isolation and breach classification",
+   "quote": "This protocol SHALL NOT:",
+   "interpretation": "Inspect protocol rules and effects for redefinition of justice logic, alteration of impact measurements, introduction of policy discretion, or exemptions from axiomatic constraints. Any such violation must be classified as a critical architectural breach.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "asset_protocol_rules",
+    "asset_protocol_effects",
+    "justice_logic_baseline",
+    "impact_measurements",
+    "policy_authority",
+    "axiomatic_constraints",
+    "breach_classification"
+   ],
+   "criterion": "The protocol does not redefine justice logic, alter impact measurements, introduce policy discretion, or create axiomatic exemptions; any violation constitutes a critical architectural breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "justice logic baseline",
+    "original impact measurements",
+    "axiomatic constraints",
+    "architecture and change records"
+   ],
+   "gap": "The relevant baselines and tests distinguishing permitted application from redefinition, alteration, or discretion are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare comparison baselines and semantic tests for the four forbidden changes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-14-01",
+   "section": "14",
+   "title": "Controlled procedure for protocol changes",
+   "quote": "This protocol is changed only through the controlled procedure of DKP-4-UPGRADE-001: proposal, simulation under DKP-8-SIMULATION-001, audit under DKP-8-AUDIT-001, acceptance conditions, activation window and rollback.",
+   "interpretation": "For normative changes, verify compliance with the referenced upgrade procedure and evidence for each listed component. Rollback may mean required rollback capability or an executed rollback when conditions warrant; the local text does not require every successful upgrade to be rolled back.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "protocol_change",
+    "proposal",
+    "simulation_record",
+    "audit_record",
+    "acceptance_evidence",
+    "activation_window",
+    "activation_record",
+    "rollback_provisions"
+   ],
+   "criterion": "A normative protocol change occurs only through DKP-4-UPGRADE-001 with the stated proposal, simulation, audit, acceptance, activation-window, and rollback components.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001",
+    "DKP-8-SIMULATION-001",
+    "DKP-8-AUDIT-001"
+   ],
+   "data_dependencies": [
+    "upgrade workflow records",
+    "simulation results",
+    "audit results",
+    "acceptance and activation records",
+    "rollback provisions"
+   ],
+   "gap": "The referenced procedures, acceptance conditions, activation rules, and rollback semantics are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Supply the referenced procedures and resolve rollback semantics according to them."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-14-02",
+   "section": "14",
+   "title": "Required artifacts for protocol modifications",
+   "quote": "- a new protocol identifier,\n- explicit declaration of incompatibility,\n- full-system simulation under DKP-8-SIMULATION.",
+   "interpretation": "Check that a normative modification has a changed protocol identifier, an explicit incompatibility declaration, and a full-system simulation under the exact referenced identifier. The later presentation-only exception is read as excluding qualifying corrections from these requirements.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "modification",
+    "normative_content_change",
+    "previous_protocol_id",
+    "new_protocol_id",
+    "incompatibility_declaration",
+    "full_system_simulation"
+   ],
+   "criterion": "Each normative modification has a new protocol identifier, an explicit incompatibility declaration, and full-system simulation under DKP-8-SIMULATION.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION"
+   ],
+   "data_dependencies": [
+    "protocol version records",
+    "incompatibility declarations",
+    "full-system simulation evidence"
+   ],
+   "gap": "DKP-8-SIMULATION is not supplied and its relationship to DKP-8-SIMULATION-001 is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Resolve the simulation identifier and apply the presentation-only exception to the phrase Any modification."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-14-03",
+   "section": "14",
+   "title": "Presentation correction exception and recording",
+   "quote": "Presentation-only corrections that do not change normative content are not Upgrades (DKP-4-UPGRADE-001 §3); they are recorded only by the \"Last updated\" date of this document.",
+   "interpretation": "Classify a correction as outside the Upgrade process only when its normative content is unchanged, and check that its change record uses only the document's Last updated date. The text does not define semantic equivalence or reconcile only with edition digest recording.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "previous_document",
+    "corrected_document",
+    "normative_content_comparison",
+    "upgrade_classification",
+    "last_updated_date",
+    "change_records"
+   ],
+   "criterion": "A presentation-only correction with unchanged normative content is not an Upgrade and is recorded only through the document's Last updated date.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-UPGRADE-001"
+   ],
+   "data_dependencies": [
+    "document versions",
+    "upgrade classifications",
+    "edition and date records"
+   ],
+   "gap": "The referenced exception, a normative-equivalence test, and the scope of only in relation to edition integrity records are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a normative-equivalence review method and how date-only correction recording coexists with published-edition digest listing."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ASSETS-14-04",
+   "section": "14",
+   "title": "Published edition canonical digest listing",
+   "quote": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in `SHA256SUMS.txt` of the canonical repository (github.com/anahronic/World).",
+   "interpretation": "Given each published edition's canonical source bytes and the repository checksum file, compute SHA-256 and verify the corresponding listed digest. This checks the listing and digest match without inferring an unspecified source canonicalization process.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "published_editions",
+    "canonical_source_bytes",
+    "sha256sums_file",
+    "edition_checksum_mapping"
+   ],
+   "criterion": "For each published edition, SHA-256 of its canonical source equals its digest listed in SHA256SUMS.txt of github.com/anahronic/World.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "published edition inventory",
+    "canonical source bytes",
+    "canonical repository SHA256SUMS.txt"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}

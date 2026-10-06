@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["doc_id", "requirements", "notes"],
+  "properties": {
+    "doc_id": {"type": "string"},
+    "notes": {"type": "string"},
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "section", "title", "quote", "interpretation", "kind", "checkable",
+                     "inputs", "criterion", "numeric_source", "normative_dependencies",
+                     "data_dependencies", "gap", "hypotheses_needed"],
+        "properties": {
+          "id": {"type": "string"},
+          "section": {"type": "string"},
+          "title": {"type": "string"},
+          "quote": {"type": "string"},
+          "interpretation": {"type": "string"},
+          "kind": {"type": "string", "enum": ["formula", "constraint", "contract", "state_transition", "dynamic_model", "definition"]},
+          "checkable": {"type": "string", "enum": ["yes", "partial", "no"]},
+          "inputs": {"type": "array", "items": {"type": "string"}},
+          "criterion": {"type": "string"},
+          "numeric_source": {"type": "string", "enum": ["text", "calibration", "hypothesis", "missing", "none"]},
+          "normative_dependencies": {"type": "array", "items": {"type": "string"}},
+          "data_dependencies": {"type": "array", "items": {"type": "string"}},
+          "gap": {"type": ["string", "null"]},
+          "hypotheses_needed": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

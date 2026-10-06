@@ -1,0 +1,1628 @@
+{
+ "schema": "dkp-lab-requirements/1",
+ "doc_id": "DKP-0-ORACLE-001",
+ "doc_sha256": "11cae82c33efd663125ace16420ff5b6c32fa983fa91a3c4b306ecd3448ce829",
+ "prefix": "ORACLE",
+ "provenance": {
+  "drafted_by": "codex (OpenAI), model from local config",
+  "prompt": "lab/tools/codex/requirements_prompt.md",
+  "review": "machine-checked by lab.tools.check_registry (verbatim quotes, sections, ids); content reviewed by Claude where noted in review_notes",
+  "review_notes": []
+ },
+ "draft_notes": "Only the supplied text was used. Identifiers preserve the carriage return in the supplied requirement prefix as JSON \\r. Quotes retain Markdown where convenient and occasionally omit permitted backslash escapes. Repeated rules in sections 16 and 17 are retained as normative constants and registry limits. Appendix A.2, Appendix A.4, and Genesis Block #0 are referenced without DKP document identifiers. Section 5 includes an excluded domain among its classification subsections; this is treated as an exclusion, not an admissible output category. The document does not define confidence aggregation, coverage measurement, posterior-distance calculation, arbitration-expiry behavior, or the operational procedure for correcting immutable measurement records.",
+ "requirements": [
+  {
+   "id": "ORACLE-1-01",
+   "section": "1",
+   "title": "Exclusive interface to physical reality",
+   "quote": "The Physical Truth Layer (PTL) defines the **sole admissible interface between physical reality and the Dikenocracy governance system**.",
+   "interpretation": "Check that governance inputs representing physical reality enter through PTL. Identifying all such inputs requires a declared system boundary and provenance model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "governance_inputs",
+    "input_provenance",
+    "system_boundary"
+   ],
+   "criterion": "Every governance input representing physical reality passes through PTL.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "governance input provenance"
+   ],
+   "gap": "The system boundary and classification of physical-reality inputs are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the governance boundary and which inputs represent physical reality."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-1-02",
+   "section": "1",
+   "title": "Outputs restricted to physical state",
+   "quote": "The PTL produces **physical state only**.",
+   "interpretation": "Inspect outputs and processing operations for physical-state content only. The surrounding prohibitions exclude meaning interpretation, intent inference, value assignment, policy reasoning, and subjective or semantic inference, but detecting these requires a semantic classification model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_outputs",
+    "processing_operations",
+    "content_classification"
+   ],
+   "criterion": "PTL produces only physical state and performs none of the explicitly prohibited interpretive or normative operations.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "processing provenance and output classifications"
+   ],
+   "gap": "No executable distinction between physical-state processing and prohibited interpretation is supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classification of operations and output content."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-2-01",
+   "section": "2",
+   "title": "Mandatory Genesis anchor compatibility",
+   "quote": "Compatibility with Genesis Block physical anchors and parameters is a **mandatory validity condition** for any PTL implementation.",
+   "interpretation": "Compare implementation parameters and physical anchors against Genesis Block #0, identified in this section as dated 2025-12-10. The required anchor values and compatibility procedure are absent.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "implementation_parameters",
+    "implementation_anchors",
+    "genesis_anchors",
+    "compatibility_rules"
+   ],
+   "criterion": "A valid PTL implementation is compatible with Genesis Block #0 physical anchors and parameters.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis Block #0 anchors and parameters",
+    "Code of Planetary Synergy Appendix A.2"
+   ],
+   "gap": "Genesis anchor values and the compatibility test are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an anchor-compatibility procedure if the referenced material does not provide one."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-2-02",
+   "section": "2",
+   "title": "Explicit rules for output consumption",
+   "quote": "PTL outputs are **non-normative** and may only be consumed by higher layers under explicitly defined activation and scope rules.",
+   "interpretation": "Check each higher-layer consumption against explicitly defined activation and scope rules, and verify that the measurement itself is not treated as normative authority. The applicable higher-layer rules are not included.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "output_consumption_events",
+    "activation_rules",
+    "scope_rules",
+    "authority_assignments"
+   ],
+   "criterion": "Every higher-layer consumption is authorized by explicit activation and scope rules, and PTL outputs remain non-normative.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "higher-layer activation and scope rules"
+   ],
+   "gap": "Applicable consumption rules and an operational representation of normative authority are missing. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Represent activation, scope, and normative authority as explicit predicates."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-3-01",
+   "section": "3",
+   "title": "Excluded inputs and processing operations",
+   "quote": "This protocol explicitly excludes:\n\n- human testimony or manual input,",
+   "interpretation": "Check input provenance and operation records against the section's exclusions: human testimony or manual input, semantic interpretation, intent inference, subjective state attribution, policy reasoning, and cross-layer feedback or parameter adjustment. Whether manual input also includes administrative registration is not resolved.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "input_provenance",
+    "processing_operations",
+    "parameter_change_provenance"
+   ],
+   "criterion": "No excluded input or processing operation occurs within PTL scope.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "input and parameter-change provenance"
+   ],
+   "gap": "The boundaries of manual input and the semantic operation categories are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define whether administrative configuration is manual input and classify prohibited processing operations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.1-01",
+   "section": "4.1",
+   "title": "Physical state vector provenance",
+   "quote": "A time-indexed vector of **physically measurable variables**, derived exclusively from admissible oracle inputs.",
+   "interpretation": "Check that S(t) is indexed by time and that every component has an admissible oracle-input lineage. Physical measurability requires a declared measurement-domain model.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "state_vector",
+    "component_provenance",
+    "oracle_admissibility",
+    "measurement_domain"
+   ],
+   "criterion": "S(t) is time-indexed, contains physically measurable variables, and derives exclusively from admissible oracle inputs.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle admissibility records",
+    "measurement provenance"
+   ],
+   "gap": "Physical measurability is not defined by an executable test. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare admissible physical variables and their measurement procedures."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.2-01",
+   "section": "4.2",
+   "title": "Hardware bound registered oracle sources",
+   "quote": "A hardware-bound system producing **cryptographically signed physical measurements**, traceable to a registered oracle identity.",
+   "interpretation": "Verify measurement signatures and registered identity linkage, and inspect evidence binding the source to hardware. The text does not specify hardware attestation or registration mechanisms.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "source_record",
+    "measurements",
+    "signatures",
+    "oracle_registry",
+    "hardware_binding_evidence"
+   ],
+   "criterion": "An oracle source is hardware-bound and produces signed physical measurements traceable to a registered oracle identity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle identity registry",
+    "hardware attestation and verification keys"
+   ],
+   "gap": "Hardware-binding, physical-measurement validation, and identity-registration procedures are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare acceptable hardware attestations, registration records, and signature verification rules."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.3-01",
+   "section": "4.3",
+   "title": "Ownership follows control of sources",
+   "quote": "A natural or legal person controlling one or more oracle sources.",
+   "interpretation": "Map each controlling natural or legal person to their oracle sources for ownership checks. The definition does not specify how indirect, shared, or disputed control is established.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "persons",
+    "oracle_sources",
+    "control_relationships"
+   ],
+   "criterion": "A person controlling one or more oracle sources qualifies as an oracle owner.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle ownership and control records"
+   ],
+   "gap": "The evidence and attribution rules for control are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how direct, indirect, and shared control map sources to owners."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.4-01",
+   "section": "4.4",
+   "title": "Normalized bounded reliability contributions",
+   "quote": "A normalized reliability contribution of an oracle source, bounded and capped by protocol constraints.",
+   "interpretation": "Check weights against a declared normalization convention and the protocol caps. Normalization could apply to all registered sources or only active admissible sources; the denominator is not specified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "source_weights",
+    "reliability_values",
+    "normalization_domain",
+    "normalization_rule"
+   ],
+   "criterion": "Each confidence weight is a normalized reliability contribution and satisfies applicable bounds and caps.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "source reliability records"
+   ],
+   "gap": "The normalization rule, domain, and relationship to reliability are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the normalization domain and rule, including treatment of capped or zero-weight sources."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.5-01",
+   "section": "4.5",
+   "title": "Coverage counts valid active observation",
+   "quote": "The fraction of the target physical domain that is actively observed by valid oracle sources with non-zero confidence.",
+   "interpretation": "Compute the fraction of the target domain actively observed by valid sources having non-zero confidence. A domain measure and rules for active observation and overlapping observations are required.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "target_domain",
+    "observation_footprints",
+    "source_validity",
+    "source_confidence",
+    "domain_measure"
+   ],
+   "criterion": "Coverage equals the observed fraction of the target physical domain, counting only active observations from valid sources with non-zero confidence.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "observation footprints",
+    "source validity and confidence"
+   ],
+   "gap": "The domain measure and active-observation rules are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define the physical domain, its measure, active observation, and treatment of overlapping coverage."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.6-01",
+   "section": "4.6",
+   "title": "TTL defines admissible datum age",
+   "quote": "The maximum admissible age of a datum before its confidence weight is **forced to zero**.",
+   "interpretation": "Compare datum age with its TTL and require zero confidence after TTL is exceeded. Section 9 makes the boundary explicit as exceeding TTL, so equality alone does not trigger zeroing.",
+   "kind": "definition",
+   "checkable": "yes",
+   "inputs": [
+    "datum_age",
+    "datum_ttl",
+    "datum_confidence_weight"
+   ],
+   "criterion": "If datum_age > datum_ttl, datum_confidence_weight = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "datum timestamps and assigned TTL values"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.7-01",
+   "section": "4.7",
+   "title": "Independence requires separated sensing mechanisms",
+   "quote": "Distinct measurement modalities defined by **physical separation of sensing mechanisms**.",
+   "interpretation": "Check whether declared independent classes use physically separated sensing mechanisms. The text does not explain whether separation means location, physical measurement principle, or both.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "measurement_modalities",
+    "sensing_mechanisms",
+    "separation_evidence"
+   ],
+   "criterion": "Independent oracle classes have distinct measurement modalities with physical separation of sensing mechanisms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "sensor mechanism descriptions and separation evidence"
+   ],
+   "gap": "Physical separation lacks an operational definition. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether independence depends on spatial separation, sensing principle, or both."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-4.8-01",
+   "section": "4.8",
+   "title": "Divergence requires significant cross-class disagreement",
+   "quote": "A statistically significant disagreement between posterior distributions produced by **independent oracle classes**.",
+   "interpretation": "Compare posterior distributions from independent classes under a declared significance test. It is unclear whether statistical significance is an additional condition beyond section 11's 7% rule or is intended to be defined by that rule.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "class_posteriors",
+    "class_independence",
+    "significance_test"
+   ],
+   "criterion": "A Divergence Event is statistically significant disagreement between posterior distributions from independent oracle classes.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "class-specific posterior distributions"
+   ],
+   "gap": "The statistical significance test and its relationship to the 7% threshold are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the significance test and whether it is separate from the section 11 threshold."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-5-01",
+   "section": "5",
+   "title": "Mandatory explicit measurement classification",
+   "quote": "All PTL outputs MUST be explicitly classified as one of the following:",
+   "interpretation": "Check that every output carries an explicit measurement classification. Read with section 5.3, direct and proxy-based measurements are admissible classifications; treating excluded domains as a third permissible category would conflict with its prohibition.",
+   "kind": "contract",
+   "checkable": "yes",
+   "inputs": [
+    "ptl_outputs",
+    "output_classifications"
+   ],
+   "criterion": "Every emitted PTL output is explicitly classified as a direct physical measurement or a proxy-based measurement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-5.1-01",
+   "section": "5.1",
+   "title": "Direct measurements require no interpretation",
+   "quote": "Directly observable quantities requiring no semantic interpretation.",
+   "interpretation": "Verify that quantities classified as direct measurements are directly observable and do not require semantic interpretation. This requires a declared model of observability and measurement processing.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "direct_measurements",
+    "measurement_methods",
+    "processing_operations"
+   ],
+   "criterion": "Every direct physical measurement is directly observable without semantic interpretation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measurement methods and processing provenance"
+   ],
+   "gap": "Direct observability and semantic interpretation have no executable definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare which measurement methods qualify as direct and which operations are semantic."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-5.2-01",
+   "section": "5.2",
+   "title": "Proxies remain physical process indicators",
+   "quote": "Derived indicators correlating with physical processes but **not equivalent to subjective, semantic, or normative states**.",
+   "interpretation": "Check that a proxy model identifies a physical process with which its indicator correlates and does not equate that indicator with subjective, semantic, or normative states. The required strength and evidence of correlation are not specified.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "proxy_models",
+    "physical_processes",
+    "correlation_evidence",
+    "output_claims"
+   ],
+   "criterion": "A proxy indicator correlates with a physical process and is not treated as equivalent to a subjective, semantic, or normative state.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "proxy validation evidence"
+   ],
+   "gap": "The standard for establishing correlation and prohibited equivalence is undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare proxy-validation criteria and a representation of equivalence claims."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-5.2-02",
+   "section": "5.2",
+   "title": "Required proxy declarations and uncertainty",
+   "quote": "- explicitly declare the proxy model used,\n- include propagated uncertainty,\n- explicitly state that the result is not a subjective state.",
+   "interpretation": "Check every proxy-based output for its model declaration, propagated uncertainty, and an explicit non-subjective-state statement. Field presence is directly testable, but validating uncertainty propagation requires the declared model.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "proxy_output",
+    "proxy_model",
+    "input_uncertainty",
+    "output_uncertainty",
+    "non_subjective_statement"
+   ],
+   "criterion": "Every proxy output declares its model, includes uncertainty propagated through that model, and explicitly states that the result is not a subjective state.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "proxy models and input uncertainties"
+   ],
+   "gap": "The uncertainty propagation method is model-dependent and is not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the uncertainty representation and propagation procedure for each proxy model."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-5.3-01",
+   "section": "5.3",
+   "title": "Non-measurable domains cannot be emitted",
+   "quote": "The PTL SHALL NOT emit outputs concerning:\n\n- intent,",
+   "interpretation": "Check outputs against all listed excluded subjects: intent, dignity, belief, responsibility, consent, and moral, cultural, or social harm. The breadth of 'concerning' requires an explicit content-classification rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_outputs",
+    "output_subject_classification"
+   ],
+   "criterion": "No PTL output concerns any of the section's explicitly excluded domains.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "output subject classifications"
+   ],
+   "gap": "No executable rule determines whether an output concerns an excluded domain. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a classifier or reviewed labels for excluded output subjects."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-6-01",
+   "section": "6",
+   "title": "Defined independent oracle class taxonomy",
+   "quote": "- Orbital (satellite-based remote sensing),\n- Ground (fixed terrestrial or marine sensors),\n- Autonomous (mobile or robotic sensing platforms).",
+   "interpretation": "Validate oracle class assignments against the three defined platform categories. The text does not resolve overlaps such as fixed robotic sensors or specify whether the class list can be extended.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "oracle_class_assignments",
+    "platform_characteristics"
+   ],
+   "criterion": "Orbital denotes satellite-based remote sensing; Ground denotes fixed terrestrial or marine sensors; Autonomous denotes mobile or robotic sensing platforms.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle platform characteristics"
+   ],
+   "gap": "Overlapping category assignments and taxonomy extensibility are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare tie-breaking rules for overlapping platform descriptions and whether additional classes are allowed."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-6-02",
+   "section": "6",
+   "title": "Divergence detection only across classes",
+   "quote": "Divergence detection applies **exclusively across classes**, not within a single class.",
+   "interpretation": "Inspect every divergence comparison and reject comparisons confined to one oracle class. This checks comparison scope, assuming class assignments have already been validated.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "divergence_comparisons",
+    "oracle_class_assignments"
+   ],
+   "criterion": "Every divergence comparison involves different oracle classes; no within-class comparison triggers protocol divergence.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validated oracle class assignments"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-7-01",
+   "section": "7",
+   "title": "Authenticated timestamped registered ingestion data",
+   "quote": "- be cryptographically signed at the source,\n- be time-stamped with a verifiable clock,\n- be traceable to a registered oracle identity,",
+   "interpretation": "Verify source signatures, timestamp clock evidence, and registered identity linkage for every ingested datum. The protocol leaves signature schemes, clock verification, and identity evidence unspecified; authenticity may optionally be verified using zero-knowledge proofs.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "ingested_data",
+    "source_signatures",
+    "timestamps",
+    "clock_evidence",
+    "oracle_registry",
+    "authenticity_proofs"
+   ],
+   "criterion": "Every ingested datum is signed at its source, timestamped with a verifiable clock, and traceable to a registered oracle identity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "verification keys",
+    "clock attestations",
+    "oracle identity registry"
+   ],
+   "gap": "Accepted signature, clock-verification, identity-linkage, and optional proof schemes are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare accepted cryptographic schemes and clock and identity verification procedures."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-7-02",
+   "section": "7",
+   "title": "Open publicly decodable ingestion formats",
+   "quote": "- be delivered in an open, publicly decodable schema.\n\nProprietary or non-decodable data formats SHALL be rejected regardless of signature validity.",
+   "interpretation": "Check schema availability and public decoding, and reject proprietary or non-decodable formats even when signatures verify. A proprietary sensor implementation can remain concealed, but the delivered data format must satisfy this rule.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "data_format",
+    "schema",
+    "public_decoder",
+    "format_ownership_status",
+    "ingestion_decision"
+   ],
+   "criterion": "Accept data only in open, publicly decodable schemas; reject proprietary or non-decodable formats irrespective of signature validity.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "public schemas and decoders",
+    "format licensing or ownership classification"
+   ],
+   "gap": "The meanings of open and proprietary formats and the public-decodability test are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare criteria for openness, proprietary status, and public decoding."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-7-03",
+   "section": "7",
+   "title": "No transformations during data ingestion",
+   "quote": "No data may be modified, normalized, aggregated, or interpreted at ingestion time.",
+   "interpretation": "Check ingestion operation traces for prohibited transformations and verify that admitted measurement content matches source content. The boundary between ingestion validation or decoding and modification requires an explicit pipeline definition.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "source_data",
+    "ingested_data",
+    "ingestion_operations",
+    "pipeline_boundaries"
+   ],
+   "criterion": "During ingestion, data is neither modified, normalized, aggregated, nor interpreted.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "ingestion operation traces"
+   ],
+   "gap": "Ingestion boundaries and the treatment of decoding or representation changes are undefined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Define ingestion stages and distinguish validation or decoding from prohibited transformation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-8-01",
+   "section": "8",
+   "title": "Source and owner confidence caps",
+   "quote": "- Maximum confidence weight per oracle source: **4%**\n- Maximum combined confidence weight per oracle owner: **4%**",
+   "interpretation": "Check each source weight and the combined weights of all sources controlled by each owner. The owner cap applies regardless of device count or distribution, using validated ownership assignments.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "source_weights",
+    "source_owner_mapping"
+   ],
+   "criterion": "Every source weight ≤ 4%, and every owner's combined source weight ≤ 4%, regardless of device number or distribution.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "validated source ownership mapping"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-8-02",
+   "section": "8",
+   "title": "Automatic sanctions for excess weight",
+   "quote": "- automatic zeroing of excess weight,\n- slashing of the violating owner’s remaining stake, where applicable.",
+   "interpretation": "For each cap violation, verify automatic removal of excess weight and slashing of the owner's remaining stake when applicable. The allocation of removed weight, slashing amount, applicability, and action timing are not defined.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "cap_violations",
+    "weights_before",
+    "weights_after",
+    "owner_stake",
+    "slashing_events",
+    "slashing_applicability"
+   ],
+   "criterion": "A cap violation automatically zeros excess weight and causes applicable slashing of the violating owner's remaining stake.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "stake balances and slashing records",
+    "ownership mapping"
+   ],
+   "gap": "Excess-weight allocation and the scope, amount, applicability, and timing of slashing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare excess-weight removal and slashing rules, including whether remaining stake means all remaining stake."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-9-01",
+   "section": "9",
+   "title": "Explicit TTL and mandatory expiry",
+   "quote": "All data types SHALL have an explicit TTL.\n\nData exceeding its TTL SHALL have its confidence weight set to zero.",
+   "interpretation": "Verify that every data type has an explicit TTL and every datum older than its TTL has zero confidence weight. Equality with TTL does not satisfy the stated exceeding condition.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "data_types",
+    "ttl_assignments",
+    "datum_types",
+    "datum_ages",
+    "confidence_weights"
+   ],
+   "criterion": "Every data type has a TTL; for every datum, age > assigned TTL implies confidence weight = 0.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "datum timestamps and type assignments"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-9-02",
+   "section": "9",
+   "title": "Stale data cannot support current state",
+   "quote": "Stale data MUST NOT be:\n\n- extrapolated,",
+   "interpretation": "Inspect data lineage and operations to ensure stale data is not extrapolated, interpolated, substituted, or averaged into current state. The meaning of substitution needs clarification, including whether it prohibits replacing a stale datum with a fresh independent observation.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "stale_data",
+    "processing_operations",
+    "current_state_lineage"
+   ],
+   "criterion": "Stale data undergoes none of the four prohibited uses: extrapolation, interpolation, substitution, or averaging into current state.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "current-state computation lineage"
+   ],
+   "gap": "Substitution is undefined and can describe either using stale data as a replacement or replacing stale data. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the meaning of substitution and operation labels for stale-data processing."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-9-03",
+   "section": "9",
+   "title": "Missing observations propagate explicit degradation",
+   "quote": "- SHALL NOT be interpreted as neutral or zero-impact physical states,\n- MUST propagate upward as **explicit uncertainty, degradation, or halt signals**.",
+   "interpretation": "For oracle silence, signal loss, or zero weight, verify upward emission of an explicit uncertainty, degradation, or halt signal and absence of neutral-state or zero-impact substitution. The text does not assign a particular signal to each condition or specify propagation latency.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "oracle_conditions",
+    "upward_signals",
+    "state_substitutions",
+    "condition_detection_rules"
+   ],
+   "criterion": "Each detected silence, signal-loss, or zero-weight condition propagates upward as uncertainty, degradation, or halt and is not represented as a neutral or zero-impact physical state.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle availability and signal status",
+    "higher-layer signal receipts"
+   ],
+   "gap": "Silence detection, neutral-state classification, and propagation timing are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare silence-detection timing, state classifications, and signal-propagation semantics."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-10-01",
+   "section": "10",
+   "title": "Deterministic Bayesian physical state aggregation",
+   "quote": "- Oracle inputs act as likelihood updates, not votes.\n- Prior weights reflect long-term reliability.\n- Posterior distributions define S(t).",
+   "interpretation": "Validate that the aggregation pipeline is a deterministic Bayesian ensemble using oracle inputs as likelihood updates, reliability-based priors, and posteriors to define S(t). No likelihood construction, reliability estimator, prior mapping, or posterior-to-vector mapping is supplied.",
+   "kind": "formula",
+   "checkable": "partial",
+   "inputs": [
+    "admissible_oracle_inputs",
+    "reliability_history",
+    "priors",
+    "likelihoods",
+    "posteriors",
+    "state_vector",
+    "aggregation_model"
+   ],
+   "criterion": "A deterministic Bayesian ensemble updates likelihoods from admissible oracle inputs, uses priors reflecting long-term reliability, and defines S(t) from posterior distributions.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "oracle reliability histories and admissible measurements"
+   ],
+   "gap": "The Bayesian model and all mappings needed to calculate the result are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the likelihood model, reliability horizon and estimator, prior construction, and posterior-to-S(t) mapping."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-10-02",
+   "section": "10",
+   "title": "Identical aggregation inputs reproduce outputs",
+   "quote": "Given identical inputs, aggregation MUST be reproducible.",
+   "interpretation": "Replay aggregation with identical complete inputs and compare results. The text does not define whether reproducibility means bitwise identity or numerical equivalence, or which configuration and historical state count as inputs.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "aggregation_runs",
+    "complete_input_sets",
+    "aggregation_outputs",
+    "equivalence_rule"
+   ],
+   "criterion": "Aggregation runs with identical inputs produce reproducible results.",
+   "numeric_source": "hypothesis",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "aggregation execution records"
+   ],
+   "gap": "The complete input boundary and output-equivalence standard are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare complete aggregation inputs and whether reproducibility requires bitwise equality or a specified equivalence rule."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-10-03",
+   "section": "10",
+   "title": "Auditable and explainable aggregation pipelines",
+   "quote": "All aggregation pipelines MUST be auditable and explainable.",
+   "interpretation": "An evaluator could inspect pipeline documentation and execution traces, but the text supplies no acceptance standard for auditability or explainability.",
+   "kind": "constraint",
+   "checkable": "no",
+   "inputs": [
+    "aggregation_pipelines",
+    "pipeline_documentation",
+    "audit_traces",
+    "explanations"
+   ],
+   "criterion": "Every aggregation pipeline is auditable and explainable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "pipeline documentation and audit evidence"
+   ],
+   "gap": "Auditability and explainability require unspecified evaluative judgments.",
+   "hypotheses_needed": [
+    "Adopt explicit review criteria or externally assigned auditability and explainability labels."
+   ],
+   "coverage": "NOT_COMPUTABLE",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-11-01",
+   "section": "11",
+   "title": "Seven percent cross-class divergence trigger",
+   "quote": "A Divergence Event is triggered when posterior distributions across independent oracle classes differ by more than **7%**.",
+   "interpretation": "Compute the difference between independent class posteriors and trigger divergence when it exceeds 7%. The distribution-distance metric, percentage denominator, and treatment of more than two classes are unspecified.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "class_posteriors",
+    "class_independence",
+    "posterior_difference_metric",
+    "divergence_events"
+   ],
+   "criterion": "Cross-class posterior difference > 7% triggers a Divergence Event.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "class-specific posterior distributions"
+   ],
+   "gap": "No metric defines a percentage difference between posterior distributions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the posterior-distance metric, percentage basis, multi-class comparison rule, and relationship to statistical significance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-11-02",
+   "section": "11",
+   "title": "Divergence flags freeze dependent transactions",
+   "quote": "- a divergence flag is emitted,\n- all dependent state-based transactions SHALL be frozen.",
+   "interpretation": "For each Divergence Event, check flag emission and freezing of every dependent state-based transaction. This is decidable given an explicit dependency mapping; no separate numerical grace period is stated.",
+   "kind": "state_transition",
+   "checkable": "yes",
+   "inputs": [
+    "divergence_events",
+    "divergence_flags",
+    "transaction_dependencies",
+    "transaction_states"
+   ],
+   "criterion": "Upon a Divergence Event, emit a divergence flag and freeze all dependent state-based transactions.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "transaction dependency mapping and execution states"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-11-03",
+   "section": "11",
+   "title": "Arbitration bounded to fourteen days",
+   "quote": "Maximum arbitration window: **14 days**.",
+   "interpretation": "Measure each arbitration window and require duration no greater than 14 days. The text does not explicitly identify the start event or prescribe what happens if arbitration ends without resolution.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "divergence_event_time",
+    "arbitration_start_time",
+    "arbitration_end_time",
+    "current_time"
+   ],
+   "criterion": "The arbitration window does not exceed 14 days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "arbitration lifecycle timestamps"
+   ],
+   "gap": "The window's start event and unresolved-expiry behavior are not specified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether the window starts at divergence detection or arbitration initiation and define expiry handling."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-11-04",
+   "section": "11",
+   "title": "Divergence resolution requires qualifying outcome",
+   "quote": "Resolution requires:\n\n- convergence within the threshold, or",
+   "interpretation": "Permit resolution only after convergence within the 7% threshold or exclusion of faulty or compromised sources. The text permits an alternative reading in which exclusion alone suffices even if remaining sources still diverge; it does not explicitly require both.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "resolution_events",
+    "posterior_difference",
+    "source_exclusions",
+    "fault_or_compromise_evidence"
+   ],
+   "criterion": "Resolution requires posterior convergence within 7% or exclusion of faulty or compromised sources.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "source fault or compromise findings",
+    "class posterior comparisons"
+   ],
+   "gap": "Fault qualification, necessary extent of exclusion, and whether convergence is required after exclusion are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare fault-evidence criteria and whether exclusion independently suffices for resolution."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-12-01",
+   "section": "12",
+   "title": "Required immutable physical truth outputs",
+   "quote": "The PTL produces the following immutable outputs:",
+   "interpretation": "Check the output interface for signed S(t), oracle confidence weights, coverage metrics, divergence flags, a confidence envelope for each output, and raw B(t), and reject mutation of emitted records. Whether immutability permits append-only correction records is left to the final interpretation note and its external error protocol.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "output_interface",
+    "emitted_records",
+    "record_history",
+    "state_vector_signatures"
+   ],
+   "criterion": "PTL provides every listed output type and preserves emitted output records as immutable.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "signature verification material",
+    "output record history"
+   ],
+   "gap": "Output cadence, signature validation details, and permitted correction mechanics are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare output emission rules and how correction records coexist with immutable outputs."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-12-02",
+   "section": "12",
+   "title": "Confidence envelopes remain within bounds",
+   "quote": "- Confidence envelope for each output ∈ [0,1]",
+   "interpretation": "Check that every output includes a confidence envelope bounded inclusively by zero and one. The text does not specify whether an envelope is a scalar, interval, or more complex object.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_outputs",
+    "confidence_envelopes",
+    "envelope_representation"
+   ],
+   "criterion": "Every output has a confidence envelope within [0,1].",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "The structure of a confidence envelope is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare whether confidence envelopes are scalars or intervals and how the bounds apply."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-12-03",
+   "section": "12",
+   "title": "Biosphere index uses admissible measurements",
+   "quote": "B(t) is a **composite physical index**, constructed exclusively from PTL-admissible measurements.",
+   "interpretation": "Trace every measurement contribution to B(t) and require PTL admissibility. Checking that the index remains physical and composite also depends on its externally specified model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "biosphere_index",
+    "biosphere_model",
+    "measurement_lineage",
+    "measurement_admissibility"
+   ],
+   "criterion": "B(t) is a composite physical index whose measurement inputs are exclusively PTL-admissible.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "B(t) model and measurement lineage",
+    "PTL admissibility decisions"
+   ],
+   "gap": "The B(t) model needed to validate its physical and composite character is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the B(t) model and complete measurement provenance."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-12-04",
+   "section": "12",
+   "title": "External biosphere model specification required",
+   "quote": "The **model, aggregation logic, weighting, and calibration of B(t)** are **not defined in PTL** and MUST be explicitly specified in **DKP-8-SIMULATION-001**.",
+   "interpretation": "Inspect DKP-8-SIMULATION-001 for explicit B(t) model, aggregation logic, weighting, and calibration specifications. The supplied text does not provide that document or authorize inventing those specifications.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "simulation_protocol",
+    "biosphere_model_specification",
+    "aggregation_specification",
+    "weighting_specification",
+    "calibration_specification"
+   ],
+   "criterion": "DKP-8-SIMULATION-001 explicitly specifies all four required aspects of B(t).",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-8-SIMULATION-001"
+   ],
+   "data_dependencies": [
+    "B(t) simulation model, aggregation, weighting, and calibration specifications"
+   ],
+   "gap": "The referenced simulation protocol and required specifications are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-12-05",
+   "section": "12",
+   "title": "Biosphere index emitted without alteration",
+   "quote": "PTL SHALL NOT modify, tune, normalize, or reinterpret B(t) beyond emitting its raw, model-declared output.",
+   "interpretation": "Compare emitted B(t) to the model-declared raw result and inspect PTL processing for prohibited alterations. The raw result's authoritative representation must come from the model.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "raw_model_output",
+    "emitted_biosphere_index",
+    "biosphere_processing_trace",
+    "model_output_contract"
+   ],
+   "criterion": "PTL emits raw, model-declared B(t) without modification, tuning, normalization, or reinterpretation.",
+   "numeric_source": "missing",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "model-declared raw B(t) output and output contract"
+   ],
+   "gap": "The authoritative B(t) model output contract is absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare the raw-output representation and permitted serialization operations."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-12-06",
+   "section": "12",
+   "title": "Calibration gates biosphere enforcement use",
+   "quote": "Until an attached and valid L8 calibration bundle exists, B(t) SHALL be treated as **informational only** and SHALL NOT trigger enforcement.",
+   "interpretation": "Block B(t)-triggered enforcement whenever an attached valid L8 calibration bundle is absent. The rule does not itself authorize enforcement after a bundle becomes valid; other activation and scope rules still apply.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "calibration_bundle",
+    "bundle_attachment",
+    "bundle_validity",
+    "biosphere_usage",
+    "enforcement_trigger_lineage"
+   ],
+   "criterion": "Without an attached valid L8 calibration bundle, B(t) is informational only and triggers no enforcement.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L8 calibration bundle and validity determination",
+    "enforcement trigger provenance"
+   ],
+   "gap": "Calibration-bundle attachment and validity criteria are not defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare bundle attachment and validity checks and how informational-only use is represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-13-01",
+   "section": "13",
+   "title": "Systemic halt on degraded observability",
+   "quote": "- aggregate confidence falls below **60%**,\n- global coverage falls below the minimum operational threshold,\n- systemic oracle integrity is compromised.",
+   "interpretation": "Require all dependent governance execution layers to halt when any listed condition holds, subject to section 14's permitted deferral. Section 16 supplies the coverage threshold as 80%; confidence and coverage equal to their thresholds do not satisfy 'below'.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "aggregate_confidence",
+    "global_coverage",
+    "systemic_integrity_status",
+    "dependent_layer_states",
+    "valid_crisis_deferral"
+   ],
+   "criterion": "Unless a valid section 14 deferral applies, aggregate confidence < 60% or global coverage < 80% or compromised systemic oracle integrity requires every dependent governance execution layer to halt.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "aggregate confidence",
+    "global coverage",
+    "systemic oracle integrity findings",
+    "governance execution states"
+   ],
+   "gap": "Confidence aggregation, global coverage measurement, and systemic compromise criteria are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare confidence aggregation, global coverage measurement, and systemic integrity predicates."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-13-02",
+   "section": "13",
+   "title": "Halt blocks execution preserves continuity",
+   "quote": "- blocks execution of L2 and higher layers,\n- SHALL NOT erase, reset, reinterpret, or invalidate L1 state,\n- preserves identity attribution, impact records, and subject continuity.",
+   "interpretation": "Check halted execution traces for blocked L2-and-higher execution and compare L1 and continuity records for prohibited changes. Erasure and resets can be detected structurally, while reinterpretation, invalidation, and subject continuity require explicit semantic rules.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "halt_status",
+    "layer_execution_trace",
+    "l1_state_history",
+    "identity_attribution",
+    "impact_records",
+    "subject_continuity"
+   ],
+   "criterion": "During Systemic Halt, L2 and higher execution is blocked; L1 is not erased, reset, reinterpreted, or invalidated; identity attribution, impact records, and subject continuity are preserved.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "L1 state and attribution records",
+    "L2-and-higher execution traces"
+   ],
+   "gap": "Semantic preservation, invalidation, and subject continuity are not operationally defined. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare continuity and semantic-preservation invariants for L1 records."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-14-01",
+   "section": "14",
+   "title": "Conditional permission to defer halt",
+   "quote": "If a Crisis Mercy status is formally activated under Appendix A.4 of the Code of Planetary Synergy, and the PTL confirms that oracle degradation is caused by **non-anthropogenic global physical events**, enforcement of Systemic Halt MAY be temporarily deferred.",
+   "interpretation": "Allow, but do not require, a temporary halt-enforcement deferral only when formal Crisis Mercy activation and PTL confirmation of the specified cause are both present. Activation validity and causal confirmation cannot be determined from this text alone.",
+   "kind": "state_transition",
+   "checkable": "partial",
+   "inputs": [
+    "crisis_mercy_status",
+    "activation_evidence",
+    "ptl_causal_confirmation",
+    "degradation_cause",
+    "halt_deferral"
+   ],
+   "criterion": "A Systemic Halt deferral is permitted only with formally activated Appendix A.4 Crisis Mercy status and PTL confirmation of non-anthropogenic global physical causation.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Appendix A.4 activation records",
+    "PTL event-causation findings"
+   ],
+   "gap": "Appendix A.4 activation criteria and the causal-confirmation method are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a causal attribution model and a procedure for validating Crisis Mercy activation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-14-02",
+   "section": "14",
+   "title": "Human causation excludes mercy classification",
+   "quote": "Events resulting from **human action, negligence, sabotage, coordinated sensor manipulation, or deliberate oracle interference** SHALL NOT be classified as non-anthropogenic.",
+   "interpretation": "Reject a non-anthropogenic classification when an event results from any listed human cause. The text does not define causal attribution or how mixed natural and human causes are assessed.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "event_causal_evidence",
+    "event_classification"
+   ],
+   "criterion": "An event resulting from human action, negligence, sabotage, coordinated sensor manipulation, or deliberate oracle interference is not classified as non-anthropogenic.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "event causation and interference findings"
+   ],
+   "gap": "Causal attribution standards and mixed-cause treatment are unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare causal attribution rules, including treatment of mixed natural and human causes."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-14-03",
+   "section": "14",
+   "title": "Deferral preserves measurement validity rules",
+   "quote": "- DOES NOT modify TTL values,\n- DOES NOT restore stale data weights,\n- DOES NOT alter aggregation logic,",
+   "interpretation": "Compare TTL settings, stale-data weights, and aggregation logic before and during a deferral. Deferral must not change TTL or aggregation logic, and stale-data weights must remain zero.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "deferral_status",
+    "ttl_history",
+    "stale_data_weights",
+    "aggregation_logic_history"
+   ],
+   "criterion": "A deferral leaves TTL values and aggregation logic unchanged and does not restore stale-data confidence weights.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "configuration history and stale-data confidence records"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-14-04",
+   "section": "14",
+   "title": "Deferral time limit and authority",
+   "quote": "- IS strictly time-limited in accordance with Appendix A.4,\n- DOES NOT create normative or precedential authority (see DKP-7-SCOPE-001).",
+   "interpretation": "Check the deferral duration against Appendix A.4 and ensure the exception is not used to create normative or precedential authority. Neither the duration nor the authority test is available in the supplied text.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "deferral_start",
+    "deferral_end",
+    "appendix_a4_time_limit",
+    "authority_claims",
+    "scope_rules"
+   ],
+   "criterion": "Deferral remains within the Appendix A.4 time limit and creates no normative or precedential authority.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-7-SCOPE-001"
+   ],
+   "data_dependencies": [
+    "Appendix A.4 time limit",
+    "scope and authority rules",
+    "deferral-related authority claims"
+   ],
+   "gap": "The external time limit and rules for identifying normative or precedential authority are absent. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a representation of normative and precedential authority for simulation checks."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-15-01",
+   "section": "15",
+   "title": "Higher layers cannot alter PTL",
+   "quote": "No higher-layer protocol may:\n\n- influence oracle weights,",
+   "interpretation": "Inspect higher-layer interactions for influence on oracle weights, modification of TTL, alteration of aggregation logic, suppression of divergence flags, or reinterpretation of confidence envelopes. Any such violation must be classified as a critical system integrity breach, but the text prescribes no specific recovery action.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "higher_layer_actions",
+    "weight_provenance",
+    "ttl_change_history",
+    "aggregation_change_history",
+    "flag_delivery_history",
+    "confidence_interpretations",
+    "integrity_breach_records"
+   ],
+   "criterion": "No higher-layer protocol performs any of the five prohibited interactions; a violation constitutes a critical system integrity breach.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "cross-layer interaction traces and configuration provenance"
+   ],
+   "gap": "Indirect influence, suppression, and confidence-envelope reinterpretation lack operational definitions. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare a causal influence model and detectable predicates for suppression and reinterpretation."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-16-01",
+   "section": "16",
+   "title": "Normative weight and divergence constants",
+   "quote": "| Max oracle source weight | 4%      |\n| Max oracle owner weight  | 4%      |\n| Divergence threshold     | 7%      |",
+   "interpretation": "Compare configured source-weight cap, owner-weight cap, and divergence threshold against the table. This validates constants without supplying the missing divergence metric or weight normalization.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "source_weight_cap",
+    "owner_weight_cap",
+    "divergence_threshold"
+   ],
+   "criterion": "source_weight_cap = 4%; owner_weight_cap = 4%; divergence_threshold = 7%.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-16-02",
+   "section": "16",
+   "title": "Normative arbitration and halt constants",
+   "quote": "| Arbitration window       | 14 days |\n| Systemic confidence halt | < 60%  |\n| Minimum global coverage  | 80%     |",
+   "interpretation": "Verify the maximum arbitration window and systemic halt settings against the table. The coverage value completes section 13's otherwise unnamed minimum operational threshold.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "maximum_arbitration_window",
+    "confidence_halt_predicate",
+    "minimum_global_coverage"
+   ],
+   "criterion": "The maximum arbitration window is 14 days, confidence halt uses confidence < 60%, and minimum global coverage is 80%.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-17-01",
+   "section": "17",
+   "title": "Atmospheric temperature and fire TTLs",
+   "quote": "| Atmospheric CO₂ concentration  | 1 hour      |\n| Surface temperature (land/sea) | 24 hours    |\n| Active fire detection          | 10 minutes  |",
+   "interpretation": "Compare assigned TTLs for the three named data types against the listed maxima. Because the table says Maximum TTL, shorter assigned TTLs satisfy these limits; the table does not require equality.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "atmospheric_co2_ttl",
+    "surface_temperature_ttl",
+    "active_fire_ttl"
+   ],
+   "criterion": "Atmospheric CO₂ TTL ≤ 1 hour; land/sea surface temperature TTL ≤ 24 hours; active fire detection TTL ≤ 10 minutes.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data-type TTL assignments"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-17-02",
+   "section": "17",
+   "title": "Biodiversity and land-use TTL limits",
+   "quote": "| Biodiversity indices           | 30 days     |\n| Land-use change                | 7 days      |",
+   "interpretation": "Compare assigned TTLs for biodiversity indices and land-use change against their maximum values. Shorter assigned TTLs satisfy the maximum-limit wording.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "biodiversity_indices_ttl",
+    "land_use_change_ttl"
+   ],
+   "criterion": "Biodiversity indices TTL ≤ 30 days; land-use change TTL ≤ 7 days.",
+   "numeric_source": "text",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "data-type TTL assignments"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-18-01",
+   "section": "18",
+   "title": "Deployed protocol remains immutable",
+   "quote": "This protocol is immutable once deployed.",
+   "interpretation": "Compare the deployed protocol artifact with subsequent artifacts under the same deployed identity. A replacement protocol can be assessed separately under the modification requirements, but the deployed artifact must remain unchanged.",
+   "kind": "constraint",
+   "checkable": "yes",
+   "inputs": [
+    "deployment_record",
+    "deployed_protocol_artifact",
+    "protocol_artifact_history"
+   ],
+   "criterion": "After deployment, the deployed protocol artifact does not change.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "deployment records and protocol artifact history"
+   ],
+   "gap": "No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-18-02",
+   "section": "18",
+   "title": "Modified protocols require explicit replacement metadata",
+   "quote": "- a new protocol identifier,\n- an explicit incompatibility declaration,\n- re-anchoring assessment against Genesis Block #0.",
+   "interpretation": "For any modified protocol, check for a new identifier, explicit incompatibility declaration, and documented re-anchoring assessment against Genesis Block #0. Presence can be checked, but adequacy of the assessment depends on unavailable Genesis criteria.",
+   "kind": "contract",
+   "checkable": "partial",
+   "inputs": [
+    "original_protocol_id",
+    "modified_protocol_id",
+    "incompatibility_declaration",
+    "reanchoring_assessment",
+    "genesis_anchors"
+   ],
+   "criterion": "Every modification has a new protocol identifier, an explicit incompatibility declaration, and a re-anchoring assessment against Genesis Block #0.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "Genesis Block #0 anchors",
+    "protocol revision and assessment records"
+   ],
+   "gap": "The requirements for a valid re-anchoring assessment are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare assessment completeness criteria using the Genesis anchors."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-EpistemicInterpretationNote-01",
+   "section": "Epistemic Interpretation Note",
+   "title": "Measurement records retain temporal meaning",
+   "quote": "PTL outputs are measurement records of physical states at specific times.",
+   "interpretation": "Check that outputs can be associated with the physical state and observation time they record. The text does not say whether the time must be an output field or may be resolved through provenance.",
+   "kind": "definition",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_outputs",
+    "physical_state_references",
+    "observation_times",
+    "output_provenance"
+   ],
+   "criterion": "Every PTL output represents a physical-state measurement at a specific time.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "measurement timestamps and provenance"
+   ],
+   "gap": "The required representation of physical-state and time associations is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how output records bind to measured physical states and observation times."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-EpistemicInterpretationNote-02",
+   "section": "Epistemic Interpretation Note",
+   "title": "Higher layers cannot override measurements",
+   "quote": "b) The prohibition on higher layers overriding measured reality",
+   "interpretation": "Check higher-layer actions for replacement or invalidation of measured reality by higher-layer assertions. The meaning of override must distinguish prohibited interference from permitted measurement-error correction.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "measurement_records",
+    "higher_layer_actions",
+    "correction_records"
+   ],
+   "criterion": "Higher layers do not override measured reality.",
+   "numeric_source": "none",
+   "normative_dependencies": [],
+   "data_dependencies": [
+    "higher-layer consumption and correction histories"
+   ],
+   "gap": "The boundary between overriding measured reality and legitimate error correction is unspecified. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare an override predicate that preserves the error-correction exception."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-EpistemicInterpretationNote-03",
+   "section": "Epistemic Interpretation Note",
+   "title": "Finality permits correction and expiry",
+   "quote": "b) Immunity from measurement error correction under DKP-4-ERROR-001\n\nc) Permanent validity beyond defined TTL windows",
+   "interpretation": "Under the preceding 'This does NOT constitute' clause, finality must not exempt measurements from the referenced correction process or extend their validity past TTL. The same list also rejects treating finality as a claim of absolute truth; the correction workflow itself is absent.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "finality_rules",
+    "measurement_correction_requests",
+    "correction_policy",
+    "datum_ages",
+    "datum_ttls",
+    "validity_decisions",
+    "output_truth_claims"
+   ],
+   "criterion": "Finality establishes neither absolute-truth claims nor immunity from DKP-4-ERROR-001 correction nor permanent validity beyond TTL.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-4-ERROR-001"
+   ],
+   "data_dependencies": [
+    "measurement-error correction rules and decisions",
+    "TTL and validity records"
+   ],
+   "gap": "The correction protocol and executable criteria for absolute-truth claims are not supplied. No lab check implemented yet.",
+   "hypotheses_needed": [
+    "Declare how correction eligibility and claims of absolute truth are represented."
+   ],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  },
+  {
+   "id": "ORACLE-EpistemicInterpretationNote-04",
+   "section": "Epistemic Interpretation Note",
+   "title": "Outputs remain epistemically bounded evaluations",
+   "quote": "PTL outputs remain bounded evaluations per DKP-1-EPISTEMIC-BOUNDARIES-001.",
+   "interpretation": "Validate outputs against the evaluation bounds required by the referenced epistemic-boundaries protocol. The supplied document provides no substitute for those external requirements.",
+   "kind": "constraint",
+   "checkable": "partial",
+   "inputs": [
+    "ptl_outputs",
+    "epistemic_boundary_rules"
+   ],
+   "criterion": "Every PTL output remains a bounded evaluation satisfying DKP-1-EPISTEMIC-BOUNDARIES-001.",
+   "numeric_source": "missing",
+   "normative_dependencies": [
+    "DKP-1-EPISTEMIC-BOUNDARIES-001"
+   ],
+   "data_dependencies": [
+    "epistemic evaluation bounds and validation rules"
+   ],
+   "gap": "The referenced epistemic-boundaries protocol is absent. No lab check implemented yet.",
+   "hypotheses_needed": [],
+   "coverage": "NOT_IMPLEMENTED",
+   "implementation": null,
+   "tests": []
+  }
+ ]
+}
