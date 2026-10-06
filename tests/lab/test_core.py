@@ -108,3 +108,24 @@ def test_report_escapes_markup():
     page = html_page(doc, "en")
     assert "<script>alert" not in page and "&lt;script&gt;" in page
     assert "<b>x</b>" in markdown(doc, "ru")      # Markdown stays plain text; HTML is escaped
+
+
+def test_validation_is_idempotent_for_every_module_example():
+    """A resolved input must validate to itself: packages store resolved inputs and replay them."""
+    from lab.modules import MODULES
+    for m in MODULES.values():
+        for name, inp in m.examples().items():
+            once = m.validate(inp)
+            assert m.validate(once) == once, (m.id, name)
+
+
+def test_every_module_example_package_replays():
+    """End to end: the first two examples of each module -> package -> replay with the same ids."""
+    from lab import api
+    from lab.modules import MODULES
+    for mid in sorted(MODULES):
+        req = api.example_request(mid)
+        req["variants"] = req["variants"][:2]
+        doc = run_request(req)
+        rep = replay(build_package(doc, {}, {"fixed": True}))
+        assert rep["same_input"] and rep["same_result"], mid

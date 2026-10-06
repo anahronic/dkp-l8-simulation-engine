@@ -112,7 +112,8 @@ def run(r: Dict[str, Any]):
                                                  "scope": r["phase2_domains"], "enforceable": True})
                 phase = 2
         # impact events and their enforcement (only in Phase >= 2, within declared domains, not retroactive)
-        for ev_day, domain in r["impact_events"]:
+        for ev in r["impact_events"]:
+            ev_day, domain = ev["day"], ev["domain"]
             if ev_day == k:
                 m = put("observation", "PTL", k, {"impact": domain})
                 impact_events.append((k, domain, m.event_id, phase))
@@ -466,9 +467,11 @@ class ExitIntegrationModule(LabModule):
                            "default": ["water", "energy"], "source": "user",
                            "label": {"en": "Enforceable domains in Phase 2", "ru": "Принуждаемые домены в фазе 2"}},
         "impact_events": {"type": "list", "min_items": 0, "max_items": 100,
-                          "items": {"type": "list", "min_items": 2, "max_items": 2, "items": {"type": "str"}},
-                          "default": [["20", "water"], ["100", "water"], ["120", "transport"], ["220", "transport"]],
-                          "source": "user", "label": {"en": "Impact events [day, domain]", "ru": "События воздействия [день, домен]"}},
+                          "items": {"type": "object", "fields": {"day": {"type": "int", "min": 0, "max": 10 ** 6},
+                                                                 "domain": {"type": "str"}}},
+                          "default": [{"day": 20, "domain": "water"}, {"day": 100, "domain": "water"},
+                                      {"day": 120, "domain": "transport"}, {"day": 220, "domain": "transport"}],
+                          "source": "user", "label": {"en": "Impact events {day, domain}", "ru": "События воздействия {day, domain}"}},
         "shock_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "DTI-Day", "source": "user",
                          "label": {"en": "Integration shock from/to day", "ru": "Шок интеграции с/до дня"}},
         "rollback_on_shock": {"type": "bool", "default": True, "source": "user",
@@ -511,10 +514,6 @@ class ExitIntegrationModule(LabModule):
     def validate(self, value: Dict[str, Any]) -> Dict[str, Any]:
         r = super().validate(value)
         p = []
-        try:
-            r["impact_events"] = [[int(d), str(dom)] for d, dom in r["impact_events"]]
-        except ValueError:
-            p.append("input.impact_events: each item is [day, domain] with a whole day")
         for key in ("shock_window", "crisis_window"):
             if not all(float(x).is_integer() for x in r[key]):
                 p.append(f"input.{key}: whole days")
@@ -571,4 +570,4 @@ class ExitIntegrationModule(LabModule):
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"decreasing_phase_days": {"phase_entry_days": [90, 30, 200]},
-                "bad_event": {"impact_events": [["day ten", "water"]]}}
+                "bad_event": {"impact_events": [{"day": "ten", "domain": "water"}]}}
