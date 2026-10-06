@@ -378,11 +378,17 @@
    "data_dependencies": [
     "operational outputs from all producing modules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "operational_outputs_have_metadata"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -476,11 +482,17 @@
     "metadata validation findings",
     "deviation reporting records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "metadata_deviation_reported"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -728,13 +740,19 @@
     "protocol execution inputs and outputs",
     "execution context"
    ],
-   "gap": "The complete input boundary and the execution domain over which determinism must be established are unspecified. No lab check implemented yet.",
+   "gap": "Determinism of this module's execution only.",
    "hypotheses_needed": [
     "Declare what counts as an input and whether determinism is checked over observed executions or a complete model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "deterministic_execution"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1126,13 +1144,19 @@
     "failure and halt signal histories",
     "response mechanism provenance"
    ],
-   "gap": "A causal non-interference model and the boundary between reporting and required response triggering are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how audit-caused changes, failure masking, and signal delays are identified, and how escalation triggers relate to observation-only operation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "audit_observes_only"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

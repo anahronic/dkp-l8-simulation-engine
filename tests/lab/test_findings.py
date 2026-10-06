@@ -100,6 +100,15 @@ def test_f011_f012_exit_conflicts():
             for n, x in v.items()} == {"never_suspended": (284, "PASS"), "scope_crisis_suspension": (302, "FAIL")}
 
 
+def test_f013_mirror_conflict():
+    with open(os.path.join(FINDINGS, "F-013.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    st = {n: {c["requirement_id"]: c["status"] for c in x["checks"]} for n, x in v.items()}
+    assert st["interop_rule"]["CRISIS-4-01"] == "FAIL" and st["ptl_rule"]["INTEROP-9-04"] == "FAIL"
+    assert st["tolerance_missing"]["CRISIS-4-01"] == "UNKNOWN"
+    assert v["ptl_rule"]["outputs"]["internal_decisions"] == 16
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [

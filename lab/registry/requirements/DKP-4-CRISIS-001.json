@@ -513,7 +513,7 @@
     "PTL output verification",
     "multi-domain harm measurements"
    ],
-   "gap": "'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010).",
+   "gap": "crisis_recovery: 'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010). interop_failure: 'Correction tolerance' is not defined (declared input).",
    "hypotheses_needed": [
     "Declare sustained durations, correction tolerance, survival margins, and a consistent conjunction of entry prerequisites."
    ],
@@ -521,14 +521,23 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "ptl_confirmed_triggers"
+    "check": "ptl_confirmed_triggers",
+    "also": [
+     {
+      "module": "interop_failure",
+      "version": "1.0.0",
+      "check": "ptl_loss_triggers_crisis"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_interop_failure_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
-    "Q-030"
+    "Q-030",
+    "Q-033"
    ],
    "decision_status": "UNRESOLVED"
   },

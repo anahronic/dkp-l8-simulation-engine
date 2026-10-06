@@ -368,11 +368,17 @@
     "ruling provenance",
     "internal recognition status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "external_rulings_not_binding"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -483,13 +489,19 @@
     "internal valuation outputs",
     "justice weighting parameters"
    ],
-   "gap": "The justice weighting formula and the meaning of internal equivalence are missing. No lab check implemented yet.",
+   "gap": "No translation function is given: UNKNOWN.",
    "hypotheses_needed": [
     "Declare the justice weighting formula, its parameters, and the equivalence relation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "justice_weighted_translation"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -543,11 +555,17 @@
    "data_dependencies": [
     "value provenance and source flags"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "external_values_flagged"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -698,13 +716,19 @@
     "control logic transparency and ownership classifications",
     "input trust assignments"
    ],
-   "gap": "Operational definitions of black-box and proprietary control logic are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how control logic is classified as black-box or proprietary."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "blackbox_not_authoritative"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -732,13 +756,19 @@
     "ingestion trust labels",
     "information classification rules"
    ],
-   "gap": "DKP-5-INFO-001 is absent, and the relationship between the two permitted ingestion descriptions is ambiguous. No lab check implemented yet.",
+   "gap": "I1 classification is recorded; INFO transitions are not modelled.",
    "hypotheses_needed": [
     "Declare whether untrusted status and I1 classification are cumulative requirements or alternative representations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "external_info_as_i1"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -763,13 +793,19 @@
     "PTL verification requirements and results",
     "verification decision provenance"
    ],
-   "gap": "The PTL verification procedure and the conditions requiring it are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the PTL verification contract and how substitution is detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "no_external_validation_for_ptl"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -826,16 +862,24 @@
     "external failure events",
     "internal execution traces"
    ],
-   "gap": "A reference execution model and the execution properties that must remain unaffected are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the failure triggers and the equivalence relation between affected-scenario and reference execution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "internal_execution_unaffected"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-033"
+   ]
   },
   {
    "id": "INTEROP-9-03",
@@ -858,13 +902,19 @@
     "DKP transition logs",
     "rollback classifications"
    ],
-   "gap": "The scope of the rollback prohibition and its relationship to upgrade rollback are not explicit. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the prohibition covers failure responses only or all rollbacks during a failure condition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "no_rollback"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -887,14 +937,22 @@
    "data_dependencies": [
     "Crisis and Mercy activation logs with trigger provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Conflicts with CRISIS §4 when the external system is an oracle mirror (F-013).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "no_crisis_from_interop"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-033"
+   ]
   },
   {
    "id": "INTEROP-10-01",
@@ -945,13 +1003,19 @@
     "algorithm dependency graphs",
     "external system functional classifications"
    ],
-   "gap": "The meaning of algorithmic dependency and its boundary with permitted external inputs are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which data, control, or availability dependencies constitute algorithmic dependency."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "no_external_decision_dependency"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -976,13 +1040,19 @@
     "API capability specifications",
     "governance authority and action records"
    ],
-   "gap": "The boundary between permitted API access and prohibited governance-by-API is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which API capabilities or effects constitute exercise of governance authority."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "no_governance_by_api"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1007,13 +1077,19 @@
     "norm import records",
     "disclosure and authorization records"
    ],
-   "gap": "The evidence and procedure required to establish that an import is not silent are unspecified. No lab check implemented yet.",
+   "gap": "Norm import is observed as execution of an external ruling.",
    "hypotheses_needed": [
     "Declare how silent imports are detected and what disclosure or authorization is relevant."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "no_silent_norm_import"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1130,13 +1206,19 @@
     "boundary event streams",
     "event logs and review access"
    ],
-   "gap": "The set of recordable boundary events and the requirements for later review are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the boundary event taxonomy, minimum record contents, and any assumed retention policy."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "boundary_events_recorded"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

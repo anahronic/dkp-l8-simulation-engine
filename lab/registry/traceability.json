@@ -8,6 +8,7 @@
   "dispute_correction",
   "exit_integration",
   "failure_chain",
+  "interop_failure",
   "prevention",
   "sensor_loss",
   "time",
@@ -318,6 +319,31 @@
    "module": "exit_integration",
    "example": "shock_and_rollback",
    "kind": "reference"
+  },
+  {
+   "module": "interop_failure",
+   "example": "external_outage",
+   "kind": "reference"
+  },
+  {
+   "module": "interop_failure",
+   "example": "faulty_boundary",
+   "kind": "counterexample"
+  },
+  {
+   "module": "interop_failure",
+   "example": "mirror_loss_beyond_tolerance",
+   "kind": "reference"
+  },
+  {
+   "module": "interop_failure",
+   "example": "mirror_loss_ptl_rule",
+   "kind": "alternative"
+  },
+  {
+   "module": "interop_failure",
+   "example": "tolerance_missing",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -325,18 +351,18 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 223,
-  "covered_percent": 12.8,
+  "covered": 242,
+  "covered_percent": 13.9,
   "statuses": {
-   "PASS": 192,
-   "FAIL": 8,
+   "PASS": 210,
+   "FAIL": 9,
    "UNKNOWN": 15,
    "NOT_APPLICABLE": 8,
-   "UNCOVERED": 1514
+   "UNCOVERED": 1495
   },
-  "resolvable": 337,
-  "resolvable_uncovered": 262,
-  "unresolved_decisions": 1400
+  "resolvable": 336,
+  "resolvable_uncovered": 257,
+  "unresolved_decisions": 1401
  },
  "stages": [
   {
@@ -386,18 +412,18 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 223,
-    "covered_percent": 12.8,
+    "covered": 242,
+    "covered_percent": 13.9,
     "statuses": {
-     "PASS": 192,
-     "FAIL": 8,
+     "PASS": 210,
+     "FAIL": 9,
      "UNKNOWN": 15,
      "NOT_APPLICABLE": 8,
-     "UNCOVERED": 1514
+     "UNCOVERED": 1495
     },
-    "resolvable": 337,
-    "resolvable_uncovered": 262,
-    "unresolved_decisions": 1400
+    "resolvable": 336,
+    "resolvable_uncovered": 257,
+    "unresolved_decisions": 1401
    }
   },
   {
@@ -467,17 +493,17 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 63,
-    "covered_percent": 17.3,
+    "covered": 67,
+    "covered_percent": 18.4,
     "statuses": {
-     "PASS": 58,
+     "PASS": 62,
      "FAIL": 3,
      "UNKNOWN": 0,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 302
+     "UNCOVERED": 298
     },
     "resolvable": 103,
-    "resolvable_uncovered": 80,
+    "resolvable_uncovered": 78,
     "unresolved_decisions": 262
    }
   },
@@ -502,8 +528,8 @@
     "covered_percent": 22.6,
     "statuses": {
      "PASS": 87,
-     "FAIL": 0,
-     "UNKNOWN": 5,
+     "FAIL": 1,
+     "UNKNOWN": 4,
      "NOT_APPLICABLE": 4,
      "UNCOVERED": 328
     },
@@ -560,18 +586,18 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 29,
-    "covered_percent": 5.7,
+    "covered": 44,
+    "covered_percent": 8.6,
     "statuses": {
-     "PASS": 21,
+     "PASS": 35,
      "FAIL": 0,
-     "UNKNOWN": 8,
+     "UNKNOWN": 9,
      "NOT_APPLICABLE": 0,
-     "UNCOVERED": 482
+     "UNCOVERED": 467
     },
-    "resolvable": 81,
-    "resolvable_uncovered": 76,
-    "unresolved_decisions": 430
+    "resolvable": 80,
+    "resolvable_uncovered": 73,
+    "unresolved_decisions": 431
    }
   },
   {
@@ -747,13 +773,9 @@
     "DKP-6-RESILIENCE-001",
     "DKP-8-AUDIT-001"
    ],
-   "module": null,
-   "status": "NOT STARTED",
-   "documents_without_checks": [
-    "DKP-8-INTEROP-001",
-    "DKP-6-RESILIENCE-001",
-    "DKP-8-AUDIT-001"
-   ]
+   "module": "interop_failure",
+   "status": "DONE",
+   "documents_without_checks": []
   }
  ],
  "open_questions": [
@@ -915,6 +937,11 @@
   {
    "id": "Q-032",
    "title": "EXIT §4 'never suspended' against SCOPE §9 'except temporarily within Crisis Scope to preserve immediate life'",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-033",
+   "title": "Failure of an external oracle mirror: INTEROP §9 forbids Crisis; CRISIS §4 requires it on PTL loss beyond an undefined tolerance",
    "status": "UNRESOLVED"
   }
  ],
@@ -21865,30 +21892,37 @@
    "module": "crisis_recovery",
    "check": "ptl_confirmed_triggers",
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_interop_failure_module.py"
    ],
-   "gap": "'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010).",
-   "also_checked_by": [],
+   "gap": "crisis_recovery: 'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010). interop_failure: 'Correction tolerance' is not defined (declared input).",
+   "also_checked_by": [
+    "interop_failure · ptl_loss_triggers_crisis"
+   ],
    "hypotheses": [
     "H-CR-1",
     "H-CR-2",
-    "H-CR-3"
+    "H-CR-3",
+    "H-IO-1",
+    "H-IO-2"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
-    "Q-030"
+    "Q-030",
+    "Q-033"
    ],
    "observed": {
     "PASS": 1,
-    "FAIL": 0,
-    "UNKNOWN": 1,
-    "NOT_APPLICABLE": 1
+    "FAIL": 1,
+    "UNKNOWN": 2,
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNKNOWN",
+   "status": "FAIL",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "UNKNOWN": 1
+    "UNKNOWN": 1,
+    "PASS": 1
    }
   },
   {
@@ -38901,25 +38935,34 @@
    "section": "5.3",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced interoperability rules and the required notion of output identity are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "mirror_unaltered",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "RESILIENCE-5.4-01",
@@ -39109,25 +39152,32 @@
    "section": "5.7",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Violation detection depends on absent integrity definitions, and the invalidation deadline is unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "entry_point_invalidated",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "RESILIENCE-5.8-01",
@@ -44782,25 +44832,32 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A causal non-interference model and the boundary between reporting and required response triggering are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "audit_observes_only",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "AUDIT-11-01",
@@ -45432,25 +45489,32 @@
    "section": "5.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The complete input boundary and the execution domain over which determinism must be established are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "deterministic_execution",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Determinism of this module's execution only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "AUDIT-5.5-01",
@@ -45744,25 +45808,32 @@
    "section": "Epistemic Metadata Verification",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "operational_outputs_have_metadata",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "AUDIT-EpistemicMetadataVerification-02",
@@ -45822,25 +45893,34 @@
    "section": "Epistemic Metadata Verification",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "metadata_deviation_reported",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-1-01",
@@ -45900,25 +45980,32 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meaning of algorithmic dependency and its boundary with permitted external inputs are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "no_external_decision_dependency",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-10-03",
@@ -45926,25 +46013,32 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between permitted API access and prohibited governance-by-API is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "no_governance_by_api",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-10-04",
@@ -45952,25 +46046,34 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The evidence and procedure required to establish that an import is not silent are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_silent_norm_import",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Norm import is observed as execution of an external ruling.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-10-05",
@@ -46056,25 +46159,32 @@
    "section": "11",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The set of recordable boundary events and the requirements for later review are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "boundary_events_recorded",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-11-04",
@@ -46654,25 +46764,34 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "external_rulings_not_binding",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-5-03",
@@ -46758,25 +46877,32 @@
    "section": "6",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The justice weighting formula and the meaning of internal equivalence are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "justice_weighted_translation",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "No translation function is given: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 3,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "UNKNOWN": 1
+   }
   },
   {
    "id": "INTEROP-6-03",
@@ -46810,25 +46936,32 @@
    "section": "6",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "external_values_flagged",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-6-05",
@@ -46940,25 +47073,34 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of black-box and proprietary control logic are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "blackbox_not_authoritative",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-8-01",
@@ -46966,25 +47108,32 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-5-INFO-001 is absent, and the relationship between the two permitted ingestion descriptions is ambiguous. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "external_info_as_i1",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "I1 classification is recorded; INFO transitions are not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-8-02",
@@ -46992,25 +47141,34 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The PTL verification procedure and the conditions requiring it are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "no_external_validation_for_ptl",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-9-01",
@@ -47044,25 +47202,36 @@
    "section": "9",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A reference execution model and the execution properties that must remain unaffected are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "internal_execution_unaffected",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-033"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary"
+   ],
+   "under_alternative_readings": {
+    "FAIL": 1
+   }
   },
   {
    "id": "INTEROP-9-03",
@@ -47070,25 +47239,32 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of the rollback prohibition and its relationship to upgrade rollback are not explicit. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "no_rollback",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "INTEROP-9-04",
@@ -47096,25 +47272,34 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_crisis_from_interop",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Conflicts with CRISIS §4 when the external system is an oracle mirror (F-013).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-033"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "FAIL": 1
+   }
   },
   {
    "id": "SIMULATION-0-01",

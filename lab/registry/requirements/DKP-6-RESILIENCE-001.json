@@ -325,13 +325,19 @@
     "external validation requirements",
     "original and mirrored DKP outputs"
    ],
-   "gap": "The referenced interoperability rules and the required notion of output identity are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define whether output preservation means exact representation equality or semantic equality."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "mirror_unaltered"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -582,13 +588,19 @@
     "interface-integrity validation results",
     "entry-point validity states"
    ],
-   "gap": "Violation detection depends on absent integrity definitions, and the invalidation deadline is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply interface violation rules and define when the resulting invalidation must be observable."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.0.0",
+    "check": "entry_point_invalidated"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
