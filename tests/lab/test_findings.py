@@ -81,6 +81,13 @@ def test_f008_quotes_still_contradict():
     assert "DOES NOT modify TTL values" in oracle and "modify TTL values," in oracle
 
 
+def test_f010_sustained_d3_gap():
+    with open(os.path.join(FINDINGS, "F-010.request.json"), encoding="utf-8") as f:
+        doc = run_request(json.load(f))
+    got = {n: (v["outputs"]["defense_escalation_hour"], v["outputs"]["crisis_entry_hour"]) for n, v in doc["variants"].items()}
+    assert got == {"sustained_6h": (10, 15), "sustained_24h": (10, 33), "immediate": (10, 10)}
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [

@@ -4,6 +4,7 @@
  "registry_problems": 0,
  "modules": [
   "contribution",
+  "crisis_recovery",
   "dispute_correction",
   "failure_chain",
   "prevention",
@@ -261,6 +262,31 @@
    "module": "sensor_loss",
    "example": "sybil_inflation",
    "kind": "reference"
+  },
+  {
+   "module": "crisis_recovery",
+   "example": "cascade_and_divergence",
+   "kind": "reference"
+  },
+  {
+   "module": "crisis_recovery",
+   "example": "d3_immediate",
+   "kind": "alternative"
+  },
+  {
+   "module": "crisis_recovery",
+   "example": "d3_sustained",
+   "kind": "reference"
+  },
+  {
+   "module": "crisis_recovery",
+   "example": "faulty_crisis",
+   "kind": "counterexample"
+  },
+  {
+   "module": "crisis_recovery",
+   "example": "no_crisis",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -280,18 +306,18 @@
    "DKP-8-SIMULATION-001"
   ],
   "provisions": 1215,
-  "covered": 159,
-  "covered_percent": 13.1,
+  "covered": 180,
+  "covered_percent": 14.8,
   "statuses": {
-   "PASS": 136,
+   "PASS": 156,
    "FAIL": 7,
-   "UNKNOWN": 10,
+   "UNKNOWN": 11,
    "NOT_APPLICABLE": 6,
-   "UNCOVERED": 1056
+   "UNCOVERED": 1035
   },
-  "resolvable": 255,
-  "resolvable_uncovered": 198,
-  "unresolved_decisions": 960
+  "resolvable": 254,
+  "resolvable_uncovered": 191,
+  "unresolved_decisions": 961
  },
  "stages": [
   {
@@ -347,18 +373,18 @@
      "DKP-8-SIMULATION-001"
     ],
     "provisions": 1215,
-    "covered": 159,
-    "covered_percent": 13.1,
+    "covered": 180,
+    "covered_percent": 14.8,
     "statuses": {
-     "PASS": 136,
+     "PASS": 156,
      "FAIL": 7,
-     "UNKNOWN": 10,
+     "UNKNOWN": 11,
      "NOT_APPLICABLE": 6,
-     "UNCOVERED": 1056
+     "UNCOVERED": 1035
     },
-    "resolvable": 255,
-    "resolvable_uncovered": 198,
-    "unresolved_decisions": 960
+    "resolvable": 254,
+    "resolvable_uncovered": 191,
+    "unresolved_decisions": 961
    }
   },
   {
@@ -466,18 +492,18 @@
      "DKP-6-INTEGRATION-001"
     ],
     "provisions": 311,
-    "covered": 53,
-    "covered_percent": 17.0,
+    "covered": 70,
+    "covered_percent": 22.5,
     "statuses": {
-     "PASS": 47,
+     "PASS": 63,
      "FAIL": 0,
-     "UNKNOWN": 4,
+     "UNKNOWN": 5,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 258
+     "UNCOVERED": 241
     },
-    "resolvable": 66,
-    "resolvable_uncovered": 50,
-    "unresolved_decisions": 245
+    "resolvable": 65,
+    "resolvable_uncovered": 44,
+    "unresolved_decisions": 246
    }
   },
   {
@@ -536,17 +562,17 @@
      "DKP-8-INTEROP-001"
     ],
     "provisions": 303,
-    "covered": 19,
-    "covered_percent": 6.3,
+    "covered": 23,
+    "covered_percent": 7.6,
     "statuses": {
-     "PASS": 15,
+     "PASS": 19,
      "FAIL": 0,
      "UNKNOWN": 4,
      "NOT_APPLICABLE": 0,
-     "UNCOVERED": 284
+     "UNCOVERED": 280
     },
     "resolvable": 60,
-    "resolvable_uncovered": 56,
+    "resolvable_uncovered": 55,
     "unresolved_decisions": 243
    }
   },
@@ -663,11 +689,9 @@
     "DKP-4-ERROR-001",
     "DKP-4-UPGRADE-001"
    ],
-   "module": null,
-   "status": "NOT STARTED",
+   "module": "crisis_recovery",
+   "status": "PARTIAL",
    "documents_without_checks": [
-    "DKP-4-CRISIS-001",
-    "DKP-3-DEFENSE-001",
     "DKP-7-SCOPE-001",
     "DKP-4-ERROR-001",
     "DKP-4-UPGRADE-001"
@@ -885,6 +909,11 @@
   {
    "id": "Q-029",
    "title": "CRISIS forbids numbers in the protocol and defers them to DKP-8-SIMULATION-001 (durations, 'sustained', revalidation cadence), which defines none",
+   "status": "UNRESOLVED"
+  },
+  {
+   "id": "Q-030",
+   "title": "DEFENSE §5 makes escalation at D3 mandatory; CRISIS §4 enters only on 'sustained' D3 (duration undefined)",
    "status": "UNRESOLVED"
   }
  ],
@@ -18262,7 +18291,9 @@
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-030"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -18279,25 +18310,33 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The refresh interval outside the VPI rule and the required exit state are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "d3_needs_confirmation",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "DEFENSE-6-01",
@@ -18487,25 +18526,33 @@
    "section": "8",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "resource_recovery_claim",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "DEFENSE-8-03",
@@ -18539,25 +18586,33 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Admissible-state criteria and the operational meaning and timing of wind down are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "wind_down",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Admissible-state restoration is the end of the harm window.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "DEFENSE-9-01",
@@ -18565,25 +18620,35 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Trigger assessment criteria and the escalation deadline are not specified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "escalation_to_crisis",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-030"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-01",
@@ -21321,25 +21386,33 @@
    "section": "10",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The commitment scheme and the unnamed higher-layer audit rules are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "actions_anchored_committed",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-10-02",
@@ -21347,25 +21420,33 @@
    "section": "10",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The archive isolation standard, payload completeness criteria, and post-termination preservation test are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "final_state_broadcast",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "The broadcast is a logged notice; the external archive is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   }
   },
   {
    "id": "CRISIS-11-01",
@@ -21477,25 +21558,33 @@
    "section": "12.1",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Confidence propagation and multi-oracle consistency determination procedures are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "conditional_outputs",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Confidence and consistency are propagated from the scenario's PTL flags.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-12.1-02",
@@ -21503,25 +21592,33 @@
    "section": "12.1",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "scope_ref_flags",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-12.2-01",
@@ -21763,25 +21860,35 @@
    "section": "4",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The trigger thresholds and sustained-state durations are absent, and the text does not explain how every listed trigger satisfies the separate L3 escalation gate. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "ptl_confirmed_triggers",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-030"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "UNKNOWN": 1
+   }
   },
   {
    "id": "CRISIS-4-02",
@@ -21789,25 +21896,35 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "no_discretionary_entry",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-5-01",
@@ -21815,25 +21932,33 @@
    "section": "5",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The DKP time-index contract is not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "finite_dti_states",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Transitions among C1–C4 are a hypothesis (H-CR-1).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-5-02",
@@ -21971,25 +22096,35 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The validated cadence and the meaning of continuous PTL confirmation are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "persistence_needs_confirmation",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Revalidation cadence is not defined (Q-029).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-029"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-6-01",
@@ -22075,25 +22210,33 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Proportionality, applicable time limits, full auditability, and reversal feasibility lack complete operational criteria. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "action_qualities",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Proportionality to the threat is not measurable here.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-7-01",
@@ -22101,25 +22244,35 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The discretionary-authority classification and Justice and identity baselines are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "logging_no_authority",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-7-02",
@@ -22153,25 +22306,35 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not define factor classifications or a test for indirect priority dependence. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "no_status_priority",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-7-04",
@@ -22179,25 +22342,35 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The baseline minimum and the allowed decision rules for equality, proximity, and feasibility are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "allocation_basis",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-8-01",
@@ -22231,25 +22404,35 @@
    "section": "8",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "human_logged",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-9-01",
@@ -22257,25 +22440,33 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Admissibility, existential levels, and calibrated exit thresholds are not provided. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "automatic_exit",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Exit conditions are scenario inputs confirmed by PTL messages.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-9-02",
@@ -22283,25 +22474,35 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The granularity and completion semantics of strict layer reactivation order are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "sequential_recovery",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-9-03",
@@ -22361,25 +22562,35 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The event semantics of immediate collapse and the representation of an interpretation's active lifetime are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "immediate_collapse",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-AxiomA1InterpretationConstraint-01",
@@ -22413,25 +22624,35 @@
    "section": "Non-Precedent Rule:",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Semantic precedent and justificatory reliance are not formally represented in the text. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "no_precedent",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Precedent is detected as citation (provenance) of a crisis action.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {}
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   }
   },
   {
    "id": "CRISIS-Non-PrecedentRule_-02",
@@ -22474,7 +22695,9 @@
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-029"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
@@ -22499,8 +22722,10 @@
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-029"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,

@@ -853,7 +853,9 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-030"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -875,13 +877,19 @@
    "data_dependencies": [
     "PTL confirmation update and validity records"
    ],
-   "gap": "The refresh interval outside the VPI rule and the required exit state are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare confirmation freshness rules and the state selected when freshness fails."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "d3_needs_confirmation"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1139,11 +1147,17 @@
     "Justice claim receipt records",
     "compensation process ownership"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "resource_recovery_claim"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1205,13 +1219,19 @@
     "PTL cessation or neutralization confirmations",
     "system admissibility assessments"
    ],
-   "gap": "Admissible-state criteria and the operational meaning and timing of wind down are undefined. No lab check implemented yet.",
+   "gap": "Admissible-state restoration is the end of the harm window.",
    "hypotheses_needed": [
     "Declare admissible-state predicates and wind-down transition semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "wind_down"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1242,15 +1262,23 @@
     "defense sufficiency assessments",
     "containment capacity assessments"
    ],
-   "gap": "Trigger assessment criteria and the escalation deadline are not specified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Treat each listed trigger as independently sufficient and declare the risk, sufficiency, and capacity assessment rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "escalation_to_crisis"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-030"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {

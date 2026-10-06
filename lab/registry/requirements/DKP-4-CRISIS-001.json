@@ -513,15 +513,23 @@
     "PTL output verification",
     "multi-domain harm measurements"
    ],
-   "gap": "The trigger thresholds and sustained-state durations are absent, and the text does not explain how every listed trigger satisfies the separate L3 escalation gate. No lab check implemented yet.",
+   "gap": "'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010).",
    "hypotheses_needed": [
     "Declare sustained durations, correction tolerance, survival margins, and a consistent conjunction of entry prerequisites."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "ptl_confirmed_triggers"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-030"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -542,11 +550,17 @@
    "data_dependencies": [
     "initiation provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "no_discretionary_entry"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -572,11 +586,17 @@
    "data_dependencies": [
     "DKP time indices"
    ],
-   "gap": "The DKP time-index contract is not supplied. No lab check implemented yet.",
+   "gap": "Transitions among C1–C4 are a hypothesis (H-CR-1).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "finite_dti_states"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -768,15 +788,23 @@
     "revalidation records",
     "simulation-validated cadence"
    ],
-   "gap": "The validated cadence and the meaning of continuous PTL confirmation are absent. No lab check implemented yet.",
+   "gap": "Revalidation cadence is not defined (Q-029).",
    "hypotheses_needed": [
     "Declare confirmation coverage semantics and use a simulation-validated revalidation cadence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "persistence_needs_confirmation"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-029"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -908,13 +936,19 @@
     "action execution and audit records",
     "physical and logical reversibility assessments"
    ],
-   "gap": "Proportionality, applicable time limits, full auditability, and reversal feasibility lack complete operational criteria. No lab check implemented yet.",
+   "gap": "Proportionality to the threat is not measurable here.",
    "hypotheses_needed": [
     "Declare proportionality and audit completeness tests, justified action time limits, and physical and logical reversal feasibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "action_qualities"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -939,13 +973,19 @@
    "data_dependencies": [
     "normative and upgrade justification provenance"
    ],
-   "gap": "Semantic precedent and justificatory reliance are not formally represented in the text. No lab check implemented yet.",
+   "gap": "Precedent is detected as citation (provenance) of a crisis action.",
    "hypotheses_needed": [
     "Declare a provenance model that distinguishes justificatory reliance from audit or historical reference."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "no_precedent"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1004,7 +1044,9 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-029"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -1037,8 +1079,10 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-029"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "CRISIS-7-01",
@@ -1064,13 +1108,19 @@
     "authority grants",
     "Justice axiom and identity attribution baselines"
    ],
-   "gap": "The discretionary-authority classification and Justice and identity baselines are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare discretionary authority and semantic override tests."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "logging_no_authority"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1132,13 +1182,19 @@
     "resource allocation inputs and outputs",
     "subject attribute classifications"
    ],
-   "gap": "The document does not define factor classifications or a test for indirect priority dependence. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how prohibited attributes, proxies, and causal priority effects are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "no_status_priority"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1167,13 +1223,19 @@
     "survival feasibility assessments",
     "authorized baseline survival minimum"
    ],
-   "gap": "The baseline minimum and the allowed decision rules for equality, proximity, and feasibility are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the authorized baseline minimum and the allocation rule, including whether and how the alternatives can be combined."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "allocation_basis"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1268,11 +1330,17 @@
     "human intervention events",
     "post-crisis audit scope"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "human_logged"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1308,13 +1376,19 @@
     "error correction completeness",
     "simulation-validated exit parameters"
    ],
-   "gap": "Admissibility, existential levels, and calibrated exit thresholds are not provided. No lab check implemented yet.",
+   "gap": "Exit conditions are scenario inputs confirmed by PTL messages.",
    "hypotheses_needed": [
     "Declare the admissibility and state-level predicates and apply validated exit parameters."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "automatic_exit"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1341,13 +1415,19 @@
     "Justice confirmation of crisis claim closure",
     "financial execution records"
    ],
-   "gap": "The granularity and completion semantics of strict layer reactivation order are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether ordering applies to layer activation starts or completed layer reactivation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "sequential_recovery"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1443,13 +1523,19 @@
     "authority and execution lifetimes",
     "post-crisis interpretation records"
    ],
-   "gap": "The event semantics of immediate collapse and the representation of an interpretation's active lifetime are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare atomic or timestamp-based collapse semantics and how crisis-specific interpretive authority is deactivated."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "immediate_collapse"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1479,13 +1565,19 @@
     "cryptographic commitment verification",
     "higher-layer audit transparency, delay, and redaction rules"
    ],
-   "gap": "The commitment scheme and the unnamed higher-layer audit rules are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a cryptographic commitment verification interface and identify the governing audit rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "actions_anchored_committed"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1516,13 +1608,19 @@
     "system state snapshots",
     "external archive isolation and retention evidence"
    ],
-   "gap": "The archive isolation standard, payload completeness criteria, and post-termination preservation test are unspecified. No lab check implemented yet.",
+   "gap": "The broadcast is a logged notice; the external archive is not modelled.",
    "hypotheses_needed": [
     "Declare audit and snapshot completeness, archive physical isolation, and preservation semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "final_state_broadcast"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -1688,11 +1786,17 @@
     "triggering PTL confidence metadata",
     "multi-oracle consistency determination"
    ],
-   "gap": "Confidence propagation and multi-oracle consistency determination procedures are missing. No lab check implemented yet.",
+   "gap": "Confidence and consistency are propagated from the scenario's PTL flags.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "conditional_outputs"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1716,11 +1820,17 @@
    "data_dependencies": [
     "current crisis state"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.0.0",
+    "check": "scope_ref_flags"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
