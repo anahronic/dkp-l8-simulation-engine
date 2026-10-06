@@ -331,16 +331,24 @@
     "calibrated minimum attribution confidence",
     "attribution confidence and failure diagnostics"
    ],
-   "gap": "The calibrated threshold, confidence scale, and criteria for a sufficiently specific failure reason are not supplied. No lab check implemented yet.",
+   "gap": "The threshold comes from a calibration that does not exist; without a declared threshold the chain is blocked (UNKNOWN).",
    "hypotheses_needed": [
     "The applicable calibration and confidence scale.",
     "A structured representation of specific confidence failures."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "no_attribution_output"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-025"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -361,11 +369,17 @@
    "data_dependencies": [
     "downstream enforcement trigger provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "no_enforcement_cascade"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -394,14 +408,20 @@
     "enforcement and attribution-resolution histories",
     "attribution evidence provenance"
    ],
-   "gap": "Attribution resolution and circumstantial factors lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A criterion for attribution resolution.",
     "A classification separating circumstantial factors from admissible causal evidence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "no_attribution_logged_deferred"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -429,14 +449,20 @@
     "impact significance assessment",
     "audit investigation priority and outcome records"
    ],
-   "gap": "Significance criteria, priority rules, and outcome-independence checks are unavailable. No lab check implemented yet.",
+   "gap": "'Significant impact' read as a boundary crossing (H-DC-4).",
    "hypotheses_needed": [
     "A significance criterion and investigation-priority ordering.",
     "A test for whether escalation predetermines attribution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "investigation_trigger"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -473,7 +499,9 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-025"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -568,14 +596,20 @@
     "mechanism classification",
     "originating Subject and execution provenance"
    ],
-   "gap": "The classification boundary and formal meaning of independent versus proxy-subject status are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "An entity taxonomy resolving overlap with artificial intelligences and automated systems.",
     "A formal proxy-subject representation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "proxies_not_subjects"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -607,15 +641,21 @@
     "legal attribution records",
     "counter-binding and Subject identity records"
    ],
-   "gap": "Material benefit, legal attribution, selection among multiple qualifying originators, and counter-binding auditability are undefined. No lab check implemented yet.",
+   "gap": "Counter-bindings are not modelled.",
    "hypotheses_needed": [
     "A material-benefit criterion.",
     "Whether all qualifying originating Subjects must be included.",
     "A legal-attribution representation and counter-binding validation model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "proxy_actions_to_originator"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -641,14 +681,20 @@
     "per-Subject causal contribution measurements",
     "collective and individual responsibility records"
    ],
-   "gap": "Causal contribution measurement, distribution scale, and treatment of overlapping contributions are unspecified. No lab check implemented yet.",
+   "gap": "Causal contributions are given on input.",
    "hypotheses_needed": [
     "A common causal-contribution measure.",
     "A responsibility scale and handling of overlapping contributions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "proportional_weights"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-016"

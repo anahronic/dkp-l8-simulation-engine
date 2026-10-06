@@ -99,7 +99,9 @@ def build() -> Dict[str, Any]:
                 "checkable": r["checkable"], "coverage": r["coverage"],
                 "module": impl["module"] if impl else None, "check": impl["check"] if impl else None,
                 "tests": r["tests"], "gap": r["gap"],
-                "hypotheses": hyps.get(impl["module"], []) if impl else [],
+                "also_checked_by": [f"{a['module']} · {a['check']}" for a in impl.get("also", [])] if impl else [],
+                "hypotheses": sorted({h for mid in ([impl["module"]] + [a["module"] for a in impl.get("also", [])])
+                                      for h in hyps.get(mid, [])}) if impl else [],
                 "interpretation_status": r["interpretation_status"], "decision_status": r["decision_status"],
                 "open_questions": r["open_questions"],
                 "observed": {s: counts.get(s, 0) for s in STATUSES[:4]},

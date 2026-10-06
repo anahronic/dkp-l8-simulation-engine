@@ -24,14 +24,25 @@ NOT_IMPLEMENTED_GAP = "No lab check implemented yet."
 
 
 def declared() -> Dict[str, Dict[str, Any]]:
+    """requirement id -> merged declaration.  Several modules may check one provision (in different
+    scenarios): the first by module id is the primary implementation, the others are listed in
+    ``implementation.also``; coverage is IMPLEMENTED if any module implements it fully."""
     from lab.modules import MODULES
-    out: Dict[str, Dict[str, Any]] = {}
-    for m in MODULES.values():
+    by_rid: Dict[str, list] = {}
+    for mid in sorted(MODULES):
+        m = MODULES[mid]
         for rid, (check, coverage, note) in m.implements.items():
-            if rid in out:
-                raise ValueError(f"{rid} is declared by two modules")
-            out[rid] = {"module": m.id, "version": m.version, "check": check, "coverage": coverage,
-                        "note": note, "tests": list(m.tests)}
+            by_rid.setdefault(rid, []).append({"module": m.id, "version": m.version, "check": check,
+                                               "coverage": coverage, "note": note, "tests": list(m.tests)})
+    out: Dict[str, Dict[str, Any]] = {}
+    for rid, decls in by_rid.items():
+        full = any(d["coverage"] == "IMPLEMENTED" for d in decls)
+        notes = [f"{d['module']}: {d['note']}" if len(decls) > 1 else d["note"]
+                 for d in decls if d["coverage"] == "PARTIAL" and d["note"]]
+        out[rid] = {**decls[0], "coverage": "IMPLEMENTED" if full else "PARTIAL",
+                    "note": " ".join(notes) or None,
+                    "tests": sorted({t for d in decls for t in d["tests"]}),
+                    "also": [{"module": d["module"], "version": d["version"], "check": d["check"]} for d in decls[1:]]}
     return out
 
 
@@ -62,6 +73,8 @@ def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
         if d:
             r["coverage"] = d["coverage"]
             r["implementation"] = {"module": d["module"], "version": d["version"], "check": d["check"]}
+            if d["also"]:
+                r["implementation"]["also"] = d["also"]
             r["tests"] = d["tests"]
             r["gap"] = d["note"] if d["coverage"] == "PARTIAL" else None
         elif r["coverage"] in ("IMPLEMENTED", "PARTIAL") or r["implementation"] is not None:

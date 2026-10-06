@@ -91,11 +91,17 @@
    "data_dependencies": [
     "Physical Truth Layer provenance and access records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "justice_inputs"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -123,11 +129,17 @@
     "Impact output provenance",
     "Identity attribution-binding provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "justice_inputs"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -329,11 +341,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "all_domains_evaluated"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -358,15 +376,23 @@
     "Impact reversibility flags",
     "physical mitigation and repair assessments"
    ],
-   "gap": "Physical feasibility and the channel-to-action trigger rule are unspecified. No lab check implemented yet.",
+   "gap": "Depends on the reading of Rᵢ (finding F-006); mitigation possibility is an input.",
    "hypotheses_needed": [
     "A physical feasibility model and a channel-to-action trigger rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "restitution_trigger"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-022"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -390,13 +416,19 @@
     "Identity responsibility weights",
     "mitigation capability data"
    ],
-   "gap": "Rules for computing mitigation scope, obligation quantities, and completion deadlines are absent. No lab check implemented yet.",
+   "gap": "Amounts and time limits need an amount function the texts do not give: UNKNOWN.",
    "hypotheses_needed": [
     "A restitution computation model and a rule for setting completion deadlines."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "restitution_outputs"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -452,15 +484,23 @@
     "Subject behavior history",
     "mitigation capacity assessments"
    ],
-   "gap": "Safe margins, repetition criteria, and mitigation sufficiency rules are not supplied. No lab check implemented yet.",
+   "gap": "Safe margins have no numeric value: UNKNOWN unless declared.",
    "hypotheses_needed": [
     "A repeated-harm detection rule and a mitigation capacity sufficiency model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "restriction_trigger"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-024"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -547,15 +587,23 @@
     "Impact reversibility and externality flags",
     "systemic risk assessments"
    ],
-   "gap": "The systemic-risk test and the precise critical-exposure semantics of Xᵢ are unspecified. No lab check implemented yet.",
+   "gap": "Depends on the reading of Rᵢ (finding F-006); systemic risk is an input.",
    "hypotheses_needed": [
     "A systemic-risk model and an explicit interpretation of the externality flag."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "isolation_trigger"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-022"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {
@@ -643,13 +691,19 @@
     "mitigation and isolation outcomes",
     "Subject compliance capability assessments"
    ],
-   "gap": "The text defines no persistence threshold or tests for containment failure, refusal, and incapacity. No lab check implemented yet.",
+   "gap": "Trigger conditions are inputs.",
    "hypotheses_needed": [
     "A persistence rule and operational tests for containment failure and compliance status."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "exclusion_trigger"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -772,13 +826,19 @@
    "data_dependencies": [
     "Identity responsibility weights and attributable contributions"
    ],
-   "gap": "A comparison and allocation rule for consequence-vector components and attributable contribution is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A component-wise or otherwise explicitly declared proportional allocation and contribution comparison model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "proportional_distribution"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -869,13 +929,19 @@
     "original Impact provenance",
     "underlying Physical Truth Layer TTL metadata and temporal guarantees"
    ],
-   "gap": "TTL metadata and other temporal guarantees are not supplied, and the interval anchor for subsequent cycles is not fully explicit. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared interval anchor for periodic cycles and a way to import temporal metadata consistently with Section 2."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "periodic_not_faster_than_ttl"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -967,14 +1033,22 @@
     "epistemic admissibility determinations",
     "dispute rejection records"
    ],
-   "gap": "Section 7.1's rules for identifying qualifying new admissible data are absent. No lab check implemented yet.",
+   "gap": "Two readings of the conditions a)-c) (open question Q-020).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "dispute_not_blocked_by_ttl"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-020"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "JUSTICE-DisputeExceptionClause-02",
@@ -1004,15 +1078,23 @@
     "prior evaluation evidence",
     "appeal submission records"
    ],
-   "gap": "External admissibility, appeal mechanism, and any additional dispute-validity requirements are absent. No lab check implemented yet.",
+   "gap": "Two readings of the conditions a)-c) (open question Q-020).",
    "hypotheses_needed": [
     "An explicit interpretation of whether the three listed conditions exhaust dispute validity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "dispute_exception_conditions"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-020"
+   ],
    "decision_status": "UNRESOLVED"
   },
   {

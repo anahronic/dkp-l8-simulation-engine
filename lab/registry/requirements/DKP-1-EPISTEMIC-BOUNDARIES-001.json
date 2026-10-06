@@ -832,11 +832,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "dispute_preserves_original"
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "dispute_preserves_original",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "dispute_preserves_original"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_dispute_correction_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -868,11 +876,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "dispute_new_evaluation"
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "dispute_new_evaluation",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "dispute_new_evaluation"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_dispute_correction_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -903,17 +919,25 @@
     "admissibility decisions",
     "recomputation records"
    ],
-   "gap": "Admissibility of the new inputs is the TTL rule only.",
+   "gap": "dispute_correction: Admissibility of new data is the appeal's evidence only. failure_chain: Admissibility of the new inputs is the TTL rule only.",
    "hypotheses_needed": [
     "Declare admissibility rules and the input and state model required for deterministic recomputation."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "dispute_recomputes"
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "dispute_recomputes",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "dispute_recomputes"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_dispute_correction_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -946,11 +970,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.1.0",
-    "check": "dispute_delta"
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "dispute_delta",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.1.0",
+      "check": "dispute_delta"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_dispute_correction_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",

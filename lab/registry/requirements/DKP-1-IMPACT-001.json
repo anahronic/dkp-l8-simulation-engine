@@ -96,8 +96,10 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-024"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "IMPACT-2-03",
@@ -364,8 +366,10 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-023"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "IMPACT-ReversibilityFlagR_-01",
@@ -383,14 +387,22 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": "Rᵢ is declared on input; the §7 criteria are not computable here.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "r_is_irreversibility"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-022"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "IMPACT-ExternalityFlagX_-01",
@@ -472,14 +484,22 @@
     "Physical Truth Layer state projections",
     "Imported channel reference bounds"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "impact_formula"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-023"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "IMPACT-5-02",
@@ -530,14 +550,22 @@
    "numeric_source": "text",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "boundary_flag"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-023"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "IMPACT-5-04",
@@ -594,8 +622,10 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "open_questions": [
+    "Q-024"
+   ],
+   "decision_status": "UNRESOLVED"
   },
   {
    "id": "IMPACT-6-02",
@@ -802,13 +832,19 @@
    "data_dependencies": [
     "Boundary-crossing detection results"
    ],
-   "gap": "The relationship between reference-bound crossings and system-boundary crossings is not defined. No lab check implemented yet.",
+   "gap": "Reads 'boundary crossing' in §8 as the §5 flag; system-boundary scope is not modelled.",
    "hypotheses_needed": [
     "Declare which crossing types trigger Xᵢ = True."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "externality_on_crossing"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -928,13 +964,19 @@
    "data_dependencies": [
     "Measurement uncertainty provenance"
    ],
-   "gap": "Impact status ordering and the meanings of downgrade and invalidation are not specified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how suppression, downgrade, and invalidation are recognized and causally attributed to uncertainty."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "uncertainty_does_not_suppress"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED"
@@ -955,11 +997,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.0.0",
+    "check": "impact_fields"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

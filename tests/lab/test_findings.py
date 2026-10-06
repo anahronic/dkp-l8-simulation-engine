@@ -46,6 +46,21 @@ def test_f003_slow_class_keeps_outputs_suspended():
     }
 
 
+def test_f005_and_f006_impact_and_reversibility():
+    with open(os.path.join(FINDINGS, "F-005.request.json"), encoding="utf-8") as f:
+        doc = run_request(json.load(f))
+    rows = {n: (v["outputs"]["impact"][0]["I"], v["outputs"]["impact"][0]["boundary_crossing"],
+                v["outputs"]["impact"][0]["level_reached"]) for n, v in doc["variants"].items()}
+    assert rows["example_s13"] == (0.0002, False, False)
+    assert rows["level_crossed"][1:] == (False, True)
+    with open(os.path.join(FINDINGS, "F-006.request.json"), encoding="utf-8") as f:
+        doc = run_request(json.load(f))
+    dom = {n: v["outputs"]["decisions"][0]["domains"] for n, v in doc["variants"].items()}
+    assert (dom["as_written"]["isolation"], dom["as_written"]["restitution"]) == (True, False)
+    assert (dom["irreversible_as_written"]["isolation"], dom["irreversible_as_written"]["restitution"]) == (False, True)
+    assert (dom["consistent"]["isolation"], dom["consistent"]["restitution"]) == (False, True)
+
+
 def test_f004_broken_cross_reference():
     broken = catalog()["section_references"]["broken"]
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [
