@@ -31,13 +31,19 @@
     "claim classification records",
     "systemic impact assessments"
    ],
-   "gap": "The text does not specify an operational method for separating factual claims from mixed or subjective expression. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared classification method for factual, subjective, and mixed content."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "opinions_not_regulated"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -100,13 +106,19 @@
     "protocol action logs",
     "requirements imposed on participants"
    ],
-   "gap": "No operational classifier for the prohibited evaluation and cognitive controls is supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared taxonomy identifying prohibited evaluation, conformity, and compelled acceptance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "no_belief_evaluation"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -136,13 +148,19 @@
    "data_dependencies": [
     "L8 calibration records and validity information"
    ],
-   "gap": "The calibration bundle and complete validity rules are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared validator for L8 calibration applicability and validity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "no_enforcement_without_l8"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -240,13 +258,19 @@
    "data_dependencies": [
     "statement classification assessments"
    ],
-   "gap": "No decision procedure for non-verifiability or subjective categories is given. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared classifier for verifiability and subjective categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "opinion_is_i0"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -355,14 +379,20 @@
     "claim histories",
     "calibrated persistence and systemic impact assessments"
    ],
-   "gap": "Persistence and impact tests, class precedence, and the relationship between I0 and the information-act definition are unspecified. No lab check implemented yet.",
+   "gap": "Systemic impact is declared (harm, coherence) or by a declared propagation threshold.",
    "hypotheses_needed": [
     "A declared policy for overlapping classes and mixed content.",
     "Calibrated persistence and systemic impact tests."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "classes_i3_i4"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -390,11 +420,17 @@
     "systemic evaluation logs",
     "classification histories"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "systemic_only_i2_i4"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -422,14 +458,20 @@
     "reproducible measurement evidence",
     "cross-oracle consensus results and thresholds"
    ],
-   "gap": "Consensus threshold values, reproducibility criteria, and whether the three evidence sources are jointly required are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared interpretation of joint versus permitted-source requirements.",
     "Declared cross-oracle consensus thresholds and measurement reproducibility criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "truth_by_ptl"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -457,13 +499,19 @@
    "data_dependencies": [
     "truth-decision provenance and input categories"
    ],
-   "gap": "The document does not define how to establish that a prohibited factor determined a decision. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A provenance model distinguishing determinative inputs from incidental context."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "not_by_popularity"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -576,15 +624,21 @@
     "L8-calibrated T₁",
     "annotation transition records"
    ],
-   "gap": "T₁, the claim clock, and the classification semantics of informational annotation are unspecified. No lab check implemented yet.",
+   "gap": "T₁ needs an L8 bundle (F-014): UNKNOWN unless a hypothetical bundle is declared.",
    "hypotheses_needed": [
     "A declared claim clock.",
     "A declared state representation for annotation and its relationship to I1."
    ],
    "section_label": "6.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "t1_annotation"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -657,14 +711,20 @@
    "data_dependencies": [
     "temporal threshold calibration records"
    ],
-   "gap": "The external calibration procedure and resulting records are not supplied. No lab check implemented yet.",
+   "gap": "No L8 calibration exists: UNKNOWN.",
    "hypotheses_needed": [
     "A declared method for validating threshold calibration provenance."
    ],
    "section_label": "6.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "t_values_calibrated"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -697,14 +757,20 @@
     "blocking and suspension logs",
     "enforcement trigger provenance"
    ],
-   "gap": "The meanings of unrelated and non-dependent, together with causal trigger attribution, are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared dependency graph and causal attribution model."
    ],
    "section_label": "6.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "i1_non_blocking"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -735,14 +801,20 @@
     "escalation provenance",
     "claim treatment records"
    ],
-   "gap": "The impact confirmation standard, escalation destination, and interaction with other I1 restrictions are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared impact-confirmation test and escalation state model."
    ],
    "section_label": "6.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "i1_informational"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -894,14 +966,20 @@
     "original claim visibility records",
     "audit evidence archives"
    ],
-   "gap": "The scope of protected informational records and the required audience and duration of visibility are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared protected-record scope and visibility interpretation."
    ],
    "section_label": "Informational Arbitration (Non-Removal Principle)",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "no_removal"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -936,15 +1014,21 @@
     "correspondence probability estimates",
     "timestamped verification records"
    ],
-   "gap": "The probability computation, relevance test for oracle metadata, and validation of PTL anchoring are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared correspondence-probability model.",
     "A declared validation method for PTL anchors and relevant oracle metadata."
    ],
    "section_label": "Informational Arbitration (Non-Removal Principle)",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "annotation_fields"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -977,14 +1061,20 @@
     "enforcement records",
     "legal status, penalty, rights, and obligation changes"
    ],
-   "gap": "No method is supplied for attributing prohibited downstream consequences to annotations. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared causal attribution model for annotation effects."
    ],
    "section_label": "Informational Arbitration (Non-Removal Principle)",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "annotation_not_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1018,15 +1108,21 @@
     "I3 histories",
     "calibrated systemic impact assessments"
    ],
-   "gap": "The text does not define isolation or operational tests for suppression and belief correction, and calibrated impact criteria are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared interpretation of isolated events.",
     "A declared prohibited-action taxonomy and calibrated impact test."
    ],
    "section_label": "Informational Arbitration (Non-Removal Principle)",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "no_penalty_isolated_i3"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1059,13 +1155,19 @@
     "L8 Calibration Bundle",
     "calibration confidence bounds and validity windows"
    ],
-   "gap": "The bundle, full validity criteria, and required granularity of confidence bounds and validity windows are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared bundle-validity procedure and interpretation of confidence-bound and validity-window coverage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "activation_gate"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1097,14 +1199,20 @@
     "classification effects",
     "remediation and escalation logs"
    ],
-   "gap": "Bundle validity and the boundary between informational annotation and systemic remediation or escalation are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared bundle-validity procedure.",
     "A declared distinction between informational effects, remediation, and escalation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "informational_without_bundle"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1133,13 +1241,19 @@
     "truth-status operation logs",
     "human involvement and decision provenance"
    ],
-   "gap": "The scope of manual interpretation is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared reading of manual interpretation covering either all human interpretation or manual truth-status determination."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "no_manual_truth"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1174,13 +1288,19 @@
     "conditioning activities",
     "annotation and truth-exposure effects"
    ],
-   "gap": "Operational definitions of censorship, conditioning, and coercion are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared taxonomy for the prohibited actions and coercive effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "no_coercive_annotation"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1216,14 +1336,20 @@
     "audit escalation records",
     "L8 bundle validity information"
    ],
-   "gap": "Attempt-detection criteria, the audit interface, and precedence relative to the uncalibrated escalation prohibition are absent. No lab check implemented yet.",
+   "gap": "Abuse is declared, not detected.",
    "hypotheses_needed": [
     "A declared detector for each abuse-attempt category.",
     "A declared precedence rule for abuse escalation when no valid calibration bundle exists."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "abuse_to_audit"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1256,14 +1382,20 @@
     "verification paths",
     "privacy aggregation metadata"
    ],
-   "gap": "Auditability criteria, exposure access requirements, and acceptable aggregation are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declared auditability and verification-path access criteria.",
     "A declared aggregation policy preserving the mandatory verification properties."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "verification_paths"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1294,14 +1426,20 @@
     "node independence information",
     "classification verification inputs"
    ],
-   "gap": "Node independence, reproduction conditions, and result-agreement criteria are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared node-independence test and reproduction procedure.",
     "A declared interpretation of acceptable agreement without assuming an unstated tolerance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "reproducible"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

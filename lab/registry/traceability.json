@@ -11,6 +11,7 @@
   "economic_access",
   "exit_integration",
   "failure_chain",
+  "info_truth",
   "internal_security",
   "interop_failure",
   "police_antiterror",
@@ -691,6 +692,26 @@
    "module": "axiom_constraints",
    "example": "suffering_tiebreak",
    "kind": "reference"
+  },
+  {
+   "module": "info_truth",
+   "example": "claims_without_bundle",
+   "kind": "reference"
+  },
+  {
+   "module": "info_truth",
+   "example": "faulty_information",
+   "kind": "counterexample"
+  },
+  {
+   "module": "info_truth",
+   "example": "hypothetical_bundle",
+   "kind": "alternative"
+  },
+  {
+   "module": "info_truth",
+   "example": "systemic_disinformation",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -698,17 +719,17 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 432,
-  "covered_percent": 24.9,
+  "covered": 455,
+  "covered_percent": 26.2,
   "statuses": {
-   "PASS": 387,
+   "PASS": 408,
    "FAIL": 4,
-   "UNKNOWN": 32,
+   "UNKNOWN": 34,
    "NOT_APPLICABLE": 9,
-   "UNCOVERED": 1305
+   "UNCOVERED": 1282
   },
   "resolvable": 334,
-  "resolvable_uncovered": 214,
+  "resolvable_uncovered": 213,
   "unresolved_decisions": 1403
  },
  "stages": [
@@ -759,17 +780,17 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 432,
-    "covered_percent": 24.9,
+    "covered": 455,
+    "covered_percent": 26.2,
     "statuses": {
-     "PASS": 387,
+     "PASS": 408,
      "FAIL": 4,
-     "UNKNOWN": 32,
+     "UNKNOWN": 34,
      "NOT_APPLICABLE": 9,
-     "UNCOVERED": 1305
+     "UNCOVERED": 1282
     },
     "resolvable": 334,
-    "resolvable_uncovered": 214,
+    "resolvable_uncovered": 213,
     "unresolved_decisions": 1403
    }
   },
@@ -902,17 +923,17 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 41,
-    "covered_percent": 14.0,
+    "covered": 64,
+    "covered_percent": 21.8,
     "statuses": {
-     "PASS": 34,
+     "PASS": 55,
      "FAIL": 0,
-     "UNKNOWN": 5,
+     "UNKNOWN": 7,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 252
+     "UNCOVERED": 229
     },
     "resolvable": 43,
-    "resolvable_uncovered": 31,
+    "resolvable_uncovered": 30,
     "unresolved_decisions": 250
    }
   },
@@ -40568,25 +40589,35 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not specify an operational method for separating factual claims from mixed or subjective expression. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "opinions_not_regulated",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -40632,25 +40663,35 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of censorship, conditioning, and coercion are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "no_coercive_annotation",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -40664,25 +40705,33 @@
    "section": "11",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Attempt-detection criteria, the audit interface, and precedence relative to the uncalibrated escalation prohibition are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "info_truth",
+   "check": "abuse_to_audit",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": "Abuse is declared, not detected.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -40696,25 +40745,33 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Auditability criteria, exposure access requirements, and acceptable aggregation are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "verification_paths",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -40728,25 +40785,33 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Node independence, reproduction conditions, and result-agreement criteria are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "reproducible",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -40917,25 +40982,35 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No operational classifier for the prohibited evaluation and cognitive controls is supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "no_belief_evaluation",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -40949,25 +41024,33 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The calibration bundle and complete validity rules are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "no_enforcement_without_l8",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41045,25 +41128,35 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No decision procedure for non-verifiability or subjective categories is given. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "opinion_is_i0",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41141,25 +41234,35 @@
    "section": "4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Persistence and impact tests, class precedence, and the relationship between I0 and the information-act definition are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "info_truth",
+   "check": "classes_i3_i4",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": "Systemic impact is declared (harm, coherence) or by a declared propagation threshold.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41173,25 +41276,33 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "systemic_only_i2_i4",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -41202,25 +41313,35 @@
    "section": "5",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Consensus threshold values, reproducibility criteria, and whether the three evidence sources are jointly required are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "truth_by_ptl",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41234,25 +41355,35 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not define how to establish that a prohibited factor determined a decision. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "not_by_popularity",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41330,25 +41461,33 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "T₁, the claim clock, and the classification semantics of informational annotation are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "info_truth",
+   "check": "t1_annotation",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": "T₁ needs an L8 bundle (F-014): UNKNOWN unless a hypothetical bundle is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 2,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41394,25 +41533,33 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The external calibration procedure and resulting records are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "info_truth",
+   "check": "t_values_calibrated",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": "No L8 calibration exists: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 2,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41426,25 +41573,33 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meanings of unrelated and non-dependent, together with causal trigger attribution, are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "i1_non_blocking",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41458,25 +41613,33 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The impact confirmation standard, escalation destination, and interaction with other I1 restrictions are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "i1_informational",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41586,25 +41749,33 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The bundle, full validity criteria, and required granularity of confidence bounds and validity windows are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "activation_gate",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41618,25 +41789,33 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Bundle validity and the boundary between informational annotation and systemic remediation or escalation are not fully defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "informational_without_bundle",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41650,25 +41829,35 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of manual interpretation is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "no_manual_truth",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41682,25 +41871,33 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of protected informational records and the required audience and duration of visibility are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "no_removal",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41714,25 +41911,33 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The probability computation, relevance test for oracle metadata, and validation of PTL anchoring are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "annotation_fields",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41746,25 +41951,35 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No method is supplied for attributing prohibited downstream consequences to annotations. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "annotation_not_enforcement",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -41778,25 +41993,35 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define isolation or operational tests for suppression and belief correction, and calibrated impact criteria are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "no_penalty_isolated_i3",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {

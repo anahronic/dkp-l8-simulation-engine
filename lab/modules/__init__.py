@@ -8,6 +8,7 @@ from lab.modules.dispute_correction import DisputeCorrectionModule
 from lab.modules.economic_access import EconomicAccessModule
 from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
+from lab.modules.info_truth import InfoTruthModule
 from lab.modules.internal_security import InternalSecurityModule
 from lab.modules.interop_failure import InteropFailureModule
 from lab.modules.police_antiterror import PoliceAntiterrorModule
@@ -24,4 +25,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              InteropFailureModule(), CalibrationExpiryModule(),
                              TransportCapacityModule(), EconomicAccessModule(),
                              UpgradeLifecycleModule(), InternalSecurityModule(),
-                             PoliceAntiterrorModule(), AxiomConstraintsModule())}
+                             PoliceAntiterrorModule(), AxiomConstraintsModule(),
+                             InfoTruthModule())}
