@@ -27,11 +27,14 @@ unless every provision of the document was applicable and passed.
 | `lab/registry/protocol_catalog.json` | generated catalog: kinds, layers, sections, references, unresolved dependencies |
 | `lab/registry/requirements/*.json` | one file per document: provisions with verbatim quote, section, kind, inputs, criterion, numeric source, dependencies, coverage |
 | `lab/core/` | input schema, check statuses, run identity, reports, replay packages |
-| `lab/modules/` | installed modules: `prevention`, `time`, `work_cycle`, `failure_chain` |
+| `lab/modules/` | installed modules (12): `prevention`, `time`, `work_cycle`, `failure_chain`, `dispute_correction`, `contribution`, `sensor_loss`, `crisis_recovery`, `exit_integration`, `interop_failure`, `calibration_expiry`, `transport_capacity` |
 | `lab/api.py` | functions used by the browser worker and by a server |
-| `lab/registry/open_questions.json` | questions that need an author decision (UNRESOLVED), linked to provisions, hypotheses and findings |
+| `lab/registry/open_questions.json` | questions that need an author decision (UNRESOLVED: normative ambiguity or architecture definition, verified against the text) and questions withdrawn after verification, linked to provisions, hypotheses and findings |
+| `lab/registry/verifications.json` | semantic verification gate: findings, reference FAILs, noncompliant cases and questions read against the literal text, with verbatim quotes |
+| `lab/registry/unresolved_classification.json` | Codex draft of the origin of every open point (not normative, never an author question by itself) |
+| `lab/registry/calibration_map.json`, `lab/CALIBRATION_MAP.md` | decomposition of F-014: what needs a bundle, constants in the texts, parameters assigned to L8, missing values, status of each document |
 | `lab/registry/traceability.json`, `lab/TRACEABILITY.md` | generated map requirement → implementation → test → gap → open question; execution matrix of the specification (stages A–G, S-LAB scenarios) |
-| `lab/findings/` | problems found in the protocols, with minimal reproductions and options for the author |
+| `lab/findings/` | findings with minimal reproductions, classified CONFIRMED_FINDING / INTERPRETATION_GAP / IMPLEMENTATION_BUG (UNVERIFIED_FINDING until verified) |
 | `lab/ARCHITECTURE_DEVIATION.md` | open deviation: browser-only execution instead of the specified server API |
 | `lab/tools/` | catalog builder, registry checker, coverage sync, traceability, Codex drafting prompt, web bundle |
 
@@ -46,7 +49,9 @@ python -m lab replay pkg.zip                   # recompute; compare input_id and
 python -m lab.tools.check_registry             # verbatim quotes, sections, ids, coverage rules
 python -m lab.tools.sync_coverage --check      # registry coverage = module declarations
 python -m lab.tools.build_catalog              # verify the corpus pin, rebuild the catalog
-python -m lab.tools.trace                      # traceability map and execution matrix
+python -m lab.tools.trace                      # traceability map, execution matrix, semantic gate
+python -m lab.tools.calibration_map            # calibration map (F-014 decomposition)
+python -m lab.tools.codex.import_classification OUT_DIR   # import a Codex draft of open-point origins
 ```
 
 ## Registry
@@ -57,10 +62,18 @@ every `quote` must occur verbatim in the pinned text, every `section` must be a 
 of the document, ids are unique.  Coverage is never typed by hand: modules declare what
 they implement (`implements`), `sync_coverage` writes it into the registry, and a test
 checks that every declared check is actually emitted when the module's examples run.
-Every provision carries `interpretation_status` (all `DRAFT_UNREVIEWED`; no tool upgrades
-it) and `decision_status` (`UNRESOLVED` when the draft names missing definitions or an open
-question links it).  Drafted interpretations are proposals for review, not readings
-accepted by the author.
+Every provision carries `interpretation_status` (`DRAFT_UNREVIEWED`, or `TEXT_VERIFIED` when the
+semantic verification gate read its wording against the literal text — derived from
+`lab/registry/verifications.json`, not a human review; no tool sets `REVIEWED` or
+`CONFIRMED_BY_AUTHOR`) and `decision_status` (`UNRESOLVED` when the draft names missing
+definitions or an author question links it), with `open_point.origin` saying what would close
+it.  Drafted interpretations are proposals for review, not readings accepted by the author.
+
+**Semantic verification gate.**  Before a provision leads to a FAIL in a reference example, a
+normative conflict, a systemic blocker or an author question, it is read against the literal
+pinned text and recorded with verbatim quotes in `lab/registry/verifications.json`;
+`tests/lab/test_semantic_gate.py` refuses an unverified reference FAIL, a finding without a class,
+and an author question whose origin is calibration, data, an external document or lab work.
 
 ## Identity and replay
 

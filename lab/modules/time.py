@@ -203,7 +203,7 @@ class TimeModule(LabModule):
                 checks.append(CheckResult(rid, "normative_vector", FAIL,
                                           f"{g}: table says {can_t} (DTI-Day {jdn_t}); §5 gives {canonical(dy, doy)} "
                                           f"for DTI-Day {jdn}. The table row contradicts §5 and §10 — corpus "
-                                          f"inconsistency, erratum pending; the lab does not choose a value",
+                                          f"inconsistency (F-017), erratum pending; the lab does not choose a value",
                                           evidence={"tag": "corpus_inconsistency" if not consistent else "mismatch",
                                                     "table": [jdn_t, dy_t, doy_t, can_t],
                                                     "computed": [jdn, dy, doy, canonical(dy, doy)]}))

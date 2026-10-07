@@ -76,14 +76,16 @@ def test_adapter_never_reads_future_readings():
 
 
 def test_dispute_keeps_the_original_and_reports_a_delta():
+    """New data at step 30 re-evaluate at once (EV-002); the dispute at 60 recomputes after the status quo delay
+    (EV-003) with a comparative delta; every earlier record is kept unchanged."""
     _, res = run(dispute_at_step=60, value_change_at_step=30, changed_value=95)
     ev = res.outputs["evaluations"]
-    assert [e["id"] for e in ev] == ["EV-001", "EV-002"]
-    assert ev[0]["value"] == 100 and ev[0]["step"] == 0
-    assert ev[1]["supersedes"] == "EV-001" and ev[1]["value"] == 95
+    assert [(e["id"], e["step"], e["value"], e["supersedes"]) for e in ev] == [
+        ("EV-001", 0, 100.0, None), ("EV-002", 30, 95.0, "EV-001"), ("EV-003", 62, 95.0, "EV-002")]
     delta = [e for e in res.outputs["events"] if e["type"] == "delta"]
-    assert delta == [{"step": 62, "type": "delta", "old": "EV-001", "new": "EV-002",
-                      "old_value": 100.0, "new_value": 95.0, "delta": -5.0}]
+    assert delta == [{"step": 62, "type": "delta", "old": "EV-002", "new": "EV-003",
+                      "old_value": 95.0, "new_value": 95.0, "delta": 0.0}]
+    assert statuses(res)["EB-7.2-01"] == "PASS"
 
 
 def test_ttl_above_the_text_maximum_fails():
@@ -93,15 +95,16 @@ def test_ttl_above_the_text_maximum_fails():
     assert st["ORACLE-17-02"] == "PASS" and st["ORACLE-17-01"] == "NOT_APPLICABLE"
 
 
-def test_value_drop_without_divergence_keeps_enforcement():
-    """Documented gap (MODEL_GAPS §11): under H-FC-5 a synchronous drop below the limit
-    is not a trigger, so enforcement continues on the old evaluation and no rule fails."""
+def test_value_drop_triggers_reevaluation():
+    """New admissible data trigger re-evaluation (EB §7.1, ETRANS §4.2): a synchronous drop below the limit ends
+    enforcement at once.  The lab's former reading ('declared_events') kept enforcing and is now a FAIL of
+    ETRANS-4.2-01 (finding F-001 reclassified as IMPLEMENTATION_BUG)."""
     _, res = run(**M.examples()["value_drop_in_sync"])
-    assert res.outputs["totals"]["final_mode"] == "ACTIVE"
-    assert res.outputs["totals"]["evaluations"] == 1
-    assert "FAIL" not in statuses(res).values()
-    _, res = run(**M.examples()["value_drop"])                   # asynchronous sampling: spurious divergence
     assert res.outputs["totals"]["final_mode"] == "INACTIVE"
+    assert res.outputs["totals"]["steps_enforced_against_current_state"] == 0
+    _, old = run(**{**M.examples()["value_drop_in_sync"], "reevaluation_policy": "declared_events"})
+    assert statuses(old)["ETRANS-4.2-01"] == "FAIL"
+    assert old.outputs["totals"]["steps_enforced_against_current_state"] == 192
 
 
 @pytest.mark.parametrize("name", sorted(M.failure_examples()))

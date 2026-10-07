@@ -313,10 +313,11 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
         elif (current is not None and valid and mode in ("ACTIVE", "INACTIVE")
               and r["reevaluation_policy"] != "declared_events"):
             old_value = store[current]["value"]
-            if r["reevaluation_policy"] == "every_step" and S != old_value:
+            new_data = any(cls[c]["weight"] and cls[c]["age"] == 0 for c in CLASSES)    # a reading arrived now
+            if r["reevaluation_policy"] == "new_admissible_data" and new_data and S != old_value:
                 old = current
                 current = new_evaluation(k, S, meta, cls, old)
-                events.append({"step": k, "type": "recomputed", "evaluation": current, "reason": "every_step"})
+                events.append({"step": k, "type": "recomputed", "evaluation": current, "reason": "new_admissible_data"})
                 if S > limit:
                     if mode != "ACTIVE":
                         events.append({"step": k, "type": "resume", "evaluation": current})
@@ -688,7 +689,14 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
         out.append(na("ETRANS-4.4-01", "reentry_new_output", "re-entry of enforcement", why))
         out.append(na("ETRANS-4.4-02", "no_auto_reactivation", "reactivation of earlier outputs", why))
 
-    triggers = sorted(set(downgrade_steps) | set(disputes) |
+    # ETRANS §4.2 conditions: degradation, new admissible data (EB §7.1: a reading that arrives and changes S(t)),
+    # loss of consistency; declared disputes are new admissible data too
+    arrivals = {k for k in range(1, N) if exp[k]["S"] is not None and exp[k - 1]["S"] is not None
+                and abs(exp[k]["S"] - exp[k - 1]["S"]) > 1e-9
+                and any(bisect.bisect_right(times[c], k * r["step_minutes"]) - 1 >= 0
+                        and times[c][bisect.bisect_right(times[c], k * r["step_minutes"]) - 1] == k * r["step_minutes"]
+                        for c in exp[k]["admissible"])}
+    triggers = sorted(set(downgrade_steps) | set(disputes) | arrivals |
                       {k for k in range(1, N) if exp[k - 1]["meta"]["consistency_state"] == CONSISTENT
                        and exp[k]["meta"]["consistency_state"] != CONSISTENT})
     if triggers:
@@ -790,7 +798,7 @@ IMPLEMENTS = {
     "ETRANS-4.1-01": ("revalidation_flag", "IMPLEMENTED", None),
     "ETRANS-4.1-02": ("suspension_on_downgrade", "IMPLEMENTED", None),
     "ETRANS-4.1-03": ("no_escalation_after_downgrade", "IMPLEMENTED", None),
-    "ETRANS-4.2-01": ("no_persistence_on_past_valid", "PARTIAL", "New admissible data is introduced by a declared dispute (H-FC-5)."),
+    "ETRANS-4.2-01": ("no_persistence_on_past_valid", "PARTIAL", "New admissible data = a reading that arrives and changes S(t), or a declared dispute (H-FC-5)."),
     "ETRANS-4.3-01": ("status_quo_preserved", "IMPLEMENTED", None),
     "ETRANS-4.3-02": ("no_escalation_in_uncertainty", "IMPLEMENTED", None),
     "ETRANS-4.3-03": ("no_penalty_accumulation", "IMPLEMENTED", None),
@@ -812,7 +820,7 @@ def _window(default=None):
 
 class FailureChainModule(LabModule):
     id = "failure_chain"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Stale and contradictory data (failure chain)",
              "ru": "Устаревшие и противоречивые данные (цепочка отказа)"}
     summary = {"en": "Sensors go silent or disagree: do dependent asset restrictions and penalties stop, wait "
@@ -848,18 +856,24 @@ class FailureChainModule(LabModule):
                   "going stale does not end it.",
             "ru": "Расхождение заканчивается только сближением в пределах 7 % или исключением неисправного класса; "
                   "устаревание одной стороны его не заканчивает."}},
-        {"id": "H-FC-5", "source": "hypothesis", "text": {
-            "en": "The dependent evaluation is recomputed only at declared events: first VALID state, dispute "
-                  "(new admissible data submitted), re-entry after a downgrade. Routine readings update S(t) only.",
-            "ru": "Зависимая оценка пересчитывается только в объявленных событиях: первое состояние VALID, спор "
-                  "(поданы новые допустимые данные), возврат после понижения. Обычные показания меняют только S(t)."}},
+        {"id": "H-FC-5", "source": "text", "text": {
+            "en": "New admissible data trigger re-evaluation (EB §7.1, ETRANS §4.2, JUSTICE §11): when a reading arrives "
+                  "and changes S(t), the dependent evaluation is recomputed at once (a recomputation that changes nothing "
+                  "confirms the current evaluation). Declared disputes, the first VALID state and re-entry after a "
+                  "downgrade also recompute. The immediacy of system-triggered recomputation is the lab's choice.",
+            "ru": "Новые допустимые данные запускают переоценку (EB §7.1, ETRANS §4.2, JUSTICE §11): когда приходит "
+                  "показание и меняет S(t), зависимая оценка сразу пересчитывается (пересчёт без изменения подтверждает "
+                  "текущую оценку). Объявленный спор, первое состояние VALID и возврат после понижения тоже пересчитывают. "
+                  "Немедленность системного пересчёта — выбор лаборатории."}},
         {"id": "H-FC-5-ALT", "source": "alternative", "text": {
-            "en": "Alternative readings for comparison, not adopted norms: 'every_step' recomputes the evaluation at "
-                  "every step (ETRANS §3 item 4 read literally); 'material_change' treats a change of S(t) beyond a "
-                  "declared tolerance as new admissible data (ETRANS §4.2) and recomputes after the status quo delay.",
-            "ru": "Альтернативные прочтения для сравнения, не принятые нормы: 'every_step' — пересчёт на каждом шаге "
-                  "(буквальное прочтение ETRANS §3 п.4); 'material_change' — изменение S(t) сверх объявленного допуска "
-                  "считается новыми допустимыми данными (ETRANS §4.2), пересчёт после задержки статус-кво."}},
+            "en": "Readings for comparison: 'material_change' recomputes only when S(t) moves beyond a declared tolerance, "
+                  "after the status quo delay; 'declared_events' is the lab's former reading (routine readings are not new "
+                  "admissible data). It contradicts EB §7.1 and ETRANS §4.2 and is kept only to reproduce F-001, which was "
+                  "an implementation error of the lab.",
+            "ru": "Прочтения для сравнения: 'material_change' — пересчёт только при изменении S(t) сверх допуска, после "
+                  "задержки статус-кво; 'declared_events' — прежнее прочтение лаборатории (обычные показания — не новые "
+                  "допустимые данные). Оно противоречит EB §7.1 и ETRANS §4.2 и сохранено только для воспроизведения F-001 — "
+                  "ошибки реализации лаборатории."}},
         {"id": "H-FC-6", "source": "hypothesis", "text": {
             "en": "Enforcement stand-in: while the evaluated value exceeds the limit, an asset restriction applies "
                   "(level +1 every N active steps) and a penalty accrues 1 model unit per active step. Not money.",
@@ -910,8 +924,8 @@ class FailureChainModule(LabModule):
         "recompute_delay_steps": {"type": "int", "min": 0, "max": 1000, "default": 2, "unit": "step",
                                   "source": "hypothesis",
                                   "label": {"en": "Recomputation takes", "ru": "Пересчёт занимает"}},
-        "reevaluation_policy": {"type": "enum", "values": ["declared_events", "every_step", "material_change"],
-                                "default": "declared_events", "source": "hypothesis",
+        "reevaluation_policy": {"type": "enum", "values": ["new_admissible_data", "material_change", "declared_events"],
+                                "default": "new_admissible_data", "source": "text",
                                 "label": {"en": "When the evaluation is recomputed (H-FC-5; alternatives H-FC-5-ALT)",
                                           "ru": "Когда пересчитывается оценка (H-FC-5; альтернативы H-FC-5-ALT)"}},
         "material_change_percent": {"type": "number", "min": 0, "max": 1000, "default": 5, "unit": "%",

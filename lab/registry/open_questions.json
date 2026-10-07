@@ -1,6 +1,6 @@
 {
  "schema": "dkp-lab-open-questions/1",
- "note": "Questions that need a human or author decision. Status UNRESOLVED until the author decides; the lab never turns them into working assumptions silently. Hypotheses listed here are the lab's declared stand-ins used only to compute, shown in every result.",
+ "note": "Questions that need an author decision: only genuine normative ambiguity or an architecture choice the corpus does not define (category), each verified against the literal text (lab/registry/verifications.json). Missing calibration, data, documents or code are not author questions: such questions are WITHDRAWN with the reason and tracked in lab/registry/calibration_map.json or as lab work. UNRESOLVED until the author decides; the lab never turns them into working assumptions silently. Hypotheses listed here are the lab's declared stand-ins used only to compute, shown in every result.",
  "questions": [
   {
    "id": "Q-001",
@@ -13,7 +13,9 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §1",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-001"
   },
   {
    "id": "Q-002",
@@ -25,9 +27,13 @@
     "TIME-9-04"
    ],
    "hypotheses": [],
-   "findings": [],
+   "findings": [
+    "F-017"
+   ],
    "source": "MODEL_GAPS §2; audit rt/TIME_erratum_2000-01-01.md",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-002"
   },
   {
    "id": "Q-003",
@@ -53,7 +59,9 @@
     "F-003"
    ],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-003"
   },
   {
    "id": "Q-004",
@@ -74,7 +82,9 @@
     "F-002"
    ],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-004"
   },
   {
    "id": "Q-005",
@@ -86,9 +96,13 @@
     "ORACLE-11-03"
    ],
    "hypotheses": [],
-   "findings": [],
+   "findings": [
+    "F-018"
+   ],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-005"
   },
   {
    "id": "Q-006",
@@ -112,7 +126,13 @@
     "F-001"
    ],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "implementation_only",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Answered by EB §7.1/§7.2 and ETRANS §4.2: new admissible data triggers re-evaluation. The lab error is fixed (F-001)."
+   },
+   "verification": "lab/registry/verifications.json#Q-006"
   },
   {
    "id": "Q-007",
@@ -130,7 +150,9 @@
    ],
    "findings": [],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-007"
   },
   {
    "id": "Q-008",
@@ -151,7 +173,9 @@
     "F-003"
    ],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-008"
   },
   {
    "id": "Q-009",
@@ -168,7 +192,9 @@
     "F-004"
    ],
    "source": "catalog section_references",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-009"
   },
   {
    "id": "Q-010",
@@ -182,9 +208,13 @@
    "hypotheses": [
     "H-FC-6"
    ],
-   "findings": [],
+   "findings": [
+    "F-018"
+   ],
    "source": "MODEL_GAPS §11",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-010"
   },
   {
    "id": "Q-011",
@@ -199,7 +229,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §10",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "implementation_only",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Cycle6 is the 'normative default'; §7 constrains any system-approved schedule. Other cycles are allowed if they keep §7. No author decision needed."
+   },
+   "verification": "lab/registry/verifications.json#Q-011"
   },
   {
    "id": "Q-012",
@@ -216,7 +252,9 @@
    ],
    "findings": [],
    "source": "MODEL_GAPS §10",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-012"
   },
   {
    "id": "Q-013",
@@ -231,7 +269,9 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §10",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-013"
   },
   {
    "id": "Q-014",
@@ -245,11 +285,17 @@
    "hypotheses": [],
    "findings": [],
    "source": "catalog unresolved_dependencies, ambiguous_references",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "external_dependency",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Two referenced documents are not in the corpus: an external dependency (listed in lab/registry/calibration_map.json), not an author decision. 'DKP-7 scope boundaries' reads the same whether it means layer L7 or DKP-7-SCOPE-001."
+   },
+   "verification": "lab/registry/verifications.json#Q-014"
   },
   {
    "id": "Q-015",
-   "title": "PREVENTION: shares of contribution (§6), recurrence (§9.3), meaning of SE and its time basis (§3.5/§3.6), TTL source (ORACLE §9 vs §3.6)",
+   "title": "PREVENTION: SE is defined as the reduction of risk (§3.5), but the §3.6 formula treats it as the residual",
    "documents": [
     "DKP-1-PREVENTION-001",
     "DKP-0-ORACLE-001"
@@ -268,7 +314,9 @@
    ],
    "findings": [],
    "source": "MODEL_GAPS §6; AUDIT_REPORT_PREVENTION_L8_PHASE_3.md §5",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-015"
   },
   {
    "id": "Q-016",
@@ -288,7 +336,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §3",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "empirical_model_data",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Establishing causal linkage from measurements needs a causal/empirical model; the lab takes it as a declared input. Not an author decision."
+   },
+   "verification": "lab/registry/verifications.json#Q-016"
   },
   {
    "id": "Q-017",
@@ -312,7 +366,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §7",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "l8_parameter",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Composite index models are assigned to L8 by the text. Listed in the calibration map."
+   },
+   "verification": "lab/registry/verifications.json#Q-017"
   },
   {
    "id": "Q-018",
@@ -330,7 +390,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §5",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "implementation_only",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "The PATCH forbids partial and selective enforcement: the scope is global as written. A regional N_eff would be part of the missing N_eff definition (Q-026)."
+   },
+   "verification": "lab/registry/verifications.json#Q-018"
   },
   {
    "id": "Q-019",
@@ -348,7 +414,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "MODEL_GAPS §9",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "implementation_only",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Compatible: resumption is automatic (no approval or restart) and happens through new recomputed outputs; previous outputs are not reactivated."
+   },
+   "verification": "lab/registry/verifications.json#Q-019"
   },
   {
    "id": "Q-020",
@@ -365,7 +437,9 @@
    ],
    "findings": [],
    "source": "module dispute_correction",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-020"
   },
   {
    "id": "Q-021",
@@ -382,11 +456,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "module dispute_correction",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-021"
   },
   {
    "id": "Q-022",
-   "title": "Polarity of Rᵢ: IMPACT §4 defines an irreversibility indicator; JUSTICE §6/§8 read Rᵢ = True as reversible",
+   "title": "Should IMPACT state the polarity of Rᵢ (JUSTICE §6/§8 read True as reversible), and is the §13 output 'Rᵢ = False' meant for a reversible change",
    "documents": [
     "DKP-1-IMPACT-001",
     "DKP-1-JUSTICE-001"
@@ -403,7 +479,9 @@
     "F-006"
    ],
    "source": "module dispute_correction",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-022"
   },
   {
    "id": "Q-023",
@@ -423,7 +501,9 @@
     "F-005"
    ],
    "source": "module dispute_correction",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-023"
   },
   {
    "id": "Q-024",
@@ -443,7 +523,13 @@
    ],
    "findings": [],
    "source": "module dispute_correction",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "empirical_model_data",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "Numeric physical bounds and margins are data not present in AXIOMS; listed in the calibration map as values missing from the corpus. Not an author decision about meaning."
+   },
+   "verification": "lab/registry/verifications.json#Q-024"
   },
   {
    "id": "Q-025",
@@ -459,7 +545,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "module dispute_correction",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "l8_parameter",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "The threshold is assigned to L8 calibration. Listed in the calibration map."
+   },
+   "verification": "lab/registry/verifications.json#Q-025"
   },
   {
    "id": "Q-026",
@@ -480,7 +572,9 @@
     "F-007"
    ],
    "source": "module sensor_loss",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-026"
   },
   {
    "id": "Q-027",
@@ -498,7 +592,9 @@
     "F-008"
    ],
    "source": "reading for S-LAB-06",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-027"
   },
   {
    "id": "Q-028",
@@ -512,7 +608,9 @@
     "F-009"
    ],
    "source": "catalog section_references",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-028"
   },
   {
    "id": "Q-029",
@@ -529,7 +627,13 @@
    "hypotheses": [],
    "findings": [],
    "source": "reading for S-LAB-06",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "l8_parameter",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "CRISIS assigns its numbers to DKP-8-SIMULATION-001; their absence is missing calibration (calibration map), not an author question."
+   },
+   "verification": "lab/registry/verifications.json#Q-029"
   },
   {
    "id": "Q-030",
@@ -551,7 +655,13 @@
     "F-010"
    ],
    "source": "module crisis_recovery",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "l8_parameter",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "The duration of 'sustained' is an L8 parameter (CRISIS §6); DEFENSE §5 and CRISIS §4 are compatible."
+   },
+   "verification": "lab/registry/verifications.json#Q-030"
   },
   {
    "id": "Q-031",
@@ -573,7 +683,9 @@
     "F-011"
    ],
    "source": "module exit_integration",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-031"
   },
   {
    "id": "Q-032",
@@ -594,7 +706,9 @@
     "F-012"
    ],
    "source": "module exit_integration",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-032"
   },
   {
    "id": "Q-033",
@@ -617,7 +731,13 @@
     "F-013"
    ],
    "source": "module interop_failure",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "implementation_only",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "The conflict came from the lab's premise (F-013, implementation bug)."
+   },
+   "verification": "lab/registry/verifications.json#Q-033"
   },
   {
    "id": "Q-034",
@@ -636,7 +756,9 @@
     "F-014"
    ],
    "source": "module calibration_expiry",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "architecture_definition",
+   "verification": "lab/registry/verifications.json#Q-034"
   },
   {
    "id": "Q-035",
@@ -660,11 +782,13 @@
     "F-014"
    ],
    "source": "reading for S-LAB-05",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-035"
   },
   {
    "id": "Q-036",
-   "title": "TRANSPORT RED as one delta over mortality, medical, infrastructure and insurance harm 'computed via IMPACT', against IMPACT's ban on aggregated scores; RED coefficient and DKP-2-ECONOMIC-001 missing",
+   "title": "Who quantifies 'systemic insurance exposure' in RED: PTL (TRANSPORT §7.1, against ORACLE §1 'physical state only') or another layer; where RED combines its channels",
    "documents": [
     "DKP-5-TRANSPORT-001",
     "DKP-1-IMPACT-001"
@@ -683,7 +807,9 @@
     "F-015"
    ],
    "source": "module transport_capacity",
-   "status": "UNRESOLVED"
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity",
+   "verification": "lab/registry/verifications.json#Q-036"
   },
   {
    "id": "Q-037",
@@ -704,7 +830,21 @@
     "F-016"
    ],
    "source": "module transport_capacity",
-   "status": "UNRESOLVED"
+   "status": "WITHDRAWN",
+   "category": "l8_parameter",
+   "withdrawn": {
+    "date": "2026-10-07",
+    "reason": "The indicator is physical (forced contact); its measurement model and threshold belong to calibration. No conflict with ORACLE §5.3 under the text's own wording."
+   },
+   "verification": "lab/registry/verifications.json#Q-037"
   }
+ ],
+ "categories": [
+  "normative_ambiguity",
+  "architecture_definition",
+  "l8_parameter",
+  "empirical_model_data",
+  "external_dependency",
+  "implementation_only"
  ]
 }

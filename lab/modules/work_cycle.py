@@ -7,9 +7,10 @@ The module computes hourly productive coverage against a demand profile and
 checks the provisions that are decidable from the roster.
 
 Declared hypotheses (the text does not fix them):
-  H-WC-1  phase_offsets: "staggered" lets workers run the Cycle6 pattern with
-          different phase offsets; "aligned" is the literal reading (every
-          worker follows CycleDay = DTI-Day mod 6 with offset 0).
+  H-WC-1  phase_offsets: Cycle6 is a global overlay (CycleDay = DTI-Day mod 6);
+          whether each worker may run it with an own phase is not said (Q-012).
+          "staggered" (default) gives workers different offsets; "aligned"
+          (alternative) puts every worker at offset 0.
   H-WC-2  workers are distributed evenly over shift starts and phase offsets.
   H-WC-3  recovery sits inside the presence window after ``work_before_recovery``
           hours (the §5.2 layout 4-2-4 is the default).
@@ -64,12 +65,16 @@ class WorkCycleModule(LabModule):
                      "и ежедневного блока восстановления?"}
     protocols = ["DKP-5-WORK-CYCLE-001"]
     example_order = ["staffed_36", "understaffed_16", "aligned_phases", "shifts_every_8h", "three_in_a_row"]
+    alternative_examples = ["aligned_phases"]
+    noncompliant_examples = ["understaffed_16", "shifts_every_8h", "three_in_a_row"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_work_cycle_module.py"]
     hypotheses = [
         {"id": "H-WC-1", "source": "hypothesis", "text": {
-            "en": "Phase offsets: 'staggered' lets workers run Cycle6 with different offsets; 'aligned' is the literal reading.",
-            "ru": "Сдвиг фазы: 'staggered' — работники идут по Cycle6 с разными сдвигами; 'aligned' — буквальное прочтение."}},
+            "en": "Phase offsets: Cycle6 is a global overlay of DTI-Day; whether a worker may run it with an own phase is "
+                  "not said (Q-012). 'staggered' (default): different offsets; 'aligned' (alternative): every worker at offset 0.",
+            "ru": "Сдвиг фазы: Cycle6 — общий оверлей DTI-Day; может ли работник идти со своей фазой, не сказано (Q-012). "
+                  "'staggered' (по умолчанию): разные сдвиги; 'aligned' (альтернатива): все с нулевым сдвигом."}},
         {"id": "H-WC-2", "source": "hypothesis", "text": {
             "en": "Workers are spread evenly over shift starts and phase offsets.",
             "ru": "Работники распределены поровну по началам смен и сдвигам фазы."}},

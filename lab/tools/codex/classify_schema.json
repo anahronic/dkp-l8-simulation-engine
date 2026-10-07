@@ -1,0 +1,23 @@
+{
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["doc_id", "items"],
+ "properties": {
+  "doc_id": {"type": "string"},
+  "items": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "primary", "secondary", "author_question_candidate", "rationale"],
+    "properties": {
+     "id": {"type": "string"},
+     "primary": {"type": "string", "enum": ["normative_ambiguity", "architecture_definition", "l8_parameter", "empirical_model_data", "external_dependency", "implementation_only"]},
+     "secondary": {"type": ["string", "null"], "enum": ["normative_ambiguity", "architecture_definition", "l8_parameter", "empirical_model_data", "external_dependency", "implementation_only", null]},
+     "author_question_candidate": {"type": "boolean"},
+     "rationale": {"type": "string"}
+    }
+   }
+  }
+ }
+}

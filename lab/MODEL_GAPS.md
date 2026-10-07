@@ -87,8 +87,8 @@ lists every provision with its coverage and gap; this file collects the cross-cu
 ## 11. Failure chain (S-LAB-02): stale and contradictory data
 
 Module `failure_chain`; hypotheses H-FC-1..6 are declared in the module and shown in the UI.
-Findings with minimal reproductions and options for the author: [findings/](findings/README.md)
-(F-001 … F-004).
+Findings with minimal reproductions: [findings/](findings/README.md) (F-001 … F-004, F-018); their
+classes after the semantic verification of 2026-10-07 are listed there.
 
 - **PTL conditions → EB states (H-FC-1).** ORACLE §9 requires silence and zero weight to
   propagate "as explicit uncertainty, degradation, or halt"; EB §5 defines the states; no
@@ -101,21 +101,21 @@ Findings with minimal reproductions and options for the author: [findings/](find
   at different times turns a real change into a divergence (example `value_drop`: the true
   value falls from 100 to 80 at step 50; ground and autonomous classes see it at once, the
   orbital class 4 steps later — a 20 % "divergence", suspension, then re-evaluation).  → **F-002**
-- **Change without divergence (H-FC-5).** When all classes see the same drop at the same
-  step (example `value_drop_in_sync`), no listed transition of ETRANS §4.1 occurs, no
-  dispute is filed, and enforcement continues on the old evaluation (100) while S(t) = 80,
-  without any provision failing.  ETRANS §4.2 ("new admissible data is introduced") and
-  EB §9 ("detected environmental change") could cover this, but neither says whether
-  routine readings are "new admissible data" nor how large a change must be.  → **F-001**
-  (alternative readings `every_step` and `material_change` can be compared through the
-  input `reevaluation_policy`; neither is adopted).
+- **Change without divergence (H-FC-5) — closed, it was a lab error.**  Checkpoint 2 reported
+  that a synchronous drop (example `value_drop_in_sync`) left enforcement on the old evaluation
+  without any provision failing.  The texts settle it: EB §7.1 lists "new admissible data" as a
+  trigger, EB §7.2 requires a new evaluation and recomputation, ETRANS §4.2 forbids keeping an
+  output active on a past VALID state once new admissible data is introduced, and JUSTICE §11
+  re-evaluates when impact metrics change.  Since `failure_chain` 1.2.0 the default policy is
+  `new_admissible_data`; the former reading `declared_events` fails ETRANS-4.2-01.  → **F-001**
+  (IMPLEMENTATION_BUG).
 - **ETRANS §4.1 list.** Listed downgrades: VALID → CONDITIONAL/INVALID, CONSISTENT →
   ORACLE_CONFLICT, SUFFICIENT_DATA → DEGRADED_SIGNAL.  Not listed: → INSUFFICIENT_DATA,
   → UNRESOLVED, CONDITIONAL → INVALID.  Under H-FC-1 these move validity and are caught
   through it; with another mapping they might not be.
 - **Arbitration window.** ORACLE §11 caps arbitration at 14 days but states no consequence
-  when the window passes (example `long_divergence`: 24 days unresolved, dependent outputs
-  stay suspended; ORACLE-11-03 is reported `FAIL`).
+  when the window passes and no exclusion procedure (example `long_divergence`: 24 days
+  unresolved, dependent outputs stay suspended; ORACLE-11-03 is reported `FAIL`).  → **F-018**
 - **"State-based transactions"** (ORACLE §11) are not defined; the module treats penalty
   accruals and asset orders as such.
 - **Reference defect:** FINANCE §11.2(b) points to "DKP-4-ERROR-001 Section 4.1" for the
@@ -131,4 +131,11 @@ Findings with minimal reproductions and options for the author: [findings/](find
 
 The registry was drafted with an OpenAI Codex agent and machine-checked (verbatim quotes,
 sections, ids).  Interpretations are proposals; a human review of each document's entries
-is still open.  Documents whose drafting is not finished are shown as "not yet registered".
+is still open.  Provisions involved in a finding, a reference FAIL or an author question were
+read against the literal text (`lab/registry/verifications.json`; `interpretation_status`
+TEXT_VERIFIED — not a human review).  The origin of every open point (`open_point.origin`:
+normative ambiguity, architecture definition, L8 parameter, empirical model/data, external
+dependency, implementation only) is a Codex draft unless an author question was verified
+(`lab/registry/unresolved_classification.json`; counts in TRACEABILITY.md).  Missing
+calibration, data, documents and code are not author questions; they are listed in
+`lab/CALIBRATION_MAP.md` (decomposition of F-014).  Documents whose drafting is not finished are shown as "not yet registered".

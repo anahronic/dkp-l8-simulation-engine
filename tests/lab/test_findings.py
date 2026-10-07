@@ -24,18 +24,21 @@ def totals(name):
     return out
 
 
-def test_f001_synchronous_change_triggers_no_reevaluation():
+def test_f001_was_a_lab_error_now_caught_by_etrans_4_2():
+    """F-001 (IMPLEMENTATION_BUG): new admissible data trigger re-evaluation; the former lab reading
+    ('declared_events') is now detected as a violation of ETRANS §4.2."""
     assert totals("F-001") == {
-        "declared_events": (1, 24, "ACTIVE", 0, 0, 18, 0),
-        "every_step": (2, 6, "INACTIVE", 0, 0, 0, 0),
+        "new_admissible_data": (2, 6, "INACTIVE", 0, 0, 0, 0),
+        "declared_events_former_lab_reading": (1, 24, "ACTIVE", 0, 0, 18, 1),
         "material_change_5pct": (2, 6, "INACTIVE", 3, 0, 0, 0),
     }
 
 
 def test_f002_asynchronous_sampling_reports_a_divergence():
+    """F-002 (INTERPRETATION_GAP, depends on H-FC-3): asynchronous sampling freezes transactions; both re-evaluate."""
     assert totals("F-002") == {
         "orbital_every_4h": (2, 6, "INACTIVE", 4, 2, 0, 0),
-        "orbital_every_1h": (1, 24, "ACTIVE", 0, 0, 18, 0),
+        "orbital_every_1h": (2, 6, "INACTIVE", 0, 0, 0, 0),
     }
 
 
@@ -55,10 +58,17 @@ def test_f005_and_f006_impact_and_reversibility():
     assert rows["level_crossed"][1:] == (False, True)
     with open(os.path.join(FINDINGS, "F-006.request.json"), encoding="utf-8") as f:
         doc = run_request(json.load(f))
-    dom = {n: v["outputs"]["decisions"][0]["domains"] for n, v in doc["variants"].items()}
-    assert (dom["as_written"]["isolation"], dom["as_written"]["restitution"]) == (True, False)
-    assert (dom["irreversible_as_written"]["isolation"], dom["irreversible_as_written"]["restitution"]) == (False, True)
-    assert (dom["consistent"]["isolation"], dom["consistent"]["restitution"]) == (False, True)
+    rows = {n: (v["outputs"]["impact"][0]["R"], v["outputs"]["decisions"][0]["domains"]["restitution"],
+                v["outputs"]["decisions"][0]["domains"]["isolation"],
+                sorted(c["requirement_id"] for c in v["checks"] if c["status"] == "FAIL"))
+            for n, v in doc["variants"].items()}
+    assert rows == {                                    # (Rᵢ emitted, restitution, isolation, FAIL)
+        "reversible_justice_polarity": (True, True, False, []),
+        "irreversible_justice_polarity": (False, False, True, []),
+        "reversible_impact_name_polarity": (False, True, False, []),
+        "irreversible_impact_name_polarity": (True, False, True, []),
+        "reversible_mixed": (False, False, True, ["JUSTICE-6-01", "JUSTICE-8-01"]),
+        "irreversible_mixed": (True, True, False, ["JUSTICE-6-01", "JUSTICE-8-01"])}
 
 
 def test_f007_n_eff_undefined():
@@ -100,13 +110,17 @@ def test_f011_f012_exit_conflicts():
             for n, x in v.items()} == {"never_suspended": (284, "PASS"), "scope_crisis_suspension": (302, "FAIL")}
 
 
-def test_f013_mirror_conflict():
+def test_f013_was_a_lab_premise_now_a_counterexample():
     with open(os.path.join(FINDINGS, "F-013.request.json"), encoding="utf-8") as f:
         v = run_request(json.load(f))["variants"]
-    st = {n: {c["requirement_id"]: c["status"] for c in x["checks"]} for n, x in v.items()}
-    assert st["interop_rule"]["CRISIS-4-01"] == "FAIL" and st["ptl_rule"]["INTEROP-9-04"] == "FAIL"
-    assert st["tolerance_missing"]["CRISIS-4-01"] == "UNKNOWN"
-    assert v["ptl_rule"]["outputs"]["internal_decisions"] == 16
+    rows = {n: (x["outputs"]["internal_decisions"], x["outputs"]["crisis_entered"],
+                {c["requirement_id"]: c["status"] for c in x["checks"]}["CRISIS-4-01"],
+                sorted(c["requirement_id"] for c in x["checks"] if c["status"] == "FAIL")) for n, x in v.items()}
+    assert rows == {"external_mirror_outage": (24, False, "NOT_APPLICABLE", []),
+                    "former_lab_premise": (16, True, "NOT_APPLICABLE",
+                                           ["INTEROP-8-01", "INTEROP-8-02", "INTEROP-9-02", "INTEROP-9-04"]),
+                    "registered_sources_lost": (16, True, "PASS", []),
+                    "registered_tolerance_missing": (24, False, "UNKNOWN", [])}
 
 
 def test_f014_bundle_precondition_text():
@@ -119,11 +133,13 @@ def test_f014_bundle_precondition_text():
     assert not any("calibration" in f.lower() and "bundle" in f.lower() for f in names)     # no bundle in the corpus
 
 
-def test_f015_red_aggregation():
+def test_f015_insurance_exposure_and_red_aggregation():
     with open(os.path.join(FINDINGS, "F-015.request.json"), encoding="utf-8") as f:
         v = run_request(json.load(f))["variants"]
-    st = {n: next(c["status"] for c in x["checks"] if c["requirement_id"] == "IMPACT-10-02") for n, x in v.items()}
-    assert st == {"single_delta": "FAIL", "channel_separated": "PASS"}
+    st = {n: tuple(next(c["status"] for c in x["checks"] if c["requirement_id"] == rid) for rid in ("ORACLE-1-02", "IMPACT-10-02"))
+          for n, x in v.items()}
+    assert st == {"single_delta_as_written": ("FAIL", "UNKNOWN"), "channel_separated": ("FAIL", "PASS"),
+                  "insurance_outside_ptl": ("PASS", "UNKNOWN"), "channel_separated_insurance_outside_ptl": ("PASS", "PASS")}
 
 
 def test_f016_consent_not_measurable_by_ptl():

@@ -14,8 +14,12 @@ the texts leave open is declared:
   * PPDI has components but no formula and no minimum: no composite index is computed;
   * "regular" standing has no threshold; RED has no coefficient (its economic side depends on
     DKP-2-ECONOMIC-001, which is not in the corpus);
-  * RED as one delta over mortality, medical, infrastructure and insurance harm is an aggregate
-    score, which IMPACT §5/§10 forbid (finding F-015): two readings.
+  * TRANSPORT §7.1 has the Physical Truth Layer quantify harm that includes "systemic insurance
+    exposure", an economic quantity; ORACLE §1: "The PTL produces physical state only" (finding
+    F-015, confirmed).  Alternative: insurance exposure quantified outside PTL (H-TR-4);
+  * RED is "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001" (§7.2); where its channels are
+    combined is not said.  If IMPACT combined them, IMPACT §5/§10 would forbid it; nothing says it
+    does, so the lab reports UNKNOWN, not a conflict (H-TR-3).
 """
 
 from __future__ import annotations
@@ -28,6 +32,8 @@ from lab.core.module import LabModule, ModuleResult
 from lab.core.schema import LabInputError
 
 RED_CHANNELS = ("mortality_risk", "medical_load", "infrastructure_degradation", "insurance_exposure")
+# an economic exposure, not a physical state: ORACLE §1 "The PTL produces physical state only" / "does not ... assign value"
+NON_PHYSICAL = ("insurance_exposure",)
 FAULTS = {
     "standing_as_standard": "regular standing is not classified as under-provisioning",
     "passenger_adaptation": "under-provisioning is answered by asking passengers to adapt",
@@ -116,10 +122,12 @@ def run(r: Dict[str, Any]):
             remedy = "ask passengers to adapt" if "passenger_adaptation" in faults else "capacity expansion"
             put("action", "TRANSPORT", k, {"response": remedy}, [c.event_id])
         if r["red_per_km"] >= 0:
+            per = {ch: d["private_km"] * r["red_per_km"] / len(RED_CHANNELS) for ch in RED_CHANNELS}
+            ptl_channels = [ch for ch in RED_CHANNELS if r["red_insurance"] == "ptl_quantified" or ch not in NON_PHYSICAL]
             if r["red_reading"] == "single_delta":
-                red = {"RED": round(d["private_km"] * r["red_per_km"], 6)}
+                red = {"RED": round(sum(per[ch] for ch in ptl_channels), 6)}
             else:
-                red = {ch: round(d["private_km"] * r["red_per_km"] / len(RED_CHANNELS), 6) for ch in RED_CHANNELS}
+                red = {ch: round(per[ch], 6) for ch in ptl_channels}
             weight = "reputation score" if "moral_weighting" in faults else "PTL-confirmed risk profile"
             proxy = {} if "undeclared_proxy" in faults else {
                 "classification": "proxy-based measurement (ORACLE §5.2)",
@@ -127,9 +135,19 @@ def run(r: Dict[str, Any]):
                 "uncertainty": {k2: round(v2 * r["red_uncertainty"], 6) for k2, v2 in red.items()},
                 "not_a_subjective_state": True}
             rm = put("evaluation", "TRANSPORT/RED", k, {"day": d["day"], **red, "modulation": weight, **proxy,
+                                                        "quantified_by": "PTL (TRANSPORT §7.1)", "channels": ptl_channels,
                                                         "unit": "model unit (no coefficient in the corpus)"}, [ppdi.event_id])
+            cost = sum(v for v in red.values())
+            prov = [rm.event_id]
+            if len(ptl_channels) < len(RED_CHANNELS):
+                outside = {ch: round(per[ch], 6) for ch in RED_CHANNELS if ch not in ptl_channels}
+                ins = put("evaluation", "L2/RED-INSURANCE", k, {"day": d["day"], **outside,
+                                                                "quantified_by": "outside PTL (no protocol named in the corpus)"},
+                          [ppdi.event_id])
+                cost += sum(outside.values())
+                prov.append(ins.event_id)
             dest = "general budget levy" if "red_as_tax" in faults else "high-PPDI transport infrastructure fund"
-            put("action", "LEDGER", k, {"externality_cost": sum(v for v in red.values()), "destination": dest}, [rm.event_id])
+            put("action", "LEDGER", k, {"externality_cost": round(cost, 6), "destination": dest}, prov)
             if "justice_from_red" in faults:
                 put("decision", "JUSTICE", k, {"outcome": "restriction", "basis": "high RED"}, [rm.event_id])
         if "ban_private" in faults and d["day"] == 0:
@@ -192,6 +210,7 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
         out.append(na("TRANSPORT-7.2-02", "red_not_a_tax", "use of RED", "RED not computed"))
         out.append(na("TRANSPORT-7.3-03", "no_moral_weighting", "RED modulation", "RED not computed"))
         out.append(na("IMPACT-10-02", "no_aggregated_score", "aggregation of RED", "RED not computed"))
+        out.append(na("ORACLE-1-02", "ptl_physical_state_only", "RED quantified by PTL", "RED not computed"))
     else:
         out.append(CheckResult("TRANSPORT-7.1-01", "red_quantified", PASS if reds else FAIL,
                                f"RED quantified per day ({r['red_reading']}), in model units with a declared coefficient"))
@@ -204,13 +223,21 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
         out.append(v("TRANSPORT-7.3-03", "no_moral_weighting", [m.event_id for m in reds if m.value["modulation"] != "PTL-confirmed risk profile"],
                      "RED modulation uses PTL-confirmed risk profiles only", "{n} RED modulations with reputation weighting"))
         if r["red_reading"] == "single_delta":
-            out.append(CheckResult("IMPACT-10-02", "no_aggregated_score", FAIL,
-                                   "RED is one delta over mortality, medical, infrastructure and insurance harm and is computed "
-                                   "via IMPACT, which forbids aggregated impact scores (§5, §10). Rule conflict (F-015)",
-                                   evidence={"tag": "rule_conflict"}))
+            out.append(CheckResult("IMPACT-10-02", "no_aggregated_score", UNKNOWN,
+                                   "RED is one delta 'computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001' (TRANSPORT §7.2); "
+                                   "the corpus does not say whether IMPACT itself combines the channels (then §5/§10 would "
+                                   "forbid it) or only supplies channel outputs (F-015, interpretation gap)"))
         else:
             out.append(CheckResult("IMPACT-10-02", "no_aggregated_score", PASS,
                                    "RED kept channel-separated (reading 'channel_separated'); no aggregate impact score"))
+        bad = [m.event_id for m in reds if set(m.value["channels"]) & set(NON_PHYSICAL)]
+        out.append(CheckResult(
+            "ORACLE-1-02", "ptl_physical_state_only", FAIL if bad else PASS,
+            ("TRANSPORT §7.1 has the Physical Truth Layer quantify harm including 'systemic insurance exposure', an "
+             "economic quantity; ORACLE §1: 'The PTL produces physical state only'. Rule conflict between texts in "
+             f"force (F-015); {len(bad)} RED outputs") if bad else
+            "RED quantified by PTL covers physical channels only; insurance exposure is quantified outside PTL (H-TR-4)",
+            evidence={"tag": "rule_conflict", "violations": bad[:10]} if bad else {}))
     if reds:
         bad = [m.event_id for m in reds if not (m.value.get("proxy_model") and m.value.get("uncertainty") is not None
                                                  and m.value.get("not_a_subjective_state") is True)]
@@ -256,7 +283,8 @@ IMPLEMENTS = {
     "TRANSPORT-11-02": ("no_justice_outcomes", "IMPLEMENTED", None),
     "TRANSPORTA-A.1-01": ("no_justice_trigger", "IMPLEMENTED", None),
     "TRANSPORTA-A.1-02": ("degradation_signal_only", "IMPLEMENTED", None),
-    "IMPACT-10-02": ("no_aggregated_score", "PARTIAL", "RED as a single delta conflicts with IMPACT §5/§10 (F-015)."),
+    "IMPACT-10-02": ("no_aggregated_score", "PARTIAL", "Where RED combines its channels is not defined: UNKNOWN for a single delta (F-015)."),
+    "ORACLE-1-02": ("ptl_physical_state_only", "PARTIAL", "Checked on RED only: PTL asked to quantify an economic exposure (F-015)."),
     "ORACLE-5.2-02": ("red_proxy_declared", "IMPLEMENTED", None),
     "ORACLE-5.3-01": ("no_excluded_domain_outputs", "PARTIAL", "Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016)."),
 }
@@ -264,15 +292,16 @@ IMPLEMENTS = {
 
 class TransportCapacityModule(LabModule):
     id = "transport_capacity"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Transport capacity (S-LAB-09)", "ru": "Транспортная вместимость (S-LAB-09)"}
     summary = {"en": "A corridor at rush hour: queues, seats and external harm side by side — is standing an exception, "
                      "is under-provisioning met by more capacity, and does RED fund better transport without punishing anyone?",
                "ru": "Коридор в час пик: очереди, места и внешний вред рядом — исключение ли стоя, отвечают ли на нехватку "
                      "новой вместимостью, идёт ли RED на лучший транспорт без наказаний?"}
     protocols = ["DKP-5-TRANSPORT-001", "DKP-5-TRANSPORT-001-APPENDIX-A", "DKP-1-IMPACT-001", "DKP-0-ORACLE-001"]
-    example_order = ["seated_only", "standing_allowed", "thin_service", "more_vehicles", "red_channel_separated", "faulty_transport", "bench_interior"]
-    alternative_examples = ["red_channel_separated"]
+    example_order = ["seated_only", "standing_allowed", "thin_service", "more_vehicles", "red_single_delta",
+                     "red_channel_separated", "red_insurance_outside_ptl", "faulty_transport", "bench_interior"]
+    alternative_examples = ["red_channel_separated", "red_insurance_outside_ptl"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_transport_capacity_module.py"]
     causal_note = None
@@ -286,8 +315,15 @@ class TransportCapacityModule(LabModule):
             "ru": "'Регулярно' стоя = стоя дольше объявленной доли часов суток; вынужденный контакт = плотность стоящих выше "
                   "объявленной на м²; коэффициент RED на км. В корпусе их нет."}},
         {"id": "H-TR-3", "source": "alternative", "text": {
-            "en": "RED reading: 'single_delta' (TRANSPORT §7: one delta) or 'channel_separated' (IMPACT §5/§10: no aggregation; F-015).",
-            "ru": "Чтение RED: 'single_delta' (TRANSPORT §7: одна дельта) или 'channel_separated' (IMPACT §5/§10: без агрегирования; F-015)."}},
+            "en": "RED form: 'single_delta' (TRANSPORT §7.1: one delta) or 'channel_separated'. Where the channels are combined "
+                  "is not defined ('computed via' ORACLE and IMPACT, §7.2); IMPACT-10-02 is UNKNOWN for a single delta (F-015).",
+            "ru": "Форма RED: 'single_delta' (TRANSPORT §7.1: одна дельта) или 'channel_separated'. Где каналы объединяются, "
+                  "не определено ('computed via' ORACLE и IMPACT, §7.2); для одной дельты IMPACT-10-02 = UNKNOWN (F-015)."}},
+        {"id": "H-TR-4", "source": "alternative", "text": {
+            "en": "Insurance exposure: 'ptl_quantified' — PTL quantifies it with the other channels (TRANSPORT §7.1, against "
+                  "ORACLE §1: F-015); 'outside_ptl' — quantified outside PTL by a protocol the corpus does not name.",
+            "ru": "Страховая нагрузка: 'ptl_quantified' — PTL оценивает её вместе с другими каналами (TRANSPORT §7.1, вопреки "
+                  "ORACLE §1: F-015); 'outside_ptl' — оценивается вне PTL протоколом, которого корпус не называет."}},
     ]
     inputs = {
         "days": {"type": "int", "min": 1, "max": 365, "default": 5, "unit": "day", "source": "user", "label": {"en": "Days", "ru": "Дней"}},
@@ -334,7 +370,10 @@ class TransportCapacityModule(LabModule):
         "red_uncertainty": {"type": "number", "min": 0, "max": 10, "default": 0.25, "source": "hypothesis",
                             "label": {"en": "Relative uncertainty of RED", "ru": "Относительная неопределённость RED"}},
         "red_reading": {"type": "enum", "values": ["single_delta", "channel_separated"], "default": "single_delta",
-                        "source": "alternative", "label": {"en": "RED reading (H-TR-3)", "ru": "Чтение RED (H-TR-3)"}},
+                        "source": "alternative", "label": {"en": "RED form (H-TR-3)", "ru": "Форма RED (H-TR-3)"}},
+        "red_insurance": {"type": "enum", "values": ["ptl_quantified", "outside_ptl"], "default": "ptl_quantified",
+                          "source": "alternative", "label": {"en": "Insurance exposure quantified (H-TR-4)",
+                                                             "ru": "Кто оценивает страховую нагрузку (H-TR-4)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -378,7 +417,9 @@ class TransportCapacityModule(LabModule):
             "standing_allowed": {"policy": "standing_allowed"},
             "thin_service": {"policy": "standing_allowed", "vehicles_per_hour": [4] * 6 + [9] * 4 + [5] * 6 + [9] * 4 + [3] * 4},
             "more_vehicles": {"vehicles_per_hour": [4] * 6 + [18] * 4 + [8] * 6 + [18] * 4 + [4] * 4},
+            "red_single_delta": {"red_per_km": 0.02},
             "red_channel_separated": {"red_per_km": 0.02, "red_reading": "channel_separated"},
+            "red_insurance_outside_ptl": {"red_per_km": 0.02, "red_insurance": "outside_ptl"},
             "faulty_transport": {"policy": "standing_allowed", "red_per_km": 0.02,
                                  "faults": ["passenger_adaptation", "red_as_tax", "justice_from_red", "ban_private"]},
             "bench_interior": {"interior": "bench", "core_route": False},

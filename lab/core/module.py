@@ -52,6 +52,10 @@ class LabModule:
     #: examples computed under an alternative reading (source 'alternative'), not the text in force;
     #: their statuses are reported apart from the reference examples
     alternative_examples: List[str] = []
+    #: examples whose input describes a case that breaks a provision on purpose (an understaffed roster,
+    #: three workdays in a row): their FAILs are the expected outcome of the case, not a statement about a
+    #: protocol; reported apart from the reference examples and verified in lab/registry/verifications.json
+    noncompliant_examples: List[str] = []
     #: optional progress callback set by the runner: fn(fraction 0..1, message)
     progress: Optional[Callable[[float, str], None]] = None
 
@@ -66,8 +70,20 @@ class LabModule:
             "hypotheses": self.hypotheses,
             "causal_note": self.causal_note,
             "examples": self.ordered_examples(),
+            "example_kinds": {n: self.example_kind(n) for n in self.ordered_examples()},
             "failure_examples": sorted(self.failure_examples()),
         }
+
+    def example_kind(self, name: str) -> str:
+        """counterexample (deliberate faults) | alternative (another reading) | noncompliant (the case breaks a
+        provision on purpose) | reference (text in force, compliant case)."""
+        if self.examples()[name].get("faults"):
+            return "counterexample"
+        if name in self.alternative_examples:
+            return "alternative"
+        if name in self.noncompliant_examples:
+            return "noncompliant"
+        return "reference"
 
     def validate(self, value: Dict[str, Any]) -> Dict[str, Any]:
         return resolve(value, self.inputs)

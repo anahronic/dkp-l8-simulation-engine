@@ -38,7 +38,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-2-01",
@@ -69,7 +73,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-3-01",
@@ -97,7 +105,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "operational_within_validity"
    },
    "tests": [
@@ -107,7 +115,11 @@
    "open_questions": [
     "Q-003"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ETRANS-3-02",
@@ -137,7 +149,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "downgrade_propagates"
    },
    "tests": [
@@ -145,7 +157,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-3-03",
@@ -176,7 +192,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-3-04",
@@ -206,10 +226,12 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-006"
-   ],
-   "decision_status": "UNRESOLVED"
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.1-01",
@@ -243,7 +265,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "check": "revalidation_flag"
      }
     ]
@@ -257,7 +279,11 @@
     "Q-003",
     "Q-007"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ETRANS-4.1-02",
@@ -286,7 +312,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "suspension_on_downgrade"
    },
    "tests": [
@@ -297,7 +323,11 @@
     "Q-003",
     "Q-007"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ETRANS-4.1-03",
@@ -328,7 +358,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_escalation_after_downgrade"
    },
    "tests": [
@@ -338,7 +368,11 @@
    "open_questions": [
     "Q-007"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ETRANS-4.2-01",
@@ -363,7 +397,7 @@
     "epistemic and consistency states",
     "enforcement justification provenance"
    ],
-   "gap": "New admissible data is introduced by a declared dispute (H-FC-5).",
+   "gap": "New admissible data = a reading that arrives and changes S(t), or a declared dispute (H-FC-5).",
    "hypotheses_needed": [
     "Treat the listed conditions as alternative triggers.",
     "Declare how admissibility and sole reliance are established."
@@ -371,17 +405,19 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_persistence_on_past_valid"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-006"
-   ],
-   "decision_status": "UNRESOLVED"
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.3-01",
@@ -412,7 +448,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "status_quo_preserved"
    },
    "tests": [
@@ -420,7 +456,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.3-02",
@@ -450,7 +490,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_escalation_in_uncertainty"
    },
    "tests": [
@@ -458,7 +498,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.3-03",
@@ -489,7 +533,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_penalty_accumulation"
    },
    "tests": [
@@ -497,7 +541,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.3-04",
@@ -528,7 +576,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "awaits_recomputation"
    },
    "tests": [
@@ -536,7 +584,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.4-01",
@@ -570,17 +622,19 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "reentry_new_output"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-019"
-   ],
-   "decision_status": "UNRESOLVED"
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.4-02",
@@ -611,7 +665,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "check": "no_auto_reactivation"
      },
      {
@@ -626,11 +680,9 @@
     "tests/lab/test_failure_chain_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-019"
-   ],
-   "decision_status": "UNRESOLVED"
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [],
+   "decision_status": "NONE_IDENTIFIED"
   },
   {
    "id": "ETRANS-4.5-01",
@@ -666,7 +718,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-4.5-02",
@@ -724,7 +780,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-6-02",
@@ -754,7 +814,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-6-03",
@@ -784,7 +848,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-6-04",
@@ -815,7 +883,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-7-01",
@@ -857,7 +929,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-7-02",
@@ -949,7 +1025,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-7-05",
@@ -1018,7 +1098,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ETRANS-7-07",

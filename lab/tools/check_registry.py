@@ -36,11 +36,18 @@ REQUIRED = ["id", "section", "title", "quote", "interpretation", "kind", "checka
             "criterion", "numeric_source", "normative_dependencies", "data_dependencies", "gap",
             "hypotheses_needed", "coverage", "implementation", "tests",
             "interpretation_status", "decision_status", "open_questions"]
-# DRAFT_UNREVIEWED: machine draft, not a confirmed reading; REVIEWED: checked by a human
-# reviewer; CONFIRMED_BY_AUTHOR: the author accepted the reading.  No tool upgrades it.
-INTERPRETATION = {"DRAFT_UNREVIEWED", "REVIEWED", "CONFIRMED_BY_AUTHOR"}
-# UNRESOLVED: a human or author decision is needed (hypotheses_needed or an open question)
+# DRAFT_UNREVIEWED: machine draft, not a confirmed reading; TEXT_VERIFIED: its wording was read
+# against the literal text by the lab's semantic verification gate (lab/registry/verifications.json,
+# derived by sync_coverage) — not a human review; REVIEWED: checked by a human reviewer;
+# CONFIRMED_BY_AUTHOR: the author accepted the reading.  No tool sets REVIEWED or CONFIRMED_BY_AUTHOR.
+INTERPRETATION = {"DRAFT_UNREVIEWED", "TEXT_VERIFIED", "REVIEWED", "CONFIRMED_BY_AUTHOR"}
+# UNRESOLVED: an open point needs a decision — by the author, by L8 calibration, by data or by lab
+# work; ``open_point.origin`` says which (draft classification unless text-verified)
 DECISION = {"UNRESOLVED", "NONE_IDENTIFIED"}
+ORIGINS = ("normative_ambiguity", "architecture_definition", "l8_parameter", "empirical_model_data",
+           "external_dependency", "implementation_only")
+AUTHOR_ORIGINS = ("normative_ambiguity", "architecture_definition")
+QUESTION_STATUS = {"UNRESOLVED", "WITHDRAWN"}
 OPEN_QUESTIONS = os.path.join(LAB_ROOT, "registry", "open_questions.json")
 PREFIXES = os.path.join(LAB_ROOT, "registry", "prefixes.json")
 
@@ -119,6 +126,12 @@ def check_file(path: str, catalog: Dict[str, Any], seen_ids: Dict[str, str]) -> 
         needs = bool(r["hypotheses_needed"]) or bool(r["open_questions"])
         if needs and r["decision_status"] != "UNRESOLVED":
             problems.append(f"{where}: open decisions but decision_status {r['decision_status']}")
+        op = r.get("open_point")
+        if op is not None:
+            if r["decision_status"] != "UNRESOLVED":
+                problems.append(f"{where}: open_point on a provision without an open decision")
+            if op.get("origin") not in ORIGINS or op.get("source") not in ("codex_draft", "text_verified"):
+                problems.append(f"{where}: open_point {op!r}")
     return problems
 
 
@@ -134,6 +147,15 @@ def check_open_questions(seen_ids: Dict[str, str]) -> List[str]:
         if q["id"] in ids:
             problems.append(f"open_questions: duplicate {q['id']}")
         ids.add(q["id"])
+        if q.get("status") not in QUESTION_STATUS:
+            problems.append(f"open_questions {q['id']}: status {q.get('status')!r}")
+        if q.get("category") not in ORIGINS:
+            problems.append(f"open_questions {q['id']}: category {q.get('category')!r}")
+        elif q["status"] == "UNRESOLVED" and q["category"] not in AUTHOR_ORIGINS:
+            problems.append(f"open_questions {q['id']}: an author question must be normative_ambiguity or "
+                            f"architecture_definition, not {q['category']}")
+        if q.get("status") == "WITHDRAWN" and not (q.get("withdrawn") or {}).get("reason"):
+            problems.append(f"open_questions {q['id']}: WITHDRAWN without a reason")
         for rid in q["requirements"]:
             doc = prefix_doc.get(rid.split("-", 1)[0])
             if rid not in seen_ids and doc in registered:

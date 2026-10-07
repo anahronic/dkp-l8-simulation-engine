@@ -39,7 +39,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-1-02",
@@ -60,16 +64,26 @@
    "data_dependencies": [
     "processing provenance and output classifications"
    ],
-   "gap": "No executable distinction between physical-state processing and prohibited interpretation is supplied. No lab check implemented yet.",
+   "gap": "Checked on RED only: PTL asked to quantify an economic exposure (F-015).",
    "hypotheses_needed": [
     "Declare a classification of operations and output content."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.1.0",
+    "check": "ptl_physical_state_only"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-2-01",
@@ -101,7 +115,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-2-02",
@@ -132,7 +150,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-3-01",
@@ -162,7 +184,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.1-01",
@@ -194,7 +220,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "empirical_model_data",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.2-01",
@@ -227,7 +257,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.3-01",
@@ -257,7 +291,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.4-01",
@@ -288,7 +326,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.5-01",
@@ -321,7 +363,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.6-01",
@@ -347,7 +393,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ttl_zero_weight"
    },
    "tests": [
@@ -385,7 +431,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-4.8-01",
@@ -413,11 +463,15 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-004"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-5-01",
@@ -472,7 +526,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "empirical_model_data",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-5.2-01",
@@ -503,7 +561,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "empirical_model_data",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-5.2-02",
@@ -533,7 +595,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "red_proxy_declared"
    },
    "tests": [
@@ -541,7 +603,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "empirical_model_data",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-5.3-01",
@@ -568,17 +634,19 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_excluded_domain_outputs"
    },
    "tests": [
     "tests/lab/test_transport_capacity_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-037"
-   ],
-   "decision_status": "UNRESOLVED"
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-6-01",
@@ -607,7 +675,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-6-02",
@@ -669,7 +741,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-7-02",
@@ -702,7 +778,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-7-03",
@@ -733,7 +813,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-8-01",
@@ -800,7 +884,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-9-01",
@@ -828,17 +916,21 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ttl_zero_weight"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-008"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-9-02",
@@ -871,7 +963,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "check": "no_stale_in_state"
      }
     ]
@@ -882,7 +974,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-9-03",
@@ -912,17 +1008,21 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "silence_propagates"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-003"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-10-01",
@@ -954,9 +1054,13 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "empirical_model_data",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-10-02",
@@ -987,7 +1091,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-10-03",
@@ -1018,7 +1126,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-11-01",
@@ -1047,17 +1159,21 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "divergence_threshold"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-004"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-11-02",
@@ -1084,17 +1200,21 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "divergence_freeze"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-010"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-11-03",
@@ -1123,17 +1243,21 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "arbitration_window"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-005"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-11-04",
@@ -1163,17 +1287,21 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "divergence_resolution"
    },
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-004"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-12-01",
@@ -1205,7 +1333,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-12-02",
@@ -1233,7 +1365,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-12-03",
@@ -1264,10 +1400,12 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-017"
-   ],
-   "decision_status": "UNRESOLVED"
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "l8_parameter",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-12-04",
@@ -1298,10 +1436,8 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-017"
-   ],
-   "decision_status": "UNRESOLVED"
+   "open_questions": [],
+   "decision_status": "NONE_IDENTIFIED"
   },
   {
    "id": "ORACLE-12-05",
@@ -1331,10 +1467,12 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-017"
-   ],
-   "decision_status": "UNRESOLVED"
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "l8_parameter",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-12-06",
@@ -1366,10 +1504,12 @@
    "implementation": null,
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [
-    "Q-017"
-   ],
-   "decision_status": "UNRESOLVED"
+   "open_questions": [],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-13-01",
@@ -1410,7 +1550,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-13-02",
@@ -1442,7 +1586,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "halt_blocks_l2"
    },
    "tests": [
@@ -1450,7 +1594,11 @@
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-14-01",
@@ -1483,7 +1631,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-14-02",
@@ -1512,7 +1664,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "empirical_model_data",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-14-03",
@@ -1539,11 +1695,15 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-027"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-14-04",
@@ -1579,7 +1739,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-15-01",
@@ -1611,11 +1775,15 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-027"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-16-01",
@@ -1639,11 +1807,15 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-035"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-16-02",
@@ -1671,7 +1843,11 @@
    "open_questions": [
     "Q-035"
    ],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ORACLE-17-01",
@@ -1697,7 +1873,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ttl_registry"
    },
    "tests": [
@@ -1730,7 +1906,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ttl_registry"
    },
    "tests": [
@@ -1799,7 +1975,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-EpistemicInterpretationNote-01",
@@ -1830,7 +2010,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "implementation_only",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-EpistemicInterpretationNote-02",
@@ -1860,7 +2044,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-EpistemicInterpretationNote-03",
@@ -1897,7 +2085,11 @@
    "tests": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED"
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
   },
   {
    "id": "ORACLE-EpistemicInterpretationNote-04",

@@ -24,6 +24,7 @@ import sys
 from collections import Counter
 from typing import Any, Dict, List
 
+from lab.core import verification
 from lab.core.registry import catalog
 from lab.tools.check_registry import REQ_DIR, check_file, check_open_questions, load_catalog
 
@@ -56,12 +57,13 @@ def observe() -> Dict[str, Any]:
     evidence: Dict[str, Counter] = {}
     detected: Dict[str, List[str]] = {}
     alternative: Dict[str, Counter] = {}
+    noncompliant: Dict[str, List[str]] = {}
+    ref_fails: Dict[str, List[str]] = {}
     runs = []
     for m in MODULES.values():
         for name, inp in sorted(m.examples().items()):
             res = m.evaluate(m.validate(inp))
-            kind = "counterexample" if inp.get("faults") else \
-                "alternative" if name in m.alternative_examples else "reference"
+            kind = m.example_kind(name)
             runs.append({"module": m.id, "example": name, "kind": kind})
             for c in res.checks:
                 if kind == "counterexample":
@@ -69,9 +71,15 @@ def observe() -> Dict[str, Any]:
                         detected.setdefault(c.requirement_id, []).append(f"{m.id}:{name}")
                 elif kind == "alternative":
                     alternative.setdefault(c.requirement_id, Counter())[c.status] += 1
+                elif kind == "noncompliant":
+                    if c.status == "FAIL":
+                        noncompliant.setdefault(c.requirement_id, []).append(f"{m.id}:{name}")
                 else:
                     evidence.setdefault(c.requirement_id, Counter())[c.status] += 1
-    return {"evidence": evidence, "detected": detected, "alternative": alternative, "runs": runs}
+                    if c.status == "FAIL":
+                        ref_fails.setdefault(c.requirement_id, []).append(f"{m.id}:{name}")
+    return {"evidence": evidence, "detected": detected, "alternative": alternative, "noncompliant": noncompliant,
+            "reference_fails": ref_fails, "runs": runs}
 
 
 def summary_status(counts: Counter) -> str:
@@ -92,6 +100,8 @@ def build() -> Dict[str, Any]:
     stages = _load("tz_stages.json")
     obs = observe()
     hyps = {m.id: [h["id"] for h in m.hypotheses] for m in MODULES.values()}
+    ver = verification.load()
+    read = verification.verified_provisions(ver, regs)
 
     rows = []
     for doc_id, reg in regs.items():
@@ -112,6 +122,9 @@ def build() -> Dict[str, Any]:
                 "status": summary_status(counts),
                 "counterexample_detected_by": sorted(set(obs["detected"].get(r["id"], []))),
                 "under_alternative_readings": dict(obs["alternative"].get(r["id"], {})),
+                "violated_by_noncompliant_case": sorted(set(obs["noncompliant"].get(r["id"], []))),
+                "text_verification": read.get(r["id"], []),
+                "open_point": r.get("open_point"),
             })
     by_doc: Dict[str, List[Dict[str, Any]]] = {}
     for row in rows:
@@ -156,8 +169,8 @@ def build() -> Dict[str, Any]:
             return not reg_problems
         if check == "references_checked":
             return "section_references" in cat
-        if check == "interpretations_reviewed":
-            return all(x["interpretation_status"] != "DRAFT_UNREVIEWED" for x in rows)
+        if check == "interpretations_reviewed":           # a human review; TEXT_VERIFIED does not count
+            return all(x["interpretation_status"] in ("REVIEWED", "CONFIRMED_BY_AUTHOR") for x in rows)
         if check == "stage_coverage":
             s = doc_stats(stage_docs)
             return s["registered"] == s["documents"] and s["resolvable_uncovered"] == 0
@@ -194,6 +207,7 @@ def build() -> Dict[str, Any]:
         scen_rows.append({**sc, "status": status, "documents_without_checks": missing})
 
     total = doc_stats(registrable)
+    gate = semantic_gate(ver, obs, questions)
     return {
         "schema": "dkp-lab-traceability/1",
         "corpus": cat["corpus"]["commit"],
@@ -203,8 +217,68 @@ def build() -> Dict[str, Any]:
         "totals": total,
         "stages": stage_rows,
         "scenarios": scen_rows,
-        "open_questions": [{"id": q["id"], "title": q["title"], "status": q["status"]} for q in questions],
+        "open_questions": [{"id": q["id"], "title": q["title"], "status": q["status"], "category": q["category"]}
+                           for q in questions],
+        "semantic_gate": gate,
+        "unresolved_decomposition": decomposition(rows),
         "requirements": sorted(rows, key=lambda x: (x["document"], x["id"])),
+    }
+
+
+def finding_title(fid: str) -> str:
+    with open(os.path.join(verification.FINDINGS_DIR, f"{fid}.md"), encoding="utf-8") as f:
+        first = f.readline().strip()
+    return first.split("—", 1)[1].strip() if "—" in first else first.lstrip("# ")
+
+
+def semantic_gate(ver: Dict[str, Any], obs: Dict[str, Any], questions: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Findings by class, every FAIL of a reference or noncompliant example against its verification record."""
+    cls = verification.classifications(ver)
+    findings = [{"id": fid, "title": finding_title(fid), "classification": c} for fid, c in cls.items()]
+    by_req = {r["requirement"]: r for r in ver["reference_fails"]}
+    fails = []
+    for rid, runs in sorted(obs["reference_fails"].items()):
+        rec = by_req.get(rid)
+        fails.append({"requirement": rid, "runs": sorted(set(runs)),
+                      "origin": rec["origin"] if rec else "UNVERIFIED", "finding": rec.get("finding") if rec else None})
+    nc_rec = {r["requirement"]: r for r in ver["noncompliant_cases"]}
+    nc = [{"requirement": rid, "runs": sorted(set(runs)), "verified": rid in nc_rec}
+          for rid, runs in sorted(obs["noncompliant"].items())]
+    qc = Counter((q["status"], q["category"]) for q in questions)
+    return {
+        "verifier": ver["verifier"], "date": ver["date"],
+        "findings": findings,
+        "finding_counts": {c: sum(1 for f in findings if f["classification"] == c) for c in verification.FINDING_CLASSES},
+        "reference_fails": fails,
+        "unverified_reference_fails": [f["requirement"] for f in fails if f["origin"] == "UNVERIFIED"],
+        "noncompliant_fails": nc,
+        "unverified_noncompliant_fails": [x["requirement"] for x in nc if not x["verified"]],
+        "questions": [{"status": s, "category": c, "count": n} for (s, c), n in sorted(qc.items())],
+    }
+
+
+def decomposition(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """UNRESOLVED provisions by the origin of the open point (text-verified or Codex draft)."""
+    cls = verification.load_classification() or {"items": {}, "provenance": {}}
+    unres = [r for r in rows if r["decision_status"] == "UNRESOLVED"]
+    by = Counter()
+    per_doc: Dict[str, Counter] = {}
+    for r in unres:
+        op = r["open_point"]
+        key = (op["origin"], op["source"]) if op else ("pending", "none")
+        by[key] += 1
+        per_doc.setdefault(r["document"], Counter())[op["origin"] if op else "pending"] += 1
+    draft_rows = {r["id"] for r in unres if (r["open_point"] or {}).get("source") == "codex_draft"}
+    candidates = sorted(rid for rid, it in cls["items"].items() if it["author_question_candidate"] and rid in draft_rows)
+    origins = list(verification.ORIGINS) + ["pending"]
+    return {
+        "unresolved": len(unres),
+        "by_origin": [{"origin": o, "text_verified": by.get((o, "text_verified"), 0), "codex_draft": by.get((o, "codex_draft"), 0),
+                       "total": by.get((o, "text_verified"), 0) + by.get((o, "codex_draft"), 0) + by.get((o, "none"), 0)}
+                      for o in origins],
+        "draft_author_question_candidates": len(candidates),
+        "draft_provenance": cls.get("provenance", {}),
+        "per_document": {d: {o: c.get(o, 0) for o in origins} for d, c in sorted(per_doc.items())},
     }
 
 
@@ -213,11 +287,13 @@ def markdown(t: Dict[str, Any]) -> str:
          "Generated by `python -m lab.tools.trace` — do not edit.  Corpus World "
          f"`{t['corpus'][:12]}`; modules: {', '.join(t['modules'])}.", "",
          "*Covered* = a lab check exists (IMPLEMENTED or PARTIAL); it does not mean that a protocol holds.",
-         "Statuses aggregate the modules' reference examples (text in force, no deliberate faults; examples",
-         "under alternative readings are reported per provision in the JSON): FAIL if any run",
-         "failed, else UNKNOWN, else PASS, else NOT_APPLICABLE; UNCOVERED = no check.  A FAIL may be a",
-         "property of the example case (e.g. an understaffed roster).  All interpretations are",
-         "unreviewed drafts; UNRESOLVED decisions are listed in `lab/registry/open_questions.json`.", "",
+         "Statuses aggregate the modules' reference examples (text in force, compliant case, no deliberate",
+         "faults): FAIL if any run failed, else UNKNOWN, else PASS, else NOT_APPLICABLE; UNCOVERED = no check.",
+         "Examples under alternative readings, examples that break a provision on purpose (noncompliant",
+         "cases, e.g. an understaffed roster) and counterexamples with deliberate faults are reported apart.",
+         "Every reference FAIL passes the semantic verification gate (`lab/registry/verifications.json`).",
+         "Interpretations are machine drafts; TEXT_VERIFIED means the wording was read against the literal",
+         "text by the lab (not a human review).  Author questions: `lab/registry/open_questions.json`.", "",
          "## Stages of the specification", "",
          "| Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |",
          "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
@@ -246,8 +322,36 @@ def markdown(t: Dict[str, Any]) -> str:
     for sc in t["scenarios"]:
         L.append(f"| {sc['id']} {sc['title']} | {sc['status']} | {sc['module'] or '—'} | "
                  f"{', '.join(sc['documents_without_checks']) or '—'} |")
+    g = t["semantic_gate"]
+    L += ["", "## Semantic verification gate", "",
+          f"Verifier: {g['verifier']} ({g['date']}).", "",
+          "| Class | Findings |", "|---|---:|"]
+    L += [f"| {c} | {n} |" for c, n in g["finding_counts"].items()]
+    L += ["", "| Finding | Class | Title |", "|---|---|---|"]
+    L += [f"| {f['id']} | {f['classification']} | {f['title']} |" for f in g["findings"]]
+    L += ["", "FAILs of reference examples and their verified origin:", "",
+          "| Requirement | Origin | Finding | Runs |", "|---|---|---|---|"]
+    L += [f"| {x['requirement']} | {x['origin']} | {x['finding'] or '—'} | {', '.join(x['runs'])} |" for x in g["reference_fails"]]
+    L += ["", "FAILs of noncompliant cases (the input breaks the provision on purpose):", "",
+          "| Requirement | Verified | Runs |", "|---|---|---|"]
+    L += [f"| {x['requirement']} | {'yes' if x['verified'] else '**no**'} | {', '.join(x['runs'])} |" for x in g["noncompliant_fails"]]
+    L += ["", f"Unverified reference FAILs: {', '.join(g['unverified_reference_fails']) or 'none'}; "
+              f"unverified noncompliant FAILs: {', '.join(g['unverified_noncompliant_fails']) or 'none'}."]
+    d = t["unresolved_decomposition"]
+    pv = d["draft_provenance"]
+    L += ["", "## Origin of open points (UNRESOLVED provisions)", "",
+          f"{d['unresolved']} provisions have an open point.  Origin: text-verified where an author question was "
+          "verified against the literal text; otherwise a Codex draft "
+          f"({pv.get('model', '—')}, {pv.get('date', '—')}; DRAFT_UNREVIEWED; pending: "
+          f"{', '.join(pv.get('documents_pending', [])) or 'none'}).  Only normative_ambiguity and "
+          "architecture_definition can become author questions, and only after verification.", "",
+          "| Origin | Text-verified | Codex draft | Total |", "|---|---:|---:|---:|"]
+    L += [f"| {x['origin']} | {x['text_verified']} | {x['codex_draft']} | {x['total']} |" for x in d["by_origin"]]
+    L += ["", f"Draft author-question candidates (unverified, not questions): {d['draft_author_question_candidates']}."]
     L += ["", "## Open questions (author decisions)", ""]
-    L += [f"- {q['id']} [{q['status']}] {q['title']}" for q in t["open_questions"]]
+    L += [f"- {q['id']} [{q['status']}, {q['category']}] {q['title']}" for q in t["open_questions"] if q["status"] != "WITHDRAWN"]
+    L += ["", "Withdrawn after verification (not author decisions):", ""]
+    L += [f"- {q['id']} [{q['category']}] {q['title']}" for q in t["open_questions"] if q["status"] == "WITHDRAWN"]
     L += ["", "## Documents", "", "| Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |",
           "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
     by = {}

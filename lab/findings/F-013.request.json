@@ -2,27 +2,12 @@
  "schema": "dkp-lab-input/1",
  "module": "interop_failure",
  "variants": [
-  {
-   "name": "interop_rule",
-   "input": {
-    "mirror_sources": 4,
-    "ptl_loss_tolerance": 0.25
-   }
-  },
-  {
-   "name": "ptl_rule",
-   "input": {
-    "mirror_sources": 4,
-    "ptl_loss_tolerance": 0.25,
-    "interop_crisis_reading": "ptl_rule"
-   }
-  },
-  {
-   "name": "tolerance_missing",
-   "input": {
-    "mirror_sources": 4,
-    "ptl_loss_tolerance": -1
-   }
-  }
+  {"name": "external_mirror_outage", "input": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25}},
+  {"name": "former_lab_premise",
+   "input": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25, "faults": ["mirror_feeds_ptl", "crisis_from_interop"]}},
+  {"name": "registered_sources_lost",
+   "input": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25, "mirror_role": "registered_ptl_source"}},
+  {"name": "registered_tolerance_missing",
+   "input": {"mirror_sources": 4, "ptl_loss_tolerance": -1, "mirror_role": "registered_ptl_source"}}
  ]
 }

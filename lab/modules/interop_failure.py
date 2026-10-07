@@ -8,10 +8,14 @@ metadata, otherwise local invalidation §5.7) → DKP-8-AUDIT-001 (epistemic met
 D2 reporting, observation only, determinism).
 
 The internal execution is computed twice — with and without the external failure — and compared
-message by message.  One pair of rules collides when the external system is an oracle mirror
-feeding PTL (finding F-013): INTEROP §9 says interop failure SHALL NOT trigger Crisis; CRISIS §4
-enters crisis on "verified loss or divergence of PTL outputs beyond correction tolerance".  The
-tolerance itself is not defined (input marked `missing`).
+message by message.  The sources of an outside provider have one of two roles, never both: an
+External System (INTEROP §3, "not governed by DKP protocols"), whose readings enter only as untrusted
+I1 inputs and cannot substitute PTL verification (§8), so their outage is an interop failure
+(§9: no Crisis); or registered PTL sources governed by ORACLE, whose outage is a loss of PTL outputs
+(CRISIS §4).  The lab once counted an external mirror among PTL sources and reported a conflict
+between INTEROP §9 and CRISIS §4 (F-013, reclassified as an implementation error); that premise is now
+the counterexample `mirror_feeds_ptl`.  The CRISIS §4 "correction tolerance" is not defined (input
+marked `missing`).
 """
 
 from __future__ import annotations
@@ -35,7 +39,23 @@ FAULTS = {
     "rollback_on_failure": "DKP state is rolled back when the external system fails",
     "audit_masks": "audit does not report missing epistemic metadata",
     "audit_modifies": "audit injects a corrective action into live execution",
+    "mirror_feeds_ptl": "readings of an external oracle mirror are counted as PTL sources (the lab's former premise, F-013)",
+    "crisis_from_interop": "the outage of an external oracle mirror enters Crisis",
+    "no_crisis_on_ptl_loss": "a loss of registered PTL sources beyond the tolerance does not enter Crisis",
 }
+
+
+def crisis_condition(r: Dict[str, Any], k: int, failure: bool) -> bool:
+    """Generator: when this hour calls for Crisis.  Registered sources: PTL loss beyond the declared
+    tolerance (CRISIS §4).  External mirror: never (INTEROP §9), unless a fault says otherwise."""
+    lo, hi = r["external_failure_window"]
+    faults = set(r["faults"])
+    if r["mirror_role"] == "registered_ptl_source":
+        registered = r["internal_sources"] + r["mirror_sources"]
+        lost = r["mirror_sources"] if lo <= k < hi else 0
+        return (r["ptl_loss_tolerance"] >= 0 and lost / registered > r["ptl_loss_tolerance"]
+                and "no_crisis_on_ptl_loss" not in faults)
+    return "crisis_from_interop" in faults and failure and lo <= k < hi
 
 
 def md(scope="interop"):
@@ -57,29 +77,39 @@ def run(r: Dict[str, Any], failure: bool = True):
                                   epistemic=epistemic, provenance=tuple(prov), order=order[kind]))
 
     lo, hi = r["external_failure_window"]
+    registered = r["mirror_role"] == "registered_ptl_source"
+    feeds_ptl = registered or "mirror_feeds_ptl" in faults
     entry_valid = True
     crisis = False
-    total = r["internal_sources"] + r["mirror_sources"]
+    total = r["internal_sources"] + (r["mirror_sources"] if feeds_ptl else 0)
     for k in range(r["horizon_steps"]):
-        down = failure and lo <= k < hi
-        mirror_ok = r["mirror_sources"] if not down else 0
-        ptl = put("observation", "PTL", k, {"internal_sources": r["internal_sources"], "mirror_sources": mirror_ok,
-                                            "share": (r["internal_sources"] + mirror_ok) / total})
-        loss = 1 - (r["internal_sources"] + mirror_ok) / total
-        beyond = r["ptl_loss_tolerance"] >= 0 and loss > r["ptl_loss_tolerance"]
-        if down:
-            put("notice", "INTEROP", k, {"boundary": "degraded", "channels": ["legal", "finance", "info", "oracle_mirror"]}, [ptl.event_id])
+        in_window = lo <= k < hi
+        # the provider's outage: for an external mirror an interop failure (absent from the baseline run);
+        # for registered PTL sources a loss of PTL sources, present in both runs (not an interop event)
+        down = in_window and (failure or registered)
+        mirror_ok = 0 if down else r["mirror_sources"]
+        ext: Dict[str, Message] = {}
+        if not registered and mirror_ok:
+            ext["mirror"] = put("observation", "EXTERNAL/ORACLE", k, {"mirrored_sources": mirror_ok, "class": "I1"})
+        used = r["internal_sources"] + (mirror_ok if feeds_ptl else 0)
+        ptl = put("observation", "PTL", k, {"internal_sources": r["internal_sources"],
+                                            "provider_sources": mirror_ok if feeds_ptl else 0, "share": used / total},
+                  [ext["mirror"].event_id] if feeds_ptl and "mirror" in ext else [])
+        if failure and in_window:
+            channels = ["legal", "finance", "info"] + ([] if registered else ["oracle_mirror"])
+            put("notice", "INTEROP", k, {"boundary": "degraded", "channels": channels}, [ptl.event_id])
             if "rollback_on_failure" in faults and k == lo:
                 put("action", "INTEROP", k, {"rollback": "DKP state to hour 0"}, [ptl.event_id])
-        if beyond and r["interop_crisis_reading"] == "ptl_rule" and not crisis:
-            put("notice", "CRISIS", k, {"enter": "C3", "trigger": "loss of PTL outputs beyond tolerance", "cause": "oracle mirror"},
-                [ptl.event_id])
+        want = crisis_condition(r, k, failure)
+        if want and not crisis:
+            put("notice", "CRISIS", k, {"enter": "C3", "trigger": "loss of PTL outputs beyond tolerance" if registered
+                                        else "external oracle mirror outage",
+                                        "cause": "registered PTL sources" if registered else "interop"}, [ptl.event_id])
             crisis = True
-        if crisis and not beyond:
+        if crisis and not want:
             put("notice", "CRISIS", k, {"exit": True}, [ptl.event_id])
             crisis = False
         # external events at the boundary
-        ext: Dict[str, Message] = {}
         if failure and k == r["external_ruling_step"]:
             ext["ruling"] = put("observation", "EXTERNAL/LEGAL", k, {"ruling": "suspend subject X", "binding_claimed": True})
             put("notice", "INTEROP", k, {"boundary_event": "external ruling received", "internal_status": "not binding"},
@@ -169,34 +199,57 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
                      "{n} internal decisions differ because of the external failure"))
         rb = [m.event_id for m in msgs if m.value and m.value.get("rollback")]
         out.append(v("INTEROP-9-03", "no_rollback", rb, "no DKP state rolled back", "{n} rollbacks on external failure"))
-        crisis = [m.event_id for m in msgs if m.source == "CRISIS" and m.value.get("enter")]
+        # a crisis the run without the interop failure does not have was caused by the interop failure
+        base_entries = {m.arrived_at for m in baseline.messages() if m.source == "CRISIS" and m.value.get("enter")}
+        crisis = [m.event_id for m in msgs if m.source == "CRISIS" and m.value.get("enter") and m.arrived_at not in base_entries]
         out.append(v("INTEROP-9-04", "no_crisis_from_interop", crisis, "no Crisis or Mercy triggered by the interop failure",
-                     "crisis entered because a mirrored oracle failed (reading 'ptl_rule', F-013)"))
-        lossy = [m for m in msgs if m.source == "PTL" and r["ptl_loss_tolerance"] >= 0 and 1 - m.value["share"] > r["ptl_loss_tolerance"]]
-        if lossy:
-            if crisis:
-                out.append(CheckResult("CRISIS-4-01", "ptl_loss_triggers_crisis", PASS,
-                                       f"PTL lost more than the declared tolerance in {len(lossy)} hours; crisis entered (CRISIS §4)"))
-            else:
-                out.append(CheckResult("CRISIS-4-01", "ptl_loss_triggers_crisis", FAIL,
-                                       f"PTL lost more than the declared tolerance ({r['ptl_loss_tolerance']}) in {len(lossy)} hours "
-                                       "because a mirrored oracle failed, and no crisis was entered (INTEROP §9 forbids it). "
-                                       "Rule conflict between texts in force (F-013)",
-                                       evidence={"tag": "rule_conflict", "hours": len(lossy)}))
+                     "{n} crisis entries caused by the interop failure"))
+        # CRISIS §4 from the declared inputs: only registered PTL sources count (an external mirror is I1, INTEROP §8)
+        if r["mirror_role"] != "registered_ptl_source":
+            out.append(na("CRISIS-4-01", "ptl_loss_triggers_crisis", "PTL loss",
+                          "the failing sources are an External System (INTEROP §3), ingested only as untrusted I1 "
+                          "(§8): no PTL output is lost"))
         elif r["ptl_loss_tolerance"] < 0:
             out.append(CheckResult("CRISIS-4-01", "ptl_loss_triggers_crisis", UNKNOWN,
-                                   "'correction tolerance' for PTL loss is not defined; whether the mirror failure is a crisis "
-                                   "trigger cannot be decided (F-013)"))
+                                   "registered PTL sources were lost, but the 'correction tolerance' of CRISIS §4 is not "
+                                   "defined; whether this is a crisis trigger cannot be decided"))
         else:
-            out.append(na("CRISIS-4-01", "ptl_loss_triggers_crisis", "PTL loss", "PTL loss stays within the declared tolerance"))
+            share = r["mirror_sources"] / (r["internal_sources"] + r["mirror_sources"])
+            lossy = [k for k in range(r["horizon_steps"]) if lo <= k < hi] if share > r["ptl_loss_tolerance"] else []
+            if not lossy:
+                out.append(na("CRISIS-4-01", "ptl_loss_triggers_crisis", "PTL loss",
+                              f"PTL loss {share:.3g} stays within the declared tolerance {r['ptl_loss_tolerance']}"))
+            else:
+                hours, on = set(), False
+                notices = [m for m in msgs if m.source == "CRISIS"]
+                for k in range(r["horizon_steps"]):
+                    for m in notices:
+                        if m.arrived_at == k:
+                            on = True if m.value.get("enter") else False if m.value.get("exit") else on
+                    if on:
+                        hours.add(k)
+                missed = [k for k in lossy if k not in hours]
+                out.append(v("CRISIS-4-01", "ptl_loss_triggers_crisis", missed,
+                             f"registered PTL sources lost ({share:.3g} > {r['ptl_loss_tolerance']}) in {len(lossy)} hours; "
+                             "crisis in force for all of them (CRISIS §4)",
+                             "{n} hours of PTL loss beyond the declared tolerance without crisis"))
     else:
         for rid, chk in (("INTEROP-9-02", "internal_execution_unaffected"), ("INTEROP-9-03", "no_rollback"),
                          ("INTEROP-9-04", "no_crisis_from_interop"), ("CRISIS-4-01", "ptl_loss_triggers_crisis")):
             out.append(na(rid, chk, "external failure", "no external failure in this experiment"))
 
+    def ancestors(m):
+        seen, todo = set(), list(m.provenance)
+        while todo:
+            e = todo.pop()
+            if e not in seen:
+                seen.add(e)
+                todo.extend(log.get(e).provenance)
+        return seen
+
     def uses(src):
         ids = ext_ids(src)
-        return [m.event_id for m in decisions if ids & set(m.provenance)]
+        return [m.event_id for m in decisions if ids & ancestors(m)]
     if ext_ids("EXTERNAL/LEGAL"):
         bad = uses("EXTERNAL/LEGAL")
         for rid, chk in (("INTEROP-5-02", "external_rulings_not_binding"), ("INTEROP-10-04", "no_silent_norm_import")):
@@ -220,12 +273,17 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
                      "the black-box input was not used as an authoritative input", "{n} decisions driven by a black-box input"))
     else:
         out.append(na("INTEROP-7-04", "blackbox_not_authoritative", "black-box inputs", "no black-box input"))
-    if ext_ids("EXTERNAL/INFO"):
-        bad = uses("EXTERNAL/INFO")
+    if ext_ids("EXTERNAL/INFO") | ext_ids("EXTERNAL/ORACLE"):
+        bad = uses("EXTERNAL/INFO") + uses("EXTERNAL/ORACLE")
         out.append(v("INTEROP-8-02", "no_external_validation_for_ptl", bad,
-                     "external consensus did not replace PTL verification", "{n} decisions based on external consensus"))
-        out.append(v("INTEROP-8-01", "external_info_as_i1", [m.event_id for m in msgs if m.source == "EXTERNAL/INFO" and m.value.get("class") != "I1"],
-                     "external information ingested as I1 (untrusted)", "{n} external claims ingested above I1"))
+                     "external information (consensus claims, mirrored oracle readings) did not replace PTL verification",
+                     "{n} decisions based on external information in place of PTL"))
+        ext_in = ext_ids("EXTERNAL/INFO") | ext_ids("EXTERNAL/ORACLE")
+        trusted = [m.event_id for m in msgs if m.source in ("EXTERNAL/INFO", "EXTERNAL/ORACLE") and m.value.get("class") != "I1"]
+        trusted += [m.event_id for m in msgs if m.source == "PTL" and ext_in & set(m.provenance)]
+        out.append(v("INTEROP-8-01", "external_info_as_i1", trusted,
+                     "external information ingested only as untrusted I1 (never as a PTL source)",
+                     "{n} external inputs ingested above I1 or counted as PTL"))
     else:
         out.append(na("INTEROP-8-02", "no_external_validation_for_ptl", "external information", "no external information"))
         out.append(na("INTEROP-8-01", "external_info_as_i1", "external information", "no external information"))
@@ -275,11 +333,11 @@ IMPLEMENTS = {
     "INTEROP-6-02": ("justice_weighted_translation", "PARTIAL", "No translation function is given: UNKNOWN."),
     "INTEROP-6-04": ("external_values_flagged", "IMPLEMENTED", None),
     "INTEROP-7-04": ("blackbox_not_authoritative", "IMPLEMENTED", None),
-    "INTEROP-8-01": ("external_info_as_i1", "PARTIAL", "I1 classification is recorded; INFO transitions are not modelled."),
+    "INTEROP-8-01": ("external_info_as_i1", "PARTIAL", "I1 classification and non-use as PTL are checked; INFO transitions are not modelled."),
     "INTEROP-8-02": ("no_external_validation_for_ptl", "IMPLEMENTED", None),
     "INTEROP-9-02": ("internal_execution_unaffected", "IMPLEMENTED", None),
     "INTEROP-9-03": ("no_rollback", "IMPLEMENTED", None),
-    "INTEROP-9-04": ("no_crisis_from_interop", "PARTIAL", "Conflicts with CRISIS §4 when the external system is an oracle mirror (F-013)."),
+    "INTEROP-9-04": ("no_crisis_from_interop", "IMPLEMENTED", None),
     "INTEROP-10-02": ("no_external_decision_dependency", "IMPLEMENTED", None),
     "INTEROP-10-03": ("no_governance_by_api", "IMPLEMENTED", None),
     "INTEROP-10-04": ("no_silent_norm_import", "PARTIAL", "Norm import is observed as execution of an external ruling."),
@@ -290,21 +348,22 @@ IMPLEMENTS = {
     "AUDIT-EpistemicMetadataVerification-04": ("metadata_deviation_reported", "IMPLEMENTED", None),
     "AUDIT-10-01": ("audit_observes_only", "IMPLEMENTED", None),
     "AUDIT-5.4-01": ("deterministic_execution", "PARTIAL", "Determinism of this module's execution only."),
-    "CRISIS-4-01": ("ptl_loss_triggers_crisis", "PARTIAL", "'Correction tolerance' is not defined (declared input)."),
+    "CRISIS-4-01": ("ptl_loss_triggers_crisis", "PARTIAL", "Only the PTL-loss trigger; 'correction tolerance' is not defined (declared input)."),
 }
 
 
 class InteropFailureModule(LabModule):
     id = "interop_failure"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Failure of an external interface (S-LAB-10)", "ru": "Отказ внешнего интерфейса (S-LAB-10)"}
     summary = {"en": "An external court, market, data provider or API fails or pushes in: does the inside keep running "
                      "unchanged, with nothing external becoming binding?",
                "ru": "Внешний суд, рынок, поставщик данных или API отказывает или давит: продолжает ли внутренняя часть "
                      "работать без изменений, не становится ли внешнее обязательным?"}
     protocols = ["DKP-8-INTEROP-001", "DKP-6-RESILIENCE-001", "DKP-8-AUDIT-001", "DKP-4-CRISIS-001"]
-    example_order = ["external_outage", "mirror_loss_beyond_tolerance", "mirror_loss_ptl_rule", "faulty_boundary", "tolerance_missing"]
-    alternative_examples = ["mirror_loss_ptl_rule"]
+    example_order = ["external_outage", "mirror_outage_untrusted", "registered_sources_lost", "tolerance_missing",
+                     "faulty_boundary", "former_lab_premise"]
+    alternative_examples: List[str] = []
     implements = IMPLEMENTS
     tests = ["tests/lab/test_interop_failure_module.py"]
     causal_note = None
@@ -312,9 +371,13 @@ class InteropFailureModule(LabModule):
         {"id": "H-IO-1", "source": "missing", "text": {
             "en": "'Correction tolerance' for PTL loss (CRISIS §4) is a declared share of lost sources; the corpus gives no value.",
             "ru": "'Допуск коррекции' потерь PTL (CRISIS §4) — объявленная доля потерянных источников; в корпусе значения нет."}},
-        {"id": "H-IO-2", "source": "alternative", "text": {
-            "en": "When a mirrored oracle fails: 'interop_rule' — no crisis (INTEROP §9); 'ptl_rule' — crisis on PTL loss beyond tolerance (CRISIS §4); F-013.",
-            "ru": "При отказе зеркала оракула: 'interop_rule' — кризиса нет (INTEROP §9); 'ptl_rule' — кризис при потере PTL сверх допуска (CRISIS §4); F-013."}},
+        {"id": "H-IO-2", "source": "text", "text": {
+            "en": "A provider's sources are either an External System (INTEROP §3: 'not governed by DKP protocols'; §8: only "
+                  "untrusted I1, never a substitute for PTL verification) or registered PTL sources governed by ORACLE. "
+                  "The outage of the first is an interop failure (§9: no Crisis); of the second, a loss of PTL outputs (CRISIS §4).",
+            "ru": "Источники провайдера — либо внешняя система (INTEROP §3: 'not governed by DKP protocols'; §8: только "
+                  "недоверенный I1, не замена PTL-верификации), либо зарегистрированные источники PTL под ORACLE. Отказ "
+                  "первых — отказ интероперабельности (§9: без кризиса); вторых — потеря выходов PTL (CRISIS §4)."}},
     ]
     inputs = {
         "horizon_steps": {"type": "int", "min": 2, "max": 2000, "default": 24, "unit": "h", "source": "user",
@@ -322,11 +385,12 @@ class InteropFailureModule(LabModule):
         "internal_sources": {"type": "int", "min": 1, "max": 1000, "default": 8, "source": "user",
                              "label": {"en": "Internal PTL sources", "ru": "Внутренние источники PTL"}},
         "mirror_sources": {"type": "int", "min": 0, "max": 1000, "default": 2, "source": "user",
-                           "label": {"en": "Sources mirrored from an external oracle", "ru": "Источники из внешнего зеркала оракула"}},
+                           "label": {"en": "Sources of the outside provider", "ru": "Источники внешнего провайдера"}},
+        "mirror_role": {"type": "enum", "values": ["untrusted_interop", "registered_ptl_source"], "default": "untrusted_interop",
+                        "source": "user", "label": {"en": "Role of the provider's sources (H-IO-2)",
+                                                    "ru": "Роль источников провайдера (H-IO-2)"}},
         "ptl_loss_tolerance": {"type": "number", "min": -1, "max": 1, "default": 0.25, "source": "missing",
                                "label": {"en": "PTL loss tolerance (-1: not defined; H-IO-1)", "ru": "Допуск потерь PTL (-1: не определён; H-IO-1)"}},
-        "interop_crisis_reading": {"type": "enum", "values": ["interop_rule", "ptl_rule"], "default": "interop_rule",
-                                   "source": "alternative", "label": {"en": "Mirror failure (H-IO-2)", "ru": "Отказ зеркала (H-IO-2)"}},
         "external_failure_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [6, 14], "unit": "h", "source": "user",
                                     "label": {"en": "External system unreliable from/to hour", "ru": "Внешняя система ненадёжна с/до часа"}},
         "external_ruling_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 8, "unit": "h", "source": "user",
@@ -371,12 +435,24 @@ class InteropFailureModule(LabModule):
                    "crisis_entered": any(m.source == "CRISIS" and m.value.get("enter") for m in msgs),
                    "messages": [m.as_dict() for m in msgs if m.source != "AUDIT"][:300],
                    "event_log": {"time_unit": log.time_unit, "messages": len(log), "digest": log.digest()}}
-        explain = [{"en": f"{outputs['internal_decisions']} internal decisions with the external failure, "
+        role = {"untrusted_interop": ("an External System: readings enter as untrusted I1, not as PTL (INTEROP §3, §8)",
+                                      "внешняя система: показания входят как недоверенный I1, а не как PTL (INTEROP §3, §8)"),
+                "registered_ptl_source": ("registered PTL sources: their outage is a loss of PTL outputs (CRISIS §4), not an "
+                                          "interop failure", "зарегистрированные источники PTL: их отказ — потеря выходов PTL "
+                                          "(CRISIS §4), а не отказ интероперабельности")}[r["mirror_role"]]
+        explain = [{"en": f"The provider's {r['mirror_sources']} sources are {role[0]}.",
+                    "ru": f"{r['mirror_sources']} источников провайдера — {role[1]}."},
+                   {"en": f"{outputs['internal_decisions']} internal decisions with the external failure, "
                           f"{outputs['internal_decisions_without_failure']} without; {outputs['boundary_events']} boundary records; "
                           f"crisis entered: {outputs['crisis_entered']}.",
                     "ru": f"Внутренних решений при отказе: {outputs['internal_decisions']}, без отказа: "
                           f"{outputs['internal_decisions_without_failure']}; записей на границе: {outputs['boundary_events']}; "
                           f"кризис: {outputs['crisis_entered']}."}]
+        if "mirror_feeds_ptl" in r["faults"]:
+            explain.append({"en": "Counterexample: the external mirror is counted as PTL — the premise under which the lab "
+                                  "once reported F-013; INTEROP §8 forbids it.",
+                            "ru": "Контрпример: внешнее зеркало засчитано как PTL — посылка, при которой лаборатория "
+                                  "когда-то сообщила F-013; INTEROP §8 это запрещает."})
         return ModuleResult(outputs=outputs, checks=res, explain=explain)
 
     def comparison_metrics(self, outputs: Dict[str, Any]) -> Dict[str, Any]:
@@ -387,11 +463,13 @@ class InteropFailureModule(LabModule):
     def examples(self) -> Dict[str, Dict[str, Any]]:
         return {
             "external_outage": {},
-            "mirror_loss_beyond_tolerance": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25},
-            "mirror_loss_ptl_rule": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25, "interop_crisis_reading": "ptl_rule"},
+            "mirror_outage_untrusted": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25},
+            "registered_sources_lost": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25, "mirror_role": "registered_ptl_source"},
+            "tolerance_missing": {"mirror_sources": 4, "ptl_loss_tolerance": -1, "mirror_role": "registered_ptl_source"},
             "faulty_boundary": {"faults": ["binding_external_ruling", "blackbox_authoritative", "info_substitutes_ptl",
                                            "alter_mirror", "audit_masks"]},
-            "tolerance_missing": {"ptl_loss_tolerance": -1},
+            "former_lab_premise": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25,
+                                   "faults": ["mirror_feeds_ptl", "crisis_from_interop"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

@@ -3,39 +3,34 @@
  "module": "dispute_correction",
  "variants": [
   {
-   "name": "as_written",
-   "input": {
-    "appeal_after_minutes": -1,
-    "s0": 426.91,
-    "s1_recorded": 427.0,
-    "s1_true": 427.0,
-    "bound": 450,
-    "uncertainty": 0.01
-   }
+   "name": "reversible_justice_polarity",
+   "input": {"appeal_after_minutes": -1, "s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
+             "uncertainty": 0.01, "irreversible": false, "r_polarity": "true_means_reversible"}
   },
   {
-   "name": "consistent",
-   "input": {
-    "appeal_after_minutes": -1,
-    "s0": 426.91,
-    "s1_recorded": 427.0,
-    "s1_true": 427.0,
-    "bound": 450,
-    "uncertainty": 0.01,
-    "r_polarity_reading": "consistent"
-   }
+   "name": "irreversible_justice_polarity",
+   "input": {"appeal_after_minutes": -1, "s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
+             "uncertainty": 0.01, "irreversible": true, "r_polarity": "true_means_reversible"}
   },
   {
-   "name": "irreversible_as_written",
-   "input": {
-    "appeal_after_minutes": -1,
-    "s0": 426.91,
-    "s1_recorded": 427.0,
-    "s1_true": 427.0,
-    "bound": 450,
-    "uncertainty": 0.01,
-    "irreversible": true
-   }
+   "name": "reversible_impact_name_polarity",
+   "input": {"appeal_after_minutes": -1, "s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
+             "uncertainty": 0.01, "irreversible": false, "r_polarity": "true_means_irreversible"}
+  },
+  {
+   "name": "irreversible_impact_name_polarity",
+   "input": {"appeal_after_minutes": -1, "s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
+             "uncertainty": 0.01, "irreversible": true, "r_polarity": "true_means_irreversible"}
+  },
+  {
+   "name": "reversible_mixed",
+   "input": {"appeal_after_minutes": -1, "s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
+             "uncertainty": 0.01, "irreversible": false, "r_polarity": "mixed"}
+  },
+  {
+   "name": "irreversible_mixed",
+   "input": {"appeal_after_minutes": -1, "s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
+             "uncertainty": 0.01, "irreversible": true, "r_polarity": "mixed"}
   }
  ]
 }

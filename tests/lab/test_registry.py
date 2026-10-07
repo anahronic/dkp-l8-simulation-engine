@@ -96,6 +96,7 @@ def test_every_requirement_is_marked_as_draft_and_decisions_are_explicit():
     from lab.tools.trace import registry
     for reg in registry().values():
         for r in reg["requirements"]:
-            assert r["interpretation_status"] == "DRAFT_UNREVIEWED"      # no tool may upgrade it
+            # no tool sets a human review; TEXT_VERIFIED comes only from the semantic verification gate
+            assert r["interpretation_status"] in ("DRAFT_UNREVIEWED", "TEXT_VERIFIED")
             if r["hypotheses_needed"] or r["open_questions"]:
                 assert r["decision_status"] == "UNRESOLVED"

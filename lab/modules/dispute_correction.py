@@ -54,16 +54,30 @@ FAULTS = {
 
 
 # shared definitions (declared readings) -------------------------------------------
-def impact(s0: float, s1: float, bound: float, u: float, irreversible: bool, faults=()) -> Dict[str, Any]:
+def emitted_r(irreversible: bool, polarity: str) -> bool:
+    """Rᵢ as IMPACT emits it.  IMPACT §4 calls Rᵢ 'a boolean indicator of physical or informational
+    irreversibility' and does not say which value means what; JUSTICE §6/§8 do (True = reversible).
+    'true_means_reversible' (default): both protocols use the JUSTICE polarity; 'true_means_irreversible':
+    both use the plain reading of the IMPACT name; 'mixed': IMPACT the plain reading, JUSTICE its own
+    (finding F-006, an undefined polarity, not a defect of either text)."""
+    return (not irreversible) if polarity == "true_means_reversible" else bool(irreversible)
+
+
+def justice_reversible(r_flag: bool, polarity: str) -> bool:
+    """How JUSTICE reads a received Rᵢ."""
+    return (not r_flag) if polarity == "true_means_irreversible" else bool(r_flag)
+
+
+def impact(s0: float, s1: float, bound: float, u: float, irreversible: bool, faults=(),
+           polarity: str = "true_means_reversible") -> Dict[str, Any]:
     """IMPACT §5: Iᵢ = (Sᵢ(t₁) − Sᵢ(t₀)) / Bᵢ; |Iᵢ| ≥ 1 flags a boundary crossing; Xᵢ on crossing (§8).
-    Uᵢ: independent ±u on both states propagated linearly (H-DC-2).  Rᵢ: IMPACT §4 defines it as an
-    indicator of irreversibility, so Rᵢ = irreversible."""
+    Uᵢ: independent ±u on both states propagated linearly (H-DC-2).  Rᵢ by the declared polarity (H-DC-5)."""
     i = (s1 - s0) / bound
     ui = 2 * u / abs(bound)
     crossing = abs(i) >= 1
     if "suppress_by_uncertainty" in faults and abs(i) - ui < 1:
         crossing = False
-    return {"I": round(i, 12), "B": bound, "R": bool(irreversible), "X": crossing, "U": round(ui, 12),
+    return {"I": round(i, 12), "B": bound, "R": emitted_r(irreversible, polarity), "X": crossing, "U": round(ui, 12),
             "boundary_crossing": crossing,
             "level_reached": (s1 >= bound) if bound > 0 else (s1 <= bound)}      # diagnostic, finding F-005
 
@@ -81,9 +95,8 @@ def bind(subjects: List[Dict[str, Any]], contributions: List[float], faults=()) 
 
 
 def justice_domains(imp: Dict[str, Any], r: Dict[str, Any]) -> Dict[str, Optional[bool]]:
-    """JUSTICE §6–§9 triggers.  'as_written': JUSTICE reads Rᵢ = True as reversible (§6, §8) while
-    IMPACT emits Rᵢ = True for irreversible (§4); 'consistent': JUSTICE reads Rᵢ as IMPACT defines it."""
-    reversible = imp["R"] if r["r_polarity_reading"] == "as_written" else not imp["R"]
+    """JUSTICE §6–§9 triggers; the received Rᵢ is read by the declared polarity (H-DC-5)."""
+    reversible = justice_reversible(imp["R"], r["r_polarity"])
     margin = None if r["safe_margin"] < 0 else abs(imp["I"]) >= r["safe_margin"]
     if r["repeated_harm"] or r["mitigation_insufficient"] or margin:
         restriction: Optional[bool] = True
@@ -144,7 +157,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     recorded_contrib = r["recorded_contributions"] or contributions
 
     def evaluate_chain(at, s1_msg, s0_msg, contrib, label):
-        imp = impact(s0_msg.value, s1_msg.value, r["bound"], r["uncertainty"], r["irreversible"], faults)
+        imp = impact(s0_msg.value, s1_msg.value, r["bound"], r["uncertainty"], r["irreversible"], faults,
+                     r["r_polarity"])
         m_imp = put("evaluation", "IMPACT", at, imp, (s0_msg.event_id, s1_msg.event_id),
                     md("VALID", "SUFFICIENT_DATA", "CONSISTENT", scope), record=True)
         if r["attribution_threshold"] < 0:
@@ -264,7 +278,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     s1_new = new_obs if new_obs else s1
     contrib_new = contributions if r["appeal_category"] == "E3" else recorded_contrib
     if "mutate_original" in faults:
-        imp = impact(r["s0"], s1_new.value, r["bound"], r["uncertainty"], r["irreversible"], faults)
+        imp = impact(r["s0"], s1_new.value, r["bound"], r["uncertainty"], r["irreversible"], faults,
+                         r["r_polarity"])
         store[dec1.event_id]["value"] = {**dec1.value, "label": "recomputed in place", "domains": justice_domains(imp, r),
                                          "shares": bind(r["subjects"], contrib_new, faults)}
         dec2_value, dec2_id = store[dec1.event_id]["value"], dec1.event_id
@@ -356,9 +371,11 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
     res.append(verdict("IMPACT-10-01", "impact_fields", not miss, "every impact output carries Iᵢ, Bᵢ, Rᵢ, Xᵢ, Uᵢ",
                        f"{len(miss)} impact outputs lack fields"))
     res.append(verdict("IMPACT-ReversibilityFlagR_-01", "r_is_irreversibility",
-                       all(m.value["R"] == bool(r["irreversible"]) for m in imps),
-                       "Rᵢ is emitted as the irreversibility indicator of §4 (True = irreversible)",
-                       "Rᵢ does not follow the §4 definition"))
+                       all(isinstance(m.value["R"], bool) and m.value["R"] == emitted_r(r["irreversible"], r["r_polarity"])
+                           for m in imps),
+                       f"Rᵢ is a boolean reversibility indicator under the declared polarity '{r['r_polarity']}' "
+                       "(§4 does not fix the polarity)",
+                       "Rᵢ is not a boolean or does not follow the declared polarity"))
 
     # IDENTITY -------------------------------------------------------------------------
     na_atts = [m for m in atts if m.value["status"] == "NO_ATTRIBUTION"]
@@ -461,10 +478,12 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
         bad = [m.event_id for m in decs if set(m.value["domains"]) != set(DOMAINS)]
         res.append(verdict("JUSTICE-5-02", "all_domains_evaluated", not bad, "all four domains evaluated in every decision",
                            "a domain was not evaluated"))
+        # §6/§8 name the physical condition ("impact is reversible (Rᵢ = True)"): the checker takes it from the
+        # declared input, not from the emitted flag, so a polarity mismatch between IMPACT and JUSTICE shows up
         expected = {}
         for m in decs:
             imp = get(m.provenance[0]).value
-            reversible = imp["R"] if r["r_polarity_reading"] == "as_written" else not imp["R"]
+            reversible = not r["irreversible"]
             expected[m.event_id] = {
                 "restitution": reversible and r["mitigation_possible"],
                 "isolation": (not reversible) or imp["X"] or r["systemic_risk"],
@@ -473,7 +492,9 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
             bad = [m.event_id for m in decs if bool(m.value["domains"][d]) != bool(expected[m.event_id][d])]
             res.append(verdict(rid, f"{d}_trigger", not bad,
                                f"{d} applied exactly when its §{rid.split('-')[1]} conditions hold "
-                               f"(Rᵢ read '{r['r_polarity_reading']}')", f"{d} trigger wrong in {bad}"))
+                               f"(impact {'ir' if r['irreversible'] else ''}reversible, Rᵢ polarity '{r['r_polarity']}')",
+                               f"{d} trigger wrong in {bad} (impact {'ir' if r['irreversible'] else ''}reversible, "
+                               f"Rᵢ polarity '{r['r_polarity']}')"))
         if r["safe_margin"] < 0 and not (r["repeated_harm"] or r["mitigation_insufficient"]):
             res.append(CheckResult("JUSTICE-7-01", "restriction_trigger", UNKNOWN,
                                    "'axiom-defined safe margins' have no numeric value in the corpus; whether the "
@@ -762,7 +783,7 @@ IMPLEMENTS = {
     "IMPACT-8-03": ("externality_on_crossing", "PARTIAL", "Reads 'boundary crossing' in §8 as the §5 flag; system-boundary scope is not modelled."),
     "IMPACT-9-03": ("uncertainty_does_not_suppress", "IMPLEMENTED", None),
     "IMPACT-10-01": ("impact_fields", "IMPLEMENTED", None),
-    "IMPACT-ReversibilityFlagR_-01": ("r_is_irreversibility", "PARTIAL", "Rᵢ is declared on input; the §7 criteria are not computable here."),
+    "IMPACT-ReversibilityFlagR_-01": ("r_is_irreversibility", "PARTIAL", "Physical reversibility is declared on input (the §7 criteria are not computable); polarity per H-DC-5 (F-006)."),
     "IDENTITY-4.1-01": ("no_attribution_output", "PARTIAL", "The threshold comes from a calibration that does not exist; without a declared threshold the chain is blocked (UNKNOWN)."),
     "IDENTITY-4.1-02": ("no_enforcement_cascade", "IMPLEMENTED", None),
     "IDENTITY-4.1-03": ("no_attribution_logged_deferred", "IMPLEMENTED", None),
@@ -773,10 +794,10 @@ IMPLEMENTS = {
     "JUSTICE-2-02": ("justice_inputs", "IMPLEMENTED", None),
     "JUSTICE-2-03": ("justice_inputs", "IMPLEMENTED", None),
     "JUSTICE-5-02": ("all_domains_evaluated", "IMPLEMENTED", None),
-    "JUSTICE-6-01": ("restitution_trigger", "PARTIAL", "Depends on the reading of Rᵢ (finding F-006); mitigation possibility is an input."),
+    "JUSTICE-6-01": ("restitution_trigger", "PARTIAL", "Rᵢ polarity from JUSTICE §6; IMPACT §4 leaves it open (F-006); mitigation possibility is an input."),
     "JUSTICE-6-02": ("restitution_outputs", "PARTIAL", "Amounts and time limits need an amount function the texts do not give: UNKNOWN."),
     "JUSTICE-7-01": ("restriction_trigger", "PARTIAL", "Safe margins have no numeric value: UNKNOWN unless declared."),
-    "JUSTICE-8-01": ("isolation_trigger", "PARTIAL", "Depends on the reading of Rᵢ (finding F-006); systemic risk is an input."),
+    "JUSTICE-8-01": ("isolation_trigger", "PARTIAL", "Rᵢ polarity from JUSTICE §8; IMPACT §4 leaves it open (F-006); systemic risk is an input."),
     "JUSTICE-9-01": ("exclusion_trigger", "PARTIAL", "Trigger conditions are inputs."),
     "JUSTICE-10-01": ("proportional_distribution", "IMPLEMENTED", None),
     "JUSTICE-11-02": ("periodic_not_faster_than_ttl", "IMPLEMENTED", None),
@@ -816,7 +837,7 @@ SUBJECT = {"type": "object", "fields": {
 
 class DisputeCorrectionModule(LabModule):
     id = "dispute_correction"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Dispute and correction (S-LAB-04)", "ru": "Спор и исправление (S-LAB-04)"}
     summary = {"en": "A measurement or an attribution was wrong: is the appeal accepted in time, is the decision "
                      "recomputed without new penalties, is the original kept and the difference shown?",
@@ -826,10 +847,10 @@ class DisputeCorrectionModule(LabModule):
                  "DKP-1-EPISTEMIC-BOUNDARIES-001"]
     example_order = ["measurement_error_corrected", "same_with_faulty_chain", "late_e3_appeal", "late_e1_appeal",
                      "unfounded_appeal", "no_attribution", "calibration_missing", "proxy_attribution",
-                     "harsher_recomputation", "r_polarity_consistent", "impact_example_s13", "dispute_within_ttl_all",
+                     "harsher_recomputation", "polarity_true_irreversible", "polarity_mixed", "impact_example_s13", "dispute_within_ttl_all",
                      "dispute_within_ttl_either"]
     implements = IMPLEMENTS
-    alternative_examples = ["r_polarity_consistent", "dispute_within_ttl_either"]
+    alternative_examples = ["polarity_true_irreversible", "polarity_mixed", "dispute_within_ttl_either"]
     tests = ["tests/lab/test_dispute_correction_module.py"]
     causal_note = {"en": "Causal contributions of Subjects are given on input: the lab checks a declared causal binding; "
                          "it does not infer causality from measurements.",
@@ -852,11 +873,15 @@ class DisputeCorrectionModule(LabModule):
         {"id": "H-DC-4", "source": "hypothesis", "text": {
             "en": "'Significant impact' (IDENTITY §4.1 c) is read as a boundary crossing |Iᵢ| ≥ 1.",
             "ru": "'Существенное воздействие' (IDENTITY §4.1 c) понимается как пересечение границы |Iᵢ| ≥ 1."}},
-        {"id": "H-DC-5", "source": "alternative", "text": {
-            "en": "Rᵢ reading: 'as_written' — IMPACT emits Rᵢ = True for irreversible (§4) and JUSTICE reads Rᵢ = True "
-                  "as reversible (§6, §8); 'consistent' — JUSTICE reads Rᵢ as IMPACT defines it (finding F-006).",
-            "ru": "Чтение Rᵢ: 'as_written' — IMPACT выдаёт Rᵢ = True для необратимого (§4), JUSTICE читает Rᵢ = True как "
-                  "обратимое (§6, §8); 'consistent' — JUSTICE читает Rᵢ так, как его определяет IMPACT (находка F-006)."}},
+        {"id": "H-DC-5", "source": "text", "text": {
+            "en": "Polarity of Rᵢ: IMPACT §4 does not fix it, JUSTICE §6/§8 do (True = reversible). Default "
+                  "'true_means_reversible' applies the JUSTICE polarity in both protocols; 'true_means_irreversible' "
+                  "applies the plain reading of the IMPACT name in both; 'mixed' shows what an implementation that "
+                  "follows each text separately does (finding F-006).",
+            "ru": "Полярность Rᵢ: IMPACT §4 её не фиксирует, JUSTICE §6/§8 фиксируют (True = обратимо). По умолчанию "
+                  "'true_means_reversible' — полярность JUSTICE в обоих протоколах; 'true_means_irreversible' — бытовое "
+                  "прочтение названия в IMPACT в обоих; 'mixed' — что делает реализация, которая следует каждому "
+                  "тексту по отдельности (находка F-006)."}},
         {"id": "H-DC-6", "source": "alternative", "text": {
             "en": "Dispute exception (JUSTICE §11): 'all_conditions' — a), b) and c) together (the list after 'provided'); "
                   "'data_or_allegation' — a) or b), with c).",
@@ -882,9 +907,9 @@ class DisputeCorrectionModule(LabModule):
                   "label": {"en": "Reference bound Bᵢ (no numeric value in AXIOMS)", "ru": "Граница Bᵢ (в AXIOMS нет числа)"}},
         "irreversible": {"type": "bool", "default": False, "source": "user",
                          "label": {"en": "Impact is physically irreversible", "ru": "Воздействие физически необратимо"}},
-        "r_polarity_reading": {"type": "enum", "values": ["as_written", "consistent"], "default": "as_written",
-                               "source": "alternative", "label": {"en": "Reading of Rᵢ in JUSTICE (H-DC-5)",
-                                                                  "ru": "Чтение Rᵢ в JUSTICE (H-DC-5)"}},
+        "r_polarity": {"type": "enum", "values": ["true_means_reversible", "true_means_irreversible", "mixed"],
+                       "default": "true_means_reversible", "source": "text",
+                       "label": {"en": "Polarity of Rᵢ (H-DC-5)", "ru": "Полярность Rᵢ (H-DC-5)"}},
         "subjects": {"type": "list", "min_items": 1, "max_items": 12, "items": SUBJECT, "source": "user",
                      "default": [{"id": "plant", "kind": "legal_entity", "contribution": 3, "originator": "none"},
                                  {"id": "logistics", "kind": "legal_entity", "contribution": 1, "originator": "none"}],
@@ -1003,9 +1028,9 @@ class DisputeCorrectionModule(LabModule):
         if imps:
             i = imps[0]
             e.append({"en": f"Impact Iᵢ = ({r['s1_recorded']:g} − {r['s0']:g}) / {r['bound']:g} = {i['I']:.6g}; "
-                            f"boundary crossing: {i['boundary_crossing']}; Rᵢ (irreversible) = {i['R']}.",
+                            f"boundary crossing: {i['boundary_crossing']}; Rᵢ = {i['R']} ({r['r_polarity']}).",
                       "ru": f"Воздействие Iᵢ = ({r['s1_recorded']:g} − {r['s0']:g}) / {r['bound']:g} = {i['I']:.6g}; "
-                            f"пересечение границы: {i['boundary_crossing']}; Rᵢ (необратимо) = {i['R']}."})
+                            f"пересечение границы: {i['boundary_crossing']}; Rᵢ = {i['R']} ({r['r_polarity']})."})
             if i["level_reached"] and not i["boundary_crossing"]:
                 e.append({"en": "S(t₁) has reached the level Bᵢ, yet |Iᵢ| < 1: the §5 formula treats Bᵢ as a scale, "
                                 "not as a level (finding F-005).",
@@ -1023,12 +1048,13 @@ class DisputeCorrectionModule(LabModule):
                             + (f"; undecidable: {unk}" if unk else "") + f"; shares {m.value['shares']}.",
                       "ru": f"Правосудие ({m.value['label']}): домены {on or 'нет'}"
                             + (f"; не решаемо: {unk}" if unk else "") + f"; доли {m.value['shares']}."})
-        if r["r_polarity_reading"] == "as_written" and imps and not imps[0]["R"] and decs and \
-                decs[0].value["domains"]["isolation"]:
-            e.append({"en": "Isolation follows from Rᵢ = False, which IMPACT uses for a reversible impact and JUSTICE "
-                            "reads as irreversible (finding F-006).",
-                      "ru": "Изоляция следует из Rᵢ = False: IMPACT так обозначает обратимое воздействие, а JUSTICE "
-                            "читает его как необратимое (находка F-006)."})
+        if r["r_polarity"] == "mixed" and decs:
+            e.append({"en": "Mixed polarity: IMPACT emits Rᵢ by the plain reading of its name (True = irreversible), "
+                            "JUSTICE reads it by §6/§8 (True = reversible), so restitution and isolation swap "
+                            "(finding F-006: IMPACT does not fix the polarity).",
+                      "ru": "Смешанная полярность: IMPACT выдаёт Rᵢ по бытовому прочтению названия (True = необратимо), "
+                            "JUSTICE читает по §6/§8 (True = обратимо) — возмещение и изоляция меняются местами "
+                            "(находка F-006: IMPACT не фиксирует полярность)."})
         e.append({"en": f"ERROR: final state {out['state']}; bond {out['bond'] or '—'}; measures in force: "
                         f"{out['active_final'] or 'none'}.",
                   "ru": f"ERROR: итоговое состояние {out['state']}; залог {out['bond'] or '—'}; действующие меры: "
@@ -1058,8 +1084,9 @@ class DisputeCorrectionModule(LabModule):
             "no_attribution": {**base, "attribution_confidence": 0.6, "s1_recorded": 1.0, "s0": 0.0},
             "calibration_missing": {**base, "attribution_threshold": -1},
             "proxy_attribution": {**base, "subjects": proxy, "appellant": "plant", "appeal_after_minutes": -1},
-            "harsher_recomputation": {**base, "s1_recorded": 0.55, "s1_true": 0.95, "irreversible": True},
-            "r_polarity_consistent": {**base, "r_polarity_reading": "consistent"},
+            "harsher_recomputation": {**base, "s1_recorded": 0.55, "s1_true": 0.95},
+            "polarity_true_irreversible": {**base, "r_polarity": "true_means_irreversible"},
+            "polarity_mixed": {**base, "r_polarity": "mixed"},
             "impact_example_s13": {"s0": 426.91, "s1_recorded": 427.0, "s1_true": 427.0, "bound": 450,
                                    "uncertainty": 0.01, "appeal_after_minutes": -1},
             "dispute_within_ttl_all": {**base, "appeal_after_minutes": 1440 + 30, "appeal_allegation": "none",

@@ -7,7 +7,7 @@ from lab.modules.transport_capacity import FAULTS, TransportCapacityModule
 
 M = TransportCapacityModule()
 THIN = {"policy": "standing_allowed", "vehicles_per_hour": [4] * 6 + [9] * 4 + [5] * 6 + [9] * 4 + [3] * 4}
-RED = {"policy": "standing_allowed", "red_per_km": 0.02, "red_reading": "channel_separated"}
+RED = {"policy": "standing_allowed", "red_per_km": 0.02, "red_reading": "channel_separated", "red_insurance": "outside_ptl"}
 
 
 def run(**inp):
@@ -18,7 +18,8 @@ def statuses(res):
     return {c.requirement_id: c.status for c in res.checks}
 
 
-@pytest.mark.parametrize("name", ["seated_only", "standing_allowed", "more_vehicles", "red_channel_separated", "thin_service"])
+@pytest.mark.parametrize("name", ["seated_only", "standing_allowed", "more_vehicles", "red_insurance_outside_ptl",
+                                  "thin_service", "bench_interior"])
 def test_reference_breaks_no_rule(name):
     assert "FAIL" not in statuses(run(**M.examples()[name])).values()
 
@@ -60,10 +61,13 @@ def test_open_parameters_stay_unknown():
         assert st[rid] == "UNKNOWN", rid
 
 
-def test_red_as_single_delta_conflicts_with_impact():
-    """F-015: RED as one delta aggregates harm channels; IMPACT forbids aggregated impact scores."""
-    assert statuses(run(red_per_km=0.02))["IMPACT-10-02"] == "FAIL"
+def test_red_insurance_exposure_conflicts_with_oracle():
+    """F-015 (CONFIRMED): PTL quantifying 'systemic insurance exposure' (TRANSPORT §7.1) against ORACLE §1 'physical
+    state only'.  The former claim that a single RED violates IMPACT §5/§10 is an interpretation gap: UNKNOWN."""
+    lit = statuses(run(red_per_km=0.02))
+    assert lit["ORACLE-1-02"] == "FAIL" and lit["IMPACT-10-02"] == "UNKNOWN"
     assert statuses(run(red_per_km=0.02, red_reading="channel_separated"))["IMPACT-10-02"] == "PASS"
+    assert statuses(run(red_per_km=0.02, red_insurance="outside_ptl"))["ORACLE-1-02"] == "PASS"
 
 
 @pytest.mark.parametrize("name", sorted(M.failure_examples()))

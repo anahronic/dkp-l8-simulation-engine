@@ -58,16 +58,47 @@ def question_links() -> Dict[str, list]:
     return {k: sorted(v) for k, v in out.items()}
 
 
+def question_origins() -> Dict[str, str]:
+    """requirement id -> category of a text-verified UNRESOLVED open question linking it."""
+    with open(os.path.join(os.path.dirname(REQ_DIR), "open_questions.json"), encoding="utf-8") as f:
+        qs = json.load(f)["questions"]
+    out: Dict[str, str] = {}
+    for q in qs:
+        if q["status"] == "UNRESOLVED":
+            for rid in q["requirements"]:
+                out.setdefault(rid, q["category"])
+    return out
+
+
+def gate() -> Dict[str, Any]:
+    """Inputs from the semantic verification gate and the draft classification of open points."""
+    from lab.core import verification
+    cls = verification.load_classification()
+    return {"verified": verification.verified_provisions(), "question_origin": question_origins(),
+            "draft": (cls or {}).get("items", {})}
+
+
 def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
-           links: Optional[Dict[str, list]] = None) -> Dict[str, Any]:
+           links: Optional[Dict[str, list]] = None, g: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     reg = json.loads(json.dumps(reg))
     links = question_links() if links is None else links
+    g = gate() if g is None else g
     for r in reg["requirements"]:
-        # derived status fields: interpretation is never upgraded here
+        # derived status fields: TEXT_VERIFIED comes only from lab/registry/verifications.json;
+        # REVIEWED and CONFIRMED_BY_AUTHOR are never set or removed here
         r.setdefault("interpretation_status", "DRAFT_UNREVIEWED")
+        if r["interpretation_status"] in ("DRAFT_UNREVIEWED", "TEXT_VERIFIED"):
+            r["interpretation_status"] = "TEXT_VERIFIED" if r["id"] in g["verified"] else "DRAFT_UNREVIEWED"
         r["open_questions"] = links.get(r["id"], [])
         r["decision_status"] = "UNRESOLVED" if (r.get("hypotheses_needed") or r["open_questions"]) \
             else "NONE_IDENTIFIED"
+        r.pop("open_point", None)
+        if r["decision_status"] == "UNRESOLVED":
+            if r["id"] in g["question_origin"]:
+                r["open_point"] = {"origin": g["question_origin"][r["id"]], "source": "text_verified"}
+            elif r["id"] in g["draft"]:
+                d = g["draft"][r["id"]]
+                r["open_point"] = {"origin": d["primary"], "source": "codex_draft"}
         d = decl.get(r["id"])
         base_gap = (r.get("gap") or "").replace(NOT_IMPLEMENTED_GAP, "").strip() or None
         if d:
@@ -88,6 +119,7 @@ def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
 def main(argv=None) -> int:
     check_only = "--check" in (argv or sys.argv[1:])
     decl = declared()
+    links, g = question_links(), gate()
     seen = set()
     drift = []
     for name in sorted(os.listdir(REQ_DIR)):
@@ -96,7 +128,7 @@ def main(argv=None) -> int:
         path = os.path.join(REQ_DIR, name)
         with open(path, encoding="utf-8") as f:
             reg = json.load(f)
-        new = synced(reg, decl)
+        new = synced(reg, decl, links, g)
         seen |= {r["id"] for r in reg["requirements"]}
         if new != reg:
             drift.append(name)
