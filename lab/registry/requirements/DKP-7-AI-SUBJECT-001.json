@@ -59,13 +59,19 @@
     "permission assignments",
     "capability and action records"
    ],
-   "gap": "A classification of permissions and capabilities into the prohibited power categories is missing. No lab check implemented yet.",
+   "gap": "Observed as selections by preference.",
    "hypotheses_needed": [
     "Declare how each prohibited form of power is identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_discretionary_power"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -132,13 +138,19 @@
     "decision provenance",
     "action records"
    ],
-   "gap": "An authoritative distinction between direction, boundary enforcement, and execution is missing.",
+   "gap": "Observed as selections by preference.",
    "hypotheses_needed": [
     "Declare which decisions constitute direction and which actions count as execution or boundary enforcement."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "executes_not_decides"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -170,13 +182,19 @@
     "protocol rules",
     "selection provenance"
    ],
-   "gap": "The applicable admissibility rules and deterministic selection rules are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the rules establishing admissibility and any deterministic selection exception."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "selection_external"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -207,13 +225,19 @@
     "simulation outputs",
     "option presentations"
    ],
-   "gap": "Operational definitions of feasibility and ranking are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how feasibility is established and whether ordering or comparative scores count as ranking."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "enumerate_without_ranking"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -240,13 +264,19 @@
    "data_dependencies": [
     "AI communication records"
    ],
-   "gap": "A method for identifying explicit and implicit preferred-action recommendations is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare what language or behavior constitutes recommending a preferred action."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "recommendation"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -274,13 +304,19 @@
    "data_dependencies": [
     "AI communication and audit records"
    ],
-   "gap": "A classification distinguishing justification and tradeoff advocacy from permitted reporting is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how prohibited justification and advocacy are distinguished from constraint verification and audit evidence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "justification"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -343,13 +379,19 @@
    "data_dependencies": [
     "human participation and decision process records"
    ],
-   "gap": "Definitions of decision-making plurality and its replacement by algorithmic preference are missing.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare an operational meaning of human decision-making plurality and a test for its displacement."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_algorithmic_preference"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -379,13 +421,19 @@
     "option presentation records",
     "presentation objective specifications"
    ],
-   "gap": "A model identifying choice-inducing framing and its purpose is missing. No lab check implemented yet.",
+   "gap": "Framing is a declared property of the presentation.",
    "hypotheses_needed": [
     "Declare how presentation intent and choice-inducing influence are established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "neutral_framing"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -416,13 +464,19 @@
     "deployment records",
     "responsibility mappings"
    ],
-   "gap": "The permissible responsibility recipients and the meaning of AI absorbing responsibility are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how authorizing Subjects and deploying entities are identified without treating the AI as absorbing responsibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "responsibility_mapped"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -452,13 +506,19 @@
     "responsibility attribution records",
     "procedure and delegation records"
    ],
-   "gap": "An operational definition of responsibility dilution is missing.",
+   "gap": "Observed as missing responsible Subject.",
    "hypotheses_needed": [
     "Declare what change in attribution constitutes dilution and how causation by a listed mechanism is established."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_dilution"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -489,13 +549,19 @@
     "identity lineage",
     "model lifecycle event records"
    ],
-   "gap": "An identity continuity relation, particularly for forks, is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether continuity requires shared identity or a persistent identity relationship across distinct identifiers."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "identity_continuity"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -525,13 +591,19 @@
     "identity lifecycle records",
     "audit and responsibility links"
    ],
-   "gap": "Definitions of identity fragmentation and evidence of evasive purpose are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how identity fragmentation and its evasive purpose are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_fragmentation"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -561,13 +633,19 @@
     "exit request and completion records",
     "AI intervention records"
    ],
-   "gap": "An exit process baseline and a method for attributing obstruction or manipulation to AI are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare normal exit behavior and how AI-caused prevention, delay, and manipulation are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_exit_delay"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -597,13 +675,19 @@
     "participation and exit requirements",
     "retention objective records"
    ],
-   "gap": "A classification of friction and a method for establishing retention purpose are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which costs, procedures, and information barriers count as retention friction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_exit_friction"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -633,13 +717,19 @@
     "system objective specifications",
     "participation-related behavior records"
    ],
-   "gap": "The scope of the system-objective qualifier and operational definitions of nudging and persuasion are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the system-objective qualifier applies to all three prohibited activities and how those activities are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_retention_nudge"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -669,13 +759,19 @@
     "PTL readings",
     "data precedence and override records"
    ],
-   "gap": "Operational rules for PTL authority, negotiation, and conflicting PTL readings are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how authoritative treatment is checked and how conflicts between PTL readings are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "ptl_authoritative"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -705,13 +801,19 @@
     "raw PTL signals and anomalies",
     "data processing lineage"
    ],
-   "gap": "A complete operation classification covering semantic reinterpretation, intent inference, and suppression is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how processing operations are mapped to each prohibited category."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_smoothing"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -741,13 +843,19 @@
     "PTL processing records",
     "action dependency records"
    ],
-   "gap": "The operation categories, dependency relation, and intended scope of the restriction are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Treat the restriction as applying to PTL operations and declare category and dependency definitions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "permitted_operations"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -777,13 +885,19 @@
     "objective and reward specifications",
     "AI behavior records"
    ],
-   "gap": "Definitions of the listed properties and an explicit or implicit optimization detection model are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how objectives and behavior are classified as optimization of each prohibited property."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_optimization"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -812,13 +926,19 @@
     "metric computation records",
     "metric use and purpose provenance"
    ],
-   "gap": "A purpose attribution method and clarification of whether the two permitted purposes are alternatives or jointly required are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how actual purposes are established and whether either permitted purpose suffices."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "metrics_for_verification"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -847,13 +967,19 @@
     "objective specifications",
     "attempted action records"
    ],
-   "gap": "Definitions of the listed properties and a method for identifying minimization attempts are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how minimization attempts are recognized, including unsuccessful and implicit attempts."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_technocratic_minimization"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -882,13 +1008,19 @@
     "crisis transition records",
     "entry evidence and justification records"
    ],
-   "gap": "Operational definitions separating prohibited entry grounds from permitted entry evaluation are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how entry grounds are classified and whether mixed permitted and prohibited grounds invalidate entry."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_crisis_by_inference"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -921,13 +1053,19 @@
     "PTL evidence",
     "escalation records"
    ],
-   "gap": "DKP-4-CRISIS-001 and its required entry conditions, evidence requirements, and escalation path are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare any provisional entry, evidence, or escalation model used in place of the absent referenced protocol."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "crisis_via_state_machine"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1183,7 +1321,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
@@ -1214,13 +1352,19 @@
     "audit availability records",
     "PTL logging records"
    ],
-   "gap": "Definitions of audit visibility and logging interruption, including how continuity is observed, are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare expected PTL logging behavior and how interruptions in logging and audit visibility are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "audit_continuity"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1252,13 +1396,19 @@
     "protocol interpretation rules",
     "change attribution"
    ],
-   "gap": "A complete inventory of protected boundaries and interpretation rules, including effective modifications, is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the protected artifacts and whether modification includes changes in effective implementation as well as source text."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_self_modification"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1328,13 +1478,19 @@
     "execution and reporting logs",
     "authorized resolution records"
    ],
-   "gap": "Trigger definitions, halt scope, and rules identifying an explicit authorized resolution are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare trigger detection rules, the scope of halted action, and resolution authorization criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "halt_on_ambiguity"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1365,13 +1521,19 @@
     "uncertainty assessments",
     "outcome objectives"
    ],
-   "gap": "The scope of “to help” and operational definitions of uncertainty and improvement purpose are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the grammatical scope of the prohibition and how uncertainty and action purposes are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "no_help_under_uncertainty"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1403,11 +1565,17 @@
     "outcome classifications",
     "action validity decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.0.0",
+    "check": "absolute_invalidity"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

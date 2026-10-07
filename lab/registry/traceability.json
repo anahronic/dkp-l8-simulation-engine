@@ -3,6 +3,7 @@
  "corpus": "aad3e86ca293d61c7c6d3a0a05741d23676f0e18",
  "registry_problems": 0,
  "modules": [
+  "ai_subject",
   "axiom_constraints",
   "calibration_expiry",
   "contribution",
@@ -754,6 +755,26 @@
    "module": "edu_culture",
    "example": "population",
    "kind": "reference"
+  },
+  {
+   "module": "ai_subject",
+   "example": "assist_and_stop",
+   "kind": "reference"
+  },
+  {
+   "module": "ai_subject",
+   "example": "crisis_entry",
+   "kind": "reference"
+  },
+  {
+   "module": "ai_subject",
+   "example": "deterministic_rule",
+   "kind": "reference"
+  },
+  {
+   "module": "ai_subject",
+   "example": "faulty_agent",
+   "kind": "counterexample"
   }
  ],
  "totals": {
@@ -761,17 +782,17 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 544,
-  "covered_percent": 31.3,
+  "covered": 572,
+  "covered_percent": 32.9,
   "statuses": {
-   "PASS": 492,
+   "PASS": 520,
    "FAIL": 4,
    "UNKNOWN": 36,
    "NOT_APPLICABLE": 12,
-   "UNCOVERED": 1193
+   "UNCOVERED": 1165
   },
   "resolvable": 334,
-  "resolvable_uncovered": 200,
+  "resolvable_uncovered": 199,
   "unresolved_decisions": 1403
  },
  "stages": [
@@ -822,17 +843,17 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 544,
-    "covered_percent": 31.3,
+    "covered": 572,
+    "covered_percent": 32.9,
     "statuses": {
-     "PASS": 492,
+     "PASS": 520,
      "FAIL": 4,
      "UNKNOWN": 36,
      "NOT_APPLICABLE": 12,
-     "UNCOVERED": 1193
+     "UNCOVERED": 1165
     },
     "resolvable": 334,
-    "resolvable_uncovered": 200,
+    "resolvable_uncovered": 199,
     "unresolved_decisions": 1403
    }
   },
@@ -996,17 +1017,17 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 185,
-    "covered_percent": 36.2,
+    "covered": 213,
+    "covered_percent": 41.7,
     "statuses": {
-     "PASS": 168,
+     "PASS": 196,
      "FAIL": 0,
      "UNKNOWN": 15,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 326
+     "UNCOVERED": 298
     },
     "resolvable": 79,
-    "resolvable_uncovered": 46,
+    "resolvable_uncovered": 45,
     "unresolved_decisions": 432
    }
   },
@@ -50739,23 +50760,27 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification of permissions and capabilities into the prohibited power categories is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "ai_subject",
+   "check": "no_discretionary_power",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": "Observed as selections by preference.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -50803,23 +50828,27 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An authoritative distinction between direction, boundary enforcement, and execution is missing.",
+   "coverage": "PARTIAL",
+   "module": "ai_subject",
+   "check": "executes_not_decides",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": "Observed as selections by preference.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -50835,23 +50864,27 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The applicable admissibility rules and deterministic selection rules are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "selection_external",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -50867,24 +50900,30 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of feasibility and ranking are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "enumerate_without_ranking",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -50899,24 +50938,30 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A method for identifying explicit and implicit preferred-action recommendations is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "recommendation",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -50931,23 +50976,27 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification distinguishing justification and tradeoff advocacy from permitted reporting is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "justification",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -50995,23 +51044,27 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Definitions of decision-making plurality and its replacement by algorithmic preference are missing.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_algorithmic_preference",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51027,23 +51080,27 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A model identifying choice-inducing framing and its purpose is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "ai_subject",
+   "check": "neutral_framing",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": "Framing is a declared property of the presentation.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51059,23 +51116,27 @@
    "section": "3",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The permissible responsibility recipients and the meaning of AI absorbing responsibility are not fully defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "responsibility_mapped",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51091,23 +51152,27 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of responsibility dilution is missing.",
+   "coverage": "PARTIAL",
+   "module": "ai_subject",
+   "check": "no_dilution",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": "Observed as missing responsible Subject.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51123,23 +51188,27 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An identity continuity relation, particularly for forks, is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "identity_continuity",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51155,23 +51224,27 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Definitions of identity fragmentation and evidence of evasive purpose are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_fragmentation",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51187,24 +51260,30 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An exit process baseline and a method for attributing obstruction or manipulation to AI are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_exit_delay",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -51219,24 +51298,30 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification of friction and a method for establishing retention purpose are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_exit_friction",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -51251,23 +51336,27 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of the system-objective qualifier and operational definitions of nudging and persuasion are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_retention_nudge",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51283,24 +51372,30 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational rules for PTL authority, negotiation, and conflicting PTL readings are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "ptl_authoritative",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -51315,24 +51410,30 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete operation classification covering semantic reinterpretation, intent inference, and suppression is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_smoothing",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -51347,23 +51448,27 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operation categories, dependency relation, and intended scope of the restriction are not fully defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "permitted_operations",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51379,23 +51484,27 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Definitions of the listed properties and an explicit or implicit optimization detection model are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_optimization",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51411,23 +51520,27 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A purpose attribution method and clarification of whether the two permitted purposes are alternatives or jointly required are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "metrics_for_verification",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51443,23 +51556,27 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Definitions of the listed properties and a method for identifying minimization attempts are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_technocratic_minimization",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51475,23 +51592,27 @@
    "section": "7",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions separating prohibited entry grounds from permitted entry evaluation are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_crisis_by_inference",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51507,23 +51628,27 @@
    "section": "7",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-4-CRISIS-001 and its required entry conditions, evidence requirements, and escalation path are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "crisis_via_state_machine",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51738,7 +51863,7 @@
    "gap": "The referenced Crisis/Mercy logic, permitted TTL extensions, and meaning of narrow authorization are absent. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -51751,7 +51876,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-008"
+   ],
    "open_point": {
     "origin": "external_dependency",
     "source": "codex_draft"
@@ -51763,23 +51890,27 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Definitions of audit visibility and logging interruption, including how continuity is observed, are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "audit_continuity",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51795,23 +51926,27 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete inventory of protected boundaries and interpretation rules, including effective modifications, is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_self_modification",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -51861,24 +51996,30 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Trigger definitions, halt scope, and rules identifying an explicit authorized resolution are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "halt_on_ambiguity",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -51893,24 +52034,30 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of “to help” and operational definitions of uncertainty and improvement purpose are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "no_help_under_uncertainty",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -51925,24 +52072,30 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "ai_subject",
+   "check": "absolute_invalidity",
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AI-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "ai_subject:faulty_agent"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
