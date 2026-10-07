@@ -156,3 +156,12 @@ def test_f004_broken_cross_reference():
     assert [(b["from"], b["line"], b["text"]) for b in broken] == [
         ("DKP-2-FINANCE-001", 243, "DKP-4-ERROR-001 Section 4.1"),
         ("DKP-4-CRISIS-001", 280, "Section 8")]                 # F-009: the named rule is under §6
+
+
+def test_f019_two_dispute_clocks():
+    with open(os.path.join(FINDINGS, "F-019.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    rows = {n: (x["outputs"]["dispute_accepted"], x["outputs"]["revocation_execution_day"],
+                {c["requirement_id"]: c["status"] for c in x["checks"]}["ASSETS-8.3-01"]) for n, x in v.items()}
+    assert rows == {"same_day_execution": (False, 2, "PASS"), "execution_clock": (True, 12, "UNKNOWN"),
+                    "recording_clock": (False, 12, "UNKNOWN")}

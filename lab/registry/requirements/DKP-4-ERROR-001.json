@@ -960,7 +960,7 @@
    "tests": [
     "tests/lab/test_dispute_correction_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -992,14 +992,28 @@
    "implementation": {
     "module": "dispute_correction",
     "version": "1.1.0",
-    "check": "appeal_window"
+    "check": "appeal_window",
+    "also": [
+     {
+      "module": "economic_access",
+      "version": "1.0.0",
+      "check": "appeal_window"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_economic_access_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-038"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ERROR-7-03",
@@ -1029,10 +1043,18 @@
    "implementation": {
     "module": "dispute_correction",
     "version": "1.1.0",
-    "check": "e1_no_limitation"
+    "check": "e1_no_limitation",
+    "also": [
+     {
+      "module": "economic_access",
+      "version": "1.0.0",
+      "check": "e1_no_limitation"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_economic_access_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],

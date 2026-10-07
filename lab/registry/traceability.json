@@ -7,6 +7,7 @@
   "contribution",
   "crisis_recovery",
   "dispute_correction",
+  "economic_access",
   "exit_integration",
   "failure_chain",
   "interop_failure",
@@ -451,6 +452,71 @@
    "module": "transport_capacity",
    "example": "thin_service",
    "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "delayed_execution_clock_gap",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "dispute_rejected",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "e1_late_dispute",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "exclusion_then_successful_dispute",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "faulty_economy",
+   "kind": "counterexample"
+  },
+  {
+   "module": "economic_access",
+   "example": "halt_during_revocation",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "identity_ttl_declared",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "irreversible_asset",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "non_essential_scope",
+   "kind": "alternative"
+  },
+  {
+   "module": "economic_access",
+   "example": "recording_clock",
+   "kind": "alternative"
+  },
+  {
+   "module": "economic_access",
+   "example": "restriction_only",
+   "kind": "reference"
+  },
+  {
+   "module": "economic_access",
+   "example": "slow_polling",
+   "kind": "noncompliant"
+  },
+  {
+   "module": "economic_access",
+   "example": "transfer_and_shell",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -458,18 +524,18 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 286,
-  "covered_percent": 16.5,
+  "covered": 310,
+  "covered_percent": 17.8,
   "statuses": {
-   "PASS": 253,
+   "PASS": 274,
    "FAIL": 4,
-   "UNKNOWN": 22,
+   "UNKNOWN": 25,
    "NOT_APPLICABLE": 7,
-   "UNCOVERED": 1451
+   "UNCOVERED": 1427
   },
-  "resolvable": 337,
-  "resolvable_uncovered": 248,
-  "unresolved_decisions": 1400
+  "resolvable": 336,
+  "resolvable_uncovered": 244,
+  "unresolved_decisions": 1401
  },
  "stages": [
   {
@@ -519,18 +585,18 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 286,
-    "covered_percent": 16.5,
+    "covered": 310,
+    "covered_percent": 17.8,
     "statuses": {
-     "PASS": 253,
+     "PASS": 274,
      "FAIL": 4,
-     "UNKNOWN": 22,
+     "UNKNOWN": 25,
      "NOT_APPLICABLE": 7,
-     "UNCOVERED": 1451
+     "UNCOVERED": 1427
     },
-    "resolvable": 337,
-    "resolvable_uncovered": 248,
-    "unresolved_decisions": 1400
+    "resolvable": 336,
+    "resolvable_uncovered": 244,
+    "unresolved_decisions": 1401
    }
   },
   {
@@ -631,18 +697,18 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 103,
-    "covered_percent": 24.3,
+    "covered": 127,
+    "covered_percent": 30.0,
     "statuses": {
-     "PASS": 95,
+     "PASS": 116,
      "FAIL": 0,
-     "UNKNOWN": 5,
+     "UNKNOWN": 8,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 321
+     "UNCOVERED": 297
     },
-    "resolvable": 94,
-    "resolvable_uncovered": 59,
-    "unresolved_decisions": 330
+    "resolvable": 93,
+    "resolvable_uncovered": 55,
+    "unresolved_decisions": 331
    }
   },
   {
@@ -1090,6 +1156,12 @@
    "title": "PPDI 'forced bodily contact between non-consenting passengers' as a PTL-measurable indicator, against ORACLE §5.3 (no PTL outputs about consent)",
    "status": "WITHDRAWN",
    "category": "l8_parameter"
+  },
+  {
+   "id": "Q-038",
+   "title": "Dispute window of an asset revocation: 30 DTI-Days from execution (ASSETS §8.3(a)) or from recording (ERROR §7) when the two differ",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -1185,11 +1257,16 @@
     "id": "F-018",
     "title": "ORACLE §11: nothing says what happens when the 14-day arbitration window ends unresolved",
     "classification": "CONFIRMED_FINDING"
+   },
+   {
+    "id": "F-019",
+    "title": "An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR)",
+    "classification": "INTERPRETATION_GAP"
    }
   ],
   "finding_counts": {
    "CONFIRMED_FINDING": 11,
-   "INTERPRETATION_GAP": 5,
+   "INTERPRETATION_GAP": 6,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
   },
@@ -1233,6 +1310,13 @@
   ],
   "unverified_reference_fails": [],
   "noncompliant_fails": [
+   {
+    "requirement": "FINANCE-11.2-01",
+    "runs": [
+     "economic_access:slow_polling"
+    ],
+    "verified": true
+   },
    {
     "requirement": "WORKCYCLE-4.2-01",
     "runs": [
@@ -1280,7 +1364,7 @@
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 17
+    "count": 18
    },
    {
     "status": "WITHDRAWN",
@@ -1305,13 +1389,13 @@
   ]
  },
  "unresolved_decomposition": {
-  "unresolved": 1400,
+  "unresolved": 1401,
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "text_verified": 44,
+    "text_verified": 46,
     "codex_draft": 116,
-    "total": 160
+    "total": 162
    },
    {
     "origin": "architecture_definition",
@@ -1334,8 +1418,8 @@
    {
     "origin": "external_dependency",
     "text_verified": 0,
-    "codex_draft": 152,
-    "total": 152
+    "codex_draft": 151,
+    "total": 151
    },
    {
     "origin": "implementation_only",
@@ -1483,11 +1567,11 @@
     "pending": 0
    },
    "DKP-2-ASSETS-001": {
-    "normative_ambiguity": 3,
+    "normative_ambiguity": 4,
     "architecture_definition": 7,
     "l8_parameter": 2,
     "empirical_model_data": 6,
-    "external_dependency": 8,
+    "external_dependency": 7,
     "implementation_only": 12,
     "pending": 0
    },
@@ -1573,7 +1657,7 @@
     "pending": 0
    },
    "DKP-4-ERROR-001": {
-    "normative_ambiguity": 9,
+    "normative_ambiguity": 10,
     "architecture_definition": 7,
     "l8_parameter": 3,
     "empirical_model_data": 5,
@@ -16382,25 +16466,36 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Applicable impact constraints and the scope of their application to a transfer are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "transfer_with_obligations",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 8
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -16414,25 +16509,36 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "attribution_kept",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 8
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -16443,25 +16549,36 @@
    "section": "11",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Non-essential assets and the scope and timing of restrictions are undefined; section 8.1 also requires revocation for the same named justice outcomes. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "non_essential_suspended",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -16475,25 +16592,38 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Axiom A1 and the criteria determining access necessary for preservation of life are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "life_access_kept",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "economic_access:faulty_economy"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -16571,25 +16701,36 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The category definitions and whether attribution obstruction qualifies all named categories are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "no_hidden_ownership",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Bindability is a declared property of each asset.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 8
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -16793,17 +16934,25 @@
    "kind": "constraint",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "exit_integration",
-   "check": "no_asset_decision_in_halt",
+   "module": "economic_access",
+   "check": "no_decision_during_halt",
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_exit_integration_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "gap": null,
    "also_checked_by": [
+    "exit_integration · no_asset_decision_in_halt",
     "failure_chain · assets_invalid_in_halt_or_divergence"
    ],
    "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6",
     "H-EI-1",
     "H-EI-2",
     "H-EI-3",
@@ -16815,14 +16964,14 @@
     "H-FC-5-ALT",
     "H-FC-6"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 16
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -16830,10 +16979,12 @@
     "failure_chain:divergence_faulty_adapter"
    ],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 3
    },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-019"
+   ],
    "open_point": null
   },
   {
@@ -17162,25 +17313,36 @@
    "section": "8.1",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Harm and infeasibility tests and the temporal semantics of mandatory revocation are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "revocation_on_justice",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Only the Justice-outcome trigger; scope reading H-EA-2.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17255,30 +17417,47 @@
    "section": "8.3",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The DTI-Day definition, endpoint convention, and referenced dispute procedure are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "dispute_window",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "UNKNOWN when the execution clock and the ERROR §7 recording clock disagree (H-EA-3).",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-038"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "UNKNOWN": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-019",
+    "questions:Q-038"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
    }
   },
   {
@@ -17287,25 +17466,39 @@
    "section": "8.3",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text lacks the valuation method and selection rule for the property to be preserved in escrow. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "escrow",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "economic_access:faulty_economy"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17319,25 +17512,37 @@
    "section": "8.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "claims_preserved",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -17348,25 +17553,37 @@
    "section": "8.3",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Return feasibility, equivalent-value calculation, and remedy execution timing are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "return_or_equivalent",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Equivalent value is the declared asset value; no valuation model.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17380,25 +17597,38 @@
    "section": "8.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Determining actual reliance on dispute filing requires complete causal or justification records. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "no_prejudice",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "economic_access:faulty_economy"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17412,15 +17642,77 @@
    "section": "8.3",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "failure_chain",
-   "check": "asset_order_metadata",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "revocation_metadata",
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "Inheritance from a Justice output is replaced by the evaluation of this chain.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "failure_chain · asset_order_metadata"
+   ],
    "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6",
+    "H-FC-1",
+    "H-FC-2",
+    "H-FC-3",
+    "H-FC-4",
+    "H-FC-5",
+    "H-FC-5-ALT",
+    "H-FC-6"
+   ],
+   "interpretation_status": "DRAFT_UNREVIEWED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [],
+   "observed": {
+    "PASS": 17,
+    "FAIL": 0,
+    "UNKNOWN": 0,
+    "NOT_APPLICABLE": 1
+   },
+   "status": "PASS",
+   "counterexample_detected_by": [],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
+   "violated_by_noncompliant_case": [],
+   "text_verification": [],
+   "open_point": {
+    "origin": "external_dependency",
+    "source": "codex_draft"
+   }
+  },
+  {
+   "id": "ASSETS-8.3-07",
+   "document": "DKP-2-ASSETS-001",
+   "section": "8.3",
+   "kind": "constraint",
+   "checkable": "partial",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "missing_metadata_non_operational",
+   "tests": [
+    "tests/lab/test_economic_access_module.py",
+    "tests/lab/test_failure_chain_module.py"
+   ],
+   "gap": null,
+   "also_checked_by": [
+    "failure_chain · asset_order_requires_metadata"
+   ],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -17436,55 +17728,15 @@
     "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
-   },
-   "status": "PASS",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
-   "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
-   }
-  },
-  {
-   "id": "ASSETS-8.3-07",
-   "document": "DKP-2-ASSETS-001",
-   "section": "8.3",
-   "kind": "constraint",
-   "checkable": "partial",
-   "coverage": "IMPLEMENTED",
-   "module": "failure_chain",
-   "check": "asset_order_requires_metadata",
-   "tests": [
-    "tests/lab/test_failure_chain_module.py"
-   ],
-   "gap": null,
-   "also_checked_by": [],
-   "hypotheses": [
-    "H-FC-1",
-    "H-FC-2",
-    "H-FC-3",
-    "H-FC-4",
-    "H-FC-5",
-    "H-FC-5-ALT",
-    "H-FC-6"
-   ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
-   "open_questions": [],
-   "observed": {
-    "PASS": 1,
-    "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
     "failure_chain:all_faults"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17498,25 +17750,36 @@
    "section": "8.3",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Determining partial metadata requires the absent full mandatory metadata specification. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "missing_metadata_non_operational",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17594,25 +17857,36 @@
    "section": "Identity Binding Requirement",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The test for obstruction of causal attribution is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "shell_invalid",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Bindability is a declared property of each asset.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 8
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17626,25 +17900,36 @@
    "section": "Reallocation Transparency Constraint",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Public observability, audit completeness, and the complete deterministic procedure are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "rule_based_reallocation",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Rule and provenance recorded; public observability is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17658,25 +17943,38 @@
    "section": "Reallocation Transparency Constraint",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of discretionary authority, closed committee, and opaque administrative body are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "no_discretionary_body",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "economic_access:faulty_economy"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17858,25 +18156,36 @@
    "section": "11.1",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The authoritative domain interface and precise event-to-suspension timing semantics are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "auto_suspension",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17890,25 +18199,38 @@
    "section": "11.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define which pathways count as compensatory. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "no_alternative_pathway",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Observed as compensatory credit lines; other pathways are not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "economic_access:faulty_economy"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -17922,25 +18244,36 @@
    "section": "11.1",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "restore_only_on_exit",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -17951,27 +18284,43 @@
    "section": "11.2",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DTI-Day duration and the clock origin when resolution and exit differ are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "restore_within_one_day",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
-   "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
+   "violated_by_noncompliant_case": [
+    "economic_access:slow_polling"
+   ],
+   "text_verification": [
+    "noncompliant_cases:FINANCE-11.2-01"
+   ],
    "open_point": {
     "origin": "architecture_definition",
     "source": "codex_draft"
@@ -17983,25 +18332,37 @@
    "section": "11.2",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "pending_no_restore",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-004",
@@ -18016,14 +18377,23 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "failure_chain",
-   "check": "no_accumulation_in_status_quo",
+   "module": "economic_access",
+   "check": "no_accrual_status_quo",
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "Status quo of an epistemic dispute; Justice-domain disputes are not modelled.",
-   "also_checked_by": [],
+   "gap": "economic_access: The cited ERROR 'Section 4.1' does not exist (F-004); the ERROR §7 period is used. failure_chain: Status quo of an epistemic dispute; Justice-domain disputes are not modelled.",
+   "also_checked_by": [
+    "failure_chain · no_accumulation_in_status_quo"
+   ],
    "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -18038,17 +18408,21 @@
     "Q-009"
    ],
    "observed": {
-    "PASS": 7,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
    "counterexample_detected_by": [
+    "economic_access:faulty_economy",
     "failure_chain:all_faults",
     "failure_chain:divergence_faulty_adapter"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-004",
@@ -18065,25 +18439,36 @@
    "section": "11.2",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "PTL TTL definitions, the applicable measurement set and synchronization latency semantics are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "poll_interval",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "ORACLE §17 gives no identity TTL: UNKNOWN unless a value is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 8,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "UNKNOWN": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -18097,25 +18482,36 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The auditability standard and required reproducibility environment are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "traceable_mechanisms",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Determinism and stated basis; full traceability to L1 outputs needs the L1 modules.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -18411,25 +18807,36 @@
    "section": "3.1",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete flow inventory and an operational auditability standard are required. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "economic_access",
+   "check": "deterministic_ledger",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -19048,25 +19455,38 @@
    "section": "Explicit Time Preference Prohibition",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not supply a formal classifier for prohibited valuation mechanisms. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "no_time_preference",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Checks the declared basis of present values; JWCoC has no formula.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "economic_access:faulty_economy"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -31582,7 +32002,7 @@
     "H-DC-5",
     "H-DC-6"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
@@ -31597,7 +32017,10 @@
     "PASS": 3
    },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-019",
+    "questions:Q-038"
+   ],
    "open_point": null
   },
   {
@@ -31610,35 +32033,54 @@
    "module": "dispute_correction",
    "check": "appeal_window",
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_economic_access_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "economic_access · appeal_window"
+   ],
    "hypotheses": [
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "interpretation_status": "TEXT_VERIFIED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-038"
+   ],
    "observed": {
-    "PASS": 1,
+    "PASS": 6,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 12
    },
-   "status": "PASS",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 3,
+    "PASS": 1,
+    "UNKNOWN": 1
    },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": null
+   "text_verification": [
+    "findings:F-019",
+    "questions:Q-038"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "ERROR-7-03",
@@ -31650,31 +32092,40 @@
    "module": "dispute_correction",
    "check": "e1_no_limitation",
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_economic_access_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "economic_access · e1_no_limitation"
+   ],
    "hypotheses": [
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 17
    },
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 5
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],

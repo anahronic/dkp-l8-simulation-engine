@@ -1,0 +1,11 @@
+{
+ "schema": "dkp-lab-input/1",
+ "module": "economic_access",
+ "variants": [
+  {"name": "same_day_execution", "input": {"horizon_days": 60, "dispute": {"filed_day": 36, "validated_day": 37, "resolved_day": 45}}},
+  {"name": "execution_clock", "input": {"horizon_days": 60, "execution_delay_days": 10,
+                                        "dispute": {"filed_day": 36, "validated_day": 37, "resolved_day": 45}}},
+  {"name": "recording_clock", "input": {"horizon_days": 60, "execution_delay_days": 10, "dispute_clock": "recording",
+                                        "dispute": {"filed_day": 36, "validated_day": 37, "resolved_day": 45}}}
+ ]
+}

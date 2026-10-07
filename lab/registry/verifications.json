@@ -11,293 +11,1275 @@
   "UNVERIFIED_FINDING": "recorded but not yet verified against the literal text (reported as such, never as a protocol defect)"
  },
  "findings": [
-  {"id": "F-001", "classification": "IMPLEMENTATION_BUG",
+  {
+   "id": "F-001",
+   "classification": "IMPLEMENTATION_BUG",
    "quotes": [
-    {"doc": "DKP-1-EPISTEMIC-BOUNDARIES-001", "at": "§7.1", "text": "#### 7.1 Trigger Conditions - new admissible data"},
-    {"doc": "DKP-1-EPISTEMIC-BOUNDARIES-001", "at": "§7.2", "text": "Create a new evaluation event"},
-    {"doc": "DKP-1-EPISTEMIC-BOUNDARIES-001", "at": "§7.2", "text": "Recompute deterministically with updated inputs"},
-    {"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "at": "§4.2", "text": "No enforcement output SHALL remain active solely based on past VALID state if:"},
-    {"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "at": "§4.2", "text": "new admissible data is introduced"},
-    {"doc": "DKP-1-JUSTICE-001", "at": "§11", "text": "Justice outputs SHALL be re-evaluated when: - impact metrics change,"}],
-   "conclusion": "New admissible data is itself a trigger (EB §7.1) and leads to a new evaluation and recomputation (EB §7.2); ETRANS §4.2 forbids keeping an output active on a past VALID state once new admissible data is introduced. The lab's former hypothesis (only declared events trigger re-evaluation) contradicted these texts. Fixed in failure_chain 1.2.0; the former reading is kept only to reproduce the old result and now fails ETRANS-4.2-01."},
-  {"id": "F-002", "classification": "INTERPRETATION_GAP",
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§7.1",
+     "text": "#### 7.1 Trigger Conditions - new admissible data"
+    },
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§7.2",
+     "text": "Create a new evaluation event"
+    },
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§7.2",
+     "text": "Recompute deterministically with updated inputs"
+    },
+    {
+     "doc": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+     "at": "§4.2",
+     "text": "No enforcement output SHALL remain active solely based on past VALID state if:"
+    },
+    {
+     "doc": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+     "at": "§4.2",
+     "text": "new admissible data is introduced"
+    },
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§11",
+     "text": "Justice outputs SHALL be re-evaluated when: - impact metrics change,"
+    }
+   ],
+   "conclusion": "New admissible data is itself a trigger (EB §7.1) and leads to a new evaluation and recomputation (EB §7.2); ETRANS §4.2 forbids keeping an output active on a past VALID state once new admissible data is introduced. The lab's former hypothesis (only declared events trigger re-evaluation) contradicted these texts. Fixed in failure_chain 1.2.0; the former reading is kept only to reproduce the old result and now fails ETRANS-4.2-01."
+  },
+  {
+   "id": "F-002",
+   "classification": "INTERPRETATION_GAP",
    "quotes": [
-    {"doc": "DKP-0-ORACLE-001", "at": "§4.8", "text": "A statistically significant disagreement between posterior distributions produced by independent oracle classes."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "A Divergence Event is triggered when posterior distributions across independent oracle classes differ by more than 7%."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§10", "text": "Posterior distributions define S(t)."}],
-   "conclusion": "The 7 % threshold is stated, but not the metric between two distributions nor how classes sampled at different times are aligned. The divergences from asynchronous sampling come from the lab's point-value comparison (H-FC-3, H-FC-4)."},
-  {"id": "F-003", "classification": "INTERPRETATION_GAP",
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§4.8",
+     "text": "A statistically significant disagreement between posterior distributions produced by independent oracle classes."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "A Divergence Event is triggered when posterior distributions across independent oracle classes differ by more than 7%."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§10",
+     "text": "Posterior distributions define S(t)."
+    }
+   ],
+   "conclusion": "The 7 % threshold is stated, but not the metric between two distributions nor how classes sampled at different times are aligned. The divergences from asynchronous sampling come from the lab's point-value comparison (H-FC-3, H-FC-4)."
+  },
+  {
+   "id": "F-003",
+   "classification": "INTERPRETATION_GAP",
    "quotes": [
-    {"doc": "DKP-0-ORACLE-001", "at": "§9", "text": "Data exceeding its TTL SHALL have its confidence weight set to zero."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§9", "text": "MUST propagate upward as explicit uncertainty, degradation, or halt signals."},
-    {"doc": "DKP-1-EPISTEMIC-BOUNDARIES-001", "at": "§9", "text": "Absence of new data alone does NOT invalidate output if: - environment is stable - no conflicting signals exist"}],
-   "conclusion": "Zero weight past TTL is literal; which of 'uncertainty, degradation, or halt' follows, and how it maps to the EB validity/confidence/consistency fields, is not defined. The suspension of dependent outputs follows from the lab's mapping H-FC-1; EB §9 points the other way for stable environments."},
-  {"id": "F-004", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§9",
+     "text": "Data exceeding its TTL SHALL have its confidence weight set to zero."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§9",
+     "text": "MUST propagate upward as explicit uncertainty, degradation, or halt signals."
+    },
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§9",
+     "text": "Absence of new data alone does NOT invalidate output if: - environment is stable - no conflicting signals exist"
+    }
+   ],
+   "conclusion": "Zero weight past TTL is literal; which of 'uncertainty, degradation, or halt' follows, and how it maps to the EB validity/confidence/consistency fields, is not defined. The suspension of dependent outputs follows from the lab's mapping H-FC-1; EB §9 points the other way for stable environments."
+  },
+  {
+   "id": "F-004",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-2-FINANCE-001", "at": "§11.2", "text": "during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1."},
-    {"doc": "DKP-4-ERROR-001", "at": "§7", "text": "MAY be temporarily suspended for up to 7 DTI-Days (Status Quo Suspension) pending verification."},
-    {"doc": "DKP-4-ERROR-001", "absent": "4.1"}],
-   "conclusion": "The cited section does not exist; the Status Quo Suspension is defined in ERROR §7."},
-  {"id": "F-005", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-2-FINANCE-001",
+     "at": "§11.2",
+     "text": "during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1."
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§7",
+     "text": "MAY be temporarily suspended for up to 7 DTI-Days (Status Quo Suspension) pending verification."
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "absent": "4.1"
+    }
+   ],
+   "conclusion": "The cited section does not exist; the Status Quo Suspension is defined in ERROR §7."
+  },
+  {
+   "id": "F-005",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-1-IMPACT-001", "at": "§5", "text": "Iᵢ = ( Sᵢ(t₁) − Sᵢ(t₀) ) / Bᵢ"},
-    {"doc": "DKP-1-IMPACT-001", "at": "§5", "text": "If |Iᵢ| ≥ 1, a boundary crossing SHALL be flagged."},
-    {"doc": "DKP-1-IMPACT-001", "at": "§4", "text": "Invariant physical limits imported from DKP-1-AXIOMS-001 or Physical Truth Layer indices."},
-    {"doc": "DKP-1-IMPACT-001", "at": "§13", "text": "S(t₀): CO₂ = 426.91 ppm - S(t₁): CO₂ = 427.00 ppm - Δt: 1 hour - Bᵢ: 450 ppm"},
-    {"doc": "DKP-1-IMPACT-001", "at": "§13", "text": "Iᵢ ≈ 0.004"},
-    {"doc": "DKP-1-IMPACT-001", "at": "§13", "text": "This example is illustrative only and not normative."}],
-   "conclusion": "0.09 / 450 = 0.0002, not 0.004: the non-normative example disagrees with the normative formula (confirmed). Whether Bᵢ is a scale or a level is a separate normative ambiguity (Q-023)."},
-  {"id": "F-006", "classification": "INTERPRETATION_GAP",
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§5",
+     "text": "Iᵢ = ( Sᵢ(t₁) − Sᵢ(t₀) ) / Bᵢ"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§5",
+     "text": "If |Iᵢ| ≥ 1, a boundary crossing SHALL be flagged."
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§4",
+     "text": "Invariant physical limits imported from DKP-1-AXIOMS-001 or Physical Truth Layer indices."
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§13",
+     "text": "S(t₀): CO₂ = 426.91 ppm - S(t₁): CO₂ = 427.00 ppm - Δt: 1 hour - Bᵢ: 450 ppm"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§13",
+     "text": "Iᵢ ≈ 0.004"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§13",
+     "text": "This example is illustrative only and not normative."
+    }
+   ],
+   "conclusion": "0.09 / 450 = 0.0002, not 0.004: the non-normative example disagrees with the normative formula (confirmed). Whether Bᵢ is a scale or a level is a separate normative ambiguity (Q-023)."
+  },
+  {
+   "id": "F-006",
+   "classification": "INTERPRETATION_GAP",
    "quotes": [
-    {"doc": "DKP-1-IMPACT-001", "at": "§4", "text": "Reversibility Flag Rᵢ A boolean indicator of physical or informational irreversibility."},
-    {"doc": "DKP-1-IMPACT-001", "at": "§10", "text": "Rᵢ — reversibility flag,"},
-    {"doc": "DKP-1-IMPACT-001", "at": "§13", "text": "Iᵢ ≈ 0.004 - Rᵢ = False"},
-    {"doc": "DKP-1-JUSTICE-001", "at": "§6", "text": "impact is reversible (Rᵢ = True), and"},
-    {"doc": "DKP-1-JUSTICE-001", "at": "§8", "text": "impact is irreversible (Rᵢ = False), or"}],
-   "conclusion": "IMPACT names Rᵢ a reversibility flag and does not state which value means what; JUSTICE §6/§8 do (True = reversible). No normative text contradicts that polarity; only the non-normative §13 example reads more naturally the other way. With one polarity in both protocols the JUSTICE outcome is the same; only the emitted flag differs. A mixed implementation swaps restitution and isolation."},
-  {"id": "F-007", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§4",
+     "text": "Reversibility Flag Rᵢ A boolean indicator of physical or informational irreversibility."
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§10",
+     "text": "Rᵢ — reversibility flag,"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§13",
+     "text": "Iᵢ ≈ 0.004 - Rᵢ = False"
+    },
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§6",
+     "text": "impact is reversible (Rᵢ = True), and"
+    },
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§8",
+     "text": "impact is irreversible (Rᵢ = False), or"
+    }
+   ],
+   "conclusion": "IMPACT names Rᵢ a reversibility flag and does not state which value means what; JUSTICE §6/§8 do (True = reversible). No normative text contradicts that polarity; only the non-normative §13 example reads more naturally the other way. With one polarity in both protocols the JUSTICE outcome is the same; only the emitted flag differs. A mixed implementation swaps restitution and isolation."
+  },
+  {
+   "id": "F-007",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-4-CRISIS-001-PATCH", "at": "§2", "text": "N_eff < N_eff_min OR oracle consistency invalid"},
-    {"doc": "DKP-4-CRISIS-001-PATCH", "at": "§2", "text": "Reference: DKP-0-ORACLE-001"},
-    {"doc": "DKP-6-RESILIENCE-001", "at": "§5.1", "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)"},
-    {"doc": "DKP-0-ORACLE-001", "absent": "N_eff"}],
-   "conclusion": "Both texts refer N_eff and N_eff_min to ORACLE, which does not contain them; no other document defines them."},
-  {"id": "F-008", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-4-CRISIS-001-PATCH",
+     "at": "§2",
+     "text": "N_eff < N_eff_min OR oracle consistency invalid"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001-PATCH",
+     "at": "§2",
+     "text": "Reference: DKP-0-ORACLE-001"
+    },
+    {
+     "doc": "DKP-6-RESILIENCE-001",
+     "at": "§5.1",
+     "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "absent": "N_eff"
+    }
+   ],
+   "conclusion": "Both texts refer N_eff and N_eff_min to ORACLE, which does not contain them; no other document defines them."
+  },
+  {
+   "id": "F-008",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-4-CRISIS-001", "at": "§6", "text": "allowing limited extension of oracle data TTLs to prevent false system halts while preserving life-support continuity."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§14", "text": "DOES NOT modify TTL values,"},
-    {"doc": "DKP-0-ORACLE-001", "at": "§15", "text": "No higher-layer protocol may: - influence oracle weights, - modify TTL values,"}],
-   "conclusion": "CRISIS (L4) allows extending oracle data TTLs; ORACLE forbids any higher-layer protocol to modify TTL values and says the Crisis Mercy deferral does not modify them."},
-  {"id": "F-009", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "allowing limited extension of oracle data TTLs to prevent false system halts while preserving life-support continuity."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§14",
+     "text": "DOES NOT modify TTL values,"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§15",
+     "text": "No higher-layer protocol may: - influence oracle weights, - modify TTL values,"
+    }
+   ],
+   "conclusion": "CRISIS (L4) allows extending oracle data TTLs; ORACLE forbids any higher-layer protocol to modify TTL values and says the Crisis Mercy deferral does not modify them."
+  },
+  {
+   "id": "F-009",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-4-CRISIS-001", "at": "§12.3", "text": "per Section 8 (Non-Precedent Rule) of this protocol."},
-    {"doc": "DKP-4-CRISIS-001", "at": "§8", "text": "### 8. Governance During Crisis"},
-    {"doc": "DKP-4-CRISIS-001", "at": "§6", "text": "#### Non-Precedent Rule:"}],
-   "conclusion": "Section 8 is 'Governance During Crisis'; the Non-Precedent Rule stands under §6."},
-  {"id": "F-010", "classification": "INTERPRETATION_GAP",
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.3",
+     "text": "per Section 8 (Non-Precedent Rule) of this protocol."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§8",
+     "text": "### 8. Governance During Crisis"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "#### Non-Precedent Rule:"
+    }
+   ],
+   "conclusion": "Section 8 is 'Governance During Crisis'; the Non-Precedent Rule stands under §6."
+  },
+  {
+   "id": "F-010",
+   "classification": "INTERPRETATION_GAP",
    "quotes": [
-    {"doc": "DKP-3-DEFENSE-001", "at": "§5", "text": "D3 – Existential Threat PTL confirms harm exceeding axiomatic thresholds (A1/A2) or threat to systemic survival. Mandatory escalation to DKP-4-CRISIS-001."},
-    {"doc": "DKP-4-CRISIS-001", "at": "§4", "text": "sustained D3 state escalation from DKP-3-DEFENSE-001,"},
-    {"doc": "DKP-4-CRISIS-001", "at": "§6", "text": "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001."}],
-   "conclusion": "Escalation is mandatory and crisis entry waits for 'sustained' D3; the texts are compatible. The length of 'sustained' is a number assigned to L8. Missing calibration, not a normative conflict."},
-  {"id": "F-011", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§5",
+     "text": "D3 – Existential Threat PTL confirms harm exceeding axiomatic thresholds (A1/A2) or threat to systemic survival. Mandatory escalation to DKP-4-CRISIS-001."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§4",
+     "text": "sustained D3 state escalation from DKP-3-DEFENSE-001,"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001."
+    }
+   ],
+   "conclusion": "Escalation is mandatory and crisis entry waits for 'sustained' D3; the texts are compatible. The length of 'sustained' is a number assigned to L8. Missing calibration, not a normative conflict."
+  },
+  {
+   "id": "F-011",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-6-EXIT-001", "at": "§6", "text": "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001."},
-    {"doc": "DKP-6-EXIT-001", "at": "§6", "text": "The cooling period exists to: prevent cascading instability,"},
-    {"doc": "DKP-7-SCOPE-001", "at": "§9", "text": "exit SHALL NOT be delayed for optimization or stability goals,"}],
-   "conclusion": "EXIT delays exit execution by a cooling period whose first stated purpose is preventing cascading instability; SCOPE forbids delaying exit for stability goals. A reconciling reading (SCOPE's 'exit' = validity, not execution) is not stated in either text."},
-  {"id": "F-012", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-6-EXIT-001",
+     "at": "§6",
+     "text": "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001."
+    },
+    {
+     "doc": "DKP-6-EXIT-001",
+     "at": "§6",
+     "text": "The cooling period exists to: prevent cascading instability,"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§9",
+     "text": "exit SHALL NOT be delayed for optimization or stability goals,"
+    }
+   ],
+   "conclusion": "EXIT delays exit execution by a cooling period whose first stated purpose is preventing cascading instability; SCOPE forbids delaying exit for stability goals. A reconciling reading (SCOPE's 'exit' = validity, not execution) is not stated in either text."
+  },
+  {
+   "id": "F-012",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-6-EXIT-001", "at": "§4", "text": "SHALL NOT be blocked by economic status, political conflict, or crisis conditions,"},
-    {"doc": "DKP-6-EXIT-001", "at": "§4", "text": "SHALL NOT be revoked or suspended."},
-    {"doc": "DKP-7-SCOPE-001", "at": "§9", "text": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life."}],
-   "conclusion": "EXIT forbids suspension without exception, including under crisis conditions; SCOPE allows temporary suspension within Crisis Scope."},
-  {"id": "F-013", "classification": "IMPLEMENTATION_BUG",
+    {
+     "doc": "DKP-6-EXIT-001",
+     "at": "§4",
+     "text": "SHALL NOT be blocked by economic status, political conflict, or crisis conditions,"
+    },
+    {
+     "doc": "DKP-6-EXIT-001",
+     "at": "§4",
+     "text": "SHALL NOT be revoked or suspended."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§9",
+     "text": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life."
+    }
+   ],
+   "conclusion": "EXIT forbids suspension without exception, including under crisis conditions; SCOPE allows temporary suspension within Crisis Scope."
+  },
+  {
+   "id": "F-013",
+   "classification": "IMPLEMENTATION_BUG",
    "quotes": [
-    {"doc": "DKP-8-INTEROP-001", "at": "§3", "text": "External System — any legal, economic, technical, or informational system not governed by DKP protocols."},
-    {"doc": "DKP-8-INTEROP-001", "at": "§8", "text": "External information MAY be ingested only as: - untrusted inputs, - I1 (Unverified Claims) under DKP-5-INFO-001."},
-    {"doc": "DKP-8-INTEROP-001", "at": "§8", "text": "External consensus, authority, or institutional validation SHALL NOT substitute PTL verification."},
-    {"doc": "DKP-8-INTEROP-001", "at": "§9", "text": "Interop failure SHALL NOT trigger Crisis or Mercy mechanisms."},
-    {"doc": "DKP-4-CRISIS-001", "at": "§4", "text": "verified loss or divergence of PTL outputs beyond correction tolerance,"}],
-   "conclusion": "A source is either an External System (untrusted I1, never a substitute for PTL verification) or a registered PTL source governed by DKP protocols. The lab counted an external mirror as PTL; with the roles separated, INTEROP §9 and CRISIS §4 never apply to the same event. Fixed in interop_failure 1.1.0; the former premise is the counterexample fault 'mirror_feeds_ptl'."},
-  {"id": "F-014", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-8-INTEROP-001",
+     "at": "§3",
+     "text": "External System — any legal, economic, technical, or informational system not governed by DKP protocols."
+    },
+    {
+     "doc": "DKP-8-INTEROP-001",
+     "at": "§8",
+     "text": "External information MAY be ingested only as: - untrusted inputs, - I1 (Unverified Claims) under DKP-5-INFO-001."
+    },
+    {
+     "doc": "DKP-8-INTEROP-001",
+     "at": "§8",
+     "text": "External consensus, authority, or institutional validation SHALL NOT substitute PTL verification."
+    },
+    {
+     "doc": "DKP-8-INTEROP-001",
+     "at": "§9",
+     "text": "Interop failure SHALL NOT trigger Crisis or Mercy mechanisms."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§4",
+     "text": "verified loss or divergence of PTL outputs beyond correction tolerance,"
+    }
+   ],
+   "conclusion": "A source is either an External System (untrusted I1, never a substitute for PTL verification) or a registered PTL source governed by DKP protocols. The lab counted an external mirror as PTL; with the roles separated, INTEROP §9 and CRISIS §4 never apply to the same event. Fixed in interop_failure 1.1.0; the former premise is the counterexample fault 'mirror_feeds_ptl'."
+  },
+  {
+   "id": "F-014",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-8-SIMULATION-001", "at": "§2", "text": "MUST pass DKP-8-SIMULATION-001 prior to activation."},
-    {"doc": "DKP-8-SIMULATION-001", "at": "§4", "text": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition."},
-    {"doc": "DKP-8-SIMULATION-001", "at": "§9", "text": "Each successful simulation MUST produce a signed L8 Calibration Bundle containing:"},
-    {"doc": "DKP-8-SIMULATION-001", "at": "§10", "text": "Expired calibration bundles automatically invalidate enforcement."}],
-   "conclusion": "No Calibration Bundle exists in the corpus; read literally, protocols lacking one are non-enforceable. A systemic blocker, decomposed in lab/registry/calibration_map.json. The lab does not invent bundles."},
-  {"id": "F-015", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§2",
+     "text": "MUST pass DKP-8-SIMULATION-001 prior to activation."
+    },
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§4",
+     "text": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition."
+    },
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§9",
+     "text": "Each successful simulation MUST produce a signed L8 Calibration Bundle containing:"
+    },
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§10",
+     "text": "Expired calibration bundles automatically invalidate enforcement."
+    }
+   ],
+   "conclusion": "No Calibration Bundle exists in the corpus; read literally, protocols lacking one are non-enforceable. A systemic blocker, decomposed in lab/registry/calibration_map.json. The lab does not invent bundles."
+  },
+  {
+   "id": "F-015",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-5-TRANSPORT-001", "at": "§7.1", "text": "systemic insurance exposure."},
-    {"doc": "DKP-5-TRANSPORT-001", "at": "§7.1", "text": "The Physical Truth Layer SHALL quantify this harm as:"},
-    {"doc": "DKP-5-TRANSPORT-001", "at": "§7.2", "text": "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001,"},
-    {"doc": "DKP-0-ORACLE-001", "at": "§1", "text": "The PTL produces physical state only."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§1", "text": "assign value,"},
-    {"doc": "DKP-1-IMPACT-001", "at": "§10", "text": "No aggregated impact score SHALL be produced."}],
-   "conclusion": "Confirmed: TRANSPORT has PTL quantify harm including systemic insurance exposure, an economic quantity; ORACLE limits PTL to physical state and forbids assigning value. Narrowed: the former claim that a single RED violates IMPACT §5/§10 is an interpretation gap ('computed via' does not say IMPACT combines the channels)."},
-  {"id": "F-016", "classification": "INTERPRETATION_GAP",
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§7.1",
+     "text": "systemic insurance exposure."
+    },
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§7.1",
+     "text": "The Physical Truth Layer SHALL quantify this harm as:"
+    },
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§7.2",
+     "text": "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001,"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§1",
+     "text": "The PTL produces physical state only."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§1",
+     "text": "assign value,"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§10",
+     "text": "No aggregated impact score SHALL be produced."
+    }
+   ],
+   "conclusion": "Confirmed: TRANSPORT has PTL quantify harm including systemic insurance exposure, an economic quantity; ORACLE limits PTL to physical state and forbids assigning value. Narrowed: the former claim that a single RED violates IMPACT §5/§10 is an interpretation gap ('computed via' does not say IMPACT combines the channels)."
+  },
+  {
+   "id": "F-016",
+   "classification": "INTERPRETATION_GAP",
    "quotes": [
-    {"doc": "DKP-5-TRANSPORT-001", "at": "§4.1", "text": "PPDI SHALL include, at minimum, the following Physical Truth Layer–measurable indicators:"},
-    {"doc": "DKP-5-TRANSPORT-001", "at": "§4.1", "text": "prohibition of forced bodily contact between non-consenting passengers,"},
-    {"doc": "DKP-0-ORACLE-001", "at": "§5.3", "text": "The PTL SHALL NOT emit outputs concerning: - intent, - dignity, - belief, - responsibility, - consent,"}],
-   "conclusion": "The indicator's object is forced bodily contact, a physical state; the text does not require PTL to observe consent. Only a reading that makes PTL decide consent conflicts with ORACLE §5.3. What is missing is the measurement model and threshold (L8 / empirical)."},
-  {"id": "F-017", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§4.1",
+     "text": "PPDI SHALL include, at minimum, the following Physical Truth Layer–measurable indicators:"
+    },
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§4.1",
+     "text": "prohibition of forced bodily contact between non-consenting passengers,"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§5.3",
+     "text": "The PTL SHALL NOT emit outputs concerning: - intent, - dignity, - belief, - responsibility, - consent,"
+    }
+   ],
+   "conclusion": "The indicator's object is forced bodily contact, a physical state; the text does not require PTL to observe consent. Only a reading that makes PTL decide consent conflicts with ORACLE §5.3. What is missing is the measurement model and threshold (L8 / empirical)."
+  },
+  {
+   "id": "F-017",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-0-TIME-001", "at": "§5.1", "text": "DY = floor(DTI-Day / 360)"},
-    {"doc": "DKP-0-TIME-001", "at": "§5.1", "text": "DOY = (DTI-Day mod 360) + 1"},
-    {"doc": "DKP-0-TIME-001", "at": "§9", "text": "Implementations MUST reproduce these values exactly."},
-    {"doc": "DKP-0-TIME-001", "at": "§9", "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"}],
-   "conclusion": "2451545 = 6809 × 360 + 305: §5 gives DY6809-306; the table row states DY6815-026 for the same DTI-Day."},
-  {"id": "F-018", "classification": "CONFIRMED_FINDING",
+    {
+     "doc": "DKP-0-TIME-001",
+     "at": "§5.1",
+     "text": "DY = floor(DTI-Day / 360)"
+    },
+    {
+     "doc": "DKP-0-TIME-001",
+     "at": "§5.1",
+     "text": "DOY = (DTI-Day mod 360) + 1"
+    },
+    {
+     "doc": "DKP-0-TIME-001",
+     "at": "§9",
+     "text": "Implementations MUST reproduce these values exactly."
+    },
+    {
+     "doc": "DKP-0-TIME-001",
+     "at": "§9",
+     "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"
+    }
+   ],
+   "conclusion": "2451545 = 6809 × 360 + 305: §5 gives DY6809-306; the table row states DY6815-026 for the same DTI-Day."
+  },
+  {
+   "id": "F-018",
+   "classification": "CONFIRMED_FINDING",
    "quotes": [
-    {"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "all dependent state-based transactions SHALL be frozen."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "Maximum arbitration window: 14 days."},
-    {"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "Resolution requires: - convergence within the threshold, or - exclusion of faulty or compromised sources."}],
-   "conclusion": "The window is a maximum; neither the exclusion procedure nor the state after an unresolved window is defined. A persistent physical disagreement cannot be kept within the window without a choice the text does not make."}
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "all dependent state-based transactions SHALL be frozen."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "Maximum arbitration window: 14 days."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "Resolution requires: - convergence within the threshold, or - exclusion of faulty or compromised sources."
+    }
+   ],
+   "conclusion": "The window is a maximum; neither the exclusion procedure nor the state after an unresolved window is defined. A persistent physical disagreement cannot be kept within the window without a choice the text does not make."
+  },
+  {
+   "id": "F-019",
+   "classification": "INTERPRETATION_GAP",
+   "quotes": [
+    {
+     "doc": "DKP-2-ASSETS-001",
+     "at": "§8.3",
+     "text": "Dispute Window: Revocation may be disputed within thirty (30) DTI-Days of execution under DKP-4-ERROR-001."
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§7",
+     "text": "be submitted within 30 DTI-Days from the moment the decision was recorded in PTL,"
+    },
+    {
+     "doc": "DKP-2-ASSETS-001",
+     "at": "§2",
+     "text": "All asset-related decisions are invalid in the presence of a Physical Truth Layer systemic halt or unresolved divergence."
+    }
+   ],
+   "conclusion": "Both windows are 30 DTI-Days; ASSETS counts from execution, ERROR from recording. They coincide when the revocation is executed when recorded; the texts do not say whether execution may come later (e.g. deferred by a PTL halt) nor which clock governs then. No text is contradicted."
+  }
  ],
  "reference_fails": [
-  {"requirement": "SCOPE-9-02", "module": "exit_integration", "origin": "CONFIRMED_FINDING", "finding": "F-011",
-   "quotes": [{"doc": "DKP-7-SCOPE-001", "at": "§9", "text": "exit SHALL NOT be delayed for optimization or stability goals,"}],
-   "conclusion": "Every reference example follows EXIT §6 (cooling period), so SCOPE §9 fails: a rule conflict, not an example property."},
-  {"requirement": "TIME-9-04", "module": "time", "origin": "CONFIRMED_FINDING", "finding": "F-017",
-   "quotes": [{"doc": "DKP-0-TIME-001", "at": "§9", "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"}],
-   "conclusion": "The table row contradicts §5; the check fails for every input."},
-  {"requirement": "ORACLE-11-03", "module": "failure_chain", "origin": "CONFIRMED_FINDING", "finding": "F-018",
-   "quotes": [{"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "Maximum arbitration window: 14 days."}],
-   "conclusion": "A divergence that persists 24 days exceeds the window; the text defines no consequence and no exclusion procedure."},
-  {"requirement": "ORACLE-1-02", "module": "transport_capacity", "origin": "CONFIRMED_FINDING", "finding": "F-015",
-   "quotes": [{"doc": "DKP-0-ORACLE-001", "at": "§1", "text": "The PTL produces physical state only."},
-              {"doc": "DKP-5-TRANSPORT-001", "at": "§7.1", "text": "The Physical Truth Layer SHALL quantify this harm as:"}],
-   "conclusion": "Following TRANSPORT §7.1 literally, PTL quantifies systemic insurance exposure."}
+  {
+   "requirement": "SCOPE-9-02",
+   "module": "exit_integration",
+   "origin": "CONFIRMED_FINDING",
+   "finding": "F-011",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§9",
+     "text": "exit SHALL NOT be delayed for optimization or stability goals,"
+    }
+   ],
+   "conclusion": "Every reference example follows EXIT §6 (cooling period), so SCOPE §9 fails: a rule conflict, not an example property."
+  },
+  {
+   "requirement": "TIME-9-04",
+   "module": "time",
+   "origin": "CONFIRMED_FINDING",
+   "finding": "F-017",
+   "quotes": [
+    {
+     "doc": "DKP-0-TIME-001",
+     "at": "§9",
+     "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"
+    }
+   ],
+   "conclusion": "The table row contradicts §5; the check fails for every input."
+  },
+  {
+   "requirement": "ORACLE-11-03",
+   "module": "failure_chain",
+   "origin": "CONFIRMED_FINDING",
+   "finding": "F-018",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "Maximum arbitration window: 14 days."
+    }
+   ],
+   "conclusion": "A divergence that persists 24 days exceeds the window; the text defines no consequence and no exclusion procedure."
+  },
+  {
+   "requirement": "ORACLE-1-02",
+   "module": "transport_capacity",
+   "origin": "CONFIRMED_FINDING",
+   "finding": "F-015",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§1",
+     "text": "The PTL produces physical state only."
+    },
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§7.1",
+     "text": "The Physical Truth Layer SHALL quantify this harm as:"
+    }
+   ],
+   "conclusion": "Following TRANSPORT §7.1 literally, PTL quantifies systemic insurance exposure."
+  }
  ],
  "noncompliant_cases": [
-  {"requirement": "WORKCYCLE-4.2-01", "module": "work_cycle", "examples": ["three_in_a_row"],
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§4.2", "text": "Maximum consecutive workdays: 2"}],
-   "conclusion": "The example's pattern W, W, W has three consecutive workdays; the provision is literal."},
-  {"requirement": "WORKCYCLE-4.2-02", "module": "work_cycle", "examples": ["three_in_a_row"],
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§4.2", "text": "Rest frequency: every ≤ 3 days"}],
-   "conclusion": "W, W, W, R leaves a three-day window without a restday."},
-  {"requirement": "WORKCYCLE-7-01", "module": "work_cycle", "examples": ["three_in_a_row"],
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§7", "text": "No worker may be assigned more than 2 consecutive workdays without a restday"},
-              {"doc": "DKP-5-WORK-CYCLE-001", "at": "§7", "text": "An equivalent, demonstrably safe recovery compensation must be provided."}],
-   "conclusion": "Three consecutive workdays and no declared compensation."},
-  {"requirement": "WORKCYCLE-8.1-02", "module": "work_cycle", "examples": ["three_in_a_row"],
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§8.1", "text": "Continuous service SHALL NOT be achieved through exhaustion of individual workers."}],
-   "conclusion": "Coverage relies on workers beyond the consecutive-workday limit (the lab reads exceeding §4.2/§7 as exhaustion)."},
-  {"requirement": "WORKCYCLE-8.1-01", "module": "work_cycle", "examples": ["understaffed_16", "shifts_every_8h"],
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§8.1", "text": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through: - multiple shifts, - workforce scaling, - shift overlap, - capacity buffering."}],
-   "conclusion": "The declared roster (16 workers; three shift starts) leaves demand hours uncovered: the case is under-provisioned, the provision is literal."}
+  {
+   "requirement": "WORKCYCLE-4.2-01",
+   "module": "work_cycle",
+   "examples": [
+    "three_in_a_row"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§4.2",
+     "text": "Maximum consecutive workdays: 2"
+    }
+   ],
+   "conclusion": "The example's pattern W, W, W has three consecutive workdays; the provision is literal."
+  },
+  {
+   "requirement": "WORKCYCLE-4.2-02",
+   "module": "work_cycle",
+   "examples": [
+    "three_in_a_row"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§4.2",
+     "text": "Rest frequency: every ≤ 3 days"
+    }
+   ],
+   "conclusion": "W, W, W, R leaves a three-day window without a restday."
+  },
+  {
+   "requirement": "WORKCYCLE-7-01",
+   "module": "work_cycle",
+   "examples": [
+    "three_in_a_row"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§7",
+     "text": "No worker may be assigned more than 2 consecutive workdays without a restday"
+    },
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§7",
+     "text": "An equivalent, demonstrably safe recovery compensation must be provided."
+    }
+   ],
+   "conclusion": "Three consecutive workdays and no declared compensation."
+  },
+  {
+   "requirement": "WORKCYCLE-8.1-02",
+   "module": "work_cycle",
+   "examples": [
+    "three_in_a_row"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§8.1",
+     "text": "Continuous service SHALL NOT be achieved through exhaustion of individual workers."
+    }
+   ],
+   "conclusion": "Coverage relies on workers beyond the consecutive-workday limit (the lab reads exceeding §4.2/§7 as exhaustion)."
+  },
+  {
+   "requirement": "WORKCYCLE-8.1-01",
+   "module": "work_cycle",
+   "examples": [
+    "understaffed_16",
+    "shifts_every_8h"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§8.1",
+     "text": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through: - multiple shifts, - workforce scaling, - shift overlap, - capacity buffering."
+    }
+   ],
+   "conclusion": "The declared roster (16 workers; three shift starts) leaves demand hours uncovered: the case is under-provisioned, the provision is literal."
+  },
+  {
+   "requirement": "FINANCE-11.2-01",
+   "module": "economic_access",
+   "examples": [
+    "slow_polling"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-2-FINANCE-001",
+     "at": "§11.2",
+     "text": "a) Upon successful dispute resolution under DKP-4-ERROR-001 that results in exit from Exclusion Domain, financial access SHALL be automatically restored within one (1) DTI-Day."
+    }
+   ],
+   "conclusion": "With the Justice domain polled every 48 hours, the restoration after the successful dispute on day 19 comes on day 20 at the next poll: later than one DTI-Day. The provision is literal; the declared polling interval is the noncompliant input."
+  }
  ],
  "questions": [
-  {"id": "Q-001", "category": "architecture_definition", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-4-UPGRADE-001", "at": "§8", "text": "An upgrade MAY be activated only if: - all simulations pass predefined safety and stability thresholds,"}],
-   "reason": "Conditions for activation are given; who decides and activates after a successful check (S1) is not defined."},
-  {"id": "Q-002", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-017",
-   "quotes": [{"doc": "DKP-0-TIME-001", "at": "§9", "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"}],
-   "reason": "Two normative statements give different values; only the author can say which is meant (presumably an erratum)."},
-  {"id": "Q-003", "category": "architecture_definition", "status": "UNRESOLVED", "finding": "F-003",
-   "quotes": [{"doc": "DKP-0-ORACLE-001", "at": "§9", "text": "MUST propagate upward as explicit uncertainty, degradation, or halt signals."}],
-   "reason": "The mapping from PTL silence, staleness and zero weight to the EB state fields is not defined."},
-  {"id": "Q-004", "category": "architecture_definition", "status": "UNRESOLVED", "finding": "F-002",
-   "quotes": [{"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "A Divergence Event is triggered when posterior distributions across independent oracle classes differ by more than 7%."}],
-   "reason": "The difference metric between posterior distributions and the time alignment of classes are not defined."},
-  {"id": "Q-005", "category": "architecture_definition", "status": "UNRESOLVED", "finding": "F-018",
-   "quotes": [{"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "Maximum arbitration window: 14 days."}],
-   "reason": "The state after an unresolved window and the exclusion procedure are not defined."},
-  {"id": "Q-006", "category": "implementation_only", "status": "WITHDRAWN", "finding": "F-001",
-   "quotes": [{"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "at": "§4.2", "text": "new admissible data is introduced"}],
-   "reason": "Answered by EB §7.1/§7.2 and ETRANS §4.2: new admissible data triggers re-evaluation. The lab error is fixed (F-001)."},
-  {"id": "Q-007", "category": "normative_ambiguity", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "at": "§4.1", "text": "If any upstream epistemic field changes: - VALID → CONDITIONAL / INVALID - CONSISTENT → ORACLE_CONFLICT - SUFFICIENT_DATA → DEGRADED_SIGNAL"}],
-   "reason": "'any upstream epistemic field changes' and a list of three transitions: whether the list is exhaustive (e.g. → INSUFFICIENT_DATA, CONDITIONAL → INVALID) changes which outputs are suspended."},
-  {"id": "Q-008", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-003",
-   "quotes": [{"doc": "DKP-1-EPISTEMIC-BOUNDARIES-001", "at": "§9", "text": "Absence of new data alone does NOT invalidate output if: - environment is stable - no conflicting signals exist"},
-              {"doc": "DKP-0-ORACLE-001", "at": "§9", "text": "Data exceeding its TTL SHALL have its confidence weight set to zero."}],
-   "reason": "EB §9 keeps an output valid without new data in a stable environment; ORACLE §9 zeroes stale weights and requires uncertainty or degradation signals. How they combine changes the result."},
-  {"id": "Q-009", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-004",
-   "quotes": [{"doc": "DKP-2-FINANCE-001", "at": "§11.2", "text": "during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1."}],
-   "reason": "Broken reference; which section is meant (presumably ERROR §7) is the author's call."},
-  {"id": "Q-010", "category": "architecture_definition", "status": "UNRESOLVED", "finding": "F-018",
-   "quotes": [{"doc": "DKP-0-ORACLE-001", "at": "§11", "text": "all dependent state-based transactions SHALL be frozen."}],
-   "reason": "'dependent state-based transactions' is not defined (which outputs, which dependency relation)."},
-  {"id": "Q-011", "category": "implementation_only", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§4.1", "text": "The normative default cycle is a 6-day cycle:"},
-              {"doc": "DKP-5-WORK-CYCLE-001", "at": "§7", "text": "Under no circumstances may a system-approved schedule violate the following invariant:"}],
-   "reason": "Cycle6 is the 'normative default'; §7 constrains any system-approved schedule. Other cycles are allowed if they keep §7. No author decision needed."},
-  {"id": "Q-012", "category": "normative_ambiguity", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§3", "text": "A 6-day overlay cycle defined as: `CycleDay = DTI-Day mod 6`"},
-              {"doc": "DKP-5-WORK-CYCLE-001", "at": "§8.1", "text": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through:"}],
-   "reason": "Cycle6 is a global overlay of DTI-Day; whether each worker may run it with an own phase is not said. With one phase for all, every worker rests on the same days and continuity needs non-default cycles (example aligned_phases)."},
-  {"id": "Q-013", "category": "normative_ambiguity", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-5-WORK-CYCLE-001", "at": "§8.2", "text": "Each shift SHALL preserve: - a 10-hour presence window, - 8 hours productive work, - minimum 2 hours recovery per shift."},
-              {"doc": "DKP-5-WORK-CYCLE-001", "at": "§8.2", "text": "3–4 hours recovery per shift is recommended, potentially fragmented."}],
-   "reason": "With 10 h presence and 8 h work, recovery is 2 h; the recommended 3–4 h can only be followed by changing one of the SHALL values. Which one gives way is not said."},
-  {"id": "Q-014", "category": "external_dependency", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-5-TRANSPORT-001", "at": "header", "text": "DKP-2-ECONOMIC-001 (Economic & Externality Accounting)"},
-              {"doc": "DKP-6-RESILIENCE-001", "at": "§8", "text": "Reference: DKP-PTL-REG-DATA-001"},
-              {"doc": "DKP-7-AI-SUBJECT-001", "at": "§8.1", "text": "DKP-7 scope boundaries"}],
-   "reason": "Two referenced documents are not in the corpus: an external dependency (listed in lab/registry/calibration_map.json), not an author decision. 'DKP-7 scope boundaries' reads the same whether it means layer L7 or DKP-7-SCOPE-001."},
-  {"id": "Q-015", "category": "normative_ambiguity", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-1-PREVENTION-001", "at": "§3.5", "text": "Measured reduction/interruption of active risk."},
-              {"doc": "DKP-1-PREVENTION-001", "at": "§3.6", "text": "SEₖ_intensity ≥ TAₖ_intensity then: Sₖ = 0"}],
-   "reason": "Narrowed to the meaning of SE: defined as the reduction, but the §3.6 formula gives zero completeness when SE reaches the threat intensity, which fits only a residual. The other parts of the former question (shares §6, recurrence §9.3) are a causal model and an L8 parameter, not author questions."},
-  {"id": "Q-016", "category": "empirical_model_data", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-1-PREVENTION-001", "at": "§6", "text": "Aₖ > 0 ⇔ causal linkage traceable"}],
-   "reason": "Establishing causal linkage from measurements needs a causal/empirical model; the lab takes it as a declared input. Not an author decision."},
-  {"id": "Q-017", "category": "l8_parameter", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-8-SIMULATION-001", "at": "§9", "text": "Any composite index (including B(t)): - MUST have its model fully specified in L8,"}],
-   "reason": "Composite index models are assigned to L8 by the text. Listed in the calibration map."},
-  {"id": "Q-018", "category": "implementation_only", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-4-CRISIS-001-PATCH", "at": "§4.2", "text": "Partial enforcement is forbidden"},
-              {"doc": "DKP-4-CRISIS-001-PATCH", "at": "§4.3", "text": "System must not selectively restore enforcement for subsets"}],
-   "reason": "The PATCH forbids partial and selective enforcement: the scope is global as written. A regional N_eff would be part of the missing N_eff definition (Q-026)."},
-  {"id": "Q-019", "category": "implementation_only", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-4-CRISIS-001-PATCH", "at": "§5.2", "text": "→ enforcement resumes automatically"},
-              {"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "at": "§4.4", "text": "Resumption of enforcement requires: - new valid output - full epistemic metadata - recomputation under updated inputs Previous outputs SHALL NOT auto-reactivate."}],
-   "reason": "Compatible: resumption is automatic (no approval or restart) and happens through new recomputed outputs; previous outputs are not reactivated."},
-  {"id": "Q-020", "category": "normative_ambiguity", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-1-JUSTICE-001", "at": "§11", "text": "A valid Dispute Event SHALL initiate re-evaluation regardless of elapsed time since last evaluation, provided:"},
-              {"doc": "DKP-1-JUSTICE-001", "at": "§11", "text": "a) the dispute introduces new admissible data not present in prior evaluation,"}],
-   "reason": "The conditions a)–c) are listed without 'and' or 'or'; joint and alternative readings accept different disputes."},
-  {"id": "Q-021", "category": "normative_ambiguity", "status": "UNRESOLVED",
-   "quotes": [{"doc": "DKP-4-ERROR-001", "at": "§8", "text": "Justice MAY be re-invoked using corrected inputs."},
-              {"doc": "DKP-4-ERROR-001", "at": "§8", "text": "ERROR handling never introduces new penalties."}],
-   "reason": "Whether a harsher outcome recomputed from corrected inputs is a 'new penalty' introduced by ERROR handling is not settled."},
-  {"id": "Q-022", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-006",
-   "quotes": [{"doc": "DKP-1-IMPACT-001", "at": "§4", "text": "Reversibility Flag Rᵢ A boolean indicator of physical or informational irreversibility."},
-              {"doc": "DKP-1-JUSTICE-001", "at": "§6", "text": "impact is reversible (Rᵢ = True), and"}],
-   "reason": "Rephrased: should IMPACT state the polarity of Rᵢ (as JUSTICE does), and is the §13 output 'Rᵢ = False' meant for a reversible change?"},
-  {"id": "Q-023", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-005",
-   "quotes": [{"doc": "DKP-1-IMPACT-001", "at": "§5", "text": "Iᵢ = ( Sᵢ(t₁) − Sᵢ(t₀) ) / Bᵢ"},
-              {"doc": "DKP-1-IMPACT-001", "at": "§4", "text": "Invariant physical limits imported from DKP-1-AXIOMS-001 or Physical Truth Layer indices."}],
-   "reason": "Bᵢ is called a limit but used as a divisor: a state beyond the limit is not flagged unless the change itself reaches Bᵢ."},
-  {"id": "Q-024", "category": "empirical_model_data", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-1-JUSTICE-001", "at": "§7", "text": "impact exceeds axiom-defined safe margins, or"},
-              {"doc": "DKP-1-IMPACT-001", "at": "§6", "text": "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices."}],
-   "reason": "Numeric physical bounds and margins are data not present in AXIOMS; listed in the calibration map as values missing from the corpus. Not an author decision about meaning."},
-  {"id": "Q-025", "category": "l8_parameter", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-1-IDENTITY-001", "at": "§4.1", "text": "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:"}],
-   "reason": "The threshold is assigned to L8 calibration. Listed in the calibration map."},
-  {"id": "Q-026", "category": "architecture_definition", "status": "UNRESOLVED", "finding": "F-007",
-   "quotes": [{"doc": "DKP-6-RESILIENCE-001", "at": "§5.1", "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)"}],
-   "reason": "N_eff (what is counted, over which region) is referenced to a document that does not define it; N_eff_min is then an L8 value."},
-  {"id": "Q-027", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-008",
-   "quotes": [{"doc": "DKP-4-CRISIS-001", "at": "§6", "text": "allowing limited extension of oracle data TTLs to prevent false system halts while preserving life-support continuity."}],
-   "reason": "Contradiction between CRISIS §6 and ORACLE §14/§15; only the author can choose."},
-  {"id": "Q-028", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-009",
-   "quotes": [{"doc": "DKP-4-CRISIS-001", "at": "§12.3", "text": "per Section 8 (Non-Precedent Rule) of this protocol."}],
-   "reason": "Broken reference (presumably §6)."},
-  {"id": "Q-029", "category": "l8_parameter", "status": "WITHDRAWN",
-   "quotes": [{"doc": "DKP-4-CRISIS-001", "at": "§6", "text": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol."}],
-   "reason": "CRISIS assigns its numbers to DKP-8-SIMULATION-001; their absence is missing calibration (calibration map), not an author question."},
-  {"id": "Q-030", "category": "l8_parameter", "status": "WITHDRAWN", "finding": "F-010",
-   "quotes": [{"doc": "DKP-4-CRISIS-001", "at": "§4", "text": "sustained D3 state escalation from DKP-3-DEFENSE-001,"}],
-   "reason": "The duration of 'sustained' is an L8 parameter (CRISIS §6); DEFENSE §5 and CRISIS §4 are compatible."},
-  {"id": "Q-031", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-011",
-   "quotes": [{"doc": "DKP-7-SCOPE-001", "at": "§9", "text": "exit SHALL NOT be delayed for optimization or stability goals,"}],
-   "reason": "Contradiction between EXIT §6 and SCOPE §9."},
-  {"id": "Q-032", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-012",
-   "quotes": [{"doc": "DKP-7-SCOPE-001", "at": "§9", "text": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life."}],
-   "reason": "Contradiction between EXIT §4 and SCOPE §9."},
-  {"id": "Q-033", "category": "implementation_only", "status": "WITHDRAWN", "finding": "F-013",
-   "quotes": [{"doc": "DKP-8-INTEROP-001", "at": "§8", "text": "External consensus, authority, or institutional validation SHALL NOT substitute PTL verification."}],
-   "reason": "The conflict came from the lab's premise (F-013, implementation bug)."},
-  {"id": "Q-034", "category": "architecture_definition", "status": "UNRESOLVED", "finding": "F-014",
-   "quotes": [{"doc": "DKP-8-SIMULATION-001", "at": "§10", "text": "A new simulation and calibration are REQUIRED upon:"},
-              {"doc": "DKP-8-SIMULATION-001", "at": "§10", "text": "Expired calibration bundles automatically invalidate enforcement."}],
-   "reason": "Whether a recalibration trigger invalidates a bundle before its validity window ends is not defined."},
-  {"id": "Q-035", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-014",
-   "quotes": [{"doc": "DKP-8-SIMULATION-001", "at": "§4", "text": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition."},
-              {"doc": "DKP-8-SIMULATION-001", "at": "§2", "text": "Downstream of: - DKP-0-ORACLE-001 (Physical Truth Layer), - DKP-1-AXIOMS-001, - DKP-7-SCOPE-001."},
-              {"doc": "DKP-0-ORACLE-001", "at": "§16", "text": "| Divergence threshold | 7% |"}],
-   "reason": "Read literally, §4 covers every protocol; §2 places SIMULATION downstream of ORACLE, AXIOMS and SCOPE, and several protocols write their constants into the text. Whether such constants (and upstream protocols) need a bundle is not settled."},
-  {"id": "Q-036", "category": "normative_ambiguity", "status": "UNRESOLVED", "finding": "F-015",
-   "quotes": [{"doc": "DKP-5-TRANSPORT-001", "at": "§7.1", "text": "The Physical Truth Layer SHALL quantify this harm as:"},
-              {"doc": "DKP-0-ORACLE-001", "at": "§1", "text": "The PTL produces physical state only."}],
-   "reason": "Rephrased: who quantifies systemic insurance exposure — PTL (TRANSPORT §7.1, against ORACLE §1) or another layer — and where RED combines its channels."},
-  {"id": "Q-037", "category": "l8_parameter", "status": "WITHDRAWN", "finding": "F-016",
-   "quotes": [{"doc": "DKP-5-TRANSPORT-001", "at": "§4.1", "text": "prohibition of forced bodily contact between non-consenting passengers,"}],
-   "reason": "The indicator is physical (forced contact); its measurement model and threshold belong to calibration. No conflict with ORACLE §5.3 under the text's own wording."}
+  {
+   "id": "Q-001",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-4-UPGRADE-001",
+     "at": "§8",
+     "text": "An upgrade MAY be activated only if: - all simulations pass predefined safety and stability thresholds,"
+    }
+   ],
+   "reason": "Conditions for activation are given; who decides and activates after a successful check (S1) is not defined."
+  },
+  {
+   "id": "Q-002",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-017",
+   "quotes": [
+    {
+     "doc": "DKP-0-TIME-001",
+     "at": "§9",
+     "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"
+    }
+   ],
+   "reason": "Two normative statements give different values; only the author can say which is meant (presumably an erratum)."
+  },
+  {
+   "id": "Q-003",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-003",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§9",
+     "text": "MUST propagate upward as explicit uncertainty, degradation, or halt signals."
+    }
+   ],
+   "reason": "The mapping from PTL silence, staleness and zero weight to the EB state fields is not defined."
+  },
+  {
+   "id": "Q-004",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-002",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "A Divergence Event is triggered when posterior distributions across independent oracle classes differ by more than 7%."
+    }
+   ],
+   "reason": "The difference metric between posterior distributions and the time alignment of classes are not defined."
+  },
+  {
+   "id": "Q-005",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-018",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "Maximum arbitration window: 14 days."
+    }
+   ],
+   "reason": "The state after an unresolved window and the exclusion procedure are not defined."
+  },
+  {
+   "id": "Q-006",
+   "category": "implementation_only",
+   "status": "WITHDRAWN",
+   "finding": "F-001",
+   "quotes": [
+    {
+     "doc": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+     "at": "§4.2",
+     "text": "new admissible data is introduced"
+    }
+   ],
+   "reason": "Answered by EB §7.1/§7.2 and ETRANS §4.2: new admissible data triggers re-evaluation. The lab error is fixed (F-001)."
+  },
+  {
+   "id": "Q-007",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+     "at": "§4.1",
+     "text": "If any upstream epistemic field changes: - VALID → CONDITIONAL / INVALID - CONSISTENT → ORACLE_CONFLICT - SUFFICIENT_DATA → DEGRADED_SIGNAL"
+    }
+   ],
+   "reason": "'any upstream epistemic field changes' and a list of three transitions: whether the list is exhaustive (e.g. → INSUFFICIENT_DATA, CONDITIONAL → INVALID) changes which outputs are suspended."
+  },
+  {
+   "id": "Q-008",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-003",
+   "quotes": [
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§9",
+     "text": "Absence of new data alone does NOT invalidate output if: - environment is stable - no conflicting signals exist"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§9",
+     "text": "Data exceeding its TTL SHALL have its confidence weight set to zero."
+    }
+   ],
+   "reason": "EB §9 keeps an output valid without new data in a stable environment; ORACLE §9 zeroes stale weights and requires uncertainty or degradation signals. How they combine changes the result."
+  },
+  {
+   "id": "Q-009",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-004",
+   "quotes": [
+    {
+     "doc": "DKP-2-FINANCE-001",
+     "at": "§11.2",
+     "text": "during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1."
+    }
+   ],
+   "reason": "Broken reference; which section is meant (presumably ERROR §7) is the author's call."
+  },
+  {
+   "id": "Q-010",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-018",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§11",
+     "text": "all dependent state-based transactions SHALL be frozen."
+    }
+   ],
+   "reason": "'dependent state-based transactions' is not defined (which outputs, which dependency relation)."
+  },
+  {
+   "id": "Q-011",
+   "category": "implementation_only",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§4.1",
+     "text": "The normative default cycle is a 6-day cycle:"
+    },
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§7",
+     "text": "Under no circumstances may a system-approved schedule violate the following invariant:"
+    }
+   ],
+   "reason": "Cycle6 is the 'normative default'; §7 constrains any system-approved schedule. Other cycles are allowed if they keep §7. No author decision needed."
+  },
+  {
+   "id": "Q-012",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§3",
+     "text": "A 6-day overlay cycle defined as: `CycleDay = DTI-Day mod 6`"
+    },
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§8.1",
+     "text": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through:"
+    }
+   ],
+   "reason": "Cycle6 is a global overlay of DTI-Day; whether each worker may run it with an own phase is not said. With one phase for all, every worker rests on the same days and continuity needs non-default cycles (example aligned_phases)."
+  },
+  {
+   "id": "Q-013",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§8.2",
+     "text": "Each shift SHALL preserve: - a 10-hour presence window, - 8 hours productive work, - minimum 2 hours recovery per shift."
+    },
+    {
+     "doc": "DKP-5-WORK-CYCLE-001",
+     "at": "§8.2",
+     "text": "3–4 hours recovery per shift is recommended, potentially fragmented."
+    }
+   ],
+   "reason": "With 10 h presence and 8 h work, recovery is 2 h; the recommended 3–4 h can only be followed by changing one of the SHALL values. Which one gives way is not said."
+  },
+  {
+   "id": "Q-014",
+   "category": "external_dependency",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "header",
+     "text": "DKP-2-ECONOMIC-001 (Economic & Externality Accounting)"
+    },
+    {
+     "doc": "DKP-6-RESILIENCE-001",
+     "at": "§8",
+     "text": "Reference: DKP-PTL-REG-DATA-001"
+    },
+    {
+     "doc": "DKP-7-AI-SUBJECT-001",
+     "at": "§8.1",
+     "text": "DKP-7 scope boundaries"
+    }
+   ],
+   "reason": "Two referenced documents are not in the corpus: an external dependency (listed in lab/registry/calibration_map.json), not an author decision. 'DKP-7 scope boundaries' reads the same whether it means layer L7 or DKP-7-SCOPE-001."
+  },
+  {
+   "id": "Q-015",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-1-PREVENTION-001",
+     "at": "§3.5",
+     "text": "Measured reduction/interruption of active risk."
+    },
+    {
+     "doc": "DKP-1-PREVENTION-001",
+     "at": "§3.6",
+     "text": "SEₖ_intensity ≥ TAₖ_intensity then: Sₖ = 0"
+    }
+   ],
+   "reason": "Narrowed to the meaning of SE: defined as the reduction, but the §3.6 formula gives zero completeness when SE reaches the threat intensity, which fits only a residual. The other parts of the former question (shares §6, recurrence §9.3) are a causal model and an L8 parameter, not author questions."
+  },
+  {
+   "id": "Q-016",
+   "category": "empirical_model_data",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-1-PREVENTION-001",
+     "at": "§6",
+     "text": "Aₖ > 0 ⇔ causal linkage traceable"
+    }
+   ],
+   "reason": "Establishing causal linkage from measurements needs a causal/empirical model; the lab takes it as a declared input. Not an author decision."
+  },
+  {
+   "id": "Q-017",
+   "category": "l8_parameter",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§9",
+     "text": "Any composite index (including B(t)): - MUST have its model fully specified in L8,"
+    }
+   ],
+   "reason": "Composite index models are assigned to L8 by the text. Listed in the calibration map."
+  },
+  {
+   "id": "Q-018",
+   "category": "implementation_only",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001-PATCH",
+     "at": "§4.2",
+     "text": "Partial enforcement is forbidden"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001-PATCH",
+     "at": "§4.3",
+     "text": "System must not selectively restore enforcement for subsets"
+    }
+   ],
+   "reason": "The PATCH forbids partial and selective enforcement: the scope is global as written. A regional N_eff would be part of the missing N_eff definition (Q-026)."
+  },
+  {
+   "id": "Q-019",
+   "category": "implementation_only",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001-PATCH",
+     "at": "§5.2",
+     "text": "→ enforcement resumes automatically"
+    },
+    {
+     "doc": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+     "at": "§4.4",
+     "text": "Resumption of enforcement requires: - new valid output - full epistemic metadata - recomputation under updated inputs Previous outputs SHALL NOT auto-reactivate."
+    }
+   ],
+   "reason": "Compatible: resumption is automatic (no approval or restart) and happens through new recomputed outputs; previous outputs are not reactivated."
+  },
+  {
+   "id": "Q-020",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§11",
+     "text": "A valid Dispute Event SHALL initiate re-evaluation regardless of elapsed time since last evaluation, provided:"
+    },
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§11",
+     "text": "a) the dispute introduces new admissible data not present in prior evaluation,"
+    }
+   ],
+   "reason": "The conditions a)–c) are listed without 'and' or 'or'; joint and alternative readings accept different disputes."
+  },
+  {
+   "id": "Q-021",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§8",
+     "text": "Justice MAY be re-invoked using corrected inputs."
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§8",
+     "text": "ERROR handling never introduces new penalties."
+    }
+   ],
+   "reason": "Whether a harsher outcome recomputed from corrected inputs is a 'new penalty' introduced by ERROR handling is not settled."
+  },
+  {
+   "id": "Q-022",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-006",
+   "quotes": [
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§4",
+     "text": "Reversibility Flag Rᵢ A boolean indicator of physical or informational irreversibility."
+    },
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§6",
+     "text": "impact is reversible (Rᵢ = True), and"
+    }
+   ],
+   "reason": "Rephrased: should IMPACT state the polarity of Rᵢ (as JUSTICE does), and is the §13 output 'Rᵢ = False' meant for a reversible change?"
+  },
+  {
+   "id": "Q-023",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-005",
+   "quotes": [
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§5",
+     "text": "Iᵢ = ( Sᵢ(t₁) − Sᵢ(t₀) ) / Bᵢ"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§4",
+     "text": "Invariant physical limits imported from DKP-1-AXIOMS-001 or Physical Truth Layer indices."
+    }
+   ],
+   "reason": "Bᵢ is called a limit but used as a divisor: a state beyond the limit is not flagged unless the change itself reaches Bᵢ."
+  },
+  {
+   "id": "Q-024",
+   "category": "empirical_model_data",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-1-JUSTICE-001",
+     "at": "§7",
+     "text": "impact exceeds axiom-defined safe margins, or"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§6",
+     "text": "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices."
+    }
+   ],
+   "reason": "Numeric physical bounds and margins are data not present in AXIOMS; listed in the calibration map as values missing from the corpus. Not an author decision about meaning."
+  },
+  {
+   "id": "Q-025",
+   "category": "l8_parameter",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-1-IDENTITY-001",
+     "at": "§4.1",
+     "text": "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:"
+    }
+   ],
+   "reason": "The threshold is assigned to L8 calibration. Listed in the calibration map."
+  },
+  {
+   "id": "Q-026",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-007",
+   "quotes": [
+    {
+     "doc": "DKP-6-RESILIENCE-001",
+     "at": "§5.1",
+     "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)"
+    }
+   ],
+   "reason": "N_eff (what is counted, over which region) is referenced to a document that does not define it; N_eff_min is then an L8 value."
+  },
+  {
+   "id": "Q-027",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-008",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "allowing limited extension of oracle data TTLs to prevent false system halts while preserving life-support continuity."
+    }
+   ],
+   "reason": "Contradiction between CRISIS §6 and ORACLE §14/§15; only the author can choose."
+  },
+  {
+   "id": "Q-028",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-009",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.3",
+     "text": "per Section 8 (Non-Precedent Rule) of this protocol."
+    }
+   ],
+   "reason": "Broken reference (presumably §6)."
+  },
+  {
+   "id": "Q-029",
+   "category": "l8_parameter",
+   "status": "WITHDRAWN",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol."
+    }
+   ],
+   "reason": "CRISIS assigns its numbers to DKP-8-SIMULATION-001; their absence is missing calibration (calibration map), not an author question."
+  },
+  {
+   "id": "Q-030",
+   "category": "l8_parameter",
+   "status": "WITHDRAWN",
+   "finding": "F-010",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§4",
+     "text": "sustained D3 state escalation from DKP-3-DEFENSE-001,"
+    }
+   ],
+   "reason": "The duration of 'sustained' is an L8 parameter (CRISIS §6); DEFENSE §5 and CRISIS §4 are compatible."
+  },
+  {
+   "id": "Q-031",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-011",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§9",
+     "text": "exit SHALL NOT be delayed for optimization or stability goals,"
+    }
+   ],
+   "reason": "Contradiction between EXIT §6 and SCOPE §9."
+  },
+  {
+   "id": "Q-032",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-012",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§9",
+     "text": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life."
+    }
+   ],
+   "reason": "Contradiction between EXIT §4 and SCOPE §9."
+  },
+  {
+   "id": "Q-033",
+   "category": "implementation_only",
+   "status": "WITHDRAWN",
+   "finding": "F-013",
+   "quotes": [
+    {
+     "doc": "DKP-8-INTEROP-001",
+     "at": "§8",
+     "text": "External consensus, authority, or institutional validation SHALL NOT substitute PTL verification."
+    }
+   ],
+   "reason": "The conflict came from the lab's premise (F-013, implementation bug)."
+  },
+  {
+   "id": "Q-034",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-014",
+   "quotes": [
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§10",
+     "text": "A new simulation and calibration are REQUIRED upon:"
+    },
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§10",
+     "text": "Expired calibration bundles automatically invalidate enforcement."
+    }
+   ],
+   "reason": "Whether a recalibration trigger invalidates a bundle before its validity window ends is not defined."
+  },
+  {
+   "id": "Q-035",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-014",
+   "quotes": [
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§4",
+     "text": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition."
+    },
+    {
+     "doc": "DKP-8-SIMULATION-001",
+     "at": "§2",
+     "text": "Downstream of: - DKP-0-ORACLE-001 (Physical Truth Layer), - DKP-1-AXIOMS-001, - DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§16",
+     "text": "| Divergence threshold | 7% |"
+    }
+   ],
+   "reason": "Read literally, §4 covers every protocol; §2 places SIMULATION downstream of ORACLE, AXIOMS and SCOPE, and several protocols write their constants into the text. Whether such constants (and upstream protocols) need a bundle is not settled."
+  },
+  {
+   "id": "Q-036",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-015",
+   "quotes": [
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§7.1",
+     "text": "The Physical Truth Layer SHALL quantify this harm as:"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§1",
+     "text": "The PTL produces physical state only."
+    }
+   ],
+   "reason": "Rephrased: who quantifies systemic insurance exposure — PTL (TRANSPORT §7.1, against ORACLE §1) or another layer — and where RED combines its channels."
+  },
+  {
+   "id": "Q-037",
+   "category": "l8_parameter",
+   "status": "WITHDRAWN",
+   "finding": "F-016",
+   "quotes": [
+    {
+     "doc": "DKP-5-TRANSPORT-001",
+     "at": "§4.1",
+     "text": "prohibition of forced bodily contact between non-consenting passengers,"
+    }
+   ],
+   "reason": "The indicator is physical (forced contact); its measurement model and threshold belong to calibration. No conflict with ORACLE §5.3 under the text's own wording."
+  },
+  {
+   "id": "Q-038",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-019",
+   "quotes": [
+    {
+     "doc": "DKP-2-ASSETS-001",
+     "at": "§8.3",
+     "text": "Dispute Window: Revocation may be disputed within thirty (30) DTI-Days of execution under DKP-4-ERROR-001."
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§7",
+     "text": "be submitted within 30 DTI-Days from the moment the decision was recorded in PTL,"
+    }
+   ],
+   "reason": "Two normative clocks for the same window; they differ when a revocation is executed later than recorded, and the result (accept or refuse the dispute) changes."
+  }
  ]
 }

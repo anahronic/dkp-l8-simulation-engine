@@ -170,13 +170,19 @@
    "data_dependencies": [
     "CU flow records"
    ],
-   "gap": "A complete flow inventory and an operational auditability standard are required. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define ledger audit evidence and the input state required for deterministic replay."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "deterministic_ledger"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -345,13 +351,19 @@
     "DKP-1-AXIOMS-001"
    ],
    "data_dependencies": [],
-   "gap": "The text does not supply a formal classifier for prohibited valuation mechanisms. No lab check implemented yet.",
+   "gap": "Checks the declared basis of present values; JWCoC has no formula.",
    "hypotheses_needed": [
     "Declare how valuation models are classified as subjective preference, impatience discounting or utility-based devaluation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "no_time_preference"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1118,13 +1130,19 @@
    "data_dependencies": [
     "Justice Domain assignments"
    ],
-   "gap": "The authoritative domain interface and precise event-to-suspension timing semantics are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the authoritative domain event source and how suspension timing relates to section 11.2 polling."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "auto_suspension"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1155,13 +1173,19 @@
     "exclusion outcomes",
     "formal exclusion exit determinations"
    ],
-   "gap": "The text does not define which pathways count as compensatory. No lab check implemented yet.",
+   "gap": "Observed as compensatory credit lines; other pathways are not modelled.",
    "hypotheses_needed": [
     "Declare a classifier for compensatory financial pathways."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "no_alternative_pathway"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1190,11 +1214,17 @@
    "data_dependencies": [
     "formal Exclusion Domain exit determinations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "restore_only_on_exit"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1224,14 +1254,20 @@
     "Justice Domain exits",
     "DTI-Day time definition"
    ],
-   "gap": "DTI-Day duration and the clock origin when resolution and exit differ are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare DTI-Day duration and the triggering timestamp for the restoration deadline."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "restore_within_one_day"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1261,11 +1297,17 @@
    "data_dependencies": [
     "dispute proceeding states"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "pending_no_restore"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1295,17 +1337,25 @@
     "Status Quo Suspension periods under DKP-4-ERROR-001 Section 4.1",
     "dispute scope"
    ],
-   "gap": "Status quo of an epistemic dispute; Justice-domain disputes are not modelled.",
+   "gap": "economic_access: The cited ERROR 'Section 4.1' does not exist (F-004); the ERROR §7 period is used. failure_chain: Status quo of an epistemic dispute; Justice-domain disputes are not modelled.",
    "hypotheses_needed": [
     "Declare the period boundaries and which accounts and restriction events are covered."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.2.0",
-    "check": "no_accumulation_in_status_quo"
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "no_accrual_status_quo",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.2.0",
+      "check": "no_accumulation_in_status_quo"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
@@ -1341,13 +1391,19 @@
     "Justice Domain status",
     "PTL TTL values for Identity-related measurements"
    ],
-   "gap": "PTL TTL definitions, the applicable measurement set and synchronization latency semantics are absent. No lab check implemented yet.",
+   "gap": "ORACLE §17 gives no identity TTL: UNKNOWN unless a value is declared.",
    "hypotheses_needed": [
     "Declare the TTL selection rule and whether continuous synchronization means immediate updates or updates upon polling detection."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "poll_interval"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1378,13 +1434,19 @@
    "data_dependencies": [
     "L1 protocol outputs and provenance"
    ],
-   "gap": "The auditability standard and required reproducibility environment are not specified. No lab check implemented yet.",
+   "gap": "Determinism and stated basis; full traceability to L1 outputs needs the L1 modules.",
    "hypotheses_needed": [
     "Declare the evidence required for full auditability and the environment used to assess reproducibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "traceable_mechanisms"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

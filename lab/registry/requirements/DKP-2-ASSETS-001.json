@@ -151,10 +151,15 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "exit_integration",
+    "module": "economic_access",
     "version": "1.0.0",
-    "check": "no_asset_decision_in_halt",
+    "check": "no_decision_during_halt",
     "also": [
+     {
+      "module": "exit_integration",
+      "version": "1.0.0",
+      "check": "no_asset_decision_in_halt"
+     },
      {
       "module": "failure_chain",
       "version": "1.2.0",
@@ -163,10 +168,11 @@
     ]
    },
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_exit_integration_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -576,13 +582,19 @@
     "causal harm assessments",
     "restitution feasibility assessments"
    ],
-   "gap": "Harm and infeasibility tests and the temporal semantics of mandatory revocation are unspecified. No lab check implemented yet.",
+   "gap": "Only the Justice-outcome trigger; scope reading H-EA-2.",
    "hypotheses_needed": [
     "Treat each listed trigger as sufficient and declare harm, restitution infeasibility, and transition semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "revocation_on_justice"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -684,13 +696,19 @@
     "public process records",
     "execution and audit logs"
    ],
-   "gap": "Public observability, audit completeness, and the complete deterministic procedure are unspecified. No lab check implemented yet.",
+   "gap": "Rule and provenance recorded; public observability is not modelled.",
    "hypotheses_needed": [
     "Declare required public records, audit coverage, and complete inputs for deterministic replay."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "rule_based_reallocation"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -721,13 +739,19 @@
     "authorization policies",
     "control and override logs"
    ],
-   "gap": "Operational definitions of discretionary authority, closed committee, and opaque administrative body are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare actor classification criteria for the three prohibited categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "no_discretionary_body"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -798,19 +822,27 @@
     "revocation execution records",
     "dispute filing records"
    ],
-   "gap": "The DTI-Day definition, endpoint convention, and referenced dispute procedure are absent. No lab check implemented yet.",
+   "gap": "UNKNOWN when the execution clock and the ERROR §7 recording clock disagree (H-EA-3).",
    "hypotheses_needed": [
     "Declare DTI-Day conversion and endpoint handling consistent with the referenced dispute procedure."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "dispute_window"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-038"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
    }
   },
   {
@@ -838,13 +870,19 @@
     "asset valuations",
     "escrow ledger"
    ],
-   "gap": "The text lacks the valuation method and selection rule for the property to be preserved in escrow. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how asset value equivalents are computed and when proceeds or equivalents are used."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "escrow"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -875,11 +913,17 @@
     "dispute records",
     "restitution claim ledger"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "claims_preserved"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -910,13 +954,19 @@
     "valuation data",
     "return and restitution records"
    ],
-   "gap": "Return feasibility, equivalent-value calculation, and remedy execution timing are unspecified. No lab check implemented yet.",
+   "gap": "Equivalent value is the declared asset value; no valuation model.",
    "hypotheses_needed": [
     "Declare return-feasibility criteria and a valuation method without adding a normative execution deadline."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "return_or_equivalent"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -947,13 +997,19 @@
     "restriction decisions and grounds",
     "justice attribution decisions and grounds"
    ],
-   "gap": "Determining actual reliance on dispute filing requires complete causal or justification records. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how decision grounds are represented and how concealed or indirect reliance on dispute filing is tested."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "no_prejudice"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -992,17 +1048,25 @@
     "Impact measurements and confidence metadata",
     "upstream epistemic metadata"
    ],
-   "gap": "Inheritance from a Justice output is replaced by the evaluation of this chain.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply the referenced metadata schema and declare confidence propagation semantics where that schema leaves them open."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.2.0",
-    "check": "asset_order_metadata"
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "revocation_metadata",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.2.0",
+      "check": "asset_order_metadata"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1045,11 +1109,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.2.0",
-    "check": "asset_order_requires_metadata"
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "missing_metadata_non_operational",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.2.0",
+      "check": "asset_order_requires_metadata"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_economic_access_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1085,13 +1157,19 @@
     "mandatory metadata schema",
     "emission and validation logs"
    ],
-   "gap": "Determining partial metadata requires the absent full mandatory metadata specification. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply the authoritative metadata schema and identify the output emission event."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "missing_metadata_non_operational"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1197,13 +1275,19 @@
     "acceptance records",
     "current impact constraints and compliance assessments"
    ],
-   "gap": "Applicable impact constraints and the scope of their application to a transfer are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the subject and scope of impact compliance at transfer time."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "transfer_with_obligations"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1235,11 +1319,17 @@
     "inheritance records",
     "justice exemption rules and grounds"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "attribution_kept"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1268,13 +1358,19 @@
     "asset essentiality classifications",
     "asset control and benefit records"
    ],
-   "gap": "Non-essential assets and the scope and timing of restrictions are undefined; section 8.1 also requires revocation for the same named justice outcomes. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare asset essentiality and how restriction or suspension under section 11 relates to mandatory revocation under section 8.1."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "non_essential_suspended"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1306,13 +1402,19 @@
     "asset access records",
     "Axiom A1 requirements"
    ],
-   "gap": "Axiom A1 and the criteria determining access necessary for preservation of life are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply Axiom A1 and declare how necessary life-preserving access is identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "life_access_kept"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1421,13 +1523,19 @@
     "structure classifications",
     "impact and responsibility attribution records"
    ],
-   "gap": "The category definitions and whether attribution obstruction qualifies all named categories are unspecified. No lab check implemented yet.",
+   "gap": "Bindability is a declared property of each asset.",
    "hypotheses_needed": [
     "Declare whether named categories are categorically forbidden or forbidden when obstructive, and define causal attribution capability."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "no_hidden_ownership"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1461,13 +1569,19 @@
     "causal attribution assessments",
     "validity and waiver records"
    ],
-   "gap": "The test for obstruction of causal attribution is unspecified. No lab check implemented yet.",
+   "gap": "Bindability is a declared property of each asset.",
    "hypotheses_needed": [
     "Declare an obstruction classifier without introducing waiver exceptions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.0.0",
+    "check": "shell_invalid"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
