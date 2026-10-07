@@ -15,6 +15,7 @@
   "sensor_loss",
   "time",
   "transport_capacity",
+  "upgrade_lifecycle",
   "work_cycle"
  ],
  "runs": [
@@ -517,6 +518,51 @@
    "module": "economic_access",
    "example": "transfer_and_shell",
    "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "activation_refused_cooling",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "after_crisis_declared_stabilization",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "after_crisis_layered",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "correlated_initiators",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "deviation_and_rollback",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "faulty_upgrades",
+   "kind": "counterexample"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "ordinary_upgrade",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "presentation_only",
+   "kind": "reference"
+  },
+  {
+   "module": "upgrade_lifecycle",
+   "example": "rejections",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -524,17 +570,17 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 310,
-  "covered_percent": 17.8,
+  "covered": 335,
+  "covered_percent": 19.3,
   "statuses": {
-   "PASS": 274,
+   "PASS": 296,
    "FAIL": 4,
-   "UNKNOWN": 25,
+   "UNKNOWN": 28,
    "NOT_APPLICABLE": 7,
-   "UNCOVERED": 1427
+   "UNCOVERED": 1402
   },
   "resolvable": 336,
-  "resolvable_uncovered": 244,
+  "resolvable_uncovered": 237,
   "unresolved_decisions": 1401
  },
  "stages": [
@@ -585,17 +631,17 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 310,
-    "covered_percent": 17.8,
+    "covered": 335,
+    "covered_percent": 19.3,
     "statuses": {
-     "PASS": 274,
+     "PASS": 296,
      "FAIL": 4,
-     "UNKNOWN": 25,
+     "UNKNOWN": 28,
      "NOT_APPLICABLE": 7,
-     "UNCOVERED": 1427
+     "UNCOVERED": 1402
     },
     "resolvable": 336,
-    "resolvable_uncovered": 244,
+    "resolvable_uncovered": 237,
     "unresolved_decisions": 1401
    }
   },
@@ -697,17 +743,17 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 127,
-    "covered_percent": 30.0,
+    "covered": 152,
+    "covered_percent": 35.8,
     "statuses": {
-     "PASS": 116,
+     "PASS": 138,
      "FAIL": 0,
-     "UNKNOWN": 8,
+     "UNKNOWN": 11,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 297
+     "UNCOVERED": 272
     },
     "resolvable": 93,
-    "resolvable_uncovered": 55,
+    "resolvable_uncovered": 48,
     "unresolved_decisions": 331
    }
   },
@@ -1162,6 +1208,12 @@
    "title": "Dispute window of an asset revocation: 30 DTI-Days from execution (ASSETS §8.3(a)) or from recording (ERROR §7) when the two differ",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-039",
+   "title": "UPGRADE post-crisis cooldown: the 'full post-crisis audit and stabilization period' is 'as defined by DKP-8-AUDIT-001', which defines none",
+   "status": "UNRESOLVED",
+   "category": "architecture_definition"
   }
  ],
  "semantic_gate": {
@@ -1262,10 +1314,15 @@
     "id": "F-019",
     "title": "An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR)",
     "classification": "INTERPRETATION_GAP"
+   },
+   {
+    "id": "F-020",
+    "title": "UPGRADE defers the post-crisis audit and stabilization period to AUDIT, which does not define it",
+    "classification": "CONFIRMED_FINDING"
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 11,
+   "CONFIRMED_FINDING": 12,
    "INTERPRETATION_GAP": 6,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
@@ -1359,7 +1416,7 @@
    {
     "status": "UNRESOLVED",
     "category": "architecture_definition",
-    "count": 7
+    "count": 8
    },
    {
     "status": "UNRESOLVED",
@@ -1399,9 +1456,9 @@
    },
    {
     "origin": "architecture_definition",
-    "text_verified": 16,
+    "text_verified": 17,
     "codex_draft": 177,
-    "total": 193
+    "total": 194
    },
    {
     "origin": "l8_parameter",
@@ -1418,8 +1475,8 @@
    {
     "origin": "external_dependency",
     "text_verified": 0,
-    "codex_draft": 151,
-    "total": 151
+    "codex_draft": 150,
+    "total": 150
    },
    {
     "origin": "implementation_only",
@@ -1667,10 +1724,10 @@
    },
    "DKP-4-UPGRADE-001": {
     "normative_ambiguity": 5,
-    "architecture_definition": 8,
+    "architecture_definition": 9,
     "l8_parameter": 1,
     "empirical_model_data": 5,
-    "external_dependency": 10,
+    "external_dependency": 9,
     "implementation_only": 5,
     "pending": 0
    },
@@ -32700,26 +32757,34 @@
    "module": "crisis_recovery",
    "check": "no_emergency_upgrade",
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_upgrade_lifecycle_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "upgrade_lifecycle · no_crisis_upgrade"
+   ],
    "hypotheses": [
     "H-CR-1",
     "H-CR-2",
-    "H-CR-3"
+    "H-CR-3",
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {
     "PASS": 1
    },
@@ -32768,23 +32833,29 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "no_bypass",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Simulation and cooling-off; audit is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -32890,23 +32961,29 @@
    "section": "12",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "presentation_not_upgrade",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -32919,23 +32996,29 @@
    "section": "12",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "edition_dated",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Checked on the pinned corpus files, not on the published site.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33099,23 +33182,29 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The axiom definitions and a test for semantic redefinition are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "axioms_untouched",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "The effect on the axioms is a declared property of the proposal.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33131,23 +33220,29 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The PTL rule inventory and semantic modification test are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "ptl_rules_untouched",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Targets are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33261,23 +33356,29 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not explicitly resolve changes that belong to both excluded and substantive categories. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "presentation_not_upgrade",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33293,23 +33394,29 @@
    "section": "4.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Formal axiom semantics and tests for weakening, reinterpretation, and conditioning are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "axioms_untouched",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "The effect on the axioms is a declared property of the proposal.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33357,24 +33464,32 @@
    "section": "4.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No operational definitions or measurement rules are given for urgency and fear. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "no_crisis_upgrade",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Crisis only; 'urgency' and 'fear' are not measurable.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -33421,23 +33536,29 @@
    "section": "4.5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The comparison metrics and scenario coverage are unspecified, and the direction of the response-latency constraint is ambiguous. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "no_degradation",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Degradation is declared; the lab cannot measure trigger sensitivity of an arbitrary change.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33517,23 +33638,29 @@
    "section": "4.6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The trigger inventory and semantic tests for weakening, reinterpretation, and indirect delay are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "no_degradation",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Degradation is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33581,23 +33708,29 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "incomplete_rejected",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33610,23 +33743,29 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-8-SIMULATION-001 is absent, so its simulation requirements cannot be evaluated from this text. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "simulation_before_approval",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Simulation results are declared inputs.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33703,23 +33842,29 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The influence measure, aggregation scope, and cap values are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "influence_caps",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "No cap value in the corpus: UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 8,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33735,23 +33880,29 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The Identity protocol and a rule for deciding proposal correlation are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "correlation_detected",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33767,23 +33918,29 @@
    "section": "7",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Micro-upgrade scope, capture, convergence, and the relevant historical horizon are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "micro_upgrade_capture",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "No convergence measure: declared input or UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 8,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33799,23 +33956,29 @@
    "section": "7",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define which lineage links must be recorded or what constitutes complete traceability. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "lineage",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33831,24 +33994,32 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Threshold values, the relevant unresolved-case scope, and the deadline against which advance announcement is measured are not fully defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "activation_conditions",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Necessary conditions only; who approves is open (Q-001).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -33863,24 +34034,32 @@
    "section": "9",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Unexpected deviation, instability, emergent capture, and last stable version lack operational selection or detection criteria. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "automatic_rollback",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -33895,24 +34074,32 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "no_stacking",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -33924,24 +34111,32 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "rollback_priority",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "Observed as rollback on the day of detection.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -33953,30 +34148,41 @@
    "section": "Post-Crisis Cooldown Rule",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-8-AUDIT-001 is absent, leaving duration, completion criteria, and no-prior-crisis applicability unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "post_crisis_stabilization",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "AUDIT defines no stabilization period (F-020): UNKNOWN unless declared.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-039"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-020",
+    "questions:Q-039"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "text_verified"
    }
   },
   {
@@ -33985,24 +34191,32 @@
    "section": "Post-Crisis Cooldown Rule",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "cooling_off_30",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "upgrade_lifecycle:faulty_upgrades"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -34046,23 +34260,29 @@
    "section": "Post-Crisis Cooldown Rule",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The deterministic scheduling rule and its input-fixing conditions are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "deterministic_day",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -34078,23 +34298,29 @@
    "section": "Post-Crisis Cooldown Rule",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The window duration, its reference point, and whether it bounds availability or completion are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "upgrade_lifecycle",
+   "check": "reversible_window",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": "The length of the window is not defined; only its existence is checked.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -34110,23 +34336,29 @@
    "section": "Post-Crisis Cooldown Rule",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meaning and required guarantees of committed are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "upgrade_lifecycle",
+   "check": "logged",
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-UP-1",
+    "H-UP-2",
+    "H-UP-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],

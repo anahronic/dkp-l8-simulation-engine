@@ -165,3 +165,12 @@ def test_f019_two_dispute_clocks():
                 {c["requirement_id"]: c["status"] for c in x["checks"]}["ASSETS-8.3-01"]) for n, x in v.items()}
     assert rows == {"same_day_execution": (False, 2, "PASS"), "execution_clock": (True, 12, "UNKNOWN"),
                     "recording_clock": (False, 12, "UNKNOWN")}
+
+
+def test_f020_stabilization_period_undefined():
+    with open(os.path.join(FINDINGS, "F-020.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    rows = {n: (x["outputs"]["status"]["justice_change"],
+                {c["requirement_id"]: c["status"] for c in x["checks"]}["UPGRADE-Post-CrisisCooldownRule-01"]) for n, x in v.items()}
+    assert rows == {"period_undefined": ("held", "UNKNOWN"), "declared_20_days": ("rejected", "PASS"),
+                    "declared_0_days": ("active", "PASS")}

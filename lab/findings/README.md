@@ -42,6 +42,7 @@ documented numbers as regressions.
 | [F-017](F-017.md) | TIME §9: the test vector for 2000-01-01 contradicts §5 | CONFIRMED_FINDING | Q-002 |
 | [F-018](F-018.md) | ORACLE §11: nothing says what happens when the 14-day arbitration window ends | CONFIRMED_FINDING | Q-005, Q-010 |
 | [F-019](F-019.md) | An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR) | INTERPRETATION_GAP | Q-038 |
+| [F-020](F-020.md) | UPGRADE defers the post-crisis stabilization period to AUDIT, which does not define it | CONFIRMED_FINDING | Q-039 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

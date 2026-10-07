@@ -12,10 +12,12 @@ from lab.modules.prevention import PreventionModule
 from lab.modules.sensor_loss import SensorLossModule
 from lab.modules.time import TimeModule
 from lab.modules.transport_capacity import TransportCapacityModule
+from lab.modules.upgrade_lifecycle import UpgradeLifecycleModule
 from lab.modules.work_cycle import WorkCycleModule
 
 MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule(), FailureChainModule(),
                              DisputeCorrectionModule(), ContributionModule(), SensorLossModule(),
                              CrisisRecoveryModule(), ExitIntegrationModule(),
                              InteropFailureModule(), CalibrationExpiryModule(),
-                             TransportCapacityModule(), EconomicAccessModule())}
+                             TransportCapacityModule(), EconomicAccessModule(),
+                             UpgradeLifecycleModule())}

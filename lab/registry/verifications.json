@@ -506,6 +506,31 @@
     }
    ],
    "conclusion": "Both windows are 30 DTI-Days; ASSETS counts from execution, ERROR from recording. They coincide when the revocation is executed when recorded; the texts do not say whether execution may come later (e.g. deferred by a PTL halt) nor which clock governs then. No text is contradicted."
+  },
+  {
+   "id": "F-020",
+   "classification": "CONFIRMED_FINDING",
+   "quotes": [
+    {
+     "doc": "DKP-4-UPGRADE-001",
+     "at": "§8",
+     "text": "Any upgrade affecting Defense, Crisis, Identity, or Justice layers SHALL NOT be proposed or activated until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001."
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "absent": "stabiliz"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "absent": "post-crisis"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§11",
+     "text": "During Crisis Mercy conditions: - audit continues uninterrupted,"
+    }
+   ],
+   "conclusion": "UPGRADE refers the post-crisis audit and stabilization period to AUDIT; AUDIT contains no such definition (neither length nor completion criterion). Upgrades touching Defense, Crisis, Identity or Justice after a Crisis cannot be shown to be allowed."
   }
  ],
  "reference_fails": [
@@ -1280,6 +1305,20 @@
     }
    ],
    "reason": "Two normative clocks for the same window; they differ when a revocation is executed later than recorded, and the result (accept or refuse the dispute) changes."
+  },
+  {
+   "id": "Q-039",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-020",
+   "quotes": [
+    {
+     "doc": "DKP-4-UPGRADE-001",
+     "at": "§8",
+     "text": "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001."
+    }
+   ],
+   "reason": "A referenced definition (completion criterion or length of the stabilization period) does not exist in the cited document or elsewhere."
   }
  ]
 }

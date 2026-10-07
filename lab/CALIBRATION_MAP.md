@@ -102,6 +102,8 @@ No Calibration Bundle exists in the pinned corpus.
 | threshold of a systemic or cascading error | DKP-4-ERROR-001 | §9 | "impacting more than a protocol-defined threshold of Subjects or cross-layer execution" | l8_parameter | — |
 | minimum PPDI threshold, 'regular' standing, forced-contact density | DKP-5-TRANSPORT-001 | §4.2 | "Transport modes operating below the minimum PPDI threshold are classified as:" | l8_parameter (F-016) | transport_capacity.regular_standing_share, contact_density_m2 |
 | RED coefficient | DKP-5-TRANSPORT-001 | §7.2 | "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001," | external_dependency (F-015) | transport_capacity.red_per_km |
+| post-crisis audit and stabilization period | DKP-4-UPGRADE-001 | §8 | "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001." | architecture_definition (F-020) | upgrade_lifecycle.stabilization_days |
+| length of the upgrade reversibility window | DKP-4-UPGRADE-001 | §8 | "be reversible within a defined window," | l8_parameter | upgrade_lifecycle (per-proposal reversible_window_days) |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -131,7 +133,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-4-CRISIS-001-PATCH | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-4-ERROR-001 | not listed | — | 3 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-4-UPGRADE-001 | listed downstream | — | 1 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-4-UPGRADE-001 | listed downstream | — | 1 | 0 | 2 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-CULTURE-001 | listed downstream | interactions informational and non-binding without L8 calibration (§11) | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-EDU-001 | listed downstream | signals informational without L8 calibration (§12) | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-HABITAT-001 | listed downstream | non-enforceable without a bundle covering SPDI (§6) | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

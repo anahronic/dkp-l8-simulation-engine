@@ -143,13 +143,19 @@
    "data_dependencies": [
     "authoritative A1 and A2 definitions"
    ],
-   "gap": "The axiom definitions and a test for semantic redefinition are absent. No lab check implemented yet.",
+   "gap": "The effect on the axioms is a declared property of the proposal.",
    "hypotheses_needed": [
     "Declare how direct and indirect axiom redefinitions are recognized."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "axioms_untouched"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -180,13 +186,19 @@
     "authoritative PTL rules",
     "proposed PTL behavior"
    ],
-   "gap": "The PTL rule inventory and semantic modification test are not supplied. No lab check implemented yet.",
+   "gap": "Targets are declared.",
    "hypotheses_needed": [
     "Declare whether rule equivalence is textual, behavioral, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "ptl_rules_untouched"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -317,13 +329,19 @@
     "change classification",
     "normative impact analysis"
    ],
-   "gap": "The text does not explicitly resolve changes that belong to both excluded and substantive categories. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether substantive effects override an excluded presentation or UI classification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -352,13 +370,19 @@
     "axiom definitions",
     "upgrade semantic analysis"
    ],
-   "gap": "Formal axiom semantics and tests for weakening, reinterpretation, and conditioning are missing. No lab check implemented yet.",
+   "gap": "The effect on the axioms is a declared property of the proposal.",
    "hypotheses_needed": [
     "Declare a semantic preservation relation for A1 and A2."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "axioms_untouched"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -426,13 +450,19 @@
     "Crisis state",
     "execution context assessments"
    ],
-   "gap": "No operational definitions or measurement rules are given for urgency and fear. No lab check implemented yet.",
+   "gap": "Crisis only; 'urgency' and 'fear' are not measurable.",
    "hypotheses_needed": [
     "Declare operational predicates for urgency, fear, and crisis conditions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "no_crisis_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -503,14 +533,20 @@
     "deployed and proposed Crisis behavior",
     "comparative simulation results"
    ],
-   "gap": "The comparison metrics and scenario coverage are unspecified, and the direction of the response-latency constraint is ambiguous. No lab check implemented yet.",
+   "gap": "Degradation is declared; the lab cannot measure trigger sensitivity of an arbitrary change.",
    "hypotheses_needed": [
     "Declare metrics and comparison semantics for every protected dimension.",
     "Resolve whether response latency must remain numerically unreduced or must not worsen."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "no_degradation"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -615,13 +651,19 @@
     "trigger dependency graph",
     "response timing evidence"
    ],
-   "gap": "The trigger inventory and semantic tests for weakening, reinterpretation, and indirect delay are absent. No lab check implemented yet.",
+   "gap": "Degradation is declared.",
    "hypotheses_needed": [
     "Declare trigger equivalence, strength, and indirect timing comparison rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "no_degradation"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -692,11 +734,17 @@
     "proposal validation result",
     "proposal disposition log"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "incomplete_rejected"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -724,13 +772,19 @@
     "simulation execution records",
     "simulation protocol compliance evidence"
    ],
-   "gap": "DKP-8-SIMULATION-001 is absent, so its simulation requirements cannot be evaluated from this text. No lab check implemented yet.",
+   "gap": "Simulation results are declared inputs.",
    "hypotheses_needed": [
     "Declare an interface for establishing simulation protocol compliance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "simulation_before_approval"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -827,13 +881,19 @@
     "proposal initiation records",
     "influence attribution"
    ],
-   "gap": "The influence measure, aggregation scope, and cap values are missing. No lab check implemented yet.",
+   "gap": "No cap value in the corpus: UNKNOWN.",
    "hypotheses_needed": [
     "Declare the influence metric, aggregation scope, and caps."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "influence_caps"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -864,13 +924,19 @@
     "Identity linkage records",
     "proposal history"
    ],
-   "gap": "The Identity protocol and a rule for deciding proposal correlation are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how Identity linkages establish proposal correlation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "correlation_detected"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -901,13 +967,19 @@
     "proposal sequence",
     "capture analysis"
    ],
-   "gap": "Micro-upgrade scope, capture, convergence, and the relevant historical horizon are undefined. No lab check implemented yet.",
+   "gap": "No convergence measure: declared input or UNKNOWN.",
    "hypotheses_needed": [
     "Declare a cumulative capture model, convergence test, and historical horizon."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "micro_upgrade_capture"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -935,13 +1007,19 @@
     "historical proposal records",
     "proposal ancestry and linkage records"
    ],
-   "gap": "The text does not define which lineage links must be recorded or what constitutes complete traceability. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the proposal lineage schema and completeness criterion."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "lineage"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -977,15 +1055,21 @@
     "Justice appeal status",
     "public activation announcement"
    ],
-   "gap": "Threshold values, the relevant unresolved-case scope, and the deadline against which advance announcement is measured are not fully defined. No lab check implemented yet.",
+   "gap": "Necessary conditions only; who approves is open (Q-001).",
    "hypotheses_needed": [
     "Declare safety and stability thresholds and when they must be predefined.",
     "Declare whether unresolved ERROR covers all error cases or only appeals.",
     "Declare whether announcement must precede the window opening or the actual activation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "activation_conditions"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1020,19 +1104,27 @@
     "post-crisis audit completion",
     "stabilization period completion"
    ],
-   "gap": "DKP-8-AUDIT-001 is absent, leaving duration, completion criteria, and no-prior-crisis applicability unspecified. No lab check implemented yet.",
+   "gap": "AUDIT defines no stabilization period (F-020): UNKNOWN unless declared.",
    "hypotheses_needed": [
     "Declare the audit and stabilization completion interface and applicability before any crisis."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "post_crisis_stabilization"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-039"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "text_verified"
    }
   },
   {
@@ -1055,11 +1147,17 @@
     "activation timestamp",
     "DTI time coordinates"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "cooling_off_30"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1125,13 +1223,19 @@
     "activation scheduling record",
     "actual activation event"
    ],
-   "gap": "The deterministic scheduling rule and its input-fixing conditions are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the deterministic scheduling rule and when schedule inputs become fixed."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "deterministic_day"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1160,13 +1264,19 @@
     "reversal configuration",
     "rollback capability evidence"
    ],
-   "gap": "The window duration, its reference point, and whether it bounds availability or completion are unspecified. No lab check implemented yet.",
+   "gap": "The length of the window is not defined; only its existence is checked.",
    "hypotheses_needed": [
     "Declare the window bounds and whether they govern reversal availability or completion."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "reversible_window"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1196,13 +1306,19 @@
     "activation log",
     "commitment records"
    ],
-   "gap": "The meaning and required guarantees of committed are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the commitment operation and evidence that logging and commitment occur automatically."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "logged"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1235,13 +1351,19 @@
     "invariant evaluation results",
     "version stability history"
    ],
-   "gap": "Unexpected deviation, instability, emergent capture, and last stable version lack operational selection or detection criteria. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare deviation and instability detection rules, a capture detector, and the last-stable-version selection rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "automatic_rollback"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1273,11 +1395,17 @@
     "upgrade ancestry",
     "correction plan"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "no_stacking"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1299,11 +1427,17 @@
    "data_dependencies": [
     "operation scheduling policy"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Observed as rollback on the day of detection.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "rollback_priority"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1380,10 +1514,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "no_emergency_upgrade"
+    "check": "no_emergency_upgrade",
+    "also": [
+     {
+      "module": "upgrade_lifecycle",
+      "version": "1.0.0",
+      "check": "no_crisis_upgrade"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_upgrade_lifecycle_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1452,11 +1594,17 @@
     "cooling-off compliance status",
     "workflow history"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Simulation and cooling-off; audit is not modelled.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "no_bypass"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1598,11 +1746,17 @@
     "change classification",
     "edition metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1628,11 +1782,17 @@
     "edition history",
     "rendered document metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Checked on the pinned corpus files, not on the published site.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.0.0",
+    "check": "edition_dated"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

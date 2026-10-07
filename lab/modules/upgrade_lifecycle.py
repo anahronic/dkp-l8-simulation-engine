@@ -1,0 +1,538 @@
+"""
+UPGRADE LIFECYCLE module — DKP-4-UPGRADE-001: from proposal to activation and rollback.
+
+Every proposal passes: definition (§3: presentation-only changes are not upgrades) → hard
+constraints (§2: no axiom redefinition, no PTL rule change, nothing during an active Crisis; §4.1,
+§4.5, §4.6 invariants) → completeness (§5, procedural rejection) → simulation and proof (§6: no
+simulation, no upgrade) → anti-capture (§7: correlated proposals by IDENTITY linkage, lineage) →
+approval and activation (§8: all simulations pass, no unresolved ERROR or Justice appeal, window
+announced in advance, at least 30 DTI-Days between publication of final results and activation,
+deterministic DTI-Day, a defined reversibility window, automatic log) → post-activation (§9:
+automatic rollback, no stacking of fixes on a faulty version).
+
+What the module does not decide:
+  * who approves (UPGRADE §8 gives necessary conditions only; S1, open question Q-001): an
+    activation is a declared request, checked against the conditions;
+  * the "full post-crisis audit and stabilization period ... as defined by DKP-8-AUDIT-001" for
+    upgrades touching Defense, Crisis, Identity or Justice: AUDIT defines none (finding F-020);
+    such an upgrade after a crisis is held, and the check says UNKNOWN unless a period is declared;
+  * simulation results, capture convergence and invariant effects are declared inputs (the lab
+    cannot simulate an arbitrary protocol change); influence caps have no number (UNKNOWN).
+Time unit: DTI-Day.
+"""
+
+from __future__ import annotations
+
+import re
+from typing import Any, Dict, List, Optional
+
+from lab.core.bus import EventLog, Message
+from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
+from lab.core.module import LabModule, ModuleResult
+from lab.core.schema import LabInputError
+from lab.modules.time import canonical, dy_doy
+
+COOLING_DAYS = 30                                               # UPGRADE §8 Post-Crisis Cooldown Rule
+KINDS = ("formula", "threshold", "logic", "cross_layer", "presentation_only")
+TARGETS = ("axioms", "ptl_rules", "defense", "crisis", "identity", "justice", "finance", "social", "upgrade_protocol")
+COOLDOWN_LAYERS = ("defense", "crisis", "identity", "justice")
+PROPOSAL_ITEMS = ("specification", "before_after", "impact_deltas", "failure_modes_rollback", "simulation_parameters")
+FAULTS = {
+    "upgrade_in_crisis": "a proposal is accepted while a Crisis is active",
+    "skip_completeness": "an incomplete proposal is processed",
+    "weaken_axiom_accepted": "a proposal weakening an axiom is accepted",
+    "degrade_defense_accepted": "a proposal degrading Defense or Crisis effectiveness is accepted",
+    "no_simulation": "an upgrade is approved without a passed simulation",
+    "short_cooling": "activation comes less than 30 DTI-Days after publication of the final results",
+    "activate_with_open_appeal": "activation while an ERROR or Justice appeal is unresolved",
+    "unannounced": "activation without an announced window",
+    "no_rollback": "post-activation deviation does not trigger rollback",
+    "stack_fix": "a fix is activated on top of a faulty version instead of rolling it back",
+    "ignore_correlation": "correlated proposals from linked initiators are not flagged",
+    "presentation_as_upgrade": "a presentation-only change is run through the upgrade procedure",
+}
+PROPOSAL = {"type": "object", "fields": {
+    "id": {"type": "str"},
+    "submitted_day": {"type": "int", "min": 0, "max": 10 ** 6, "default": 0},
+    "kind": {"type": "enum", "values": list(KINDS), "default": "threshold"},
+    "targets": {"type": "list", "min_items": 1, "max_items": len(TARGETS), "items": {"type": "enum", "values": list(TARGETS)},
+                "default": ["social"]},
+    "missing_items": {"type": "list", "min_items": 0, "max_items": len(PROPOSAL_ITEMS),
+                      "items": {"type": "enum", "values": list(PROPOSAL_ITEMS)}, "default": []},
+    "weakens_axioms": {"type": "bool", "default": False},
+    "degrades_defense_crisis": {"type": "bool", "default": False},
+    "simulation_passed": {"type": "bool", "default": True},
+    "stress_and_capture_tested": {"type": "bool", "default": True},
+    "results_published_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": 5},
+    "initiator_link": {"type": "str", "default": "independent"},
+    "capture_convergence": {"type": "bool", "default": False},
+    "announced_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": 20},
+    "activation_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": 40},
+    "reversible_window_days": {"type": "int", "min": 0, "max": 3650, "default": 30},
+    "deviation_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": -1},
+    "fixes": {"type": "str", "default": "none"}}}
+
+
+def run(r: Dict[str, Any]):
+    faults = set(r["faults"])
+    log = EventLog("DTI-Day", tie_rule="observation < evaluation < decision < action < notice; then event_id")
+    order = {"observation": 0, "evaluation": 1, "decision": 2, "action": 3, "notice": 4}
+    n = {"i": 0}
+
+    def put(kind, source, k, value, prov=()):
+        n["i"] += 1
+        return log.append(Message(event_id=f"{source.lower()}-{k:05d}-{n['i']:05d}", kind=kind, source=source,
+                                  arrived_at=k, decided_at=k if kind in ("decision", "action") else None,
+                                  value={**value, "day": k, "dti": canonical(*dy_doy(r["start_dti_day"] + k))},
+                                  provenance=tuple(prov), order=order[kind]))
+
+    lo, hi = r["crisis_window"]
+    crisis = lambda k: lo <= k < hi
+    crisis_seen = hi > lo
+    stab = r["stabilization_days"]
+    appeals = [(a[0], a[1]) for a in r["open_appeals"]]
+    state: Dict[str, Dict[str, Any]] = {}
+    links: Dict[str, List[str]] = {}
+    version = {"current": "v0", "stable": "v0"}
+    for k in range(r["horizon_days"]):
+        for p in r["proposals"]:
+            pid = p["id"]
+            if p["submitted_day"] == k:
+                s = state.setdefault(pid, {"status": None})
+                sub = put("observation", "UPGRADE", k, {"proposal": pid, "kind": p["kind"], "targets": p["targets"],
+                                                        "initiator_link": p["initiator_link"], "fixes": p["fixes"]})
+                s["msg"] = sub.event_id
+                if p["kind"] == "presentation_only" and "presentation_as_upgrade" not in faults:
+                    s["status"] = "not_an_upgrade"
+                    put("notice", "UPGRADE", k, {"proposal": pid, "status": "not an upgrade (§3): recorded by 'Last updated'"},
+                        [sub.event_id])
+                    continue
+                reason = None
+                if crisis(k) and "upgrade_in_crisis" not in faults:
+                    reason = "active Crisis (§2, §4.3, §11)"
+                elif p["missing_items"] and "skip_completeness" not in faults:
+                    reason = f"incomplete proposal (§5): missing {', '.join(p['missing_items'])}"
+                elif ("axioms" in p["targets"] or p["weakens_axioms"]) and "weaken_axiom_accepted" not in faults:
+                    reason = "touches Axiom A1/A2 (§2, §4.1)"
+                elif "ptl_rules" in p["targets"]:
+                    reason = "modifies Physical Truth Layer rules (§2)"
+                elif p["degrades_defense_crisis"] and "degrade_defense_accepted" not in faults:
+                    reason = "degrades Defense or Crisis (§4.5, §4.6)"
+                elif set(p["targets"]) & set(COOLDOWN_LAYERS) and crisis_seen and k >= hi and \
+                        (stab < 0 or k < hi + stab):
+                    reason = ("post-crisis audit and stabilization period not defined by AUDIT (F-020): held"
+                              if stab < 0 else "within the declared post-crisis stabilization period")
+                if reason:
+                    s["status"] = "held" if "F-020" in reason else "rejected"
+                    put("decision", "UPGRADE", k, {"proposal": pid, "status": s["status"], "reason": reason}, [sub.event_id])
+                    continue
+                s["status"] = "proposed"
+                links.setdefault(p["initiator_link"], []).append(pid)
+                if p["initiator_link"] != "independent" and len(links[p["initiator_link"]]) > 1 and \
+                        "ignore_correlation" not in faults:
+                    put("notice", "UPGRADE", k, {"proposal": pid, "correlated_with": links[p["initiator_link"]][:-1],
+                                                 "via": "DKP-1-IDENTITY-001 linkage"}, [sub.event_id])
+                put("notice", "UPGRADE", k, {"proposal": pid, "lineage": {"fixes": p["fixes"], "parent": version["current"]}},
+                    [sub.event_id])
+            s = state.get(pid)
+            if not s or s["status"] not in ("proposed", "active"):
+                continue
+            if s["status"] == "proposed" and p["results_published_day"] == k:
+                ok = (p["simulation_passed"] and p["stress_and_capture_tested"]) or "no_simulation" in faults
+                put("notice", "SIMULATION", k, {"proposal": pid, "published": True, "passed": p["simulation_passed"],
+                                                "stress_and_capture": p["stress_and_capture_tested"]}, [s["msg"]])
+                if p["capture_convergence"]:
+                    ok = False
+                s["sim_ok"] = ok
+                if not ok:
+                    s["status"] = "rejected"
+                    put("decision", "UPGRADE", k, {"proposal": pid, "status": "rejected",
+                                                   "reason": "simulation or capture analysis failed (§6, §7)"}, [s["msg"]])
+                    continue
+            if s["status"] == "proposed" and p["announced_day"] == k:
+                put("notice", "UPGRADE", k, {"proposal": pid, "activation_window_announced": p["activation_day"]}, [s["msg"]])
+            if s["status"] == "proposed" and p["activation_day"] == k:
+                why = []
+                if not s.get("sim_ok"):
+                    why.append("no passed and published simulation (§6)")
+                if p["results_published_day"] < 0 or (k - p["results_published_day"] < COOLING_DAYS and "short_cooling" not in faults):
+                    why.append(f"cooling-off: fewer than {COOLING_DAYS} DTI-Days since publication (§8)")
+                if any(a <= k < b for a, b in appeals) and "activate_with_open_appeal" not in faults:
+                    why.append("unresolved ERROR or Justice appeal (§8)")
+                if not (0 <= p["announced_day"] < k) and "unannounced" not in faults:
+                    why.append("activation window not announced in advance (§8)")
+                if crisis(k):
+                    why.append("active Crisis (§2)")
+                if p["reversible_window_days"] <= 0:
+                    why.append("no reversibility window defined (§8)")
+                faulty = version["current"] != version["stable"]
+                if p["fixes"] != "none" and faulty and "stack_fix" not in faults:
+                    why.append("the version it fixes is faulty and must be rolled back first (§9)")
+                if why:
+                    s["status"] = "refused"
+                    put("decision", "UPGRADE", k, {"proposal": pid, "status": "activation refused", "reasons": why}, [s["msg"]])
+                    continue
+                s["status"] = "active"
+                parent = version["current"]
+                version["current"] = pid
+                version["stable_before"] = version["stable"]
+                put("action", "UPGRADE", k, {"proposal": pid, "activated": True, "on_dti_day": r["start_dti_day"] + k,
+                                             "reversible_until": k + p["reversible_window_days"], "parent": parent,
+                                             "logged": True}, [s["msg"]])
+                if p["deviation_day"] < 0:
+                    version["stable"] = pid
+            if s["status"] == "active" and p["deviation_day"] == k:
+                put("observation", "MONITOR", k, {"proposal": pid, "deviation": "unexpected impact deviation"}, [s["msg"]])
+                if "no_rollback" not in faults and "stack_fix" not in faults:
+                    back = version.get("stable_before", "v0")
+                    put("action", "UPGRADE", k, {"proposal": pid, "rollback_to": back, "automatic": True}, [s["msg"]])
+                    s["status"] = "rolled_back"
+                    version["current"] = back
+                    version["stable"] = back
+    return log, {pid: s["status"] for pid, s in state.items()}, dict(version)
+
+
+def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
+    msgs = log.messages()
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no, ev=None):
+        e = dict(ev or {})
+        if bad:
+            e["violations"] = bad[:10]
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok, evidence=e)
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+
+    P = {p["id"]: p for p in r["proposals"]}
+    lo, hi = r["crisis_window"]
+    acts = {m.value["proposal"]: m for m in msgs if m.source == "UPGRADE" and m.value.get("activated")}
+    accepted = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and "lineage" in m.value}
+    rejected = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and m.value.get("status") == "rejected"}
+    upgrades = [p for p in r["proposals"] if p["kind"] != "presentation_only"]
+    # §3 presentation-only changes
+    pres = [p["id"] for p in r["proposals"] if p["kind"] == "presentation_only"]
+    if pres:
+        bad = [pid for pid in pres if pid in accepted or pid in acts]
+        for rid in ("UPGRADE-3-02", "UPGRADE-12-03"):
+            out.append(v(rid, "presentation_not_upgrade", bad, "presentation-only changes were recorded without the upgrade procedure",
+                         "{n} presentation-only changes run as upgrades"))
+    else:
+        for rid in ("UPGRADE-3-02", "UPGRADE-12-03"):
+            out.append(na(rid, "presentation_not_upgrade", "presentation-only changes", "none proposed"))
+    # §2 / §4.3 / §11: nothing during an active Crisis
+    if hi > lo:
+        bad = [p["id"] for p in upgrades if lo <= p["submitted_day"] < hi and p["id"] in accepted]
+        bad += [pid for pid, m in acts.items() if lo <= m.arrived_at < hi]
+        for rid in ("UPGRADE-4.3-01", "UPGRADE-11-01"):
+            out.append(v(rid, "no_crisis_upgrade", bad, "no upgrade proposed or activated during the active Crisis",
+                         "{n} upgrades during the Crisis"))
+    else:
+        for rid in ("UPGRADE-4.3-01", "UPGRADE-11-01"):
+            out.append(na(rid, "no_crisis_upgrade", "upgrades during a Crisis", "no Crisis declared"))
+    incomplete = [p["id"] for p in upgrades if p["missing_items"]]
+    if incomplete:
+        out.append(v("UPGRADE-5-02", "incomplete_rejected", [pid for pid in incomplete if pid in accepted],
+                     "incomplete proposals rejected procedurally", "{n} incomplete proposals processed"))
+    else:
+        out.append(na("UPGRADE-5-02", "incomplete_rejected", "incomplete proposals", "every proposal is complete"))
+    ax = [p["id"] for p in upgrades if p["weakens_axioms"] or "axioms" in p["targets"]]
+    if ax:
+        for rid in ("UPGRADE-4.1-01", "UPGRADE-2-03"):
+            out.append(v(rid, "axioms_untouched", [pid for pid in ax if pid in accepted],
+                         "proposals touching Axiom A1/A2 rejected", "{n} axiom-touching proposals accepted"))
+    else:
+        for rid in ("UPGRADE-4.1-01", "UPGRADE-2-03"):
+            out.append(na(rid, "axioms_untouched", "axiom changes", "no proposal touches the axioms"))
+    ptl = [p["id"] for p in upgrades if "ptl_rules" in p["targets"]]
+    if ptl:
+        out.append(v("UPGRADE-2-04", "ptl_rules_untouched", [pid for pid in ptl if pid in accepted],
+                     "proposals modifying PTL rules rejected", "{n} PTL-rule changes accepted"))
+    else:
+        out.append(na("UPGRADE-2-04", "ptl_rules_untouched", "PTL rule changes", "no proposal targets PTL rules"))
+    deg = [p["id"] for p in upgrades if p["degrades_defense_crisis"]]
+    if deg:
+        for rid in ("UPGRADE-4.5-01", "UPGRADE-4.6-02"):
+            out.append(v(rid, "no_degradation", [pid for pid in deg if pid in accepted],
+                         "proposals degrading Defense or Crisis (declared effect) rejected",
+                         "{n} degrading proposals accepted"))
+    else:
+        for rid in ("UPGRADE-4.5-01", "UPGRADE-4.6-02"):
+            out.append(na(rid, "no_degradation", "Defense/Crisis degradation", "no proposal declares a degradation"))
+    # §6: no simulation, no upgrade
+    if acts:
+        bad = [pid for pid in acts if not (P[pid]["simulation_passed"] and P[pid]["stress_and_capture_tested"]
+                                           and P[pid]["results_published_day"] >= 0)]
+        for rid, chk in (("UPGRADE-6-01", "simulation_before_approval"), ("UPGRADE-11-03", "no_bypass")):
+            out.append(v(rid, chk, bad, "every activated upgrade passed a published simulation, stress test and capture analysis",
+                         "{n} upgrades activated without a passed simulation"))
+        bad = [pid for pid in acts if acts[pid].arrived_at - P[pid]["results_published_day"] < COOLING_DAYS]
+        out.append(v("UPGRADE-Post-CrisisCooldownRule-02", "cooling_off_30", bad,
+                     f"at least {COOLING_DAYS} DTI-Days between publication of final results and every activation",
+                     "{n} activations inside the cooling-off period"))
+        bad = [pid for pid in acts if any(a <= acts[pid].arrived_at < b for a, b in r["open_appeals"])
+               or not (0 <= P[pid]["announced_day"] < acts[pid].arrived_at) or not P[pid]["simulation_passed"]]
+        out.append(v("UPGRADE-8-01", "activation_conditions", bad,
+                     "activations only with passed simulations, no unresolved appeal and a window announced in advance "
+                     "(necessary conditions; who decides is open, Q-001)", "{n} activations without the §8 conditions"))
+        bad = [pid for pid, m in acts.items() if m.value.get("on_dti_day") != r["start_dti_day"] + m.arrived_at
+               or not m.value.get("logged")]
+        for rid, chk in (("UPGRADE-Post-CrisisCooldownRule-04", "deterministic_day"),
+                         ("UPGRADE-Post-CrisisCooldownRule-06", "logged")):
+            out.append(v(rid, chk, bad, "activation on a deterministic DTI-Day, logged automatically", "{n} activations not logged"))
+        bad = [pid for pid, m in acts.items() if m.value.get("reversible_until", -1) <= m.arrived_at]
+        out.append(v("UPGRADE-Post-CrisisCooldownRule-05", "reversible_window", bad,
+                     "every activation declares a reversibility window (its length is not defined by the corpus)",
+                     "{n} activations without a reversibility window"))
+    else:
+        for rid, chk in (("UPGRADE-6-01", "simulation_before_approval"), ("UPGRADE-11-03", "no_bypass"),
+                         ("UPGRADE-Post-CrisisCooldownRule-02", "cooling_off_30"), ("UPGRADE-8-01", "activation_conditions"),
+                         ("UPGRADE-Post-CrisisCooldownRule-04", "deterministic_day"),
+                         ("UPGRADE-Post-CrisisCooldownRule-06", "logged"),
+                         ("UPGRADE-Post-CrisisCooldownRule-05", "reversible_window")):
+            out.append(na(rid, chk, "activation", "no upgrade activated"))
+    # post-crisis stabilization (F-020)
+    layered = [p for p in upgrades if set(p["targets"]) & set(COOLDOWN_LAYERS) and hi > lo and p["submitted_day"] >= hi]
+    if layered and r["stabilization_days"] < 0:
+        out.append(CheckResult("UPGRADE-Post-CrisisCooldownRule-01", "post_crisis_stabilization", UNKNOWN,
+                               f"{len(layered)} proposals touch Defense, Crisis, Identity or Justice after a Crisis; the "
+                               "'full post-crisis audit and stabilization period' is 'as defined by DKP-8-AUDIT-001', which "
+                               "defines none (F-020); the lab holds them"))
+    elif layered:
+        bad = [p["id"] for p in layered if (p["id"] in accepted and p["submitted_day"] < hi + r["stabilization_days"])
+               or (p["id"] in acts and acts[p["id"]].arrived_at < hi + r["stabilization_days"])]
+        out.append(v("UPGRADE-Post-CrisisCooldownRule-01", "post_crisis_stabilization", bad,
+                     f"no Defense/Crisis/Identity/Justice upgrade within the declared {r['stabilization_days']}-day stabilization",
+                     "{n} layered upgrades inside the stabilization period"))
+    else:
+        out.append(na("UPGRADE-Post-CrisisCooldownRule-01", "post_crisis_stabilization", "post-crisis stabilization",
+                      "no layered proposal after a Crisis"))
+    # §7 anti-capture
+    groups: Dict[str, List[str]] = {}
+    for p in upgrades:
+        if p["id"] in accepted and p["initiator_link"] != "independent":
+            groups.setdefault(p["initiator_link"], []).append(p["id"])
+    corr = [ids for ids in groups.values() if len(ids) > 1]
+    if corr:
+        flagged = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and "correlated_with" in m.value}
+        bad = [pid for ids in corr for pid in ids[1:] if pid not in flagged]
+        out.append(v("UPGRADE-7-02", "correlation_detected", bad,
+                     "proposals from IDENTITY-linked initiators flagged as correlated", "{n} correlated proposals not flagged"))
+    else:
+        out.append(na("UPGRADE-7-02", "correlation_detected", "correlated proposals", "no linked initiators"))
+    lin = [pid for pid in accepted if not any(m.source == "UPGRADE" and m.value.get("proposal") == pid and "lineage" in m.value
+                                              for m in msgs)]
+    out.append(v("UPGRADE-7-04", "lineage", lin, "every accepted proposal records its lineage (parent version, fixes)",
+                 "{n} proposals without lineage"))
+    conv = [p["id"] for p in upgrades if p["capture_convergence"]]
+    if conv:
+        out.append(v("UPGRADE-7-03", "micro_upgrade_capture", [pid for pid in conv if pid in acts],
+                     "proposals declared as converging toward capture were not activated (convergence is a declared input)",
+                     "{n} converging proposals activated"))
+    else:
+        out.append(CheckResult("UPGRADE-7-03", "micro_upgrade_capture", UNKNOWN,
+                               "no measure of 'cumulative micro-upgrades converging toward capture' is defined; "
+                               "convergence can only be declared"))
+    out.append(CheckResult("UPGRADE-7-01", "influence_caps", UNKNOWN,
+                           "'caps on influence over upgrade initiation' have no value in the corpus"))
+    # §9 rollback
+    dev = [p for p in upgrades if p["deviation_day"] >= 0 and p["id"] in acts and p["deviation_day"] < r["horizon_days"]]
+    if dev:
+        rb = {m.value["proposal"]: m for m in msgs if m.source == "UPGRADE" and "rollback_to" in m.value}
+        bad = [p["id"] for p in dev if p["id"] not in rb or rb[p["id"]].arrived_at != p["deviation_day"]]
+        for rid, chk in (("UPGRADE-9-01", "automatic_rollback"), ("UPGRADE-9-03", "rollback_priority")):
+            out.append(v(rid, chk, bad, "post-activation deviation rolled back automatically on the day it was detected",
+                         "{n} deviations without rollback"))
+        faulty = {p["id"]: (p["deviation_day"], rb.get(p["id"])) for p in dev}
+        bad = []
+        for pid, m in acts.items():
+            f = P[pid]["fixes"]
+            if f in faulty and faulty[f][0] <= m.arrived_at and (faulty[f][1] is None or faulty[f][1].arrived_at > m.arrived_at):
+                bad.append(pid)
+        out.append(v("UPGRADE-9-02", "no_stacking", bad, "no fix activated on top of a faulty, not rolled-back version",
+                     "{n} fixes stacked on a faulty version"))
+    else:
+        for rid, chk in (("UPGRADE-9-01", "automatic_rollback"), ("UPGRADE-9-03", "rollback_priority"),
+                         ("UPGRADE-9-02", "no_stacking")):
+            out.append(na(rid, chk, "rollback", "no post-activation deviation"))
+    # §12 edition dating of the pinned corpus
+    from lab.core.registry import catalog
+    docs = [d for d in catalog()["documents"] if d["kind"] in ("protocol", "addendum", "appendix", "codex")]
+    bad = [d["id"] for d in docs if not d.get("last_updated") or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", d["last_updated"])]
+    out.append(v("UPGRADE-12-04", "edition_dated", bad,
+                 f"all {len(docs)} registered documents of the pinned corpus carry a 'Last updated' date (the glossary is "
+                 "not counted: whether it is a 'DKP document' is not said)", "{n} documents without an edition date"))
+    return out
+
+
+IMPLEMENTS = {
+    "UPGRADE-3-02": ("presentation_not_upgrade", "IMPLEMENTED", None),
+    "UPGRADE-12-03": ("presentation_not_upgrade", "IMPLEMENTED", None),
+    "UPGRADE-4.3-01": ("no_crisis_upgrade", "PARTIAL", "Crisis only; 'urgency' and 'fear' are not measurable."),
+    "UPGRADE-11-01": ("no_crisis_upgrade", "IMPLEMENTED", None),
+    "UPGRADE-5-02": ("incomplete_rejected", "IMPLEMENTED", None),
+    "UPGRADE-4.1-01": ("axioms_untouched", "PARTIAL", "The effect on the axioms is a declared property of the proposal."),
+    "UPGRADE-2-03": ("axioms_untouched", "PARTIAL", "The effect on the axioms is a declared property of the proposal."),
+    "UPGRADE-2-04": ("ptl_rules_untouched", "PARTIAL", "Targets are declared."),
+    "UPGRADE-4.5-01": ("no_degradation", "PARTIAL", "Degradation is declared; the lab cannot measure trigger sensitivity of an arbitrary change."),
+    "UPGRADE-4.6-02": ("no_degradation", "PARTIAL", "Degradation is declared."),
+    "UPGRADE-6-01": ("simulation_before_approval", "PARTIAL", "Simulation results are declared inputs."),
+    "UPGRADE-11-03": ("no_bypass", "PARTIAL", "Simulation and cooling-off; audit is not modelled."),
+    "UPGRADE-Post-CrisisCooldownRule-01": ("post_crisis_stabilization", "PARTIAL", "AUDIT defines no stabilization period (F-020): UNKNOWN unless declared."),
+    "UPGRADE-Post-CrisisCooldownRule-02": ("cooling_off_30", "IMPLEMENTED", None),
+    "UPGRADE-Post-CrisisCooldownRule-04": ("deterministic_day", "IMPLEMENTED", None),
+    "UPGRADE-Post-CrisisCooldownRule-05": ("reversible_window", "PARTIAL", "The length of the window is not defined; only its existence is checked."),
+    "UPGRADE-Post-CrisisCooldownRule-06": ("logged", "IMPLEMENTED", None),
+    "UPGRADE-8-01": ("activation_conditions", "PARTIAL", "Necessary conditions only; who approves is open (Q-001)."),
+    "UPGRADE-7-01": ("influence_caps", "PARTIAL", "No cap value in the corpus: UNKNOWN."),
+    "UPGRADE-7-02": ("correlation_detected", "IMPLEMENTED", None),
+    "UPGRADE-7-03": ("micro_upgrade_capture", "PARTIAL", "No convergence measure: declared input or UNKNOWN."),
+    "UPGRADE-7-04": ("lineage", "IMPLEMENTED", None),
+    "UPGRADE-9-01": ("automatic_rollback", "IMPLEMENTED", None),
+    "UPGRADE-9-02": ("no_stacking", "IMPLEMENTED", None),
+    "UPGRADE-9-03": ("rollback_priority", "PARTIAL", "Observed as rollback on the day of detection."),
+    "UPGRADE-12-04": ("edition_dated", "PARTIAL", "Checked on the pinned corpus files, not on the published site."),
+}
+
+
+class UpgradeLifecycleModule(LabModule):
+    id = "upgrade_lifecycle"
+    version = "1.0.0"
+    title = {"en": "Upgrade lifecycle (UPGRADE)", "ru": "Жизненный цикл изменения (UPGRADE)"}
+    summary = {"en": "Proposals to change the protocols: which are rejected and why, when may one be activated, and is a "
+                     "faulty one rolled back rather than patched?",
+               "ru": "Предложения изменить протоколы: какие отклоняются и почему, когда можно активировать, откатывается "
+                     "ли неудачное изменение вместо латания?"}
+    protocols = ["DKP-4-UPGRADE-001", "DKP-8-SIMULATION-001", "DKP-4-CRISIS-001", "DKP-8-AUDIT-001"]
+    example_order = ["ordinary_upgrade", "rejections", "deviation_and_rollback", "after_crisis_layered",
+                     "after_crisis_declared_stabilization", "correlated_initiators", "presentation_only",
+                     "activation_refused_cooling", "faulty_upgrades"]
+    implements = IMPLEMENTS
+    tests = ["tests/lab/test_upgrade_lifecycle_module.py"]
+    causal_note = None
+    hypotheses = [
+        {"id": "H-UP-1", "source": "hypothesis", "text": {
+            "en": "Simulation results, stress and capture analysis, effects on axioms and on Defense/Crisis are declared per "
+                  "proposal; the lab does not simulate an arbitrary protocol change.",
+            "ru": "Результаты симуляции, стресс-тест и анализ захвата, влияние на аксиомы и на Defense/Crisis объявляются для "
+                  "каждого предложения; лаборатория не симулирует произвольное изменение протокола."}},
+        {"id": "H-UP-2", "source": "hypothesis", "text": {
+            "en": "Activation is a declared request on a DTI-Day; the module checks the necessary conditions of §8 and never "
+                  "decides who approves (Q-001).",
+            "ru": "Активация — объявленный запрос на DTI-Day; модуль проверяет необходимые условия §8 и не решает, кто "
+                  "одобряет (Q-001)."}},
+        {"id": "H-UP-3", "source": "missing", "text": {
+            "en": "Post-crisis audit and stabilization period: 'as defined by DKP-8-AUDIT-001', which defines none (F-020). "
+                  "-1 = undefined: proposals touching Defense, Crisis, Identity or Justice after a Crisis are held.",
+            "ru": "Пост-кризисный аудит и период стабилизации: 'as defined by DKP-8-AUDIT-001', где его нет (F-020). "
+                  "-1 = не определён: предложения о Defense, Crisis, Identity, Justice после кризиса удерживаются."}},
+    ]
+    inputs = {
+        "start_dti_day": {"type": "int", "min": 0, "max": 10 ** 8, "default": 2461042, "source": "user",
+                          "label": {"en": "DTI-Day of day 0", "ru": "DTI-Day дня 0"}},
+        "horizon_days": {"type": "int", "min": 2, "max": 2000, "default": 120, "unit": "day", "source": "user",
+                         "label": {"en": "Days", "ru": "Дней"}},
+        "proposals": {"type": "list", "min_items": 1, "max_items": 12, "items": PROPOSAL, "source": "user",
+                      "default": [{**{k: f["default"] for k, f in PROPOSAL["fields"].items() if "default" in f}, "id": "u1"}],
+                      "label": {"en": "Proposals (H-UP-1)", "ru": "Предложения (H-UP-1)"}},
+        "crisis_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "day", "source": "user",
+                          "label": {"en": "Active Crisis from/to day", "ru": "Активный кризис с/до дня"}},
+        "stabilization_days": {"type": "int", "min": -1, "max": 3650, "default": -1, "unit": "day", "source": "missing",
+                               "label": {"en": "Post-crisis stabilization (-1: undefined, F-020; H-UP-3)",
+                                         "ru": "Стабилизация после кризиса (-1: не определена, F-020)"}},
+        "open_appeals": {"type": "list", "min_items": 0, "max_items": 20,
+                         "items": {"type": "pair", "min": 0, "max": 10 ** 6}, "default": [], "source": "user",
+                         "label": {"en": "Unresolved ERROR/Justice appeals from/to day", "ru": "Незакрытые апелляции с/до дня"}},
+        "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
+                   "default": [], "source": "user",
+                   "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
+                   "help": {"en": "; ".join(f"{k}: {v}" for k, v in FAULTS.items()),
+                            "ru": "Каждая ошибка отключает одно правило, чтобы показать, что проверка её ловит."}},
+    }
+
+    def validate(self, value: Dict[str, Any]) -> Dict[str, Any]:
+        r = super().validate(value)
+        p = []
+        ids = [x["id"] for x in r["proposals"]]
+        if len(set(ids)) != len(ids):
+            p.append("input.proposals: repeated id")
+        for x in ids:
+            if not re.fullmatch(r"[a-z][a-z0-9_]{0,23}", x):
+                p.append(f"input.proposals: id {x!r} must be lowercase letters, digits or _ (at most 24)")
+        for x in r["proposals"]:
+            if x["fixes"] != "none" and x["fixes"] not in ids:
+                p.append(f"input.proposals: {x['id']} fixes unknown proposal {x['fixes']}")
+            if not re.fullmatch(r"[a-z][a-z0-9_]{0,23}", x["initiator_link"]):
+                p.append(f"input.proposals: initiator_link {x['initiator_link']!r}")
+        if len(set(r["faults"])) != len(r["faults"]):
+            p.append("input.faults: repeated fault")
+        if not all(float(t).is_integer() for t in r["crisis_window"]) or \
+                not all(float(t).is_integer() for a in r["open_appeals"] for t in a):
+            p.append("input: windows in whole days")
+        if p:
+            raise LabInputError(p)
+        return r
+
+    def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
+        log, status, version = run(r)
+        res = checks(r, log)
+        msgs = log.messages()
+        decisions = [m.value for m in msgs if m.source == "UPGRADE" and m.kind in ("decision", "action")]
+        outputs = {"status": status, "version": version, "decisions": decisions,
+                   "event_log": {"time_unit": log.time_unit, "messages": len(log), "digest": log.digest()}}
+        e = []
+        for d in decisions:
+            what = d.get("status") or ("activated" if d.get("activated") else f"rolled back to {d.get('rollback_to')}")
+            why = d.get("reason") or "; ".join(d.get("reasons", []))
+            e.append({"en": f"Day {d['day']}: {d['proposal']} — {what}" + (f" ({why})" if why else "") + ".",
+                      "ru": f"День {d['day']}: {d['proposal']} — {what}" + (f" ({why})" if why else "") + "."})
+        return ModuleResult(outputs=outputs, checks=res, explain=e[:40])
+
+    def comparison_metrics(self, outputs: Dict[str, Any]) -> Dict[str, Any]:
+        st = list(outputs["status"].values())
+        return {"activated": sum(1 for s in st if s == "active"), "rolled_back": sum(1 for s in st if s == "rolled_back"),
+                "rejected_or_refused": sum(1 for s in st if s in ("rejected", "refused")),
+                "current_version": outputs["version"]["current"]}
+
+    def examples(self) -> Dict[str, Dict[str, Any]]:
+        return {
+            "ordinary_upgrade": {},
+            "rejections": {"proposals": [
+                {"id": "incomplete", "missing_items": ["before_after"]},
+                {"id": "axiom", "targets": ["axioms"]},
+                {"id": "ptl", "targets": ["ptl_rules"]},
+                {"id": "weaker_defense", "targets": ["defense"], "degrades_defense_crisis": True},
+                {"id": "failed_sim", "simulation_passed": False},
+                {"id": "ok", "submitted_day": 3}]},
+            "deviation_and_rollback": {"proposals": [
+                {"id": "u1", "deviation_day": 50},
+                {"id": "fix", "submitted_day": 52, "results_published_day": 55, "announced_day": 60, "activation_day": 90,
+                 "fixes": "u1"}]},
+            "after_crisis_layered": {"crisis_window": [0, 10], "proposals": [
+                {"id": "justice_change", "submitted_day": 12, "targets": ["justice"], "results_published_day": 15,
+                 "announced_day": 20, "activation_day": 50},
+                {"id": "social_change", "submitted_day": 12, "results_published_day": 15, "announced_day": 20,
+                 "activation_day": 50}]},
+            "after_crisis_declared_stabilization": {"crisis_window": [0, 10], "stabilization_days": 20, "proposals": [
+                {"id": "early", "submitted_day": 12, "targets": ["justice"], "results_published_day": 15,
+                 "announced_day": 20, "activation_day": 50},
+                {"id": "later", "submitted_day": 31, "targets": ["justice"], "results_published_day": 35,
+                 "announced_day": 40, "activation_day": 70}]},
+            "correlated_initiators": {"proposals": [
+                {"id": "a", "initiator_link": "group_x"},
+                {"id": "b", "submitted_day": 2, "initiator_link": "group_x", "results_published_day": 6, "activation_day": 45}]},
+            "presentation_only": {"proposals": [{"id": "typo", "kind": "presentation_only"}]},
+            "activation_refused_cooling": {"proposals": [{"id": "u1", "activation_day": 25}]},
+            "faulty_upgrades": {"crisis_window": [60, 70], "open_appeals": [[38, 45]], "proposals": [
+                {"id": "u1", "deviation_day": 50},
+                {"id": "fix", "submitted_day": 51, "results_published_day": 52, "announced_day": 53, "activation_day": 54,
+                 "fixes": "u1"},
+                {"id": "in_crisis", "submitted_day": 62}],
+                "faults": ["upgrade_in_crisis", "short_cooling", "activate_with_open_appeal", "no_rollback", "stack_fix"]},
+        }
+
+    def failure_examples(self) -> Dict[str, Dict[str, Any]]:
+        return {"repeated_id": {"proposals": [{"id": "a"}, {"id": "a"}]},
+                "unknown_fix": {"proposals": [{"id": "a", "fixes": "zz"}]},
+                "unknown_target": {"proposals": [{"id": "a", "targets": ["moon"]}]}}

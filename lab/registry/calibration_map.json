@@ -4,102 +4,267 @@
  "verifier": "Claude (Anthropic): manual reading of the pinned text, 2026-10-07. Not a human review.",
  "rule": "Decomposition of the systemic blocker F-014. The lab invents no Calibration Bundle and no value: every number below is quoted from the corpus, and every value the corpus lacks is listed as missing with the declared lab input that stands in for it (source 'missing' in the module, shown in every result). Quotes are checked verbatim by tests/lab/test_calibration_map.py.",
  "bundle_required": [
-  {"doc": "DKP-8-SIMULATION-001", "at": "§2", "scope": "any protocol or change introducing thresholds, activation conditions, composite indices, enforcement logic, calibration parameters, cross-layer dependencies",
-   "text": "MUST pass DKP-8-SIMULATION-001 prior to activation."},
-  {"doc": "DKP-8-SIMULATION-001", "at": "§4", "scope": "every protocol",
-   "text": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition."},
-  {"doc": "DKP-8-SIMULATION-001", "at": "§9", "scope": "content of a bundle",
-   "text": "Each successful simulation MUST produce a signed L8 Calibration Bundle containing:"},
-  {"doc": "DKP-8-SIMULATION-001", "at": "§10", "scope": "expiry",
-   "text": "Expired calibration bundles automatically invalidate enforcement."},
-  {"doc": "DKP-5-HABITAT-001", "at": "§6", "scope": "HABITAT as a whole",
-   "text": "DKP-5-HABITAT-001 is NON-ENFORCEABLE unless all of the following exist: a valid L8 Calibration Bundle explicitly covering SPDI,"},
-  {"doc": "DKP-5-INFO-001", "at": "§9", "scope": "INFO as a whole",
-   "text": "DKP-5-INFO-001 is NON-ENFORCEABLE unless: a valid L8 Calibration Bundle exists for:"},
-  {"doc": "DKP-5-INFO-001", "at": "§9", "scope": "INFO classifications above I1",
-   "text": "Absent a valid L8 bundle: classifications above I1 are informational only,"},
-  {"doc": "DKP-5-EDU-001", "at": "§12", "scope": "EDU signals",
-   "text": "Absent valid L8 calibration, educational signals are informational only."},
-  {"doc": "DKP-5-CULTURE-001", "at": "§11", "scope": "CULTURE interactions",
-   "text": "Absent valid L8 calibration, cultural interactions are informational and non-binding only."},
-  {"doc": "DKP-0-ORACLE-001", "at": "§12", "scope": "the composite index B(t) only",
-   "text": "Until an attached and valid L8 calibration bundle exists, B(t) SHALL be treated as informational only and SHALL NOT trigger enforcement."}
+  {
+   "doc": "DKP-8-SIMULATION-001",
+   "at": "§2",
+   "scope": "any protocol or change introducing thresholds, activation conditions, composite indices, enforcement logic, calibration parameters, cross-layer dependencies",
+   "text": "MUST pass DKP-8-SIMULATION-001 prior to activation."
+  },
+  {
+   "doc": "DKP-8-SIMULATION-001",
+   "at": "§4",
+   "scope": "every protocol",
+   "text": "Protocols lacking an attached and valid L8 Calibration Bundle are NON-ENFORCEABLE by definition."
+  },
+  {
+   "doc": "DKP-8-SIMULATION-001",
+   "at": "§9",
+   "scope": "content of a bundle",
+   "text": "Each successful simulation MUST produce a signed L8 Calibration Bundle containing:"
+  },
+  {
+   "doc": "DKP-8-SIMULATION-001",
+   "at": "§10",
+   "scope": "expiry",
+   "text": "Expired calibration bundles automatically invalidate enforcement."
+  },
+  {
+   "doc": "DKP-5-HABITAT-001",
+   "at": "§6",
+   "scope": "HABITAT as a whole",
+   "text": "DKP-5-HABITAT-001 is NON-ENFORCEABLE unless all of the following exist: a valid L8 Calibration Bundle explicitly covering SPDI,"
+  },
+  {
+   "doc": "DKP-5-INFO-001",
+   "at": "§9",
+   "scope": "INFO as a whole",
+   "text": "DKP-5-INFO-001 is NON-ENFORCEABLE unless: a valid L8 Calibration Bundle exists for:"
+  },
+  {
+   "doc": "DKP-5-INFO-001",
+   "at": "§9",
+   "scope": "INFO classifications above I1",
+   "text": "Absent a valid L8 bundle: classifications above I1 are informational only,"
+  },
+  {
+   "doc": "DKP-5-EDU-001",
+   "at": "§12",
+   "scope": "EDU signals",
+   "text": "Absent valid L8 calibration, educational signals are informational only."
+  },
+  {
+   "doc": "DKP-5-CULTURE-001",
+   "at": "§11",
+   "scope": "CULTURE interactions",
+   "text": "Absent valid L8 calibration, cultural interactions are informational and non-binding only."
+  },
+  {
+   "doc": "DKP-0-ORACLE-001",
+   "at": "§12",
+   "scope": "the composite index B(t) only",
+   "text": "Until an attached and valid L8 calibration bundle exists, B(t) SHALL be treated as informational only and SHALL NOT trigger enforcement."
+  }
  ],
  "deferred_to_l8": [
-  {"parameter": "minimum attribution confidence", "doc": "DKP-1-IDENTITY-001", "at": "§4.1",
+  {
+   "parameter": "minimum attribution confidence",
+   "doc": "DKP-1-IDENTITY-001",
+   "at": "§4.1",
    "text": "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:",
-   "lab_input": "dispute_correction.attribution_threshold"},
-  {"parameter": "B(t): model, aggregation, weighting, calibration", "doc": "DKP-0-ORACLE-001", "at": "§12",
+   "lab_input": "dispute_correction.attribution_threshold"
+  },
+  {
+   "parameter": "B(t): model, aggregation, weighting, calibration",
+   "doc": "DKP-0-ORACLE-001",
+   "at": "§12",
    "text": "The model, aggregation logic, weighting, and calibration of B(t) are not defined in PTL and MUST be explicitly specified in DKP-8-SIMULATION-001.",
-   "lab_input": null},
-  {"parameter": "every composite index (model, inputs, weights, uncertainty)", "doc": "DKP-8-SIMULATION-001", "at": "§9",
+   "lab_input": null
+  },
+  {
+   "parameter": "every composite index (model, inputs, weights, uncertainty)",
+   "doc": "DKP-8-SIMULATION-001",
+   "at": "§9",
    "text": "Any composite index (including B(t)): - MUST have its model fully specified in L8,",
-   "lab_input": null},
-  {"parameter": "Crisis authority duration, decay, revalidation cadence, exit sensitivity", "doc": "DKP-4-CRISIS-001", "at": "§6",
+   "lab_input": null
+  },
+  {
+   "parameter": "Crisis authority duration, decay, revalidation cadence, exit sensitivity",
+   "doc": "DKP-4-CRISIS-001",
+   "at": "§6",
    "text": "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001.",
-   "lab_input": "crisis_recovery (declared durations)"},
-  {"parameter": "any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins')", "doc": "DKP-4-CRISIS-001", "at": "§6",
+   "lab_input": "crisis_recovery (declared durations)"
+  },
+  {
+   "parameter": "any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins')",
+   "doc": "DKP-4-CRISIS-001",
+   "at": "§6",
    "text": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol.",
    "note": "CRISIS may not hold them; SIMULATION §2 requires thresholds to pass SIMULATION. Inferred assignment to L8.",
-   "lab_input": "crisis_recovery.sustained_d3_steps; interop_failure.ptl_loss_tolerance"},
-  {"parameter": "exit cooling period", "doc": "DKP-6-EXIT-001", "at": "§6",
+   "lab_input": "crisis_recovery.sustained_d3_steps; interop_failure.ptl_loss_tolerance"
+  },
+  {
+   "parameter": "exit cooling period",
+   "doc": "DKP-6-EXIT-001",
+   "at": "§6",
    "text": "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001.",
-   "lab_input": "exit_integration.cooling_days"},
-  {"parameter": "SPDI model, SPDI_min and component survivability thresholds", "doc": "DKP-5-HABITAT-001", "at": "§5",
+   "lab_input": "exit_integration.cooling_days"
+  },
+  {
+   "parameter": "SPDI model, SPDI_min and component survivability thresholds",
+   "doc": "DKP-5-HABITAT-001",
+   "at": "§5",
    "text": "SHALL be specified, calibrated, and validated exclusively under DKP-8-SIMULATION-001,",
-   "lab_input": "calibration_expiry.bundle (a hypothetical bundle, labelled as such)"},
-  {"parameter": "INFO transition times T₁, T₂", "doc": "DKP-5-INFO-001", "at": "§6.1",
+   "lab_input": "calibration_expiry.bundle (a hypothetical bundle, labelled as such)"
+  },
+  {
+   "parameter": "INFO transition times T₁, T₂",
+   "doc": "DKP-5-INFO-001",
+   "at": "§6.1",
    "text": "Values of T₁ and T₂ SHALL NOT be defined in this protocol and MUST be calibrated under DKP-8-SIMULATION-001.",
-   "lab_input": null},
-  {"parameter": "INFO propagation thresholds for a Systemic Lie", "doc": "DKP-5-INFO-001", "at": "§7",
+   "lab_input": null
+  },
+  {
+   "parameter": "INFO propagation thresholds for a Systemic Lie",
+   "doc": "DKP-5-INFO-001",
+   "at": "§7",
    "text": "repetition exceeds L8-calibrated propagation thresholds,",
-   "lab_input": null},
-  {"parameter": "EDU competence-based restrictions", "doc": "DKP-5-EDU-001", "at": "§12",
+   "lab_input": null
+  },
+  {
+   "parameter": "EDU competence-based restrictions",
+   "doc": "DKP-5-EDU-001",
+   "at": "§12",
    "text": "MUST be calibrated under DKP-8-SIMULATION-001,",
-   "lab_input": null},
-  {"parameter": "PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights", "doc": "DKP-1-PREVENTION-001", "at": "§14",
+   "lab_input": null
+  },
+  {
+   "parameter": "PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights",
+   "doc": "DKP-1-PREVENTION-001",
+   "at": "§14",
    "text": "### 14. Simulation Layer (L8) Defines: - ε_consistency - Δt_int - θ thresholds - Wₖ weights",
-   "lab_input": "prevention (declared parameters, H-P hypotheses)"},
-  {"parameter": "EXIT phased disengagement", "doc": "DKP-6-EXIT-001", "at": "§7",
+   "lab_input": "prevention (declared parameters, H-P hypotheses)"
+  },
+  {
+   "parameter": "EXIT phased disengagement",
+   "doc": "DKP-6-EXIT-001",
+   "at": "§7",
    "text": "be L8-simulated for stability,",
-   "lab_input": null},
-  {"parameter": "INTEGRATION interface clearance", "doc": "DKP-6-INTEGRATION-001", "at": "§5.3",
+   "lab_input": null
+  },
+  {
+   "parameter": "INTEGRATION interface clearance",
+   "doc": "DKP-6-INTEGRATION-001",
+   "at": "§5.3",
    "text": "DKP-8-SIMULATION-001 stress-test clearance,",
-   "lab_input": null}
+   "lab_input": null
+  }
  ],
  "missing_values": [
-  {"value": "N_eff (definition) and N_eff_min (value)", "doc": "DKP-6-RESILIENCE-001", "at": "§5.1",
+  {
+   "value": "N_eff (definition) and N_eff_min (value)",
+   "doc": "DKP-6-RESILIENCE-001",
+   "at": "§5.1",
    "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)",
-   "origin": "architecture_definition", "finding": "F-007", "lab_input": "sensor_loss.n_eff_min"},
-  {"value": "axiom-defined safe margins", "doc": "DKP-1-JUSTICE-001", "at": "§7",
+   "origin": "architecture_definition",
+   "finding": "F-007",
+   "lab_input": "sensor_loss.n_eff_min"
+  },
+  {
+   "value": "axiom-defined safe margins",
+   "doc": "DKP-1-JUSTICE-001",
+   "at": "§7",
    "text": "impact exceeds axiom-defined safe margins, or",
-   "origin": "empirical_model_data", "lab_input": "dispute_correction.safe_margin"},
-  {"value": "numeric reference bounds Bᵢ", "doc": "DKP-1-IMPACT-001", "at": "§6",
+   "origin": "empirical_model_data",
+   "lab_input": "dispute_correction.safe_margin"
+  },
+  {
+   "value": "numeric reference bounds Bᵢ",
+   "doc": "DKP-1-IMPACT-001",
+   "at": "§6",
    "text": "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices.",
-   "origin": "empirical_model_data", "lab_input": "dispute_correction.bound"},
-  {"value": "threshold of a systemic or cascading error", "doc": "DKP-4-ERROR-001", "at": "§9",
+   "origin": "empirical_model_data",
+   "lab_input": "dispute_correction.bound"
+  },
+  {
+   "value": "threshold of a systemic or cascading error",
+   "doc": "DKP-4-ERROR-001",
+   "at": "§9",
    "text": "impacting more than a protocol-defined threshold of Subjects or cross-layer execution",
-   "origin": "l8_parameter", "lab_input": null},
-  {"value": "minimum PPDI threshold, 'regular' standing, forced-contact density", "doc": "DKP-5-TRANSPORT-001", "at": "§4.2",
+   "origin": "l8_parameter",
+   "lab_input": null
+  },
+  {
+   "value": "minimum PPDI threshold, 'regular' standing, forced-contact density",
+   "doc": "DKP-5-TRANSPORT-001",
+   "at": "§4.2",
    "text": "Transport modes operating below the minimum PPDI threshold are classified as:",
-   "origin": "l8_parameter", "finding": "F-016", "lab_input": "transport_capacity.regular_standing_share, contact_density_m2"},
-  {"value": "RED coefficient", "doc": "DKP-5-TRANSPORT-001", "at": "§7.2",
+   "origin": "l8_parameter",
+   "finding": "F-016",
+   "lab_input": "transport_capacity.regular_standing_share, contact_density_m2"
+  },
+  {
+   "value": "RED coefficient",
+   "doc": "DKP-5-TRANSPORT-001",
+   "at": "§7.2",
    "text": "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001,",
-   "origin": "external_dependency", "finding": "F-015", "lab_input": "transport_capacity.red_per_km"}
+   "origin": "external_dependency",
+   "finding": "F-015",
+   "lab_input": "transport_capacity.red_per_km"
+  },
+  {
+   "value": "post-crisis audit and stabilization period",
+   "doc": "DKP-4-UPGRADE-001",
+   "at": "§8",
+   "text": "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001.",
+   "origin": "architecture_definition",
+   "finding": "F-020",
+   "lab_input": "upgrade_lifecycle.stabilization_days"
+  },
+  {
+   "value": "length of the upgrade reversibility window",
+   "doc": "DKP-4-UPGRADE-001",
+   "at": "§8",
+   "text": "be reversible within a defined window,",
+   "origin": "l8_parameter",
+   "lab_input": "upgrade_lifecycle (per-proposal reversible_window_days)"
+  }
  ],
  "external_dependencies": [
-  {"document": "DKP-2-ECONOMIC-001", "doc": "DKP-5-TRANSPORT-001", "at": "header",
-   "text": "DKP-2-ECONOMIC-001 (Economic & Externality Accounting)"},
-  {"document": "DKP-PTL-REG-DATA-001", "doc": "DKP-6-RESILIENCE-001", "at": "§8",
-   "text": "Reference: DKP-PTL-REG-DATA-001"}
+  {
+   "document": "DKP-2-ECONOMIC-001",
+   "doc": "DKP-5-TRANSPORT-001",
+   "at": "header",
+   "text": "DKP-2-ECONOMIC-001 (Economic & Externality Accounting)"
+  },
+  {
+   "document": "DKP-PTL-REG-DATA-001",
+   "doc": "DKP-6-RESILIENCE-001",
+   "at": "§8",
+   "text": "Reference: DKP-PTL-REG-DATA-001"
+  }
  ],
  "simulation_position": {
-  "upstream": ["DKP-0-ORACLE-001", "DKP-1-AXIOMS-001", "DKP-7-SCOPE-001"],
-  "listed_downstream": ["DKP-5-HABITAT-001", "DKP-5-INFO-001", "DKP-5-EDU-001", "DKP-5-CULTURE-001",
-                        "DKP-6-INTEGRATION-001", "DKP-6-EXIT-001", "DKP-4-UPGRADE-001", "DKP-8-AUDIT-001",
-                        "DKP-8-INTEROP-001"],
-  "quote": {"doc": "DKP-8-SIMULATION-001", "at": "§2",
-            "text": "Upstream of: - all enforceable L5 protocols (HABITAT / INFO / EDU / CULTURE), - DKP-6-INTEGRATION-001, - DKP-6-EXIT-001, - DKP-4-UPGRADE-001, - DKP-8-AUDIT-001, - DKP-8-INTEROP-001."}
+  "upstream": [
+   "DKP-0-ORACLE-001",
+   "DKP-1-AXIOMS-001",
+   "DKP-7-SCOPE-001"
+  ],
+  "listed_downstream": [
+   "DKP-5-HABITAT-001",
+   "DKP-5-INFO-001",
+   "DKP-5-EDU-001",
+   "DKP-5-CULTURE-001",
+   "DKP-6-INTEGRATION-001",
+   "DKP-6-EXIT-001",
+   "DKP-4-UPGRADE-001",
+   "DKP-8-AUDIT-001",
+   "DKP-8-INTEROP-001"
+  ],
+  "quote": {
+   "doc": "DKP-8-SIMULATION-001",
+   "at": "§2",
+   "text": "Upstream of: - all enforceable L5 protocols (HABITAT / INFO / EDU / CULTURE), - DKP-6-INTEGRATION-001, - DKP-6-EXIT-001, - DKP-4-UPGRADE-001, - DKP-8-AUDIT-001, - DKP-8-INTEROP-001."
+  }
  },
  "own_clause": {
   "DKP-5-HABITAT-001": "non-enforceable without a bundle covering SPDI (§6)",
