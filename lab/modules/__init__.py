@@ -7,6 +7,7 @@ from lab.modules.dispute_correction import DisputeCorrectionModule
 from lab.modules.economic_access import EconomicAccessModule
 from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
+from lab.modules.internal_security import InternalSecurityModule
 from lab.modules.interop_failure import InteropFailureModule
 from lab.modules.prevention import PreventionModule
 from lab.modules.sensor_loss import SensorLossModule
@@ -20,4 +21,4 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              CrisisRecoveryModule(), ExitIntegrationModule(),
                              InteropFailureModule(), CalibrationExpiryModule(),
                              TransportCapacityModule(), EconomicAccessModule(),
-                             UpgradeLifecycleModule())}
+                             UpgradeLifecycleModule(), InternalSecurityModule())}

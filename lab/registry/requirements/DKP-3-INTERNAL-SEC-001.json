@@ -119,13 +119,19 @@
     "rights and privilege records",
     "axiomatic constraints"
    ],
-   "gap": "The prohibited operation categories and applicable axiomatic constraints are not formally specified here. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a mapping from executable operations to prohibited authority categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_autonomous_revocation"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -158,13 +164,19 @@
     "Justice and Identity trigger contracts",
     "Subject effect execution records"
    ],
-   "gap": "Formal trigger contracts and a definition of restrictive or corrective Subject effects are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare effect classifications and the provenance required to establish mediated execution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "effects_via_triggers"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -390,13 +402,19 @@
     "PTL output provenance",
     "security execution traces"
    ],
-   "gap": "PTL confirmation validation and the semantics of redefining or overriding outputs are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how actions and their effects are mapped to PTL confirmations and authority changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "responds_to_ptl"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -430,13 +448,19 @@
     "live violation records",
     "state transition validity and authorization rules"
    ],
-   "gap": "Current activity, invalidity, authorization, and prohibited decision dependencies require definitions or external rules. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare activity detection and decision dependency tests, and whether PTL-evidenced modifies both trigger branches."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "non_preemptive"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -543,13 +567,19 @@
     "triggering evidence",
     "physical and logical reversal assessments"
    ],
-   "gap": "Immutability verification and physical and logical reversal feasibility are not defined. No lab check implemented yet.",
+   "gap": "Logging and traceability; physical reversibility is declared.",
    "hypotheses_needed": [
     "Declare an audit integrity model and tests for physical and logical reversibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "logged_traceable"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -618,13 +648,19 @@
     "Dikenocratic Time specification and clock",
     "integrity anomaly detections"
    ],
-   "gap": "Dikenocratic Time semantics and complete state-entry and transition conditions are unavailable. No lab check implemented yet.",
+   "gap": "The state machine is modelled on declared evidence episodes.",
    "hypotheses_needed": [
     "Declare state-entry predicates and how forced return to S0 interacts with unresolved detected anomalies."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "finite_state_machine"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -659,13 +695,19 @@
     "evidence collection and verification records",
     "escalation records"
    ],
-   "gap": "Non-coercive and heightened verification criteria and the effect of escalation on the deadline are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare verification baselines, coercion classifications, and the applicability of the general escalation exception."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "max_duration_S1"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -700,13 +742,19 @@
     "affected target records",
     "containment and escalation records"
    ],
-   "gap": "Targeted containment and the state or deadline following escalation are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a containment targeting rule and escalation handling."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "max_duration_S2"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -741,19 +789,27 @@
     "system isolation and execution records",
     "escalation records"
    ],
-   "gap": "The scope of partial isolation and the applicability and effect of the general escalation exception are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the partial-isolation classification and how escalation affects S3 expiry."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "max_duration_S3"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-040"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
    }
   },
   {
@@ -776,11 +832,17 @@
    "data_dependencies": [
     "Crisis escalation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "s4_escalates"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -812,19 +874,27 @@
     "transition evidence",
     "audit and escalation records"
    ],
-   "gap": "Evidence sufficiency and the handling of escalated deadlines are unspecified. No lab check implemented yet.",
+   "gap": "Whether persisting evidence re-enters at once after reversion is not defined (H-IS-2, F-021).",
    "hypotheses_needed": [
     "Declare evidence sufficiency for transitions and how escalation changes timeout processing."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "auto_revert"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-040"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
    }
   },
   {
@@ -931,13 +1001,19 @@
     "L3 execution traces",
     "L0 resolution records"
    ],
-   "gap": "Immediate suspension semantics and the conditions for resuming execution after L0 resolution are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare logical event ordering or an explicit implementation timing interpretation without treating it as a textual deadline."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "halt_suspends_l3"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -972,13 +1048,19 @@
     "operation sensitivity and impact classifications",
     "verification records"
    ],
-   "gap": "Sensitive and high-impact classifications, multi-signature policy, and the mandatory-versus-permitted reading are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare qualifying operation classifications, a multi-signature policy, and whether imposing that policy is optional in S1."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "allowed_actions_S1"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1010,13 +1092,19 @@
     "baseline access entitlements",
     "execution and economic performance observations"
    ],
-   "gap": "Artificial throttling, economic slowdown, and baseline access are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare baseline access, performance baselines, and a causal attribution model for action effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_throttle_s1"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1052,13 +1140,19 @@
     "Finance and Assets dispute and freeze records",
     "Justice workflow records"
    ],
-   "gap": "Scope, affected-subsystem identification, dispute status, and temporary-freeze termination semantics are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare target and dispute classifiers and freeze termination conditions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "allowed_actions_S2"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1092,13 +1186,19 @@
     "operation sensitivity classifications",
     "authorization records"
    ],
-   "gap": "Safe mode, sensitivity, authorization-party requirements, and the mandatory-versus-permitted reading are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare safe-mode behavior, operation sensitivity, a multi-party policy, and whether imposing that policy is optional in S3."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "allowed_actions_S3"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1133,13 +1233,19 @@
     "PTL halt request interface",
     "execution path essentiality classifications"
    ],
-   "gap": "PTL systemic-halt applicability and non-essential execution paths are not defined. No lab check implemented yet.",
+   "gap": "Escalation and halt request are recorded; CRISIS itself is in crisis_recovery.",
    "hypotheses_needed": [
     "Declare halt-request applicability and execution-path essentiality classifications."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "s4_escalates"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1168,13 +1274,19 @@
     "PTL trigger records",
     "surveillance activity records"
    ],
-   "gap": "Mass surveillance and the required trigger-to-action relationship are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a mass-surveillance classification and valid PTL trigger linkage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_mass_surveillance"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1204,13 +1316,19 @@
    "data_dependencies": [
     "individual attribution and decision records"
    ],
-   "gap": "Collective punishment and guilt by association lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare tests distinguishing individually attributed effects from association-based punishment or guilt."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_collective_punishment"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1240,13 +1358,19 @@
     "Justice-domain outcomes",
     "exclusion execution records"
    ],
-   "gap": "Permanent exclusion and the required substantive relationship to the Justice outcome are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare exclusion permanence and the Justice-outcome linkage required for compliance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_permanent_exclusion"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1277,13 +1401,19 @@
     "published rule and enforcement artifacts",
     "artifact access policies"
    ],
-   "gap": "Required disclosure audience, access level, and disclosure timing are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the disclosure audience and a completeness and accessibility test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_secret_rules"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1311,13 +1441,19 @@
    "data_dependencies": [
     "security action justification records"
    ],
-   "gap": "Ideology and narrative lack operational classifiers for evaluating justifications. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare justification classification rules and dependency analysis."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_ideology"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1351,14 +1487,20 @@
     "Identity-linked group membership",
     "node control attribution"
    ],
-   "gap": "Oracle control and aggregation definitions, evaluation timing, and the empty-node case are absent. No lab check implemented yet.",
+   "gap": "Node shares are declared inputs.",
    "hypotheses_needed": [
     "Declare control attribution, group aggregation, evaluation timing, and handling of no executing nodes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "node_cap"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1424,13 +1566,19 @@
     "invariant and integrity-rule registry",
     "Justice reversal and appeal rules"
    ],
-   "gap": "The Justice requirements governing valid reversal and appeal conditions are not provided. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how explicit disclosure and correspondence to the violated rule and containment scope are verified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "due_process"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1494,13 +1642,19 @@
     "PTL evidence and verification results",
     "action execution records"
    ],
-   "gap": "Coercive-action classification and PTL evidence validation rules are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare coercion classification and the evidence-to-action association required by the invariant."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_evidence_no_action"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1566,13 +1720,19 @@
     "independent execution event inventory",
     "audit records"
    ],
-   "gap": "The complete event scope and required audit fields are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare auditable event coverage and required fields, including all security actions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "complete_audit_trail"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1640,13 +1800,19 @@
     "execution provenance",
     "formal trigger records"
    ],
-   "gap": "The document gives some authority exclusions but not a complete cross-layer authority specification. No lab check implemented yet.",
+   "gap": "Observed as effects on Subjects executed at L3.",
    "hypotheses_needed": [
     "Declare a complete authority map consistent with the explicit section 2 restrictions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "internal_security",
+    "version": "1.0.0",
+    "check": "no_overreach"
+   },
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

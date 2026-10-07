@@ -174,3 +174,10 @@ def test_f020_stabilization_period_undefined():
                 {c["requirement_id"]: c["status"] for c in x["checks"]}["UPGRADE-Post-CrisisCooldownRule-01"]) for n, x in v.items()}
     assert rows == {"period_undefined": ("held", "UNKNOWN"), "declared_20_days": ("rejected", "PASS"),
                     "declared_0_days": ("active", "PASS")}
+
+
+def test_f021_reentry_after_expiry():
+    with open(os.path.join(FINDINGS, "F-021.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    rows = {n: (x["outputs"]["contained_days"], "FAIL" in {c["status"] for c in x["checks"]}) for n, x in v.items()}
+    assert rows == {"evidence_driven": (8, False), "episode_once": (3, False)}
