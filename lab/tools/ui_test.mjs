@@ -27,7 +27,10 @@ ok("module_cards", cards.length >= 3, cards);
 ok("counts_separate", /35 protocols/.test(await page.textContent("#modules-counts")), await page.textContent("#modules-counts"));
 
 const results = {};
-for (let i = 0; i < cards.length; i++) {
+// WORK-CYCLE last: the validation step below uses its number fields
+const wcIndex = cards.findIndex((t) => /WORK-CYCLE/.test(t));
+const visit = [...cards.keys()].filter((i) => i !== wcIndex).concat(wcIndex >= 0 ? [wcIndex] : []);
+for (const i of visit) {
   await page.click(`#module-cards .card >> nth=${i} >> button.btn`);
   await page.waitForFunction((prev) => {
     const ids = document.querySelectorAll("#result-body .lab-ids");
@@ -51,8 +54,11 @@ ok("lang_ru_result", /Выполнено/.test((await page.$$eval(".lab-sentence
 await page.click('button[data-lang="en"]');
 
 // validation error shown, not run
-const firstNumber = await page.$("#variants input[type=number]");
-await firstNumber.fill("-5");
+// the first number field of the open module whose declared minimum is >= 0 (modules differ in their fields)
+const numbers = await page.$$("#variants input[type=number]");
+const target = await page.$$eval("#variants input[type=number]",
+  (els) => els.findIndex((e) => e.getAttribute("min") !== null && Number(e.getAttribute("min")) >= 0));
+await numbers[target].fill("-5");
 await page.click("#validate");
 await page.waitForSelector("#problems li");
 ok("validation_error", /must be >=|expected/.test(await page.textContent("#problems")), await page.textContent("#problems"));
