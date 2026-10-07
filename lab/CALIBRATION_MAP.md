@@ -107,6 +107,8 @@ No Calibration Bundle exists in the pinned corpus.
 | detention limit | DKP-3-POLICE-001 | §5.1 | "be time-limited," | l8_parameter | police_antiterror.detention_limit_hours |
 | acceptable civilian casualty risk | DKP-3-ANTITERROR-001 | §9 | "civilian casualty risk exceeds acceptable thresholds," | l8_parameter | — |
 | elevated authorization thresholds for irreversible security actions | DKP-3-INTERNAL-SEC-001 | §4.4 | "Irreversible actions require elevated authorization thresholds and justification." | l8_parameter | — |
+| Axiom A1 minimum required conditions | DKP-1-AXIOMS-001 | A1 | "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS" | architecture_definition (F-023) | police_antiterror.crisis_lethal_authorized |
+| active validating nodes (ratification of axiom changes) | DKP-1-AXIOMS-001 | §8 | "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy" | architecture_definition (F-022) | axiom_constraints (declared ratification_share) |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -119,7 +121,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | CODE-OF-PLANETARY-SYNERGY | not listed | — | 18 | 0 | 0 | not a protocol (§4 speaks of protocols); Main Equation parameters change only via UPGRADE + SIMULATION |
 | DKP-0-ORACLE-001 | upstream of SIMULATION | B(t) informational until a bundle exists (§12); nothing else in ORACLE refers to a bundle | 8 | 1 | 0 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
 | DKP-0-TIME-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-1-AXIOMS-001 | upstream of SIMULATION | — | 1 | 0 | 0 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
+| DKP-1-AXIOMS-001 | upstream of SIMULATION | — | 1 | 0 | 2 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-IDENTITY-001 | not listed | — | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-IMPACT-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

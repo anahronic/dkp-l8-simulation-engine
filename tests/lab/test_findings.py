@@ -181,3 +181,19 @@ def test_f021_reentry_after_expiry():
         v = run_request(json.load(f))["variants"]
     rows = {n: (x["outputs"]["contained_days"], "FAIL" in {c["status"] for c in x["checks"]}) for n, x in v.items()}
     assert rows == {"evidence_driven": (8, False), "episode_once": (3, False)}
+
+
+def _chosen_and_open(fid):
+    with open(os.path.join(FINDINGS, f"{fid}.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    return {n: (x["outputs"]["chosen"], sorted(c["requirement_id"] for c in x["checks"] if c["status"] == "UNKNOWN"))
+            for n, x in v.items()}
+
+
+def test_f022_to_f025_axioms():
+    assert _chosen_and_open("F-022") == {"share_70": ("a", ["AXIOMS-8-02"]), "share_50": ("a", ["AXIOMS-8-02"])}
+    assert _chosen_and_open("F-023") == {"claim_refused": ("wait", ["AXIOMS-AxiomA1-PreservationofLife-02"])}
+    assert _chosen_and_open("F-024") == {"lexicographic": ("hide", ["AXIOMS-1-01", "AXIOMS-5-02"]),
+                                         "no_admissible_action": (None, ["AXIOMS-1-01", "AXIOMS-5-02", "AXIOMS-5-04"])}
+    assert _chosen_and_open("F-025") == {"constraint": ("weir", []),
+                                         "recommendation": ("dam", ["AXIOMS-AxiomA4-IrreversibilityAversion-01"])}

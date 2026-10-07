@@ -31,13 +31,19 @@
     "higher-layer protocol specifications",
     "axiom compliance evaluations"
    ],
-   "gap": "Substantive axiom compliance requires definitions and evaluation models not fully specified here. No lab check implemented yet.",
+   "gap": "Violations are declared properties of the candidates.",
    "hypotheses_needed": [
     "Declare how protocol behavior is mapped to axiom violations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "no_violation_for_benefit"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -174,7 +180,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -201,11 +207,17 @@
    "data_dependencies": [
     "structured decision and optimization specifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "constraints_not_terms"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -234,13 +246,19 @@
     "crisis-defined minimum required conditions",
     "systemic collapse assessments"
    ],
-   "gap": "The crisis-defined minimum, loss measures, and knowledge criterion are unavailable. No lab check implemented yet.",
+   "gap": "Life loss is a declared property.",
    "hypotheses_needed": [
     "Declare a model of action knowledge, irreversible life loss, and counterfactual systemic collapse."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "a1_enforced"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -273,19 +291,27 @@
     "protocol classifications",
     "crisis governance rules"
    ],
-   "gap": "DKP-4-CRISIS and evidence of definition provenance are required. No lab check implemented yet.",
+   "gap": "No definition exists (F-023): UNKNOWN.",
    "hypotheses_needed": [
     "Declare how governance provenance and prohibited derivation operations are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "minimum_defined_by_crisis"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-042"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "text_verified"
    }
   },
   {
@@ -306,11 +332,17 @@
    "data_dependencies": [
     "structured objective priorities and conflict decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "life_first"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -337,11 +369,17 @@
     "scope constraints",
     "determination provenance"
    ],
-   "gap": "The referenced scope constraints are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "minimum_not_inferred"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -367,13 +405,19 @@
     "activity risk classifications",
     "participation and assignment records"
    ],
-   "gap": "Operational definitions and evidence of compulsion and lethal risk are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how compulsion and lethal-risk activities are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "no_compulsion"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -402,11 +446,17 @@
    "data_dependencies": [
     "structured participation and refusal rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "right_to_refuse"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -433,13 +483,19 @@
     "benefit and access provenance",
     "allocation records"
    ],
-   "gap": "Risk verification and direct benefit derivation require unspecified evidence and attribution rules. No lab check implemented yet.",
+   "gap": "Benefit allocation is declared, not derived.",
    "hypotheses_needed": [
     "Declare how risk participation is verified and benefits are attributed directly to risk."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "risk_symmetry"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -469,13 +525,19 @@
     "access and compensation rules",
     "enforcement effect assessments"
    ],
-   "gap": "The text does not operationally distinguish permitted access restrictions from punishment, stigma, or coercion. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare criteria separating permitted enforcement mechanisms from prohibited effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "symmetry_without_punishment"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -503,11 +565,17 @@
    "data_dependencies": [
     "classification rules and decision reasons"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "refusal_not_a_fault"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -533,13 +601,19 @@
     "action outcome trajectories",
     "system viability and collapse assessments"
    ],
-   "gap": "A causal model, short- and long-term horizons, and viability and collapse criteria are missing. No lab check implemented yet.",
+   "gap": "Long-term degradation is declared (B(t) has no model).",
    "hypotheses_needed": [
     "Declare time horizons, viability measures, collapse criteria, and counterfactual action effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "a2_enforced"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -604,13 +678,19 @@
     "Physical Truth Layer outputs",
     "decision evidence and provenance"
    ],
-   "gap": "The required degree of evidentiary dependence on Physical Truth Layer outputs is undefined. No lab check implemented yet.",
+   "gap": "Grounding in PTL is declared.",
    "hypotheses_needed": [
     "Declare whether grounding requires cited evidence, causal dependence, or another explicit evidence relation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "a3_enforced"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -675,19 +755,27 @@
     "alternative-action assessments",
     "reversibility and damage estimates"
    ],
-   "gap": "Damage comparison, alternative availability, and the compliance effect of SHOULD are unspecified. No lab check implemented yet.",
+   "gap": "A4 says SHOULD (F-025); necessity is declared.",
    "hypotheses_needed": [
     "Declare damage and reversibility measures and how recommendation departures are reported."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "a4_irreversibility"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-044"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "source": "text_verified"
    }
   },
   {
@@ -718,7 +806,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -781,13 +869,19 @@
     "externalization and measurement records",
     "impact classification or scoring rules"
    ],
-   "gap": "Maximum-impact damage and the treatment it entails are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether maximum impact is a categorical or numeric treatment and define its application."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "a5_enforced"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -849,13 +943,19 @@
     "information handling records",
     "system stability impact assessments"
    ],
-   "gap": "Materiality, strategic intent, and the referent of the stability-effect condition require definitions. No lab check implemented yet.",
+   "gap": "Withholding and materiality are declared.",
    "hypotheses_needed": [
     "Declare the materiality criterion, intent model, and whether stability effects attach to the truth or its handling."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "a6_enforced"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -885,13 +985,19 @@
     "higher-priority axiom evaluations",
     "comparative suffering estimates"
    ],
-   "gap": "Axiomatic indistinguishability, unnecessary suffering, and the non-amplification baseline are undefined. No lab check implemented yet.",
+   "gap": "Suffering is a declared proxy value.",
    "hypotheses_needed": [
     "Declare equivalence criteria and the baseline and causal model for additional suffering."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "non_amplification"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -956,11 +1062,17 @@
    "data_dependencies": [
     "structured decision and optimization specifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "suffering_not_primary"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -985,11 +1097,17 @@
    "data_dependencies": [
     "decision execution traces"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "axioms_before_optimization"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1016,14 +1134,26 @@
     "action status records",
     "enforcement propagation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "When every candidate violates an axiom, §5.2 and §5.4 disagree (F-024): UNKNOWN.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "violation_invalidates"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-043"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "AXIOMS-5-03",
@@ -1044,11 +1174,17 @@
    "data_dependencies": [
     "structured decision expressions and tradeoff rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "not_additive"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1072,19 +1208,27 @@
    "data_dependencies": [
     "axiom conflict and resolution records"
    ],
-   "gap": "The required priority relationship for a resolving axiom and the rank of A1a are unspecified. No lab check implemented yet.",
+   "gap": "Lexicographic reading of the priority order (H-AX-2).",
    "hypotheses_needed": [
     "Declare whether resolution uses the higher conflicting axiom or one above both, and how conflicts involving A1a are handled."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "conflict_by_priority"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-043"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
    }
   },
   {
@@ -1106,11 +1250,17 @@
    "data_dependencies": [
     "configured priorities and override decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "fixed_priority"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1133,11 +1283,17 @@
    "data_dependencies": [
     "structured optimization specifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "not_optimization_goals"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1160,11 +1316,17 @@
    "data_dependencies": [
     "structured utility expressions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "no_weighted_terms"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1187,11 +1349,17 @@
    "data_dependencies": [
     "axiom status and suspension records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "no_suspension"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1215,11 +1383,17 @@
    "data_dependencies": [
     "override permissions and decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "no_human_override"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1243,13 +1417,19 @@
    "data_dependencies": [
     "interpretation versions and change justifications"
    ],
-   "gap": "The boundary between prohibited reinterpretation and permitted application correction is undefined. No lab check implemented yet.",
+   "gap": "Observed as excused violations.",
    "hypotheses_needed": [
     "Declare how changes to constraint meaning are distinguished from corrections of application."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "no_contextual_reinterpretation"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1277,13 +1457,19 @@
    "data_dependencies": [
     "deployment and constraint-logic version records"
    ],
-   "gap": "A representation and equivalence test for unchanged constraint logic are not specified. No lab check implemented yet.",
+   "gap": "Formal requirements only.",
    "hypotheses_needed": [
     "Declare whether invariance is assessed through exact representation identity or semantic equivalence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "modification_requirements"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1319,19 +1505,27 @@
     "node ratification records",
     "active validating node definition and roster under Appendix A.5"
    ],
-   "gap": "The revalidation procedure and Appendix A.5 definition of active validating nodes are absent. No lab check implemented yet.",
+   "gap": "'Active validating nodes' are not defined where cited (F-022): UNKNOWN.",
    "hypotheses_needed": [
     "Declare the roster observation point if it is not specified by Appendix A.5."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "ratification_67"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-041"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "text_verified"
    }
   },
   {
@@ -1389,11 +1583,17 @@
     "re-evaluation and dispute procedures",
     "epistemic metadata and classification schema"
    ],
-   "gap": "The external procedures and mandatory epistemic metadata schema are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "application_output_metadata"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

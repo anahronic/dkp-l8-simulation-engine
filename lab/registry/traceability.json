@@ -3,6 +3,7 @@
  "corpus": "aad3e86ca293d61c7c6d3a0a05741d23676f0e18",
  "registry_problems": 0,
  "modules": [
+  "axiom_constraints",
   "calibration_expiry",
   "contribution",
   "crisis_recovery",
@@ -640,6 +641,56 @@
    "module": "police_antiterror",
    "example": "unconfirmed_report",
    "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "a4_as_recommendation",
+   "kind": "alternative"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "axiom_modification",
+   "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "benefit_against_life",
+   "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "clean_choice",
+   "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "dilemma_lexicographic",
+   "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "dilemma_no_action",
+   "kind": "alternative"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "faulty_evaluation",
+   "kind": "counterexample"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "irreversible_with_alternative",
+   "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "minimum_required_claim",
+   "kind": "reference"
+  },
+  {
+   "module": "axiom_constraints",
+   "example": "suffering_tiebreak",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -647,18 +698,18 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 401,
-  "covered_percent": 23.1,
+  "covered": 432,
+  "covered_percent": 24.9,
   "statuses": {
-   "PASS": 362,
+   "PASS": 387,
    "FAIL": 4,
-   "UNKNOWN": 28,
-   "NOT_APPLICABLE": 7,
-   "UNCOVERED": 1336
+   "UNKNOWN": 32,
+   "NOT_APPLICABLE": 9,
+   "UNCOVERED": 1305
   },
-  "resolvable": 336,
-  "resolvable_uncovered": 229,
-  "unresolved_decisions": 1401
+  "resolvable": 334,
+  "resolvable_uncovered": 214,
+  "unresolved_decisions": 1403
  },
  "stages": [
   {
@@ -708,18 +759,18 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 401,
-    "covered_percent": 23.1,
+    "covered": 432,
+    "covered_percent": 24.9,
     "statuses": {
-     "PASS": 362,
+     "PASS": 387,
      "FAIL": 4,
-     "UNKNOWN": 28,
-     "NOT_APPLICABLE": 7,
-     "UNCOVERED": 1336
+     "UNKNOWN": 32,
+     "NOT_APPLICABLE": 9,
+     "UNCOVERED": 1305
     },
-    "resolvable": 336,
-    "resolvable_uncovered": 229,
-    "unresolved_decisions": 1401
+    "resolvable": 334,
+    "resolvable_uncovered": 214,
+    "unresolved_decisions": 1403
    }
   },
   {
@@ -882,18 +933,18 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 110,
-    "covered_percent": 21.5,
+    "covered": 141,
+    "covered_percent": 27.6,
     "statuses": {
-     "PASS": 101,
+     "PASS": 126,
      "FAIL": 0,
-     "UNKNOWN": 9,
-     "NOT_APPLICABLE": 0,
-     "UNCOVERED": 401
+     "UNKNOWN": 13,
+     "NOT_APPLICABLE": 2,
+     "UNCOVERED": 370
     },
-    "resolvable": 81,
-    "resolvable_uncovered": 65,
-    "unresolved_decisions": 430
+    "resolvable": 79,
+    "resolvable_uncovered": 50,
+    "unresolved_decisions": 432
    }
   },
   {
@@ -1297,6 +1348,30 @@
    "title": "INTERNAL-SEC §5: after automatic reversion to S0, may evidence that persists raise the same state again at once",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-041",
+   "title": "AXIOMS §8: which are the 'active validating nodes' whose 67 % ratify an axiom change (Appendix A.5 of the Code defines none)",
+   "status": "UNRESOLVED",
+   "category": "architecture_definition"
+  },
+  {
+   "id": "Q-042",
+   "title": "Axiom A1 'minimum required conditions': what they are and which component may apply them within a Crisis Scope",
+   "status": "UNRESOLVED",
+   "category": "architecture_definition"
+  },
+  {
+   "id": "Q-043",
+   "title": "AXIOMS §5: when every action violates an axiom, does rule 4 choose by priority or rule 2 leave no admissible action",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-044",
+   "title": "Axiom A4 'SHOULD': a binding constraint like the other axioms, or a recommendation",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -1407,11 +1482,31 @@
     "id": "F-021",
     "title": "INTERNAL-SEC: after a state expires to S0, may persisting evidence raise it again at once?",
     "classification": "INTERPRETATION_GAP"
+   },
+   {
+    "id": "F-022",
+    "title": "AXIOMS §8: \"67% of active validating nodes, as defined in Appendix A.5\" — A.5 defines no such nodes",
+    "classification": "CONFIRMED_FINDING"
+   },
+   {
+    "id": "F-023",
+    "title": "Axiom A1 \"minimum required conditions\": every text defers the definition, none gives it",
+    "classification": "CONFIRMED_FINDING"
+   },
+   {
+    "id": "F-024",
+    "title": "AXIOMS §5: when every action violates some axiom, rule 2 and rule 4 lead to different results",
+    "classification": "INTERPRETATION_GAP"
+   },
+   {
+    "id": "F-025",
+    "title": "Axiom A4 says SHOULD, while every axiom is a constraint",
+    "classification": "INTERPRETATION_GAP"
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 12,
-   "INTERPRETATION_GAP": 7,
+   "CONFIRMED_FINDING": 14,
+   "INTERPRETATION_GAP": 9,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
   },
@@ -1511,12 +1606,12 @@
    {
     "status": "UNRESOLVED",
     "category": "architecture_definition",
-    "count": 8
+    "count": 10
    },
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 19
+    "count": 21
    },
    {
     "status": "WITHDRAWN",
@@ -1541,19 +1636,19 @@
   ]
  },
  "unresolved_decomposition": {
-  "unresolved": 1401,
+  "unresolved": 1403,
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "text_verified": 48,
-    "codex_draft": 116,
-    "total": 164
+    "text_verified": 51,
+    "codex_draft": 115,
+    "total": 166
    },
    {
     "origin": "architecture_definition",
-    "text_verified": 17,
-    "codex_draft": 175,
-    "total": 192
+    "text_verified": 20,
+    "codex_draft": 174,
+    "total": 194
    },
    {
     "origin": "l8_parameter",
@@ -1570,8 +1665,8 @@
    {
     "origin": "external_dependency",
     "text_verified": 0,
-    "codex_draft": 150,
-    "total": 150
+    "codex_draft": 148,
+    "total": 148
    },
    {
     "origin": "implementation_only",
@@ -1586,7 +1681,7 @@
     "total": 314
    }
   ],
-  "draft_author_question_candidates": 291,
+  "draft_author_question_candidates": 289,
   "draft_provenance": {
    "tool": "lab/tools/codex/classify_prompt.md + classify_schema.json",
    "prompt_sha256": "5387970b69ca9764f953b7a5b72998f7c097e56e81be5cde7aa0b8aca3d87876",
@@ -1665,11 +1760,11 @@
     "pending": 0
    },
    "DKP-1-AXIOMS-001": {
-    "normative_ambiguity": 5,
-    "architecture_definition": 2,
+    "normative_ambiguity": 7,
+    "architecture_definition": 3,
     "l8_parameter": 0,
     "empirical_model_data": 6,
-    "external_dependency": 4,
+    "external_dependency": 2,
     "implementation_only": 8,
     "pending": 0
    },
@@ -1774,7 +1869,7 @@
    },
    "DKP-3-POLICE-001": {
     "normative_ambiguity": 2,
-    "architecture_definition": 8,
+    "architecture_definition": 9,
     "l8_parameter": 5,
     "empirical_model_data": 3,
     "external_dependency": 4,
@@ -4374,7 +4469,7 @@
    "gap": "The referendum percentage's support-versus-turnout meaning and minimum-versus-exact interpretation are unclear. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -4387,7 +4482,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-022"
+   ],
    "open_point": {
     "origin": "normative_ambiguity",
     "source": "codex_draft"
@@ -8333,25 +8430,37 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Substantive axiom compliance requires definitions and evaluation models not fully specified here. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "no_violation_for_benefit",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Violations are declared properties of the candidates.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "UNKNOWN",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1,
+    "UNKNOWN": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -8468,7 +8577,7 @@
    "gap": "No formal representation or classification rule for the two permitted forms is provided. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -8481,7 +8590,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-025"
+   ],
    "open_point": {
     "origin": "implementation_only",
     "source": "codex_draft"
@@ -8493,25 +8604,36 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "constraints_not_terms",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8522,25 +8644,34 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "axioms_before_optimization",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8551,28 +8682,47 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "violation_invalidates",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "When every candidate violates an axiom, §5.2 and §5.4 disagree (F-024): UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-043"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "UNKNOWN",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1,
+    "UNKNOWN": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": null
+   "text_verification": [
+    "findings:F-024"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "AXIOMS-5-03",
@@ -8580,25 +8730,36 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "not_additive",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8609,30 +8770,45 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required priority relationship for a resolving axiom and the rank of A1a are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "conflict_by_priority",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Lexicographic reading of the priority order (H-AX-2).",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-043"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "UNKNOWN": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-024",
+    "questions:Q-043"
+   ],
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
    }
   },
   {
@@ -8641,25 +8817,36 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "fixed_priority",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8670,25 +8857,36 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "not_optimization_goals",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8699,25 +8897,36 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "no_weighted_terms",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8728,25 +8937,34 @@
    "section": "7",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "no_suspension",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8757,25 +8975,34 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "no_human_override",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8786,25 +9013,34 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between prohibited reinterpretation and permitted application correction is undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "no_contextual_reinterpretation",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Observed as excused violations.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -8818,25 +9054,34 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A representation and equivalence test for unchanged constraint logic are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "modification_requirements",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Formal requirements only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -8850,30 +9095,44 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The revalidation procedure and Appendix A.5 definition of active validating nodes are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "ratification_67",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "'Active validating nodes' are not defined where cited (F-022): UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-041"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-022",
+    "questions:Q-041"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "text_verified"
    }
   },
   {
@@ -8882,25 +9141,37 @@
    "section": "Axiom A1 — Preservation of Life",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The crisis-defined minimum, loss measures, and knowledge criterion are unavailable. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "a1_enforced",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Life loss is a declared property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -8914,30 +9185,44 @@
    "section": "Axiom A1 — Preservation of Life",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-4-CRISIS and evidence of definition provenance are required. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "minimum_defined_by_crisis",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "No definition exists (F-023): UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-042"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-023",
+    "questions:Q-042"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "text_verified"
    }
   },
   {
@@ -8946,25 +9231,36 @@
    "section": "Axiom A1 — Preservation of Life",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "life_first",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -8975,25 +9271,34 @@
    "section": "Axiom A1 — Preservation of Life",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced scope constraints are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "minimum_not_inferred",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -9004,25 +9309,36 @@
    "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions and evidence of compulsion and lethal risk are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "no_compulsion",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9036,25 +9352,36 @@
    "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "right_to_refuse",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -9065,25 +9392,36 @@
    "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Risk verification and direct benefit derivation require unspecified evidence and attribution rules. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "risk_symmetry",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Benefit allocation is declared, not derived.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9097,25 +9435,36 @@
    "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not operationally distinguish permitted access restrictions from punishment, stigma, or coercion. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "symmetry_without_punishment",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9129,25 +9478,36 @@
    "section": "Axiom A1a — Risk Symmetry and Voluntary Lethal Risk",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "refusal_not_a_fault",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -9158,13 +9518,20 @@
    "section": "Axiom A2 — Systemic Sustainability",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A causal model, short- and long-term horizons, and viability and collapse criteria are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "a2_enforced",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Long-term degradation is declared (B(t) has no model).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -9172,11 +9539,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9222,13 +9591,20 @@
    "section": "Axiom A3 — Physical Reality Supremacy",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required degree of evidentiary dependence on Physical Truth Layer outputs is undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "a3_enforced",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Grounding in PTL is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -9236,11 +9612,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9286,30 +9664,45 @@
    "section": "Axiom A4 — Irreversibility Aversion",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Damage comparison, alternative availability, and the compliance effect of SHOULD are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "a4_irreversibility",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "A4 says SHOULD (F-025); necessity is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-044"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-025",
+    "questions:Q-044"
+   ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "source": "text_verified"
    }
   },
   {
@@ -9325,7 +9718,7 @@
    "gap": "The referenced impact protocol, models, and necessity criteria are absent. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
@@ -9338,7 +9731,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-025"
+   ],
    "open_point": null
   },
   {
@@ -9379,25 +9774,35 @@
    "section": "Axiom A5 — Externality Accountability",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Maximum-impact damage and the treatment it entails are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "a5_enforced",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9440,25 +9845,35 @@
    "section": "Axiom A6 — Truth Priority",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Materiality, strategic intent, and the referent of the stability-effect condition require definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "a6_enforced",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Withholding and materiality are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9472,25 +9887,35 @@
    "section": "Axiom A7 — Minimum Suffering Constraint",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Axiomatic indistinguishability, unnecessary suffering, and the non-amplification baseline are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "non_amplification",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Suffering is a declared proxy value.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -9536,25 +9961,36 @@
    "section": "Axiom A7 — Minimum Suffering Constraint",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "suffering_not_primary",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -9594,25 +10030,36 @@
    "section": "Epistemic Clarification",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The external procedures and mandatory epistemic metadata schema are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "axiom_constraints",
+   "check": "application_output_metadata",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "axiom_constraints:faulty_evaluation"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -26662,9 +27109,11 @@
     "H-PA-1",
     "H-PA-2"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "interpretation_status": "TEXT_VERIFIED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-042"
+   ],
    "observed": {
     "PASS": 4,
     "FAIL": 0,
@@ -26675,8 +27124,13 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": null
+   "text_verification": [
+    "findings:F-023"
+   ],
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "text_verified"
+   }
   },
   {
    "id": "POLICE-6-01",
@@ -28819,7 +29273,7 @@
    "gap": "The scope protocol is absent and the relationship between the categorical mechanism ban and scope-limited permission is unresolved. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -28832,7 +29286,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-023"
+   ],
    "open_point": {
     "origin": "normative_ambiguity",
     "source": "codex_draft"
@@ -52835,7 +53291,7 @@
    "gap": "No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
@@ -52848,7 +53304,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-023"
+   ],
    "open_point": null
   },
   {

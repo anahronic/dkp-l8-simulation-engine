@@ -44,6 +44,10 @@ documented numbers as regressions.
 | [F-019](F-019.md) | An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR) | INTERPRETATION_GAP | Q-038 |
 | [F-020](F-020.md) | UPGRADE defers the post-crisis stabilization period to AUDIT, which does not define it | CONFIRMED_FINDING | Q-039 |
 | [F-021](F-021.md) | INTERNAL-SEC: re-entry after a state expires to S0 is not defined | INTERPRETATION_GAP | Q-040 |
+| [F-022](F-022.md) | AXIOMS §8 ratifies by '67% of active validating nodes, as defined in Appendix A.5' — A.5 defines none | CONFIRMED_FINDING | Q-041 |
+| [F-023](F-023.md) | Axiom A1 'minimum required conditions': AXIOMS, CRISIS and SCOPE defer the definition to each other | CONFIRMED_FINDING | Q-042 |
+| [F-024](F-024.md) | AXIOMS §5: rules 2 and 4 differ when every action violates an axiom | INTERPRETATION_GAP | Q-043 |
+| [F-025](F-025.md) | Axiom A4 says SHOULD while every axiom is a constraint | INTERPRETATION_GAP | Q-044 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

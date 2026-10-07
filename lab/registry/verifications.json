@@ -548,6 +548,103 @@
     }
    ],
    "conclusion": "Maximum durations and automatic reversion are literal; whether evidence that persists after the reversion may drive the same state again at once is not said. The two readings keep every stated limit but give 8 or 3 days of containment for a 10-day compromise."
+  },
+  {
+   "id": "F-022",
+   "classification": "CONFIRMED_FINDING",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "§8",
+     "text": "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.5",
+     "text": "#### A.5. Minimum Startup Cluster (6+1)"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.5",
+     "text": "After this, new territories connect only via a referendum of 67% of the adult population + deposit of a Peace Stake."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "absent": "validating node"
+    }
+   ],
+   "conclusion": "Appendix A.5 defines a startup cluster and a population referendum for new territories; it defines neither 'active validating nodes' nor a ratification procedure for axiom changes."
+  },
+  {
+   "id": "F-023",
+   "classification": "CONFIRMED_FINDING",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "A1",
+     "text": "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS and SHALL NOT be inferred, approximated, or declared by operational, economic, or enforcement protocols."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§7",
+     "text": "Interpretation of “minimum required conditions” under Axiom A1 SHALL NOT be inferred, extended, or operationalized by Crisis execution logic or by any operational, economic, or enforcement mechanism."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§7",
+     "text": "Such interpretation is permitted only within the Crisis Scope explicitly defined in DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "Crisis Scope",
+     "text": "Crisis Scope is defined and activated only by DKP-4-CRISIS-001,"
+    },
+    {
+     "doc": "DKP-3-POLICE-001",
+     "at": "§5.2",
+     "text": "Lethal force is permitted only under Axiom A1 minimum-required conditions, as defined exclusively by DKP-4-CRISIS-001."
+    }
+   ],
+   "conclusion": "AXIOMS assigns the definition to CRISIS; CRISIS gives none, forbids its execution logic and every operational mechanism to operationalize it and permits interpretation only inside a Crisis Scope, which SCOPE says only CRISIS defines. No text defines the conditions or a component allowed to apply them; POLICE lethal force depends on them."
+  },
+  {
+   "id": "F-024",
+   "classification": "INTERPRETATION_GAP",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "§5",
+     "text": "2. Violation of any axiom invalidates an action regardless of utility score and propagates to higher-layer protocols for enforcement."
+    },
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "§5",
+     "text": "4. Conflicts between axioms are resolved only by higher-priority axioms."
+    }
+   ],
+   "conclusion": "With an axiom-clean action both rules agree; in a dilemma rule 2 invalidates every action and rule 4 resolves by priority. The text does not say which applies."
+  },
+  {
+   "id": "F-025",
+   "classification": "INTERPRETATION_GAP",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "A4",
+     "text": "System actions SHOULD minimize irreversible damage when reversible alternatives exist."
+    },
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "§3",
+     "text": "Each axiom is defined as: - a forbidden state, or - a hard priority ordering between competing system objectives."
+    },
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "A4",
+     "text": "Irreversible transitions require demonstrable necessity verified by irreversible impact models under DKP-1-IMPACT."
+    }
+   ],
+   "conclusion": "A4 alone uses SHOULD while every axiom is a constraint; the two readings choose differently. IMPACT has no irreversible impact models, so necessity can only be declared."
   }
  ],
  "reference_fails": [
@@ -1365,6 +1462,62 @@
     }
    ],
    "reason": "Re-entry after an automatic reversion is neither allowed nor forbidden; the readings change how long an ongoing compromise is contained."
+  },
+  {
+   "id": "Q-041",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-022",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "§8",
+     "text": "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy"
+    }
+   ],
+   "reason": "The referenced set and ratification procedure are not defined where cited."
+  },
+  {
+   "id": "Q-042",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-023",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "A1",
+     "text": "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS"
+    }
+   ],
+   "reason": "No text defines the conditions or the component allowed to apply them inside a Crisis Scope."
+  },
+  {
+   "id": "Q-043",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-024",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "§5",
+     "text": "4. Conflicts between axioms are resolved only by higher-priority axioms."
+    }
+   ],
+   "reason": "Rules 2 and 4 of §5 give different results when no action is axiom-clean."
+  },
+  {
+   "id": "Q-044",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-025",
+   "quotes": [
+    {
+     "doc": "DKP-1-AXIOMS-001",
+     "at": "A4",
+     "text": "System actions SHOULD minimize irreversible damage when reversible alternatives exist."
+    }
+   ],
+   "reason": "SHOULD in an axiom that §3/§5 treat as a constraint; the readings choose differently."
   }
  ]
 }
