@@ -45,10 +45,7 @@
    "DKP-5-TRANSPORT-001",
    "DKP-5-WORK-CYCLE-001",
    "DKP-6-EXIT-001",
-   "DKP-6-INTEGRATION-001"
-  ],
-  "author_candidate_flags_corrected": 18,
-  "documents_pending": [
+   "DKP-6-INTEGRATION-001",
    "DKP-6-RESILIENCE-001",
    "DKP-7-AI-SUBJECT-001",
    "DKP-7-PRIVACY-001",
@@ -57,9 +54,283 @@
    "DKP-8-AUDIT-001",
    "DKP-8-INTEROP-001",
    "DKP-8-SIMULATION-001"
+  ],
+  "author_candidate_flags_corrected": 26,
+  "closed_since_classification": [
+   "CRISIS-Non-PrecedentRule_-04",
+   "CRISISPATCH-3-01",
+   "ETRANS-4.4-02",
+   "IMPACT-2-02",
+   "IMPACT-6-01",
+   "INTEROP-9-04",
+   "ORACLE-12-04"
+  ],
+  "unclassified_open_points": [
+   "AXIOMS-5-02",
+   "ERROR-7-02",
+   "POLICE-5.2-04"
   ]
  },
  "items": {
+  "AISUBJECT-1-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Identifying whether actual permissions and behavior confer 'sovereign, discretionary, interpretive, or normative power' requires capability assessment against the operational prohibitions in §§2 and 8."
+  },
+  "AISUBJECT-1-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Learned preference' and 'emergent strategy' require behavioral evidence or models to detect conflict, while 'override and invalidate' clearly establishes precedence."
+  },
+  "AISUBJECT-1-04": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Humans choose' and 'AI executes or stops' are operationally elaborated by §§2.1–2.3, so the draft's claimed absence of a choice-versus-execution distinction does not establish an unresolved reading."
+  },
+  "AISUBJECT-2-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Unless a deterministic protocol rule selects one' requires the applicable selecting protocol and admissibility constraints, which are not supplied here."
+  },
+  "AISUBJECT-2-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Without ranking' prohibits preference ordering, supplemented by §2.3's prohibition on inducing a preferred choice, and the draft does not establish that mere presentation sequence creates a separate normative ambiguity."
+  },
+  "AISUBJECT-2-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Recognizing implicit instances of 'recommend a preferred action' requires semantic assessment of outputs and behavior."
+  },
+  "AISUBJECT-2-04": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Justify decisions' can encompass explanatory reasons presented as §6.2 'audit evidence', and the document does not settle whether such explanations constitute prohibited justification."
+  },
+  "AISUBJECT-2-05": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Recognizing behavior that would 'resolve conflicts between values' requires semantic evidence, while §8.3 already requires halting upon 'conflict' rather than independently resolving ordinary constraint conflicts."
+  },
+  "AISUBJECT-2-06": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Replace plurality of human decision-making with algorithmic preference' is constrained by §2.1's external-selection requirement and §2.3's preference prohibitions without requiring the draft's proposed numerical measure of plurality."
+  },
+  "AISUBJECT-2-07": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'To induce a preferred choice' requires evidence of presentation purpose and behavioral influence, which presentation differences alone cannot establish."
+  },
+  "AISUBJECT-3-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'An AI cannot absorb responsibility' expressly excludes AI responsibility absorption, and §1.1's 'never an authority' defeats the draft's suggestion that Subject status alone permits AI authorization."
+  },
+  "AISUBJECT-3-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Dilute responsibility via' the listed mechanisms requires evidence that those mechanisms weaken attribution, rather than merely evidence that complexity or delegation exists."
+  },
+  "AISUBJECT-3-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Identity is continuous across updates, forks, deployments, and parameter changes' supplies no identity relation defining how branching instances retain continuity."
+  },
+  "AISUBJECT-3-04": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "architecture_definition",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "'Identity fragmentation' depends on the undefined continuity relation in §3.3, while 'to evade audit, liability, or responsibility' additionally requires evidence of evasive purpose."
+  },
+  "AISUBJECT-4-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Prevent, delay, or manipulate Subject exit' requires an observed or modeled exit baseline and causal attribution of interference to AI."
+  },
+  "AISUBJECT-4-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Economic, procedural, or informational friction to retain Subjects' requires evidence of imposed burdens and their retention purpose."
+  },
+  "AISUBJECT-4-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "normative_ambiguity",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "'As a system objective' can qualify the entire coordinated prohibition or only optimization, changing whether incidental participation-directed nudging or persuasion is prohibited."
+  },
+  "AISUBJECT-5-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Authoritative and non-negotiable' forbids overriding PTL data, while §8.3 already directs the AI to halt upon 'conflict', resolving the draft's proposed need for discretionary reconciliation of conflicting readings."
+  },
+  "AISUBJECT-5-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Detecting whether processing would 'reinterpret, infer intent from, or suppress PTL signals or anomalies' requires semantic and behavioral assessment beyond recognizing explicit numerical transformations."
+  },
+  "AISUBJECT-5-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Divergence events' and 'dependent actions' lack an event definition and dependency model, although the 'PHYSICAL TRUTH LAYER (PTL) INTEGRITY' heading resolves the draft's proposed global-scope reading."
+  },
+  "AISUBJECT-6-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Determining whether behavior would 'optimize system stability, welfare, sustainability, efficiency, fairness, growth, entropy, resilience, or risk' requires an objective-inference or behavioral model."
+  },
+  "AISUBJECT-6-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Solely for constraint verification and audit evidence' identifies permitted purposes without requiring every computation to serve both, leaving attribution of actual metric purposes as the substantive evidentiary gap."
+  },
+  "AISUBJECT-6-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Any attempt to minimize' requires identifying attempted objectives even without success, and §4.2's ban on imposing retention friction does not require minimizing friction."
+  },
+  "AISUBJECT-7-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Enter Crisis Scope' must be assessed against §7.2's exclusive 'DKP-4-CRISIS-001 state machine entry conditions', whose absence prevents distinguishing authorized evaluation from prohibited substitutes."
+  },
+  "AISUBJECT-7-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'DKP-4-CRISIS-001 state machine entry conditions' and 'the required escalation path' explicitly depend on an unsupplied protocol."
+  },
+  "AISUBJECT-7-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Survival-oriented' does not specify whether the relevant survival is that of particular Subjects, a population, or the system, allowing different evaluations of the same crisis action."
+  },
+  "AISUBJECT-7-04": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Authority-minimized' does not specify whose authority or whether its scope, concentration, or duration must be minimized, and the ban on AI authority does not settle those comparisons."
+  },
+  "AISUBJECT-7-05": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Reversible where physically possible' requires a physical feasibility model of the action and its reversal, without requiring every action actually to be reversed."
+  },
+  "AISUBJECT-7-06": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "l8_parameter",
+   "secondary": "normative_ambiguity",
+   "author_question_candidate": false,
+   "rationale": "'Time-limited' requires calibrated durations and separately leaves unresolved whether the limit governs action execution, authorization, or continuing effects."
+  },
+  "AISUBJECT-7-07": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Auditable' lacks a required evidence and access contract, and §7.6's logging-continuity requirement does not define what an audit must be able to inspect."
+  },
+  "AISUBJECT-7-08": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Create normative, procedural, or interpretive precedent' requires evidence that later rules or decisions derive authority from a crisis action, rather than merely mention it."
+  },
+  "AISUBJECT-7-09": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Only when explicitly defined by Crisis/Mercy logic' conditions the coordinated permissions on missing external logic that must supply severity-reduction rules and narrowly authorized TTL extensions."
+  },
+  "AISUBJECT-7-10": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Audit visibility and PTL logging' lack an access interface and expected logging-event contract against which 'uninterrupted in all modes' can be checked."
+  },
+  "AISUBJECT-8-01": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'DKP-7 scope boundaries' and 'protocol interpretation rules' are referenced without identifying the complete protected rule sets or their authoritative representations."
+  },
+  "AISUBJECT-8-02": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Create implicit authority or discretionary power' requires assessing the capabilities produced by learning, while the Constitution itself supplies fixed constraints that the draft should not treat as wholly absent."
+  },
+  "AISUBJECT-8-03": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "normative_ambiguity",
+   "secondary": "architecture_definition",
+   "author_question_candidate": true,
+   "rationale": "'Halt action' does not settle whether unaffected operational actions must also stop, and 'explicit authorized resolution' lacks an authorization mechanism even though §7.6 preserves audit and logging."
+  },
+  "AISUBJECT-8-04": {
+   "document": "DKP-7-AI-SUBJECT-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Acting “to help” under uncertainty or to improve outcomes' leaves unclear whether all outcome-improvement actions are prohibited or only those also undertaken 'to help'."
+  },
   "ANTITERROR-0-01": {
    "document": "DKP-3-ANTITERROR-001",
    "primary": "normative_ambiguity",
@@ -570,6 +841,244 @@
    "secondary": null,
    "author_question_candidate": false,
    "rationale": "“Algorithmic custodianship under open rules,” together with the prohibition on discretionary control or override, supplies the distinction that the draft incorrectly treats as wholly undefined."
+  },
+  "AUDIT-1-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Permanent structural condition,” together with audit of “all protocol executions” and “no audit suspension,” establishes continuous coverage; representing and checking that coverage is an implementation task."
+  },
+  "AUDIT-1-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Verifies correctness of execution” is grounded in the declared specifications and section 5 invariants, so the draft does not establish an unresolved boundary requiring an author-defined classification."
+  },
+  "AUDIT-10-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Audit observes and reports only,” together with its position “upstream of enforcement, remediation, and halt mechanisms,” resolves the draft's apparent conflict between reporting triggers and direct execution control."
+  },
+  "AUDIT-11-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“During Crisis Mercy conditions” depends on externally established crisis and mercy states, while “continues uninterrupted” and “no audit suspension” clearly specify audit behavior within those states."
+  },
+  "AUDIT-11-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Mercy affects response severity, not audit visibility,” read with uninterrupted audit and retention of all deviations, limits mercy's permitted effects without requiring a severity change in every invocation."
+  },
+  "AUDIT-12-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Controlled procedure of DKP-4-UPGRADE-001” delegates acceptance, activation, and rollback semantics to that unavailable protocol, while the presentation-only exception is stated locally."
+  },
+  "AUDIT-12-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Presentation-only corrections” being “recorded only by the ‘Last updated’ date” supplies the specific exception to “any modification requires a new protocol identifier,” so the draft invents an unresolved ambiguity."
+  },
+  "AUDIT-12-03": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Mandatory simulation under DKP-8-SIMULATION-001” requires the unavailable simulation rules, while presentation-only corrections being “not Upgrades” and recorded “only” by date resolves their exemption."
+  },
+  "AUDIT-12-04": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Explicit compatibility declaration” requires a checkable declaration, and the later rule recording presentation-only corrections “only” by date resolves the draft's proposed applicability ambiguity."
+  },
+  "AUDIT-12-05": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Do not change normative content” supplies the correction criterion, and date-only correction recording can coexist with the separate SHA-256 requirement for “each published edition,” leaving change assessment and records to implementation."
+  },
+  "AUDIT-2-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "architecture_definition",
+   "secondary": "external_dependency",
+   "author_question_candidate": true,
+   "rationale": "“Downstream,” “parallel,” and “upstream” lack defined interface or ordering semantics, while “constrained by DKP-7-SCOPE-001” additionally requires an unavailable protocol."
+  },
+  "AUDIT-2-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Audit outputs SHALL NOT” lists explicit authority restrictions, and “Audit observes and reports only” resolves the distinction between reporting deviations and exercising prohibited decision authority."
+  },
+  "AUDIT-3-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“A verifiable record of protocol execution state” does not define the execution-state information or verification interface that an Audit Event must expose."
+  },
+  "AUDIT-3-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Audit Events covering an execution interval” lacks a structural mapping from execution activity to required events, even though section 4 establishes comprehensive audit scope."
+  },
+  "AUDIT-3-03": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST hold true at all times” states an unqualified invariant obligation; constructing executable predicates and sufficient verification evidence does not require choosing another normative reading."
+  },
+  "AUDIT-3-05": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Deviation without explicit error or halt signal” requires an unspecified correlation and signal-lifecycle model to determine which signals acknowledge a particular deviation."
+  },
+  "AUDIT-4-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“All protocol executions,” “all parameter accesses and updates,” and the remaining exhaustive categories establish coverage, leaving activity instrumentation and coverage checks to implementation."
+  },
+  "AUDIT-4-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Non-system cultural expression” and “off-chain activity without system effect” require contextual evidence and causal assessment to classify actual activities."
+  },
+  "AUDIT-5-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be continuously verified,” read with invariants holding “at all times,” specifies the coverage obligation without requiring the author to select an event-triggered or monitoring implementation."
+  },
+  "AUDIT-5.1-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“No execution path SHALL violate DKP-1-AXIOMS-001” requires the unavailable axioms, while “no execution path” already rules out treating observed paths as the entire obligation."
+  },
+  "AUDIT-5.1-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Immediate escalation” establishes urgency, while any numerical latency tolerance needed for a laboratory check is a calibration parameter rather than a normative ambiguity."
+  },
+  "AUDIT-5.2-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Without formal upgrade” requires DKP-4-UPGRADE-001, whereas section 7 already identifies scope breaches as “D3 — Structural Breach.”"
+  },
+  "AUDIT-5.3-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Runtime tuning, adaptive optimization, or silent calibration” appears under “Parameter Integrity” immediately after the parameter-modification restriction, resolving the draft's proposed ambiguity about unrelated optimization."
+  },
+  "AUDIT-5.4-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Identical inputs” and “identical outputs” require a defined execution interface identifying relevant state and context, although the universal determinism obligation itself is clear."
+  },
+  "AUDIT-5.5-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "architecture_definition",
+   "secondary": "external_dependency",
+   "author_question_candidate": true,
+   "rationale": "“Systemic fault” has no defined mapping to deviation classes or response mechanisms, and “valid Subjects per DKP-1-IDENTITY-001” additionally depends on an unavailable protocol."
+  },
+  "AUDIT-6-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Cryptographically signed execution traces,” hashing, replay, independent recomputation, and replica checks specify the required mechanisms, leaving their concrete verification procedures to implementation."
+  },
+  "AUDIT-6-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Selectively anonymized under DKP-7-SCOPE-001” requires unavailable scope rules, while immutability, time indexing, and public aggregate verification remain implementation obligations."
+  },
+  "AUDIT-7-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "normative_ambiguity",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "“Bounded, reversible,” “scope, axiom, or parameter integrity,” and “systematic, concealed, or coordinated” can overlap without a precedence rule despite different escalation pathways, and impact or coordination also requires evidence."
+  },
+  "AUDIT-8-04": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Immediate halt” needs a calibrated latency tolerance for measurement, whereas “trigger” requires evidence that upgrade review was initiated without imposing an unstated completion deadline."
+  },
+  "AUDIT-8-05": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Audit SHALL NOT apply punishment” is operationally constrained by “observes and reports only,” the prohibition on substituting for justice decisions, and the enumerated procedural escalation pathways."
+  },
+  "AUDIT-9-01": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Accessible for independent verification” and “SHALL expose methodology and invariants checked” specify the required access and evidence, leaving their delivery and verification to implementation."
+  },
+  "AUDIT-9-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“No audit process may be proprietary, closed, or authority-gated” governs process openness, while the explicit aggregation and anonymization provisions already accommodate protected underlying data."
+  },
+  "AUDIT-EpistemicMetadataVerification-02": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Upstream propagation rules,” “unauthorized upgrades,” and “expiration and staleness” depend on upstream epistemic rules and state information not supplied in this document."
+  },
+  "AUDIT-EpistemicMetadataVerification-03": {
+   "document": "DKP-8-AUDIT-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Classification per DKP-1-EPISTEMIC-BOUNDARIES-001 Section 5” expressly delegates the classification rules to an unavailable document."
   },
   "AXIOMS-1-01": {
    "document": "DKP-1-AXIOMS-001",
@@ -1656,13 +2165,6 @@
    "author_question_candidate": false,
    "rationale": "'No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol' is unqualified; the draft invents an authority-only exception and confuses identifiers with parameter definitions."
   },
-  "CRISIS-Non-PrecedentRule_-04": {
-   "document": "DKP-4-CRISIS-001",
-   "primary": "l8_parameter",
-   "secondary": null,
-   "author_question_candidate": false,
-   "rationale": "'Defined, tested, and validated exclusively under DKP-8-SIMULATION-001' explicitly assigns the missing authority, cadence, and exit parameters to L8 calibration."
-  },
   "CRISISPATCH-0-01": {
    "document": "DKP-4-CRISIS-001-PATCH",
    "primary": "normative_ambiguity",
@@ -1697,13 +2199,6 @@
    "secondary": "external_dependency",
    "author_question_candidate": true,
    "rationale": "“N_eff” lacks a quantity definition and input interface, while “oracle consistency invalid” depends on the unavailable referenced DKP-0-ORACLE-001."
-  },
-  "CRISISPATCH-3-01": {
-   "document": "DKP-4-CRISIS-001-PATCH",
-   "primary": "implementation_only",
-   "secondary": null,
-   "author_question_candidate": false,
-   "rationale": "“state = NO_ENFORCEMENT” explicitly supplies the required state assignment once section 2's trigger holds."
   },
   "CRISISPATCH-3-04": {
    "document": "DKP-4-CRISIS-001-PATCH",
@@ -3301,13 +3796,6 @@
    "author_question_candidate": true,
    "rationale": "“Full epistemic metadata” requires a metadata schema and “recomputation under updated inputs” requires an input-coverage contract, neither of which is supplied."
   },
-  "ETRANS-4.4-02": {
-   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
-   "primary": "implementation_only",
-   "secondary": null,
-   "author_question_candidate": false,
-   "rationale": "“Previous outputs SHALL NOT auto-reactivate” directly specifies the prohibited event and needs only output identity and activation records to check."
-  },
   "ETRANS-4.5-01": {
    "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
    "primary": "architecture_definition",
@@ -4596,13 +5084,6 @@
    "author_question_candidate": false,
    "rationale": "“Do not change normative content” and “Last updated” provide a clear preservation test and map naturally to last_updated, while any additional rules in “DKP-4-UPGRADE-001 §3” require that external text."
   },
-  "IMPACT-2-02": {
-   "document": "DKP-1-IMPACT-001",
-   "primary": "implementation_only",
-   "secondary": null,
-   "author_question_candidate": false,
-   "rationale": "“MUST be explicitly imported from” and the ensuing source list establish a clear provenance check requiring import records and validation code."
-  },
   "IMPACT-2-03": {
    "document": "DKP-1-IMPACT-001",
    "primary": "architecture_definition",
@@ -4644,13 +5125,6 @@
    "secondary": null,
    "author_question_candidate": false,
    "rationale": "“No aggregation across channels is permitted” states a direct prohibition requiring inspection of computation lineage."
-  },
-  "IMPACT-6-01": {
-   "document": "DKP-1-IMPACT-001",
-   "primary": "implementation_only",
-   "secondary": null,
-   "author_question_candidate": false,
-   "rationale": "“Each impact channel SHALL declare its applicable reference bounds Bᵢ” and the ensuing constraints specify clear declaration, immutability, and provenance checks."
   },
   "IMPACT-6-02": {
    "document": "DKP-1-IMPACT-001",
@@ -5267,6 +5741,293 @@
    "secondary": "empirical_model_data",
    "author_question_candidate": true,
    "rationale": "“Beyond interface compatibility” lacks a defined integration interface, while verifying that cultural and linguistic systems “remain untouched” requires evidence about integration effects."
+  },
+  "INTEROP-1-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "The exclusions “harmonize legal systems,” “enforce DKP externally,” and “accept external norms as binding within DKP” specify prohibited effects; implementing their detection does not establish a competing normative reading."
+  },
+  "INTEROP-10-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Automatic legal harmonization” is prohibited consistently with §1’s exclusion of harmonization and §3’s definition of translation as mapping representations."
+  },
+  "INTEROP-10-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Algorithmic dependency on external decision systems” does not distinguish prohibited reliance on their decisions from data or availability dependencies arising through the expressly permitted bridges and oracle mirroring."
+  },
+  "INTEROP-10-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Governance-by-API” is distinguished from §7’s permitted “API access” by §1’s prohibition on implicit authority transfer and §4.3’s restriction on deriving legitimacy, obligation, or consent from compatibility."
+  },
+  "INTEROP-10-04": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Silent import of external norms” is constrained by §3’s explicit-authorization condition, §5’s rejection of internally binding external rulings, and §11’s boundary-event recording requirement."
+  },
+  "INTEROP-10-05": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Permanent delegation” does not settle whether an indefinite but revocable delegation is prohibited or whether permanence requires irrevocability."
+  },
+  "INTEROP-11-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "The requirement “MUST be auditable” operates under the absent DKP-8-AUDIT-001, to which §11 exclusively assigns audit authority and §7 assigns audit-hook compatibility."
+  },
+  "INTEROP-11-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST expose translation logic” does not specify whether access must be public or restricted to authorized auditors, and “open specifications” does not expressly settle access to the logic itself."
+  },
+  "INTEROP-11-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST record boundary events for post-facto review” specifies the recording purpose, while a suitable event schema and storage policy are implementation work rather than unstated normative requirements."
+  },
+  "INTEROP-11-04": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Governed exclusively by DKP-8-AUDIT-001” expressly places audit authority in a document outside the supplied corpus."
+  },
+  "INTEROP-12-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Resolve geopolitical conflicts” clearly excludes a substantive conflict-resolution function from the protocol’s defined translational remit, leaving operation classification to implementation."
+  },
+  "INTEROP-12-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Unify legal systems” is excluded consistently with §1’s rejection of legal harmonization and §3’s permitted mapping between distinct representations."
+  },
+  "INTEROP-12-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Guarantee compliance by external actors” plainly restricts protocol commitments, so missing guarantee records or recognition code do not create a normative ambiguity."
+  },
+  "INTEROP-12-04": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Act as an enforcement bridge” is bounded in both directions by §1’s exclusion of enforcing DKP externally and §5’s refusal to recognize external rulings as internally binding."
+  },
+  "INTEROP-12-05": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Compatibility, not convergence” summarizes the defined translational interfaces and exclusions of legal harmonization and unification, so the draft’s demand for an additional independent acceptance standard is unsupported."
+  },
+  "INTEROP-13-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“The controlled procedure of DKP-4-UPGRADE-001” expressly delegates the upgrade process, including its simulation, audit, activation, and rollback requirements, to absent protocols."
+  },
+  "INTEROP-13-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Any modification requires a new protocol identifier” is qualified by presentation-only corrections being “recorded only” through the date, while the draft supplies no textual basis for competing identifier-freshness regimes."
+  },
+  "INTEROP-13-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Mandatory simulation under DKP-8-SIMULATION-001” requires the simulation procedure specified by an absent document."
+  },
+  "INTEROP-13-05": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Corrections that “do not change normative content” receive date-only correction recording, while “each published edition” separately requires an integrity digest, so these clauses do not establish the draft’s claimed recording conflict."
+  },
+  "INTEROP-13-06": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "The “canonical source” and its listing in “SHA256SUMS.txt” must be obtained from the named canonical repository; the text specifies SHA-256 and does not require an additional canonicalization transformation."
+  },
+  "INTEROP-2-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Purely translational” is explained by §3’s “deterministic mapping between DKP-native representations and external representations” and the authority restrictions in §4."
+  },
+  "INTEROP-3-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“A formally defined interface” requires an interface specification but does not require the protocol author to select its specification language."
+  },
+  "INTEROP-3-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Deterministic mapping” supplies the required property, while declaring each integration’s representations, inputs, and contextual state belongs to implementing that mapping."
+  },
+  "INTEROP-3-04": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Implicit import of external authority, norms, or obligations” and “without explicit protocol authorization” already define the classification conditions; the missing import and authorization checks are implementation work."
+  },
+  "INTEROP-4.1-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Checking whether an operation would “override or reinterpret DKP axioms” requires the absent DKP-1-AXIOMS-001 named in §2."
+  },
+  "INTEROP-4.2-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Beyond DKP-7-SCOPE-001” explicitly delegates the jurisdictional boundary to a document outside the supplied corpus."
+  },
+  "INTEROP-4.3-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“SHALL NOT be treated as legitimacy, obligation, or consent” clearly prohibits the inference, while representations of those statuses and inference records remain implementation choices."
+  },
+  "INTEROP-4.4-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Assessing “auditable translation rules” depends on the audit framework referenced by §7’s “audit hooks compatible with DKP-8-AUDIT-001” and §11’s exclusive assignment of audit authority."
+  },
+  "INTEROP-5-04": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Does not adjudicate conflicts between external legal regimes” prohibits deciding those conflicts, while §5 expressly permits exporting “evidence, signals, or reference data.”"
+  },
+  "INTEROP-6-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "architecture_definition",
+   "secondary": "l8_parameter",
+   "author_question_candidate": true,
+   "rationale": "“Justice-weighted internal equivalents” supplies neither the internal value representation nor the conversion relation, while the justice weights themselves require calibration."
+  },
+  "INTEROP-6-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Full externality internalization” requires an empirical accounting model and evidence identifying, attributing, and valuing the externalities to be internalized."
+  },
+  "INTEROP-6-05": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“DKP-2-FINANCE-001 constraints” explicitly requires constraints from a document outside the supplied corpus."
+  },
+  "INTEROP-7-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Open specifications” does not settle whether public readability suffices or whether licensing and unrestricted implementation rights are also required."
+  },
+  "INTEROP-7-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Cryptographic verifiability” leaves the verified artifacts, asserted properties, and trust relationships undefined, so a verification contract is missing."
+  },
+  "INTEROP-7-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Audit hooks compatible with DKP-8-AUDIT-001” requires the interface requirements of the absent audit protocol."
+  },
+  "INTEROP-7-04": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Black-box or proprietary” makes either classification sufficient to prohibit authoritative trust, leaving classification evidence and enforcement checks to implementation."
+  },
+  "INTEROP-8-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "normative_ambiguity",
+   "secondary": "external_dependency",
+   "author_question_candidate": true,
+   "rationale": "“Only as” introduces “untrusted inputs” and “I1 (Unverified Claims)” without stating whether every untrusted input must also receive I1 classification, whose governing DKP-5-INFO-001 is absent."
+  },
+  "INTEROP-8-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“PTL verification” names a verification mechanism without defining PTL, its interface, or the evidence establishing that verification occurred."
+  },
+  "INTEROP-9-01": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“The interop boundary MUST degrade gracefully” lacks defined degraded boundary states and transitions, although the adjacent clauses constrain internal effects and rollback."
+  },
+  "INTEROP-9-02": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“DKP internal execution MUST remain unaffected” does not settle whether preservation concerns logical execution and state or also timing and availability, producing different compliance results."
+  },
+  "INTEROP-9-03": {
+   "document": "DKP-8-INTEROP-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“No rollback of DKP state is permitted” sits within §9’s explicit failure conditional, while §13 separately governs upgrade rollback, so the draft’s unrestricted rollback prohibition is unsupported."
   },
   "INTSEC-1-01": {
    "document": "DKP-3-INTERNAL-SEC-001",
@@ -6108,13 +6869,6 @@
    "author_question_candidate": false,
    "rationale": "'Composite physical index' requires the B(t) model that the following paragraph explicitly assigns to DKP-8-SIMULATION-001."
   },
-  "ORACLE-12-04": {
-   "document": "DKP-0-ORACLE-001",
-   "primary": "l8_parameter",
-   "secondary": "external_dependency",
-   "author_question_candidate": false,
-   "rationale": "'Model, aggregation logic, weighting, and calibration of B(t)' are explicitly assigned to DKP-8-SIMULATION-001, whose required specifications are absent."
-  },
   "ORACLE-12-05": {
    "document": "DKP-0-ORACLE-001",
    "primary": "l8_parameter",
@@ -6878,6 +7632,1175 @@
    "author_question_candidate": true,
    "rationale": "“No data” does not distinguish absent readings from unusable readings or missing required inputs, and that distinction can select zero instead of the “informational” outcome allowed elsewhere."
   },
+  "PRIVACY-10-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Mass surveillance,” “behavioral profiling,” “predictive policing,” “social credit scoring,” and “cross-domain identity correlation” require evidence about what implemented practices collect, infer, and do."
+  },
+  "PRIVACY-11-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Privacy SHALL NOT be suspended” is expressly qualified by permission to “reduce anonymity” under the listed crisis conditions, so the draft invents a need for another suspension exception."
+  },
+  "PRIVACY-11-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "external_dependency",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Explicitly bounded Crisis Scope” depends on crisis and Scope rules absent here, while “direct life-preservation purposes” requires evidence connecting the reduction to life preservation."
+  },
+  "PRIVACY-11-03": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be temporary” is reinforced by “SHALL NOT persist beyond Crisis Scope,” so checking cessation needs lifecycle implementation rather than an invented independent duration limit."
+  },
+  "PRIVACY-11-05": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST be reversible” does not specify whether reversal restores anonymity controls alone or must also remedy information already disclosed."
+  },
+  "PRIVACY-11-06": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Beyond Crisis Scope” requires the applicable Scope boundaries and lifecycle supplied by crisis and Scope rules absent from this document."
+  },
+  "PRIVACY-12-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST be auditable” lacks a mapping from privacy rules, thresholds, and guarantees to audit claims and admissible evidence, which §9's general restrictions do not supply."
+  },
+  "PRIVACY-12-03": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST be verifiable by Subjects” requires a Subject-facing verification interface and evidence contract that the document does not define."
+  },
+  "PRIVACY-12-04": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Verify what the system cannot see” lacks a defined system observation boundary and formal claims through which Subjects can verify nonvisibility."
+  },
+  "PRIVACY-13-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "external_dependency",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Override DKP-1-AXIOMS-001” and “shield criminal liability” depend on absent authoritative rules, while “prevent impact attribution” and “justify harm concealment” additionally require factual findings."
+  },
+  "PRIVACY-14-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Controlled procedure of DKP-4-UPGRADE-001” assigns procedure details, including “rollback,” to a referenced document, so its absence does not establish a normative ambiguity here."
+  },
+  "PRIVACY-14-04": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "external_dependency",
+   "secondary": "implementation_only",
+   "author_question_candidate": false,
+   "rationale": "“DKP-4-UPGRADE-001 §3” supplies the referenced classification rule, while “Last updated” plainly maps to the sole front-matter date field “last_updated” without requiring an author decision."
+  },
+  "PRIVACY-3-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Except where explicitly permitted herein” directs checking against the specific permissions in §§7 and 11; the draft does not establish an additional unresolved exception."
+  },
+  "PRIVACY-4-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Causally linked to a specific Subject across time” requires a causal linkage model and temporal evidence, without specifying a numerical minimum observation period."
+  },
+  "PRIVACY-4-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Directly reveals subject identity” depends on an identity model and a mapping from identifiers to Subjects that this document does not define."
+  },
+  "PRIVACY-4-03": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Enables re-identification via correlation” requires auxiliary information and an empirical model of successful correlation attacks."
+  },
+  "PRIVACY-4-04": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Provably non-linkable to a Subject” lacks a formal non-linkability claim, observer knowledge model, and proof-verification contract."
+  },
+  "PRIVACY-4-05": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "l8_parameter",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Beyond defined thresholds” requires calibrated reconstruction thresholds and a model measuring identity-reconstruction capability, rather than an authorial choice between normative readings."
+  },
+  "PRIVACY-4.1-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Fully observable across all system layers” lacks a system-layer visibility model identifying whose combined observations constitute observability."
+  },
+  "PRIVACY-4.1-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "normative_ambiguity",
+   "secondary": "architecture_definition",
+   "author_question_candidate": true,
+   "rationale": "“Total data aggregation across domains” does not settle whether totality concerns all data in selected domains or coverage of every domain, and domain boundaries are undefined."
+  },
+  "PRIVACY-4.2-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Minimum data required for protocol execution” requires evidence about execution dependencies and whether execution remains possible with less data; the draft's alternative counting units do not establish a textual ambiguity."
+  },
+  "PRIVACY-4.3-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": "architecture_definition",
+   "author_question_candidate": false,
+   "rationale": "“Prevent identity reconstruction through data linkage” requires attack-effectiveness evidence within an observer and linkage threat model that the document does not define."
+  },
+  "PRIVACY-4.4-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“SHALL NOT justify privacy erosion” clearly excludes the three listed grounds as authorization, and mixed grounds create no additional permission under §3."
+  },
+  "PRIVACY-6-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "architecture_definition",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "“Private and non-public” lacks a permitted-access model, while “private communications not producing externalized impact” additionally requires evidence attributing external effects to communications."
+  },
+  "PRIVACY-6-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Non-extractable and non-auditable at the individual level” leaves the final qualifier's application to extraction, auditing, or both unresolved."
+  },
+  "PRIVACY-7-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Anonymized or aggregated form” expressly permits alternatives, while §4 defines anonymity, §5 prohibits reconstructive linkage, and §7 explicitly supplies the individual-disclosure exception."
+  },
+  "PRIVACY-7-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Higher-layer enforcement protocols within Scope” requires the referenced enforcement and Scope rules; its placement in §7 and §6's “SHALL ALWAYS” resolve the draft's proposed extension to absolute domains."
+  },
+  "PRIVACY-8-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Identity is not required for” the three listed purposes requires evidence that those functions can or cannot operate without identity."
+  },
+  "PRIVACY-8-02": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“SHALL NOT reduce rights or access to system functions” does not settle whether equal access includes functions for which the preceding sentence recognizes that identity is required."
+  },
+  "PRIVACY-9-01": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Where possible” requires evidence that an audit can perform its verification using anonymized data, while the accompanying prohibition on raw personal data remains unconditional."
+  },
+  "PRIVACY-9-04": {
+   "document": "DKP-7-PRIVACY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“System behavior, not personal life,” together with §6's individual-audit prohibition and §9's raw-data ban, already excludes personal-life evidence even when it also concerns system activity."
+  },
+  "RESILIENCE-0-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Override: Not permitted' is categorical, and §10.1 gives crisis protocols precedence without authorizing an override of resilience, so the draft establishes no unresolved exception."
+  },
+  "RESILIENCE-1-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": "architecture_definition",
+   "author_question_candidate": false,
+   "rationale": "'Continuity of function under pressure' needs a defined inventory of functions and empirical pressure scenarios for evaluating dependence on protected actors."
+  },
+  "RESILIENCE-10.1-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Resilience does not override' explicitly names DKP-4-CRISIS-001 and DKP-7-SCOPE-001, whose requirements are needed to check compliance."
+  },
+  "RESILIENCE-10.1-02": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'No precedent' does not distinguish prohibiting binding authority for later actions from prohibiting any later reliance on a crisis action."
+  },
+  "RESILIENCE-10.2-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Not handled directly' and 'mitigated via 5.1 (non-dependence)' explicitly establish the scope boundary and applicable invariant without prescribing a separate threat-response mechanism."
+  },
+  "RESILIENCE-11-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'If' states sufficiency and 'above threshold' states a strict resilience test distinct from §5.1's inclusive validity bound, leaving implementation and scenario evidence rather than the draft's alleged logical ambiguity."
+  },
+  "RESILIENCE-12-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Emerge from structure, not protection' requires causal evidence that structural properties sustain function without dependence on protective mechanisms."
+  },
+  "RESILIENCE-13-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Non-targetable,' 'non-overridable,' and 'non-distortable' leave unresolved whether the final statement claims absolute immunity or summarizes the structural constraints that earlier sections allow to be violated."
+  },
+  "RESILIENCE-3-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Any individual actor' is clarified by §11's 'removal of any actor,' so the draft's proposed simultaneous removal of all actors is an additional requirement unsupported by the text."
+  },
+  "RESILIENCE-4.4-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Handled via structural invariants only' is resolved by §10.2's explicit referral to §5.1 non-dependence, without requiring a separate physical-suppression response model."
+  },
+  "RESILIENCE-5.1-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'No function of DKP may depend on a unique actor, node, or interface' requires a function inventory and dependency model that the document does not define."
+  },
+  "RESILIENCE-5.1-02": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "'N_eff ≥ N_eff_min (DKP-0-ORACLE-001)' delegates the statistical definitions to another document and requires a calibrated minimum, while 'no enforcement' fixes the consequence."
+  },
+  "RESILIENCE-5.2-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Must not be representable' leaves unresolved whether the prohibition concerns actual organizational representation or any public portrayal as an individual or leadership structure."
+  },
+  "RESILIENCE-5.3-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Bound to measurable physical states (PTL)' requires an enforcement-to-measurement binding contract that the document does not specify."
+  },
+  "RESILIENCE-5.3-02": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Forbidden' expressly covers all three overrides, and §9 requires 'absence of override layer,' so finer classification does not change their prohibited status."
+  },
+  "RESILIENCE-5.3-03": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'May be mirrored but not altered (DKP-8-INTEROP-001)' explicitly references an unavailable interoperability contract that must be checked before declaring output-equivalence semantics unresolved."
+  },
+  "RESILIENCE-5.4-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Must not require explicit displacement' is clarified as operation through a 'constraint layer' rather than a 'governance replacement mechanism,' resolving the draft's proposed role ambiguity."
+  },
+  "RESILIENCE-5.5-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Measurable dependency through constraint enforcement' requires measurements and causal attribution, with §5.5's removal comparison supplying the relevant observable effect."
+  },
+  "RESILIENCE-5.5-02": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Irreplaceability is emergent, not imposed' is explained by the same section's '5.4 prohibits forced displacement' and '5.5 defines emergent dependency via constraints.'"
+  },
+  "RESILIENCE-5.5-03": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "'Removal causes no measurable change' requires a counterfactual measurement model and calibrated detection resolution, while 'not a resilience condition' fixes the test's role."
+  },
+  "RESILIENCE-5.6-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Must not alter core axioms or enforcement logic' explicitly references DKP-7-SCOPE-001 for the protected scope, which is unavailable in the supplied corpus."
+  },
+  "RESILIENCE-5.7-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Minimum PTL metadata completeness' is accompanied by 'Reference: DKP-PTL-REG-DATA-001,' making the missing metadata contract a referenced-document dependency."
+  },
+  "RESILIENCE-5.7-02": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'No partial state exposure,' 'no semantic filtering,' and 'no aggregation that hides variance' require the PTL state contract referenced as DKP-PTL-REG-DATA-001."
+  },
+  "RESILIENCE-5.7-03": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Local invalidation of entry point' names a consequence without defining the entry-point validity state, its operational effects, or the transition contract."
+  },
+  "RESILIENCE-5.8-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "'Limits defined in DKP-0-ORACLE-001' requires the referenced concentration rules and applicable calibrated limits, rather than a new interpretation of this prohibition."
+  },
+  "RESILIENCE-5.8-02": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "external_dependency",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'Statistically independent' and 'artificial scaling does not increase influence' are implications of the referenced oracle rules and require statistical evidence rather than assuming influence equals N_eff."
+  },
+  "RESILIENCE-6.1-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": "external_dependency",
+   "author_question_candidate": true,
+   "rationale": "'Multiple independent implementations' lacks an architectural independence criterion, while 'MUST comply with 5.7' inherits the external PTL metadata contract."
+  },
+  "RESILIENCE-6.2-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Functional at micro-level before scaling' does not define the deployment unit or minimum functional configuration constituting the micro-level."
+  },
+  "RESILIENCE-6.3-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Adoption via utility, not mandate' requires evidence and a behavioural model attributing adoption to utility rather than compulsion."
+  },
+  "RESILIENCE-6.4-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Behavior influenced only via measurable limits' requires a causal model identifying the mechanisms responsible for observed behavioural changes."
+  },
+  "RESILIENCE-7.1-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Central Authority Node' names a forbidden architectural role without specifying the node powers or control relationships that constitute that role."
+  },
+  "RESILIENCE-7.2-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Identity-bound Trust' does not settle whether identity-based authentication itself counts as prohibited trust or whether only identity-based authority is forbidden."
+  },
+  "RESILIENCE-7.3-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Narrative Dependence' prohibits an input dependency without defining the narrative input class or its mapping to operational dependencies."
+  },
+  "RESILIENCE-7.4-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Enforcement via Interpretation' leaves unresolved whether interpretation means discretionary judgment or also includes automatic semantic processing."
+  },
+  "RESILIENCE-8.4-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "architecture_definition",
+   "secondary": "external_dependency",
+   "author_question_candidate": true,
+   "rationale": "'System enters null-output state' lacks an output-state contract beyond §5.1's 'no enforcement,' while the trigger's statistical definitions are delegated to DKP-0-ORACLE-001."
+  },
+  "RESILIENCE-8.5-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": "architecture_definition",
+   "author_question_candidate": false,
+   "rationale": "'Cascade to soft capture' needs a causal model of propagation and a defined soft-capture state, which §8.2 merely names."
+  },
+  "RESILIENCE-9-01": {
+   "document": "DKP-6-RESILIENCE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Resists suppression through' asserts the effectiveness of listed mechanisms, requiring a suppression model and evidence rather than an invented necessary-versus-sufficient validation rule."
+  },
+  "SCOPE-10-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Access to verification mechanisms” lacks an access contract identifying beneficiaries, exposed mechanisms, and required verification capabilities."
+  },
+  "SCOPE-10-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Access to audit trails” does not define the covered trail set or the access-entitlement model."
+  },
+  "SCOPE-10-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Access to counterfactual and failure-mode simulations” leaves the required simulation coverage and beneficiary-facing access contract undefined."
+  },
+  "SCOPE-11-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST trigger containment and review” names required responses without defining their procedures, responsible components, or triggering interfaces."
+  },
+  "SCOPE-11-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "l8_parameter",
+   "secondary": "architecture_definition",
+   "author_question_candidate": false,
+   "rationale": "“Repeated violations” requires calibrated recurrence and time-window parameters plus a structural rule identifying which violation events are counted together."
+  },
+  "SCOPE-12-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“The controlled procedure of DKP-4-UPGRADE-001” and the named simulation and audit protocols explicitly place detailed acceptance, activation, and rollback requirements in unsupplied documents."
+  },
+  "SCOPE-12-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Presentation-only corrections” are expressly recorded “only” by the date, resolving the claimed exception conflict, while allocating “a new protocol identifier” requires identifier-management implementation."
+  },
+  "SCOPE-12-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Across all dependent protocols” requires a dependency relation, including its treatment of transitive dependencies, that the document's system-position list does not fully define."
+  },
+  "SCOPE-12-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Do not change normative content” and “are not Upgrades” explicitly establish the exception, leaving semantic comparison and date recording rather than an unresolved normative conflict."
+  },
+  "SCOPE-12-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Canonical source” and “SHA256SUMS.txt” in the named canonical repository identify external artifacts whose edition bytes and digest entries must be obtained before verification."
+  },
+  "SCOPE-2-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Absence of explicit permission” and the domain lists introduced by “Includes” leave unresolved whether unlisted activities within a broadly described domain are explicitly permitted."
+  },
+  "SCOPE-3-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Four mutually exclusive domains” requires a classification unit and a decomposition rule for mixed activities, neither of which the document defines."
+  },
+  "SCOPE-3-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "The S0 list specifies “physical resource allocation under PTL constraints,” but those constraints depend on the referenced DKP-0-ORACLE-001 rather than this supplied document."
+  },
+  "SCOPE-3-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "S1 expressly references execution “under DKP-3-DEFENSE-001,” “under DKP-4-CRISIS-001,” and prioritization “bounded by Axiom A1,” whose specifications are not supplied."
+  },
+  "SCOPE-3-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be time-limited” fixes the finite-duration requirement, while selecting the actual duration is a calibration task."
+  },
+  "SCOPE-3-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be PTL-anchored” depends on evidence qualification by the Physical Truth Layer identified as DKP-0-ORACLE-001."
+  },
+  "SCOPE-3-06": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST be auditable” supplies no audit evidence contract defining the information and access an S1 execution must expose."
+  },
+  "SCOPE-3-07": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "normative_ambiguity",
+   "secondary": "architecture_definition",
+   "author_question_candidate": true,
+   "rationale": "“MUST degrade toward baseline (S0)” does not settle whether intermediate increases are permissible or define the ordering used to compare exceptional execution states."
+  },
+  "SCOPE-3-08": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST NOT generate normative precedent” requires evidence that an execution is subsequently treated as normative authority, which mere citation of a crisis action does not establish."
+  },
+  "SCOPE-3-09": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": "external_dependency",
+   "author_question_candidate": true,
+   "rationale": "“Vectors of Physical Inevitability” is an undefined technical construct here, and its required “PTL-confirmed” status also depends on the external PTL specification."
+  },
+  "SCOPE-3-11": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Persistent S1 execution” needs a calibrated duration or recurrence criterion, while the surrounding text already prohibits using inevitability vectors to sustain exceptional execution."
+  },
+  "SCOPE-3-13": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Verification, factual grounding, and access to knowledge infrastructure” is expressly permitted subject to the listed S2 prohibitions, so an unwritten service classifier does not itself establish ambiguity."
+  },
+  "SCOPE-3-14": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Tools for learning and validation” identifies required functions but supplies no minimum service capabilities or provision interface."
+  },
+  "SCOPE-3-15": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“SHALL NOT define curricula or learning objectives” clearly limits the preceding tool-provision duty, and the draft identifies a missing classifier rather than competing normative readings."
+  },
+  "SCOPE-3-16": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Normalize, or optimize cultural or ideological content” can cover technical processing or substantive cultural standardization, and the document does not distinguish those readings."
+  },
+  "SCOPE-3-17": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Enforce behavioral or cognitive conformity” requires a behavioral model and evidence about what an action compels."
+  },
+  "SCOPE-3-18": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Algorithmic governance is explicitly forbidden” and the S3 list specify the prohibitions; applying them needs classification code and, for properties such as “irreversible identity modification,” factual evidence."
+  },
+  "SCOPE-4-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "The express permission for interpreting “minimum required conditions” under A1 within Crisis Scope supplies the narrow exception to “axioms SHALL NOT be interpreted,” resolving the draft's alleged conflict."
+  },
+  "SCOPE-4-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Axioms SHALL NOT be re-weighted, parameterized, or balanced against secondary objectives” states the forbidden operations, while their formal representation and detection remain implementation work."
+  },
+  "SCOPE-4-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Strictly bounded by DKP-7-SCOPE-001” identifies the governing constraints, so encoding interpretations and checking those constraints does not require a new normative choice."
+  },
+  "SCOPE-4-06": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Invoke, extend, simulate, or analogize” expressly covers indirect reuse outside Crisis Scope, leaving semantic detection work rather than an identified alternative permission."
+  },
+  "SCOPE-5-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Although “bounded sub-domain of S1” omits declaration dimensions here, §4 expressly assigns Crisis Scope definition and activation to DKP-4-CRISIS-001."
+  },
+  "SCOPE-5-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Only through the state machine and entry conditions of DKP-4-CRISIS-001” explicitly delegates the entry specification to an unsupplied document."
+  },
+  "SCOPE-5-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Any attempt” through the listed indirect bases is explicitly a violation, and the preceding exclusive state-machine entry rule supplies the governing distinction."
+  },
+  "SCOPE-5-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Execution is survival-oriented” requires evidence about execution objectives and a causal model connecting actions to survival."
+  },
+  "SCOPE-5-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "“Authority is minimized” lacks a defined ordering of authority configurations, while establishing feasible alternatives additionally requires evidence."
+  },
+  "SCOPE-5-06": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Reversibility has priority over optimization” fixes the priority, while assessing how completely alternative actions can be reversed requires a model of their consequences."
+  },
+  "SCOPE-5-07": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“No permanent state change” does not distinguish physical consequences from institutional or protocol changes, yielding materially different limits on crisis actions."
+  },
+  "SCOPE-5-08": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Creation of new rights” requires an authoritative rights model and a mapping from actions to rights changes, neither of which is defined here."
+  },
+  "SCOPE-5-09": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Crisis Scope explicitly forbids “extension of authority duration,” while §6 states necessary conditions for persistence without granting an exception to that prohibition."
+  },
+  "SCOPE-5-11": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Implicit policy formation through repeated practice” requires evidence and a behavioral model showing that repeated actions have acquired policy-setting force."
+  },
+  "SCOPE-5-12": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": "implementation_only",
+   "author_question_candidate": false,
+   "rationale": "“DKP-4-CRISIS-001 exit conditions” must be supplied externally, while “upon” and “beyond validated Crisis exit conditions” require implementation ordering without authorizing a grace period."
+  },
+  "SCOPE-6-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST be explicitly scoped” requires a scope contract for authorities, control surfaces, and exceptional paths, but the required dimensions are not defined."
+  },
+  "SCOPE-6-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be time-bounded” establishes finite bounds, leaving their duration and assignment to calibration."
+  },
+  "SCOPE-6-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST decay over time” requires a calibrated decay model, schedule, and rate without prescribing continuous rather than stepwise reduction."
+  },
+  "SCOPE-6-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "“Upon stabilization” needs an evidence-based stabilization predicate and calibrated thresholds, while §3 already identifies baseline as S0."
+  },
+  "SCOPE-6-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“No authority may be self-extending” requires control and attribution evidence to determine whether a nominally separate delegate is acting under that authority's control."
+  },
+  "SCOPE-6-06": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "external_dependency",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "“Mandatory validation under DKP-8-SIMULATION-001” requires the external validation rules, and the frequency of “renewed PTL-anchored justification” is a calibration input."
+  },
+  "SCOPE-7-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Strictly as a physical harm-interruption action” is clarified by the subsequent bans on jurisdiction and authority expansion, leaving purpose-and-effect verification to implementation and evidence."
+  },
+  "SCOPE-7-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Create implicit governance, control, or normative authority” requires causal evidence about de facto control resulting from neutralization."
+  },
+  "SCOPE-8-01": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Expand its scope by” repeated crises, cumulative measures, or normalized exceptions requires attribution of actual scope expansion to those practices."
+  },
+  "SCOPE-8-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "l8_parameter",
+   "secondary": "architecture_definition",
+   "author_question_candidate": false,
+   "rationale": "“A threshold number of Subjects” needs calibration, while counting reports of “Any claimed divergence” also needs an undefined report-identity and aggregation contract."
+  },
+  "SCOPE-8-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“SHALL block transition from S0 to S1” defines the blocking effect but supplies no audit lifecycle or event that releases the block."
+  },
+  "SCOPE-8-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "architecture_definition",
+   "secondary": "l8_parameter",
+   "author_question_candidate": true,
+   "rationale": "“Confirmation by independent PTL nodes” lacks a confirmation payload and node-independence contract, while the required confirmation count is a calibration parameter."
+  },
+  "SCOPE-8-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "normative_ambiguity",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "“Single-sensor classes” can mean one sensor class or classes containing one sensor, while “isolated regions” and “non-reproducible signals” additionally require empirical tests."
+  },
+  "SCOPE-9-02": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Exit SHALL NOT be delayed for optimization or stability goals” is explicit, and “In case of conflict, DKP-7-SCOPE-001 prevails” resolves the alleged conflicting stability-based cooling period."
+  },
+  "SCOPE-9-03": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "“To preserve immediate life” requires causal evidence of a life-preserving effect, while “temporarily within Crisis Scope” requires a finite calibrated duration within that scope."
+  },
+  "SCOPE-9-04": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "normative_ambiguity",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "“A physically detachable equivalent” does not choose equivalence by asset quantity, exchange value, or function, and applying a chosen valuation basis would also require data."
+  },
+  "SCOPE-9-05": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“SHALL NOT depend on continued DKP execution,” reinforced by “non-protocol-bound form,” establishes operational independence that can be checked through dependency analysis and testing."
+  },
+  "SCOPE-9-07": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Non-protocol-bound form” is clarified by the adjacent bans on continued-execution dependence and post-exit compliance, so valuation is not a gap in this particular requirement."
+  },
+  "SCOPE-9-08": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": "normative_ambiguity",
+   "author_question_candidate": false,
+   "rationale": "“De facto restriction of exit” requires behavioral evidence of economic deterrence, while “used as” leaves unresolved whether restrictive effects alone suffice or intentional use is required."
+  },
+  "SCOPE-9-09": {
+   "document": "DKP-7-SCOPE-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Permanent restriction of exit” clearly determines the capture classification, but establishing permanence from finite observations requires evidence about the restriction's future enforceability."
+  },
+  "SIMULATION-0-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": "l8_parameter",
+   "author_question_candidate": false,
+   "rationale": "Verification against 'physical constraints', 'axiomatic invariants', and 'scope and conflict rules' requires the named external protocols, while §9 assigns model specifications and thresholds to L8."
+  },
+  "SIMULATION-10-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "normative_ambiguity",
+   "secondary": "l8_parameter",
+   "author_question_candidate": true,
+   "rationale": "'A new simulation and calibration are REQUIRED upon' does not settle whether enforcement may continue pending recalibration, while drift detection and 'sustained audit divergence' require L8 calibration."
+  },
+  "SIMULATION-10-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Expired calibration bundles automatically invalidate enforcement' unambiguously specifies the consequence of expiration, leaving a validity-window check and enforcement control to implement."
+  },
+  "SIMULATION-11-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Be deterministic given identical inputs' states a clear reproducibility obligation; the draft's input encoding, seed handling, and verification method are implementation matters rather than competing normative readings."
+  },
+  "SIMULATION-11-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Expose configuration, assumptions, and parameters', 'publish summary outcomes for audit', and 'allow independent re-execution' specify the required disclosures and capabilities without requiring an author-selected publication mechanism."
+  },
+  "SIMULATION-11-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'SHALL NOT be opaque' is operationally constrained by §11's disclosure and independent re-execution requirements, so the draft's proposed additional transparency standard is not an established textual ambiguity."
+  },
+  "SIMULATION-12-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Simulation outcomes SHALL NOT be overridden' and 'Only redesign and re-simulation are permitted' clearly prohibit bypasses, while identifying override events requires controls and evidence records."
+  },
+  "SIMULATION-12-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Only redesign and re-simulation are permitted' clearly requires a changed design and another simulation, without imposing the additional redesign threshold presumed by the draft."
+  },
+  "SIMULATION-13-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'DKP-8-AUDIT-001 SHALL' assigns verification to an absent protocol, and comparing 'deployed behavior against simulated behavior' additionally requires deployment observations and a comparison model."
+  },
+  "SIMULATION-13-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "l8_parameter",
+   "secondary": "external_dependency",
+   "author_question_candidate": false,
+   "rationale": "'Divergence beyond tolerance' requires a metric and calibrated threshold under §§2 and 9, while the responsible DKP-8-AUDIT-001 protocol is not supplied."
+  },
+  "SIMULATION-13-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'DKP-8-AUDIT-001 SHALL' 'trigger rollback or halt when required' delegates the response to an external protocol whose applicable trigger and response rules are unavailable here."
+  },
+  "SIMULATION-14-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'The controlled procedure of DKP-4-UPGRADE-001' and 'audit under DKP-8-AUDIT-001' explicitly locate the missing procedural details in referenced protocols."
+  },
+  "SIMULATION-14-04": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": "l8_parameter",
+   "author_question_candidate": true,
+   "rationale": "'All dependent protocols' requires an undefined protocol-dependency mapping, while 'full re-simulation' requires the applicable L8 simulation models and scenario coverage."
+  },
+  "SIMULATION-14-05": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Presentation-only corrections that do not change normative content' supplies the exemption test, and 'Last updated' corresponds to the supplied last_updated metadata, leaving change assessment and recording to implementation."
+  },
+  "SIMULATION-14-06": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'The canonical source' and its entry in 'SHA256SUMS.txt' must be obtained from the explicitly named external repository before the specified SHA-256 comparison can be performed."
+  },
+  "SIMULATION-3-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'An isolated execution space that mirrors DKP protocol logic without producing live effects' requires an execution boundary and a mapping between simulated and live protocol operations that the document does not define."
+  },
+  "SIMULATION-3-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'A bounded set' does not settle whether boundedness applies to the number of conditions, their value ranges, or the scenario's execution extent, and those readings admit different scenarios."
+  },
+  "SIMULATION-3-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Derived from DKP-1-AXIOMS-001 and DKP-7-SCOPE-001' makes the invariant content dependent on two protocols not supplied here."
+  },
+  "SIMULATION-3-04": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "l8_parameter",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'Declared risk envelopes' require L8-calibrated bounds under §9, while determining whether an outcome 'produces irreversible harm' requires a causal harm model."
+  },
+  "SIMULATION-3-06": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'A signed output artifact produced by L8' requires a signing and trust interface identifying authorized L8 signers, which the document does not define."
+  },
+  "SIMULATION-4-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'The following REQUIRE simulation and calibration' supplies an explicit list of covered actions, leaving only classification and workflow checks to implement."
+  },
+  "SIMULATION-4-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'An attached and valid L8 Calibration Bundle' relies on a protocol-to-bundle association and authenticated L8 identity that §§3, 9, and 10 do not structurally define."
+  },
+  "SIMULATION-5-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Invent unphysical data' and 'bypass PTL constraints' require the physical admissibility rules of the referenced DKP-0-ORACLE-001."
+  },
+  "SIMULATION-5-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'SHALL NOT' explicitly prohibits the listed transformations and selective sampling practices; the draft's requested operation taxonomy concerns detection implementation rather than an unresolved permission."
+  },
+  "SIMULATION-5-04": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Explicitly declared', 'versioned', and 'reproducible' state clear obligations, and the draft's proposed retrieval procedure and comparison mechanism are implementation choices."
+  },
+  "SIMULATION-6-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'All axioms' and 'scope and conflict rules' require the referenced protocols, while evaluating 'life-preservation constraints' and 'biosphere integrity constraints' also requires empirical models."
+  },
+  "SIMULATION-7-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Direct axiom or scope violation' requires the absent axiom and scope rules, and the draft does not establish a separate textual ambiguity about 'direct'."
+  },
+  "SIMULATION-7-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "l8_parameter",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'Runaway dynamics, cascading failures, deadlocks, or collapse conditions' require detection models, thresholds, and observation horizons assigned to L8 by §§2 and 9, with empirical support for system dynamics."
+  },
+  "SIMULATION-7-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": "l8_parameter",
+   "author_question_candidate": true,
+   "rationale": "'State transitions that cannot be rolled back within declared constraints' requires an undefined state-transition and rollback-reachability structure, alongside constraints to be calibrated by L8."
+  },
+  "SIMULATION-7-04": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "empirical_model_data",
+   "secondary": "architecture_definition",
+   "author_question_candidate": false,
+   "rationale": "'Unmeasured or displaced harm' requires evidence and causal attribution, while 'outside defined system boundaries' presupposes a system-boundary definition absent from this document."
+  },
+  "SIMULATION-7-06": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "'Explicit redesign and re-simulation' requires a documented design change and another simulation; the draft invents an additional minimum-substantiality requirement."
+  },
+  "SIMULATION-8-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "l8_parameter",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "'Declared bounds' and 'stable under adversarial scenarios' require L8-calibrated risk and stability models under §9, supported by models of adversarial behavior."
+  },
+  "SIMULATION-9-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": "implementation_only",
+   "author_question_candidate": true,
+   "rationale": "'A signed L8 Calibration Bundle' lacks an authentication and trusted-signer contract, while the absence of an actual bundle is only an implementation gap."
+  },
+  "SIMULATION-CalibrationExpirationEpistemicHandling-02": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Restore validity_state' lacks a defined validity-state machine specifying the destination state and how expiration interacts with other invalidity causes."
+  },
+  "SIMULATION-CalibrationExpirationEpistemicHandling-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'No legacy calibration values SHALL persist past expiration' does not resolve whether 'persist' prohibits operational retention alone or also archival retention needed for historical re-execution."
+  },
+  "SIMULATION-CompositeIndices-01": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "l8_parameter",
+   "secondary": "implementation_only",
+   "author_question_candidate": false,
+   "rationale": "'MUST have its model fully specified in L8' expressly assigns inputs, weights, and uncertainty propagation to L8, leaving specification encoding and completeness checks to implementation."
+  },
+  "SIMULATION-CompositeIndices-03": {
+   "document": "DKP-8-SIMULATION-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "'Raw, model-declared outputs' and 'Interpretation and calibration belong exclusively to L8' establish responsibilities without defining the PTL-to-L8 interface or which processing operations cross it."
+  },
   "TIME-2-01": {
    "document": "DKP-0-TIME-001",
    "primary": "implementation_only",
@@ -6919,6 +8842,293 @@
    "secondary": null,
    "author_question_candidate": true,
    "rationale": "The requirement to reproduce '6815 | 26 | DY6815-026' exactly conflicts with Section 5's arithmetic and Section 10's 'Canonical' implementation, which yield DY6809-306, without a rule resolving their precedence."
+  },
+  "TRANSPARENCY-10-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "l8_parameter",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Transparency of actions and decisions SHALL increase” requires a calibrated comparison model and measurements against ordinary operation, rather than an author decision merely because no numerical increase is specified."
+  },
+  "TRANSPARENCY-10-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Identity exposure SHALL NOT increase by default” requires measuring the exposure caused by default crisis activation, while sections 7–8 already constrain separately authorized disclosure."
+  },
+  "TRANSPARENCY-10-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Logged and reviewable post-facto” clearly requires retained evidence accessible for subsequent review, while the draft's proposed field list and review deadline are not prescribed requirements."
+  },
+  "TRANSPARENCY-10-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“No crisis may justify permanent transparency expansion” permits checking permanence and the recorded authorization basis without inventing a duration at which temporary expansion automatically becomes permanent."
+  },
+  "TRANSPARENCY-11-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": "external_dependency",
+   "author_question_candidate": false,
+   "rationale": "“Explain why,” “expose applicable protocol references,” and “allow independent verification” state concrete interface obligations, leaving their implementation and access to the applicable protocols."
+  },
+  "TRANSPARENCY-11-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Assessing “persuasive or manipulative framing” under “inform, not convince” requires a linguistic or behavioral assessment model, and lack of a deterministic classifier does not itself create normative ambiguity."
+  },
+  "TRANSPARENCY-12-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Hooks for DKP-8-AUDIT-001” requires consulting that protocol before concluding that its interface is structurally undefined."
+  },
+  "TRANSPARENCY-12-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST preserve historical records” alongside “MAY aggregate data to protect privacy” does not settle whether aggregates may replace original records or only supplement them."
+  },
+  "TRANSPARENCY-12-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MAY aggregate data to protect privacy” grants permission while existing privacy obligations remain applicable, so the draft invents a separate intent-versus-effect authorization test."
+  },
+  "TRANSPARENCY-12-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": "external_dependency",
+   "author_question_candidate": false,
+   "rationale": "Testing “SHALL NOT require identity exposure” for inferred identities needs an observer-information model, while audit sufficiency depends on DKP-8-AUDIT-001."
+  },
+  "TRANSPARENCY-13-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“SHALL NOT define moral accountability” establishes a scope exclusion, and the absence of an automated semantic-review rubric does not establish competing readings of that exclusion."
+  },
+  "TRANSPARENCY-13-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Replace justice attribution” requires the authoritative attribution process supplied by the “justice protocols” referenced in section 7."
+  },
+  "TRANSPARENCY-13-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Override cultural or informational protections” requires the applicable protection rules beyond the protections explicitly listed in this document."
+  },
+  "TRANSPARENCY-13-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Expand system scope” depends on the scope boundary established by DKP-7-SCOPE-001, which section 3 explicitly places upstream."
+  },
+  "TRANSPARENCY-14-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Through the controlled procedure of DKP-4-UPGRADE-001” delegates acceptance, activation, and rollback requirements to referenced procedures rather than leaving their meaning for this document's author to choose."
+  },
+  "TRANSPARENCY-14-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Recorded only by the ‘Last updated’ date” explicitly exempts presentation-only corrections from identifier changes, and “a new protocol identifier” does not introduce the draft's additional registry-wide novelty requirement."
+  },
+  "TRANSPARENCY-14-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Do not change normative content” and “recorded only by the ‘Last updated’ date” supply both the exception and its recording rule, leaving a semantic comparison and update procedure to implement."
+  },
+  "TRANSPARENCY-3-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“All governance, economic, informational, and enforcement layers” requires a component-to-layer mapping that this document does not define."
+  },
+  "TRANSPARENCY-3-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Detecting whether disclosures “expose private life, belief, or affiliation” indirectly requires a model of observer knowledge and information inference."
+  },
+  "TRANSPARENCY-3-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Replace verification with reputation or popularity” is testable against the section 4 definition of proof “independent of trust in actors,” without an additional normative choice."
+  },
+  "TRANSPARENCY-4-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": "external_dependency",
+   "author_question_candidate": false,
+   "rationale": "“Independently verify” is clarified by proof “independent of trust in actors,” leaving implementation of occurrence checks and checks against the applicable protocol."
+  },
+  "TRANSPARENCY-4-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Assessing indirect “exposure of identity, personal data, or private behavior” requires an information-inference model rather than a different reading of the visibility definition."
+  },
+  "TRANSPARENCY-4-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Cryptographic, physical, or procedural proof independent of trust in actors” states the acceptance property, while proof validators and tests of actor dependence remain to be implemented."
+  },
+  "TRANSPARENCY-4-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "“Except where explicitly required by higher axioms” depends on unavailable axiom provisions, while “absence of linkability” additionally needs an observer-information model."
+  },
+  "TRANSPARENCY-4-05": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Transparency SHALL NOT imply visibility” is operationally constrained by sections 5–8, so the draft's proposed choice between authorization and actual exposure does not establish an unresolved textual ambiguity."
+  },
+  "TRANSPARENCY-5-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "implementation_only",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“The following system elements MUST be publicly transparent” supplies five domains, leaving their concrete inventory, publication mechanisms, and verification checks to implementation."
+  },
+  "TRANSPARENCY-5-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Structural and aggregate levels only” lacks a defined representation or mapping showing how the required “state transitions and execution traces” fit those levels."
+  },
+  "TRANSPARENCY-6-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": "external_dependency",
+   "author_question_candidate": false,
+   "rationale": "Assessing whether domains “remain anonymous or privacy-protected” needs privacy-effectiveness and linkability models, while “absent verified harm” also depends on harm-verification inputs."
+  },
+  "TRANSPARENCY-6-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Without explicit Scope authorization” makes a downgrade decision depend on the authorization rules of the referenced DKP-7-SCOPE-001."
+  },
+  "TRANSPARENCY-7-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Verification of actions SHALL rely on” introduces four mechanisms without settling whether each is required or whether selecting among them suffices."
+  },
+  "TRANSPARENCY-7-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“Explicitly mandated by DKP-1-AXIOMS-001” and “required to attribute verified harm under justice protocols” require the referenced rules, while section 8 independently states conditions for de-anonymization."
+  },
+  "TRANSPARENCY-8-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": "external_dependency",
+   "author_question_candidate": false,
+   "rationale": "“Causal attribution is required” and “no anonymous remediation path exists” require causal and remediation-effectiveness models, alongside the external evidence required by “PTL-verified.”"
+  },
+  "TRANSPARENCY-8-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“MUST be minimal” does not identify which disclosure dimensions take priority when alternatives minimize different fields, recipients, or affected Subjects."
+  },
+  "TRANSPARENCY-8-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "l8_parameter",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be time-bound” requires a finite limit whose duration is a calibration parameter, without making the draft's proposed list of expiry mechanisms additional textual requirements."
+  },
+  "TRANSPARENCY-8-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "external_dependency",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "“MUST be auditable” connects to section 12's “hooks for DKP-8-AUDIT-001,” making the required audit procedure dependent on that referenced protocol."
+  },
+  "TRANSPARENCY-8-05": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "architecture_definition",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Beyond the specific case” requires a case identity and membership model that the document does not supply."
+  },
+  "TRANSPARENCY-9-01": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "l8_parameter",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": false,
+   "rationale": "Operationalizing “mass surveillance” requires a calibrated scale boundary and measurements of monitoring activity, whose absence alone does not establish competing normative readings."
+  },
+  "TRANSPARENCY-9-02": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Identity-based scoring or profiling” does not settle whether identity must influence the calculation or whether merely linking its output to a Subject is sufficient."
+  },
+  "TRANSPARENCY-9-03": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "empirical_model_data",
+   "secondary": null,
+   "author_question_candidate": false,
+   "rationale": "Identifying “forced transparency as punishment” requires evidence of compulsion and punitive function rather than an author-selected alternative meaning."
+  },
+  "TRANSPARENCY-9-04": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "normative_ambiguity",
+   "secondary": null,
+   "author_question_candidate": true,
+   "rationale": "“Unrelated datasets” does not specify whether relatedness follows subject matter, collection purpose, or authorized case membership, producing different boundaries for the prohibition."
+  },
+  "TRANSPARENCY-9-05": {
+   "document": "DKP-7-TRANSPARENCY-001",
+   "primary": "normative_ambiguity",
+   "secondary": "empirical_model_data",
+   "author_question_candidate": true,
+   "rationale": "“Social control” leaves unsettled which governance influences are prohibited, after which identifying those influences would require evidence of purpose or effect."
   },
   "TRANSPORT-1-01": {
    "document": "DKP-5-TRANSPORT-001",

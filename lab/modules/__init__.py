@@ -6,6 +6,7 @@ from lab.modules.contribution import ContributionModule
 from lab.modules.crisis_recovery import CrisisRecoveryModule
 from lab.modules.dispute_correction import DisputeCorrectionModule
 from lab.modules.economic_access import EconomicAccessModule
+from lab.modules.edu_culture import EduCultureModule
 from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
 from lab.modules.info_truth import InfoTruthModule
@@ -27,4 +28,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              TransportCapacityModule(), EconomicAccessModule(),
                              UpgradeLifecycleModule(), InternalSecurityModule(),
                              PoliceAntiterrorModule(), AxiomConstraintsModule(),
-                             InfoTruthModule(), PrivacyTransparencyModule())}
+                             InfoTruthModule(), PrivacyTransparencyModule(),
+                             EduCultureModule())}

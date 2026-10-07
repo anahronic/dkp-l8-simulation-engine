@@ -342,8 +342,8 @@ def markdown(t: Dict[str, Any]) -> str:
     L += ["", "## Origin of open points (UNRESOLVED provisions)", "",
           f"{d['unresolved']} provisions have an open point.  Origin: text-verified where an author question was "
           "verified against the literal text; otherwise a Codex draft "
-          f"({pv.get('model', '—')}, {pv.get('date', '—')}; DRAFT_UNREVIEWED; pending: "
-          f"{', '.join(pv.get('documents_pending', [])) or 'none'}).  Only normative_ambiguity and "
+          f"({pv.get('model', '—')}, {pv.get('date', '—')}; DRAFT_UNREVIEWED; not in the draft (opened later): "
+          f"{', '.join(pv.get('unclassified_open_points', [])) or 'none'}).  Only normative_ambiguity and "
           "architecture_definition can become author questions, and only after verification.", "",
           "| Origin | Text-verified | Codex draft | Total |", "|---|---:|---:|---:|"]
     L += [f"| {x['origin']} | {x['text_verified']} | {x['codex_draft']} | {x['total']} |" for x in d["by_origin"]]

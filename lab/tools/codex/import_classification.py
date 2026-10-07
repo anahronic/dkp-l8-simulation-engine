@@ -50,6 +50,17 @@ def unresolved() -> Dict[str, str]:
     return out
 
 
+def registry_ids() -> Dict[str, str]:
+    """document id -> ids of all its registered provisions (open or not)."""
+    out = {}
+    for name in sorted(os.listdir(REQ_DIR)):
+        if name.endswith(".json"):
+            with open(os.path.join(REQ_DIR, name), encoding="utf-8") as f:
+                reg = json.load(f)
+            out[reg["doc_id"]] = {r["id"] for r in reg["requirements"]}
+    return out
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("out_dir")
@@ -57,8 +68,9 @@ def main(argv=None) -> int:
     ap.add_argument("--date", default=datetime.date.today().isoformat())
     args = ap.parse_args(argv)
     open_ids = unresolved()
+    docs_of_registry = registry_ids()
     items: Dict[str, Dict[str, Any]] = {}
-    problems, corrected, docs = [], 0, []
+    problems, corrected, docs, closed = [], 0, [], []
     for name in sorted(os.listdir(args.out_dir)):
         if not name.endswith(".json"):
             continue
@@ -67,6 +79,9 @@ def main(argv=None) -> int:
         docs.append(d["doc_id"])
         for it in d["items"]:
             rid = it["id"]
+            if rid not in open_ids and rid in docs_of_registry.get(d["doc_id"], set()):
+                closed.append(rid)                     # open when classified, closed since (e.g. a question withdrawn)
+                continue
             if open_ids.get(rid) != d["doc_id"]:
                 problems.append(f"{name}: {rid} is not an UNRESOLVED provision of {d['doc_id']}")
                 continue
@@ -87,7 +102,7 @@ def main(argv=None) -> int:
         return 1
     with open(PROMPT, "rb") as f:
         prompt_sha = hashlib.sha256(f.read()).hexdigest()
-    pending = sorted({doc for rid, doc in open_ids.items() if rid not in items})
+    pending = sorted(rid for rid in open_ids if rid not in items)
     out = {
         "schema": "dkp-lab-unresolved-classification/1",
         "status": "DRAFT_UNREVIEWED",
@@ -105,13 +120,14 @@ def main(argv=None) -> int:
         "provenance": {"tool": "lab/tools/codex/classify_prompt.md + classify_schema.json", "prompt_sha256": prompt_sha,
                        "model": args.model, "date": args.date, "documents": docs,
                        "author_candidate_flags_corrected": corrected,
-                       "documents_pending": pending},
+                       "closed_since_classification": sorted(closed),
+                       "unclassified_open_points": pending},
         "items": dict(sorted(items.items())),
     }
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
     print(f"{len(items)} of {len(open_ids)} open points classified; {corrected} author flags corrected; "
-          f"pending: {', '.join(pending) or 'none'}")
+          f"not in the draft: {', '.join(pending) or 'none'}")
     return 0
 
 

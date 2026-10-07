@@ -29,13 +29,19 @@
    "data_dependencies": [
     "mechanism objectives and cultural effects"
    ],
-   "gap": "Operational definitions of the rejected cultural transformations are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how each rejected transformation is identified and attributed to a mechanism."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_ranking"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -173,13 +179,19 @@
     "exception lifecycle and enforcement records",
     "applicable higher-layer constraints"
    ],
-   "gap": "The applicable higher-layer constraints and operational meaning of temporary are not fully specified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the relevant higher-layer constraints and how temporary status is established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "exception_non_enforceable"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -207,14 +219,20 @@
    "data_dependencies": [
     "system priority rules and allocation decisions"
    ],
-   "gap": "Systemic priority requires an operational definition. No lab check implemented yet.",
+   "gap": "Observed as interface defaults.",
    "hypotheses_needed": [
     "Declare which forms of priority count as systemic cultural priority."
    ],
    "section_label": "4.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_systemic_priority"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -278,14 +296,20 @@
    "data_dependencies": [
     "system defaults and model reference specifications"
    ],
-   "gap": "The identification of cultural frameworks and implicit reference roles is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how explicit and implicit cultural reference roles are identified."
    ],
    "section_label": "4.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_reference_culture"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -314,14 +338,20 @@
     "official interface inventory",
     "interface behavior across languages"
    ],
-   "gap": "A linguistic-neutrality criterion and authoritative supported-interface inventory are needed. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the linguistic-neutrality model used for interface assessment."
    ],
    "section_label": "4.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "all_languages_supported"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -352,14 +382,20 @@
     "source and translated content",
     "agency and intent annotations"
    ],
-   "gap": "The document supplies no method for determining semantic fidelity, preserved agency or intent, or normative framing. No lab check implemented yet.",
+   "gap": "Meaning preservation is declared per translation.",
    "hypotheses_needed": [
     "Declare the semantic assessment method and how source agency and intent are established."
    ],
    "section_label": "4.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "semantic_fidelity"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -386,14 +422,20 @@
    "data_dependencies": [
     "operation specifications and targets"
    ],
-   "gap": "The scope of operations that count as optimizing, ranking, scoring, or converging culture is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how cultural targets and prohibited operations are classified."
    ],
    "section_label": "4.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_cultural_optimization"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -420,14 +462,20 @@
    "data_dependencies": [
     "metric registry and downstream uses"
    ],
-   "gap": "No method is supplied for identifying indirect evaluation of the prohibited attributes. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how metric purpose and indirect cultural evaluation are determined."
    ],
    "section_label": "4.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_cultural_metrics"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -525,13 +573,19 @@
     "minority language classifications",
     "language access and treatment records"
    ],
-   "gap": "Definitions of minority language status, suppression, and marginalization are missing. No lab check implemented yet.",
+   "gap": "Observed in assessments and interface support.",
    "hypotheses_needed": [
     "Declare minority language classification and suppression or marginalization criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "minority_languages_served"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -629,13 +683,19 @@
     "decision feature lineage",
     "model specifications and prediction targets"
    ],
-   "gap": "The document does not specify how indirect proxy use is detected. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how proxy use is distinguished from incidental correlation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "language_not_competence_proxy"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -702,11 +762,17 @@
    "data_dependencies": [
     "preservation mechanism eligibility and participation rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_obligations_from_preservation"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -732,13 +798,19 @@
     "cultural participation rules",
     "subject choice and coercion evidence"
    ],
-   "gap": "Full autonomy and strict voluntariness lack operational tests. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare what constitutes coercion or an infringement of cultural-expression autonomy."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "voluntary_participation"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -842,13 +914,19 @@
     "interface configuration and capabilities",
     "symbol assessments"
    ],
-   "gap": "Culturally loaded symbols and the required breadth of representation and context support are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how symbols are classified and which contexts and representations establish the required support."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "selectable_context"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -875,13 +953,19 @@
    "data_dependencies": [
     "default settings and semantic assessments"
    ],
-   "gap": "The prohibited semantic properties lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a method for identifying cultural assumptions, semantic hierarchies, and implicit normative frames."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_default_culture"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -916,13 +1000,19 @@
     "life-preservation constraints",
     "scope and conflict determinations"
    ],
-   "gap": "The referenced constraints and the exact meaning of overriding a physical-harm finding are absent. No lab check implemented yet.",
+   "gap": "Observed as exemption of a factual claim.",
    "hypotheses_needed": [
     "Declare whether the physical-harm limit protects the finding, its required response, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_override_of_ptl"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -954,13 +1044,19 @@
     "exception scope and lifecycle records",
     "audit logs"
    ],
-   "gap": "The text does not specify how temporary status is established or what the audit log must contain. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how an exception ends and what log evidence establishes readiness for post-resolution audit."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "exception_bounded"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1022,11 +1118,17 @@
     "factual-claim verification requirements",
     "exemption decisions and reasons"
    ],
-   "gap": "The verification rules of DKP-5-INFO-001 are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_verification_exemption"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1158,13 +1260,19 @@
    "data_dependencies": [
     "introduced control definitions and enforcement behavior"
    ],
-   "gap": "The scope of enforceable and restrictions is ambiguous, particularly alongside this protocol's mandatory prohibitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether enforceable qualifies every listed control and which restrictions fall within the prohibition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_enforceable_rankings"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1296,13 +1404,19 @@
     "L8 calibration validity records",
     "interaction behavior and binding effects"
    ],
-   "gap": "Valid L8 calibration and the boundary of informational-only behavior are not defined. No lab check implemented yet.",
+   "gap": "No binding cultural mechanism is modelled.",
    "hypotheses_needed": [
     "Declare how calibration validity and informational versus binding effects are determined."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "informational_without_l8"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

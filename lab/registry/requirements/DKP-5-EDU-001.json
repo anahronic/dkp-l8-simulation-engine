@@ -192,13 +192,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "A classification of prohibited targets and their indirect proxies is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define how evaluation features map to beliefs, loyalties, or identities."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_belief_evaluation"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -424,13 +430,19 @@
    "data_dependencies": [
     "authority assignments and their grounds"
    ],
-   "gap": "The boundary between intrinsic credential authority and competence-based authority is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which authority assignments depend on credentials alone."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "competence_over_credential"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -593,13 +605,19 @@
    "data_dependencies": [
     "actions taken in response to baseline failures"
    ],
-   "gap": "An operational definition of punishment is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which responses constitute punishment rather than correction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_punishment"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -628,14 +646,20 @@
    "data_dependencies": [
     "exclusion decisions and restoration conditions"
    ],
-   "gap": "The scope of exclusion and the treatment of indefinitely renewable exclusions are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the excluded services or functions covered by this safeguard.",
     "Define how restoration conditions establish that an exclusion is not permanent."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_permanent_exclusion"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -668,11 +692,17 @@
     "identity records",
     "failure-linked consequence records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Observed as withheld rights.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "legal_status_unchanged"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -699,14 +729,20 @@
     "system function classifications",
     "access restriction records"
    ],
-   "gap": "Advanced, high-impact, and temporary lack operational boundaries or a specified duration. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define advanced and high-impact function classes.",
     "Define how a restriction qualifies as temporary without imposing an invented textual deadline."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "only_temporary_restriction"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -735,11 +771,17 @@
    "data_dependencies": [
     "remediation access and charging records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "free_remediation"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -920,13 +962,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "Transparency and auditability standards are missing. No lab check implemented yet.",
+   "gap": "Declared flags.",
    "hypotheses_needed": [
     "Define required disclosures, audiences, and audit evidence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "open_declared_assessment"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -951,11 +999,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": "Declared flags.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "open_declared_assessment"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -981,14 +1035,20 @@
    "data_dependencies": [
     "cultural and linguistic assessment evidence"
    ],
-   "gap": "Bias measurement and the feasibility judgment required by 'where possible' are unspecified.",
+   "gap": "Assessment language only; other bias sources are not modelled.",
    "hypotheses_needed": [
     "Define cultural and linguistic bias measures.",
     "Define feasible alternatives and how minimization is judged."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "minimal_language_bias"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1014,13 +1074,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "A mapping from assessment features and proxies to the prohibited targets is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define direct and indirect evaluation of ideology, belief, intent, and loyalty."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_ideology_items"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1084,14 +1150,20 @@
     "system interaction error detections",
     "competence attribution results"
    ],
-   "gap": "Competence attribution and module-targeting criteria are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define attribution of interaction errors to insufficient competence.",
     "Define when an offered module adequately targets the detected error."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "targeted_modules"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1155,15 +1227,21 @@
     "failure history",
     "support and penalty records"
    ],
-   "gap": "The repeated-failure threshold, observation window, and definitions of enhanced support and penalty are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define repeated failure and its observation window.",
     "Define enhanced support relative to prior support.",
     "Define which responses constitute penalties."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "support_not_penalty"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1225,13 +1303,19 @@
    "data_dependencies": [
     "education access denial and restoration records"
    ],
-   "gap": "The treatment of indefinite or repeatedly renewed denials is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define how restoration conditions and repeated denials establish or exclude permanence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_permanent_denial"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1319,13 +1403,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "Operational criteria for detecting loyalty tests and belief screening, including proxies, are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define direct and indirect loyalty testing and belief screening."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_belief_screening"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1350,13 +1440,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "Punitive education is not operationally distinguished from permitted remediation or access restrictions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define punitive educational models consistently with the expressly permitted restrictions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_punitive_education"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1384,13 +1480,19 @@
    "data_dependencies": [
     "privilege assignments and enforcement grounds"
    ],
-   "gap": "The boundaries of privilege and credential-based enforcement are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define covered privileges and distinguish credential reliance from demonstrated competence reliance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_credential_privilege"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1419,13 +1521,19 @@
    "data_dependencies": [
     "economic and administrative penalty records"
    ],
-   "gap": "A rule identifying when a penalty substitutes for education is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the educational response being displaced and the substitution relationship."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "no_penalty_substitution"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1485,11 +1593,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": "Declared flags.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "open_declared_assessment"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1544,13 +1658,19 @@
    "data_dependencies": [
     "individual learning data inventories and processing records"
    ],
-   "gap": "The minimization objective and criteria for necessary learning data are missing.",
+   "gap": "Declared minimization.",
    "hypotheses_needed": [
     "Define necessary data by purpose and the dimensions over which minimization is evaluated."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "learning_data_minimized"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1610,13 +1730,19 @@
    "data_dependencies": [
     "cross-module learning data lineage and use records"
    ],
-   "gap": "Purpose classifications and the operational meaning of repurposing are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define profiling, enforcement, and changes of purpose that constitute repurposing."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "learning_data_not_profiled"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1775,14 +1901,20 @@
     "basic rights definitions",
     "rights access conditions and decisions"
    ],
-   "gap": "The set of basic rights and an operational definition of dignity are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the covered rights and dignity conditions.",
     "Define direct and indirect educational gating."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "not_a_rights_gate"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1812,11 +1944,17 @@
     "function classifications",
     "access restriction definitions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "restriction_reversible"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1843,11 +1981,17 @@
    "data_dependencies": [
     "simulation calibration records and validity evidence"
    ],
-   "gap": "DKP-8-SIMULATION-001 and its calibration acceptance rules are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "restriction_calibrated"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1872,11 +2016,17 @@
    "data_dependencies": [
     "restriction metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Confidence bounds come from a hypothetical bundle.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "review_intervals"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1903,13 +2053,19 @@
     "L8 calibration validity",
     "downstream educational signal uses"
    ],
-   "gap": "Calibration validity rules and the boundary of informational-only use are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define informational-only use and its boundary with operative access decisions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "informational_without_l8"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
