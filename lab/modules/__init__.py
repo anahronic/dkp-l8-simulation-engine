@@ -13,6 +13,7 @@ from lab.modules.internal_security import InternalSecurityModule
 from lab.modules.interop_failure import InteropFailureModule
 from lab.modules.police_antiterror import PoliceAntiterrorModule
 from lab.modules.prevention import PreventionModule
+from lab.modules.privacy_transparency import PrivacyTransparencyModule
 from lab.modules.sensor_loss import SensorLossModule
 from lab.modules.time import TimeModule
 from lab.modules.transport_capacity import TransportCapacityModule
@@ -26,4 +27,4 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              TransportCapacityModule(), EconomicAccessModule(),
                              UpgradeLifecycleModule(), InternalSecurityModule(),
                              PoliceAntiterrorModule(), AxiomConstraintsModule(),
-                             InfoTruthModule())}
+                             InfoTruthModule(), PrivacyTransparencyModule())}

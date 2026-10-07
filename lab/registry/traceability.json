@@ -16,6 +16,7 @@
   "interop_failure",
   "police_antiterror",
   "prevention",
+  "privacy_transparency",
   "sensor_loss",
   "time",
   "transport_capacity",
@@ -712,6 +713,26 @@
    "module": "info_truth",
    "example": "systemic_disinformation",
    "kind": "reference"
+  },
+  {
+   "module": "privacy_transparency",
+   "example": "absolute_aggregates_forbidden",
+   "kind": "alternative"
+  },
+  {
+   "module": "privacy_transparency",
+   "example": "faulty_disclosure",
+   "kind": "counterexample"
+  },
+  {
+   "module": "privacy_transparency",
+   "example": "harm_and_crisis",
+   "kind": "reference"
+  },
+  {
+   "module": "privacy_transparency",
+   "example": "mixed_requests",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -719,17 +740,17 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 455,
-  "covered_percent": 26.2,
+  "covered": 499,
+  "covered_percent": 28.7,
   "statuses": {
-   "PASS": 408,
+   "PASS": 450,
    "FAIL": 4,
-   "UNKNOWN": 34,
+   "UNKNOWN": 36,
    "NOT_APPLICABLE": 9,
-   "UNCOVERED": 1282
+   "UNCOVERED": 1238
   },
   "resolvable": 334,
-  "resolvable_uncovered": 213,
+  "resolvable_uncovered": 209,
   "unresolved_decisions": 1403
  },
  "stages": [
@@ -780,17 +801,17 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 455,
-    "covered_percent": 26.2,
+    "covered": 499,
+    "covered_percent": 28.7,
     "statuses": {
-     "PASS": 408,
+     "PASS": 450,
      "FAIL": 4,
-     "UNKNOWN": 34,
+     "UNKNOWN": 36,
      "NOT_APPLICABLE": 9,
-     "UNCOVERED": 1282
+     "UNCOVERED": 1238
     },
     "resolvable": 334,
-    "resolvable_uncovered": 213,
+    "resolvable_uncovered": 209,
     "unresolved_decisions": 1403
    }
   },
@@ -954,17 +975,17 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 141,
-    "covered_percent": 27.6,
+    "covered": 185,
+    "covered_percent": 36.2,
     "statuses": {
-     "PASS": 126,
+     "PASS": 168,
      "FAIL": 0,
-     "UNKNOWN": 13,
+     "UNKNOWN": 15,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 370
+     "UNCOVERED": 326
     },
     "resolvable": 79,
-    "resolvable_uncovered": 50,
+    "resolvable_uncovered": 46,
     "unresolved_decisions": 432
    }
   },
@@ -1393,6 +1414,12 @@
    "title": "Axiom A4 'SHOULD': a binding constraint like the other axioms, or a recommendation",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-045",
+   "title": "PRIVACY §6: may aggregate statistics of the absolute privacy domains (medical, mental, intimate, beliefs, private communications) be published",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -1523,11 +1550,16 @@
     "id": "F-025",
     "title": "Axiom A4 says SHOULD, while every axiom is a constraint",
     "classification": "INTERPRETATION_GAP"
+   },
+   {
+    "id": "F-026",
+    "title": "PRIVACY §6: may aggregate statistics of an absolute privacy domain be published?",
+    "classification": "INTERPRETATION_GAP"
    }
   ],
   "finding_counts": {
    "CONFIRMED_FINDING": 14,
-   "INTERPRETATION_GAP": 9,
+   "INTERPRETATION_GAP": 10,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
   },
@@ -1632,7 +1664,7 @@
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 21
+    "count": 22
    },
    {
     "status": "WITHDRAWN",
@@ -1661,9 +1693,9 @@
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "text_verified": 51,
+    "text_verified": 53,
     "codex_draft": 115,
-    "total": 166
+    "total": 168
    },
    {
     "origin": "architecture_definition",
@@ -1699,7 +1731,7 @@
     "origin": "pending",
     "text_verified": 0,
     "codex_draft": 0,
-    "total": 314
+    "total": 312
    }
   ],
   "draft_author_question_candidates": 289,
@@ -2042,13 +2074,13 @@
     "pending": 37
    },
    "DKP-7-PRIVACY-001": {
-    "normative_ambiguity": 0,
+    "normative_ambiguity": 2,
     "architecture_definition": 0,
     "l8_parameter": 0,
     "empirical_model_data": 0,
     "external_dependency": 0,
     "implementation_only": 0,
-    "pending": 31
+    "pending": 29
    },
    "DKP-7-SCOPE-001": {
     "normative_ambiguity": 2,
@@ -51316,25 +51348,35 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited practice categories are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "prohibited_purposes",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Purposes are declared on the request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51374,25 +51416,33 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between privacy suspension and permitted anonymity reduction is unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_transparency",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51403,25 +51453,33 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Crisis Scope membership and direct life-preservation purposes are not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_reduction_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51432,25 +51490,33 @@
    "section": "11",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No independent duration limit or method for establishing eventual cessation is specified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_reduction_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51461,25 +51527,33 @@
    "section": "11",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_reduction_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51490,25 +51564,33 @@
    "section": "11",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required meaning and extent of reversal are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_reduction_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51519,25 +51601,33 @@
    "section": "11",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Crisis Scope dimensions and the event that terminates applicable coverage are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_reduction_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51548,25 +51638,33 @@
    "section": "12",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "privacy_rules_public",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51606,25 +51704,33 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The verification standard and required Subject capabilities are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "privacy_rules_public",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Publication flag; verification by Subjects is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51635,25 +51741,33 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The system boundary, visibility model, and sufficient verification evidence are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "privacy_rules_public",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Publication flag.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51983,25 +52097,33 @@
    "section": "4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The identity-reconstruction measure and referenced thresholds are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "breach_threshold",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "No re-identification threshold in the corpus: UNKNOWN unless declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 2,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "UNKNOWN": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52041,25 +52163,35 @@
    "section": "4.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meanings of domain and total aggregation are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "no_cross_domain_linkage",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Total aggregation observed as cross-domain linkage.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52070,25 +52202,35 @@
    "section": "4.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A method for determining and comparing minimum required data is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "no_convenience_erosion",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Minimum exposure observed for analytics requests.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52099,25 +52241,35 @@
    "section": "4.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The possible linkage operations, observer knowledge, and reconstruction success condition are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "no_cross_domain_linkage",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Linkage is declared on the request; re-identification risk is not computed.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52128,25 +52280,35 @@
    "section": "4.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Privacy erosion and the treatment of mixed decision grounds are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "no_convenience_erosion",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52157,28 +52319,46 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Private access boundaries and the meaning of externalized impact are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "absolute_domains",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Aggregates of an absolute domain are not settled (F-026): UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-045"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "UNKNOWN",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1,
+    "UNKNOWN": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": null
+   "text_verification": [
+    "findings:F-026"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "PRIVACY-6-02",
@@ -52186,28 +52366,46 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Extraction is undefined and the scope of the individual-level qualifier is ambiguous. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "absolute_domains",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-045"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": null
+   "text_verification": [
+    "findings:F-026",
+    "questions:Q-045"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "PRIVACY-7-01",
@@ -52215,27 +52413,39 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Anonymization and aggregation acceptance standards and the exception's precise interaction with this rule are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "conditional_domains",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-026"
+   ],
    "open_point": null
   },
   {
@@ -52244,25 +52454,35 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The qualifying enforcement protocols, Scope test, and domain extent of this sentence are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "conditional_domains",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52273,25 +52493,35 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document supplies no test for when identity is required for the three permitted purposes. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "right_to_anonymity",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52302,25 +52532,33 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The comparison baseline and treatment of identity-required functions are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "anonymous_full_rights",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52331,25 +52569,33 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meaning of possible and the anonymization validation standard are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "audit_without_personal_data",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52389,25 +52635,33 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "audit_without_personal_data",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52418,25 +52672,33 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between system behavior and personal life is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "audit_without_personal_data",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -54743,25 +55005,33 @@
    "section": "10",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A transparency comparison model, baseline, and evaluation timing are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_transparency",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -54772,25 +55042,33 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The exposure comparison and distinction between default and separately authorized changes are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_transparency",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -54801,25 +55079,33 @@
    "section": "10",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The minimum log content and operational criteria for post-facto reviewability are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_transparency",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -54830,25 +55116,33 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Permanence and the sufficiency of non-crisis justification are not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "crisis_reduction_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -54859,25 +55153,33 @@
    "section": "11",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Explanation adequacy, protocol applicability, and the independent-verification procedure require additional rules. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "explained_decisions",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -54917,25 +55219,33 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required audit-hook interface is defined by an unavailable external document. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "audit_hooks",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55004,25 +55314,33 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Audit sufficiency and indirect identity exposure require operational models. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "audit_without_personal_data",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55323,25 +55641,35 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "no_identity_condition",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55352,25 +55680,35 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define how to detect indirect exposure or classify all private-life information. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "absolute_domains",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Private life as the absolute privacy domains.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55555,25 +55893,33 @@
    "section": "5",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete domain inventory and an operational independent-verification test are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "public_by_default",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55584,25 +55930,33 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Structural and aggregate levels lack operational definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "public_by_default",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55642,25 +55996,33 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The Scope authorization rules and a definition of protection downgrade are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "deanonymization_conditions",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Scope authorization is a declared trigger.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55700,25 +56062,33 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The axioms, unnamed justice protocols, and precedence relative to section 8 are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "deanonymization_conditions",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "AXIOMS mandates are not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55729,25 +56099,33 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Materiality, attribution necessity, PTL verification, and completeness of remediation-path assessment require external rules or models. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "deanonymization_conditions",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55758,25 +56136,35 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No ordering or decision rule defines minimal de-anonymization. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "deanonymization_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55787,25 +56175,35 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The duration, bounded object, and required behavior at expiry are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "deanonymization_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55845,25 +56243,35 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Case boundaries and the full meaning of propagation are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "deanonymization_bounded",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55903,25 +56311,35 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define identity dependence or treatment of identity proxies. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "prohibited_purposes",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55932,25 +56350,35 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not operationalize forced transparency or punitive purpose. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "prohibited_purposes",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -55961,25 +56389,35 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Dataset relatedness and the purpose-versus-outcome reading of identity inference are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "no_cross_domain_linkage",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "privacy_transparency:faulty_disclosure"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null

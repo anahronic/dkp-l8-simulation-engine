@@ -109,6 +109,7 @@ No Calibration Bundle exists in the pinned corpus.
 | elevated authorization thresholds for irreversible security actions | DKP-3-INTERNAL-SEC-001 | §4.4 | "Irreversible actions require elevated authorization thresholds and justification." | l8_parameter | — |
 | Axiom A1 minimum required conditions | DKP-1-AXIOMS-001 | A1 | "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS" | architecture_definition (F-023) | police_antiterror.crisis_lethal_authorized |
 | active validating nodes (ratification of axiom changes) | DKP-1-AXIOMS-001 | §8 | "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy" | architecture_definition (F-022) | axiom_constraints (declared ratification_share) |
+| re-identification threshold of a Privacy Breach | DKP-7-PRIVACY-001 | §4 | "Privacy Breach — any condition enabling identity reconstruction beyond defined thresholds." | l8_parameter | privacy_transparency.reidentification_k |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -150,7 +151,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-6-INTEGRATION-001 | listed downstream | — | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-6-RESILIENCE-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-7-AI-SUBJECT-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-7-PRIVACY-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-7-PRIVACY-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-7-SCOPE-001 | upstream of SIMULATION | — | 0 | 0 | 0 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
 | DKP-7-TRANSPARENCY-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-8-AUDIT-001 | listed downstream | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

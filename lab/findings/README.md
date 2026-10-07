@@ -48,6 +48,7 @@ documented numbers as regressions.
 | [F-023](F-023.md) | Axiom A1 'minimum required conditions': AXIOMS, CRISIS and SCOPE defer the definition to each other | CONFIRMED_FINDING | Q-042 |
 | [F-024](F-024.md) | AXIOMS §5: rules 2 and 4 differ when every action violates an axiom | INTERPRETATION_GAP | Q-043 |
 | [F-025](F-025.md) | Axiom A4 says SHOULD while every axiom is a constraint | INTERPRETATION_GAP | Q-044 |
+| [F-026](F-026.md) | PRIVACY §6: aggregate statistics of the absolute privacy domains — allowed or not | INTERPRETATION_GAP | Q-045 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

@@ -1,0 +1,76 @@
+"""PRIVACY and TRANSPARENCY module: domains, de-anonymization conditions, audit, crisis, F-026."""
+
+import pytest
+
+from lab.core.schema import LabInputError
+from lab.modules.privacy_transparency import FAULTS, PrivacyTransparencyModule
+
+M = PrivacyTransparencyModule()
+EX = M.examples()
+HC = EX["harm_and_crisis"]
+
+
+def run(**inp):
+    return M.evaluate(M.validate(inp))
+
+
+def statuses(res):
+    return {c.requirement_id: c.status for c in res.checks}
+
+
+@pytest.mark.parametrize("name", [n for n in EX if M.example_kind(n) in ("reference", "alternative")])
+def test_examples_break_no_rule(name):
+    assert "FAIL" not in statuses(run(**EX[name])).values()
+
+
+FAULT_CASES = {
+    "release_absolute_individual": ({}, ["PRIVACY-6-02", "TRANSPARENCY-3-03"]),
+    "audit_raw_data": ({}, ["PRIVACY-9-01", "PRIVACY-9-03", "PRIVACY-9-04", "TRANSPARENCY-12-04"]),
+    "deanonymize_without_harm": (HC, ["TRANSPARENCY-8-01", "TRANSPARENCY-6-02", "TRANSPARENCY-7-02"]),
+    "deanonymize_propagate": (HC, ["TRANSPARENCY-8-02", "TRANSPARENCY-8-03", "TRANSPARENCY-8-05"]),
+    "correlate_domains": ({}, ["PRIVACY-4.3-01", "TRANSPARENCY-9-04"]),
+    "profiling_granted": ({}, ["PRIVACY-10-01", "TRANSPARENCY-9-02"]),
+    "convenience_override": ({}, ["PRIVACY-4.4-01"]),
+    "crisis_permanent": (HC, ["PRIVACY-11-06", "TRANSPARENCY-10-04"]),
+    "crisis_identity_by_default": (HC, ["TRANSPARENCY-10-02"]),
+    "hide_public_domain": ({}, ["TRANSPARENCY-5-01"]),
+    "identity_required": ({}, ["PRIVACY-8-01", "TRANSPARENCY-3-02"]),
+    "anonymous_fewer_rights": ({}, ["PRIVACY-8-02"]),
+    "unexplained_decision": ({}, ["TRANSPARENCY-11-01"]),
+    "no_audit_hook": ({}, ["TRANSPARENCY-12-01"]),
+}
+
+
+def test_every_fault_has_a_case():
+    assert set(FAULT_CASES) == set(FAULTS)
+
+
+@pytest.mark.parametrize("fault", sorted(FAULT_CASES))
+def test_fault_is_detected(fault):
+    base, expected = FAULT_CASES[fault]
+    clean, broken = statuses(run(**base)), statuses(run(**base, faults=[fault]))
+    for rid in expected:
+        assert clean[rid] == "PASS", (rid, clean[rid])
+        assert broken[rid] == "FAIL", (fault, rid, broken[rid])
+
+
+def test_decisions():
+    g = {d["request"]: d["grant"] for d in run().outputs["decisions"]}
+    assert g == {"r1": True, "r2": True, "r3": False, "r4": True, "r5": False, "r6": False, "r7": False, "r8": True}
+    h = {d["request"]: d["grant"] for d in run(**HC).outputs["decisions"]}
+    assert h == {"h1": True, "h2": False, "h3": True, "h4": True}
+
+
+def test_absolute_aggregates_unsettled():
+    """F-026: the medical aggregate r8 is granted or refused by the reading; both report UNKNOWN."""
+    never = {d["request"]: d["grant"] for d in run(**EX["absolute_aggregates_forbidden"]).outputs["decisions"]}
+    assert never["r8"] is False
+    for inp in ({}, EX["absolute_aggregates_forbidden"]):
+        unk = [c for c in run(**inp).checks if c.requirement_id == "PRIVACY-6-01" and c.status == "UNKNOWN"]
+        assert unk and "F-026" in unk[0].explanation
+
+
+@pytest.mark.parametrize("name", sorted(M.failure_examples()))
+def test_invalid_inputs_are_refused(name):
+    with pytest.raises(LabInputError):
+        M.validate(M.failure_examples()[name])

@@ -197,3 +197,11 @@ def test_f022_to_f025_axioms():
                                          "no_admissible_action": (None, ["AXIOMS-1-01", "AXIOMS-5-02", "AXIOMS-5-04"])}
     assert _chosen_and_open("F-025") == {"constraint": ("weir", []),
                                          "recommendation": ("dam", ["AXIOMS-AxiomA4-IrreversibilityAversion-01"])}
+
+
+def test_f026_absolute_aggregates():
+    with open(os.path.join(FINDINGS, "F-026.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    rows = {n: (x["outputs"]["decisions"][0]["grant"],
+                any(c["requirement_id"] == "PRIVACY-6-01" and c["status"] == "UNKNOWN" for c in x["checks"])) for n, x in v.items()}
+    assert rows == {"aggregate_allowed": (True, True), "never": (False, True)}

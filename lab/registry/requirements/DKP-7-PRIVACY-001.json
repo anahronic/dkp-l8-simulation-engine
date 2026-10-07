@@ -181,13 +181,19 @@
     "identity reconstruction assessments",
     "applicable threshold definitions"
    ],
-   "gap": "The identity-reconstruction measure and referenced thresholds are absent. No lab check implemented yet.",
+   "gap": "No re-identification threshold in the corpus: UNKNOWN unless declared.",
    "hypotheses_needed": [
     "Declare the reconstruction measure, thresholds, and comparison semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "breach_threshold"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -242,13 +248,19 @@
    "data_dependencies": [
     "aggregation lineage and domain coverage"
    ],
-   "gap": "The meanings of domain and total aggregation are not operationally defined. No lab check implemented yet.",
+   "gap": "Total aggregation observed as cross-domain linkage.",
    "hypotheses_needed": [
     "Declare domain boundaries and the coverage condition that makes aggregation total."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "no_cross_domain_linkage"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -273,13 +285,19 @@
     "protocol execution requirements",
     "data processing records"
    ],
-   "gap": "A method for determining and comparing minimum required data is missing. No lab check implemented yet.",
+   "gap": "Minimum exposure observed for analytics requests.",
    "hypotheses_needed": [
     "Declare how execution necessity and minimality are evaluated."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "no_convenience_erosion"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -304,13 +322,19 @@
     "data access relationships",
     "linkage capabilities and auxiliary information"
    ],
-   "gap": "The possible linkage operations, observer knowledge, and reconstruction success condition are unspecified. No lab check implemented yet.",
+   "gap": "Linkage is declared on the request; re-identification risk is not computed.",
    "hypotheses_needed": [
     "Declare a linkage threat model and the condition constituting identity reconstruction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "no_cross_domain_linkage"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -333,13 +357,19 @@
    "data_dependencies": [
     "decision rationales and assessed privacy effects"
    ],
-   "gap": "Privacy erosion and the treatment of mixed decision grounds are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how privacy erosion and authorizing decision grounds are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "no_convenience_erosion"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -366,16 +396,28 @@
     "communication impact assessments",
     "access and publication histories"
    ],
-   "gap": "Private access boundaries and the meaning of externalized impact are unspecified. No lab check implemented yet.",
+   "gap": "Aggregates of an absolute domain are not settled (F-026): UNKNOWN.",
    "hypotheses_needed": [
     "Declare permitted private access and how externalized impact of communications is determined."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "absolute_domains"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-045"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "PRIVACY-6-02",
@@ -396,16 +438,28 @@
    "data_dependencies": [
     "data operation records and granularity classifications"
    ],
-   "gap": "Extraction is undefined and the scope of the individual-level qualifier is ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare what constitutes extraction and whether the individual-level qualifier limits both prohibitions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "absolute_domains"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": []
+   "open_questions": [
+    "Q-045"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "text_verified"
+   }
   },
   {
    "id": "PRIVACY-7-01",
@@ -431,14 +485,20 @@
     "aggregation descriptions",
     "enforcement trigger records"
    ],
-   "gap": "Anonymization and aggregation acceptance standards and the exception's precise interaction with this rule are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how anonymization and aggregation are validated and how the individual-disclosure exception applies."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "conditional_domains"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
   },
@@ -463,13 +523,19 @@
     "higher-layer enforcement authorizations",
     "Scope boundaries and validity"
    ],
-   "gap": "The qualifying enforcement protocols, Scope test, and domain extent of this sentence are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare eligible enforcement protocols, the Scope membership test, and the domains governed by this exception."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "conditional_domains"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -495,13 +561,19 @@
     "identity requirements of attribution, risk allocation, and transfer modules",
     "available participation modes"
    ],
-   "gap": "The document supplies no test for when identity is required for the three permitted purposes. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the necessity test for identity in each listed purpose."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "right_to_anonymity"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -528,13 +600,19 @@
     "access-control outcomes",
     "identity-dependent function requirements"
    ],
-   "gap": "The comparison baseline and treatment of identity-required functions are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare equivalent participation cases and how identity-required functions interact with equal access."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "anonymous_full_rights"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -561,13 +639,19 @@
     "anonymization evidence",
     "audit feasibility assessments"
    ],
-   "gap": "The meaning of possible and the anonymization validation standard are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the feasibility test for conducting an audit with anonymized data."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "audit_without_personal_data"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -619,11 +703,17 @@
     "audit access logs",
     "raw and personal data classifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "audit_without_personal_data"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -647,13 +737,19 @@
    "data_dependencies": [
     "audit scopes and evidence requests"
    ],
-   "gap": "The boundary between system behavior and personal life is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how audit targets that involve both system behavior and personal life are classified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "audit_without_personal_data"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -676,13 +772,19 @@
    "data_dependencies": [
     "system operation descriptions and practice assessments"
    ],
-   "gap": "The prohibited practice categories are not operationally defined. No lab check implemented yet.",
+   "gap": "Purposes are declared on the request.",
    "hypotheses_needed": [
     "Declare classification rules for each prohibited practice."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "prohibited_purposes"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -735,13 +837,19 @@
     "crisis state history",
     "privacy control changes"
    ],
-   "gap": "The boundary between privacy suspension and permitted anonymity reduction is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which changes constitute privacy suspension and how permitted anonymity reductions are distinguished."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "crisis_transparency"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -766,13 +874,19 @@
     "Crisis Scope declarations",
     "life-preservation purpose assessments"
    ],
-   "gap": "Crisis Scope membership and direct life-preservation purposes are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the Scope membership test and how direct life-preservation purposes are established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "crisis_reduction_bounded"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -795,13 +909,19 @@
    "data_dependencies": [
     "anonymity reduction lifecycle records"
    ],
-   "gap": "No independent duration limit or method for establishing eventual cessation is specified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether eventual cessation is checked on completed traces or proved from a lifecycle model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "crisis_reduction_bounded"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -825,11 +945,17 @@
     "anonymity reduction events",
     "exception logs"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "crisis_reduction_bounded"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -854,13 +980,19 @@
    "data_dependencies": [
     "reversal mechanisms and restoration evidence"
    ],
-   "gap": "The required meaning and extent of reversal are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the state properties that reversal must restore and whether disclosed information must also be addressed."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "crisis_reduction_bounded"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -885,13 +1017,19 @@
     "Crisis Scope lifecycle and boundaries",
     "active anonymity reduction records"
    ],
-   "gap": "Crisis Scope dimensions and the event that terminates applicable coverage are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare Scope membership over time and the cessation condition for a reduction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "crisis_reduction_bounded"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -917,11 +1055,17 @@
     "privacy configuration inventories",
     "public publication records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "privacy_rules_public"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -977,13 +1121,19 @@
     "subject verification interfaces",
     "subject-accessible evidence"
    ],
-   "gap": "The verification standard and required Subject capabilities are unspecified. No lab check implemented yet.",
+   "gap": "Publication flag; verification by Subjects is not modelled.",
    "hypotheses_needed": [
     "Declare what verification establishes and what capabilities a Subject may be assumed to possess."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "privacy_rules_public"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []
@@ -1009,13 +1159,19 @@
     "non-observability evidence",
     "subject verification interfaces"
    ],
-   "gap": "The system boundary, visibility model, and sufficient verification evidence are unspecified. No lab check implemented yet.",
+   "gap": "Publication flag.",
    "hypotheses_needed": [
     "Declare the observer boundary and proof standard for system nonvisibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.0.0",
+    "check": "privacy_rules_public"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": []

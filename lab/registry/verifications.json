@@ -645,6 +645,33 @@
     }
    ],
    "conclusion": "A4 alone uses SHOULD while every axiom is a constraint; the two readings choose differently. IMPACT has no irreversible impact models, so necessity can only be declared."
+  },
+  {
+   "id": "F-026",
+   "classification": "INTERPRETATION_GAP",
+   "quotes": [
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§6",
+     "text": "The following domains SHALL ALWAYS remain private and non-public:"
+    },
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§6",
+     "text": "These domains are non-extractable and non-auditable at the individual level."
+    },
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§7",
+     "text": "The following MAY be exposed only in anonymized or aggregated form:"
+    },
+    {
+     "doc": "DKP-7-TRANSPARENCY-001",
+     "at": "§5",
+     "text": "system-wide metrics and aggregate indicators,"
+    }
+   ],
+   "conclusion": "§6 keeps the absolute domains non-public without a level and limits extraction at the individual level; §7 lists other domains for aggregate exposure; TRANSPARENCY §5 makes aggregate indicators public. Whether aggregates of an absolute domain may be published is not settled."
   }
  ],
  "reference_fails": [
@@ -1518,6 +1545,20 @@
     }
    ],
    "reason": "SHOULD in an axiom that §3/§5 treat as a constraint; the readings choose differently."
+  },
+  {
+   "id": "Q-045",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-026",
+   "quotes": [
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§6",
+     "text": "These domains are non-extractable and non-auditable at the individual level."
+    }
+   ],
+   "reason": "The level to which 'private and non-public' applies decides whether aggregate statistics of these domains may be published."
   }
  ]
 }
