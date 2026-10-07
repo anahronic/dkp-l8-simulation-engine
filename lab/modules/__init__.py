@@ -9,6 +9,7 @@ from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
 from lab.modules.internal_security import InternalSecurityModule
 from lab.modules.interop_failure import InteropFailureModule
+from lab.modules.police_antiterror import PoliceAntiterrorModule
 from lab.modules.prevention import PreventionModule
 from lab.modules.sensor_loss import SensorLossModule
 from lab.modules.time import TimeModule
@@ -21,4 +22,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              CrisisRecoveryModule(), ExitIntegrationModule(),
                              InteropFailureModule(), CalibrationExpiryModule(),
                              TransportCapacityModule(), EconomicAccessModule(),
-                             UpgradeLifecycleModule(), InternalSecurityModule())}
+                             UpgradeLifecycleModule(), InternalSecurityModule(),
+                             PoliceAntiterrorModule())}

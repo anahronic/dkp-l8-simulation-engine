@@ -180,13 +180,19 @@
     "decision traces",
     "responsibility assignments"
    ],
-   "gap": "The text does not operationalize inference or collective responsibility. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a classification of prohibited inferences and collective responsibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "no_collective_responsibility"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -215,13 +221,19 @@
     "PTL harm confirmations",
     "Justice and Defense responsibility definitions"
    ],
-   "gap": "The boundary between specialization and substitution of Justice or Defense is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare institutional responsibility boundaries."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "no_action_without_harm"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -395,11 +407,17 @@
    "data_dependencies": [
     "time-indexed PTL event confirmations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "ptl_confirmed_terror"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -425,14 +443,20 @@
     "model features and decision traces",
     "harm-pattern evidence"
    ],
-   "gap": "The text does not define proxy detection or a complete physical/system harm classification. No lab check implemented yet.",
+   "gap": "Observed as detention of associates.",
    "hypotheses_needed": [
     "Declare prohibited feature and proxy classifications.",
     "Declare qualifying physical/system harm categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "identity_not_a_risk_signal"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -570,14 +594,20 @@
     "action-control capabilities",
     "PTL cessation signals"
    ],
-   "gap": "Feasibility criteria and the operational timing meaning of immediately are unspecified. No lab check implemented yet.",
+   "gap": "Termination checked; reversibility is declared.",
    "hypotheses_needed": [
     "Declare a reversal-feasibility model.",
     "Declare timing semantics for immediate termination capability."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "immediately_terminable"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -716,14 +746,20 @@
     "mass-casualty risk assessments",
     "Crisis escalation records"
    ],
-   "gap": "Defense capacity measurement, mass-casualty qualification, and the scope of the exceedance comparison are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the interpretation of the alternative triggers.",
     "Declare capacity and mass-casualty qualification models."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "t3_escalates"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -751,14 +787,20 @@
     "PTL refresh timestamps and statuses",
     "state history"
    ],
-   "gap": "Refresh cadence, freshness limits, and the transition on refresh loss are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare continuous-refresh semantics and stale-evidence handling.",
     "Declare how refresh applies to T0."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "refresh_to_persist"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -793,14 +835,20 @@
     "attack-vector and threat-zone data",
     "action records"
    ],
-   "gap": "Rapid response, temporary duration, and threat-zone determination have no operational specifications. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare timing criteria for rapid and temporary actions.",
     "Declare how threat zones and active harm sources are determined."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "permitted_actions"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -830,13 +878,19 @@
     "event records",
     "action triggers and event associations"
    ],
-   "gap": "Reactive causation and the boundaries of event scope are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare criteria linking action triggers and scope to a specific event."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "event_scoped"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -869,14 +923,20 @@
     "technical isolation configuration",
     "isolation timing and selection rules"
    ],
-   "gap": "Locality, time limits, and the distinction between signal amplitude containment and content control lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare locality and duration criteria.",
     "Declare a technical classification separating amplitude containment from content control."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "technical_information_isolation"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -904,13 +964,19 @@
    "data_dependencies": [
     "occupation and control histories"
    ],
-   "gap": "The duration or condition that makes occupation or control long-term is undefined. No lab check implemented yet.",
+   "gap": "Zone containment; 'long-term occupation' observed as actions outside the zone.",
    "hypotheses_needed": [
     "Declare the meaning of long-term occupation or control."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "lockdown_in_zone"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -941,13 +1007,19 @@
     "surveillance scope",
     "punishment decisions"
    ],
-   "gap": "Operational classifications, including the boundary of mass surveillance, are absent. No lab check implemented yet.",
+   "gap": "Collective punishment observed as detention of associates.",
    "hypotheses_needed": [
     "Declare screening, mass-surveillance, and collective-punishment classifications."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "no_collective_punishment"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -979,14 +1051,20 @@
     "detention and designation records",
     "decision justifications"
    ],
-   "gap": "The required subject-to-harm linkage and tests for dissent suppression and retrospective justification are unspecified. No lab check implemented yet.",
+   "gap": "A protest without harm as the test case.",
    "hypotheses_needed": [
     "Declare whether detention confirmation must be subject-specific.",
     "Declare prohibited designation-use and justification classifications."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "no_suppression_of_dissent"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1018,13 +1096,19 @@
     "axiom compliance findings",
     "outcome and justification records"
    ],
-   "gap": "The applicable axioms and an operational test for outcome-based justification are not provided. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare applicable axiom checks and how forbidden outcome-based justification is detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "no_retrospective_justification"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1093,11 +1177,17 @@
     "source data and log inventories",
     "Impact forwarding records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "logs_to_impact"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1161,11 +1251,17 @@
     "PTL cessation events",
     "action lifecycle records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "terminate_on_cessation"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1199,15 +1295,21 @@
     "PTL destabilization signals",
     "Crisis escalation records"
    ],
-   "gap": "Acceptable thresholds, system boundaries, and the capacity comparison model are missing. No lab check implemented yet.",
+   "gap": "T3 escalation only; 'acceptable thresholds' have no value.",
    "hypotheses_needed": [
     "Declare casualty thresholds and their authority.",
     "Declare system-wide propagation and capacity-overwhelm criteria.",
     "Treat the listed conditions as alternative escalation triggers."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "escalation_rules"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1317,13 +1419,19 @@
     "economic protocol change records",
     "sanction and execution attribution records"
    ],
-   "gap": "The boundary between triggering downstream isolation and imposing a sanction is not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare executor attribution and the distinction between permitted downstream triggering and prohibited sanctions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "no_sanctions"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
