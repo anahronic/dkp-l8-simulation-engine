@@ -28,11 +28,17 @@
    "data_dependencies": [
     "protocol override rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "no_override"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -58,13 +64,19 @@
     "measurement provenance",
     "evaluation conditions and boundaries"
    ],
-   "gap": "The text does not define how boundedness or adequate evaluation conditions are established. No lab check implemented yet.",
+   "gap": "Recorded label.",
    "hypotheses_needed": [
     "Define a predicate for an evaluation being bounded under its declared conditions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "bounded_evaluations"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -94,13 +106,19 @@
     "protocol and layer inventory",
     "enforcement and execution architecture"
    ],
-   "gap": "No implementation mapping or test for architectural responsibility is provided. No lab check implemented yet.",
+   "gap": "EB emits decisions, no actions.",
    "hypotheses_needed": [
     "Define how implementation components map to layers and enforcement or execution responsibilities."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "constraint_not_executor"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -131,13 +149,19 @@
     "conflict signals",
     "previously available data"
    ],
-   "gap": "Novelty, admissibility, and conflict-signal qualification criteria are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare novelty, admissibility, and conflict-signal predicates."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "dispute_event"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -168,13 +192,19 @@
     "admissibility decisions",
     "evaluation inputs and state"
    ],
-   "gap": "Admissibility and the complete computational state governing deterministic recomputation are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare admissibility rules and the full input and state model for determinism."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "re_evaluation"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -203,13 +233,19 @@
     "condition change history",
     "output revalidation records"
    ],
-   "gap": "The text does not define relevant condition evolution or what constitutes completed revalidation. No lab check implemented yet.",
+   "gap": "Staleness = steps since revalidation under activity (H-EG-1).",
    "hypotheses_needed": [
     "Define relevant condition changes and the revalidation coverage needed for each change."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "stale_output"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -272,13 +308,19 @@
     "scope declarations",
     "output use records"
    ],
-   "gap": "Authority and scope membership are not given executable definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define authoritative use and a scope-membership predicate."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "no_authority_outside_scope"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -308,13 +350,19 @@
     "system state transition model",
     "admissibility decisions"
    ],
-   "gap": "The admissibility rules and the meaning of a corrected system state are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define admissibility and successful correction within the state model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "reversibility_is_reevaluation"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -345,14 +393,20 @@
     "reliability assessments",
     "environmental and signal condition history"
    ],
-   "gap": "Persistence and reliability dynamics are undefined, and the relationship to section 9 needs an explicit reading. No lab check implemented yet.",
+   "gap": "The revalidation interval is not given (source missing).",
    "hypotheses_needed": [
     "Define persistence and an ordering of reliability states.",
     "Declare whether section 9 qualifies this invariant or whether persistence alone causes degradation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "persistent_outputs_degrade"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -379,11 +433,17 @@
    "data_dependencies": [
     "operational output metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "validity_values"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-003"
@@ -412,11 +472,17 @@
    "data_dependencies": [
     "operational output metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "confidence_values"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-003"
@@ -445,11 +511,17 @@
    "data_dependencies": [
     "operational output metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "consistency_values"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-003"
@@ -478,11 +550,17 @@
    "data_dependencies": [
     "operational output metadata"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "additional_fields"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -516,6 +594,11 @@
     "check": "record_metadata",
     "also": [
      {
+      "module": "epistemic_gate",
+      "version": "1.0.0",
+      "check": "full_metadata_for_operational_use"
+     },
+     {
       "module": "prevention",
       "version": "1.0.0",
       "check": "epistemic_metadata"
@@ -524,6 +607,7 @@
    },
    "tests": [
     "tests/lab/test_contribution_module.py",
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_prevention_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -553,11 +637,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.2.0",
-    "check": "incomplete_is_invalid"
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "incomplete_is_invalid",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.2.0",
+      "check": "incomplete_is_invalid"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -588,11 +680,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.2.0",
-    "check": "incomplete_not_executed"
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "not_executed",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.2.0",
+      "check": "incomplete_not_executed"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -620,13 +720,19 @@
     "metadata completeness results",
     "output transfer records"
    ],
-   "gap": "The boundary of prohibited propagation, including diagnostic and audit transfers, is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which transfers constitute propagation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "not_propagated"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -655,11 +761,17 @@
     "metadata completeness results",
     "consumer validity decisions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "not_conditional"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -686,17 +798,25 @@
     "processing records",
     "system topology"
    ],
-   "gap": "Checks that the consumer does not fill in missing fields; other repairs are not modelled.",
+   "gap": null,
    "hypotheses_needed": [
     "Define downstream system relationships and which operations constitute repair."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "failure_chain",
-    "version": "1.2.0",
-    "check": "no_downstream_repair"
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "not_repaired",
+    "also": [
+     {
+      "module": "failure_chain",
+      "version": "1.2.0",
+      "check": "no_downstream_repair"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -726,13 +846,19 @@
     "completeness enforcement architecture",
     "audit responsibilities"
    ],
-   "gap": "Primary enforcement is not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define how enforcement primacy is determined from architecture and failure behavior."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "audit_not_primary"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -761,11 +887,17 @@
     "producer inventory",
     "production boundaries and enforcement locations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "enforced_at_production"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -791,14 +923,20 @@
     "epistemic state transition model",
     "admissibility decisions"
    ],
-   "gap": "The state model, admissibility rules, and conditions for available correction transitions are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define epistemic states and admissible inputs.",
     "Distinguish epistemic correction from rollback of executed consequences."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "non_finality"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -828,13 +966,19 @@
     "dispute process specification",
     "dispute inputs and state"
    ],
-   "gap": "The complete dispute input and state model is not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare all inputs, relevant state, and result equivalence used to assess determinism."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "dispute_deterministic"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -868,14 +1012,20 @@
     "scope assessments",
     "measurement integrity challenges"
    ],
-   "gap": "Trigger predicates, combination logic, and whether triggering is automatic are not specified. No lab check implemented yet.",
+   "gap": "Triggers are declared.",
    "hypotheses_needed": [
     "Define each trigger predicate.",
     "Declare whether triggers are independently sufficient and whether a submission is required."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "dispute_triggers"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -995,7 +1145,7 @@
     "admissibility decisions",
     "recomputation records"
    ],
-   "gap": "dispute_correction: Admissibility of new data is the appeal's evidence only. failure_chain: Admissibility of the new inputs is the TTL rule only.",
+   "gap": "dispute_correction: Admissibility of new data is the appeal's evidence only. epistemic_gate: Recomputation = declared shift of the result. failure_chain: Admissibility of the new inputs is the TTL rule only.",
    "hypotheses_needed": [
     "Declare admissibility rules and the input and state model required for deterministic recomputation."
    ],
@@ -1006,6 +1156,11 @@
     "check": "dispute_recomputes",
     "also": [
      {
+      "module": "epistemic_gate",
+      "version": "1.0.0",
+      "check": "deterministic_recompute"
+     },
+     {
       "module": "failure_chain",
       "version": "1.2.0",
       "check": "dispute_recomputes"
@@ -1014,6 +1169,7 @@
    },
    "tests": [
     "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
@@ -1091,11 +1247,17 @@
    "data_dependencies": [
     "protocol applicability and admissibility definitions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "applicability_boundary_defined"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1158,14 +1320,20 @@
     "measurement integrity assessments",
     "conflicting signals"
    ],
-   "gap": "Reliability ordering, condition detection, and temporal association between conditions and degradation are unspecified. No lab check implemented yet.",
+   "gap": "Change and conflict are declared.",
    "hypotheses_needed": [
     "Define reliability degradation and each listed condition.",
     "Declare how condition events are associated with a degradation event."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "degradation_causes"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1197,14 +1365,20 @@
     "conflict detection results",
     "validity decisions and reasons"
    ],
-   "gap": "Environmental stability and the evidentiary basis for absence of conflicts are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define environmental stability and conflict-detection coverage.",
     "Represent the reasons responsible for an invalidation decision."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "silence_under_stability"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-008"
@@ -1236,13 +1410,19 @@
     "activity and stability assessments",
     "protocol data-absence handling"
    ],
-   "gap": "Activity, stability, and the required observable distinction are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define activity and stability states and how protocol behavior or metadata expresses their distinction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "absence_distinguished"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-008"
@@ -1279,15 +1459,21 @@
     "applicability assessments",
     "output selection decisions"
    ],
-   "gap": "Criticality, preference strength, trigger combination, and the representation of NO_OUTPUT are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define critical and safety-relevant contexts.",
     "Declare whether any listed condition is sufficient or their conjunction is required.",
     "Define how the preference affects selection and whether exceptions exist."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "no_output_priority"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1316,14 +1502,20 @@
     "measurement loss, delay, and instrument limitation models",
     "output representations"
    ],
-   "gap": "Measurement limitation models and a machine-testable distinction between approximation and absolute-state representation are missing. No lab check implemented yet.",
+   "gap": "Recorded label.",
    "hypotheses_needed": [
     "Declare measurement loss, delay, and instrument limitations.",
     "Define how output representations express approximate status."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "approximations"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1354,13 +1546,19 @@
     "interpretive context",
     "scope declarations"
    ],
-   "gap": "The prohibited forms of treatment lack operational definitions sufficient to decide all real-world uses.",
+   "gap": null,
    "hypotheses_needed": [
     "A simulation would need explicit proxies for each prohibited interpretation and for output-based irreversible decisions."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "prohibited_interpretations"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1390,14 +1588,20 @@
     "L8 test specifications and execution records",
     "failure detection criteria"
    ],
-   "gap": "Failure predicates, test adequacy criteria, and several named failure concepts are not defined. No lab check implemented yet.",
+   "gap": "The tests are recorded as run; their content is the other checks.",
    "hypotheses_needed": [
     "Define a test oracle for each required failure category.",
     "Declare what evidence establishes substantive coverage; no testing frequency is specified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "epistemic_gate",
+    "version": "1.0.0",
+    "check": "l8_tests"
+   },
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

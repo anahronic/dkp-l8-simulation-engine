@@ -13,6 +13,7 @@
   "dispute_correction",
   "economic_access",
   "edu_culture",
+  "epistemic_gate",
   "exit_integration",
   "failure_chain",
   "impact_attribution",
@@ -1065,6 +1066,21 @@
    "module": "impact_attribution",
    "example": "untraceable_impact",
    "kind": "noncompliant"
+  },
+  {
+   "module": "epistemic_gate",
+   "example": "complete_outputs",
+   "kind": "reference"
+  },
+  {
+   "module": "epistemic_gate",
+   "example": "faulty_consumers",
+   "kind": "counterexample"
+  },
+  {
+   "module": "epistemic_gate",
+   "example": "mixed_outputs",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1072,20 +1088,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 795,
-  "covered_percent": 45.8,
+  "covered": 823,
+  "covered_percent": 47.4,
   "statuses": {
-   "PASS": 723,
+   "PASS": 751,
    "FAIL": 3,
    "UNKNOWN": 55,
    "NOT_APPLICABLE": 14,
-   "UNCOVERED": 942
+   "UNCOVERED": 914
   },
   "resolvable": 331,
-  "resolvable_uncovered": 157,
+  "resolvable_uncovered": 152,
   "unresolved_decisions": 1406,
-  "covered_with_open_point": 621,
-  "pass_with_open_point": 556
+  "covered_with_open_point": 644,
+  "pass_with_open_point": 579
  },
  "stages": [
   {
@@ -1135,20 +1151,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 795,
-    "covered_percent": 45.8,
+    "covered": 823,
+    "covered_percent": 47.4,
     "statuses": {
-     "PASS": 723,
+     "PASS": 751,
      "FAIL": 3,
      "UNKNOWN": 55,
      "NOT_APPLICABLE": 14,
-     "UNCOVERED": 942
+     "UNCOVERED": 914
     },
     "resolvable": 331,
-    "resolvable_uncovered": 157,
+    "resolvable_uncovered": 152,
     "unresolved_decisions": 1406,
-    "covered_with_open_point": 621,
-    "pass_with_open_point": 556
+    "covered_with_open_point": 644,
+    "pass_with_open_point": 579
    }
   },
   {
@@ -1220,20 +1236,20 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 206,
-    "covered_percent": 56.4,
+    "covered": 234,
+    "covered_percent": 64.1,
     "statuses": {
-     "PASS": 193,
+     "PASS": 221,
      "FAIL": 3,
      "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 159
+     "UNCOVERED": 131
     },
     "resolvable": 100,
-    "resolvable_uncovered": 47,
+    "resolvable_uncovered": 42,
     "unresolved_decisions": 265,
-    "covered_with_open_point": 153,
-    "pass_with_open_point": 141
+    "covered_with_open_point": 176,
+    "pass_with_open_point": 164
    }
   },
   {
@@ -12195,23 +12211,28 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "no_override",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12224,24 +12245,31 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define how boundedness or adequate evaluation conditions are established. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "bounded_evaluations",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "Recorded label.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "epistemic_gate:faulty_consumers"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -12256,23 +12284,28 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Criticality, preference strength, trigger combination, and the representation of NO_OUTPUT are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "no_output_priority",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12288,23 +12321,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Measurement limitation models and a machine-testable distinction between approximation and absolute-state representation are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "approximations",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "Recorded label.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12320,24 +12358,31 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited forms of treatment lack operational definitions sufficient to decide all real-world uses.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "prohibited_interpretations",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "epistemic_gate:faulty_consumers"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -12352,23 +12397,28 @@
    "section": "13",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Failure predicates, test adequacy criteria, and several named failure concepts are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "l8_tests",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "The tests are recorded as run; their content is the other checks.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12384,23 +12434,28 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No implementation mapping or test for architectural responsibility is provided. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "constraint_not_executor",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "EB emits decisions, no actions.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12416,23 +12471,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Novelty, admissibility, and conflict-signal qualification criteria are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "dispute_event",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12448,23 +12508,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Admissibility and the complete computational state governing deterministic recomputation are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "re_evaluation",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12480,23 +12545,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define relevant condition evolution or what constitutes completed revalidation. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "stale_output",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "Staleness = steps since revalidation under activity (H-EG-1).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12544,24 +12614,31 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Authority and scope membership are not given executable definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "no_authority_outside_scope",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "epistemic_gate:faulty_consumers"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -12576,23 +12653,28 @@
    "section": "4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The admissibility rules and the meaning of a corrected system state are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "reversibility_is_reevaluation",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12608,23 +12690,28 @@
    "section": "4",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Persistence and reliability dynamics are undefined, and the relationship to section 9 needs an explicit reading. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "persistent_outputs_degrade",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "The revalidation interval is not given (source missing).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12645,21 +12732,25 @@
    "check": "record_metadata",
    "tests": [
     "tests/lab/test_contribution_module.py",
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_prevention_module.py"
    ],
    "gap": null,
    "also_checked_by": [
+    "epistemic_gate · full_metadata_for_operational_use",
     "prevention · epistemic_metadata"
    ],
    "hypotheses": [
     "H-CO-1",
+    "H-EG-1",
+    "H-EG-2",
     "PREVENTION-H-*"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12678,14 +12769,19 @@
    "kind": "constraint",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "failure_chain",
+   "module": "epistemic_gate",
    "check": "incomplete_is_invalid",
    "tests": [
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "failure_chain · incomplete_is_invalid"
+   ],
    "hypotheses": [
+    "H-EG-1",
+    "H-EG-2",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -12699,10 +12795,10 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -12720,14 +12816,19 @@
    "kind": "constraint",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "failure_chain",
-   "check": "incomplete_not_executed",
+   "module": "epistemic_gate",
+   "check": "not_executed",
    "tests": [
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "failure_chain · incomplete_not_executed"
+   ],
    "hypotheses": [
+    "H-EG-1",
+    "H-EG-2",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -12741,10 +12842,10 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -12761,24 +12862,31 @@
    "section": "5.x",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary of prohibited propagation, including diagnostic and audit transfers, is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "not_propagated",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "epistemic_gate:faulty_consumers"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -12793,23 +12901,28 @@
    "section": "5.x",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "not_conditional",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12822,15 +12935,20 @@
    "section": "5.x",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "failure_chain",
-   "check": "no_downstream_repair",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "not_repaired",
    "tests": [
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "Checks that the consumer does not fill in missing fields; other repairs are not modelled.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "failure_chain · no_downstream_repair"
+   ],
    "hypotheses": [
+    "H-EG-1",
+    "H-EG-2",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -12844,13 +12962,14 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
+    "epistemic_gate:faulty_consumers",
     "failure_chain:all_faults"
    ],
    "under_alternative_readings": {},
@@ -12867,23 +12986,28 @@
    "section": "5.x",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Primary enforcement is not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "audit_not_primary",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12899,23 +13023,28 @@
    "section": "5.x",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "enforced_at_production",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12928,23 +13057,28 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The state model, admissibility rules, and conditions for available correction transitions are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "non_finality",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12960,23 +13094,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The complete dispute input and state model is not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "dispute_deterministic",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -12992,23 +13131,28 @@
    "section": "7.1",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Trigger predicates, combination logic, and whether triggering is automatic are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "dispute_triggers",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "Triggers are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13055,14 +13199,15 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 14
+    "NOT_APPLICABLE": 15
    },
    "status": "PASS",
    "counterexample_detected_by": [
     "dispute_correction:same_with_faulty_chain",
+    "epistemic_gate:faulty_consumers",
     "failure_chain:all_faults"
    ],
    "under_alternative_readings": {
@@ -13109,10 +13254,10 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 14
+    "NOT_APPLICABLE": 15
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13139,10 +13284,12 @@
    "check": "dispute_recomputes",
    "tests": [
     "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_epistemic_gate_module.py",
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "dispute_correction: Admissibility of new data is the appeal's evidence only. failure_chain: Admissibility of the new inputs is the TTL rule only.",
+   "gap": "dispute_correction: Admissibility of new data is the appeal's evidence only. epistemic_gate: Recomputation = declared shift of the result. failure_chain: Admissibility of the new inputs is the TTL rule only.",
    "also_checked_by": [
+    "epistemic_gate · deterministic_recompute",
     "failure_chain · dispute_recomputes"
    ],
    "hypotheses": [
@@ -13152,6 +13299,8 @@
     "H-DC-4",
     "H-DC-5",
     "H-DC-6",
+    "H-EG-1",
+    "H-EG-2",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
@@ -13165,10 +13314,10 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 14
+    "NOT_APPLICABLE": 15
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13224,10 +13373,10 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 14
+    "NOT_APPLICABLE": 15
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13250,23 +13399,28 @@
    "section": "8",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "applicability_boundary_defined",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13321,23 +13475,28 @@
    "section": "9",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Reliability ordering, condition detection, and temporal association between conditions and degradation are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "epistemic_gate",
+   "check": "degradation_causes",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": "Change and conflict are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13353,25 +13512,30 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Environmental stability and the evidentiary basis for absence of conflicts are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "silence_under_stability",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-008"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13390,25 +13554,30 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Activity, stability, and the required observable distinction are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "absence_distinguished",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-008"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13424,23 +13593,28 @@
    "section": "Additional Fields",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "additional_fields",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13453,25 +13627,30 @@
    "section": "Confidence State",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "confidence_values",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-003"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13487,25 +13666,30 @@
    "section": "Consistency State",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "consistency_values",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-003"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13521,25 +13705,30 @@
    "section": "Validity State",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "epistemic_gate",
+   "check": "validity_values",
+   "tests": [
+    "tests/lab/test_epistemic_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EG-1",
+    "H-EG-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-003"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],

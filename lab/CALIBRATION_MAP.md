@@ -124,6 +124,7 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | threshold of an ultra-large fortune | l8_number | CODE-OF-PLANETARY-SYNERGY | §16.1 | "Ultra-large fortunes return to the Global Development Fund after the owner's death." | — | code_economy.ultra_large_threshold |
 | number of reporting Subjects that triggers a Scope Audit | l8_number | DKP-7-SCOPE-001 | §8 | "Any claimed divergence between PTL sensor outputs and observable physical reality, reported by a threshold number of Subjects, SHALL trigger a Scope Audit." | F-035 | scope_gate.audit_threshold |
 | boundary-approach fraction of IMPACT | l8_number | DKP-1-IMPACT-001 | §6 | "The protocol SHALL detect:" | — | impact_attribution.approach_fraction |
+| revalidation interval after which an output under activity is stale | l8_number | DKP-1-EPISTEMIC-BOUNDARIES-001 | §4 | "Persistent outputs without revalidation degrade in reliability." | — | epistemic_gate.revalidation_interval |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -139,7 +140,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-0-ORACLE-001 | upstream of SIMULATION | B(t) informational until a bundle exists (§12); nothing else in ORACLE refers to a bundle | 8 | B(t): model, aggregation, weighting, calibration (l8_model) | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
 | DKP-0-TIME-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-AXIOMS-001 | upstream of SIMULATION | — | 1 | Axiom A1 minimum required conditions (normative_predicate); active validating nodes (ratification of axiom changes) (architectural_definition) | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
-| DKP-1-EPISTEMIC-BOUNDARIES-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-1-EPISTEMIC-BOUNDARIES-001 | not listed | — | 0 | revalidation interval after which an output under activity is stale (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-IDENTITY-001 | not listed | — | 0 | minimum attribution confidence (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-IMPACT-001 | not listed | — | 0 | numeric reference bounds Bᵢ (empirical_model); boundary-approach fraction of IMPACT (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-JUSTICE-001 | not listed | — | 0 | axiom-defined safe margins (empirical_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

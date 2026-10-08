@@ -10,6 +10,7 @@ from lab.modules.crisis_recovery import CrisisRecoveryModule
 from lab.modules.dispute_correction import DisputeCorrectionModule
 from lab.modules.economic_access import EconomicAccessModule
 from lab.modules.edu_culture import EduCultureModule
+from lab.modules.epistemic_gate import EpistemicGateModule
 from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
 from lab.modules.impact_attribution import ImpactAttributionModule
@@ -37,4 +38,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              InfoTruthModule(), PrivacyTransparencyModule(),
                              EduCultureModule(), AiSubjectModule(), CodeSynergyModule(),
                              CodeEconomyModule(), ScopeGateModule(),
-                             OracleIngestionModule(), ImpactAttributionModule())}
+                             OracleIngestionModule(), ImpactAttributionModule(),
+                             EpistemicGateModule())}
