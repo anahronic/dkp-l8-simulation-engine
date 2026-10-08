@@ -24,6 +24,7 @@ from lab.modules.prevention import PreventionModule
 from lab.modules.privacy_transparency import PrivacyTransparencyModule
 from lab.modules.scope_gate import ScopeGateModule
 from lab.modules.sensor_loss import SensorLossModule
+from lab.modules.simulation_gate import SimulationGateModule
 from lab.modules.time import TimeModule
 from lab.modules.transport_capacity import TransportCapacityModule
 from lab.modules.upgrade_lifecycle import UpgradeLifecycleModule
@@ -40,4 +41,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              EduCultureModule(), AiSubjectModule(), CodeSynergyModule(),
                              CodeEconomyModule(), ScopeGateModule(),
                              OracleIngestionModule(), ImpactAttributionModule(),
-                             EpistemicGateModule(), AuditTraceModule())}
+                             EpistemicGateModule(), AuditTraceModule(),
+                             SimulationGateModule())}

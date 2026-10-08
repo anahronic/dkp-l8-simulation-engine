@@ -27,6 +27,7 @@
   "privacy_transparency",
   "scope_gate",
   "sensor_loss",
+  "simulation_gate",
   "time",
   "transport_capacity",
   "upgrade_lifecycle",
@@ -1097,6 +1098,21 @@
    "module": "audit_trace",
    "example": "quiet_stream",
    "kind": "reference"
+  },
+  {
+   "module": "simulation_gate",
+   "example": "faulty_gate",
+   "kind": "counterexample"
+  },
+  {
+   "module": "simulation_gate",
+   "example": "one_clean_change",
+   "kind": "reference"
+  },
+  {
+   "module": "simulation_gate",
+   "example": "proposed_changes",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1104,20 +1120,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 857,
-  "covered_percent": 49.3,
+  "covered": 896,
+  "covered_percent": 51.6,
   "statuses": {
-   "PASS": 785,
+   "PASS": 824,
    "FAIL": 3,
    "UNKNOWN": 55,
    "NOT_APPLICABLE": 14,
-   "UNCOVERED": 880
+   "UNCOVERED": 841
   },
   "resolvable": 330,
-  "resolvable_uncovered": 146,
+  "resolvable_uncovered": 136,
   "unresolved_decisions": 1407,
-  "covered_with_open_point": 673,
-  "pass_with_open_point": 608
+  "covered_with_open_point": 702,
+  "pass_with_open_point": 637
  },
  "stages": [
   {
@@ -1167,20 +1183,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 857,
-    "covered_percent": 49.3,
+    "covered": 896,
+    "covered_percent": 51.6,
     "statuses": {
-     "PASS": 785,
+     "PASS": 824,
      "FAIL": 3,
      "UNKNOWN": 55,
      "NOT_APPLICABLE": 14,
-     "UNCOVERED": 880
+     "UNCOVERED": 841
     },
     "resolvable": 330,
-    "resolvable_uncovered": 146,
+    "resolvable_uncovered": 136,
     "unresolved_decisions": 1407,
-    "covered_with_open_point": 673,
-    "pass_with_open_point": 608
+    "covered_with_open_point": 702,
+    "pass_with_open_point": 637
    }
   },
   {
@@ -1252,20 +1268,20 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 268,
-    "covered_percent": 73.4,
+    "covered": 307,
+    "covered_percent": 84.1,
     "statuses": {
-     "PASS": 255,
+     "PASS": 294,
      "FAIL": 3,
      "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 97
+     "UNCOVERED": 58
     },
     "resolvable": 99,
-    "resolvable_uncovered": 36,
+    "resolvable_uncovered": 26,
     "unresolved_decisions": 266,
-    "covered_with_open_point": 205,
-    "pass_with_open_point": 193
+    "covered_with_open_point": 234,
+    "pass_with_open_point": 222
    }
   },
   {
@@ -64032,24 +64048,31 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced constraints and operational tests for stability and reversibility are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "exclusive_mechanism",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Changes are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -64064,24 +64087,31 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "hard_gate",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -64093,18 +64123,23 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "calibration_expiry",
    "check": "drift_requires_recalibration",
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_simulation_gate_module.py"
    ],
-   "gap": "Whether a trigger suspends the bundle before expiry is not stated (Q-034).",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "simulation_gate · recalibration_triggers"
+   ],
    "hypotheses": [
     "H-CE-1",
     "H-CE-2",
-    "H-CE-3"
+    "H-CE-3",
+    "H-SM-1",
+    "H-SM-2"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -64112,10 +64147,10 @@
     "Q-034"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
@@ -64184,23 +64219,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The complete input boundary and required equality of outputs or execution traces are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "deterministic",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64216,23 +64256,28 @@
    "section": "11",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The disclosure audience, required summary content, access requirements, and independence standard are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "exposed_and_reexecutable",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Recorded properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64248,23 +64293,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No operational definition of opacity or minimum retained information is supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "not_opaque",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Recorded properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64280,30 +64330,37 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "calibration_expiry",
    "check": "no_override_of_failed_simulation",
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_simulation_gate_module.py"
    ],
-   "gap": "Override is modelled as issuing a bundle after a failed simulation.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "simulation_gate · no_override"
+   ],
    "hypotheses": [
     "H-CE-1",
     "H-CE-2",
-    "H-CE-3"
+    "H-CE-3",
+    "H-SM-1",
+    "H-SM-2"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {
     "NOT_APPLICABLE": 1
    },
@@ -64320,23 +64377,28 @@
    "section": "12",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not define what qualifies as redesign. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "no_appeal",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64352,23 +64414,28 @@
    "section": "13",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The audit protocol and rules for aligning and comparing deployed and simulated behavior are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "audit_compares",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Divergence values are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64384,23 +64451,28 @@
    "section": "13",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced audit protocol, divergence metric, and tolerance are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "divergence_flagged",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Tolerance not given (source missing).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64416,23 +64488,28 @@
    "section": "13",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The conditions requiring rollback or halt and the selection rule between them are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "rollback_or_halt",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64448,23 +64525,28 @@
    "section": "14",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The upgrade and audit procedures are absent, and the role of rollback as capability, plan, or executed step is not resolved here. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "upgrade_procedure",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Declared properties of the change.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64480,23 +64562,28 @@
    "section": "14",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "new_identifier",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64509,23 +64596,28 @@
    "section": "14",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "incompatibility_declared",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64538,23 +64630,28 @@
    "section": "14",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Dependency reach and the standard for full re-simulation are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "dependents_resimulated",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64570,23 +64667,28 @@
    "section": "14",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced upgrade definition and an operational test for unchanged normative content are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "presentation_not_upgrade",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64634,24 +64736,31 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "simulation_before_activation",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -64665,23 +64774,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define the execution boundary, live effects, or the required notion of logical equivalence. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "isolated_environment",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Recorded property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64697,23 +64811,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meaning of boundedness is not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "bounded_scenarios",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Scenarios are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64729,23 +64848,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The source protocols and rules for deriving executable invariants are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "invariant_definition",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Invariant kinds are declared per scenario.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64761,24 +64885,31 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Risk envelope values and an operational definition of irreversible harm are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "failure_state",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Risk envelopes are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -64793,24 +64924,31 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "formal_acceptance",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -64822,23 +64960,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The signature scheme, trusted signer identification, and artifact encoding are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "bundle_definition",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Lab bundles are research artifacts, never calibration (operational_use: false).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64854,26 +64997,33 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "mandatory_scope",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-035"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -64935,23 +65085,28 @@
    "section": "5",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "admissible_sources",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64964,23 +65119,28 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The physical admissibility rules and PTL constraints needed to identify violations are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "physical_inputs",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Unphysical data is a declared flag.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -64996,24 +65156,31 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not operationally define the prohibited processing and selection practices. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "no_smoothing",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Declared flags.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -65028,23 +65195,28 @@
    "section": "5",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required reproduction procedure and equivalence standard are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "declared_inputs",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65060,23 +65232,28 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced rules and executable definitions for the remaining invariant families are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "invariants_enforced",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Violations are declared scenario outcomes.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65092,23 +65269,28 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "invariant_invalidates",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65121,23 +65303,28 @@
    "section": "7",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The rule predicates and distinction between direct and other violations are not defined in this section. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "class_f1",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65153,23 +65340,28 @@
    "section": "7",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document supplies no operational definitions or observation horizon for these instability classes. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "class_f2",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Instability is a declared outcome.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65185,23 +65377,28 @@
    "section": "7",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The rollback model, declared constraints, and method for establishing impossibility are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "class_f3",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Irreversibility is a declared outcome.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65217,23 +65414,28 @@
    "section": "7",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundaries, harm model, and evidence capable of detecting unmeasured or displaced harm are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "class_f4",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Leaks are a declared outcome.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65249,24 +65451,31 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "f1_f3_block",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -65278,23 +65487,28 @@
    "section": "7",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The conditions under which a revision qualifies as redesign are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "f4_redesign",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65310,24 +65524,31 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Risk bounds, adversarial coverage, stability criteria, node independence, and reproduction equivalence are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "acceptance_criteria",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Independent nodes: declared minimum (source missing); adversarial stability: at least one adversarial scenario (H-SM-1).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -65342,24 +65563,31 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "eligibility_not_mandate",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "simulation_gate:faulty_gate"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -65371,24 +65599,29 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "calibration_expiry",
    "check": "signed_complete_bundle",
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_simulation_gate_module.py"
    ],
-   "gap": "The bundle is hypothetical (none exists); its signature is a flag.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "simulation_gate · bundle_contents"
+   ],
    "hypotheses": [
     "H-CE-1",
     "H-CE-2",
-    "H-CE-3"
+    "H-CE-3",
+    "H-SM-1",
+    "H-SM-2"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -65532,23 +65765,28 @@
    "section": "Composite Indices",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The standard for full specification and an acceptable uncertainty propagation method are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "index_specified",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65564,23 +65802,28 @@
    "section": "Composite Indices",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "simulation_gate",
+   "check": "index_only_in_l8",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -65593,23 +65836,28 @@
    "section": "Composite Indices",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not define the boundary between raw output processing and interpretation. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "simulation_gate",
+   "check": "ptl_raw_only",
+   "tests": [
+    "tests/lab/test_simulation_gate_module.py"
+   ],
+   "gap": "Requests carry their layer.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SM-1",
+    "H-SM-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],

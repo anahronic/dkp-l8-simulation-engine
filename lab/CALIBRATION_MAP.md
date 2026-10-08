@@ -125,6 +125,8 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | number of reporting Subjects that triggers a Scope Audit | l8_number | DKP-7-SCOPE-001 | §8 | "Any claimed divergence between PTL sensor outputs and observable physical reality, reported by a threshold number of Subjects, SHALL trigger a Scope Audit." | F-035 | scope_gate.audit_threshold |
 | boundary-approach fraction of IMPACT | l8_number | DKP-1-IMPACT-001 | §6 | "The protocol SHALL detect:" | — | impact_attribution.approach_fraction |
 | revalidation interval after which an output under activity is stale | l8_number | DKP-1-EPISTEMIC-BOUNDARIES-001 | §4 | "Persistent outputs without revalidation degrade in reliability." | — | epistemic_gate.revalidation_interval |
+| number of independent nodes that must reproduce a simulation | l8_number | DKP-8-SIMULATION-001 | §8 | "results are reproducible by independent nodes." | — | simulation_gate.min_independent_nodes |
+| tolerance of divergence between deployed and simulated behaviour | l8_number | DKP-8-SIMULATION-001 | §13 | "flag divergence beyond tolerance," | — | simulation_gate.divergence_tolerance |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -173,6 +175,6 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-7-TRANSPARENCY-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-8-AUDIT-001 | listed downstream | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-8-INTEROP-001 | listed downstream | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-8-SIMULATION-001 | not listed | — | 0 | every composite index (model, inputs, weights, uncertainty) (l8_model) | the calibration protocol itself |
+| DKP-8-SIMULATION-001 | not listed | — | 0 | every composite index (model, inputs, weights, uncertainty) (l8_model); number of independent nodes that must reproduce a simulation (l8_number); tolerance of divergence between deployed and simulated behaviour (l8_number) | the calibration protocol itself |
 
 Summary: 33 non-enforceable as written; 3 upstream of SIMULATION, undetermined (Q-035); 1 not a protocol; 1 the calibration protocol itself.  Of the non-enforceable ones, HABITAT, INFO, EDU and CULTURE say so in their own text as well.
