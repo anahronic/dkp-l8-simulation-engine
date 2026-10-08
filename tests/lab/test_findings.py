@@ -247,3 +247,8 @@ def test_f033_f034_code_economy():
         "nobody_passive": ("PASS", "PASS", "NOT_APPLICABLE", "NOT_APPLICABLE")}
     assert _code("F-034", ("CODEX-14.2-01", "IDENTITY-6-02")) == {"one_subject": ("PASS", "PASS"),
                                                                   "independent_buyers": ("PASS", "NOT_APPLICABLE")}
+
+
+def test_f035_scope_audit():
+    assert _code("F-035", ("SCOPE-8-03", "SCOPE-8-04")) == {"before_audit": ("NOT_APPLICABLE", "NOT_APPLICABLE"),
+                                                            "confirmed_during_audit": ("PASS", "UNKNOWN")}

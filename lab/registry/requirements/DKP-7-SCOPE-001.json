@@ -30,11 +30,17 @@
    "data_dependencies": [
     "scope compliance determinations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Requests carry a declared domain.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "boundaries_enforced"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -57,11 +63,17 @@
    "data_dependencies": [
     "identified inter-protocol conflicts"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Another protocol's permission is a declared flag.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "scope_prevails"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -85,13 +97,19 @@
    "data_dependencies": [
     "activity descriptions and permission mappings"
    ],
-   "gap": "The text does not specify how broadly listed permissions cover unlisted activities. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how activities map to explicit permissions and how 'Includes' affects that mapping."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "default_deny"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -118,13 +136,19 @@
    "data_dependencies": [
     "activity and domain classifications"
    ],
-   "gap": "Classification granularity and the treatment of mixed-domain activities are unspecified. No lab check implemented yet.",
+   "gap": "The domain is declared, not derived from the activity.",
    "hypotheses_needed": [
     "Declare the applicability unit and classification rules for mixed activities."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "four_domains"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -155,13 +179,19 @@
     "PTL resource constraints",
     "axiom execution records"
    ],
-   "gap": "The domain descriptions and applicable PTL constraints are not formally specified here. No lab check implemented yet.",
+   "gap": "S0 membership is declared.",
    "hypotheses_needed": [
     "Declare an S0 membership classifier and the applicable PTL constraints."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s0_executed"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -197,13 +227,19 @@
     "Axiom A1 compliance",
     "essential-function classifications"
    ],
-   "gap": "The referenced execution requirements, Axiom A1 content, and essential-function classification are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare S1 activity classification and supply the applicable external constraints."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s1_constrained"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -230,7 +266,7 @@
    "data_dependencies": [
     "S1 execution timestamps and configured limits"
    ],
-   "gap": "Crisis actions end at exit; no numeric time limit exists (Q-029).",
+   "gap": "crisis_recovery: Crisis actions end at exit; no numeric time limit exists (Q-029). scope_gate: A positive limit counts; its length is not judged.",
    "hypotheses_needed": [
     "Declare how finite S1 time limits are assigned and enforced."
    ],
@@ -238,10 +274,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "s1_time_limited"
+    "check": "s1_time_limited",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "time_limit_days"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -270,13 +314,19 @@
    "data_dependencies": [
     "PTL evidence and execution-to-evidence links"
    ],
-   "gap": "The acceptance criteria for PTL anchoring are absent. No lab check implemented yet.",
+   "gap": "Declared property.",
    "hypotheses_needed": [
     "Declare what PTL evidence qualifies as an execution anchor."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "ptl_anchored"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -304,13 +354,19 @@
    "data_dependencies": [
     "execution audit records and access capabilities"
    ],
-   "gap": "A criterion for sufficient auditability is missing. No lab check implemented yet.",
+   "gap": "Declared property.",
    "hypotheses_needed": [
     "Declare the records and access capabilities needed to audit an execution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "auditable"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -337,13 +393,19 @@
    "data_dependencies": [
     "execution and authority state histories"
    ],
-   "gap": "The ordering of execution states and the required temporal meaning of 'toward' are unspecified. No lab check implemented yet.",
+   "gap": "Declared property.",
    "hypotheses_needed": [
     "Declare a degradation ordering and whether progress must be monotonic or eventual."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "degrades"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -371,7 +433,7 @@
    "data_dependencies": [
     "policy changes and normative decision provenance"
    ],
-   "gap": "Precedent detected as citation of a crisis action.",
+   "gap": "crisis_recovery: Precedent detected as citation of a crisis action. scope_gate: Declared property.",
    "hypotheses_needed": [
     "Declare how explicit and implicit normative precedent are identified."
    ],
@@ -379,10 +441,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "s1_no_precedent"
+    "check": "s1_no_precedent",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "no_precedent"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -414,13 +484,19 @@
     "physical inevitability assessments",
     "action classifications"
    ],
-   "gap": "Vectors of Physical Inevitability and their confirmation procedure are undefined. No lab check implemented yet.",
+   "gap": "Vectors are declared PTL-confirmed or not.",
    "hypotheses_needed": [
     "Declare the vector classification and PTL confirmation procedure."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "vector_immediate_action"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -448,11 +524,17 @@
    "data_dependencies": [
     "applicability authorization changes and their recorded bases"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "vector_no_new_domain"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -475,13 +557,19 @@
    "data_dependencies": [
     "S1 histories and justification records"
    ],
-   "gap": "Persistent execution has no defined duration or recurrence criterion. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare when continued or repeated S1 execution counts as persistent."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "vector_no_persistent_s1"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -510,11 +598,17 @@
    "data_dependencies": [
     "scope declarations and elevation event records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "vector_no_elevation_beyond_crisis"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -538,13 +632,19 @@
    "data_dependencies": [
     "service and domain classifications"
    ],
-   "gap": "The boundaries between permitted support and prohibited content governance are not formalized. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare S2 membership and service-function classification rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s2_verification"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -572,13 +672,19 @@
    "data_dependencies": [
     "tool inventories, capabilities, and availability"
    ],
-   "gap": "The minimum capabilities and intended access population are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare what qualifies as a learning tool and a validation tool, and to whom provision applies."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s2_learning_tools"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -606,13 +712,19 @@
    "data_dependencies": [
     "educational outputs and decision provenance"
    ],
-   "gap": "The boundary between providing learning tools and defining curricula or objectives is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a classifier for curriculum and learning-objective definition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s2_no_curriculum"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -639,13 +751,19 @@
    "data_dependencies": [
     "content classifications and processing records"
    ],
-   "gap": "Content categories and the scope of prohibited normalization and optimization are undefined. No lab check implemented yet.",
+   "gap": "Ranking is a declared activity.",
    "hypotheses_needed": [
     "Declare content categories and which processing operations fall under the prohibition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s2_no_ranking"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -673,13 +791,19 @@
    "data_dependencies": [
     "enforcement conditions and action records"
    ],
-   "gap": "Behavioral and cognitive conformity are not operationally defined. No lab check implemented yet.",
+   "gap": "Conformity enforcement is a declared activity.",
    "hypotheses_needed": [
     "Declare a classification rule for conformity enforcement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s2_no_conformity"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -711,13 +835,19 @@
     "identity and exit effects",
     "relationship and authority effects"
    ],
-   "gap": "S3 membership, private-relationship boundaries, irreversibility, and discretionary authority require operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare an S3 classifier covering every listed prohibited activity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "s3_forbidden"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -745,16 +875,24 @@
    "data_dependencies": [
     "execution attempts and domain classifications"
    ],
-   "gap": "Only the Council of Crisis Mercy is examined (F-032).",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
     "version": "1.0.0",
-    "check": "no_dkp_logic_in_s3"
+    "check": "no_dkp_logic_in_s3",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "s3_critical_violation"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_code_synergy_module.py"
+    "tests/lab/test_code_synergy_module.py",
+    "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -786,13 +924,19 @@
    "data_dependencies": [
     "axiom operation provenance and Crisis Scope declarations"
    ],
-   "gap": "The distinction between execution and interpretation, and the relationship between the general ban and A1 exception, need formalization. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare interpretation detection and treat the express A1 permission as a narrow exception, or identify another consistent reading."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_axiom_interpretation"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -821,13 +965,19 @@
    "data_dependencies": [
     "objective configurations and axiom processing logic"
    ],
-   "gap": "A formal distinction between forbidden axiom parameterization and ordinary implementation configuration is absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how axioms, secondary objectives, and forbidden transformations are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_axiom_reweighting"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -856,11 +1006,17 @@
    "data_dependencies": [
     "classified interpretation events and Crisis Scope declarations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "min_conditions_in_crisis_only"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -887,11 +1043,17 @@
    "data_dependencies": [
     "scope definition and activation provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_scope_by_crisis_only"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -914,13 +1076,19 @@
    "data_dependencies": [
     "interpretation records and scope compliance determinations"
    ],
-   "gap": "No formal representation of interpretation space is provided. No lab check implemented yet.",
+   "gap": "Checked as: inside the declared Crisis Scope.",
    "hypotheses_needed": [
     "Declare how interpretation content is mapped to scope constraints."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "bounded_interpretation"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -951,13 +1119,19 @@
    "data_dependencies": [
     "protocol logic and execution or simulation traces"
    ],
-   "gap": "The text does not operationally define extension or analogy of this logic. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how direct uses, simulations, extensions, and analogies are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_min_conditions_elsewhere"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -985,13 +1159,19 @@
    "data_dependencies": [
     "scope declarations and domain models"
    ],
-   "gap": "The required dimensions and representation of scope bounds are missing. No lab check implemented yet.",
+   "gap": "Entry and collapse only.",
    "hypotheses_needed": [
     "Declare which dimensions must be bounded in a Crisis Scope declaration."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_scope_in_s1"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1031,10 +1211,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "crisis_entry_by_state_machine"
+    "check": "crisis_entry_by_state_machine",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "crisis_entry_state_machine"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -1063,13 +1251,19 @@
    "data_dependencies": [
     "entry attempt provenance and violation records"
    ],
-   "gap": "Entry by inference or ambiguity requires a semantic classification not defined here. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how prohibited entry bases are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_entry_by_inference"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1199,13 +1393,19 @@
    "data_dependencies": [
     "action effects and reversal capabilities"
    ],
-   "gap": "The relevant state space and the meaning of permanence are unspecified. No lab check implemented yet.",
+   "gap": "Permanence is a declared property.",
    "hypotheses_needed": [
     "Declare whether physical, institutional, and protocol states are covered and how permanence is determined."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_no_permanent_change"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1234,13 +1434,19 @@
    "data_dependencies": [
     "rights records and changes attributable to Crisis execution"
    ],
-   "gap": "The text provides neither a rights representation nor criteria for implicit rights creation. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a complete rights model, including any implicit rights."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_no_create_right"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1269,13 +1475,19 @@
    "data_dependencies": [
     "authority grant, expiration, and renewal histories"
    ],
-   "gap": "The relationship between prohibited duration extension and section 6 authority renewal is unresolved. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether and how renewal differs from extending authority duration."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_no_extend_authority"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1303,11 +1515,17 @@
    "data_dependencies": [
     "axiom versions and modification provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_no_modify_axiom"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1332,13 +1550,19 @@
    "data_dependencies": [
     "execution histories and policy or precedent provenance"
    ],
-   "gap": "No rule defines when repeated practice becomes implicit policy or precedent. No lab check implemented yet.",
+   "gap": "Precedent is a declared action.",
    "hypotheses_needed": [
     "Declare a model for identifying policy and precedent formation from practice."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "crisis_no_set_precedent"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1379,10 +1603,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "exit_collapses_to_s0"
+    "check": "exit_collapses_to_s0",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "collapse_on_exit"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1413,13 +1645,19 @@
     "authority and execution-path inventories",
     "scope declarations"
    ],
-   "gap": "The required content of an explicit scope declaration is not defined. No lab check implemented yet.",
+   "gap": "Declared property.",
    "hypotheses_needed": [
     "Declare the fields needed to express an authority or execution-path scope."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "authority_scoped"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1447,13 +1685,19 @@
    "data_dependencies": [
     "authority time bounds and execution histories"
    ],
-   "gap": "The applicable time bounds and their assignment are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare finite time bounds for each covered authority or execution path."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "authority_time_bounded"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1481,13 +1725,19 @@
    "data_dependencies": [
     "authority and exceptional execution trajectories"
    ],
-   "gap": "The authority ordering, decay schedule, and decay rate are unspecified. No lab check implemented yet.",
+   "gap": "The decay law is not given; declared property.",
    "hypotheses_needed": [
     "Declare a decay model and its parameters without treating them as document-specified values."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "authority_decays"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1515,7 +1765,7 @@
    "data_dependencies": [
     "stabilization assessments and execution-state histories"
    ],
-   "gap": "Baseline = absence of crisis authority notices after exit.",
+   "gap": "crisis_recovery: Baseline = absence of crisis authority notices after exit. scope_gate: Stabilization is a declared day.",
    "hypotheses_needed": [
     "Declare a stabilization predicate, baseline state, and event-ordering semantics."
    ],
@@ -1523,10 +1773,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "stabilization_restores_baseline"
+    "check": "stabilization_restores_baseline",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "collapse_on_stabilization"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1556,13 +1814,19 @@
    "data_dependencies": [
     "authority provenance, extension decisions, and control relationships"
    ],
-   "gap": "Self-extension is not defined for delegated or indirectly controlled decision makers. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how direct and indirect control determine whether an extension is self-extension."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_self_extension"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1593,13 +1857,19 @@
    "data_dependencies": [
     "PTL justification records and simulation validation results"
    ],
-   "gap": "The simulation validation rules, justification renewal conditions, and relationship to prohibited extensions are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply the simulation validation rules and declare renewal triggers and the distinction between renewal and extension."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "renewal_conditions"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1631,13 +1901,19 @@
    "data_dependencies": [
     "neutralization records, purposes, and classifications"
    ],
-   "gap": "The text does not operationally define the limits of physical harm interruption. No lab check implemented yet.",
+   "gap": "Recorded classification.",
    "hypotheses_needed": [
     "Declare which action purposes and effects qualify solely as physical harm interruption."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "harm_interruption"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1671,11 +1947,17 @@
    "data_dependencies": [
     "jurisdiction and applicability changes with provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_jurisdiction_expansion"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1703,11 +1985,17 @@
    "data_dependencies": [
     "target domain histories and reclassification provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_conversion"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1735,13 +2023,19 @@
    "data_dependencies": [
     "post-neutralization governance practices and control relationships"
    ],
-   "gap": "Implicit governance, control, and normative authority lack operational definitions. No lab check implemented yet.",
+   "gap": "Governance creation is a declared follow-up.",
    "hypotheses_needed": [
     "Declare how implicit authority and control arising from neutralization are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_implicit_governance"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1771,13 +2065,19 @@
    "data_dependencies": [
     "scope changes, execution histories, and justification provenance"
    ],
-   "gap": "The text does not define how cumulative or implicit scope expansion is detected. No lab check implemented yet.",
+   "gap": "Expansion attempts are declared with their basis.",
    "hypotheses_needed": [
     "Declare a causal classification for expansion through each listed mechanism."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_expansion"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1806,19 +2106,27 @@
    "data_dependencies": [
     "Subject identities and divergence reports"
    ],
-   "gap": "The Subject threshold, aggregation window, and rules for grouping reports of the same divergence are unspecified. No lab check implemented yet.",
+   "gap": "The threshold number of Subjects is not given (source missing).",
    "hypotheses_needed": [
     "Declare the threshold and how distinct Subjects and matching divergence reports are counted."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "scope_audit_trigger"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-054"
+   ],
    "open_point": {
-    "origin": "l8_parameter",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -1840,19 +2148,27 @@
    "data_dependencies": [
     "Scope Audit lifecycle and scope transition records"
    ],
-   "gap": "The duration of the block and its release conditions are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare audit lifecycle and block-release semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "audit_blocks_escalation"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-054"
+   ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -1875,19 +2191,27 @@
    "data_dependencies": [
     "PTL node confirmations and independence information"
    ],
-   "gap": "The confirmation target, independence criterion, and required confirmation count are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare what is confirmed, how node independence is determined, and the required confirmation count."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "independent_confirmation"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-054"
+   ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -1918,11 +2242,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "scope_gate",
     "version": "1.0.0",
-    "check": "no_escalation_from_isolated_region"
+    "check": "reject_weak_evidence",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "no_escalation_from_isolated_region"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_scope_gate_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -2111,13 +2443,19 @@
    "data_dependencies": [
     "settlement mechanism dependencies and operational tests"
    ],
-   "gap": "The text does not define the settlement lifecycle or dependency model covered by continued execution. No lab check implemented yet.",
+   "gap": "Settlement properties are recorded.",
    "hypotheses_needed": [
     "Declare which settlement stages must function without DKP execution and model their dependencies."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "settlement_independent"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2145,11 +2483,17 @@
    "data_dependencies": [
     "settlement terms and enforcement conditions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_post_exit_compliance"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -2215,13 +2559,19 @@
    "data_dependencies": [
     "exit costs, Subject resources, and observed or modeled exit behavior"
    ],
-   "gap": "There is no specified model or threshold for when economic friction restricts exit in practice. No lab check implemented yet.",
+   "gap": "Fees only.",
    "hypotheses_needed": [
     "Declare an economic-friction model and whether restriction requires intent, effect, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_economic_friction"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2249,13 +2599,19 @@
    "data_dependencies": [
     "exit restriction rules and duration information"
    ],
-   "gap": "Permanence is not defined for restrictions without explicit endpoints. No lab check implemented yet.",
+   "gap": "Recorded restriction.",
    "hypotheses_needed": [
     "Declare how permanent restrictions are distinguished from temporary or indefinite restrictions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "no_permanent_restriction"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2283,13 +2639,19 @@
    "data_dependencies": [
     "verification interfaces and access-control records"
    ],
-   "gap": "The scope of guaranteed access and the required verification capabilities are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare who has access, to which mechanisms, and under what conditions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "transparency_verification"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2317,13 +2679,19 @@
    "data_dependencies": [
     "audit trail inventories and access records"
    ],
-   "gap": "The covered audit trails and access entitlements are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the covered trails and beneficiaries of access."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "transparency_audit_trail"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2352,13 +2720,19 @@
    "data_dependencies": [
     "simulation inventories and access records"
    ],
-   "gap": "Required simulation coverage and access entitlements are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the covered simulations, scenarios, and access beneficiaries."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "transparency_counterfactual_simulation"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2385,11 +2759,17 @@
    "data_dependencies": [
     "transparency compliance claims"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Declining an explanation is not counted as a violation.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "transparency_model_explanation"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -2414,13 +2794,19 @@
    "data_dependencies": [
     "violation findings, audit flags, containment actions, and review records"
    ],
-   "gap": "Qualifying containment and review actions and their required timing are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare what constitutes triggered containment and review and how event timing is assessed."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "violations_flagged"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2448,13 +2834,19 @@
    "data_dependencies": [
     "violation histories and fault classifications"
    ],
-   "gap": "The grouping, time horizon, and operational recurrence criterion for repeated violations are unspecified. No lab check implemented yet.",
+   "gap": "'Repeated' = the declared number of violations (H-SG-2).",
    "hypotheses_needed": [
     "Declare which violations are counted together and when recurrence qualifies as repeated."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "repeated_violations_fault"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2491,13 +2883,19 @@
    "data_dependencies": [
     "upgrade proposals, simulation and audit results, acceptance decisions, activation records, and rollback provisions"
    ],
-   "gap": "The referenced controlled procedure and its acceptance, timing, simulation, audit, and rollback requirements are absent. No lab check implemented yet.",
+   "gap": "Audit, acceptance window and rollback are UPGRADE's checks.",
    "hypotheses_needed": [
     "Supply the referenced procedure and distinguish rollback capability from any condition requiring actual rollback."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "upgrade_only"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2527,13 +2925,19 @@
    "data_dependencies": [
     "change classifications and protocol identifier registry"
    ],
-   "gap": "The exception for presentation-only corrections and whether 'new' means globally unused require interpretation. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Treat qualifying presentation-only corrections as exempt and declare the identifier-uniqueness scope."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2561,13 +2965,19 @@
    "data_dependencies": [
     "protocol dependency graph and compatibility declarations"
    ],
-   "gap": "The dependency relation, including whether transitive dependents are included, is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the dependency relation and provide its complete set of dependents."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "compatibility_declared"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2600,13 +3010,19 @@
    "data_dependencies": [
     "edition differences, change classifications, and update metadata"
    ],
-   "gap": "The referenced §3 and a formal test for unchanged normative content are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a normative-equivalence test and treat this clause as an exception to general modification requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "scope_gate",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_scope_gate_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

@@ -57,6 +57,7 @@ documented numbers as regressions.
 | [F-032](F-032.md) | Council of Crisis Mercy and the SCOPE S3 ban on discretionary emergency authorities | INTERPRETATION_GAP | Q-051 |
 | [F-033](F-033.md) | Code §18.1 passivity rating against LABOR §9.1 (no compulsion) and PRIVACY §10 (no social credit scoring) | INTERPRETATION_GAP | Q-052 |
 | [F-034](F-034.md) | Code §14.2 'grows exponentially (Cost = Votes²)' | CONFIRMED_FINDING (wording) | Q-053 |
+| [F-035](F-035.md) | SCOPE §8: the Scope Audit has a trigger but no procedure, end or object of confirmation | CONFIRMED_FINDING | Q-054 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

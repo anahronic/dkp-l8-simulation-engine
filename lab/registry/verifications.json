@@ -1528,6 +1528,52 @@
     "quote_check": "automatic",
     "human_accepted": false
    }
+  },
+  {
+   "id": "F-035",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "missing_definition",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§8",
+     "text": "Any claimed divergence between PTL sensor outputs and observable physical reality, reported by a threshold number of Subjects, SHALL trigger a Scope Audit."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§8",
+     "text": "SHALL block transition from S0 to S1,"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§8",
+     "text": "SHALL require confirmation by independent PTL nodes,"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "absent": "Scope Audit"
+    }
+   ],
+   "conclusion": "SCOPE §8 triggers a Scope Audit and lists what it shall do, but no document defines who conducts it, when it ends (and with it the block on S0 -> S1), what the independent PTL nodes confirm, or the threshold number of reporting Subjects.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "Scope Audit",
+     "threshold number of Subjects",
+     "independent PTL nodes"
+    ],
+    "reference_chain": [
+     "each term occurs once, in SCOPE §8",
+     "DKP-8-AUDIT-001 does not mention a Scope Audit"
+    ]
+   }
   }
  ],
  "reference_fails": [
@@ -2845,6 +2891,25 @@
     }
    ],
    "reason": "Formula and prose describe different growth laws.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-054",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-035",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§8",
+     "text": "Any claimed divergence between PTL sensor outputs and observable physical reality, reported by a threshold number of Subjects, SHALL trigger a Scope Audit."
+    }
+   ],
+   "reason": "The audit's procedure, end and object of confirmation are an architectural definition absent from the corpus.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",
