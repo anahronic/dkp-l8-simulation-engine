@@ -262,3 +262,10 @@ def test_f036_b_enforcement():
 def test_f037_cultural_channels():
     assert _code("F-037", ("IMPACT-ImpactChannel-01", "IDENTITY-11-01")) == {"proxy_declared": ("UNKNOWN", "UNKNOWN"),
                                                                              "no_proxy": ("PASS", "NOT_APPLICABLE")}
+
+
+def test_f038_d2_label():
+    with open(os.path.join(FINDINGS, "F-038.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]["missing_metadata"]
+    assert [d["level"] for d in v["outputs"]["deviations"]] == ["D2"]
+    assert v["outputs"]["responses"][0]["response"] == "remediation protocol"

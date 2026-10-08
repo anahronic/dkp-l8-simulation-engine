@@ -1,6 +1,7 @@
 """Installed lab modules (the only ones the API and the UI can run)."""
 
 from lab.modules.ai_subject import AiSubjectModule
+from lab.modules.audit_trace import AuditTraceModule
 from lab.modules.axiom_constraints import AxiomConstraintsModule
 from lab.modules.calibration_expiry import CalibrationExpiryModule
 from lab.modules.code_economy import CodeEconomyModule
@@ -39,4 +40,4 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              EduCultureModule(), AiSubjectModule(), CodeSynergyModule(),
                              CodeEconomyModule(), ScopeGateModule(),
                              OracleIngestionModule(), ImpactAttributionModule(),
-                             EpistemicGateModule())}
+                             EpistemicGateModule(), AuditTraceModule())}

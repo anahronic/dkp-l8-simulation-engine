@@ -30,13 +30,19 @@
     "system operating status",
     "audit service activity"
    ],
-   "gap": "An operational definition of permanent audit coverage is missing. No lab check implemented yet.",
+   "gap": "Continuity over the declared stream.",
    "hypotheses_needed": [
     "Declare how audit presence and coverage are represented over operating intervals."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "continuous"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -65,13 +71,19 @@
     "protocol execution specifications",
     "audit decision records"
    ],
-   "gap": "The boundary between execution correctness and outcome judgment is not operationally defined. No lab check implemented yet.",
+   "gap": "No sanction in responses.",
    "hypotheses_needed": [
     "Declare a classification of execution checks and outcome judgments."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "verifies_not_judges"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -144,13 +156,19 @@
     "parameter changes",
     "governance and justice decision provenance"
    ],
-   "gap": "A causal effect model and a definition of substituting for an authorized decision are missing. No lab check implemented yet.",
+   "gap": "Live modifications only.",
    "hypotheses_needed": [
     "Declare how output effects are attributed and how decision substitution is identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "outputs_do_not_override"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -179,13 +197,19 @@
     "protocol execution states",
     "execution verification evidence"
    ],
-   "gap": "The record schema and criteria for verifiability are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare an event schema and a procedure for verifying its recorded execution state."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "verifiable_events"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -215,13 +239,19 @@
     "execution interval boundaries",
     "execution event history"
    ],
-   "gap": "The completeness criterion for covering an execution interval is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which events or states constitute complete interval coverage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "immutable_trace"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -250,13 +280,19 @@
     "execution states and transitions",
     "declared invariant predicates"
    ],
-   "gap": "A complete temporal execution representation and executable invariant predicates are needed. No lab check implemented yet.",
+   "gap": "Per recorded event.",
    "hypotheses_needed": [
     "Declare how the execution model represents all times relevant to invariant evaluation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "invariants_always"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -283,11 +319,17 @@
    "data_dependencies": [
     "constraint, invariant, and interface violation detection results"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "deviations_detected"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -312,13 +354,19 @@
    "data_dependencies": [
     "error and halt signal histories"
    ],
-   "gap": "The signal association rule and interval for establishing signal absence are unspecified. No lab check implemented yet.",
+   "gap": "Silence is a declared property.",
    "hypotheses_needed": [
     "Declare which signals belong to a deviation and when their absence can be concluded."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "silent_failures"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -351,13 +399,19 @@
     "cross-layer call logs",
     "upgrade, crisis, and mercy invocation records"
    ],
-   "gap": "A complete activity inventory and an operational definition of continuous coverage are required. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how audit coverage is established for each activity type over time."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "scope_recorded"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -386,13 +440,19 @@
     "activity classifications",
     "system effect assessments"
    ],
-   "gap": "The excluded categories and the test for system effect lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare classification rules for excluded activities and for system effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "exclusions"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -422,11 +482,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "interop_failure",
-    "version": "1.1.0",
-    "check": "operational_outputs_have_metadata"
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "metadata_presence",
+    "also": [
+     {
+      "module": "interop_failure",
+      "version": "1.1.0",
+      "check": "operational_outputs_have_metadata"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -458,13 +526,19 @@
     "epistemic state upgrade authorizations",
     "expiration and staleness status"
    ],
-   "gap": "Propagation, authorization, expiration, staleness, and continuous verification semantics are not supplied. No lab check implemented yet.",
+   "gap": "Declared flags.",
    "hypotheses_needed": [
     "Declare executable metadata validity rules and the temporal coverage model for continuous verification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "metadata_validity"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -495,13 +569,19 @@
     "epistemic classifications",
     "boundary classification rules"
    ],
-   "gap": "The referenced classification rules and their precise target objects are missing. No lab check implemented yet.",
+   "gap": "Level check only.",
    "hypotheses_needed": [
     "Declare which output or metadata objects require classification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "eb_classification"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -534,16 +614,30 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "interop_failure",
-    "version": "1.1.0",
-    "check": "metadata_deviation_reported"
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "metadata_d2",
+    "also": [
+     {
+      "module": "interop_failure",
+      "version": "1.1.0",
+      "check": "metadata_deviation_reported"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "interpretation_status": "TEXT_VERIFIED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-057"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "AUDIT-5-01",
@@ -565,13 +659,19 @@
     "invariant evaluation records",
     "system operating intervals"
    ],
-   "gap": "The temporal semantics of continuous invariant verification are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the temporal coverage model used to establish continuous verification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "invariants_verified"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -602,13 +702,19 @@
     "execution paths",
     "axiom compliance predicates"
    ],
-   "gap": "The referenced axioms and a representation covering all relevant execution paths are missing. No lab check implemented yet.",
+   "gap": "Axiom violations are declared flags.",
    "hypotheses_needed": [
     "Declare the execution path domain and whether verification covers observed or all possible paths."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "axiom_compliance"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -637,13 +743,19 @@
     "axiom violation detection events",
     "escalation events"
    ],
-   "gap": "The permitted delay or transition semantics of immediate escalation are undefined. No lab check implemented yet.",
+   "gap": "Escalation target not defined; recorded as an immediate notice.",
    "hypotheses_needed": [
     "Declare an operational interpretation of immediate escalation without attributing an invented timing bound to the text."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "axiom_escalation"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -675,11 +787,17 @@
     "operation records",
     "scope evaluation rules"
    ],
-   "gap": "The referenced scope rules and applicable declarations are missing. No lab check implemented yet.",
+   "gap": "Declared flags.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "scope_compliance"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -705,13 +823,19 @@
     "scope change history",
     "formal upgrade completion records"
    ],
-   "gap": "The conditions establishing a formal upgrade and the operational meaning of critical breach are unspecified here. No lab check implemented yet.",
+   "gap": "Critical = D3 (H-AT-1).",
    "hypotheses_needed": [
     "Declare how formal upgrade completion is established and how critical breaches are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "scope_breach_critical"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -742,11 +866,17 @@
     "parameter change history",
     "upgrade authorization and execution records"
    ],
-   "gap": "The referenced upgrade procedure is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "parameter_integrity"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -772,13 +902,19 @@
     "runtime parameter activity",
     "optimization and calibration records"
    ],
-   "gap": "The prohibited behavior categories and the scope of adaptive optimization are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how prohibited behavior is recognized and whether the prohibition covers optimization beyond parameter changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "no_runtime_tuning"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -808,17 +944,25 @@
     "protocol execution inputs and outputs",
     "execution context"
    ],
-   "gap": "Determinism of this module's execution only.",
+   "gap": "audit_trace: Replica agreement is declared. interop_failure: Determinism of this module's execution only.",
    "hypotheses_needed": [
     "Declare what counts as an input and whether determinism is checked over observed executions or a complete model."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "interop_failure",
-    "version": "1.1.0",
-    "check": "deterministic_execution"
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "determinism",
+    "also": [
+     {
+      "module": "interop_failure",
+      "version": "1.1.0",
+      "check": "deterministic_execution"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -854,13 +998,19 @@
     "Subject identity and validity records",
     "attribution retention history"
    ],
-   "gap": "The referenced Subject validity rules and operational treatment of systemic fault are missing. No lab check implemented yet.",
+   "gap": "Declared flags.",
    "hypotheses_needed": [
     "Declare how retained traceability and systemic fault treatment are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "attribution_integrity"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -894,13 +1044,19 @@
     "audit node recomputation results",
     "replica states"
    ],
-   "gap": "Mechanism verification procedures, recomputation independence, and continuous consistency coverage are unspecified. No lab check implemented yet.",
+   "gap": "Replay recorded; recomputation is the declared replica result.",
    "hypotheses_needed": [
     "Declare valid signature and hashing verification procedures, replay comparison rules, recomputation independence, and consistency coverage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "replay_recompute"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -936,13 +1092,19 @@
     "public aggregate publication records",
     "scope anonymization requirements"
    ],
-   "gap": "Aggregate verifiability criteria and the referenced selective anonymization rules are missing. No lab check implemented yet.",
+   "gap": "Immutability and time index.",
    "hypotheses_needed": [
     "Declare how immutable history and public aggregate verifiability are established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "audit_data_properties"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -977,19 +1139,27 @@
     "scope, axiom, and parameter integrity findings",
     "capture assessments"
    ],
-   "gap": "Class predicates and precedence for overlapping categories are not operationally defined. No lab check implemented yet.",
+   "gap": "D-levels per H-AT-1; §4 and §7 name D2 differently (F-038).",
    "hypotheses_needed": [
     "Declare criteria for qualitative class attributes and a rule for overlapping classifications."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "classification"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-057"
+   ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -1012,11 +1182,17 @@
     "deviation detection records",
     "logging and monitoring activation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "d1_log"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1040,11 +1216,17 @@
     "deviation detection records",
     "remediation protocol invocation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "d2_remediation"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1069,11 +1251,17 @@
     "deviation detection records",
     "Systemic Halt trigger records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Partial or full halt is not specified; recorded as a halt.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "d3_halt"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1100,13 +1288,19 @@
     "halt events",
     "upgrade review records"
    ],
-   "gap": "Immediate halt timing and the evidence establishing the mandatory review are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the operational meaning of immediate halt and the record establishing that upgrade review was triggered."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "d4_halt_review"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1134,13 +1328,19 @@
     "response action records",
     "response purpose and effect assessments"
    ],
-   "gap": "The distinction between procedural and punitive actions requires an external classification or judgment. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare criteria identifying punishment and punitive responses."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "procedural_not_punitive"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1173,13 +1373,19 @@
     "output access policies",
     "verification materials"
    ],
-   "gap": "The access and evidence sufficient for independent verification are not specified. No lab check implemented yet.",
+   "gap": "Recorded properties.",
    "hypotheses_needed": [
     "Declare a test for independent access and sufficient verification material."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "accessible"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1209,13 +1415,19 @@
     "audit process access and licensing policies",
     "process disclosure records"
    ],
-   "gap": "The operational boundaries of proprietary, closed, and authority-gated processes are undefined. No lab check implemented yet.",
+   "gap": "Recorded properties.",
    "hypotheses_needed": [
     "Declare criteria for each prohibited process restriction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "not_closed"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1254,11 +1466,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "interop_failure",
-    "version": "1.1.0",
-    "check": "audit_observes_only"
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "observe_and_report",
+    "also": [
+     {
+      "module": "interop_failure",
+      "version": "1.1.0",
+      "check": "audit_observes_only"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1292,17 +1512,25 @@
     "audit operating status",
     "deviation record history"
    ],
-   "gap": "Audit notices at Mercy start.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare which intervals are Crisis Mercy conditions and how uninterrupted auditing and record retention are represented."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "code_synergy",
+    "module": "audit_trace",
     "version": "1.0.0",
-    "check": "audit_uninterrupted"
+    "check": "audit_in_mercy",
+    "also": [
+     {
+      "module": "code_synergy",
+      "version": "1.0.0",
+      "check": "audit_uninterrupted"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_code_synergy_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1335,17 +1563,25 @@
     "response severity records",
     "audit visibility and access records"
    ],
-   "gap": "Audit notices at Mercy start.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare observable measures of severity and visibility and whether the sentence requires or merely permits severity changes."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "code_synergy",
+    "module": "audit_trace",
     "version": "1.0.0",
-    "check": "mercy_not_audit"
+    "check": "mercy_not_visibility",
+    "also": [
+     {
+      "module": "code_synergy",
+      "version": "1.0.0",
+      "check": "mercy_not_audit"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_code_synergy_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1388,13 +1624,19 @@
     "acceptance and activation records",
     "rollback arrangements"
    ],
-   "gap": "The referenced procedures, acceptance and activation rules, and required meaning of rollback are missing. No lab check implemented yet.",
+   "gap": "Declared properties of the change.",
    "hypotheses_needed": [
     "Declare whether rollback denotes preparedness, a conditional action, or an action required for every change."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "upgrade_only"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1424,13 +1666,19 @@
     "protocol version and identifier history",
     "change classifications"
    ],
-   "gap": "It is ambiguous whether presentation-only corrections are exempt from the new identifier requirement. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the presentation-only exception overrides the phrase any modification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1462,13 +1710,19 @@
     "simulation execution and compliance records",
     "change classifications"
    ],
-   "gap": "The simulation protocol is absent and application to presentation-only corrections is not expressly resolved. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether presentation-only corrections are exempt from mandatory simulation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "simulated"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1499,13 +1753,19 @@
     "protocol change records",
     "scope compatibility declarations"
    ],
-   "gap": "The text does not expressly resolve whether presentation-only corrections require the declaration. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether presentation-only corrections are exempt from the compatibility declaration requirement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "audit_trace",
+    "version": "1.0.0",
+    "check": "scope_compatibility"
+   },
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

@@ -1734,6 +1734,53 @@
      "no document defines a physical proxy for either channel"
     ]
    }
+  },
+  {
+   "id": "F-038",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "inconsistent_values",
+   "quotes": [
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§4",
+     "text": "Missing or invalid epistemic metadata constitutes D2-level deviation (Consistency or Integrity Anomaly) and SHALL be reported."
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§7",
+     "text": "- D1 — Benign Anomaly (no systemic impact)"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§7",
+     "text": "- D2 — Constraint Violation (bounded, reversible)"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§7",
+     "text": "- D3 — Structural Breach (scope, axiom, or parameter integrity)"
+    }
+   ],
+   "conclusion": "AUDIT §4 labels D2 'Consistency or Integrity Anomaly'; §7 defines D2 as 'Constraint Violation (bounded, reversible)'. The level number agrees, the label does not, and it borrows D1's 'Anomaly' and D3's 'integrity'.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "Integrity Anomaly",
+     "Consistency or Integrity",
+     "D2-level"
+    ],
+    "reference_chain": [
+     "the label occurs only in AUDIT §4",
+     "DEFENSE §5 D-levels are a different scale"
+    ]
+   }
   }
  ],
  "reference_fails": [
@@ -3152,6 +3199,25 @@
     }
    ],
    "reason": "Which physical variables feed the cognitive and cultural channels is an architectural definition absent from the corpus.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-057",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-038",
+   "quotes": [
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§4",
+     "text": "Missing or invalid epistemic metadata constitutes D2-level deviation (Consistency or Integrity Anomaly) and SHALL be reported."
+    }
+   ],
+   "reason": "The label in §4 could be read as an integrity breach (D3, halt) instead of D2 (remediation).",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

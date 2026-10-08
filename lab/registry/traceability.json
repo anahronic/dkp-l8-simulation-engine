@@ -4,6 +4,7 @@
  "registry_problems": 0,
  "modules": [
   "ai_subject",
+  "audit_trace",
   "axiom_constraints",
   "calibration_expiry",
   "code_economy",
@@ -1081,6 +1082,21 @@
    "module": "epistemic_gate",
    "example": "mixed_outputs",
    "kind": "reference"
+  },
+  {
+   "module": "audit_trace",
+   "example": "event_stream",
+   "kind": "reference"
+  },
+  {
+   "module": "audit_trace",
+   "example": "faulty_audit",
+   "kind": "counterexample"
+  },
+  {
+   "module": "audit_trace",
+   "example": "quiet_stream",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1088,20 +1104,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 823,
-  "covered_percent": 47.4,
+  "covered": 857,
+  "covered_percent": 49.3,
   "statuses": {
-   "PASS": 751,
+   "PASS": 785,
    "FAIL": 3,
    "UNKNOWN": 55,
    "NOT_APPLICABLE": 14,
-   "UNCOVERED": 914
+   "UNCOVERED": 880
   },
-  "resolvable": 331,
-  "resolvable_uncovered": 152,
-  "unresolved_decisions": 1406,
-  "covered_with_open_point": 644,
-  "pass_with_open_point": 579
+  "resolvable": 330,
+  "resolvable_uncovered": 146,
+  "unresolved_decisions": 1407,
+  "covered_with_open_point": 673,
+  "pass_with_open_point": 608
  },
  "stages": [
   {
@@ -1151,20 +1167,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 823,
-    "covered_percent": 47.4,
+    "covered": 857,
+    "covered_percent": 49.3,
     "statuses": {
-     "PASS": 751,
+     "PASS": 785,
      "FAIL": 3,
      "UNKNOWN": 55,
      "NOT_APPLICABLE": 14,
-     "UNCOVERED": 914
+     "UNCOVERED": 880
     },
-    "resolvable": 331,
-    "resolvable_uncovered": 152,
-    "unresolved_decisions": 1406,
-    "covered_with_open_point": 644,
-    "pass_with_open_point": 579
+    "resolvable": 330,
+    "resolvable_uncovered": 146,
+    "unresolved_decisions": 1407,
+    "covered_with_open_point": 673,
+    "pass_with_open_point": 608
    }
   },
   {
@@ -1236,20 +1252,20 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 234,
-    "covered_percent": 64.1,
+    "covered": 268,
+    "covered_percent": 73.4,
     "statuses": {
-     "PASS": 221,
+     "PASS": 255,
      "FAIL": 3,
      "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 131
+     "UNCOVERED": 97
     },
-    "resolvable": 100,
-    "resolvable_uncovered": 42,
-    "unresolved_decisions": 265,
-    "covered_with_open_point": 176,
-    "pass_with_open_point": 164
+    "resolvable": 99,
+    "resolvable_uncovered": 36,
+    "unresolved_decisions": 266,
+    "covered_with_open_point": 205,
+    "pass_with_open_point": 193
    }
   },
   {
@@ -1848,6 +1864,12 @@
    "title": "IMPACT §4 / IDENTITY §11 / ORACLE §5.3: which physically measurable variables feed the 'Cognitive Integrity Proxies' and 'Cultural Continuity Indicators' channels",
    "status": "UNRESOLVED",
    "category": "architecture_definition"
+  },
+  {
+   "id": "Q-057",
+   "title": "AUDIT §4 / §7: is missing epistemic metadata a D2 'Constraint Violation', and what does 'Consistency or Integrity Anomaly' refer to",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -2038,10 +2060,15 @@
     "id": "F-037",
     "title": "Cognitive and cultural impact channels must come from the PTL, which excludes cultural harm and produces physical state only",
     "classification": "INTERPRETATION_GAP"
+   },
+   {
+    "id": "F-038",
+    "title": "AUDIT §4 names D2 \"Consistency or Integrity Anomaly\"; §7 names D2 \"Constraint Violation\"",
+    "classification": "CONFIRMED_FINDING"
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 18,
+   "CONFIRMED_FINDING": 19,
    "INTERPRETATION_GAP": 17,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
@@ -2171,7 +2198,7 @@
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 28
+    "count": 29
    },
    {
     "status": "WITHDRAWN",
@@ -2196,14 +2223,14 @@
   ]
  },
  "unresolved_decomposition": {
-  "unresolved": 1406,
+  "unresolved": 1407,
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "agent_verified": 63,
-    "codex_draft": 146,
+    "agent_verified": 65,
+    "codex_draft": 145,
     "human_accepted": 0,
-    "total": 209
+    "total": 210
    },
    {
     "origin": "architecture_definition",
@@ -2248,7 +2275,7 @@
     "total": 0
    }
   ],
-  "draft_author_question_candidates": 367,
+  "draft_author_question_candidates": 366,
   "draft_provenance": {
    "tool": "lab/tools/codex/classify_prompt.md + classify_schema.json",
    "prompt_sha256": "5387970b69ca9764f953b7a5b72998f7c097e56e81be5cde7aa0b8aca3d87876",
@@ -2627,7 +2654,7 @@
     "pending": 0
    },
    "DKP-8-AUDIT-001": {
-    "normative_ambiguity": 1,
+    "normative_ambiguity": 2,
     "architecture_definition": 6,
     "l8_parameter": 2,
     "empirical_model_data": 1,
@@ -60769,24 +60796,30 @@
    "section": "1",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of permanent audit coverage is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "continuous",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Continuity over the declared stream.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -60801,24 +60834,30 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between execution correctness and outcome judgment is not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "verifies_not_judges",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "No sanction in responses.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -60834,14 +60873,18 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "IMPLEMENTED",
-   "module": "interop_failure",
-   "check": "audit_observes_only",
+   "module": "audit_trace",
+   "check": "observe_and_report",
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "interop_failure · audit_observes_only"
+   ],
    "hypotheses": [
+    "H-AT-1",
     "H-IO-1",
     "H-IO-2"
    ],
@@ -60849,7 +60892,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -60870,15 +60913,19 @@
    "section": "11",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "code_synergy",
-   "check": "audit_uninterrupted",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "audit_in_mercy",
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_code_synergy_module.py"
    ],
-   "gap": "Audit notices at Mercy start.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "code_synergy · audit_uninterrupted"
+   ],
    "hypotheses": [
+    "H-AT-1",
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
@@ -60895,13 +60942,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {
     "PASS": 2
    },
@@ -60918,15 +60967,19 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "code_synergy",
-   "check": "mercy_not_audit",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "mercy_not_visibility",
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_code_synergy_module.py"
    ],
-   "gap": "Audit notices at Mercy start.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "code_synergy · mercy_not_audit"
+   ],
    "hypotheses": [
+    "H-AT-1",
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
@@ -60943,13 +60996,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {
     "PASS": 2
    },
@@ -60966,23 +61021,27 @@
    "section": "12",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced procedures, acceptance and activation rules, and required meaning of rollback are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "upgrade_only",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Declared properties of the change.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -60998,23 +61057,27 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "It is ambiguous whether presentation-only corrections are exempt from the new identifier requirement. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "new_identifier",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61030,23 +61093,27 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The simulation protocol is absent and application to presentation-only corrections is not expressly resolved. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "simulated",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61062,23 +61129,27 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not expressly resolve whether presentation-only corrections require the declaration. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "scope_compatibility",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61187,23 +61258,27 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A causal effect model and a definition of substituting for an authorized decision are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "outputs_do_not_override",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Live modifications only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61219,23 +61294,27 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The record schema and criteria for verifiability are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "verifiable_events",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61251,24 +61330,30 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The completeness criterion for covering an execution interval is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "immutable_trace",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61283,24 +61368,30 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete temporal execution representation and executable invariant predicates are needed. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "invariants_always",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Per recorded event.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61315,24 +61406,30 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "deviations_detected",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61344,23 +61441,27 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The signal association rule and interval for establishing signal absence are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "silent_failures",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Silence is a declared property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61376,24 +61477,30 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete activity inventory and an operational definition of continuous coverage are required. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "scope_recorded",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61408,24 +61515,30 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The excluded categories and the test for system effect lack operational definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "exclusions",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61440,24 +61553,30 @@
    "section": "5",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The temporal semantics of continuous invariant verification are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "invariants_verified",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61472,23 +61591,27 @@
    "section": "5.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced axioms and a representation covering all relevant execution paths are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "axiom_compliance",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Axiom violations are declared flags.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61504,23 +61627,27 @@
    "section": "5.1",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The permitted delay or transition semantics of immediate escalation are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "axiom_escalation",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Escalation target not defined; recorded as an immediate notice.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61536,23 +61663,27 @@
    "section": "5.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced scope rules and applicable declarations are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "scope_compliance",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Declared flags.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61565,23 +61696,27 @@
    "section": "5.2",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The conditions establishing a formal upgrade and the operational meaning of critical breach are unspecified here. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "scope_breach_critical",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Critical = D3 (H-AT-1).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61597,23 +61732,27 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced upgrade procedure is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "parameter_integrity",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61626,23 +61765,27 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited behavior categories and the scope of adaptive optimization are not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "no_runtime_tuning",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61659,14 +61802,18 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "interop_failure",
-   "check": "deterministic_execution",
+   "module": "audit_trace",
+   "check": "determinism",
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
-   "gap": "Determinism of this module's execution only.",
-   "also_checked_by": [],
+   "gap": "audit_trace: Replica agreement is declared. interop_failure: Determinism of this module's execution only.",
+   "also_checked_by": [
+    "interop_failure · deterministic_execution"
+   ],
    "hypotheses": [
+    "H-AT-1",
     "H-IO-1",
     "H-IO-2"
    ],
@@ -61674,10 +61821,10 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -61695,23 +61842,27 @@
    "section": "5.5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced Subject validity rules and operational treatment of systemic fault are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "attribution_integrity",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Declared flags.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61727,23 +61878,27 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Mechanism verification procedures, recomputation independence, and continuous consistency coverage are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "replay_recompute",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Replay recorded; recomputation is the declared replica result.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61759,24 +61914,30 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Aggregate verifiability criteria and the referenced selective anonymization rules are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "audit_data_properties",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Immutability and time index.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61791,30 +61952,36 @@
    "section": "7",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Class predicates and precedence for overlapping categories are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "classification",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "D-levels per H-AT-1; §4 and §7 name D2 differently (F-038).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-057"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -61823,23 +61990,27 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "d1_log",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61852,23 +62023,27 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "d2_remediation",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61881,23 +62056,27 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "d3_halt",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Partial or full halt is not specified; recorded as a halt.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61910,23 +62089,27 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Immediate halt timing and the evidence establishing the mandatory review are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "d4_halt_review",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -61942,24 +62125,30 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The distinction between procedural and punitive actions requires an external classification or judgment. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "audit_trace",
+   "check": "procedural_not_punitive",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -61974,23 +62163,27 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The access and evidence sufficient for independent verification are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "accessible",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Recorded properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -62006,23 +62199,27 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational boundaries of proprietary, closed, and authority-gated processes are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "not_closed",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Recorded properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -62039,14 +62236,18 @@
    "kind": "contract",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "interop_failure",
-   "check": "operational_outputs_have_metadata",
+   "module": "audit_trace",
+   "check": "metadata_presence",
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "interop_failure · operational_outputs_have_metadata"
+   ],
    "hypotheses": [
+    "H-AT-1",
     "H-IO-1",
     "H-IO-2"
    ],
@@ -62054,10 +62255,10 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -62072,24 +62273,30 @@
    "section": "Epistemic Metadata Verification",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Propagation, authorization, expiration, staleness, and continuous verification semantics are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "metadata_validity",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Declared flags.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -62104,24 +62311,30 @@
    "section": "Epistemic Metadata Verification",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced classification rules and their precise target objects are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "audit_trace",
+   "check": "eb_classification",
+   "tests": [
+    "tests/lab/test_audit_trace_module.py"
+   ],
+   "gap": "Level check only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AT-1"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "audit_trace:faulty_audit"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -62137,34 +62350,47 @@
    "kind": "state_transition",
    "checkable": "yes",
    "coverage": "IMPLEMENTED",
-   "module": "interop_failure",
-   "check": "metadata_deviation_reported",
+   "module": "audit_trace",
+   "check": "metadata_d2",
    "tests": [
+    "tests/lab/test_audit_trace_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "interop_failure · metadata_deviation_reported"
+   ],
    "hypotheses": [
+    "H-AT-1",
     "H-IO-1",
     "H-IO-2"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": [],
+   "interpretation_status": "TEXT_VERIFIED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-057"
+   ],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [
+    "audit_trace:faulty_audit",
     "interop_failure:faulty_boundary"
    ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
-   "open_point": null
+   "text_verification": [
+    "findings:F-038",
+    "questions:Q-057"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "INTEROP-1-01",
