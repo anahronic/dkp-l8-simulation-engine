@@ -30,13 +30,19 @@
    "data_dependencies": [
     "governance input provenance"
    ],
-   "gap": "The system boundary and classification of physical-reality inputs are not specified. No lab check implemented yet.",
+   "gap": "Admission rules applied to declared sources.",
    "hypotheses_needed": [
     "Define the governance boundary and which inputs represent physical reality."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "sole_interface"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -106,13 +112,19 @@
     "Genesis Block #0 anchors and parameters",
     "Code of Planetary Synergy Appendix A.2"
    ],
-   "gap": "Genesis anchor values and the compatibility test are not supplied. No lab check implemented yet.",
+   "gap": "Only the CO2 anchor is compared.",
    "hypotheses_needed": [
     "Declare an anchor-compatibility procedure if the referenced material does not provide one."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "genesis_anchor"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -141,13 +153,19 @@
    "data_dependencies": [
     "higher-layer activation and scope rules"
    ],
-   "gap": "Applicable consumption rules and an operational representation of normative authority are missing. No lab check implemented yet.",
+   "gap": "Consumption of B(t) for enforcement only.",
    "hypotheses_needed": [
     "Represent activation, scope, and normative authority as explicit predicates."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "non_normative_outputs"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -175,7 +193,7 @@
    "data_dependencies": [
     "input and parameter-change provenance"
    ],
-   "gap": "Only the weight of Level 2 in the Code's stack is checked (F-028).",
+   "gap": "code_synergy: Only the weight of Level 2 in the Code's stack is checked (F-028). oracle_ingestion: Declared human sources are refused.",
    "hypotheses_needed": [
     "Define whether administrative configuration is manual input and classify prohibited processing operations."
    ],
@@ -183,10 +201,18 @@
    "implementation": {
     "module": "code_synergy",
     "version": "1.0.0",
-    "check": "human_input_excluded"
+    "check": "human_input_excluded",
+    "also": [
+     {
+      "module": "oracle_ingestion",
+      "version": "1.0.0",
+      "check": "human_input_excluded"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_code_synergy_module.py"
+    "tests/lab/test_code_synergy_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
@@ -219,13 +245,19 @@
     "oracle admissibility records",
     "measurement provenance"
    ],
-   "gap": "Physical measurability is not defined by an executable test. No lab check implemented yet.",
+   "gap": "One quantity, not a vector.",
    "hypotheses_needed": [
     "Declare admissible physical variables and their measurement procedures."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "state_vector_admissible"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -256,13 +288,19 @@
     "oracle identity registry",
     "hardware attestation and verification keys"
    ],
-   "gap": "Hardware-binding, physical-measurement validation, and identity-registration procedures are unspecified. No lab check implemented yet.",
+   "gap": "Hardware binding is a declared property.",
    "hypotheses_needed": [
     "Declare acceptable hardware attestations, registration records, and signature verification rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "hardware_signed_source"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -290,13 +328,19 @@
    "data_dependencies": [
     "oracle ownership and control records"
    ],
-   "gap": "The evidence and attribution rules for control are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how direct, indirect, and shared control map sources to owners."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "owner_aggregation"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -325,13 +369,19 @@
    "data_dependencies": [
     "source reliability records"
    ],
-   "gap": "The normalization rule, domain, and relationship to reliability are unspecified. No lab check implemented yet.",
+   "gap": "Normalized reliability with caps (H-OI-2).",
    "hypotheses_needed": [
     "Declare the normalization domain and rule, including treatment of capped or zero-weight sources."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "normalized_capped_weight"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -362,13 +412,19 @@
     "observation footprints",
     "source validity and confidence"
    ],
-   "gap": "The domain measure and active-observation rules are not defined. No lab check implemented yet.",
+   "gap": "The domain is a declared set of cells.",
    "hypotheses_needed": [
     "Define the physical domain, its measure, active observation, and treatment of overlapping coverage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "coverage_definition"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -430,13 +486,19 @@
    "data_dependencies": [
     "sensor mechanism descriptions and separation evidence"
    ],
-   "gap": "Physical separation lacks an operational definition. No lab check implemented yet.",
+   "gap": "Physical separation is declared by class.",
    "hypotheses_needed": [
     "Declare whether independence depends on spatial separation, sensing principle, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "independent_classes"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -464,13 +526,19 @@
    "data_dependencies": [
     "class-specific posterior distributions"
    ],
-   "gap": "The statistical significance test and its relationship to the 7% threshold are unspecified. No lab check implemented yet.",
+   "gap": "Relative difference of class posteriors (H-OI-3).",
    "hypotheses_needed": [
     "Declare the significance test and whether it is separate from the section 11 threshold."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "divergence_definition"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-004"
@@ -497,11 +565,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "classified_outputs"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -525,13 +599,19 @@
    "data_dependencies": [
     "measurement methods and processing provenance"
    ],
-   "gap": "Direct observability and semantic interpretation have no executable definitions. No lab check implemented yet.",
+   "gap": "The quantity is declared direct.",
    "hypotheses_needed": [
     "Declare which measurement methods qualify as direct and which operations are semantic."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "direct_measurement"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -635,17 +715,25 @@
    "data_dependencies": [
     "output subject classifications"
    ],
-   "gap": "Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016).",
+   "gap": "oracle_ingestion: Output requests declare their domain. transport_capacity: Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016).",
    "hypotheses_needed": [
     "Declare a classifier or reviewed labels for excluded output subjects."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "transport_capacity",
-    "version": "1.1.0",
-    "check": "no_excluded_domain_outputs"
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "non_measurable_excluded",
+    "also": [
+     {
+      "module": "transport_capacity",
+      "version": "1.1.0",
+      "check": "no_excluded_domain_outputs"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_oracle_ingestion_module.py",
     "tests/lab/test_transport_capacity_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
@@ -674,13 +762,19 @@
    "data_dependencies": [
     "oracle platform characteristics"
    ],
-   "gap": "Overlapping category assignments and taxonomy extensibility are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare tie-breaking rules for overlapping platform descriptions and whether additional classes are allowed."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "three_classes"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -707,11 +801,17 @@
    "data_dependencies": [
     "validated oracle class assignments"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "divergence_across_classes"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -740,13 +840,19 @@
     "clock attestations",
     "oracle identity registry"
    ],
-   "gap": "Accepted signature, clock-verification, identity-linkage, and optional proof schemes are not defined. No lab check implemented yet.",
+   "gap": "Declared properties.",
    "hypotheses_needed": [
     "Declare accepted cryptographic schemes and clock and identity verification procedures."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "signed_timestamped_registered"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -777,13 +883,19 @@
     "public schemas and decoders",
     "format licensing or ownership classification"
    ],
-   "gap": "The meanings of open and proprietary formats and the public-decodability test are not specified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare criteria for openness, proprietary status, and public decoding."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "open_schema"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -812,13 +924,19 @@
    "data_dependencies": [
     "ingestion operation traces"
    ],
-   "gap": "Ingestion boundaries and the treatment of decoding or representation changes are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define ingestion stages and distinguish validation or decoding from prohibited transformation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "unmodified_ingestion"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -883,13 +1001,19 @@
     "stake balances and slashing records",
     "ownership mapping"
    ],
-   "gap": "Excess-weight allocation and the scope, amount, applicability, and timing of slashing are unspecified. No lab check implemented yet.",
+   "gap": "Owner excess reduced proportionally (H-OI-2); every owner has a stake. A source has one owner, so the owner cap also bounds every source.",
    "hypotheses_needed": [
     "Declare excess-weight removal and slashing rules, including whether remaining stake means all remaining stake."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "zero_excess_and_slash"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1009,18 +1133,26 @@
     "oracle availability and signal status",
     "higher-layer signal receipts"
    ],
-   "gap": "Uses the declared mapping H-FC-1 of zero-weight conditions to EB states.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare silence-detection timing, state classifications, and signal-propagation semantics."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
     "version": "1.2.0",
-    "check": "silence_propagates"
+    "check": "silence_propagates",
+    "also": [
+     {
+      "module": "oracle_ingestion",
+      "version": "1.0.0",
+      "check": "silence_is_signal"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_failure_chain_module.py"
+    "tests/lab/test_failure_chain_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
@@ -1055,13 +1187,19 @@
    "data_dependencies": [
     "oracle reliability histories and admissible measurements"
    ],
-   "gap": "The Bayesian model and all mappings needed to calculate the result are unspecified. No lab check implemented yet.",
+   "gap": "Weighted posterior mean with a flat prior (H-OI-3).",
    "hypotheses_needed": [
     "Declare the likelihood model, reliability horizon and estimator, prior construction, and posterior-to-S(t) mapping."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "likelihood_updates"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1090,13 +1228,19 @@
    "data_dependencies": [
     "aggregation execution records"
    ],
-   "gap": "The complete input boundary and output-equivalence standard are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare complete aggregation inputs and whether reproducibility requires bitwise equality or a specified equivalence rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "reproducible"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1332,13 +1476,19 @@
     "signature verification material",
     "output record history"
    ],
-   "gap": "Output cadence, signature validation details, and permitted correction mechanics are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare output emission rules and how correction records coexist with immutable outputs."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "outputs_emitted"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1364,13 +1514,19 @@
    "numeric_source": "text",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The structure of a confidence envelope is unspecified. No lab check implemented yet.",
+   "gap": "Envelope = aggregate confidence (H-OI-2).",
    "hypotheses_needed": [
     "Declare whether confidence envelopes are scalars or intervals and how the bounds apply."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "envelope_range"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1400,13 +1556,19 @@
     "B(t) model and measurement lineage",
     "PTL admissibility decisions"
    ],
-   "gap": "The B(t) model needed to validate its physical and composite character is absent. No lab check implemented yet.",
+   "gap": "Placeholder B(t) model (H-OI-4).",
    "hypotheses_needed": [
     "Declare the B(t) model and complete measurement provenance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "b_from_admissible"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1438,11 +1600,17 @@
    "data_dependencies": [
     "B(t) simulation model, aggregation, weighting, and calibration specifications"
    ],
-   "gap": "The referenced simulation protocol and required specifications are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "b_model_external"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1467,13 +1635,19 @@
    "data_dependencies": [
     "model-declared raw B(t) output and output contract"
    ],
-   "gap": "The authoritative B(t) model output contract is absent. No lab check implemented yet.",
+   "gap": "Placeholder B(t) model (H-OI-4).",
    "hypotheses_needed": [
     "Declare the raw-output representation and permitted serialization operations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "b_raw"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1504,19 +1678,35 @@
     "L8 calibration bundle and validity determination",
     "enforcement trigger provenance"
    ],
-   "gap": "Calibration-bundle attachment and validity criteria are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare bundle attachment and validity checks and how informational-only use is represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "b_informational_without_bundle",
+    "also": [
+     {
+      "module": "oracle_ingestion",
+      "version": "1.0.0",
+      "check": "b_informational_without_bundle"
+     }
+    ]
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-055"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1543,17 +1733,25 @@
     "systemic oracle integrity findings",
     "governance execution states"
    ],
-   "gap": "Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled.",
+   "gap": "oracle_ingestion: 'Aggregate confidence' = sum of live weights (H-OI-2); integrity compromise not modelled. sensor_loss: Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled.",
    "hypotheses_needed": [
     "Declare confidence aggregation, global coverage measurement, and systemic integrity predicates."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "oracle_ingestion",
     "version": "1.0.0",
-    "check": "systemic_halt_on_coverage"
+    "check": "halt_conditions",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "systemic_halt_on_coverage"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_oracle_ingestion_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1587,7 +1785,7 @@
     "L1 state and attribution records",
     "L2-and-higher execution traces"
    ],
-   "gap": "The halt is a scenario input; its triggers (confidence, coverage) are not computed.",
+   "gap": "failure_chain: The halt is a scenario input; its triggers (confidence, coverage) are not computed. oracle_ingestion: Recorded effect of the halt.",
    "hypotheses_needed": [
     "Declare continuity and semantic-preservation invariants for L1 records."
    ],
@@ -1595,10 +1793,18 @@
    "implementation": {
     "module": "failure_chain",
     "version": "1.2.0",
-    "check": "halt_blocks_l2"
+    "check": "halt_blocks_l2",
+    "also": [
+     {
+      "module": "oracle_ingestion",
+      "version": "1.0.0",
+      "check": "halt_preserves_l1"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_failure_chain_module.py"
+    "tests/lab/test_failure_chain_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -1630,13 +1836,19 @@
     "Appendix A.4 activation records",
     "PTL event-causation findings"
    ],
-   "gap": "Appendix A.4 activation criteria and the causal-confirmation method are absent. No lab check implemented yet.",
+   "gap": "Mercy status and cause are declared.",
    "hypotheses_needed": [
     "Declare a causal attribution model and a procedure for validating Crisis Mercy activation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "mercy_deferral_conditions"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1663,13 +1875,19 @@
    "data_dependencies": [
     "event causation and interference findings"
    ],
-   "gap": "Causal attribution standards and mixed-cause treatment are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare causal attribution rules, including treatment of mixed natural and human causes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "human_cause_not_natural"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1698,11 +1916,17 @@
    "data_dependencies": [
     "configuration history and stale-data confidence records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "deferral_changes_nothing"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-027"
@@ -1738,13 +1962,19 @@
     "scope and authority rules",
     "deferral-related authority claims"
    ],
-   "gap": "The external time limit and rules for identifying normative or precedential authority are absent. No lab check implemented yet.",
+   "gap": "Limit = 180 days of Code A.4 (F-027 applies).",
    "hypotheses_needed": [
     "Declare a representation of normative and precedential authority for simulation checks."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "deferral_time_limited"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1776,13 +2006,19 @@
    "data_dependencies": [
     "cross-layer interaction traces and configuration provenance"
    ],
-   "gap": "Indirect influence, suppression, and confidence-envelope reinterpretation lack operational definitions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a causal influence model and detectable predicates for suppression and reinterpretation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "cross_layer_isolation"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-027"
@@ -1810,11 +2046,17 @@
    "numeric_source": "text",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "constants_source_owner_divergence"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-035"
@@ -1842,11 +2084,17 @@
    "numeric_source": "text",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "constants_window_halt_coverage"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-035"
@@ -1943,11 +2191,17 @@
    "data_dependencies": [
     "deployment records and protocol artifact history"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "immutable_once_deployed"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1974,13 +2228,19 @@
     "Genesis Block #0 anchors",
     "protocol revision and assessment records"
    ],
-   "gap": "The requirements for a valid re-anchoring assessment are not supplied. No lab check implemented yet.",
+   "gap": "Declared properties of the change.",
    "hypotheses_needed": [
     "Declare assessment completeness criteria using the Genesis anchors."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "modification_requirements"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2009,13 +2269,19 @@
    "data_dependencies": [
     "measurement timestamps and provenance"
    ],
-   "gap": "The required representation of physical-state and time associations is unspecified. No lab check implemented yet.",
+   "gap": "Time stamps only.",
    "hypotheses_needed": [
     "Declare how output records bind to measured physical states and observation times."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "measurement_records"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2084,13 +2350,19 @@
     "measurement-error correction rules and decisions",
     "TTL and validity records"
    ],
-   "gap": "The correction protocol and executable criteria for absolute-truth claims are not supplied. No lab check implemented yet.",
+   "gap": "TTL bound only.",
    "hypotheses_needed": [
     "Declare how correction eligibility and claims of absolute truth are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.0.0",
+    "check": "bounded_validity"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

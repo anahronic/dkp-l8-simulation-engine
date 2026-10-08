@@ -15,6 +15,7 @@ from lab.modules.failure_chain import FailureChainModule
 from lab.modules.info_truth import InfoTruthModule
 from lab.modules.internal_security import InternalSecurityModule
 from lab.modules.interop_failure import InteropFailureModule
+from lab.modules.oracle_ingestion import OracleIngestionModule
 from lab.modules.police_antiterror import PoliceAntiterrorModule
 from lab.modules.prevention import PreventionModule
 from lab.modules.privacy_transparency import PrivacyTransparencyModule
@@ -34,4 +35,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              PoliceAntiterrorModule(), AxiomConstraintsModule(),
                              InfoTruthModule(), PrivacyTransparencyModule(),
                              EduCultureModule(), AiSubjectModule(), CodeSynergyModule(),
-                             CodeEconomyModule(), ScopeGateModule())}
+                             CodeEconomyModule(), ScopeGateModule(),
+                             OracleIngestionModule())}

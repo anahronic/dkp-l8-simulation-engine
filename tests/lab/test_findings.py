@@ -252,3 +252,8 @@ def test_f033_f034_code_economy():
 def test_f035_scope_audit():
     assert _code("F-035", ("SCOPE-8-03", "SCOPE-8-04")) == {"before_audit": ("NOT_APPLICABLE", "NOT_APPLICABLE"),
                                                             "confirmed_during_audit": ("PASS", "UNKNOWN")}
+
+
+def test_f036_b_enforcement():
+    assert _code("F-036", ("CODEX-A.1-04", "ORACLE-12-06")) == {"code_a1": ("PASS", "FAIL"), "oracle_section_12": ("FAIL", "PASS"),
+                                                                "bundle_attached": ("PASS", "PASS")}

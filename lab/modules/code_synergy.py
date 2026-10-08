@@ -298,8 +298,12 @@ def run(r: Dict[str, Any]):
         # Kill Switches on B_min (A.1) under Mercy (A.4)
         below = b < p["B_min"]
         susp = in_mercy(d) and "kill_switch_during_mercy" not in faults
-        if "ignore_b_min" in faults or (not below and ks_state == "inactive"):
+        informational = r["b_enforcement"] == "oracle_section_12" and not r["calibration_bundle"]
+        if "ignore_b_min" in faults or (not below and ks_state == "inactive") or informational:
             new = "inactive"
+            if informational and below and not was_below:
+                put("notice", "KILLSWITCH", d, {"informational_only": True, "B": round(b, 6),
+                                                "note": "ORACLE §12: no valid L8 calibration bundle; B(t) does not trigger enforcement (F-036)"})
         else:
             new = "suspended" if susp else "active"
         if new != ks_state:
@@ -539,6 +543,21 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                                f"all Kill Switches activated together on day {first[0] if first else '—'} "
                                f"(B(t) < B_min outside Mercy); what they disconnect is not defined (F-029)",
                                evidence={"first_active": first[:1]}))
+    # ORACLE §12: B(t) informational only without a valid L8 bundle (F-036)
+    active_days = [d for d in range(days) if got[d] == "active"]
+    if r["calibration_bundle"]:
+        out.append(CheckResult("ORACLE-12-06", "b_informational_without_bundle", PASS,
+                               "a valid L8 calibration bundle is declared attached; B(t) may trigger enforcement"))
+    elif active_days:
+        out.append(CheckResult("ORACLE-12-06", "b_informational_without_bundle", FAIL,
+                               f"the Kill Switches activated on B(t) < B_min on day {active_days[0]} (Code A.1) while no valid L8 "
+                               "calibration bundle exists: ORACLE §12 forbids B(t) to trigger enforcement (F-036, rule conflict)",
+                               evidence={"tag": "rule_conflict", "first_active": active_days[0]}))
+    elif any(below):
+        out.append(CheckResult("ORACLE-12-06", "b_informational_without_bundle", PASS,
+                               "B(t) fell below B_min but triggered no enforcement (Mercy suspension or ORACLE §12 reading)"))
+    else:
+        out.append(na("ORACLE-12-06", "b_informational_without_bundle", "B(t) < B_min", "B(t) never fell below B_min"))
     # System Failure (A.1a)
     inv_days = sorted(c["day"] for c in acc if not (c["channel"] == "upgrade" and c["simulated"]))
     runs_eq, runs_inv, a, b2 = [], [], 0, 0
@@ -949,6 +968,7 @@ IMPLEMENTS = {
     "AUDIT-11-01": ("audit_uninterrupted", "PARTIAL", "Audit notices at Mercy start."),
     "AUDIT-11-02": ("mercy_not_audit", "PARTIAL", "Audit notices at Mercy start."),
     "SCOPE-3-19": ("no_dkp_logic_in_s3", "PARTIAL", "Only the Council of Crisis Mercy is examined (F-032)."),
+    "ORACLE-12-06": ("b_informational_without_bundle", "IMPLEMENTED", None),
 }
 
 _ID = re.compile(r"[a-z0-9][a-z0-9_]{0,23}")
@@ -982,9 +1002,10 @@ class CodeSynergyModule(LabModule):
                "ru": "B(t) падает ниже 0.68, государство нападает, узел захвачен, извергается вулкан: работают ли рубильники, "
                      "залоги мира, милосердие, стек оракулов и неизменность параметров так, как пишет Кодекс, и где текст молчит?"}
     protocols = ["CODE-OF-PLANETARY-SYNERGY", "DKP-0-ORACLE-001", "DKP-6-INTEGRATION-001", "DKP-7-SCOPE-001", "DKP-8-AUDIT-001"]
+    # (ORACLE §12 is checked against the Code's Kill Switches: F-036)
     example_order = ["natural_drop_with_mercy", "anthropogenic_drop", "quiet_world", "mercy_shorter_crisis_scope",
                      "mercy_fixed_180_reading", "faulty_network"]
-    alternative_examples = ["mercy_fixed_180_reading"]
+    alternative_examples = ["mercy_fixed_180_reading", "oracle_section_12_reading"]
     noncompliant_examples = ["equation_violated_181_days", "equation_violated_180_days", "indirect_ownership_breach"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_code_synergy_module.py"]
@@ -1014,6 +1035,13 @@ class CodeSynergyModule(LabModule):
                   "suspends them again.",
             "ru": "После возврата B(t) к B_min и выше рубильники остаются как есть: ни один текст их не снимает (F-029). Милосердие "
                   "снова их приостанавливает."}},
+        {"id": "H-CS-11", "source": "hypothesis", "text": {
+            "en": "Without a calibration bundle (the corpus has none, F-014) Code A.1 and ORACLE §12 conflict (F-036). Default: the Code "
+                  "is applied (the Kill Switches activate; ORACLE-12-06 fails). Alternative oracle_section_12: B(t) stays informational "
+                  "(CODEX-A.1-04 fails).",
+            "ru": "Без пакета калибровки (его нет, F-014) Кодекс A.1 и ORACLE §12 противоречат друг другу (F-036). По умолчанию "
+                  "применяется Кодекс (рубильники включаются; ORACLE-12-06 не выполнен). Альтернатива oracle_section_12: B(t) остаётся "
+                  "информационным (не выполнен CODEX-A.1-04)."}},
         {"id": "H-CS-6", "source": "hypothesis", "text": {
             "en": "An aggression is established only when recorded by independent monitoring (§8.1); §7.3 names no procedure. "
                   "'Kill Switches' are the disconnections of §8.1 and A.1: Mercy does not suspend slashing or the write-off of §8.2.",
@@ -1107,6 +1135,12 @@ class CodeSynergyModule(LabModule):
                              "ptl_verified": {"type": "bool", "default": True},
                              "crisis_scope_days": {"type": "int", "min": 0, "max": 3650}}},
                          "default": [MERCY0]},
+        "calibration_bundle": {"type": "bool", "default": False, "source": "missing",
+                               "label": {"en": "Valid L8 calibration bundle attached (none exists, F-014)",
+                                         "ru": "Действующий пакет калибровки L8 (нет, F-014)"}},
+        "b_enforcement": {"type": "enum", "values": ["code_a1", "oracle_section_12"], "default": "code_a1", "source": "hypothesis",
+                          "label": {"en": "Without a bundle, does B(t) < B_min activate the Kill Switches? (F-036)",
+                                    "ru": "Без пакета включает ли B(t) < B_min рубильники? (F-036)"}},
         "mercy_reading": {"type": "enum", "values": ["bounded_by_crisis_scope", "fixed_180_days"], "default": "bounded_by_crisis_scope",
                           "source": "hypothesis", "label": {"en": "Mercy duration reading (F-027)", "ru": "Чтение срока милосердия (F-027)"}},
         "council": {"type": "object", "source": "user", "label": {"en": "Council of Crisis Mercy pool", "ru": "Пул Совета кризисного милосердия"},
@@ -1279,6 +1313,8 @@ class CodeSynergyModule(LabModule):
             "mercy_without_crisis_scope": {"mercy_events": [dict(MERCY0, crisis_scope_days=0)], "council_actions": []},
             "eruption_vei_7": {**quiet, "mercy_events": [{"day": 50, "kind": "eruption", "magnitude": 7, "crisis_scope_days": 365}],
                                "aggressions": [{"day": 60, "region": "east", "recorded": True, "weapons": False, "damage": 0.0}]},
+            "oracle_section_12_reading": {"b_enforcement": "oracle_section_12"},
+            "bundle_attached": {"calibration_bundle": True},
             "b_recovers": {"ptl_segments": [SEG0, SEG_DROP, {"from_day": 330, "l0": 0.70, "l1": 0.70, "l2": 0.70, "cause": "natural"}]},
             "unresolved_divergence": {"ptl_segments": [SEG0, {"from_day": 200, "l0": 0.70, "l1": 0.62, "l2": 0.70, "cause": "natural"}],
                                       "mercy_events": [], "council_actions": []},
@@ -1294,7 +1330,7 @@ class CodeSynergyModule(LabModule):
                 {"day": 40, "parameter": "k", "value": 0.98, "channel": "upgrade", "simulated": True, "by_audit": True}]},
             "equation_violated_181_days": {**quiet, "equation_segments": bad_eq + [{"from_day": 281, "dw_dt": 1.0, "e": 1.0, "t": 1.0}]},
             "equation_violated_180_days": {**quiet, "equation_segments": bad_eq + [{"from_day": 280, "dw_dt": 1.0, "e": 1.0, "t": 1.0}]},
-            "indirect_ownership_breach": {"ownership": [
+            "indirect_ownership_breach": {"ptl_segments": [SEG0], "mercy_events": [], "council_actions": [], "ownership": [
                 {"holder": "orbital_a", "l0_share": 0.005, "geo_share": 0.0, "stake": 10.0, "holds": []},
                 {"holder": "fund_b", "l0_share": 0.003, "geo_share": 0.0, "stake": 5.0, "holds": [{"entity": "orbital_a", "share": 1.0}]}]},
             "node_seized": {"nodes": NODES[:2] + [dict(NODES[2], seized_day=250)] + NODES[3:]},

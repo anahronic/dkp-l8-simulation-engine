@@ -18,6 +18,7 @@
   "info_truth",
   "internal_security",
   "interop_failure",
+  "oracle_ingestion",
   "police_antiterror",
   "prevention",
   "privacy_transparency",
@@ -796,6 +797,11 @@
   },
   {
    "module": "code_synergy",
+   "example": "bundle_attached",
+   "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
    "example": "connection_by_legislative_act",
    "kind": "reference"
   },
@@ -863,6 +869,11 @@
    "module": "code_synergy",
    "example": "nuclear_equivalent",
    "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
+   "example": "oracle_section_12_reading",
+   "kind": "alternative"
   },
   {
    "module": "code_synergy",
@@ -958,6 +969,56 @@
    "module": "scope_gate",
    "example": "quiet_s0",
    "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "bundle_attached",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "class_goes_silent",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "faulty_ptl",
+   "kind": "counterexample"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "few_owners",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "fifteen_owners",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "five_per_class",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "mercy_human_cause",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "mercy_natural",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "orbital_bias",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "within_class_spread",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -965,20 +1026,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 713,
-  "covered_percent": 41.0,
+  "covered": 750,
+  "covered_percent": 43.2,
   "statuses": {
-   "PASS": 645,
-   "FAIL": 2,
+   "PASS": 681,
+   "FAIL": 3,
    "UNKNOWN": 53,
    "NOT_APPLICABLE": 13,
-   "UNCOVERED": 1024
+   "UNCOVERED": 987
   },
   "resolvable": 331,
-  "resolvable_uncovered": 176,
+  "resolvable_uncovered": 172,
   "unresolved_decisions": 1406,
-  "covered_with_open_point": 558,
-  "pass_with_open_point": 497
+  "covered_with_open_point": 591,
+  "pass_with_open_point": 529
  },
  "stages": [
   {
@@ -1028,20 +1089,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 713,
-    "covered_percent": 41.0,
+    "covered": 750,
+    "covered_percent": 43.2,
     "statuses": {
-     "PASS": 645,
-     "FAIL": 2,
+     "PASS": 681,
+     "FAIL": 3,
      "UNKNOWN": 53,
      "NOT_APPLICABLE": 13,
-     "UNCOVERED": 1024
+     "UNCOVERED": 987
     },
     "resolvable": 331,
-    "resolvable_uncovered": 176,
+    "resolvable_uncovered": 172,
     "unresolved_decisions": 1406,
-    "covered_with_open_point": 558,
-    "pass_with_open_point": 497
+    "covered_with_open_point": 591,
+    "pass_with_open_point": 529
    }
   },
   {
@@ -1113,20 +1174,20 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 143,
-    "covered_percent": 39.2,
+    "covered": 180,
+    "covered_percent": 49.3,
     "statuses": {
-     "PASS": 132,
-     "FAIL": 2,
+     "PASS": 168,
+     "FAIL": 3,
      "UNKNOWN": 7,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 222
+     "UNCOVERED": 185
     },
     "resolvable": 100,
-    "resolvable_uncovered": 62,
+    "resolvable_uncovered": 58,
     "unresolved_decisions": 265,
-    "covered_with_open_point": 105,
-    "pass_with_open_point": 95
+    "covered_with_open_point": 138,
+    "pass_with_open_point": 127
    }
   },
   {
@@ -1713,6 +1774,12 @@
    "title": "SCOPE §8: who conducts a Scope Audit, when does it end, what does 'confirmation by independent PTL nodes' confirm, and how many reporting Subjects trigger it",
    "status": "UNRESOLVED",
    "category": "architecture_definition"
+  },
+  {
+   "id": "Q-055",
+   "title": "Code A.1 / ORACLE §12: while no valid L8 calibration bundle exists, may B(t) < B_min activate the Kill Switches",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -1893,10 +1960,15 @@
     "id": "F-035",
     "title": "SCOPE §8: the Scope Audit has a trigger but no procedure, no end and no stated object of confirmation",
     "classification": "CONFIRMED_FINDING"
+   },
+   {
+    "id": "F-036",
+    "title": "Code A.1 activates the Kill Switches on B(t); ORACLE §12 forbids B(t) to trigger enforcement without an L8 bundle",
+    "classification": "CONFIRMED_FINDING"
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 17,
+   "CONFIRMED_FINDING": 18,
    "INTERPRETATION_GAP": 16,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
@@ -1909,6 +1981,27 @@
     ],
     "origin": "CONFIRMED_FINDING",
     "finding": "F-015"
+   },
+   {
+    "requirement": "ORACLE-12-06",
+    "runs": [
+     "code_synergy:anthropogenic_drop",
+     "code_synergy:b_recovers",
+     "code_synergy:connection_by_legislative_act",
+     "code_synergy:human_weight_zero",
+     "code_synergy:insufficient_assets",
+     "code_synergy:mercy_shorter_crisis_scope",
+     "code_synergy:mercy_without_crisis_scope",
+     "code_synergy:natural_drop_with_mercy",
+     "code_synergy:node_seized",
+     "code_synergy:nuclear_equivalent",
+     "code_synergy:phase_1_aggressor",
+     "code_synergy:tuning_attempts",
+     "code_synergy:unconfirmed_spare_node",
+     "code_synergy:unidentified_aggressor"
+    ],
+    "origin": "CONFIRMED_FINDING",
+    "finding": "F-036"
    },
    {
     "requirement": "TIME-9-04",
@@ -1998,7 +2091,7 @@
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 27
+    "count": 28
    },
    {
     "status": "WITHDRAWN",
@@ -2027,17 +2120,17 @@
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "agent_verified": 62,
+    "agent_verified": 63,
     "codex_draft": 146,
     "human_accepted": 0,
-    "total": 208
+    "total": 209
    },
    {
     "origin": "architecture_definition",
     "agent_verified": 31,
-    "codex_draft": 223,
+    "codex_draft": 222,
     "human_accepted": 0,
-    "total": 254
+    "total": 253
    },
    {
     "origin": "l8_parameter",
@@ -2075,7 +2168,7 @@
     "total": 0
    }
   ],
-  "draft_author_question_candidates": 369,
+  "draft_author_question_candidates": 368,
   "draft_provenance": {
    "tool": "lab/tools/codex/classify_prompt.md + classify_schema.json",
    "prompt_sha256": "5387970b69ca9764f953b7a5b72998f7c097e56e81be5cde7aa0b8aca3d87876",
@@ -2148,8 +2241,8 @@
     "pending": 0
    },
    "DKP-0-ORACLE-001": {
-    "normative_ambiguity": 11,
-    "architecture_definition": 16,
+    "normative_ambiguity": 12,
+    "architecture_definition": 15,
     "l8_parameter": 2,
     "empirical_model_data": 6,
     "external_dependency": 7,
@@ -2629,6 +2722,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -2642,7 +2736,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 15,
+    "PASS": 16,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 2
@@ -2650,7 +2744,7 @@
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -3923,6 +4017,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -3936,7 +4031,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -3946,7 +4041,7 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -3972,6 +4067,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -3985,7 +4081,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -3993,7 +4089,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4019,6 +4115,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4034,7 +4131,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 16,
+    "PASS": 17,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 1
@@ -4044,7 +4141,7 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -4072,6 +4169,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4087,7 +4185,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 16,
+    "PASS": 17,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 1
@@ -4095,11 +4193,12 @@
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
-    "findings:F-029"
+    "findings:F-029",
+    "findings:F-036"
    ],
    "open_point": {
     "origin": "architecture_definition",
@@ -4123,6 +4222,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4138,7 +4238,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 14,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 2,
     "NOT_APPLICABLE": 2
@@ -4146,7 +4246,7 @@
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4258,6 +4358,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4271,7 +4372,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4279,7 +4380,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [
     "code_synergy:equation_violated_180_days",
@@ -4311,6 +4412,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4324,7 +4426,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4332,7 +4434,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -4357,6 +4459,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4370,7 +4473,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4378,7 +4481,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4404,6 +4507,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4416,10 +4520,11 @@
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
-    "Q-048"
+    "Q-048",
+    "Q-055"
    ],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 4
@@ -4429,12 +4534,15 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 1,
+    "FAIL": 1
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-029",
-    "questions:Q-048"
+    "findings:F-036",
+    "questions:Q-048",
+    "reference_fails:ORACLE-12-06"
    ],
    "open_point": {
     "origin": "architecture_definition",
@@ -4458,6 +4566,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4474,12 +4583,12 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 17
+    "NOT_APPLICABLE": 18
    },
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -4507,6 +4616,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4523,12 +4633,12 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 17
+    "NOT_APPLICABLE": 18
    },
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4554,6 +4664,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4570,12 +4681,12 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 17
+    "NOT_APPLICABLE": 18
    },
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4601,6 +4712,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4616,7 +4728,7 @@
     "Q-049"
    ],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4624,7 +4736,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -4653,6 +4765,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4666,7 +4779,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4674,7 +4787,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -4702,6 +4815,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4715,7 +4829,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4723,7 +4837,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4746,6 +4860,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4759,7 +4874,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4767,7 +4882,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4857,6 +4972,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4870,7 +4986,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4878,7 +4994,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4933,6 +5049,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4946,7 +5063,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 16,
+    "PASS": 17,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -4956,7 +5073,7 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -4979,6 +5096,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4994,7 +5112,7 @@
     "Q-047"
    ],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5002,7 +5120,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5062,6 +5180,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5075,7 +5194,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5083,7 +5202,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5109,6 +5228,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5125,12 +5245,12 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 16
+    "NOT_APPLICABLE": 17
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5158,6 +5278,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5171,7 +5292,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 17,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
@@ -5179,7 +5300,7 @@
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5205,6 +5326,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5218,7 +5340,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5226,7 +5348,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5284,6 +5406,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5297,7 +5420,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5305,7 +5428,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5331,6 +5454,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5347,12 +5471,12 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 17
+    "NOT_APPLICABLE": 18
    },
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5378,6 +5502,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5393,7 +5518,7 @@
     "Q-046"
    ],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 2,
     "NOT_APPLICABLE": 3
@@ -5401,7 +5526,7 @@
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5430,6 +5555,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5445,7 +5571,7 @@
     "Q-051"
    ],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5453,7 +5579,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5481,6 +5607,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5494,7 +5621,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5504,7 +5631,7 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5533,6 +5660,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5546,7 +5674,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5554,7 +5682,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5580,6 +5708,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5593,7 +5722,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5601,7 +5730,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5627,6 +5756,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5640,7 +5770,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5650,7 +5780,7 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5676,6 +5806,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5691,7 +5822,7 @@
     "Q-046"
    ],
    "observed": {
-    "PASS": 15,
+    "PASS": 16,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -5699,7 +5830,8 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "FAIL": 1
+    "FAIL": 1,
+    "PASS": 1
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5728,6 +5860,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5741,7 +5874,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5751,7 +5884,7 @@
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5779,6 +5912,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5792,7 +5926,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5800,7 +5934,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -5858,6 +5992,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5873,7 +6008,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 16,
+    "PASS": 17,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -5881,7 +6016,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -5910,6 +6045,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5923,7 +6059,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5931,7 +6067,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [
     "code_synergy:indirect_ownership_breach"
@@ -5961,6 +6097,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5977,12 +6114,12 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 18
+    "NOT_APPLICABLE": 19
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -6101,6 +6238,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6114,7 +6252,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -6122,7 +6260,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -6235,6 +6373,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6248,7 +6387,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -6256,7 +6395,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -6751,24 +6890,33 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The system boundary and classification of physical-reality inputs are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "sole_interface",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Admission rules applied to declared sources.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -6831,24 +6979,33 @@
    "section": "10",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The Bayesian model and all mappings needed to calculate the result are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "likelihood_updates",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Weighted posterior mean with a flat prior (H-OI-3).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -6865,23 +7022,30 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The complete input boundary and output-equivalence standard are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "reproducible",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7127,23 +7291,30 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Output cadence, signature validation details, and permitted correction mechanics are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "outputs_emitted",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7159,23 +7330,30 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The structure of a confidence envelope is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "envelope_range",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Envelope = aggregate confidence (H-OI-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7191,24 +7369,33 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The B(t) model needed to validate its physical and composite character is absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "b_from_admissible",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Placeholder B(t) model (H-OI-4).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -7223,23 +7410,30 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced simulation protocol and required specifications are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "b_model_external",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7252,23 +7446,30 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The authoritative B(t) model output contract is absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "b_raw",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Placeholder B(t) model (H-OI-4).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7284,30 +7485,62 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Calibration-bundle attachment and validity criteria are not defined. No lab check implemented yet.",
-   "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "module": "code_synergy",
+   "check": "b_informational_without_bundle",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
+   "also_checked_by": [
+    "oracle_ingestion · b_informational_without_bundle"
+   ],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9",
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-055"
+   ],
    "observed": {
-    "PASS": 0,
-    "FAIL": 0,
+    "PASS": 10,
+    "FAIL": 14,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "FAIL",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
+   "under_alternative_readings": {
+    "FAIL": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-036",
+    "questions:Q-055",
+    "reference_fails:ORACLE-12-06"
+   ],
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -7317,14 +7550,21 @@
    "kind": "state_transition",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "systemic_halt_on_coverage",
+   "module": "oracle_ingestion",
+   "check": "halt_conditions",
    "tests": [
+    "tests/lab/test_oracle_ingestion_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled.",
-   "also_checked_by": [],
+   "gap": "oracle_ingestion: 'Aggregate confidence' = sum of live weights (H-OI-2); integrity compromise not modelled. sensor_loss: Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled.",
+   "also_checked_by": [
+    "sensor_loss · systemic_halt_on_coverage"
+   ],
    "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -7334,10 +7574,10 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 4
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7361,10 +7601,13 @@
    "module": "failure_chain",
    "check": "halt_blocks_l2",
    "tests": [
-    "tests/lab/test_failure_chain_module.py"
+    "tests/lab/test_failure_chain_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
    ],
-   "gap": "The halt is a scenario input; its triggers (confidence, coverage) are not computed.",
-   "also_checked_by": [],
+   "gap": "failure_chain: The halt is a scenario input; its triggers (confidence, coverage) are not computed. oracle_ingestion: Recorded effect of the halt.",
+   "also_checked_by": [
+    "oracle_ingestion · halt_preserves_l1"
+   ],
    "hypotheses": [
     "H-FC-1",
     "H-FC-2",
@@ -7373,16 +7616,20 @@
     "H-FC-5",
     "H-FC-5-ALT",
     "H-FC-6",
-    "H-FC-7"
+    "H-FC-7",
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 13
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7400,23 +7647,30 @@
    "section": "14",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Appendix A.4 activation criteria and the causal-confirmation method are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "mercy_deferral_conditions",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Mercy status and cause are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7432,23 +7686,30 @@
    "section": "14",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Causal attribution standards and mixed-cause treatment are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "human_cause_not_natural",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7464,25 +7725,32 @@
    "section": "14",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "deferral_changes_nothing",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-027"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7500,23 +7768,30 @@
    "section": "14",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The external time limit and rules for identifying normative or precedential authority are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "deferral_time_limited",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Limit = 180 days of Code A.4 (F-027 applies).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7534,26 +7809,35 @@
    "section": "15",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Indirect influence, suppression, and confidence-envelope reinterpretation lack operational definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "cross_layer_isolation",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-027"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -7570,25 +7854,32 @@
    "section": "16",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "constants_source_owner_divergence",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-035"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7606,25 +7897,32 @@
    "section": "16",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "constants_window_halt_coverage",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-035"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7720,23 +8018,30 @@
    "section": "18",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "immutable_once_deployed",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7749,23 +8054,30 @@
    "section": "18",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The requirements for a valid re-anchoring assessment are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "modification_requirements",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Declared properties of the change.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7781,23 +8093,30 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Genesis anchor values and the compatibility test are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "genesis_anchor",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Only the CO2 anchor is compared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7813,24 +8132,33 @@
    "section": "2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Applicable consumption rules and an operational representation of normative authority are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "non_normative_outputs",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Consumption of B(t) for enforcement only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -7849,13 +8177,17 @@
    "module": "code_synergy",
    "check": "human_input_excluded",
    "tests": [
-    "tests/lab/test_code_synergy_module.py"
+    "tests/lab/test_code_synergy_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
    ],
-   "gap": "Only the weight of Level 2 in the Code's stack is checked (F-028).",
-   "also_checked_by": [],
+   "gap": "code_synergy: Only the weight of Level 2 in the Code's stack is checked (F-028). oracle_ingestion: Declared human sources are refused.",
+   "also_checked_by": [
+    "oracle_ingestion · human_input_excluded"
+   ],
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -7863,7 +8195,11 @@
     "H-CS-6",
     "H-CS-7",
     "H-CS-8",
-    "H-CS-9"
+    "H-CS-9",
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -7871,15 +8207,17 @@
     "Q-047"
    ],
    "observed": {
-    "PASS": 1,
+    "PASS": 9,
     "FAIL": 0,
-    "UNKNOWN": 17,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 18,
+    "NOT_APPLICABLE": 1
    },
    "status": "UNKNOWN",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {
-    "UNKNOWN": 1
+    "UNKNOWN": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -7897,23 +8235,30 @@
    "section": "4.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Physical measurability is not defined by an executable test. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "state_vector_admissible",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "One quantity, not a vector.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7929,24 +8274,33 @@
    "section": "4.2",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Hardware-binding, physical-measurement validation, and identity-registration procedures are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "hardware_signed_source",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Hardware binding is a declared property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -7963,23 +8317,30 @@
    "section": "4.3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The evidence and attribution rules for control are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "owner_aggregation",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -7995,23 +8356,30 @@
    "section": "4.4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The normalization rule, domain, and relationship to reliability are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "normalized_capped_weight",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Normalized reliability with caps (H-OI-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8027,24 +8395,33 @@
    "section": "4.5",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The domain measure and active-observation rules are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "coverage_definition",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "The domain is a declared set of cells.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -8101,24 +8478,33 @@
    "section": "4.7",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Physical separation lacks an operational definition. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "independent_classes",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Physical separation is declared by class.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -8133,25 +8519,32 @@
    "section": "4.8",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The statistical significance test and its relationship to the 7% threshold are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "divergence_definition",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Relative difference of class posteriors (H-OI-3).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-004"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8169,23 +8562,30 @@
    "section": "5",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "classified_outputs",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8198,23 +8598,30 @@
    "section": "5.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Direct observability and semantic interpretation have no executable definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "direct_measurement",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "The quantity is declared direct.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8304,14 +8711,21 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "transport_capacity",
-   "check": "no_excluded_domain_outputs",
+   "module": "oracle_ingestion",
+   "check": "non_measurable_excluded",
    "tests": [
+    "tests/lab/test_oracle_ingestion_module.py",
     "tests/lab/test_transport_capacity_module.py"
    ],
-   "gap": "Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016).",
-   "also_checked_by": [],
+   "gap": "oracle_ingestion: Output requests declare their domain. transport_capacity: Checked on the module's own PTL messages; the PPDI consent component cannot be measured (F-016).",
+   "also_checked_by": [
+    "transport_capacity · no_excluded_domain_outputs"
+   ],
    "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4",
     "H-TR-1",
     "H-TR-2",
     "H-TR-3",
@@ -8321,7 +8735,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8346,23 +8760,30 @@
    "section": "6",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Overlapping category assignments and taxonomy extensibility are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "three_classes",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8378,23 +8799,30 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "divergence_across_classes",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8407,23 +8835,30 @@
    "section": "7",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Accepted signature, clock-verification, identity-linkage, and optional proof schemes are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "signed_timestamped_registered",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Declared properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8439,23 +8874,30 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meanings of open and proprietary formats and the public-decodability test are not specified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "open_schema",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8471,24 +8913,33 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Ingestion boundaries and the treatment of decoding or representation changes are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "oracle_ingestion",
+   "check": "unmodified_ingestion",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -8521,7 +8972,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8541,23 +8992,30 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Excess-weight allocation and the scope, amount, applicability, and timing of slashing are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "zero_excess_and_slash",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Owner excess reduced proportionally (H-OI-2); every owner has a stake. A source has one owner, so the owner cap also bounds every source.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8673,14 +9131,17 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "failure_chain",
    "check": "silence_propagates",
    "tests": [
-    "tests/lab/test_failure_chain_module.py"
+    "tests/lab/test_failure_chain_module.py",
+    "tests/lab/test_oracle_ingestion_module.py"
    ],
-   "gap": "Uses the declared mapping H-FC-1 of zero-weight conditions to EB states.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "oracle_ingestion · silence_is_signal"
+   ],
    "hypotheses": [
     "H-FC-1",
     "H-FC-2",
@@ -8689,7 +9150,11 @@
     "H-FC-5",
     "H-FC-5-ALT",
     "H-FC-6",
-    "H-FC-7"
+    "H-FC-7",
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -8697,14 +9162,15 @@
     "Q-003"
    ],
    "observed": {
-    "PASS": 2,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 12
    },
    "status": "PASS",
    "counterexample_detected_by": [
-    "failure_chain:all_faults"
+    "failure_chain:all_faults",
+    "oracle_ingestion:faulty_ptl"
    ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8723,23 +9189,30 @@
    "section": "Epistemic Interpretation Note",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required representation of physical-state and time associations is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "measurement_records",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "Time stamps only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -8787,24 +9260,33 @@
    "section": "Epistemic Interpretation Note",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The correction protocol and executable criteria for absolute-truth claims are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "oracle_ingestion",
+   "check": "bounded_validity",
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
+   "gap": "TTL bound only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-OI-1",
+    "H-OI-2",
+    "H-OI-3",
+    "H-OI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "oracle_ingestion:faulty_ptl"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -50392,6 +50874,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -50407,7 +50890,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 18,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50415,7 +50898,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -56361,6 +56844,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -56381,7 +56865,7 @@
    "observed": {
     "PASS": 2,
     "FAIL": 0,
-    "UNKNOWN": 13,
+    "UNKNOWN": 14,
     "NOT_APPLICABLE": 8
    },
    "status": "UNKNOWN",
@@ -56389,7 +56873,7 @@
     "scope_gate:faulty_gate"
    ],
    "under_alternative_readings": {
-    "UNKNOWN": 1
+    "UNKNOWN": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -59749,6 +60233,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -59762,7 +60247,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -59770,7 +60255,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -59796,6 +60281,7 @@
    "hypotheses": [
     "H-CS-1",
     "H-CS-10",
+    "H-CS-11",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -59809,7 +60295,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 13,
+    "PASS": 14,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -59817,7 +60303,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],

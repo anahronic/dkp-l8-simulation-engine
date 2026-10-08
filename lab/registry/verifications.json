@@ -1574,6 +1574,65 @@
      "DKP-8-AUDIT-001 does not mention a Scope Audit"
     ]
    }
+  },
+  {
+   "id": "F-036",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "contradiction",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "B<sub>min</sub> = 0.68 - Hard threshold; if B(t) < B<sub>min</sub>, all Kill Switches activate simultaneously."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§8.1",
+     "text": "the violating region is automatically disconnected from the global financial, energy, and logistical infrastructure."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§12",
+     "text": "Raw Biosphere Integrity Index B(t)"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§12",
+     "text": "Until an attached and valid L8 calibration bundle exists, B(t) SHALL be treated as informational only and SHALL NOT trigger enforcement."
+    },
+    {
+     "doc": "DIKENOCRACY-GLOSSARY",
+     "at": "B (Biosphere Integrity Index)",
+     "text": "B<sub>min</sub> = 0.68 is the critical threshold (point of no return)."
+    }
+   ],
+   "conclusion": "Code A.1 obliges all Kill Switches to activate when B(t) < 0.68; ORACLE §12 forbids B(t) to trigger enforcement until a valid L8 calibration bundle is attached. No bundle exists (F-014), so the two cannot both hold whenever B(t) < 0.68; no text ranks the Code against ORACLE.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "Code A.1 (with §8.1)",
+     "subject": "all Kill Switches",
+     "object": "activation: disconnection from infrastructure",
+     "scope": "the Network",
+     "conditions": "B(t) < 0.68",
+     "modality": "obligation, automatic"
+    },
+    "rule_b": {
+     "text": "ORACLE §12",
+     "subject": "B(t)",
+     "object": "triggering enforcement",
+     "scope": "every consumer of B(t)",
+     "conditions": "no attached and valid L8 calibration bundle",
+     "modality": "prohibition"
+    },
+    "joint_compliance": "impossible when B(t) < 0.68 without a valid bundle (the state of the pinned corpus, F-014); possible with one",
+    "priority": "none stated; ORACLE extends Appendix A.2, not A.1; Code A.1a routes parameter changes through SIMULATION but does not condition the A.1 trigger on a bundle",
+    "result": "contradiction conditional on the absence of a bundle"
+   }
   }
  ],
  "reference_fails": [
@@ -1614,6 +1673,30 @@
     }
    ],
    "conclusion": "Following TRANSPORT §7.1 literally, PTL quantifies systemic insurance exposure.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "requirement": "ORACLE-12-06",
+   "module": "code_synergy",
+   "origin": "CONFIRMED_FINDING",
+   "finding": "F-036",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§12",
+     "text": "Until an attached and valid L8 calibration bundle exists, B(t) SHALL be treated as informational only and SHALL NOT trigger enforcement."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "B<sub>min</sub> = 0.68 - Hard threshold; if B(t) < B<sub>min</sub>, all Kill Switches activate simultaneously."
+    }
+   ],
+   "conclusion": "Applying Code A.1 literally, the Kill Switches activate on B(t) < 0.68 without a bundle; ORACLE §12 forbids exactly that.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",
@@ -2910,6 +2993,25 @@
     }
    ],
    "reason": "The audit's procedure, end and object of confirmation are an architectural definition absent from the corpus.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-055",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-036",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§12",
+     "text": "Until an attached and valid L8 calibration bundle exists, B(t) SHALL be treated as informational only and SHALL NOT trigger enforcement."
+    }
+   ],
+   "reason": "No text ranks Code A.1 against ORACLE §12; the answer decides whether B(t) can disconnect anyone before a calibration bundle exists.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",
