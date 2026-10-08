@@ -257,3 +257,8 @@ def test_f035_scope_audit():
 def test_f036_b_enforcement():
     assert _code("F-036", ("CODEX-A.1-04", "ORACLE-12-06")) == {"code_a1": ("PASS", "FAIL"), "oracle_section_12": ("FAIL", "PASS"),
                                                                 "bundle_attached": ("PASS", "PASS")}
+
+
+def test_f037_cultural_channels():
+    assert _code("F-037", ("IMPACT-ImpactChannel-01", "IDENTITY-11-01")) == {"proxy_declared": ("UNKNOWN", "UNKNOWN"),
+                                                                             "no_proxy": ("PASS", "NOT_APPLICABLE")}

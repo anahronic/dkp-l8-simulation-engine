@@ -1633,6 +1633,107 @@
     "priority": "none stated; ORACLE extends Appendix A.2, not A.1; Code A.1a routes parameter changes through SIMULATION but does not condition the A.1 trigger on a bundle",
     "result": "contradiction conditional on the absence of a bundle"
    }
+  },
+  {
+   "id": "F-037",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§4",
+     "text": "- Cognitive Integrity Proxies"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§4",
+     "text": "- Cultural Continuity Indicators"
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§2",
+     "text": "All inputs to this protocol MUST originate exclusively from Physical Truth Layer outputs."
+    },
+    {
+     "doc": "DKP-1-IMPACT-001",
+     "at": "§7",
+     "text": "- permanent loss of cognitive or cultural capacity"
+    },
+    {
+     "doc": "DKP-1-IDENTITY-001",
+     "at": "§2",
+     "text": "All attribution performed by this protocol MUST rely exclusively on outputs produced by DKP-1-IMPACT-001."
+    },
+    {
+     "doc": "DKP-1-IDENTITY-001",
+     "at": "§11",
+     "text": "Cultural and cognitive harm constitutes valid systemic impact when measurable indicators demonstrate:"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§1",
+     "text": "The PTL produces physical state only."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§4.1",
+     "text": "A time-indexed vector of physically measurable variables, derived exclusively from admissible oracle inputs."
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§5.3",
+     "text": "The PTL SHALL NOT emit outputs concerning:"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§5.3",
+     "text": "- moral, cultural, or social harm."
+    }
+   ],
+   "conclusion": "IMPACT declares cognitive and cultural channels whose only admissible source is the PTL, and IDENTITY §11 attributes cultural and cognitive harm from IMPACT outputs; the PTL produces physical state only and emits nothing concerning cultural or social harm. The channels can be fed only if a physical proxy that is not 'concerning cultural harm' exists; no document names one.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "IMPACT §4, §7; IDENTITY §11",
+     "subject": "IMPACT channels; IDENTITY attribution",
+     "object": "cognitive integrity and cultural continuity measured from PTL data",
+     "scope": "every evaluated action",
+     "conditions": "measurable indicators",
+     "modality": "normatively declared channels; PTL as the only source"
+    },
+    "rule_b": {
+     "text": "ORACLE §1, §4.1, §5.3",
+     "subject": "PTL outputs",
+     "object": "cultural or social harm; non-physical state",
+     "scope": "every PTL output",
+     "conditions": "none",
+     "modality": "prohibition; physical state only"
+    },
+    "joint_compliance": "possible only through a physical proxy that is neither 'concerning cultural harm' nor a semantic state; none is named",
+    "priority": "no text ranks IMPACT §4 or IDENTITY §11 against ORACLE §5.3",
+    "result": "reading-dependent"
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "Cultural Continuity",
+     "Cognitive Integrity",
+     "cognitive or cultural",
+     "disinformation persistence",
+     "cultural harm"
+    ],
+    "reference_chain": [
+     "IMPACT §4 channels → IMPACT §2 PTL-only inputs → ORACLE §1/§4.1/§5.3",
+     "IDENTITY §11 → IDENTITY §2 IMPACT-only attribution",
+     "no document defines a physical proxy for either channel"
+    ]
+   }
   }
  ],
  "reference_fails": [
@@ -1886,6 +1987,26 @@
     }
    ],
    "conclusion": "The declared owner holds 0.3 % of Level 0 satellites directly and 0.5 % through a wholly owned entity: 0.8 % > 0.7 %.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "requirement": "IDENTITY-4-01",
+   "module": "impact_attribution",
+   "examples": [
+    "untraceable_impact"
+   ],
+   "quotes": [
+    {
+     "doc": "DKP-1-IDENTITY-001",
+     "at": "§4",
+     "text": "Unattributed or untraceable impacts constitute a critical system violation."
+    }
+   ],
+   "conclusion": "The declared world has an impact whose only causal chain is untraceable: no Subject is attributable, and the lab flags it as a critical system violation (IDENTITY-4-02 PASS).",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",
@@ -3012,6 +3133,25 @@
     }
    ],
    "reason": "No text ranks Code A.1 against ORACLE §12; the answer decides whether B(t) can disconnect anyone before a calibration bundle exists.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-056",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-037",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§5.3",
+     "text": "- moral, cultural, or social harm."
+    }
+   ],
+   "reason": "Which physical variables feed the cognitive and cultural channels is an architectural definition absent from the corpus.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

@@ -15,6 +15,7 @@
   "edu_culture",
   "exit_integration",
   "failure_chain",
+  "impact_attribution",
   "info_truth",
   "internal_security",
   "interop_failure",
@@ -1019,6 +1020,51 @@
    "module": "oracle_ingestion",
    "example": "within_class_spread",
    "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "benign_irreversible",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "counter_bound_delegation",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "faulty_chain",
+   "kind": "counterexample"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "industrial_chain",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "low_confidence",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "low_confidence_crossing",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "orphan_impact",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "physical_only",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
+   "example": "untraceable_impact",
+   "kind": "noncompliant"
   }
  ],
  "totals": {
@@ -1026,20 +1072,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 750,
-  "covered_percent": 43.2,
+  "covered": 795,
+  "covered_percent": 45.8,
   "statuses": {
-   "PASS": 681,
+   "PASS": 723,
    "FAIL": 3,
-   "UNKNOWN": 53,
-   "NOT_APPLICABLE": 13,
-   "UNCOVERED": 987
+   "UNKNOWN": 55,
+   "NOT_APPLICABLE": 14,
+   "UNCOVERED": 942
   },
   "resolvable": 331,
-  "resolvable_uncovered": 172,
+  "resolvable_uncovered": 157,
   "unresolved_decisions": 1406,
-  "covered_with_open_point": 591,
-  "pass_with_open_point": 529
+  "covered_with_open_point": 621,
+  "pass_with_open_point": 556
  },
  "stages": [
   {
@@ -1089,20 +1135,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 750,
-    "covered_percent": 43.2,
+    "covered": 795,
+    "covered_percent": 45.8,
     "statuses": {
-     "PASS": 681,
+     "PASS": 723,
      "FAIL": 3,
-     "UNKNOWN": 53,
-     "NOT_APPLICABLE": 13,
-     "UNCOVERED": 987
+     "UNKNOWN": 55,
+     "NOT_APPLICABLE": 14,
+     "UNCOVERED": 942
     },
     "resolvable": 331,
-    "resolvable_uncovered": 172,
+    "resolvable_uncovered": 157,
     "unresolved_decisions": 1406,
-    "covered_with_open_point": 591,
-    "pass_with_open_point": 529
+    "covered_with_open_point": 621,
+    "pass_with_open_point": 556
    }
   },
   {
@@ -1174,20 +1220,20 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 180,
-    "covered_percent": 49.3,
+    "covered": 206,
+    "covered_percent": 56.4,
     "statuses": {
-     "PASS": 168,
+     "PASS": 193,
      "FAIL": 3,
-     "UNKNOWN": 7,
+     "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 185
+     "UNCOVERED": 159
     },
     "resolvable": 100,
-    "resolvable_uncovered": 58,
+    "resolvable_uncovered": 47,
     "unresolved_decisions": 265,
-    "covered_with_open_point": 138,
-    "pass_with_open_point": 127
+    "covered_with_open_point": 153,
+    "pass_with_open_point": 141
    }
   },
   {
@@ -1273,20 +1319,20 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 216,
-    "covered_percent": 42.3,
+    "covered": 235,
+    "covered_percent": 46.0,
     "statuses": {
-     "PASS": 198,
+     "PASS": 215,
      "FAIL": 0,
-     "UNKNOWN": 16,
-     "NOT_APPLICABLE": 2,
-     "UNCOVERED": 295
+     "UNKNOWN": 17,
+     "NOT_APPLICABLE": 3,
+     "UNCOVERED": 276
     },
     "resolvable": 79,
-    "resolvable_uncovered": 43,
+    "resolvable_uncovered": 39,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 180,
-    "pass_with_open_point": 162
+    "covered_with_open_point": 195,
+    "pass_with_open_point": 175
    }
   },
   {
@@ -1780,6 +1826,12 @@
    "title": "Code A.1 / ORACLE §12: while no valid L8 calibration bundle exists, may B(t) < B_min activate the Kill Switches",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-056",
+   "title": "IMPACT §4 / IDENTITY §11 / ORACLE §5.3: which physically measurable variables feed the 'Cognitive Integrity Proxies' and 'Cultural Continuity Indicators' channels",
+   "status": "UNRESOLVED",
+   "category": "architecture_definition"
   }
  ],
  "semantic_gate": {
@@ -1965,11 +2017,16 @@
     "id": "F-036",
     "title": "Code A.1 activates the Kill Switches on B(t); ORACLE §12 forbids B(t) to trigger enforcement without an L8 bundle",
     "classification": "CONFIRMED_FINDING"
+   },
+   {
+    "id": "F-037",
+    "title": "Cognitive and cultural impact channels must come from the PTL, which excludes cultural harm and produces physical state only",
+    "classification": "INTERPRETATION_GAP"
    }
   ],
   "finding_counts": {
    "CONFIRMED_FINDING": 18,
-   "INTERPRETATION_GAP": 16,
+   "INTERPRETATION_GAP": 17,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
   },
@@ -2038,6 +2095,13 @@
     "verified": true
    },
    {
+    "requirement": "IDENTITY-4-01",
+    "runs": [
+     "impact_attribution:untraceable_impact"
+    ],
+    "verified": true
+   },
+   {
     "requirement": "INTSEC-8-06",
     "runs": [
      "internal_security:concentrated_nodes"
@@ -2086,7 +2150,7 @@
    {
     "status": "UNRESOLVED",
     "category": "architecture_definition",
-    "count": 14
+    "count": 15
    },
    {
     "status": "UNRESOLVED",
@@ -2127,10 +2191,10 @@
    },
    {
     "origin": "architecture_definition",
-    "agent_verified": 31,
-    "codex_draft": 222,
+    "agent_verified": 34,
+    "codex_draft": 221,
     "human_accepted": 0,
-    "total": 253
+    "total": 255
    },
    {
     "origin": "l8_parameter",
@@ -2142,9 +2206,9 @@
    {
     "origin": "empirical_model_data",
     "agent_verified": 0,
-    "codex_draft": 229,
+    "codex_draft": 228,
     "human_accepted": 0,
-    "total": 229
+    "total": 228
    },
    {
     "origin": "external_dependency",
@@ -2156,9 +2220,9 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "codex_draft": 377,
+    "codex_draft": 376,
     "human_accepted": 0,
-    "total": 377
+    "total": 376
    },
    {
     "origin": "pending",
@@ -2168,7 +2232,7 @@
     "total": 0
    }
   ],
-  "draft_author_question_candidates": 368,
+  "draft_author_question_candidates": 367,
   "draft_provenance": {
    "tool": "lab/tools/codex/classify_prompt.md + classify_schema.json",
    "prompt_sha256": "5387970b69ca9764f953b7a5b72998f7c097e56e81be5cde7aa0b8aca3d87876",
@@ -2242,11 +2306,11 @@
    },
    "DKP-0-ORACLE-001": {
     "normative_ambiguity": 12,
-    "architecture_definition": 15,
+    "architecture_definition": 16,
     "l8_parameter": 2,
     "empirical_model_data": 6,
     "external_dependency": 7,
-    "implementation_only": 7,
+    "implementation_only": 6,
     "pending": 0
    },
    "DKP-0-TIME-001": {
@@ -2278,9 +2342,9 @@
    },
    "DKP-1-IDENTITY-001": {
     "normative_ambiguity": 2,
-    "architecture_definition": 2,
+    "architecture_definition": 3,
     "l8_parameter": 5,
-    "empirical_model_data": 12,
+    "empirical_model_data": 11,
     "external_dependency": 3,
     "implementation_only": 7,
     "pending": 0
@@ -6965,6 +7029,7 @@
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-015",
+    "findings:F-037",
     "questions:Q-036",
     "reference_fails:ORACLE-1-02"
    ],
@@ -8249,7 +8314,7 @@
     "H-OI-3",
     "H-OI-4"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -8262,7 +8327,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-037"
+   ],
    "open_point": {
     "origin": "empirical_model_data",
     "source": "codex_draft"
@@ -8733,7 +8800,9 @@
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-056"
+   ],
    "observed": {
     "PASS": 15,
     "FAIL": 0,
@@ -8747,11 +8816,12 @@
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
-    "findings:F-016"
+    "findings:F-016",
+    "findings:F-037"
    ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -13485,24 +13555,33 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define a machine-readable classification of permitted and prohibited operations. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "attribution_not_punishment",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Record fields only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -13517,23 +13596,30 @@
    "section": "10",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Immediate reaction and adaptive response lack operational definitions or timing criteria. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "higher_order_definition",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Order is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13549,23 +13635,30 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Measurability, speculative modeling, and coverage beyond third-order effects are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "higher_order_conditions",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Speculativeness is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -13613,30 +13706,41 @@
    "section": "11",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Indicator measurement methods, comparison baselines, and persistence and duration criteria are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "cultural_harm_attribution",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "F-037.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-056"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "UNKNOWN": 4,
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-037"
+   ],
    "open_point": {
-    "origin": "empirical_model_data",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -13706,24 +13810,33 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "no_exemption",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -13735,24 +13848,33 @@
    "section": "13",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operation classification, reinterpretation, and the distinction between prohibited proportionality evaluation and required proportional attribution are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "attribution_only",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Record fields only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -13953,27 +14075,36 @@
    "section": "2",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "from_impact_outputs",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-037"
+   ],
    "open_point": null
   },
   {
@@ -13982,23 +14113,30 @@
    "section": "3.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational tests for capability and failure to prevent are absent, and impact measurability is delegated to an unavailable protocol. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "functional_subjects",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Subject kinds are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -14014,24 +14152,33 @@
    "section": "3.2",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The components and measurement rules of S(t), and the test for producing a change, are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "action_definition",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Actions are declared with their channel.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -14046,24 +14193,33 @@
    "section": "3.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The causal test linking omissions to measured impacts is unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "omission_is_action",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -14078,23 +14234,30 @@
    "section": "3.3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A method for establishing and maintaining causal linkage is not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "intent_independent",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -14110,27 +14273,40 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Causal validity and auditability criteria are unspecified, and Section 4.1 requires external confidence and boundary rules. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "binding_invariant",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Causal chains are declared, not discovered.",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
-   "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "violated_by_noncompliant_case": [
+    "impact_attribution:untraceable_impact"
+   ],
+   "text_verification": [
+    "noncompliant_cases:IDENTITY-4-01"
+   ],
    "open_point": {
     "origin": "empirical_model_data",
     "source": "codex_draft"
@@ -14142,27 +14318,36 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The treatment of the violation label for epistemically required NO_ATTRIBUTION events is ambiguous. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "unattributed_is_critical",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "noncompliant_cases:IDENTITY-4-01"
+   ],
    "open_point": {
     "origin": "implementation_only",
     "source": "codex_draft"
@@ -14178,26 +14363,33 @@
    "module": "dispute_correction",
    "check": "no_attribution_output",
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
-   "gap": "The threshold comes from a calibration that does not exist; without a declared threshold the chain is blocked (UNKNOWN).",
-   "also_checked_by": [],
+   "gap": "dispute_correction: The threshold comes from a calibration that does not exist; without a declared threshold the chain is blocked (UNKNOWN). impact_attribution: The confidence threshold is not given (source missing).",
+   "also_checked_by": [
+    "impact_attribution · no_attribution_state"
+   ],
    "hypotheses": [
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 11
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
@@ -14239,10 +14431,10 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 13
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -14284,10 +14476,10 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 12
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -14313,26 +14505,33 @@
    "module": "dispute_correction",
    "check": "investigation_trigger",
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
-   "gap": "'Significant impact' read as a boundary crossing (H-DC-4).",
-   "also_checked_by": [],
+   "gap": "dispute_correction: 'Significant impact' read as a boundary crossing (H-DC-4). impact_attribution: 'Significant' = boundary approach or crossing (H-IA-4).",
+   "also_checked_by": [
+    "impact_attribution · investigation_priority"
+   ],
    "hypotheses": [
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 12
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -14352,23 +14551,30 @@
    "section": "4.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Applicability boundaries and the full No-Output Priority Rule are absent, including whether preferred permits exceptions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "no_output_priority",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -14384,24 +14590,33 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The form, validator, and substantive validity and auditability requirements for counter-bindings are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "delegation_keeps_responsibility",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Counter-binding validation is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -14416,23 +14631,30 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The relationship between automated Subject status and the independent-Subject prohibition is not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "ai_no_exemption",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -14468,13 +14690,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 13
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {
     "NOT_APPLICABLE": 3
    },
@@ -14511,13 +14735,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 13
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {
     "NOT_APPLICABLE": 3
    },
@@ -14538,29 +14764,38 @@
    "module": "dispute_correction",
    "check": "proportional_weights",
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
-   "gap": "Causal contributions are given on input.",
-   "also_checked_by": [],
+   "gap": "dispute_correction: Causal contributions are given on input. impact_attribution: Contributions are declared.",
+   "also_checked_by": [
+    "impact_attribution · proportional_distribution"
+   ],
    "hypotheses": [
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {
     "PASS": 3
    },
@@ -14654,24 +14889,33 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "dissolution_keeps_history",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -14683,23 +14927,30 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The external measurement rules and reference bounds are absent, and horizon inference and material contribution are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "cascade_conditions",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Horizon and traceability are declared per action.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -14715,23 +14966,30 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "foresight_irrelevant",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -14808,24 +15066,33 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A formal classification of measurement and prohibited interpretation is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "measurement_only",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Checked as: no score produced.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -14926,27 +15193,34 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "dispute_correction",
    "check": "no_flag_override",
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
-   "gap": "Only the reversibility flag hand-over is observed.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "impact_attribution · no_layer_override"
+   ],
    "hypotheses": [
     "H-DC-1",
     "H-DC-2",
     "H-DC-3",
     "H-DC-4",
     "H-DC-5",
-    "H-DC-6"
+    "H-DC-6",
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -14969,23 +15243,30 @@
    "section": "11",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "breach_flagged",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15123,27 +15404,36 @@
    "section": "2",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "inputs_from_ptl",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-037"
+   ],
    "open_point": null
   },
   {
@@ -15152,23 +15442,30 @@
    "section": "2",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "bound_sources",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15213,24 +15510,33 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The excluded operation categories lack formal recognition criteria. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "excluded_functions",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Scoring and aggregation only.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -15293,24 +15599,33 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The evidence necessary to establish auditability is unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "unaggregated_dimensionless",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -15347,7 +15662,7 @@
     "Q-023"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 16,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -15372,26 +15687,35 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "no_cross_channel_aggregation",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-036"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "impact_attribution:faulty_chain"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -15406,23 +15730,30 @@
    "section": "6",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "channel_declares_bound",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15435,23 +15766,30 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Boundary approach is undefined, and the completeness of crossing detection beyond the Section 5 trigger is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "boundary_approach",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "The approach fraction is not given (source missing).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15467,23 +15805,30 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "bounds_unchanged",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15496,23 +15841,30 @@
    "section": "7",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required reversibility criteria and a test for their physical or informational grounding are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "formal_reversibility",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "The formal criterion is a declared flag.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15528,23 +15880,30 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Subjectivity is not given a formal recognition criterion. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "no_subjective_reversibility",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15560,23 +15919,30 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A boundary-relative classification method and impact extent representation are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "internal_external",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Spill beyond the boundary is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15592,23 +15958,30 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "planetary_default",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15664,23 +16037,30 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Full externality exposure and its interaction with the planetary default are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "undefined_boundary_external",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15696,23 +16076,30 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The propagation method, dependence treatment, and required confidence level are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "uncertainty_propagated",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Linear propagation (H-IA-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15728,23 +16115,30 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A propagation model and definition of its complete input and configuration state are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "deterministic_propagation",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15803,23 +16197,30 @@
    "section": "Baseline State S(t₀)",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "baseline_state",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15832,23 +16233,30 @@
    "section": "Externality Flag Xᵢ",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "externality_flag",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15861,30 +16269,39 @@
    "section": "Impact Channel",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Logical independence and the runtime applicability of the declared channel list are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "channel_inputs",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Cognitive and cultural channels: F-037.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-056"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 4,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -15893,23 +16310,30 @@
    "section": "Impact Horizon Δt",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "external_horizon",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "The horizon is a declared input.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15922,23 +16346,30 @@
    "section": "Impact Vector Iᵢ(t₀ → t₁, Δt)",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The permissible range and meaning of bounded impact are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "normalized_change",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15954,23 +16385,30 @@
    "section": "Observed State S(t₁)",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "impact_attribution",
+   "check": "observed_state",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15983,23 +16421,30 @@
    "section": "Physical State Vector S(t)",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "state_from_ptl",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "One component per channel.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -16012,25 +16457,32 @@
    "section": "Reference Bounds Bᵢ",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "bounds_imported",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Bound source is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [
     "Q-023"
    ],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -16097,23 +16549,30 @@
    "section": "Uncertainty Envelope Uᵢ",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A required confidence level and numerical propagation method are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "uncertainty_envelope",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Uᵢ = σ/Bᵢ (H-IA-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],

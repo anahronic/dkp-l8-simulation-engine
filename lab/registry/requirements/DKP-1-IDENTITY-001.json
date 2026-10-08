@@ -30,13 +30,19 @@
    "data_dependencies": [
     "operation and output audit records"
    ],
-   "gap": "The text does not define a machine-readable classification of permitted and prohibited operations. No lab check implemented yet.",
+   "gap": "Record fields only.",
    "hypotheses_needed": [
     "A method for classifying operations by function."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "attribution_not_punishment"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -102,12 +108,18 @@
     "impact outputs with producer provenance",
     "attribution dependency records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "from_impact_outputs"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -133,14 +145,20 @@
     "measurable state transitions from the impact protocol",
     "entity capability evidence"
    ],
-   "gap": "Operational tests for capability and failure to prevent are absent, and impact measurability is delegated to an unavailable protocol. No lab check implemented yet.",
+   "gap": "Subject kinds are declared.",
    "hypotheses_needed": [
     "A capability and prevention-opportunity model.",
     "An implementation of the referenced impact measurability test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "functional_subjects"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -170,14 +188,20 @@
     "Physical State Vector observations",
     "Subject attribution and causal evidence"
    ],
-   "gap": "The components and measurement rules of S(t), and the test for producing a change, are unspecified. No lab check implemented yet.",
+   "gap": "Actions are declared with their channel.",
    "hypotheses_needed": [
     "A representation and measurement model for S(t).",
     "A causal attribution model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "action_definition"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -208,13 +232,19 @@
     "impact measurements",
     "causal contribution assessments"
    ],
-   "gap": "The causal test linking omissions to measured impacts is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A counterfactual or other causal model for omission contributions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "omission_is_action"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -245,13 +275,19 @@
     "causal linkage history",
     "measurable impact records"
    ],
-   "gap": "A method for establishing and maintaining causal linkage is not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A causal linkage model and representation of persistence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "intent_independent"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -285,15 +321,21 @@
     "causal chain evidence",
     "attribution confidence and boundary status"
    ],
-   "gap": "Causal validity and auditability criteria are unspecified, and Section 4.1 requires external confidence and boundary rules. No lab check implemented yet.",
+   "gap": "Causal chains are declared, not discovered.",
    "hypotheses_needed": [
     "A causal-chain validation and auditability model.",
     "An implementation of Section 4.1 admissibility rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "binding_invariant"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -322,14 +364,20 @@
     "attribution and traceability statuses",
     "epistemic failure reasons"
    ],
-   "gap": "The treatment of the violation label for epistemically required NO_ATTRIBUTION events is ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Whether required NO_ATTRIBUTION retains the critical-violation label while prohibiting forced attribution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "unattributed_is_critical"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -361,7 +409,7 @@
     "calibrated minimum attribution confidence",
     "attribution confidence and failure diagnostics"
    ],
-   "gap": "The threshold comes from a calibration that does not exist; without a declared threshold the chain is blocked (UNKNOWN).",
+   "gap": "dispute_correction: The threshold comes from a calibration that does not exist; without a declared threshold the chain is blocked (UNKNOWN). impact_attribution: The confidence threshold is not given (source missing).",
    "hypotheses_needed": [
     "The applicable calibration and confidence scale.",
     "A structured representation of specific confidence failures."
@@ -370,10 +418,18 @@
    "implementation": {
     "module": "dispute_correction",
     "version": "1.2.0",
-    "check": "no_attribution_output"
+    "check": "no_attribution_output",
+    "also": [
+     {
+      "module": "impact_attribution",
+      "version": "1.0.0",
+      "check": "no_attribution_state"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
@@ -493,7 +549,7 @@
     "impact significance assessment",
     "audit investigation priority and outcome records"
    ],
-   "gap": "'Significant impact' read as a boundary crossing (H-DC-4).",
+   "gap": "dispute_correction: 'Significant impact' read as a boundary crossing (H-DC-4). impact_attribution: 'Significant' = boundary approach or crossing (H-IA-4).",
    "hypotheses_needed": [
     "A significance criterion and investigation-priority ordering.",
     "A test for whether escalation predetermines attribution."
@@ -502,10 +558,18 @@
    "implementation": {
     "module": "dispute_correction",
     "version": "1.2.0",
-    "check": "investigation_trigger"
+    "check": "investigation_trigger",
+    "also": [
+     {
+      "module": "impact_attribution",
+      "version": "1.0.0",
+      "check": "investigation_priority"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -538,14 +602,20 @@
     "applicability boundary evaluations",
     "epistemic output-selection rules"
    ],
-   "gap": "Applicability boundaries and the full No-Output Priority Rule are absent, including whether preferred permits exceptions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "An applicability-boundary model.",
     "Whether the preference is mandatory whenever both outputs are available."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "no_output_priority"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -578,13 +648,19 @@
     "delegation and deployment provenance",
     "counter-binding records and validation results"
    ],
-   "gap": "The form, validator, and substantive validity and auditability requirements for counter-bindings are unspecified. No lab check implemented yet.",
+   "gap": "Counter-binding validation is declared.",
    "hypotheses_needed": [
     "A counter-binding schema and validation procedure."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "delegation_keeps_responsibility"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -616,13 +692,19 @@
     "entity classification and Subject registry",
     "privilege and exemption records"
    ],
-   "gap": "The relationship between automated Subject status and the independent-Subject prohibition is not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A classification distinguishing Subject treatment, independent Subject status, and proxy-subject status."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "ai_no_exemption"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -745,7 +827,7 @@
     "per-Subject causal contribution measurements",
     "collective and individual responsibility records"
    ],
-   "gap": "Causal contributions are given on input.",
+   "gap": "dispute_correction: Causal contributions are given on input. impact_attribution: Contributions are declared.",
    "hypotheses_needed": [
     "A common causal-contribution measure.",
     "A responsibility scale and handling of overlapping contributions."
@@ -754,10 +836,18 @@
    "implementation": {
     "module": "dispute_correction",
     "version": "1.2.0",
-    "check": "proportional_weights"
+    "check": "proportional_weights",
+    "also": [
+     {
+      "module": "impact_attribution",
+      "version": "1.0.0",
+      "check": "proportional_distribution"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -865,11 +955,17 @@
    "data_dependencies": [
     "Subject lifecycle and attribution audit records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "dissolution_keeps_history"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -902,15 +998,21 @@
     "axiom-defined reference bounds",
     "impact contributions to reference bounds"
    ],
-   "gap": "The external measurement rules and reference bounds are absent, and horizon inference and material contribution are undefined. No lab check implemented yet.",
+   "gap": "Horizon and traceability are declared per action.",
    "hypotheses_needed": [
     "An impact-horizon origin and inference method.",
     "Applicable axiom-defined reference bounds.",
     "A material-contribution test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "cascade_conditions"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -937,11 +1039,17 @@
    "data_dependencies": [
     "responsibility decision audit records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "foresight_irrelevant"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1043,14 +1151,20 @@
    "data_dependencies": [
     "reaction and adaptation causal records"
    ],
-   "gap": "Immediate reaction and adaptive response lack operational definitions or timing criteria. No lab check implemented yet.",
+   "gap": "Order is declared.",
    "hypotheses_needed": [
     "Whether immediate denotes temporal proximity or direct causal succession.",
     "An adaptive-response classification rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "higher_order_definition"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1081,14 +1195,20 @@
     "physical or informational effect measurements",
     "attribution model provenance"
    ],
-   "gap": "Measurability, speculative modeling, and coverage beyond third-order effects are not operationally defined. No lab check implemented yet.",
+   "gap": "Speculativeness is declared.",
    "hypotheses_needed": [
     "A measurability test and a classification of speculative model dependencies.",
     "Whether the condition extends to all higher-order effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "higher_order_conditions"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1158,20 +1278,28 @@
     "longitudinal cultural and cognitive indicators",
     "population-level measurement baselines"
    ],
-   "gap": "Indicator measurement methods, comparison baselines, and persistence and duration criteria are unspecified. No lab check implemented yet.",
+   "gap": "F-037.",
    "hypotheses_needed": [
     "Operational definitions and baselines for the listed indicators.",
     "Criteria for persistent degradation and sustained increases."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "cultural_harm_attribution"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-056"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "empirical_model_data",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -1258,11 +1386,17 @@
    "data_dependencies": [
     "attribution exemption rules and decision records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "no_exemption"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1291,15 +1425,21 @@
     "impact-protocol outputs and transformation provenance",
     "protocol operation audit records"
    ],
-   "gap": "Operation classification, reinterpretation, and the distinction between prohibited proportionality evaluation and required proportional attribution are undefined. No lab check implemented yet.",
+   "gap": "Record fields only.",
    "hypotheses_needed": [
     "A functional classification of protocol operations.",
     "A rule distinguishing proportional attribution from prohibited proportionality evaluation.",
     "A criterion for output reinterpretation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "attribution_only"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

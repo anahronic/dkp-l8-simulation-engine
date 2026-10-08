@@ -27,13 +27,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "A formal classification of measurement and prohibited interpretation is missing. No lab check implemented yet.",
+   "gap": "Checked as: no score produced.",
    "hypotheses_needed": [
     "Declare how operations are classified as measurement or interpretation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "measurement_only"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -62,12 +68,18 @@
    "data_dependencies": [
     "Physical Truth Layer output provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "inputs_from_ptl"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -94,11 +106,17 @@
     "Reference-bound import records",
     "Normative Physical Truth Layer index declarations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "bound_sources"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -152,13 +170,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The excluded operation categories lack formal recognition criteria. No lab check implemented yet.",
+   "gap": "Scoring and aggregation only.",
    "hypotheses_needed": [
     "Declare an operation taxonomy covering all explicitly excluded functions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "excluded_functions"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -189,11 +213,17 @@
    "data_dependencies": [
     "Oracle state vectors, measurement metadata, timestamps, provenance, and version history"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "One component per channel.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "state_from_ptl"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -218,11 +248,17 @@
     "Time-indexed physical states",
     "Temporal location of the evaluated change"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "baseline_state"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -248,11 +284,17 @@
     "Time-indexed physical measurements",
     "Temporal location of the evaluated change"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "observed_state"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -276,11 +318,17 @@
    "data_dependencies": [
     "Externally supplied evaluation horizon"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The horizon is a declared input.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "external_horizon"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -304,20 +352,28 @@
    "data_dependencies": [
     "Definitions of physical and informational channel variables"
    ],
-   "gap": "Logical independence and the runtime applicability of the declared channel list are not operationally defined. No lab check implemented yet.",
+   "gap": "Cognitive and cultural channels: F-037.",
    "hypotheses_needed": [
     "Declare a test for logical independence.",
     "Declare whether all named channels must be evaluated on every run."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "channel_inputs"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-056"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -340,13 +396,19 @@
    "data_dependencies": [
     "Channel-specific physical changes"
    ],
-   "gap": "The permissible range and meaning of bounded impact are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the impact range and whether boundedness refers to metric values or reference bounds."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "normalized_change"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -378,11 +440,17 @@
    "data_dependencies": [
     "Imported limit declarations, provenance, and version history"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Bound source is declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "bounds_imported"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-023"
@@ -446,11 +514,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "externality_flag"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -478,13 +552,19 @@
    "data_dependencies": [
     "Physical Truth Layer uncertainty estimates"
    ],
-   "gap": "A required confidence level and numerical propagation method are unspecified. No lab check implemented yet.",
+   "gap": "Uᵢ = σ/Bᵢ (H-IA-2).",
    "hypotheses_needed": [
     "Declare the confidence level and interval construction method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "uncertainty_envelope"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -557,13 +637,19 @@
     "State and bound units",
     "Calculation provenance"
    ],
-   "gap": "The evidence necessary to establish auditability is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the records required to reproduce and audit an impact value."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "unaggregated_dimensionless"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -625,11 +711,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "no_cross_channel_aggregation"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [
     "Q-036"
@@ -664,11 +756,17 @@
    "data_dependencies": [
     "Normative bound definitions and provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "channel_declares_bound"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -694,14 +792,20 @@
    "data_dependencies": [
     "Channel states and imported reference bounds"
    ],
-   "gap": "Boundary approach is undefined, and the completeness of crossing detection beyond the Section 5 trigger is unspecified. No lab check implemented yet.",
+   "gap": "The approach fraction is not given (source missing).",
    "hypotheses_needed": [
     "Declare what constitutes boundary approach.",
     "Declare whether crossing detection is exhausted by |Iᵢ| ≥ 1."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "boundary_approach"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -730,11 +834,17 @@
    "data_dependencies": [
     "Original imported bounds and their definitions"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "bounds_unchanged"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -759,14 +869,20 @@
    "data_dependencies": [
     "Physical Truth Layer evidence relevant to reversibility"
    ],
-   "gap": "The required reversibility criteria and a test for their physical or informational grounding are not specified. No lab check implemented yet.",
+   "gap": "The formal criterion is a declared flag.",
    "hypotheses_needed": [
     "Declare formal reversibility criteria for each channel.",
     "Declare how evidence establishes the criteria's grounding and boolean interpretation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "formal_reversibility"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -795,13 +911,19 @@
    "data_dependencies": [
     "Assessment input provenance"
    ],
-   "gap": "Subjectivity is not given a formal recognition criterion. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how subjective and intent-based assessments are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "no_subjective_reversibility"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -831,13 +953,19 @@
     "Impact extent data",
     "Applicable system boundary"
    ],
-   "gap": "A boundary-relative classification method and impact extent representation are missing. No lab check implemented yet.",
+   "gap": "Spill beyond the boundary is declared.",
    "hypotheses_needed": [
     "Declare the internal and external classification rule, including treatment of impacts spanning both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "internal_external"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -865,11 +993,17 @@
    "data_dependencies": [
     "Higher-layer boundary narrowing declarations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "planetary_default"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -934,14 +1068,20 @@
    "data_dependencies": [
     "Boundary definition declarations"
    ],
-   "gap": "Full externality exposure and its interaction with the planetary default are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the representation and consequences of full externality exposure.",
     "Declare whether the planetary default counts as an explicit boundary definition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "undefined_boundary_external"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -972,13 +1112,19 @@
    "data_dependencies": [
     "Physical Truth Layer measurement uncertainties and dependence information"
    ],
-   "gap": "The propagation method, dependence treatment, and required confidence level are unspecified. No lab check implemented yet.",
+   "gap": "Linear propagation (H-IA-2).",
    "hypotheses_needed": [
     "Declare an uncertainty propagation method, dependence assumptions, and confidence level."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "uncertainty_propagated"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1007,13 +1153,19 @@
    "data_dependencies": [
     "Complete uncertainty propagation inputs"
    ],
-   "gap": "A propagation model and definition of its complete input and configuration state are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare all propagation state, including any random seeds, and the scope over which determinism is tested."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "deterministic_propagation"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1153,18 +1305,26 @@
    "data_dependencies": [
     "Higher-layer action logs and interface payloads"
    ],
-   "gap": "Only the reversibility flag hand-over is observed.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how higher-layer actions and injected logic are classified against each prohibition."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
     "version": "1.2.0",
-    "check": "no_flag_override"
+    "check": "no_flag_override",
+    "also": [
+     {
+      "module": "impact_attribution",
+      "version": "1.0.0",
+      "check": "no_layer_override"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_dispute_correction_module.py"
+    "tests/lab/test_dispute_correction_module.py",
+    "tests/lab/test_impact_attribution_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -1192,11 +1352,17 @@
    "data_dependencies": [
     "Detected higher-layer isolation violations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "breach_flagged"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
