@@ -1010,6 +1010,404 @@
     "quote_check": "automatic",
     "human_accepted": false
    }
+  },
+  {
+   "id": "F-027",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "The Snap Protocol and all Kill Switches are automatically suspended for 180 days in the event of:"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "All Mercy actions, suspensions, and discretionary decisions SHALL operate strictly within the boundaries defined by DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "- persist beyond explicitly declared Crisis Scope."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§5",
+     "text": "Crisis Scope SHALL be entered only through the state machine and entry conditions of DKP-4-CRISIS-001."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "During Crisis mode, the system MAY:"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§6",
+     "text": "- activate Crisis Mercy Mode for non-anthropogenic events (e.g., solar storms, geological phenomena)"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§14",
+     "text": "- IS strictly time-limited in accordance with Appendix A.4,"
+    },
+    {
+     "doc": "DIKENOCRACY-GLOSSARY",
+     "at": "Crisis Mercy Exception",
+     "text": "A temporary (180-day) suspension of the Snap Protocol and all Kill Switches"
+    }
+   ],
+   "conclusion": "A.4 suspends the Snap Protocol and the Kill Switches 'automatically ... for 180 days' and forbids Mercy to 'persist beyond explicitly declared Crisis Scope'; Crisis Scope exists only through the CRISIS state machine. Both hold when a Crisis Scope of at least 180 days is declared; with a shorter one, or none, they hold together only if '180 days' is a maximum.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "Code A.4, first sentence",
+     "subject": "Snap Protocol and all Kill Switches",
+     "object": "suspension",
+     "scope": "the listed events",
+     "conditions": "eruption > VEI-6, asteroid > 200 m, pandemic > 15 %, PTL-verified natural drop of B(t)",
+     "modality": "automatic, 'for 180 days'"
+    },
+    "rule_b": {
+     "text": "Code A.4 'Mercy SHALL NOT ... persist beyond explicitly declared Crisis Scope'; SCOPE §5; CRISIS §6",
+     "subject": "Mercy",
+     "object": "its duration",
+     "scope": "the declared Crisis Scope",
+     "conditions": "a Crisis Scope entered through the CRISIS state machine",
+     "modality": "prohibition"
+    },
+    "joint_compliance": "possible when the declared Crisis Scope lasts at least 180 days, or always if '180 days' is a maximum; impossible with a shorter or missing scope if '180 days' is fixed",
+    "priority": "A.4 places Mercy 'strictly within the boundaries defined by DKP-7-SCOPE-001'; the order of its two sentences is not stated",
+    "result": "reading-dependent: fixed duration or maximum; whether Mercy requires a declared Crisis Scope"
+   }
+  },
+  {
+   "id": "F-028",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.2",
+     "text": "All data upon which Code smart contracts depend is accepted only through the following stack:"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.2",
+     "text": "Level 2 — Decentralized Human Validators (Weight ≤ 10%)"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "- B(t) — Biosphere Health Index (0...1, measured by Physical Truth Layer)"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§2",
+     "text": "This protocol is an integral extension of Appendix A.2 of the Code of Planetary Synergy"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§3",
+     "text": "This protocol explicitly excludes: - human testimony or manual input,"
+    },
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§4.2",
+     "text": "A hardware-bound system producing cryptographically signed physical measurements, traceable to a registered oracle identity."
+    }
+   ],
+   "conclusion": "The Code's oracle stack gives human validators up to 10 % of the weight; ORACLE, its declared extension, excludes human testimony and admits hardware sources only. Weight 0 satisfies both; otherwise it depends on whether Level 2 lies inside ORACLE's Physical Truth Layer, which decides whether humans can move B(t).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "Code A.2",
+     "subject": "the four-layer stack",
+     "object": "weight of human validators",
+     "scope": "all data Code smart contracts depend on",
+     "conditions": "none",
+     "modality": "permission up to 10 %"
+    },
+    "rule_b": {
+     "text": "ORACLE §3, §4.2",
+     "subject": "the Physical Truth Layer",
+     "object": "admissible sources",
+     "scope": "ingestion, weighting, aggregation, B(t) indices",
+     "conditions": "none",
+     "modality": "exclusion from the protocol's scope; a source is hardware-bound"
+    },
+    "joint_compliance": "possible: Level 2 weight 0, or Level 2 outside ORACLE's scope",
+    "priority": "ORACLE §2 'integral extension of Appendix A.2' — no priority rule",
+    "result": "reading-dependent: whether human validators belong to the PTL and may contribute to B(t)"
+   }
+  },
+  {
+   "id": "F-029",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "missing_definition",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "B<sub>min</sub> = 0.68 - Hard threshold; if B(t) < B<sub>min</sub>, all Kill Switches activate simultaneously."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§8.1",
+     "text": "8.1. In the event of military aggression recorded by independent monitoring, or upon exhaustion of the Peace Stake, the violating region is automatically disconnected from the global financial, energy, and logistical infrastructure."
+    },
+    {
+     "doc": "DIKENOCRACY-GLOSSARY",
+     "at": "Kill Switch Law",
+     "text": "In the event of military aggression or exhaustion of the Peace Stake, the violating region is automatically disconnected from the global financial, energy, and logistical infrastructure."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "The Snap Protocol and all Kill Switches are automatically suspended for 180 days in the event of:"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "absent": "reconnect"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "absent": "deactivat"
+    }
+   ],
+   "conclusion": "A.1 activates 'all Kill Switches' when the planetary index B(t) falls below 0.68; the only Kill Switch defined disconnects 'the violating region', and B(t) names none. No text defines what is disconnected nor what releases the Kill Switches when B(t) recovers.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "Kill Switch",
+     "kill switch",
+     "B_min",
+     "0.68",
+     "reconnect",
+     "deactivat",
+     "release",
+     "restor"
+    ],
+    "reference_chain": [
+     "A.1 → §8.1 and Glossary 'Kill Switch Law': a Kill Switch disconnects 'the violating region'",
+     "A.4: Mercy suspends 'all Kill Switches' for 180 days",
+     "INTEGRATION §5.2: no kill switches in Phase 1",
+     "ORACLE §12: the model of B(t) is left to DKP-8-SIMULATION-001",
+     "'release' and 'restor' occur only in Code §1.3 and §12.1, unrelated"
+    ]
+   }
+  },
+  {
+   "id": "F-030",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "missing_definition",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "At any moment in time *t*, the Network must maintain:"
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1a",
+     "text": "All coefficients, bounds, and calibration parameters of the Main Equation SHALL NOT be optimized, tuned, or adjusted on-chain or through continuous execution."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1a",
+     "text": "Violation for more than 180 consecutive days = System Failure → Temporary manual control by the consortium of the first six nodes."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§6",
+     "text": "Any temporary authority, elevated control surface, or exceptional execution path:"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§6",
+     "text": "MUST be time-bounded,"
+    }
+   ],
+   "conclusion": "The powers, duration and end of the 'Temporary manual control by the consortium of the first six nodes' are defined nowhere, while SCOPE §6 requires any temporary authority to be time-bounded. Which violation is counted for 180 consecutive days (the Main Equation or the parameter invariant of A.1a) depends on the reading.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "manual control",
+     "consortium",
+     "first six",
+     "System Failure"
+    ],
+    "reference_chain": [
+     "A.1a → A.5 (the six startup nodes; 'first six' is not defined further)",
+     "SCOPE §6: temporary authority must be scoped, time-bounded and decaying",
+     "all four terms occur only in Code A.1a"
+    ]
+   }
+  },
+  {
+   "id": "F-031",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "authority_difference",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.5",
+     "text": "After this, new territories connect only via a referendum of 67% of the adult population + deposit of a Peace Stake."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§7.3",
+     "text": "7.3. In the event of aggression, the stake is automatically burned (Slashing)."
+    },
+    {
+     "doc": "DKP-6-INTEGRATION-001",
+     "at": "§3",
+     "text": "Integrating Entity A country, region, city, or jurisdiction applying to enter DKP."
+    },
+    {
+     "doc": "DKP-6-INTEGRATION-001",
+     "at": "§4.1",
+     "text": "Consent mechanisms MAY include:"
+    },
+    {
+     "doc": "DKP-6-INTEGRATION-001",
+     "at": "§4.1",
+     "text": "legislative acts,"
+    },
+    {
+     "doc": "DKP-6-INTEGRATION-001",
+     "at": "§5.2",
+     "text": "No sanctions, kill switches, or automatic enforcement,"
+    },
+    {
+     "doc": "DKP-6-INTEGRATION-001",
+     "at": "§5.3",
+     "text": "Peace Staking and Physical Truth compliance MAY activate."
+    }
+   ],
+   "conclusion": "A.5 makes a 67 % referendum and a Peace Stake necessary to connect; INTEGRATION permits other consent mechanisms and forbids sanctions and kill switches in Phase 1, with Peace Staking from Phase 2. The requirements can be met together; what differs is the authority granted, and no text maps 'connect' to an INTEGRATION phase, so whether the Code's sanctions reach a Phase 0-1 territory is not said.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "Code A.5; Code §7.3, §8.1, §8.2",
+     "subject": "a new territory; an aggressor state",
+     "object": "connection; slashing, disconnection, write-off",
+     "scope": "after the startup cluster is online",
+     "conditions": "67 % of the adult population and a Peace Stake; recorded aggression",
+     "modality": "necessary condition ('only via'); automatic sanctions"
+    },
+    "rule_b": {
+     "text": "INTEGRATION §4.1, §5.2, §5.3",
+     "subject": "an integrating entity",
+     "object": "consent mechanism; sanctions in Phase 1",
+     "scope": "every integration phase",
+     "conditions": "explicit, auditable consent",
+     "modality": "permission ('MAY include'); prohibition in Phase 1"
+    },
+    "joint_compliance": "possible: a referendum with a stake satisfies both, refusing a legislative act breaks neither; sanctions are compatible if a Phase 0-1 territory is not 'connected', incompatible if it is",
+    "priority": "INTEGRATION §2: downstream of ORACLE, AXIOMS, SCOPE; no rule ranks the Code against INTEGRATION",
+    "result": "difference in granted authority plus an undefined mapping of 'connect' to the phases"
+   }
+  },
+  {
+   "id": "F-032",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "Control transfers to the \"Council of Crisis Mercy\" (9 people, sortition from 1000 scientists with EigenTrust > 0.97)."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "All Mercy actions, suspensions, and discretionary decisions SHALL operate strictly within the boundaries defined by DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "Mercy modifies response severity only. It SHALL NOT extend jurisdiction or normative authority."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§3",
+     "text": "S3 — Prohibited Domain"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§3",
+     "text": "Algorithmic governance is explicitly forbidden."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§3",
+     "text": "creation of discretionary emergency authorities."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§3",
+     "text": "Any attempt to execute DKP logic within S3 constitutes a critical system violation."
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§2",
+     "text": "In case of conflict, DKP-7-SCOPE-001 prevails."
+    }
+   ],
+   "conclusion": "A.4 transfers control to a Council that takes 'discretionary decisions' when Mercy events occur; SCOPE puts the 'creation of discretionary emergency authorities' in the prohibited domain S3, and A.4 itself binds Mercy to SCOPE. Whether the Council is such an authority, and what its control covers besides response severity, is not said.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "Code A.4",
+     "subject": "the Council of Crisis Mercy",
+     "object": "control during Mercy; discretionary decisions",
+     "scope": "the Mercy events of A.4",
+     "conditions": "an event that triggers Mercy",
+     "modality": "automatic transfer of control"
+    },
+    "rule_b": {
+     "text": "SCOPE §3 (S3)",
+     "subject": "DKP execution (algorithmic governance)",
+     "object": "creation of discretionary emergency authorities",
+     "scope": "every protocol",
+     "conditions": "none",
+     "modality": "prohibition; 'critical system violation'"
+    },
+    "joint_compliance": "possible if the Council is not created by DKP execution or its decisions are not discretionary; impossible if the automatic transfer is DKP logic creating a discretionary emergency authority",
+    "priority": "A.4 binds Mercy decisions to SCOPE; SCOPE §2 'In case of conflict, DKP-7-SCOPE-001 prevails'",
+    "result": "reading-dependent; the content of the Council's 'control' is not defined"
+   }
   }
  ],
  "reference_fails": [
@@ -1198,6 +1596,47 @@
     }
    ],
    "conclusion": "The declared node distribution gives one identity-linked group 5 % of the nodes; the cap is literal.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "requirement": "CODEX-A.1-01",
+   "module": "code_synergy",
+   "examples": [
+    "equation_violated_181_days",
+    "equation_violated_180_days"
+   ],
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "At any moment in time *t*, the Network must maintain:"
+    }
+   ],
+   "conclusion": "The declared world sets dW/dt = 0.1 while k·E·T·B^2.83 ≈ 0.38 for 181 (or 180) days; the inequality is literal.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "requirement": "CODEX-A.6-01",
+   "module": "code_synergy",
+   "examples": [
+    "indirect_ownership_breach"
+   ],
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.6",
+     "text": "No natural or legal person may own (directly or indirectly) more than:"
+    }
+   ],
+   "conclusion": "The declared owner holds 0.3 % of Level 0 satellites directly and 0.5 % through a wholly owned entity: 0.8 % > 0.7 %.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",
@@ -2134,6 +2573,120 @@
     }
    ],
    "reason": "The level to which 'private and non-public' applies decides whether aggregate statistics of these domains may be published.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-046",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-027",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.4",
+     "text": "- persist beyond explicitly declared Crisis Scope."
+    }
+   ],
+   "reason": "The two sentences of A.4 give different Mercy periods when the declared Crisis Scope is shorter than 180 days or absent.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-047",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-028",
+   "quotes": [
+    {
+     "doc": "DKP-0-ORACLE-001",
+     "at": "§3",
+     "text": "This protocol explicitly excludes: - human testimony or manual input,"
+    }
+   ],
+   "reason": "Which layers make up the Physical Truth Layer is an architectural definition; it decides whether humans can move B(t) and the B_min threshold.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-048",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-029",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1",
+     "text": "B<sub>min</sub> = 0.68 - Hard threshold; if B(t) < B<sub>min</sub>, all Kill Switches activate simultaneously."
+    }
+   ],
+   "reason": "The target and the release of a planetary Kill Switch are not defined anywhere.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-049",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-030",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.1a",
+     "text": "Violation for more than 180 consecutive days = System Failure → Temporary manual control by the consortium of the first six nodes."
+    }
+   ],
+   "reason": "The referent of 'Violation' decides when System Failure occurs; the bounds of the manual control are required by SCOPE §6 and absent.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-050",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-031",
+   "quotes": [
+    {
+     "doc": "DKP-6-INTEGRATION-001",
+     "at": "§5.2",
+     "text": "No sanctions, kill switches, or automatic enforcement,"
+    }
+   ],
+   "reason": "No text maps the Code's 'connect' to an INTEGRATION phase.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-051",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-032",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§3",
+     "text": "creation of discretionary emergency authorities."
+    }
+   ],
+   "reason": "Whether S3 covers an authority the Code establishes in advance is not said; A.4 binds the Council to SCOPE.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

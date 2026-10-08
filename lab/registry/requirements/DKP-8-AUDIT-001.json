@@ -1292,13 +1292,19 @@
     "audit operating status",
     "deviation record history"
    ],
-   "gap": "Crisis Mercy condition boundaries and uninterrupted audit operation semantics are unspecified. No lab check implemented yet.",
+   "gap": "Audit notices at Mercy start.",
    "hypotheses_needed": [
     "Declare which intervals are Crisis Mercy conditions and how uninterrupted auditing and record retention are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "audit_uninterrupted"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1329,13 +1335,19 @@
     "response severity records",
     "audit visibility and access records"
    ],
-   "gap": "Severity, visibility, and whether every mercy invocation must change severity are undefined. No lab check implemented yet.",
+   "gap": "Audit notices at Mercy start.",
    "hypotheses_needed": [
     "Declare observable measures of severity and visibility and whether the sentence requires or merely permits severity changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "mercy_not_audit"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

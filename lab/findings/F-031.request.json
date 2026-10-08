@@ -1,0 +1,48 @@
+{
+ "schema": "dkp-lab-input/1",
+ "module": "code_synergy",
+ "variants": [
+  {
+   "name": "phase_3_aggressor",
+   "input": {}
+  },
+  {
+   "name": "phase_1_aggressor",
+   "input": {
+    "regions": [
+     {
+      "id": "north",
+      "gdp": 1000.0,
+      "assets": 5000.0,
+      "phase": "phase_3"
+     },
+     {
+      "id": "south",
+      "gdp": 600.0,
+      "assets": 3000.0,
+      "phase": "phase_3"
+     },
+     {
+      "id": "east",
+      "gdp": 400.0,
+      "assets": 2000.0,
+      "phase": "phase_1"
+     }
+    ]
+   }
+  },
+  {
+   "name": "legislative_act",
+   "input": {
+    "connections": [
+     {
+      "territory": "island_t",
+      "day": 200,
+      "mechanism": "legislative_act",
+      "stake_deposited": true
+     }
+    ]
+   }
+  }
+ ]
+}

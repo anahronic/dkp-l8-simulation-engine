@@ -175,19 +175,27 @@
    "data_dependencies": [
     "input and parameter-change provenance"
    ],
-   "gap": "The boundaries of manual input and the semantic operation categories are undefined. No lab check implemented yet.",
+   "gap": "Only the weight of Level 2 in the Code's stack is checked (F-028).",
    "hypotheses_needed": [
     "Define whether administrative configuration is manual input and classify prohibited processing operations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "human_input_excluded"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-047"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -255,7 +263,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1737,7 +1745,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {

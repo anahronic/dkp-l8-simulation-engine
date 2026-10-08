@@ -112,6 +112,11 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | Axiom A1 minimum required conditions | normative_predicate | DKP-1-AXIOMS-001 | A1 | "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS" | F-023 | police_antiterror.crisis_lethal_authorized |
 | active validating nodes (ratification of axiom changes) | architectural_definition | DKP-1-AXIOMS-001 | §8 | "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy" | F-022 | axiom_constraints (declared ratification_share) |
 | re-identification threshold of a Privacy Breach | l8_number | DKP-7-PRIVACY-001 | §4 | "Privacy Breach — any condition enabling identity reconstruction beyond defined thresholds." | — | privacy_transparency.reidentification_k |
+| Peace Stake per unit of GDP | l8_number | CODE-OF-PLANETARY-SYNERGY | §7.1 | "The stake size is proportional to GDP." | — | code_synergy.stake_rate |
+| measurement of W, E and T in the Main Equation | empirical_model | CODE-OF-PLANETARY-SYNERGY | A.1 | "W(t) — Global welfare + biosphere health (in arbitrary utility units)" | — | code_synergy.equation_segments |
+| share of Peace Stakes burned by the Dead Man Switch (at least 50 %) | l8_number | CODE-OF-PLANETARY-SYNERGY | A.3 | "≥ 50% of all Peace Stakes globally are automatically burned and distributed to the remaining nodes." | — | code_synergy.dead_man_share |
+| target and release of the Kill Switches when B(t) < B_min | architectural_definition | CODE-OF-PLANETARY-SYNERGY | A.1 | "if B(t) < B<sub>min</sub>, all Kill Switches activate simultaneously." | F-029 | — |
+| powers, duration and end of the manual control after System Failure | architectural_definition | CODE-OF-PLANETARY-SYNERGY | A.1a | "Violation for more than 180 consecutive days = System Failure → Temporary manual control by the consortium of the first six nodes." | F-030 | — |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -123,7 +128,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 
 | Document | SIMULATION §2 position | Own clause | Constants in text | Outputs depending on L8 or missing values | Status as written |
 |---|---|---|---:|---|---|
-| CODE-OF-PLANETARY-SYNERGY | not listed | — | 18 | — | not a protocol (§4 speaks of protocols); Main Equation parameters change only via UPGRADE + SIMULATION |
+| CODE-OF-PLANETARY-SYNERGY | not listed | — | 18 | Peace Stake per unit of GDP (l8_number); measurement of W, E and T in the Main Equation (empirical_model); share of Peace Stakes burned by the Dead Man Switch (at least 50 %) (l8_number); target and release of the Kill Switches when B(t) < B_min (architectural_definition); powers, duration and end of the manual control after System Failure (architectural_definition) | not a protocol (§4 speaks of protocols); Main Equation parameters change only via UPGRADE + SIMULATION |
 | DKP-0-ORACLE-001 | upstream of SIMULATION | B(t) informational until a bundle exists (§12); nothing else in ORACLE refers to a bundle | 8 | B(t): model, aggregation, weighting, calibration (l8_model) | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
 | DKP-0-TIME-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-AXIOMS-001 | upstream of SIMULATION | — | 1 | Axiom A1 minimum required conditions (normative_predicate); active validating nodes (ratification of axiom changes) (architectural_definition) | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |

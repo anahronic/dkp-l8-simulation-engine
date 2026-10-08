@@ -501,15 +501,21 @@
     "aggression attribution",
     "market and smoothing state"
    ],
-   "gap": "Indicator selection, decline calculation, crash magnitude, and instant-execution semantics are missing. No lab check implemented yet.",
+   "gap": "A monthly drop is a declared value; identification of the aggressor is not defined.",
    "hypotheses_needed": [
     "Define qualifying indicators, aggressor attribution, and crash behavior.",
     "Specify interaction with Mercy suspension."
    ],
    "section_label": "1.4",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "snap_protocol"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -943,14 +949,20 @@
     "escrow balances",
     "national GDP"
    ],
-   "gap": "The stake-to-GDP coefficient and GDP measurement convention are unspecified. No lab check implemented yet.",
+   "gap": "The proportionality constant is not given (source missing).",
    "hypotheses_needed": [
     "Declare the proportionality coefficient and GDP reference period."
    ],
    "section_label": "7.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "stake_proportional_to_gdp"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -981,14 +993,20 @@
     "global GDP growth",
     "stake and dividend ledger"
    ],
-   "gap": "Peace classification and dividend calculation are missing. No lab check implemented yet.",
+   "gap": "Dividend formula not given (H-CS-7).",
    "hypotheses_needed": [
     "Define peaceful intervals and dividend accrual, including nonpositive growth."
    ],
    "section_label": "7.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "dividends_while_at_peace"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1017,20 +1035,28 @@
     "aggression determinations",
     "stake ledger"
    ],
-   "gap": "Aggression classification and automatic-execution timing are unspecified. No lab check implemented yet.",
+   "gap": "Aggression is established by independent monitoring (H-CS-6).",
    "hypotheses_needed": [
     "Define aggression recognition and the execution event."
    ],
    "section_label": "7.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "slashing"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-050"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "empirical_model_data",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -1054,21 +1080,29 @@
     "stake balances",
     "infrastructure connection states"
    ],
-   "gap": "Independent monitoring, violating-region assignment, and complete disconnection are undefined. No lab check implemented yet.",
+   "gap": "Disconnection is a state; release is not defined.",
    "hypotheses_needed": [
     "Define accepted monitoring and regional disconnection.",
     "Specify interaction with Mercy suspension."
    ],
    "section_label": "8.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "kill_switch_law"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-050"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -1093,20 +1127,28 @@
     "damage valuation",
     "asset ledger"
    ],
-   "gap": "The document supplies no damage valuation or insufficient-assets procedure. No lab check implemented yet.",
+   "gap": "Damage is a declared value.",
    "hypotheses_needed": [
     "Define damage valuation, attribution, and treatment of asset shortfalls."
    ],
    "section_label": "8.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "weapons_write_off"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-050"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "empirical_model_data",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -1782,15 +1824,21 @@
     "available energy and compute",
     "Physical Truth Layer B readings"
    ],
-   "gap": "Operational variable definitions and a method for checking the derivative at every moment are missing. No lab check implemented yet.",
+   "gap": "W, E and T have no measurement in the corpus; they are declared scenario values.",
    "hypotheses_needed": [
     "Define W, E, and the energy-and-compute logarithm used for T.",
     "Declare time units, interpolation, and derivative estimation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "main_equation"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1816,12 +1864,18 @@
    "data_dependencies": [
     "Physical Truth Layer B values and provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "B(t) is the weighted ensemble of declared level readings (H-CS-2).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "b_index_range"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -1846,13 +1900,19 @@
     "calibration results",
     "independent audit records"
    ],
-   "gap": "The calibration method, schedule origin, and independence test are unspecified. No lab check implemented yet.",
+   "gap": "Range and independent audit are checked; the 3-year period is not.",
    "hypotheses_needed": [
     "Define the calibration method, schedule origin, and auditor independence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "k_calibration"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1883,19 +1943,27 @@
     "Kill Switch event logs",
     "Mercy state"
    ],
-   "gap": "Simultaneity semantics and priority against Mercy suspension are unspecified. No lab check implemented yet.",
+   "gap": "What 'all Kill Switches' disconnect and what releases them is not defined (F-029).",
    "hypotheses_needed": [
     "Define simultaneous activation and precedence when A.4 also applies."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "kill_switches_at_b_min"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-048"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -1917,15 +1985,21 @@
     "parameter registry",
     "change execution traces"
    ],
-   "gap": "The boundary between prohibited on-chain adjustment and recording an approved upgrade is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define parameter adjustment and on-chain execution boundaries."
    ],
    "section_label": "A.1a",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "no_on_chain_tuning"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1958,14 +2032,20 @@
     "upgrade authorization records",
     "simulation validation evidence"
    ],
-   "gap": "The upgrade and simulation specifications are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how compliance evidence for the two referenced processes is represented."
    ],
    "section_label": "A.1a",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "upgrade_and_simulation"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1995,14 +2075,20 @@
     "parameter write logs",
     "execution dependency graph"
    ],
-   "gap": "Indirect modification and protocol-category boundaries are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define protocol categories and indirect parameter influence."
    ],
    "section_label": "A.1a",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "no_protocol_modifies_parameters"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2033,21 +2119,29 @@
     "node registration order",
     "control-state logs"
    ],
-   "gap": "The violation referent, first-six-node selection, and termination of temporary control are unspecified. No lab check implemented yet.",
+   "gap": "'Violation' has two readings; manual control has no end (F-030).",
    "hypotheses_needed": [
     "Choose the violation referent and first-six-node interpretation.",
     "Define restoration from temporary manual control."
    ],
    "section_label": "A.1a",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "system_failure_after_180_days"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-049"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -2070,14 +2164,20 @@
     "contract input provenance",
     "Physical Truth Layer processing records"
    ],
-   "gap": "Required routing through individual stack levels is ambiguous. No lab check implemented yet.",
+   "gap": "Outside feeds and late drone hashes are refused.",
    "hypotheses_needed": [
     "Define valid stack provenance and whether all levels are required for each input."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "stack_only"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -2102,11 +2202,17 @@
    "data_dependencies": [
     "oracle ensemble weights"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "level0_weight"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -2130,13 +2236,19 @@
    "data_dependencies": [
     "satellite observation coverage and timestamps"
    ],
-   "gap": "Temporal coverage and acceptable monitoring interruptions are unspecified. No lab check implemented yet.",
+   "gap": "Coverage is a declared fraction.",
    "hypotheses_needed": [
     "Define constant monitoring and combined sensor coverage."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "level0_coverage"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2233,11 +2345,17 @@
    "data_dependencies": [
     "oracle ensemble weights"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "level1_weight"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -2299,11 +2417,17 @@
     "upload receipts",
     "drone mission timestamps"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "hash_before_return"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -2325,14 +2449,26 @@
    "data_dependencies": [
     "oracle ensemble weights"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "level2_weight"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-047"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "architecture_definition",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "CODEX-A.2-10",
@@ -2389,13 +2525,19 @@
    "data_dependencies": [
     "validator or dispute collateral records"
    ],
-   "gap": "The stake's unit of application and collateral-versus-penalty meaning are unspecified. No lab check implemented yet.",
+   "gap": "The stake range is checked at admission.",
    "hypotheses_needed": [
     "Define stake scope, currency interpretation, and lying determination."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "validator_stake"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2429,14 +2571,20 @@
     "arbitration ledger",
     "tranche dependency and freeze records"
    ],
-   "gap": "The ensemble, divergence metric, tranche relationship, and unresolved-at-deadline behavior are undefined. No lab check implemented yet.",
+   "gap": "Divergence is the relative spread of level readings (H-CS-3); after 14 days unresolved: F-018.",
    "hypotheses_needed": [
     "Define ensemble and divergence calculations and the stake provider.",
     "Choose whether fourteen days bounds resolution, freezing, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "divergence_arbitration"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2467,14 +2615,20 @@
     "node locations",
     "geopolitical and capability classifications"
    ],
-   "gap": "Network GDP attribution, geopolitical blocks, and nuclear-equivalent capability are undefined. No lab check implemented yet.",
+   "gap": "'Their equivalent' is not defined; such blocs give UNKNOWN.",
    "hypotheses_needed": [
     "Define GDP membership, qualifying blocks, and equivalent capability.",
     "Declare whether reaching the threshold permanently ends the shield requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "nuclear_bloc_distribution"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2504,13 +2658,19 @@
     "node energy specifications",
     "energy output and dependency records"
    ],
-   "gap": "Autonomy and the annual-energy measurement basis are unspecified. No lab check implemented yet.",
+   "gap": "Capacity and type are declared; the priority order is not checked.",
    "hypotheses_needed": [
     "Define fully autonomous supply and rated-versus-realized annual output."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "node_energy"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2582,13 +2742,19 @@
    "data_dependencies": [
     "Level 0 and Level 1 energy verification"
    ],
-   "gap": "The scope and acceptance criteria of the status confirmation are ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Choose the confirmation scope and required evidence from both levels."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "ptl_confirmed_nodes"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2620,14 +2786,20 @@
     "global stake ledger",
     "remaining-node registry"
    ],
-   "gap": "Burn-and-distribute accounting, the percentage denominator, and recipient allocation are undefined. No lab check implemented yet.",
+   "gap": "'Burned and distributed' read as taken from all stakes and paid to the remaining nodes (H-CS-9).",
    "hypotheses_needed": [
     "Define burning versus redistribution and whether the percentage applies to value or stake count.",
     "Declare recipient allocation and repeated-trigger behavior."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "dead_man_switch"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2661,20 +2833,28 @@
     "pandemic mortality data",
     "Physical Truth Layer causal verification"
    ],
-   "gap": "Trigger measurement conventions, overlapping-event timing, and precedence over biosphere emergency activation are unspecified. No lab check implemented yet.",
+   "gap": "Duration against a shorter or missing Crisis Scope: F-027.",
    "hypotheses_needed": [
     "Define asteroid size and pandemic lethality measurements.",
     "Define overlapping suspension periods and conflict precedence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "mercy_suspension"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-046"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -2701,20 +2881,28 @@
     "sortition evidence",
     "control assignment records"
    ],
-   "gap": "The eligible scientist pool, EigenTrust calculation, sortition procedure, and extent of control are unspecified. No lab check implemented yet.",
+   "gap": "Sortition is reproduced from a seed; the Council's power: F-032.",
    "hypotheses_needed": [
     "Define scientist eligibility, score calculation, and sortition.",
     "Define transferred powers within the declared Crisis Scope."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "council_sortition"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-051"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -2740,14 +2928,20 @@
     "scope declarations",
     "Mercy decision logs"
    ],
-   "gap": "DKP-7-SCOPE-001 and its boundary definitions are absent. No lab check implemented yet.",
+   "gap": "Checked as: inside a Mercy period, severity only.",
    "hypotheses_needed": [
     "Declare the applicable scope boundaries and membership test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "mercy_within_scope"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -2777,13 +2971,19 @@
     "applicability scope definitions",
     "Mercy action effects"
    ],
-   "gap": "The applicable scope model is absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define how applicability before and after Mercy is compared."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "no_applicability_expansion"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2814,13 +3014,19 @@
     "S2 and S3 domain restrictions",
     "Mercy decisions"
    ],
-   "gap": "S2 and S3 domain definitions and prohibitions are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the domain prohibitions and what constitutes an override."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "no_s2_s3_override"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2852,13 +3058,19 @@
     "rights and authority registry",
     "Mercy decision effects"
    ],
-   "gap": "The baseline rights and powers and their formal scope are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the baseline authority registry and a new-power test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "no_new_authority"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -2888,19 +3100,27 @@
     "Crisis Scope declaration",
     "Mercy activity logs"
    ],
-   "gap": "Crisis Scope structure and its temporal and substantive boundary semantics are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define how Crisis Scope limits persistence and how it relates to the 180-day suspension."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "mercy_ends_with_crisis_scope"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-046"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -2926,14 +3146,20 @@
     "response and authority baselines",
     "Mercy action effects"
    ],
-   "gap": "Severity, jurisdiction, and normative-authority effect models are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which response changes count solely as severity modifications."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "severity_only"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -2962,14 +3188,20 @@
     "node identity and online status",
     "Wild Node compliance evidence"
    ],
-   "gap": "Online status, simultaneity, and paired-location node identity are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define each startup entry, online status, and simultaneity.",
     "Treat launch as irreversible once the condition is met."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "startup_cluster_launch"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -3037,20 +3269,28 @@
     "referendum results",
     "Peace Stake escrow"
    ],
-   "gap": "The referendum percentage's support-versus-turnout meaning and minimum-versus-exact interpretation are unclear. No lab check implemented yet.",
+   "gap": "Share of the adult population; mapping to INTEGRATION phases: F-031.",
    "hypotheses_needed": [
     "Define the referendum numerator and percentage comparison.",
     "Define adult population eligibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "connection_by_referendum"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-050"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "normative_ambiguity",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -3075,15 +3315,21 @@
     "beneficial ownership graph",
     "critical infrastructure inventory"
    ],
-   "gap": "Ownership aggregation and asset-pool denominator rules are missing. No lab check implemented yet.",
+   "gap": "Indirect ownership multiplies shares along holding chains (H-CS-10).",
    "hypotheses_needed": [
     "Define indirect ownership aggregation and whether each limit uses asset count or ownership value.",
     "Define separate or combined well and power-unit pools."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "ownership_caps"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -3114,13 +3360,19 @@
     "stake ownership",
     "network access and ban records"
    ],
-   "gap": "Instant timing, the ban's start event, and participation coverage are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the violation trigger, instant execution, and covered participation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "cap_violation_sanction"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -3245,11 +3497,17 @@
    "data_dependencies": [
     "Genesis initial_parameters object"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "genesis_parameters"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -3441,14 +3699,20 @@
     "Genesis and chain history",
     "protocol state-transition rules"
    ],
-   "gap": "A formal protocol model proving immutable reference preservation is missing. No lab check implemented yet.",
+   "gap": "Only 'having no predecessor' is checked.",
    "hypotheses_needed": [
     "Define how the no-predecessor condition relates to the zero previous_hash field.",
     "Declare immutable-state transition rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "genesis_no_predecessor"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

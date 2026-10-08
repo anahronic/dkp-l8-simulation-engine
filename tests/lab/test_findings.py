@@ -215,3 +215,27 @@ def test_f018_window_closes_next_state_undefined():
     st = {n: tuple({c["requirement_id"]: c["status"] for c in x["checks"]}[r] for r in ("ORACLE-11-03", "ORACLE-11-04"))
           for n, x in v.items()}
     assert st == {"divergence_24_days": ("PASS", "UNKNOWN"), "divergence_10_days": ("PASS", "PASS")}
+
+
+def _code(fid, rids):
+    with open(os.path.join(FINDINGS, f"{fid}.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    return {n: tuple({c["requirement_id"]: c["status"] for c in x["checks"]}[r] for r in rids) for n, x in v.items()}
+
+
+def test_f027_to_f032_code():
+    """Code of Planetary Synergy (module code_synergy): the open states stay UNKNOWN, the alternative reading fails."""
+    assert _code("F-027", ("CODEX-A.4-01", "CODEX-A.4-07")) == {
+        "scope_200_days": ("PASS", "PASS"), "scope_90_days": ("UNKNOWN", "PASS"), "no_crisis_scope": ("UNKNOWN", "PASS"),
+        "scope_90_days_fixed_reading": ("PASS", "FAIL")}
+    assert _code("F-028", ("ORACLE-3-01", "CODEX-A.2-09")) == {"level2_10_percent": ("UNKNOWN", "PASS"),
+                                                               "level2_zero": ("PASS", "PASS")}
+    assert _code("F-029", ("CODEX-A.1-04",)) == {"stays_below": ("PASS",), "recovers": ("UNKNOWN",)}
+    assert _code("F-030", ("CODEX-A.1a-04", "CODEX-A.1-01")) == {"equation_181_days": ("UNKNOWN", "FAIL"),
+                                                                 "equation_180_days": ("PASS", "FAIL")}
+    assert _code("F-031", ("CODEX-7.3-01", "CODEX-8.1-01", "CODEX-8.2-01", "INTEGRATION-5.2-01", "CODEX-A.5-03")) == {
+        "phase_3_aggressor": ("PASS", "PASS", "PASS", "PASS", "PASS"),
+        "phase_1_aggressor": ("UNKNOWN", "UNKNOWN", "UNKNOWN", "PASS", "PASS"),
+        "legislative_act": ("PASS", "PASS", "PASS", "PASS", "PASS")}
+    assert _code("F-032", ("CODEX-A.4-02", "SCOPE-3-19")) == {"council_formed": ("PASS", "UNKNOWN"),
+                                                              "no_mercy": ("NOT_APPLICABLE", "NOT_APPLICABLE")}

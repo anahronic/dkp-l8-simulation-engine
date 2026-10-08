@@ -1,0 +1,54 @@
+{
+ "schema": "dkp-lab-input/1",
+ "module": "code_synergy",
+ "variants": [
+  {
+   "name": "scope_200_days",
+   "input": {}
+  },
+  {
+   "name": "scope_90_days",
+   "input": {
+    "mercy_events": [
+     {
+      "day": 120,
+      "kind": "natural_b_drop",
+      "magnitude": 0.05,
+      "ptl_verified": true,
+      "crisis_scope_days": 90
+     }
+    ]
+   }
+  },
+  {
+   "name": "no_crisis_scope",
+   "input": {
+    "mercy_events": [
+     {
+      "day": 120,
+      "kind": "natural_b_drop",
+      "magnitude": 0.05,
+      "ptl_verified": true,
+      "crisis_scope_days": 0
+     }
+    ],
+    "council_actions": []
+   }
+  },
+  {
+   "name": "scope_90_days_fixed_reading",
+   "input": {
+    "mercy_events": [
+     {
+      "day": 120,
+      "kind": "natural_b_drop",
+      "magnitude": 0.05,
+      "ptl_verified": true,
+      "crisis_scope_days": 90
+     }
+    ],
+    "mercy_reading": "fixed_180_days"
+   }
+  }
+ ]
+}

@@ -203,7 +203,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
   },
@@ -737,20 +737,28 @@
     "module configurations and actions",
     "local authority assessments"
    ],
-   "gap": "The text does not operationally define full local economic and legal sovereignty. No lab check implemented yet.",
+   "gap": "Sanctions of the Code against Phase 0-1 territories.",
    "hypotheses_needed": [
     "Define how module operation is tested for preservation of local sovereignty."
    ],
    "section_label": "5.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.0.0",
+    "check": "no_kill_switch_in_phase_1"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-050"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "agent_verified"
    }
   },
   {
@@ -865,7 +873,7 @@
    "tests": [
     "tests/lab/test_exit_integration_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
   },

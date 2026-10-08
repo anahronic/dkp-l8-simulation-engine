@@ -49,6 +49,12 @@ documented numbers as regressions.
 | [F-024](F-024.md) | AXIOMS §5: rules 2 and 4 differ when every action violates an axiom | INTERPRETATION_GAP | Q-043 |
 | [F-025](F-025.md) | Axiom A4 says SHOULD while every axiom is a constraint | INTERPRETATION_GAP | Q-044 |
 | [F-026](F-026.md) | PRIVACY §6: aggregate statistics of the absolute privacy domains — allowed or not | INTERPRETATION_GAP | Q-045 |
+| [F-027](F-027.md) | Mercy: 'suspended for 180 days' against 'SHALL NOT persist beyond explicitly declared Crisis Scope' | INTERPRETATION_GAP | Q-046 |
+| [F-028](F-028.md) | Human validators: in the Code's oracle stack (A.2), excluded by ORACLE | INTERPRETATION_GAP | Q-047 |
+| [F-029](F-029.md) | B(t) < B_min activates 'all Kill Switches': no target, no release | CONFIRMED_FINDING | Q-048 |
+| [F-030](F-030.md) | A.1a System Failure: which violation counts; the manual control has no bounds | CONFIRMED_FINDING | Q-049 |
+| [F-031](F-031.md) | 'Connect' under Code A.5 and the phases of INTEGRATION | INTERPRETATION_GAP (authority difference) | Q-050 |
+| [F-032](F-032.md) | Council of Crisis Mercy and the SCOPE S3 ban on discretionary emergency authorities | INTERPRETATION_GAP | Q-051 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to
