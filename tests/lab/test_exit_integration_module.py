@@ -17,10 +17,13 @@ def statuses(res):
 
 
 @pytest.mark.parametrize("name", ["join_then_leave", "shock_and_rollback", "liabilities_mix", "settlement_after_halt"])
-def test_reference_breaks_no_rule_except_the_cooling_conflict(name):
+def test_reference_breaks_no_rule(name):
+    """F-011 after review: SCOPE §2 sets aside the EXIT §6 stability purpose; the rest of the cooling period is
+    UNKNOWN under SCOPE §9 (dependency protection may or may not be a stability goal)."""
     st = statuses(run(**M.examples()[name]))
-    assert [k for k, s in st.items() if s == "FAIL"] == ["SCOPE-9-02"]        # F-011: EXIT §6 against SCOPE §9
-    assert "FAIL" not in statuses(run(**{**M.examples()[name], "cooling_days": 0})).values()
+    assert "FAIL" not in st.values() and st["SCOPE-9-02"] == "UNKNOWN"
+    assert statuses(run(**{**M.examples()[name], "cooling_purposes": ["settlement"]}))["SCOPE-9-02"] == "PASS"
+    assert statuses(run(**{**M.examples()[name], "cooling_purposes": ["settlement", "stability"]}))["SCOPE-9-02"] == "FAIL"
 
 
 FAULT_CASES = {

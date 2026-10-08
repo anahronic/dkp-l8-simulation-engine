@@ -145,6 +145,10 @@ def build() -> Dict[str, Any]:
             "resolvable": len(resolvable),
             "resolvable_uncovered": sum(1 for x in resolvable if x["coverage"] not in ("IMPLEMENTED", "PARTIAL")),
             "unresolved_decisions": sum(1 for x in sel if x["decision_status"] == "UNRESOLVED"),
+            # a PASS on the checkable part of a provision does not close its open point
+            "covered_with_open_point": sum(1 for x in sel if x["coverage"] in ("IMPLEMENTED", "PARTIAL")
+                                           and x["decision_status"] == "UNRESOLVED"),
+            "pass_with_open_point": sum(1 for x in sel if x["status"] == "PASS" and x["decision_status"] == "UNRESOLVED"),
         }
 
     registrable = [d for d, v in docs.items() if v["kind"] in REGISTRABLE]
@@ -273,8 +277,9 @@ def decomposition(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
     origins = list(verification.ORIGINS) + ["pending"]
     return {
         "unresolved": len(unres),
-        "by_origin": [{"origin": o, "text_verified": by.get((o, "text_verified"), 0), "codex_draft": by.get((o, "codex_draft"), 0),
-                       "total": by.get((o, "text_verified"), 0) + by.get((o, "codex_draft"), 0) + by.get((o, "none"), 0)}
+        "by_origin": [{"origin": o, "agent_verified": by.get((o, "agent_verified"), 0), "codex_draft": by.get((o, "codex_draft"), 0),
+                       "human_accepted": 0,
+                       "total": by.get((o, "agent_verified"), 0) + by.get((o, "codex_draft"), 0) + by.get((o, "none"), 0)}
                       for o in origins],
         "draft_author_question_candidates": len(candidates),
         "draft_provenance": cls.get("provenance", {}),
@@ -295,21 +300,23 @@ def markdown(t: Dict[str, Any]) -> str:
          "Interpretations are machine drafts; TEXT_VERIFIED means the wording was read against the literal",
          "text by the lab (not a human review).  Author questions: `lab/registry/open_questions.json`.", "",
          "## Stages of the specification", "",
-         "| Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |",
-         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+         "| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |",
+         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for s in t["stages"]:
         x = s["stats"]
         if x:
             st = x["statuses"]
             L.append(f"| {s['id']}. {s['title']} | {s['status']} | {x['registered']}/{x['documents']} | {x['provisions']} | "
-                     f"{x['covered']} ({x['covered_percent']} %) | {st['PASS']} | {st['FAIL']} | {st['UNKNOWN']} | "
+                     f"{x['covered']} ({x['covered_percent']} %) | {x['covered_with_open_point']} | {st['PASS']} | "
+                     f"{x['pass_with_open_point']} | {st['FAIL']} | {st['UNKNOWN']} | "
                      f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['unresolved_decisions']} |")
         else:
-            L.append(f"| {s['id']}. {s['title']} | {s['status']} | — | | | | | | | | | |")
+            L.append(f"| {s['id']}. {s['title']} | {s['status']} | — | | | | | | | | | | | |")
     x = t["totals"]
     st = x["statuses"]
     L += [f"| **All registrable documents** | | {x['registered']}/{x['documents']} | {x['provisions']} | "
-          f"{x['covered']} ({x['covered_percent']} %) | {st['PASS']} | {st['FAIL']} | {st['UNKNOWN']} | "
+          f"{x['covered']} ({x['covered_percent']} %) | {x['covered_with_open_point']} | {st['PASS']} | "
+          f"{x['pass_with_open_point']} | {st['FAIL']} | {st['UNKNOWN']} | "
           f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['unresolved_decisions']} |", "",
           "### Stage criteria", ""]
     for s in t["stages"]:
@@ -340,13 +347,14 @@ def markdown(t: Dict[str, Any]) -> str:
     d = t["unresolved_decomposition"]
     pv = d["draft_provenance"]
     L += ["", "## Origin of open points (UNRESOLVED provisions)", "",
-          f"{d['unresolved']} provisions have an open point.  Origin: text-verified where an author question was "
-          "verified against the literal text; otherwise a Codex draft "
+          f"{d['unresolved']} provisions have an open point.  Origin: agent-verified where an author question was "
+          "read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft "
           f"({pv.get('model', '—')}, {pv.get('date', '—')}; DRAFT_UNREVIEWED; not in the draft (opened later): "
           f"{', '.join(pv.get('unclassified_open_points', [])) or 'none'}).  Only normative_ambiguity and "
           "architecture_definition can become author questions, and only after verification.", "",
-          "| Origin | Text-verified | Codex draft | Total |", "|---|---:|---:|---:|"]
-    L += [f"| {x['origin']} | {x['text_verified']} | {x['codex_draft']} | {x['total']} |" for x in d["by_origin"]]
+          "| Origin | Agent-verified (quotes checked automatically) | Codex draft | Accepted by a human | Total |",
+          "|---|---:|---:|---:|---:|"]
+    L += [f"| {x['origin']} | {x['agent_verified']} | {x['codex_draft']} | {x['human_accepted']} | {x['total']} |" for x in d["by_origin"]]
     L += ["", f"Draft author-question candidates (unverified, not questions): {d['draft_author_question_candidates']}."]
     L += ["", "## Open questions (author decisions)", ""]
     L += [f"- {q['id']} [{q['status']}, {q['category']}] {q['title']}" for q in t["open_questions"] if q["status"] != "WITHDRAWN"]

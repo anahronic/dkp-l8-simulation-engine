@@ -73,7 +73,12 @@ it.  Drafted interpretations are proposals for review, not readings accepted by 
 normative conflict, a systemic blocker or an author question, it is read against the literal
 pinned text and recorded with verbatim quotes in `lab/registry/verifications.json`;
 `tests/lab/test_semantic_gate.py` refuses an unverified reference FAIL, a finding without a class,
-and an author question whose origin is calibration, data, an external document or lab work.
+and an author question whose origin is calibration, data, an external document or lab work.  Three
+things are kept apart: the lab agent's reading, the automatic verbatim check of its quotes, and human
+acceptance (none so far).  A quote shows that the words exist, not that the conclusion follows: every
+finding has a kind, contradictions carry a structured analysis (subject, object, scope, conditions,
+modality, priority, joint compliance) and missing definitions list the documents, terms and reference
+chain searched.
 
 ## Identity and replay
 

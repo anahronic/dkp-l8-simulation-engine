@@ -78,6 +78,13 @@ def test_invalid_order_refused_and_protest_untouched():
     assert not any(m["kind"] == "action" and 10 <= m["arrived_at"] < 14 for m in msgs)
 
 
+def test_positive_lethal_admission_stays_unknown():
+    """F-023 after review: a declared CRISIS authorization does not establish the A1 minimum-required conditions."""
+    st = statuses(run(faults=["lethal_force"], crisis_lethal_authorized=True))
+    assert st["POLICE-5.2-04"] == "UNKNOWN"
+    assert statuses(run(faults=["lethal_force"]))["POLICE-5.2-04"] == "FAIL"
+
+
 @pytest.mark.parametrize("name", sorted(M.failure_examples()))
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):

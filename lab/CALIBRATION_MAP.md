@@ -76,40 +76,42 @@ No Calibration Bundle exists in the pinned corpus.
 
 ## 3. Parameters the texts assign to L8
 
-| Parameter | Document | § | Text | Lab stand-in (declared, source `missing`) |
-|---|---|---|---|---|
-| minimum attribution confidence | DKP-1-IDENTITY-001 | §4.1 | "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:" | dispute_correction.attribution_threshold |
-| B(t): model, aggregation, weighting, calibration | DKP-0-ORACLE-001 | §12 | "The model, aggregation logic, weighting, and calibration of B(t) are not defined in PTL and MUST be explicitly specified in DKP-8-SIMULATION-001." | — |
-| every composite index (model, inputs, weights, uncertainty) | DKP-8-SIMULATION-001 | §9 | "Any composite index (including B(t)): - MUST have its model fully specified in L8," | — |
-| Crisis authority duration, decay, revalidation cadence, exit sensitivity | DKP-4-CRISIS-001 | §6 | "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001." | crisis_recovery (declared durations) |
-| any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins') | DKP-4-CRISIS-001 | §6 | "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol." — CRISIS may not hold them; SIMULATION §2 requires thresholds to pass SIMULATION. Inferred assignment to L8. | crisis_recovery.sustained_d3_steps; interop_failure.ptl_loss_tolerance |
-| exit cooling period | DKP-6-EXIT-001 | §6 | "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001." | exit_integration.cooling_days |
-| SPDI model, SPDI_min and component survivability thresholds | DKP-5-HABITAT-001 | §5 | "SHALL be specified, calibrated, and validated exclusively under DKP-8-SIMULATION-001," | calibration_expiry.bundle (a hypothetical bundle, labelled as such) |
-| INFO transition times T₁, T₂ | DKP-5-INFO-001 | §6.1 | "Values of T₁ and T₂ SHALL NOT be defined in this protocol and MUST be calibrated under DKP-8-SIMULATION-001." | — |
-| INFO propagation thresholds for a Systemic Lie | DKP-5-INFO-001 | §7 | "repetition exceeds L8-calibrated propagation thresholds," | — |
-| EDU competence-based restrictions | DKP-5-EDU-001 | §12 | "MUST be calibrated under DKP-8-SIMULATION-001," | — |
-| PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights | DKP-1-PREVENTION-001 | §14 | "### 14. Simulation Layer (L8) Defines: - ε_consistency - Δt_int - θ thresholds - Wₖ weights" | prevention (declared parameters, H-P hypotheses) |
-| EXIT phased disengagement | DKP-6-EXIT-001 | §7 | "be L8-simulated for stability," | — |
-| INTEGRATION interface clearance | DKP-6-INTEGRATION-001 | §5.3 | "DKP-8-SIMULATION-001 stress-test clearance," | — |
+| Parameter | Gap type | Document | § | Text | Lab stand-in (declared, source `missing`) |
+|---|---|---|---|---|---|
+| minimum attribution confidence | l8_number | DKP-1-IDENTITY-001 | §4.1 | "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:" | dispute_correction.attribution_threshold |
+| B(t): model, aggregation, weighting, calibration | l8_model | DKP-0-ORACLE-001 | §12 | "The model, aggregation logic, weighting, and calibration of B(t) are not defined in PTL and MUST be explicitly specified in DKP-8-SIMULATION-001." | — |
+| every composite index (model, inputs, weights, uncertainty) | l8_model | DKP-8-SIMULATION-001 | §9 | "Any composite index (including B(t)): - MUST have its model fully specified in L8," | — |
+| Crisis authority duration, decay, revalidation cadence, exit sensitivity | l8_number | DKP-4-CRISIS-001 | §6 | "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001." | crisis_recovery (declared durations) |
+| any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins') | l8_number | DKP-4-CRISIS-001 | §6 | "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol." — CRISIS may not hold them; SIMULATION §2 requires thresholds to pass SIMULATION. Inferred assignment to L8. | crisis_recovery.sustained_d3_steps; interop_failure.ptl_loss_tolerance |
+| exit cooling period | l8_number | DKP-6-EXIT-001 | §6 | "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001." | exit_integration.cooling_days |
+| SPDI model, SPDI_min and component survivability thresholds | l8_model | DKP-5-HABITAT-001 | §5 | "SHALL be specified, calibrated, and validated exclusively under DKP-8-SIMULATION-001," | calibration_expiry.bundle (a hypothetical bundle, labelled as such) |
+| INFO transition times T₁, T₂ | l8_number | DKP-5-INFO-001 | §6.1 | "Values of T₁ and T₂ SHALL NOT be defined in this protocol and MUST be calibrated under DKP-8-SIMULATION-001." | — |
+| INFO propagation thresholds for a Systemic Lie | l8_number | DKP-5-INFO-001 | §7 | "repetition exceeds L8-calibrated propagation thresholds," | — |
+| EDU competence-based restrictions | l8_number | DKP-5-EDU-001 | §12 | "MUST be calibrated under DKP-8-SIMULATION-001," | — |
+| PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights | l8_number | DKP-1-PREVENTION-001 | §14 | "### 14. Simulation Layer (L8) Defines: - ε_consistency - Δt_int - θ thresholds - Wₖ weights" | prevention (declared parameters, H-P hypotheses) |
+| EXIT phased disengagement | l8_number | DKP-6-EXIT-001 | §7 | "be L8-simulated for stability," | — |
+| INTEGRATION interface clearance | l8_number | DKP-6-INTEGRATION-001 | §5.3 | "DKP-8-SIMULATION-001 stress-test clearance," | — |
 
 ## 4. Values needed but neither written nor assigned to L8
 
-| Value | Document | § | Text | Origin | Lab stand-in |
-|---|---|---|---|---|---|
-| N_eff (definition) and N_eff_min (value) | DKP-6-RESILIENCE-001 | §5.1 | "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)" | architecture_definition (F-007) | sensor_loss.n_eff_min |
-| axiom-defined safe margins | DKP-1-JUSTICE-001 | §7 | "impact exceeds axiom-defined safe margins, or" | empirical_model_data | dispute_correction.safe_margin |
-| numeric reference bounds Bᵢ | DKP-1-IMPACT-001 | §6 | "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices." | empirical_model_data | dispute_correction.bound |
-| threshold of a systemic or cascading error | DKP-4-ERROR-001 | §9 | "impacting more than a protocol-defined threshold of Subjects or cross-layer execution" | l8_parameter | — |
-| minimum PPDI threshold, 'regular' standing, forced-contact density | DKP-5-TRANSPORT-001 | §4.2 | "Transport modes operating below the minimum PPDI threshold are classified as:" | l8_parameter (F-016) | transport_capacity.regular_standing_share, contact_density_m2 |
-| RED coefficient | DKP-5-TRANSPORT-001 | §7.2 | "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001," | external_dependency (F-015) | transport_capacity.red_per_km |
-| post-crisis audit and stabilization period | DKP-4-UPGRADE-001 | §8 | "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001." | architecture_definition (F-020) | upgrade_lifecycle.stabilization_days |
-| length of the upgrade reversibility window | DKP-4-UPGRADE-001 | §8 | "be reversible within a defined window," | l8_parameter | upgrade_lifecycle (per-proposal reversible_window_days) |
-| detention limit | DKP-3-POLICE-001 | §5.1 | "be time-limited," | l8_parameter | police_antiterror.detention_limit_hours |
-| acceptable civilian casualty risk | DKP-3-ANTITERROR-001 | §9 | "civilian casualty risk exceeds acceptable thresholds," | l8_parameter | — |
-| elevated authorization thresholds for irreversible security actions | DKP-3-INTERNAL-SEC-001 | §4.4 | "Irreversible actions require elevated authorization thresholds and justification." | l8_parameter | — |
-| Axiom A1 minimum required conditions | DKP-1-AXIOMS-001 | A1 | "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS" | architecture_definition (F-023) | police_antiterror.crisis_lethal_authorized |
-| active validating nodes (ratification of axiom changes) | DKP-1-AXIOMS-001 | §8 | "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy" | architecture_definition (F-022) | axiom_constraints (declared ratification_share) |
-| re-identification threshold of a Privacy Breach | DKP-7-PRIVACY-001 | §4 | "Privacy Breach — any condition enabling identity reconstruction beyond defined thresholds." | l8_parameter | privacy_transparency.reidentification_k |
+Gap types: **l8_number** — a number, threshold or duration that L8 calibration would supply; **l8_model** — a model (aggregation, weights, uncertainty) that L8 must specify; **empirical_model** — real-world data or an empirical/physical model (e.g. physical limits); **architectural_definition** — a set, structure or quantity the corpus refers to but never defines (not a calibration value); **normative_predicate** — a condition that decides whether an act is allowed; only the author can define it (not a calibration value); **external_document** — a referenced document that is not in the corpus.  Architectural definitions and normative predicates are not calibration values: a Calibration Bundle cannot supply them.
+
+| Value | Gap type | Document | § | Text | Finding | Lab stand-in |
+|---|---|---|---|---|---|---|
+| N_eff (definition) and N_eff_min (value) | architectural_definition | DKP-6-RESILIENCE-001 | §5.1 | "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)" | F-007 | sensor_loss.n_eff_min |
+| axiom-defined safe margins | empirical_model | DKP-1-JUSTICE-001 | §7 | "impact exceeds axiom-defined safe margins, or" | — | dispute_correction.safe_margin |
+| numeric reference bounds Bᵢ | empirical_model | DKP-1-IMPACT-001 | §6 | "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices." | — | dispute_correction.bound |
+| threshold of a systemic or cascading error | l8_number | DKP-4-ERROR-001 | §9 | "impacting more than a protocol-defined threshold of Subjects or cross-layer execution" | — | — |
+| minimum PPDI threshold, 'regular' standing, forced-contact density | l8_number | DKP-5-TRANSPORT-001 | §4.2 | "Transport modes operating below the minimum PPDI threshold are classified as:" | F-016 | transport_capacity.regular_standing_share, contact_density_m2 |
+| RED coefficient | external_document | DKP-5-TRANSPORT-001 | §7.2 | "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001," | F-015 | transport_capacity.red_per_km |
+| post-crisis audit and stabilization period | normative_predicate | DKP-4-UPGRADE-001 | §8 | "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001." | F-020 | upgrade_lifecycle.stabilization_days |
+| length of the upgrade reversibility window | l8_number | DKP-4-UPGRADE-001 | §8 | "be reversible within a defined window," | — | upgrade_lifecycle (per-proposal reversible_window_days) |
+| detention limit | l8_number | DKP-3-POLICE-001 | §5.1 | "be time-limited," | — | police_antiterror.detention_limit_hours |
+| acceptable civilian casualty risk | l8_number | DKP-3-ANTITERROR-001 | §9 | "civilian casualty risk exceeds acceptable thresholds," | — | — |
+| elevated authorization thresholds for irreversible security actions | l8_number | DKP-3-INTERNAL-SEC-001 | §4.4 | "Irreversible actions require elevated authorization thresholds and justification." | — | — |
+| Axiom A1 minimum required conditions | normative_predicate | DKP-1-AXIOMS-001 | A1 | "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS" | F-023 | police_antiterror.crisis_lethal_authorized |
+| active validating nodes (ratification of axiom changes) | architectural_definition | DKP-1-AXIOMS-001 | §8 | "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy" | F-022 | axiom_constraints (declared ratification_share) |
+| re-identification threshold of a Privacy Breach | l8_number | DKP-7-PRIVACY-001 | §4 | "Privacy Breach — any condition enabling identity reconstruction beyond defined thresholds." | — | privacy_transparency.reidentification_k |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -117,45 +119,47 @@ External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRA
 
 SIMULATION §2 lists the protocols downstream of it and the three it is downstream of; §4 speaks of every protocol.  Four L5 protocols and ORACLE's B(t) also say so in their own text.
 
-| Document | SIMULATION §2 position | Own clause | Constants in text | Deferred to L8 | Missing values | Status as written |
-|---|---|---|---:|---:|---:|---|
-| CODE-OF-PLANETARY-SYNERGY | not listed | — | 18 | 0 | 0 | not a protocol (§4 speaks of protocols); Main Equation parameters change only via UPGRADE + SIMULATION |
-| DKP-0-ORACLE-001 | upstream of SIMULATION | B(t) informational until a bundle exists (§12); nothing else in ORACLE refers to a bundle | 8 | 1 | 0 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
-| DKP-0-TIME-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-1-AXIOMS-001 | upstream of SIMULATION | — | 1 | 0 | 2 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
-| DKP-1-EPISTEMIC-BOUNDARIES-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-1-IDENTITY-001 | not listed | — | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-1-IMPACT-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-1-JUSTICE-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-1-PREVENTION-001 | not listed | — | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-2-ASSETS-001 | not listed | — | 1 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-2-FINANCE-001 | not listed | — | 1 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-2-LABOR-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-3-ANTITERROR-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-3-DEFENSE-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-3-INTERNAL-SEC-001 | not listed | — | 4 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-3-POLICE-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-4-CRISIS-001 | not listed | — | 0 | 2 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-4-CRISIS-001-PATCH | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-4-EPISTEMIC-TRANSITIONS-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-4-ERROR-001 | not listed | — | 3 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-4-UPGRADE-001 | listed downstream | — | 1 | 0 | 2 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-CULTURE-001 | listed downstream | interactions informational and non-binding without L8 calibration (§11) | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-EDU-001 | listed downstream | signals informational without L8 calibration (§12) | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-HABITAT-001 | listed downstream | non-enforceable without a bundle covering SPDI (§6) | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-INFO-001 | listed downstream | non-enforceable without a bundle; classifications above I1 informational (§9) | 0 | 2 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-TRANSPORT-001 | not listed | — | 0 | 0 | 2 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-TRANSPORT-001-APPENDIX-A | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-WORK-CYCLE-001 | not listed | — | 9 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-6-EXIT-001 | listed downstream | — | 0 | 2 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-6-INTEGRATION-001 | listed downstream | — | 0 | 1 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-6-RESILIENCE-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-7-AI-SUBJECT-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-7-PRIVACY-001 | not listed | — | 0 | 0 | 1 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-7-SCOPE-001 | upstream of SIMULATION | — | 0 | 0 | 0 | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
-| DKP-7-TRANSPARENCY-001 | not listed | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-8-AUDIT-001 | listed downstream | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-8-INTEROP-001 | listed downstream | — | 0 | 0 | 0 | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-8-SIMULATION-001 | not listed | — | 0 | 1 | 0 | the calibration protocol itself |
+**Reading and its limits.** SIMULATION §4 read literally: protocols lacking a valid L8 Calibration Bundle are NON-ENFORCEABLE. This concerns the enforceability of their outputs. It does not remove physical records or written constraints, nor the right to check them in an isolated research model; every lab run is research (operational_use: false), and no lab parameter is a calibration.
+
+| Document | SIMULATION §2 position | Own clause | Constants in text | Outputs depending on L8 or missing values | Status as written |
+|---|---|---|---:|---|---|
+| CODE-OF-PLANETARY-SYNERGY | not listed | — | 18 | — | not a protocol (§4 speaks of protocols); Main Equation parameters change only via UPGRADE + SIMULATION |
+| DKP-0-ORACLE-001 | upstream of SIMULATION | B(t) informational until a bundle exists (§12); nothing else in ORACLE refers to a bundle | 8 | B(t): model, aggregation, weighting, calibration (l8_model) | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
+| DKP-0-TIME-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-1-AXIOMS-001 | upstream of SIMULATION | — | 1 | Axiom A1 minimum required conditions (normative_predicate); active validating nodes (ratification of axiom changes) (architectural_definition) | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
+| DKP-1-EPISTEMIC-BOUNDARIES-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-1-IDENTITY-001 | not listed | — | 0 | minimum attribution confidence (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-1-IMPACT-001 | not listed | — | 0 | numeric reference bounds Bᵢ (empirical_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-1-JUSTICE-001 | not listed | — | 0 | axiom-defined safe margins (empirical_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-1-PREVENTION-001 | not listed | — | 0 | PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-2-ASSETS-001 | not listed | — | 1 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-2-FINANCE-001 | not listed | — | 1 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-2-LABOR-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-3-ANTITERROR-001 | not listed | — | 0 | acceptable civilian casualty risk (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-3-DEFENSE-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-3-INTERNAL-SEC-001 | not listed | — | 4 | elevated authorization thresholds for irreversible security actions (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-3-POLICE-001 | not listed | — | 0 | detention limit (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-4-CRISIS-001 | not listed | — | 0 | Crisis authority duration, decay, revalidation cadence, exit sensitivity (l8_number); any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins') (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-4-CRISIS-001-PATCH | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-4-EPISTEMIC-TRANSITIONS-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-4-ERROR-001 | not listed | — | 3 | threshold of a systemic or cascading error (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-4-UPGRADE-001 | listed downstream | — | 1 | post-crisis audit and stabilization period (normative_predicate); length of the upgrade reversibility window (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-CULTURE-001 | listed downstream | interactions informational and non-binding without L8 calibration (§11) | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-EDU-001 | listed downstream | signals informational without L8 calibration (§12) | 0 | EDU competence-based restrictions (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-HABITAT-001 | listed downstream | non-enforceable without a bundle covering SPDI (§6) | 0 | SPDI model, SPDI_min and component survivability thresholds (l8_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-INFO-001 | listed downstream | non-enforceable without a bundle; classifications above I1 informational (§9) | 0 | INFO transition times T₁, T₂ (l8_number); INFO propagation thresholds for a Systemic Lie (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-TRANSPORT-001 | not listed | — | 0 | minimum PPDI threshold, 'regular' standing, forced-contact density (l8_number); RED coefficient (external_document) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-TRANSPORT-001-APPENDIX-A | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-WORK-CYCLE-001 | not listed | — | 9 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-6-EXIT-001 | listed downstream | — | 0 | exit cooling period (l8_number); EXIT phased disengagement (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-6-INTEGRATION-001 | listed downstream | — | 0 | INTEGRATION interface clearance (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-6-RESILIENCE-001 | not listed | — | 0 | N_eff (definition) and N_eff_min (value) (architectural_definition) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-7-AI-SUBJECT-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-7-PRIVACY-001 | not listed | — | 0 | re-identification threshold of a Privacy Breach (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-7-SCOPE-001 | upstream of SIMULATION | — | 0 | — | §4 read literally: NON-ENFORCEABLE, but §2 places SIMULATION downstream of it — undetermined (Q-035) |
+| DKP-7-TRANSPARENCY-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-8-AUDIT-001 | listed downstream | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-8-INTEROP-001 | listed downstream | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-8-SIMULATION-001 | not listed | — | 0 | every composite index (model, inputs, weights, uncertainty) (l8_model) | the calibration protocol itself |
 
 Summary: 33 non-enforceable as written; 3 upstream of SIMULATION, undetermined (Q-035); 1 not a protocol; 1 the calibration protocol itself.  Of the non-enforceable ones, HABITAT, INFO, EDU and CULTURE say so in their own text as well.

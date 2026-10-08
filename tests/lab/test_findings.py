@@ -65,10 +65,10 @@ def test_f005_and_f006_impact_and_reversibility():
     assert rows == {                                    # (Rᵢ emitted, restitution, isolation, FAIL)
         "reversible_justice_polarity": (True, True, False, []),
         "irreversible_justice_polarity": (False, False, True, []),
-        "reversible_impact_name_polarity": (False, True, False, []),
-        "irreversible_impact_name_polarity": (True, False, True, []),
-        "reversible_mixed": (False, False, True, ["JUSTICE-6-01", "JUSTICE-8-01"]),
-        "irreversible_mixed": (True, True, False, ["JUSTICE-6-01", "JUSTICE-8-01"])}
+        "reversible_impact_name_polarity": (False, True, False, ["JUSTICE-3.1-01", "JUSTICE-6-01", "JUSTICE-8-01"]),
+        "irreversible_impact_name_polarity": (True, False, True, ["JUSTICE-3.1-01", "JUSTICE-6-01", "JUSTICE-8-01"]),
+        "reversible_mixed": (False, False, True, ["JUSTICE-3.1-01"]),
+        "irreversible_mixed": (True, True, False, ["JUSTICE-3.1-01"])}
 
 
 def test_f007_n_eff_undefined():
@@ -98,13 +98,15 @@ def test_f010_sustained_d3_gap():
     assert got == {"sustained_6h": (10, 15), "sustained_24h": (10, 33), "immediate": (10, 10)}
 
 
-def test_f011_f012_exit_conflicts():
+def test_f011_f012_exit():
     def run(name):
         with open(os.path.join(FINDINGS, f"{name}.request.json"), encoding="utf-8") as f:
             return run_request(json.load(f))["variants"]
     v = run("F-011")
     assert {n: (x["outputs"]["exit_executed_day"], next(c["status"] for c in x["checks"] if c["requirement_id"] == "SCOPE-9-02"))
-            for n, x in v.items()} == {"cooling_14": (284, "FAIL"), "cooling_0": (270, "PASS")}
+            for n, x in v.items()} == {"purposes_after_scope_priority": (284, "UNKNOWN"),
+                                       "purposes_as_listed_in_exit": (284, "FAIL"), "settlement_only": (284, "PASS"),
+                                       "cooling_0": (270, "PASS")}
     v = run("F-012")
     assert {n: (x["outputs"]["exit_executed_day"], next(c["status"] for c in x["checks"] if c["requirement_id"] == "EXIT-4-03"))
             for n, x in v.items()} == {"never_suspended": (284, "PASS"), "scope_crisis_suspension": (302, "FAIL")}
@@ -205,3 +207,11 @@ def test_f026_absolute_aggregates():
     rows = {n: (x["outputs"]["decisions"][0]["grant"],
                 any(c["requirement_id"] == "PRIVACY-6-01" and c["status"] == "UNKNOWN" for c in x["checks"])) for n, x in v.items()}
     assert rows == {"aggregate_allowed": (True, True), "never": (False, True)}
+
+
+def test_f018_window_closes_next_state_undefined():
+    with open(os.path.join(FINDINGS, "F-018.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    st = {n: tuple({c["requirement_id"]: c["status"] for c in x["checks"]}[r] for r in ("ORACLE-11-03", "ORACLE-11-04"))
+          for n, x in v.items()}
+    assert st == {"divergence_24_days": ("PASS", "UNKNOWN"), "divergence_10_days": ("PASS", "PASS")}

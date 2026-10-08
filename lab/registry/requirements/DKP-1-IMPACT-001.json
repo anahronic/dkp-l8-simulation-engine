@@ -390,7 +390,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -414,7 +414,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "r_is_irreversibility"
    },
    "tests": [
@@ -427,7 +427,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -519,7 +519,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "impact_formula"
    },
    "tests": [
@@ -532,7 +532,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -593,7 +593,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "boundary_flag"
    },
    "tests": [
@@ -606,7 +606,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -637,7 +637,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -901,7 +901,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "externality_on_crossing"
    },
    "tests": [
@@ -1049,7 +1049,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "uncertainty_does_not_suppress"
    },
    "tests": [
@@ -1084,7 +1084,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "impact_fields"
    },
    "tests": [
@@ -1128,7 +1128,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -1153,13 +1153,19 @@
    "data_dependencies": [
     "Higher-layer action logs and interface payloads"
    ],
-   "gap": "The prohibited logic categories lack formal recognition criteria. No lab check implemented yet.",
+   "gap": "Only the reversibility flag hand-over is observed.",
    "hypotheses_needed": [
     "Declare how higher-layer actions and injected logic are classified against each prohibition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.2.0",
+    "check": "no_flag_override"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

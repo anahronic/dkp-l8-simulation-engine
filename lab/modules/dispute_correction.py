@@ -50,6 +50,7 @@ FAULTS = {
     "proxy_as_subject": "a smart contract or agent is bound as an independent Subject",
     "enforce_no_attribution": "enforcement proceeds on NO_ATTRIBUTION",
     "suppress_by_uncertainty": "a boundary crossing within the uncertainty envelope is not flagged",
+    "override_flag": "JUSTICE inverts the reversibility flag it receives from IMPACT",
 }
 
 
@@ -94,9 +95,14 @@ def bind(subjects: List[Dict[str, Any]], contributions: List[float], faults=()) 
     return {k: round(v / total, 12) for k, v in sorted(raw.items()) if v > 0} if total > 0 else {}
 
 
+def received_flag(imp: Dict[str, Any], r: Dict[str, Any]) -> bool:
+    """The Rᵢ JUSTICE works with: IMPACT's flag unchanged (IMPACT §11), unless a fault overrides it."""
+    return (not imp["R"]) if "override_flag" in r["faults"] else bool(imp["R"])
+
+
 def justice_domains(imp: Dict[str, Any], r: Dict[str, Any]) -> Dict[str, Optional[bool]]:
     """JUSTICE §6–§9 triggers; the received Rᵢ is read by the declared polarity (H-DC-5)."""
-    reversible = justice_reversible(imp["R"], r["r_polarity"])
+    reversible = justice_reversible(received_flag(imp, r), r["r_polarity"])
     margin = None if r["safe_margin"] < 0 else abs(imp["I"]) >= r["safe_margin"]
     if r["repeated_harm"] or r["mitigation_insufficient"] or margin:
         restriction: Optional[bool] = True
@@ -185,8 +191,12 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
                 return m_imp, m_att, None
         doms = justice_domains(imp, r)
         weights = att["weights"] or bind(r["subjects"], contrib, faults)
+        got = received_flag(imp, r)
         dec = {"label": label, "domains": doms, "shares": weights,
-               "amounts": "not computed: no amount function in JUSTICE §6-§9"}
+               "amounts": "not computed: no amount function in JUSTICE §6-§9",
+               "flag": {"emitted_by_impact": imp["R"], "received": got,
+                        "read_as": "reversible" if justice_reversible(got, r["r_polarity"]) else "irreversible",
+                        "contract": "JUSTICE §6/§8: Rᵢ = True reversible, Rᵢ = False irreversible; no conversion (IMPACT §11)"}}
         m_dec = put("decision", "JUSTICE", at, dec, (m_imp.event_id, m_att.event_id),
                     md("VALID", "SUFFICIENT_DATA", "CONSISTENT", scope, reval=True), decided=at, record=True)
         return m_imp, m_att, m_dec
@@ -478,12 +488,12 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
         bad = [m.event_id for m in decs if set(m.value["domains"]) != set(DOMAINS)]
         res.append(verdict("JUSTICE-5-02", "all_domains_evaluated", not bad, "all four domains evaluated in every decision",
                            "a domain was not evaluated"))
-        # §6/§8 name the physical condition ("impact is reversible (Rᵢ = True)"): the checker takes it from the
-        # declared input, not from the emitted flag, so a polarity mismatch between IMPACT and JUSTICE shows up
+        # JUSTICE §6/§8 are checked literally on the flag JUSTICE received: Rᵢ = True means reversible, whatever
+        # reading the run declares (the reading is not allowed to change what the check calls compliant)
         expected = {}
         for m in decs:
             imp = get(m.provenance[0]).value
-            reversible = not r["irreversible"]
+            reversible = bool(m.value.get("flag", {}).get("received", imp["R"]))
             expected[m.event_id] = {
                 "restitution": reversible and r["mitigation_possible"],
                 "isolation": (not reversible) or imp["X"] or r["systemic_risk"],
@@ -491,10 +501,25 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
         for rid, d in (("JUSTICE-6-01", "restitution"), ("JUSTICE-8-01", "isolation"), ("JUSTICE-9-01", "exclusion")):
             bad = [m.event_id for m in decs if bool(m.value["domains"][d]) != bool(expected[m.event_id][d])]
             res.append(verdict(rid, f"{d}_trigger", not bad,
-                               f"{d} applied exactly when its §{rid.split('-')[1]} conditions hold "
-                               f"(impact {'ir' if r['irreversible'] else ''}reversible, Rᵢ polarity '{r['r_polarity']}')",
-                               f"{d} trigger wrong in {bad} (impact {'ir' if r['irreversible'] else ''}reversible, "
-                               f"Rᵢ polarity '{r['r_polarity']}')"))
+                               f"{d} applied exactly when its §{rid.split('-')[1]} conditions hold on the received Rᵢ "
+                               "(True = reversible, as JUSTICE §6/§8 state)",
+                               f"{d} trigger wrong in {bad}: the adapter read Rᵢ against JUSTICE §6/§8 "
+                               f"(declared polarity '{r['r_polarity']}')"))
+        # hand-over: JUSTICE must not override the flag (IMPACT §11)
+        bad = [m.event_id for m in decs if m.value.get("flag") and
+               m.value["flag"]["received"] != get(m.provenance[0]).value["R"]]
+        res.append(verdict("IMPACT-11-01", "no_flag_override", not bad,
+                           "every Justice decision used the reversibility flag exactly as IMPACT emitted it",
+                           f"{len(bad)} decisions overrode the IMPACT flag (IMPACT §11)"))
+        # chain contract: the flag IMPACT emits must mean, under the only stated polarity (JUSTICE §6/§8), the declared
+        # physical reversibility
+        bad = [m.event_id for m in decs if get(m.provenance[0]).value["R"] != (not r["irreversible"])]
+        res.append(verdict("JUSTICE-3.1-01", "flag_contract", not bad,
+                           f"the IMPACT flag (Rᵢ = {get(decs[0].provenance[0]).value['R']}) means what JUSTICE reads: the impact "
+                           f"is {'ir' if r['irreversible'] else ''}reversible",
+                           f"IMPACT emitted Rᵢ = {get(decs[0].provenance[0]).value['R']} for an "
+                           f"{'ir' if r['irreversible'] else ''}reversible impact; under JUSTICE §6/§8 it means the opposite "
+                           "(IMPACT §4 fixes no polarity: F-006)"))
         if r["safe_margin"] < 0 and not (r["repeated_harm"] or r["mitigation_insufficient"]):
             res.append(CheckResult("JUSTICE-7-01", "restriction_trigger", UNKNOWN,
                                    "'axiom-defined safe margins' have no numeric value in the corpus; whether the "
@@ -794,6 +819,8 @@ IMPLEMENTS = {
     "JUSTICE-2-02": ("justice_inputs", "IMPLEMENTED", None),
     "JUSTICE-2-03": ("justice_inputs", "IMPLEMENTED", None),
     "JUSTICE-5-02": ("all_domains_evaluated", "IMPLEMENTED", None),
+    "IMPACT-11-01": ("no_flag_override", "PARTIAL", "Only the reversibility flag hand-over is observed."),
+    "JUSTICE-3.1-01": ("flag_contract", "PARTIAL", "The reversibility flag only; physical reversibility is declared."),
     "JUSTICE-6-01": ("restitution_trigger", "PARTIAL", "Rᵢ polarity from JUSTICE §6; IMPACT §4 leaves it open (F-006); mitigation possibility is an input."),
     "JUSTICE-6-02": ("restitution_outputs", "PARTIAL", "Amounts and time limits need an amount function the texts do not give: UNKNOWN."),
     "JUSTICE-7-01": ("restriction_trigger", "PARTIAL", "Safe margins have no numeric value: UNKNOWN unless declared."),
@@ -837,7 +864,7 @@ SUBJECT = {"type": "object", "fields": {
 
 class DisputeCorrectionModule(LabModule):
     id = "dispute_correction"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Dispute and correction (S-LAB-04)", "ru": "Спор и исправление (S-LAB-04)"}
     summary = {"en": "A measurement or an attribution was wrong: is the appeal accepted in time, is the decision "
                      "recomputed without new penalties, is the original kept and the difference shown?",

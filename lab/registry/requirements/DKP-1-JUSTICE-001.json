@@ -104,7 +104,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "justice_inputs"
    },
    "tests": [
@@ -142,7 +142,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "justice_inputs"
    },
    "tests": [
@@ -174,11 +174,17 @@
    "data_dependencies": [
     "channel-level Impact outputs and lineage"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The reversibility flag only; physical reversibility is declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.2.0",
+    "check": "flag_contract"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -370,7 +376,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "all_domains_evaluated"
    },
    "tests": [
@@ -407,7 +413,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "restitution_trigger"
    },
    "tests": [
@@ -420,7 +426,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -451,7 +457,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "restitution_outputs"
    },
    "tests": [
@@ -527,7 +533,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "restriction_trigger"
    },
    "tests": [
@@ -640,7 +646,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "isolation_trigger"
    },
    "tests": [
@@ -653,7 +659,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -756,7 +762,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "exclusion_trigger"
    },
    "tests": [
@@ -903,7 +909,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "proportional_distribution"
    },
    "tests": [
@@ -1018,7 +1024,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "periodic_not_faster_than_ttl"
    },
    "tests": [
@@ -1132,7 +1138,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "dispute_not_blocked_by_ttl"
    },
    "tests": [
@@ -1145,7 +1151,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -1183,7 +1189,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "dispute_exception_conditions"
    },
    "tests": [
@@ -1196,7 +1202,7 @@
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {

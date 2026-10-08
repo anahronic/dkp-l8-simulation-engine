@@ -109,7 +109,9 @@ def protocol_table(m: Dict[str, Any], consts: List[Dict[str, Any]]) -> List[Dict
                                  "listed downstream" if did in pos["listed_downstream"] else "not listed",
                      "own_clause": m["own_clause"].get(did, "—"),
                      "constants_in_text": ncon.get(did, 0), "deferred_to_l8": ndef.get(did, 0),
-                     "missing_values": nmis.get(did, 0), "category": cat_, "literal_status": status})
+                     "missing_values": nmis.get(did, 0), "category": cat_, "literal_status": status,
+                     "depends_on": [f"{x['parameter']} ({x['gap_type']})" for x in m["deferred_to_l8"] if x["doc"] == did] +
+                                   [f"{x['value']} ({x['gap_type']})" for x in m["missing_values"] if x["doc"] == did]})
     return rows
 
 
@@ -133,22 +135,25 @@ def markdown(m: Dict[str, Any]) -> str:
         q = c["quote"] if len(c["quote"]) <= 160 else c["quote"][:157] + "…"
         L.append(f"| {c['id']} | {', '.join(c['values'])} | {q.replace('|', '¦')} |")
     L += ["", "## 3. Parameters the texts assign to L8", "",
-          "| Parameter | Document | § | Text | Lab stand-in (declared, source `missing`) |", "|---|---|---|---|---|"]
-    L += [f"| {r['parameter']} | {r['doc']} | {r['at']} | \"{r['text']}\"{' — ' + r['note'] if r.get('note') else ''} | "
+          "| Parameter | Gap type | Document | § | Text | Lab stand-in (declared, source `missing`) |", "|---|---|---|---|---|---|"]
+    L += [f"| {r['parameter']} | {r['gap_type']} | {r['doc']} | {r['at']} | \"{r['text']}\"{' — ' + r['note'] if r.get('note') else ''} | "
           f"{r['lab_input'] or '—'} |" for r in m["deferred_to_l8"]]
     L += ["", "## 4. Values needed but neither written nor assigned to L8", "",
-          "| Value | Document | § | Text | Origin | Lab stand-in |", "|---|---|---|---|---|---|"]
-    L += [f"| {r['value']} | {r['doc']} | {r['at']} | \"{r['text']}\" | {r['origin']}"
-          f"{' (' + r['finding'] + ')' if r.get('finding') else ''} | {r['lab_input'] or '—'} |" for r in m["missing_values"]]
+          "Gap types: " + "; ".join(f"**{k}** — {v}" for k, v in m["gap_types"].items()) + ".  Architectural definitions and "
+          "normative predicates are not calibration values: a Calibration Bundle cannot supply them.", "",
+          "| Value | Gap type | Document | § | Text | Finding | Lab stand-in |", "|---|---|---|---|---|---|---|"]
+    L += [f"| {r['value']} | {r['gap_type']} | {r['doc']} | {r['at']} | \"{r['text']}\" | {r.get('finding') or '—'} | "
+          f"{r['lab_input'] or '—'} |" for r in m["missing_values"]]
     L += ["", "External documents referenced but absent: " +
           "; ".join(f"{r['document']} (cited by {r['doc']})" for r in m["external_dependencies"]) + ".", "",
           "## 5. Which documents are non-enforceable without a bundle", "",
           "SIMULATION §2 lists the protocols downstream of it and the three it is downstream of; §4 speaks of every "
           "protocol.  Four L5 protocols and ORACLE's B(t) also say so in their own text.", "",
-          "| Document | SIMULATION §2 position | Own clause | Constants in text | Deferred to L8 | Missing values | Status as written |",
-          "|---|---|---|---:|---:|---:|---|"]
-    L += [f"| {r['document']} | {r['position']} | {r['own_clause']} | {r['constants_in_text']} | {r['deferred_to_l8']} | "
-          f"{r['missing_values']} | {r['literal_status']} |" for r in rows]
+          "**Reading and its limits.** " + m["reading"], "",
+          "| Document | SIMULATION §2 position | Own clause | Constants in text | Outputs depending on L8 or missing values | Status as written |",
+          "|---|---|---|---:|---|---|"]
+    L += [f"| {r['document']} | {r['position']} | {r['own_clause']} | {r['constants_in_text']} | "
+          f"{'; '.join(r['depends_on']) or '—'} | {r['literal_status']} |" for r in rows]
     st = Counter(r["category"] for r in rows)
     label = {"non_enforceable": "non-enforceable as written", "undetermined": "upstream of SIMULATION, undetermined (Q-035)",
              "not_a_protocol": "not a protocol", "calibration_protocol": "the calibration protocol itself"}

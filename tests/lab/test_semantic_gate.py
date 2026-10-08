@@ -98,3 +98,34 @@ def test_text_verified_is_derived_and_not_a_human_review():
                 for r in json.load(f)["requirements"]:
                     assert (r["interpretation_status"] == "TEXT_VERIFIED") == (r["id"] in read), r["id"]
                     assert r["interpretation_status"] in ("DRAFT_UNREVIEWED", "TEXT_VERIFIED")
+
+
+KINDS = {"contradiction", "authority_difference", "broken_reference", "inconsistent_values", "missing_definition",
+         "systemic_blocker", "reading_dependent", "lab_error"}
+
+
+def test_findings_carry_the_proof_their_kind_needs():
+    """Review 2026-10-08: a verbatim quote shows the words exist, not that the conclusion follows.  Contradictions need
+    a structured analysis, missing definitions the documents, terms and reference chain searched."""
+    for f in V["findings"]:
+        assert f["kind"] in KINDS, f["id"]
+        assert (f["kind"] == "lab_error") == (f["classification"] == "IMPLEMENTATION_BUG"), f["id"]
+        if f["kind"] in ("reading_dependent", "authority_difference"):
+            assert f["classification"] == "INTERPRETATION_GAP", f["id"]
+        if f["kind"] in ("contradiction", "authority_difference"):
+            a = f["analysis"]
+            for side in ("rule_a", "rule_b"):
+                assert all(a[side].get(k) for k in ("text", "subject", "object", "scope", "conditions", "modality")), f["id"]
+            assert a["joint_compliance"] and a["priority"] and a["result"], f["id"]
+        if f["kind"] == "missing_definition":
+            sr = f["searched"]
+            assert sr["documents"] and sr["terms"] and sr["reference_chain"], f["id"]
+
+
+def test_agent_reading_quote_check_and_human_acceptance_are_separate():
+    assert "human_acceptance" in V["acceptance"] and "quote_check" in V["acceptance"]
+    for sec in ("findings", "reference_fails", "noncompliant_cases", "questions"):
+        for rec in V[sec]:
+            acc = rec["acceptance"]
+            assert acc["agent_reading"] is True and acc["quote_check"] == "automatic"
+            assert acc["human_accepted"] is False          # no human has accepted any record yet (A6 open)

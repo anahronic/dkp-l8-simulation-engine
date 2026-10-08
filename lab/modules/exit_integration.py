@@ -341,14 +341,22 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     # SCOPE §9 ----------------------------------------------------------------------------
     out.append(v("SCOPE-9-01", "exit_not_conditioned", ["approval"] if d.value["approval_required"] else [],
                  "exit was not conditioned on compliance or approval", "exit conditioned on an approval"))
-    if r["cooling_days"] > 0:
-        out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", FAIL,
-                               f"exit is delayed by a {r['cooling_days']}-day cooling period whose stated purpose is to "
-                               "'prevent cascading instability' (EXIT §6); SCOPE §9 forbids delaying exit for stability goals. "
-                               "Rule conflict between texts in force (F-011, Q-031)",
-                               evidence={"tag": "rule_conflict", "cooling_days": r["cooling_days"]}))
-    else:
+    purposes = set(r["cooling_purposes"])
+    if r["cooling_days"] == 0:
         out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", PASS, "no cooling delay: exit not delayed for stability"))
+    elif "stability" in purposes:
+        out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", FAIL,
+                               f"exit is delayed by a {r['cooling_days']}-day cooling period that serves 'prevent cascading "
+                               "instability' (EXIT §6); SCOPE §9 forbids delaying exit for stability goals and SCOPE §2 makes "
+                               "SCOPE prevail (F-011)", evidence={"tag": "rule_conflict", "cooling_days": r["cooling_days"]}))
+    elif "dependency_protection" in purposes:
+        out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", UNKNOWN,
+                               f"the {r['cooling_days']}-day cooling period serves the EXIT §6 purposes left after SCOPE §2/§9; "
+                               "whether 'protect non-exiting parties from abrupt dependency loss' is a 'stability goal' is not "
+                               "settled (F-011, Q-031)"))
+    else:
+        out.append(CheckResult("SCOPE-9-02", "no_delay_for_stability", PASS,
+                               f"the {r['cooling_days']}-day cooling period serves only settlement and orderly disengagement"))
     pauses = [m for m in msgs if m.source == "EXIT" and "suspended" in str(m.value.get("exit", ""))]
     lo, hi = r["crisis_window"]
     out.append(v("SCOPE-9-03", "suspension_only_in_crisis_scope", [m.event_id for m in pauses if not lo <= m.arrived_at < hi],
@@ -392,7 +400,7 @@ IMPLEMENTS = {
     "ASSETS-2-02": ("no_asset_decision_in_halt", "IMPLEMENTED", None),
     "FINANCE-10-03": ("tail_before_release", "PARTIAL", "Bypass is checked as release of assets before the restitution tail is fixed."),
     "SCOPE-9-01": ("exit_not_conditioned", "IMPLEMENTED", None),
-    "SCOPE-9-02": ("no_delay_for_stability", "PARTIAL", "Any cooling period counts as a delay for stability (EXIT §6 states that purpose): rule conflict F-011."),
+    "SCOPE-9-02": ("no_delay_for_stability", "PARTIAL", "SCOPE §2 sets aside the EXIT §6 stability purpose; whether dependency protection is a stability goal is open (F-011): UNKNOWN."),
     "SCOPE-9-03": ("suspension_only_in_crisis_scope", "PARTIAL", "Crisis Scope is a declared window."),
     "SCOPE-9-04": ("detachable_equivalent", "PARTIAL", "The form of settlement is recorded, not valued."),
     "SCOPE-9-07": ("non_protocol_form", "PARTIAL", "The form of settlement is recorded, not valued."),
@@ -406,7 +414,7 @@ IMPLEMENTS = {
     "INTEGRATION-10-01": ("steps_documented", "IMPLEMENTED", None),
     "INTEGRATION-11-03": ("no_retroactive_enforcement", "IMPLEMENTED", None),
     "EXIT-4-02": ("no_approval_needed", "IMPLEMENTED", None),
-    "EXIT-4-03": ("never_suspended", "PARTIAL", "Conflicts with SCOPE §9 under the crisis-suspension reading (F-012)."),
+    "EXIT-4-03": ("never_suspended", "PARTIAL", "SCOPE §9 permits what EXIT §4 forbids; using the permission fails EXIT §4 (F-012)."),
     "EXIT-5-01": ("signed_scoped_declaration", "PARTIAL", "The signature is a declared flag."),
     "EXIT-5-03": ("no_additional_authorization", "IMPLEMENTED", None),
     "EXIT-6-02": ("cooling_bounded", "PARTIAL", "The cooling period length is not given (calibration missing): declared input."),
@@ -427,16 +435,16 @@ IMPLEMENTS = {
 
 class ExitIntegrationModule(LabModule):
     id = "exit_integration"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Exit and integration (S-LAB-07)", "ru": "Выход и интеграция (S-LAB-07)"}
     summary = {"en": "A region joins phase by phase and later leaves: is every step consented and validated, does "
                      "exit need no one's permission, and does only verified past liability follow it out?",
                "ru": "Регион входит по фазам и затем выходит: каждый ли шаг согласован и проверен, не требует ли выход "
                      "ничьего разрешения, остаётся ли за ним только проверенная прошлая ответственность?"}
     protocols = ["DKP-6-INTEGRATION-001", "DKP-6-EXIT-001", "DKP-2-FINANCE-001", "DKP-2-ASSETS-001", "DKP-7-SCOPE-001"]
-    example_order = ["join_then_leave", "shock_and_rollback", "exit_in_crisis_scope_reading", "faulty_integration",
-                     "faulty_exit", "liabilities_mix"]
-    alternative_examples = ["exit_in_crisis_scope_reading"]
+    example_order = ["join_then_leave", "shock_and_rollback", "exit_in_crisis_scope_reading", "cooling_for_stability",
+                     "faulty_integration", "faulty_exit", "liabilities_mix"]
+    alternative_examples = ["exit_in_crisis_scope_reading", "cooling_for_stability"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_exit_integration_module.py"]
     causal_note = None
@@ -445,8 +453,15 @@ class ExitIntegrationModule(LabModule):
             "en": "Cooling period: declared number of DTI-Days; EXIT §6 defers its calibration to DKP-8-SIMULATION-001, which gives none.",
             "ru": "Период охлаждения: объявленное число DTI-Days; EXIT §6 отсылает калибровку к DKP-8-SIMULATION-001, где её нет."}},
         {"id": "H-EI-2", "source": "alternative", "text": {
-            "en": "Exit during a crisis: 'never_suspended' (EXIT §4, §11) or 'scope_crisis_suspension' — paused while the crisis lasts (SCOPE §9; F-012).",
-            "ru": "Выход в кризис: 'never_suspended' (EXIT §4, §11) или 'scope_crisis_suspension' — пауза на время кризиса (SCOPE §9; F-012)."}},
+            "en": "Exit during a crisis: 'never_suspended' (EXIT §4, §11; also complies with SCOPE §9, whose exception is a "
+                  "permission) or 'scope_crisis_suspension' — the SCOPE §9 permission used while the crisis lasts (F-012).",
+            "ru": "Выход в кризис: 'never_suspended' (EXIT §4, §11; соблюдает и SCOPE §9, чьё исключение — разрешение) или "
+                  "'scope_crisis_suspension' — разрешение SCOPE §9 использовано на время кризиса (F-012)."}},
+        {"id": "H-EI-4", "source": "text", "text": {
+            "en": "Cooling purposes: EXIT §6 lists four; 'prevent cascading instability' is set aside because SCOPE §9 forbids "
+                  "delaying exit for stability goals and SCOPE §2 makes SCOPE prevail (F-011). Alternative: all four.",
+            "ru": "Цели охлаждения: EXIT §6 называет четыре; 'prevent cascading instability' снята, потому что SCOPE §9 запрещает "
+                  "откладывать выход ради стабильности, а SCOPE §2 отдаёт приоритет SCOPE (F-011). Альтернатива: все четыре."}},
         {"id": "H-EI-3", "source": "hypothesis", "text": {
             "en": "Integration phases advance only on declared validation days; shock indicators are a declared window.",
             "ru": "Фазы интеграции продвигаются только в объявленные дни проверки; признаки шока — объявленное окно."}},
@@ -494,6 +509,11 @@ class ExitIntegrationModule(LabModule):
                             "label": {"en": "PTL systemic halt from/to day", "ru": "Системная остановка PTL с/до дня"}},
         "crisis_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "DTI-Day", "source": "user",
                           "label": {"en": "Declared crisis from/to day", "ru": "Объявленный кризис с/до дня"}},
+        "cooling_purposes": {"type": "list", "min_items": 1, "max_items": 4, "source": "text",
+                             "items": {"type": "enum", "values": ["settlement", "orderly_disengagement", "dependency_protection",
+                                                                  "stability"]},
+                             "default": ["settlement", "orderly_disengagement", "dependency_protection"],
+                             "label": {"en": "Purposes the cooling period serves (H-EI-4)", "ru": "Цели периода охлаждения (H-EI-4)"}},
         "crisis_exit_reading": {"type": "enum", "values": ["never_suspended", "scope_crisis_suspension"], "default": "never_suspended",
                                 "source": "alternative", "label": {"en": "Exit during crisis (H-EI-2)", "ru": "Выход в кризис (H-EI-2)"}},
         "liabilities": {"type": "list", "min_items": 0, "max_items": 50, "items": LIAB, "source": "user",
@@ -540,10 +560,10 @@ class ExitIntegrationModule(LabModule):
                           f"выход объявлен в день {info['exit_decl']}, исполнен в день {info['exit_exec']} "
                           f"(охлаждение {r['cooling_days']} дн., объявлено — в корпусе значения нет)."}]
         if r["cooling_days"]:
-            explain.append({"en": "The cooling period delays exit to prevent instability (EXIT §6); SCOPE §9 forbids delaying exit "
-                                  "for stability goals (F-011).",
-                            "ru": "Период охлаждения откладывает выход ради предотвращения нестабильности (EXIT §6); SCOPE §9 "
-                                  "запрещает откладывать выход ради стабильности (F-011)."})
+            explain.append({"en": f"Cooling purposes: {', '.join(r['cooling_purposes'])}. EXIT §6 also names 'prevent cascading "
+                                  "instability'; SCOPE §9 forbids delaying exit for stability and SCOPE §2 makes SCOPE prevail (F-011).",
+                            "ru": f"Цели охлаждения: {', '.join(r['cooling_purposes'])}. EXIT §6 называет ещё 'prevent cascading "
+                                  "instability'; SCOPE §9 запрещает откладывать выход ради стабильности, SCOPE §2 отдаёт ему приоритет (F-011)."})
         return ModuleResult(outputs=outputs, checks=res, explain=explain)
 
     def comparison_metrics(self, outputs: Dict[str, Any]) -> Dict[str, Any]:
@@ -556,6 +576,8 @@ class ExitIntegrationModule(LabModule):
             "join_then_leave": {},
             "shock_and_rollback": {"shock_window": [95, 110]},
             "exit_in_crisis_scope_reading": {"crisis_window": [262, 280], "crisis_exit_reading": "scope_crisis_suspension"},
+            "cooling_for_stability": {"cooling_purposes": ["settlement", "orderly_disengagement", "dependency_protection",
+                                                           "stability"]},
             "faulty_integration": {"faults": ["auto_progression", "phase0_effects", "retroactive"]},
             "faulty_exit": {"faults": ["require_approval", "punitive_tail", "post_declaration_obligation", "collect_after_exit",
                                        "reentry_penalty"],

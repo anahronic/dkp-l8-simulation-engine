@@ -323,6 +323,11 @@
   },
   {
    "module": "exit_integration",
+   "example": "cooling_for_stability",
+   "kind": "alternative"
+  },
+  {
+   "module": "exit_integration",
    "example": "exit_in_crisis_scope_reading",
    "kind": "alternative"
   },
@@ -782,18 +787,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 572,
-  "covered_percent": 32.9,
+  "covered": 574,
+  "covered_percent": 33.0,
   "statuses": {
-   "PASS": 520,
-   "FAIL": 4,
-   "UNKNOWN": 36,
+   "PASS": 522,
+   "FAIL": 2,
+   "UNKNOWN": 38,
    "NOT_APPLICABLE": 12,
-   "UNCOVERED": 1165
+   "UNCOVERED": 1163
   },
   "resolvable": 334,
-  "resolvable_uncovered": 199,
-  "unresolved_decisions": 1403
+  "resolvable_uncovered": 198,
+  "unresolved_decisions": 1403,
+  "covered_with_open_point": 438,
+  "pass_with_open_point": 392
  },
  "stages": [
   {
@@ -843,18 +850,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 572,
-    "covered_percent": 32.9,
+    "covered": 574,
+    "covered_percent": 33.0,
     "statuses": {
-     "PASS": 520,
-     "FAIL": 4,
-     "UNKNOWN": 36,
+     "PASS": 522,
+     "FAIL": 2,
+     "UNKNOWN": 38,
      "NOT_APPLICABLE": 12,
-     "UNCOVERED": 1165
+     "UNCOVERED": 1163
     },
     "resolvable": 334,
-    "resolvable_uncovered": 199,
-    "unresolved_decisions": 1403
+    "resolvable_uncovered": 198,
+    "unresolved_decisions": 1403,
+    "covered_with_open_point": 438,
+    "pass_with_open_point": 392
    }
   },
   {
@@ -904,7 +913,9 @@
     },
     "resolvable": 7,
     "resolvable_uncovered": 0,
-    "unresolved_decisions": 36
+    "unresolved_decisions": 36,
+    "covered_with_open_point": 12,
+    "pass_with_open_point": 11
    }
   },
   {
@@ -924,18 +935,20 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 79,
-    "covered_percent": 21.6,
+    "covered": 80,
+    "covered_percent": 21.9,
     "statuses": {
-     "PASS": 71,
-     "FAIL": 4,
-     "UNKNOWN": 2,
+     "PASS": 72,
+     "FAIL": 2,
+     "UNKNOWN": 4,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 286
+     "UNCOVERED": 285
     },
     "resolvable": 101,
     "resolvable_uncovered": 74,
-    "unresolved_decisions": 264
+    "unresolved_decisions": 264,
+    "covered_with_open_point": 53,
+    "pass_with_open_point": 46
    }
   },
   {
@@ -966,7 +979,9 @@
     },
     "resolvable": 93,
     "resolvable_uncovered": 48,
-    "unresolved_decisions": 331
+    "unresolved_decisions": 331,
+    "covered_with_open_point": 107,
+    "pass_with_open_point": 95
    }
   },
   {
@@ -997,7 +1012,9 @@
     },
     "resolvable": 43,
     "resolvable_uncovered": 21,
-    "unresolved_decisions": 250
+    "unresolved_decisions": 250,
+    "covered_with_open_point": 87,
+    "pass_with_open_point": 78
    }
   },
   {
@@ -1017,18 +1034,20 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 213,
-    "covered_percent": 41.7,
+    "covered": 214,
+    "covered_percent": 41.9,
     "statuses": {
-     "PASS": 196,
+     "PASS": 197,
      "FAIL": 0,
      "UNKNOWN": 15,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 298
+     "UNCOVERED": 297
     },
     "resolvable": 79,
-    "resolvable_uncovered": 45,
-    "unresolved_decisions": 432
+    "resolvable_uncovered": 44,
+    "unresolved_decisions": 432,
+    "covered_with_open_point": 179,
+    "pass_with_open_point": 162
    }
   },
   {
@@ -1375,13 +1394,13 @@
   },
   {
    "id": "Q-031",
-   "title": "EXIT §6 cooling period 'to prevent cascading instability' against SCOPE §9 'exit SHALL NOT be delayed for optimization or stability goals'",
+   "title": "EXIT §6 cooling period: drop the purpose 'prevent cascading instability' (SCOPE §9, SCOPE §2), and is protecting non-exiting parties from abrupt dependency loss a 'stability goal'",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
   },
   {
    "id": "Q-032",
-   "title": "EXIT §4 'never suspended' against SCOPE §9 'except temporarily within Crisis Scope to preserve immediate life'",
+   "title": "Exit in a crisis: SCOPE §9 permits a temporary suspension within Crisis Scope to preserve immediate life, EXIT §4 forbids any suspension — does SCOPE's permission override EXIT's prohibition (SCOPE §2)",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
   },
@@ -1441,7 +1460,7 @@
   },
   {
    "id": "Q-042",
-   "title": "Axiom A1 'minimum required conditions': what they are and which component may apply them within a Crisis Scope",
+   "title": "Axiom A1 'minimum required conditions': CRISIS is the named authority (§12.2) — which evidence and checks establish that an action meets the conditions",
    "status": "UNRESOLVED",
    "category": "architecture_definition"
   },
@@ -1465,7 +1484,7 @@
   }
  ],
  "semantic_gate": {
-  "verifier": "Claude (Anthropic): manual reading of the pinned text. Not a human review and not an author decision.",
+  "verifier": "Claude (Anthropic) as the lab agent: reading of the pinned text. Not a human review and not an author decision.",
   "date": "2026-10-07",
   "findings": [
    {
@@ -1520,13 +1539,13 @@
    },
    {
     "id": "F-011",
-    "title": "EXIT delays exit for stability; SCOPE forbids delaying exit for stability",
+    "title": "EXIT §6 delays exit \"to prevent cascading instability\"; SCOPE §9 forbids delays for stability goals",
     "classification": "CONFIRMED_FINDING"
    },
    {
     "id": "F-012",
-    "title": "EXIT: exit is never suspended; SCOPE: it may be suspended within Crisis Scope",
-    "classification": "CONFIRMED_FINDING"
+    "title": "Exit in a crisis: SCOPE permits a temporary suspension that EXIT forbids",
+    "classification": "INTERPRETATION_GAP"
    },
    {
     "id": "F-013",
@@ -1555,7 +1574,7 @@
    },
    {
     "id": "F-018",
-    "title": "ORACLE §11: nothing says what happens when the 14-day arbitration window ends unresolved",
+    "title": "ORACLE §11: nothing says what follows when the 14-day arbitration window ends unresolved",
     "classification": "CONFIRMED_FINDING"
    },
    {
@@ -1580,7 +1599,7 @@
    },
    {
     "id": "F-023",
-    "title": "Axiom A1 \"minimum required conditions\": every text defers the definition, none gives it",
+    "title": "Axiom A1 \"minimum required conditions\": an authority is named, an admissibility test is not",
     "classification": "CONFIRMED_FINDING"
    },
    {
@@ -1600,8 +1619,8 @@
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 14,
-   "INTERPRETATION_GAP": 10,
+   "CONFIRMED_FINDING": 13,
+   "INTERPRETATION_GAP": 11,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
   },
@@ -1613,25 +1632,6 @@
     ],
     "origin": "CONFIRMED_FINDING",
     "finding": "F-015"
-   },
-   {
-    "requirement": "ORACLE-11-03",
-    "runs": [
-     "failure_chain:long_divergence"
-    ],
-    "origin": "CONFIRMED_FINDING",
-    "finding": "F-018"
-   },
-   {
-    "requirement": "SCOPE-9-02",
-    "runs": [
-     "exit_integration:join_then_leave",
-     "exit_integration:liabilities_mix",
-     "exit_integration:settlement_after_halt",
-     "exit_integration:shock_and_rollback"
-    ],
-    "origin": "CONFIRMED_FINDING",
-    "finding": "F-011"
    },
    {
     "requirement": "TIME-9-04",
@@ -1735,44 +1735,51 @@
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "text_verified": 53,
+    "agent_verified": 53,
     "codex_draft": 150,
+    "human_accepted": 0,
     "total": 203
    },
    {
     "origin": "architecture_definition",
-    "text_verified": 20,
+    "agent_verified": 20,
     "codex_draft": 228,
+    "human_accepted": 0,
     "total": 248
    },
    {
     "origin": "l8_parameter",
-    "text_verified": 0,
+    "agent_verified": 0,
     "codex_draft": 130,
+    "human_accepted": 0,
     "total": 130
    },
    {
     "origin": "empirical_model_data",
-    "text_verified": 0,
+    "agent_verified": 0,
     "codex_draft": 232,
+    "human_accepted": 0,
     "total": 232
    },
    {
     "origin": "external_dependency",
-    "text_verified": 0,
+    "agent_verified": 0,
     "codex_draft": 211,
+    "human_accepted": 0,
     "total": 211
    },
    {
     "origin": "implementation_only",
-    "text_verified": 0,
+    "agent_verified": 0,
     "codex_draft": 379,
+    "human_accepted": 0,
     "total": 379
    },
    {
     "origin": "pending",
-    "text_verified": 0,
+    "agent_verified": 0,
     "codex_draft": 0,
+    "human_accepted": 0,
     "total": 0
    }
   ],
@@ -4064,7 +4071,7 @@
    "gap": "The ensemble, divergence metric, tranche relationship, and unresolved-at-deadline behavior are undefined. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -4077,7 +4084,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-018"
+   ],
    "open_point": {
     "origin": "normative_ambiguity",
     "source": "codex_draft"
@@ -5584,7 +5593,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -5609,7 +5619,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -5633,7 +5643,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -5659,7 +5670,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -5668,13 +5679,13 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "failure_chain",
    "check": "arbitration_window",
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "The text gives no consequence when the window is exceeded; the check only reports it.",
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [
     "H-FC-1",
@@ -5683,7 +5694,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -5691,23 +5703,22 @@
     "Q-005"
    ],
    "observed": {
-    "PASS": 2,
-    "FAIL": 1,
+    "PASS": 3,
+    "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
    },
-   "status": "FAIL",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-018",
-    "questions:Q-005",
-    "reference_fails:ORACLE-11-03"
+    "questions:Q-005"
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -5722,7 +5733,7 @@
    "tests": [
     "tests/lab/test_failure_chain_module.py"
    ],
-   "gap": "Ends by convergence within 7 % or exclusion; staleness does not end it (H-FC-4).",
+   "gap": "Ends by convergence within 7 % or exclusion; staleness does not end it (H-FC-4); after an unresolved window the next state is undefined (F-018): UNKNOWN.",
    "also_checked_by": [],
    "hypotheses": [
     "H-FC-1",
@@ -5731,7 +5742,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -5741,10 +5753,10 @@
    "observed": {
     "PASS": 2,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 6
    },
-   "status": "PASS",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [
     "failure_chain:all_faults"
    ],
@@ -5755,7 +5767,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -6009,7 +6021,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -6127,7 +6140,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -6195,7 +6208,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -6231,7 +6244,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -6265,7 +6278,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -6289,7 +6302,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -6328,7 +6342,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -6684,7 +6699,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -6769,7 +6785,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -7197,7 +7213,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -7222,7 +7239,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -7251,6 +7268,7 @@
     "H-FC-5",
     "H-FC-5-ALT",
     "H-FC-6",
+    "H-FC-7",
     "PREVENTION-H-*"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -7295,7 +7313,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -7320,7 +7339,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -8528,7 +8547,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -8828,7 +8847,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -8915,7 +8934,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -9239,7 +9258,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -9329,7 +9348,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -9809,7 +9828,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -10735,7 +10754,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -10776,7 +10796,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -10878,7 +10899,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -11088,7 +11110,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -11141,7 +11164,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
@@ -11196,7 +11220,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -11254,7 +11279,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -11330,7 +11356,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -11416,7 +11443,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -11450,7 +11477,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -11513,7 +11540,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -11547,7 +11574,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -11581,7 +11608,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -13009,7 +13036,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -13018,25 +13045,36 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited logic categories lack formal recognition criteria. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "dispute_correction",
+   "check": "no_flag_override",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": "Only the reversibility flag hand-over is observed.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -13365,7 +13403,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -13444,7 +13482,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -13478,7 +13516,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -14121,7 +14159,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -14169,7 +14207,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -14823,25 +14861,37 @@
    "section": "3.1",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "dispute_correction",
+   "check": "flag_contract",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": "The reversibility flag only; physical reversibility is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1,
+    "FAIL": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -15089,7 +15139,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -15322,7 +15372,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -15567,7 +15617,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -15615,7 +15665,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -16463,7 +16513,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -16501,7 +16551,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -16539,7 +16589,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -16577,7 +16627,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -16817,7 +16867,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -16855,7 +16905,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -17031,7 +17081,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -17662,13 +17712,15 @@
     "H-EI-1",
     "H-EI-2",
     "H-EI-3",
+    "H-EI-4",
     "H-FC-1",
     "H-FC-2",
     "H-FC-3",
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
@@ -17685,7 +17737,7 @@
     "failure_chain:divergence_faulty_adapter"
    ],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -18163,7 +18215,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -18372,7 +18424,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -18425,7 +18478,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -18833,7 +18887,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -18847,7 +18902,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -19106,7 +19161,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -19136,7 +19192,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -25486,7 +25542,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -25566,7 +25622,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -27210,7 +27266,7 @@
    "tests": [
     "tests/lab/test_police_antiterror_module.py"
    ],
-   "gap": "CRISIS minimum-required conditions are a declared authorization.",
+   "gap": "Lethal force without authorization fails; with a declared authorization UNKNOWN (F-023).",
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
@@ -27236,7 +27292,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -28224,7 +28280,7 @@
    "gap": "No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
@@ -28237,7 +28293,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-023"
+   ],
    "open_point": null
   },
   {
@@ -29719,7 +29777,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -30265,7 +30323,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -30806,7 +30864,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -30829,7 +30888,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -30853,7 +30912,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -30967,7 +31027,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -30992,7 +31053,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -31016,7 +31077,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31039,7 +31101,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -31063,7 +31125,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31086,7 +31149,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -31110,7 +31173,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -31157,7 +31221,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31202,7 +31267,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31247,7 +31313,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31292,7 +31359,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31337,7 +31405,8 @@
     "H-FC-4",
     "H-FC-5",
     "H-FC-5-ALT",
-    "H-FC-6"
+    "H-FC-6",
+    "H-FC-7"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -31393,6 +31462,7 @@
     "H-FC-5",
     "H-FC-5-ALT",
     "H-FC-6",
+    "H-FC-7",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -32494,7 +32564,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -33217,7 +33287,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -33544,7 +33614,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -33593,7 +33663,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -35263,7 +35333,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -43336,7 +43406,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -43383,7 +43453,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -44630,7 +44700,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -45015,7 +45085,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -45456,7 +45526,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -45586,7 +45656,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -45856,7 +45926,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -45870,7 +45941,7 @@
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -45992,7 +46063,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -46006,6 +46078,7 @@
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
     "PASS": 1
    },
    "violated_by_noncompliant_case": [],
@@ -46043,7 +46116,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -46124,7 +46197,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -46138,7 +46212,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -46164,7 +46238,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -46180,7 +46255,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -46328,7 +46403,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -46344,7 +46420,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -46367,7 +46443,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -46381,7 +46458,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -46567,7 +46644,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -46581,7 +46659,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47049,7 +47127,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
@@ -47065,7 +47144,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -47085,12 +47164,13 @@
    "tests": [
     "tests/lab/test_exit_integration_module.py"
    ],
-   "gap": "Conflicts with SCOPE §9 under the crisis-suspension reading (F-012).",
+   "gap": "SCOPE §9 permits what EXIT §4 forbids; using the permission fails EXIT §4 (F-012).",
    "also_checked_by": [],
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -47106,6 +47186,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
+    "PASS": 1,
     "FAIL": 1
    },
    "violated_by_noncompliant_case": [],
@@ -47114,7 +47195,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -47166,7 +47247,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47180,7 +47262,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47238,7 +47320,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -47254,7 +47337,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47293,7 +47376,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -47313,7 +47396,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47329,13 +47413,13 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -47451,7 +47535,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -47465,7 +47550,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47552,7 +47637,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47566,7 +47652,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47653,7 +47739,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47669,7 +47756,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47727,7 +47814,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47743,7 +47831,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47769,7 +47857,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47785,7 +47874,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47843,7 +47932,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -47857,7 +47947,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -47973,7 +48063,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -47989,7 +48080,7 @@
     "exit_integration:faulty_integration"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -48547,7 +48638,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -48561,7 +48653,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -48587,7 +48679,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -48603,7 +48696,7 @@
     "exit_integration:faulty_integration"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -48626,7 +48719,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -48642,7 +48736,7 @@
     "exit_integration:faulty_integration"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -48726,7 +48820,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -48742,7 +48837,7 @@
     "exit_integration:faulty_integration"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -48957,7 +49052,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -48971,7 +49067,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -49186,7 +49282,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -49200,7 +49297,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -49255,7 +49352,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -49269,7 +49367,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53185,7 +53283,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -53232,7 +53330,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -55704,7 +55802,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -55720,7 +55819,7 @@
     "exit_integration:faulty_exit"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -55738,12 +55837,13 @@
    "tests": [
     "tests/lab/test_exit_integration_module.py"
    ],
-   "gap": "Any cooling period counts as a delay for stability (EXIT §6 states that purpose): rule conflict F-011.",
+   "gap": "SCOPE §2 sets aside the EXIT §6 stability purpose; whether dependency protection is a stability goal is open (F-011): UNKNOWN.",
    "also_checked_by": [],
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -55752,27 +55852,24 @@
    ],
    "observed": {
     "PASS": 0,
-    "FAIL": 4,
-    "UNKNOWN": 0,
+    "FAIL": 0,
+    "UNKNOWN": 4,
     "NOT_APPLICABLE": 0
    },
-   "status": "FAIL",
-   "counterexample_detected_by": [
-    "exit_integration:faulty_exit",
-    "exit_integration:faulty_integration"
-   ],
+   "status": "UNKNOWN",
+   "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "FAIL": 1
+    "FAIL": 1,
+    "UNKNOWN": 1
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-011",
-    "questions:Q-031",
-    "reference_fails:SCOPE-9-02"
+    "questions:Q-031"
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -55792,7 +55889,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -55808,7 +55906,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -55817,7 +55915,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -55837,7 +55935,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -55851,7 +55950,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -55938,7 +56037,8 @@
    "hypotheses": [
     "H-EI-1",
     "H-EI-2",
-    "H-EI-3"
+    "H-EI-3",
+    "H-EI-4"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -55952,7 +56052,7 @@
    "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 2
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -60707,7 +60807,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -60754,7 +60854,7 @@
    ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -61458,7 +61558,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {
@@ -61505,7 +61605,7 @@
    ],
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "text_verified"
+    "source": "agent_verified"
    }
   },
   {

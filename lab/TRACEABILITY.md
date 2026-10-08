@@ -13,16 +13,16 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 ## Stages of the specification
 
-| Stage | Status | Documents registered | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 572 (32.9 %) | 520 | 4 | 36 | 12 | 1165 | 199 | 1403 |
-| B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 18 | 0 | 1 | 0 | 24 | 0 | 36 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 79 (21.6 %) | 71 | 4 | 2 | 2 | 286 | 74 | 264 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 152 (35.8 %) | 138 | 0 | 11 | 3 | 272 | 48 | 331 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 109 (37.2 %) | 97 | 0 | 7 | 5 | 184 | 21 | 250 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 213 (41.7 %) | 196 | 0 | 15 | 2 | 298 | 45 | 432 |
-| G. General release | NOT STARTED | — | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 572 (32.9 %) | 520 | 4 | 36 | 12 | 1165 | 199 | 1403 |
+| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 574 (33.0 %) | 438 | 522 | 392 | 2 | 38 | 12 | 1163 | 198 | 1403 |
+| B. First working site | PARTIAL | 1/1 | 43 | 19 (44.2 %) | 12 | 18 | 11 | 0 | 1 | 0 | 24 | 0 | 36 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 80 (21.9 %) | 53 | 72 | 46 | 2 | 4 | 2 | 285 | 74 | 264 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 152 (35.8 %) | 107 | 138 | 95 | 0 | 11 | 3 | 272 | 48 | 331 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 109 (37.2 %) | 87 | 97 | 78 | 0 | 7 | 5 | 184 | 21 | 250 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 214 (41.9 %) | 179 | 197 | 162 | 0 | 15 | 2 | 297 | 44 | 432 |
+| G. General release | NOT STARTED | — | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 574 (33.0 %) | 438 | 522 | 392 | 2 | 38 | 12 | 1163 | 198 | 1403 |
 
 ### Stage criteria
 
@@ -61,12 +61,12 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 ## Semantic verification gate
 
-Verifier: Claude (Anthropic): manual reading of the pinned text. Not a human review and not an author decision. (2026-10-07).
+Verifier: Claude (Anthropic) as the lab agent: reading of the pinned text. Not a human review and not an author decision. (2026-10-07).
 
 | Class | Findings |
 |---|---:|
-| CONFIRMED_FINDING | 14 |
-| INTERPRETATION_GAP | 10 |
+| CONFIRMED_FINDING | 13 |
+| INTERPRETATION_GAP | 11 |
 | IMPLEMENTATION_BUG | 2 |
 | UNVERIFIED_FINDING | 0 |
 
@@ -82,19 +82,19 @@ Verifier: Claude (Anthropic): manual reading of the pinned text. Not a human rev
 | F-008 | CONFIRMED_FINDING | CRISIS allows extending oracle TTLs; ORACLE forbids it |
 | F-009 | CONFIRMED_FINDING | CRISIS §12.3 cites "Section 8 (Non-Precedent Rule)"; the rule is in §6 |
 | F-010 | INTERPRETATION_GAP | DEFENSE makes escalation at D3 mandatory; CRISIS enters only on "sustained" D3, whose duration nobody defines |
-| F-011 | CONFIRMED_FINDING | EXIT delays exit for stability; SCOPE forbids delaying exit for stability |
-| F-012 | CONFIRMED_FINDING | EXIT: exit is never suspended; SCOPE: it may be suspended within Crisis Scope |
+| F-011 | CONFIRMED_FINDING | EXIT §6 delays exit "to prevent cascading instability"; SCOPE §9 forbids delays for stability goals |
+| F-012 | INTERPRETATION_GAP | Exit in a crisis: SCOPE permits a temporary suspension that EXIT forbids |
 | F-013 | IMPLEMENTATION_BUG | A failing external oracle mirror: no conflict between INTEROP and CRISIS (lab premise withdrawn) |
 | F-014 | CONFIRMED_FINDING | No Calibration Bundle exists; by SIMULATION §4 every protocol that needs one is non-enforceable |
 | F-015 | CONFIRMED_FINDING | TRANSPORT has PTL quantify "systemic insurance exposure"; ORACLE limits PTL to physical state |
 | F-016 | INTERPRETATION_GAP | PPDI "forced bodily contact between non-consenting passengers": how PTL measures it is undefined |
 | F-017 | CONFIRMED_FINDING | TIME §9: the test vector for 2000-01-01 contradicts §5 and the reference code |
-| F-018 | CONFIRMED_FINDING | ORACLE §11: nothing says what happens when the 14-day arbitration window ends unresolved |
+| F-018 | CONFIRMED_FINDING | ORACLE §11: nothing says what follows when the 14-day arbitration window ends unresolved |
 | F-019 | INTERPRETATION_GAP | An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR) |
 | F-020 | CONFIRMED_FINDING | UPGRADE defers the post-crisis audit and stabilization period to AUDIT, which does not define it |
 | F-021 | INTERPRETATION_GAP | INTERNAL-SEC: after a state expires to S0, may persisting evidence raise it again at once? |
 | F-022 | CONFIRMED_FINDING | AXIOMS §8: "67% of active validating nodes, as defined in Appendix A.5" — A.5 defines no such nodes |
-| F-023 | CONFIRMED_FINDING | Axiom A1 "minimum required conditions": every text defers the definition, none gives it |
+| F-023 | CONFIRMED_FINDING | Axiom A1 "minimum required conditions": an authority is named, an admissibility test is not |
 | F-024 | INTERPRETATION_GAP | AXIOMS §5: when every action violates some axiom, rule 2 and rule 4 lead to different results |
 | F-025 | INTERPRETATION_GAP | Axiom A4 says SHOULD, while every axiom is a constraint |
 | F-026 | INTERPRETATION_GAP | PRIVACY §6: may aggregate statistics of an absolute privacy domain be published? |
@@ -104,8 +104,6 @@ FAILs of reference examples and their verified origin:
 | Requirement | Origin | Finding | Runs |
 |---|---|---|---|
 | ORACLE-1-02 | CONFIRMED_FINDING | F-015 | transport_capacity:red_single_delta |
-| ORACLE-11-03 | CONFIRMED_FINDING | F-018 | failure_chain:long_divergence |
-| SCOPE-9-02 | CONFIRMED_FINDING | F-011 | exit_integration:join_then_leave, exit_integration:liabilities_mix, exit_integration:settlement_after_halt, exit_integration:shock_and_rollback |
 | TIME-9-04 | CONFIRMED_FINDING | F-017 | time:normative_vectors, time:year_boundary |
 
 FAILs of noncompliant cases (the input breaks the provision on purpose):
@@ -124,17 +122,17 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1403 provisions have an open point.  Origin: text-verified where an author question was verified against the literal text; otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1403 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
-| Origin | Text-verified | Codex draft | Total |
-|---|---:|---:|---:|
-| normative_ambiguity | 53 | 150 | 203 |
-| architecture_definition | 20 | 228 | 248 |
-| l8_parameter | 0 | 130 | 130 |
-| empirical_model_data | 0 | 232 | 232 |
-| external_dependency | 0 | 211 | 211 |
-| implementation_only | 0 | 379 | 379 |
-| pending | 0 | 0 | 0 |
+| Origin | Agent-verified (quotes checked automatically) | Codex draft | Accepted by a human | Total |
+|---|---:|---:|---:|---:|
+| normative_ambiguity | 53 | 150 | 0 | 203 |
+| architecture_definition | 20 | 228 | 0 | 248 |
+| l8_parameter | 0 | 130 | 0 | 130 |
+| empirical_model_data | 0 | 232 | 0 | 232 |
+| external_dependency | 0 | 211 | 0 | 211 |
+| implementation_only | 0 | 379 | 0 | 379 |
+| pending | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 378.
 
@@ -159,8 +157,8 @@ Draft author-question candidates (unverified, not questions): 378.
 - Q-026 [UNRESOLVED, architecture_definition] N_eff and N_eff_min are used by CRISIS PATCH §2/§5.2 and RESILIENCE §5.1/§8.4 'per DKP-0-ORACLE-001', but no document defines them
 - Q-027 [UNRESOLVED, normative_ambiguity] Crisis Mercy Mode: CRISIS §6 allows extending oracle TTLs; ORACLE §14/§15 forbid modifying TTL values
 - Q-028 [UNRESOLVED, normative_ambiguity] CRISIS §12.3 cites 'Section 8 (Non-Precedent Rule)'; the rule is in §6
-- Q-031 [UNRESOLVED, normative_ambiguity] EXIT §6 cooling period 'to prevent cascading instability' against SCOPE §9 'exit SHALL NOT be delayed for optimization or stability goals'
-- Q-032 [UNRESOLVED, normative_ambiguity] EXIT §4 'never suspended' against SCOPE §9 'except temporarily within Crisis Scope to preserve immediate life'
+- Q-031 [UNRESOLVED, normative_ambiguity] EXIT §6 cooling period: drop the purpose 'prevent cascading instability' (SCOPE §9, SCOPE §2), and is protecting non-exiting parties from abrupt dependency loss a 'stability goal'
+- Q-032 [UNRESOLVED, normative_ambiguity] Exit in a crisis: SCOPE §9 permits a temporary suspension within Crisis Scope to preserve immediate life, EXIT §4 forbids any suspension — does SCOPE's permission override EXIT's prohibition (SCOPE §2)
 - Q-034 [UNRESOLVED, architecture_definition] Does a recalibration trigger (SIMULATION §10: drift, regime change, sensor change, audit divergence, dependency update) suspend a Calibration Bundle before its validity window ends
 - Q-035 [UNRESOLVED, normative_ambiguity] No Calibration Bundle exists: which protocols are meant to bind now, and do constants written in the texts (ORACLE §16/§17, ERROR §7, UPGRADE cooling-off) need a bundle
 - Q-036 [UNRESOLVED, normative_ambiguity] Who quantifies 'systemic insurance exposure' in RED: PTL (TRANSPORT §7.1, against ORACLE §1 'physical state only') or another layer; where RED combines its channels
@@ -168,7 +166,7 @@ Draft author-question candidates (unverified, not questions): 378.
 - Q-039 [UNRESOLVED, architecture_definition] UPGRADE post-crisis cooldown: the 'full post-crisis audit and stabilization period' is 'as defined by DKP-8-AUDIT-001', which defines none
 - Q-040 [UNRESOLVED, normative_ambiguity] INTERNAL-SEC §5: after automatic reversion to S0, may evidence that persists raise the same state again at once
 - Q-041 [UNRESOLVED, architecture_definition] AXIOMS §8: which are the 'active validating nodes' whose 67 % ratify an axiom change (Appendix A.5 of the Code defines none)
-- Q-042 [UNRESOLVED, architecture_definition] Axiom A1 'minimum required conditions': what they are and which component may apply them within a Crisis Scope
+- Q-042 [UNRESOLVED, architecture_definition] Axiom A1 'minimum required conditions': CRISIS is the named authority (§12.2) — which evidence and checks establish that an action meets the conditions
 - Q-043 [UNRESOLVED, normative_ambiguity] AXIOMS §5: when every action violates an axiom, does rule 4 choose by priority or rule 2 leave no admissible action
 - Q-044 [UNRESOLVED, normative_ambiguity] Axiom A4 'SHOULD': a binding constraint like the other axioms, or a recommendation
 - Q-045 [UNRESOLVED, normative_ambiguity] PRIVACY §6: may aggregate statistics of the absolute privacy domains (medical, mental, intimate, beliefs, private communications) be published
@@ -194,13 +192,13 @@ Withdrawn after verification (not author decisions):
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | CODE-OF-PLANETARY-SYNERGY | 101 | 0 | 0 | 0 | 0 | 0 | 101 | 90 |
-| DKP-0-ORACLE-001 | 58 | 16 | 13 | 2 | 0 | 1 | 42 | 49 |
+| DKP-0-ORACLE-001 | 58 | 16 | 13 | 1 | 1 | 1 | 42 | 49 |
 | DKP-0-TIME-001 | 35 | 12 | 11 | 1 | 0 | 0 | 23 | 6 |
 | DKP-1-AXIOMS-001 | 44 | 31 | 25 | 0 | 4 | 2 | 13 | 26 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 9 | 9 | 0 | 0 | 0 | 29 | 27 |
 | DKP-1-IDENTITY-001 | 39 | 7 | 6 | 0 | 1 | 0 | 32 | 31 |
-| DKP-1-IMPACT-001 | 39 | 7 | 5 | 0 | 1 | 1 | 32 | 26 |
-| DKP-1-JUSTICE-001 | 41 | 12 | 9 | 0 | 3 | 0 | 29 | 33 |
+| DKP-1-IMPACT-001 | 39 | 8 | 6 | 0 | 1 | 1 | 31 | 26 |
+| DKP-1-JUSTICE-001 | 41 | 13 | 10 | 0 | 3 | 0 | 28 | 33 |
 | DKP-1-PREVENTION-001 | 43 | 19 | 18 | 0 | 1 | 0 | 24 | 36 |
 | DKP-2-ASSETS-001 | 43 | 18 | 17 | 0 | 1 | 0 | 25 | 38 |
 | DKP-2-FINANCE-001 | 44 | 11 | 10 | 0 | 1 | 0 | 33 | 39 |
@@ -226,7 +224,7 @@ Withdrawn after verification (not author decisions):
 | DKP-6-RESILIENCE-001 | 37 | 8 | 4 | 0 | 4 | 0 | 29 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 28 | 28 | 0 | 0 | 0 | 11 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 24 | 22 | 0 | 2 | 0 | 15 | 31 |
-| DKP-7-SCOPE-001 | 75 | 11 | 10 | 1 | 0 | 0 | 64 | 62 |
+| DKP-7-SCOPE-001 | 75 | 11 | 10 | 0 | 1 | 0 | 64 | 62 |
 | DKP-7-TRANSPARENCY-001 | 44 | 20 | 20 | 0 | 0 | 0 | 24 | 41 |
 | DKP-8-AUDIT-001 | 43 | 4 | 4 | 0 | 0 | 0 | 39 | 34 |
 | DKP-8-INTEROP-001 | 49 | 13 | 12 | 0 | 1 | 0 | 36 | 41 |
@@ -239,8 +237,8 @@ Withdrawn after verification (not author decisions):
 | ORACLE-1-02 | PARTIAL | transport_capacity · ptl_physical_state_only | FAIL | yes | — |
 | ORACLE-11-01 | PARTIAL | failure_chain · divergence_threshold | PASS | yes | Q-004 |
 | ORACLE-11-02 | IMPLEMENTED | failure_chain · divergence_freeze | PASS | yes | Q-010 |
-| ORACLE-11-03 | PARTIAL | failure_chain · arbitration_window | FAIL | — | Q-005 |
-| ORACLE-11-04 | PARTIAL | failure_chain · divergence_resolution | PASS | yes | Q-004 |
+| ORACLE-11-03 | IMPLEMENTED | failure_chain · arbitration_window | PASS | — | Q-005 |
+| ORACLE-11-04 | PARTIAL | failure_chain · divergence_resolution | UNKNOWN | yes | Q-004 |
 | ORACLE-13-01 | PARTIAL | sensor_loss · systemic_halt_on_coverage | PASS | — | — |
 | ORACLE-13-02 | PARTIAL | failure_chain · halt_blocks_l2 | PASS | — | — |
 | ORACLE-17-01 | IMPLEMENTED | failure_chain · ttl_registry | PASS | — | — |
@@ -313,6 +311,7 @@ Withdrawn after verification (not author decisions):
 | IDENTITY-6-01 | PARTIAL | dispute_correction · proportional_weights | PASS | — | — |
 | IMPACT-10-01 | IMPLEMENTED | dispute_correction · impact_fields | PASS | — | — |
 | IMPACT-10-02 | PARTIAL | transport_capacity · no_aggregated_score | UNKNOWN | — | Q-036 |
+| IMPACT-11-01 | PARTIAL | dispute_correction · no_flag_override | PASS | — | — |
 | IMPACT-5-01 | IMPLEMENTED | dispute_correction · impact_formula | PASS | — | Q-023 |
 | IMPACT-5-03 | IMPLEMENTED | dispute_correction · boundary_flag | PASS | — | Q-023 |
 | IMPACT-8-03 | PARTIAL | dispute_correction · externality_on_crossing | PASS | — | — |
@@ -322,6 +321,7 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-11-02 | IMPLEMENTED | dispute_correction · periodic_not_faster_than_ttl | PASS | — | — |
 | JUSTICE-2-02 | IMPLEMENTED | dispute_correction · justice_inputs | PASS | — | — |
 | JUSTICE-2-03 | IMPLEMENTED | dispute_correction · justice_inputs | PASS | — | — |
+| JUSTICE-3.1-01 | PARTIAL | dispute_correction · flag_contract | PASS | — | — |
 | JUSTICE-5-02 | IMPLEMENTED | dispute_correction · all_domains_evaluated | PASS | — | — |
 | JUSTICE-6-01 | PARTIAL | dispute_correction · restitution_trigger | PASS | — | Q-022 |
 | JUSTICE-6-02 | PARTIAL | dispute_correction · restitution_outputs | UNKNOWN | — | — |
@@ -759,7 +759,7 @@ Withdrawn after verification (not author decisions):
 | SCOPE-6-04 | PARTIAL | crisis_recovery · stabilization_restores_baseline | PASS | yes | — |
 | SCOPE-8-05 | IMPLEMENTED | sensor_loss · no_escalation_from_isolated_region | PASS | — | — |
 | SCOPE-9-01 | IMPLEMENTED | exit_integration · exit_not_conditioned | PASS | yes | — |
-| SCOPE-9-02 | PARTIAL | exit_integration · no_delay_for_stability | FAIL | yes | Q-031 |
+| SCOPE-9-02 | PARTIAL | exit_integration · no_delay_for_stability | UNKNOWN | — | Q-031 |
 | SCOPE-9-03 | PARTIAL | exit_integration · suspension_only_in_crisis_scope | PASS | — | Q-032 |
 | SCOPE-9-04 | PARTIAL | exit_integration · detachable_equivalent | PASS | — | — |
 | SCOPE-9-07 | PARTIAL | exit_integration · non_protocol_form | PASS | — | — |

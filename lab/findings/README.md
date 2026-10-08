@@ -33,8 +33,8 @@ documented numbers as regressions.
 | [F-008](F-008.md) | CRISIS allows extending oracle TTLs; ORACLE forbids it | CONFIRMED_FINDING | Q-027 |
 | [F-009](F-009.md) | CRISIS §12.3 cites "Section 8 (Non-Precedent Rule)"; the rule is in §6 | CONFIRMED_FINDING | Q-028 |
 | [F-010](F-010.md) | DEFENSE escalates at D3; CRISIS enters on "sustained" D3 of undefined duration | INTERPRETATION_GAP (missing L8 parameter) | Q-029, Q-030 withdrawn |
-| [F-011](F-011.md) | EXIT delays exit for stability; SCOPE forbids delaying exit for stability | CONFIRMED_FINDING | Q-031 |
-| [F-012](F-012.md) | EXIT: exit is never suspended; SCOPE: it may be suspended within Crisis Scope | CONFIRMED_FINDING | Q-032 |
+| [F-011](F-011.md) | EXIT §6 delays exit 'to prevent cascading instability'; SCOPE §9 forbids it; SCOPE §2 resolves | CONFIRMED_FINDING (resolved by priority) | Q-031 |
+| [F-012](F-012.md) | Exit in a crisis: SCOPE permits a temporary suspension that EXIT forbids | INTERPRETATION_GAP (authority difference) | Q-032 |
 | [F-013](F-013.md) | A failing external oracle mirror: no conflict between INTEROP and CRISIS | IMPLEMENTATION_BUG (fixed) | Q-033 withdrawn |
 | [F-014](F-014.md) | No Calibration Bundle exists; by SIMULATION §4 protocols lacking one are non-enforceable | CONFIRMED_FINDING (systemic blocker) | Q-034, Q-035 |
 | [F-015](F-015.md) | TRANSPORT has PTL quantify "systemic insurance exposure"; ORACLE limits PTL to physical state | CONFIRMED_FINDING (narrowed) | Q-036 |
@@ -45,7 +45,7 @@ documented numbers as regressions.
 | [F-020](F-020.md) | UPGRADE defers the post-crisis stabilization period to AUDIT, which does not define it | CONFIRMED_FINDING | Q-039 |
 | [F-021](F-021.md) | INTERNAL-SEC: re-entry after a state expires to S0 is not defined | INTERPRETATION_GAP | Q-040 |
 | [F-022](F-022.md) | AXIOMS §8 ratifies by '67% of active validating nodes, as defined in Appendix A.5' — A.5 defines none | CONFIRMED_FINDING | Q-041 |
-| [F-023](F-023.md) | Axiom A1 'minimum required conditions': AXIOMS, CRISIS and SCOPE defer the definition to each other | CONFIRMED_FINDING | Q-042 |
+| [F-023](F-023.md) | Axiom A1 'minimum required conditions': the authority is named, the admissibility test is not | CONFIRMED_FINDING | Q-042 |
 | [F-024](F-024.md) | AXIOMS §5: rules 2 and 4 differ when every action violates an axiom | INTERPRETATION_GAP | Q-043 |
 | [F-025](F-025.md) | Axiom A4 says SHOULD while every axiom is a constraint | INTERPRETATION_GAP | Q-044 |
 | [F-026](F-026.md) | PRIVACY §6: aggregate statistics of the absolute privacy domains — allowed or not | INTERPRETATION_GAP | Q-045 |
@@ -54,3 +54,11 @@ Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's e
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to
 interpretation gaps; F-015 was narrowed to the part the texts confirm; F-017 (formerly only an open
 question) and F-018 (a reference FAIL without a record) were added.
+
+Changes made after the review of 2026-10-08: F-012 reclassified as an authority difference (the
+requirements are compatible); F-011 and F-018 no longer produce reference FAILs (F-011: the SCOPE §2
+resolution is applied; F-018: the arbitration window is measured, the state after it is UNKNOWN); F-006
+checks JUSTICE literally on the received flag, with separate checks for the hand-over (IMPACT §11) and the
+flag contract; F-023 narrowed (CRISIS §12.2 names the authority).  Every finding now has a kind;
+contradictions carry a structured analysis and missing definitions the searches made
+(`lab/registry/verifications.json`).

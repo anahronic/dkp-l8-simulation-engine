@@ -27,10 +27,9 @@ def test_ttl_registry_is_read_from_the_pinned_text():
 def test_reference_adapter_breaks_no_rule(name):
     _, res = run(**M.examples()[name])
     fails = sorted(k for k, s in statuses(res).items() if s == "FAIL")
-    if name == "long_divergence":
-        assert fails == ["ORACLE-11-03"]          # 24 days unresolved; the scenario, not the adapter
-    else:
-        assert fails == []
+    assert fails == []
+    if name == "long_divergence":                 # 24 days of disagreement: the window closes at 14, the next state is open
+        assert statuses(res)["ORACLE-11-03"] == "PASS" and statuses(res)["ORACLE-11-04"] == "UNKNOWN"
 
 
 # each deliberate fault, alone, on a scenario that exercises the rule it breaks
@@ -46,6 +45,7 @@ FAULT_CASES = {
     "mutate_on_dispute": ("dispute_recompute", ["EB-7.2-01", "EB-7.2-02", "EB-7.2-04"]),
     "execute_incomplete": ("incomplete_order", ["EB-5.x-02", "EB-5.x-03", "EB-8-02", "ASSETS-8.3-07"]),
     "repair_metadata": ("incomplete_order", ["EB-5.x-06", "EB-5.x-03"]),
+    "arbitration_overrun": ("long_divergence", ["ORACLE-11-03"]),
 }
 
 

@@ -95,7 +95,7 @@ def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
         r.pop("open_point", None)
         if r["decision_status"] == "UNRESOLVED":
             if r["id"] in g["question_origin"]:
-                r["open_point"] = {"origin": g["question_origin"][r["id"]], "source": "text_verified"}
+                r["open_point"] = {"origin": g["question_origin"][r["id"]], "source": "agent_verified"}
             elif r["id"] in g["draft"]:
                 d = g["draft"][r["id"]]
                 r["open_point"] = {"origin": d["primary"], "source": "codex_draft"}

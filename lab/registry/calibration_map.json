@@ -71,28 +71,32 @@
    "doc": "DKP-1-IDENTITY-001",
    "at": "§4.1",
    "text": "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:",
-   "lab_input": "dispute_correction.attribution_threshold"
+   "lab_input": "dispute_correction.attribution_threshold",
+   "gap_type": "l8_number"
   },
   {
    "parameter": "B(t): model, aggregation, weighting, calibration",
    "doc": "DKP-0-ORACLE-001",
    "at": "§12",
    "text": "The model, aggregation logic, weighting, and calibration of B(t) are not defined in PTL and MUST be explicitly specified in DKP-8-SIMULATION-001.",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_model"
   },
   {
    "parameter": "every composite index (model, inputs, weights, uncertainty)",
    "doc": "DKP-8-SIMULATION-001",
    "at": "§9",
    "text": "Any composite index (including B(t)): - MUST have its model fully specified in L8,",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_model"
   },
   {
    "parameter": "Crisis authority duration, decay, revalidation cadence, exit sensitivity",
    "doc": "DKP-4-CRISIS-001",
    "at": "§6",
    "text": "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001.",
-   "lab_input": "crisis_recovery (declared durations)"
+   "lab_input": "crisis_recovery (declared durations)",
+   "gap_type": "l8_number"
   },
   {
    "parameter": "any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins')",
@@ -100,63 +104,72 @@
    "at": "§6",
    "text": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol.",
    "note": "CRISIS may not hold them; SIMULATION §2 requires thresholds to pass SIMULATION. Inferred assignment to L8.",
-   "lab_input": "crisis_recovery.sustained_d3_steps; interop_failure.ptl_loss_tolerance"
+   "lab_input": "crisis_recovery.sustained_d3_steps; interop_failure.ptl_loss_tolerance",
+   "gap_type": "l8_number"
   },
   {
    "parameter": "exit cooling period",
    "doc": "DKP-6-EXIT-001",
    "at": "§6",
    "text": "Exit execution occurs after a fixed cooling period, calibrated exclusively under DKP-8-SIMULATION-001.",
-   "lab_input": "exit_integration.cooling_days"
+   "lab_input": "exit_integration.cooling_days",
+   "gap_type": "l8_number"
   },
   {
    "parameter": "SPDI model, SPDI_min and component survivability thresholds",
    "doc": "DKP-5-HABITAT-001",
    "at": "§5",
    "text": "SHALL be specified, calibrated, and validated exclusively under DKP-8-SIMULATION-001,",
-   "lab_input": "calibration_expiry.bundle (a hypothetical bundle, labelled as such)"
+   "lab_input": "calibration_expiry.bundle (a hypothetical bundle, labelled as such)",
+   "gap_type": "l8_model"
   },
   {
    "parameter": "INFO transition times T₁, T₂",
    "doc": "DKP-5-INFO-001",
    "at": "§6.1",
    "text": "Values of T₁ and T₂ SHALL NOT be defined in this protocol and MUST be calibrated under DKP-8-SIMULATION-001.",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "parameter": "INFO propagation thresholds for a Systemic Lie",
    "doc": "DKP-5-INFO-001",
    "at": "§7",
    "text": "repetition exceeds L8-calibrated propagation thresholds,",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "parameter": "EDU competence-based restrictions",
    "doc": "DKP-5-EDU-001",
    "at": "§12",
    "text": "MUST be calibrated under DKP-8-SIMULATION-001,",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "parameter": "PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights",
    "doc": "DKP-1-PREVENTION-001",
    "at": "§14",
    "text": "### 14. Simulation Layer (L8) Defines: - ε_consistency - Δt_int - θ thresholds - Wₖ weights",
-   "lab_input": "prevention (declared parameters, H-P hypotheses)"
+   "lab_input": "prevention (declared parameters, H-P hypotheses)",
+   "gap_type": "l8_number"
   },
   {
    "parameter": "EXIT phased disengagement",
    "doc": "DKP-6-EXIT-001",
    "at": "§7",
    "text": "be L8-simulated for stability,",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "parameter": "INTEGRATION interface clearance",
    "doc": "DKP-6-INTEGRATION-001",
    "at": "§5.3",
    "text": "DKP-8-SIMULATION-001 stress-test clearance,",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   }
  ],
  "missing_values": [
@@ -167,7 +180,8 @@
    "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)",
    "origin": "architecture_definition",
    "finding": "F-007",
-   "lab_input": "sensor_loss.n_eff_min"
+   "lab_input": "sensor_loss.n_eff_min",
+   "gap_type": "architectural_definition"
   },
   {
    "value": "axiom-defined safe margins",
@@ -175,7 +189,8 @@
    "at": "§7",
    "text": "impact exceeds axiom-defined safe margins, or",
    "origin": "empirical_model_data",
-   "lab_input": "dispute_correction.safe_margin"
+   "lab_input": "dispute_correction.safe_margin",
+   "gap_type": "empirical_model"
   },
   {
    "value": "numeric reference bounds Bᵢ",
@@ -183,7 +198,8 @@
    "at": "§6",
    "text": "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices.",
    "origin": "empirical_model_data",
-   "lab_input": "dispute_correction.bound"
+   "lab_input": "dispute_correction.bound",
+   "gap_type": "empirical_model"
   },
   {
    "value": "threshold of a systemic or cascading error",
@@ -191,7 +207,8 @@
    "at": "§9",
    "text": "impacting more than a protocol-defined threshold of Subjects or cross-layer execution",
    "origin": "l8_parameter",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "value": "minimum PPDI threshold, 'regular' standing, forced-contact density",
@@ -200,7 +217,8 @@
    "text": "Transport modes operating below the minimum PPDI threshold are classified as:",
    "origin": "l8_parameter",
    "finding": "F-016",
-   "lab_input": "transport_capacity.regular_standing_share, contact_density_m2"
+   "lab_input": "transport_capacity.regular_standing_share, contact_density_m2",
+   "gap_type": "l8_number"
   },
   {
    "value": "RED coefficient",
@@ -209,7 +227,8 @@
    "text": "computed via DKP-0-ORACLE-001 and DKP-1-IMPACT-001,",
    "origin": "external_dependency",
    "finding": "F-015",
-   "lab_input": "transport_capacity.red_per_km"
+   "lab_input": "transport_capacity.red_per_km",
+   "gap_type": "external_document"
   },
   {
    "value": "post-crisis audit and stabilization period",
@@ -218,7 +237,8 @@
    "text": "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001.",
    "origin": "architecture_definition",
    "finding": "F-020",
-   "lab_input": "upgrade_lifecycle.stabilization_days"
+   "lab_input": "upgrade_lifecycle.stabilization_days",
+   "gap_type": "normative_predicate"
   },
   {
    "value": "length of the upgrade reversibility window",
@@ -226,7 +246,8 @@
    "at": "§8",
    "text": "be reversible within a defined window,",
    "origin": "l8_parameter",
-   "lab_input": "upgrade_lifecycle (per-proposal reversible_window_days)"
+   "lab_input": "upgrade_lifecycle (per-proposal reversible_window_days)",
+   "gap_type": "l8_number"
   },
   {
    "value": "detention limit",
@@ -234,7 +255,8 @@
    "at": "§5.1",
    "text": "be time-limited,",
    "origin": "l8_parameter",
-   "lab_input": "police_antiterror.detention_limit_hours"
+   "lab_input": "police_antiterror.detention_limit_hours",
+   "gap_type": "l8_number"
   },
   {
    "value": "acceptable civilian casualty risk",
@@ -242,7 +264,8 @@
    "at": "§9",
    "text": "civilian casualty risk exceeds acceptable thresholds,",
    "origin": "l8_parameter",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "value": "elevated authorization thresholds for irreversible security actions",
@@ -250,7 +273,8 @@
    "at": "§4.4",
    "text": "Irreversible actions require elevated authorization thresholds and justification.",
    "origin": "l8_parameter",
-   "lab_input": null
+   "lab_input": null,
+   "gap_type": "l8_number"
   },
   {
    "value": "Axiom A1 minimum required conditions",
@@ -259,7 +283,8 @@
    "text": "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS",
    "origin": "architecture_definition",
    "finding": "F-023",
-   "lab_input": "police_antiterror.crisis_lethal_authorized"
+   "lab_input": "police_antiterror.crisis_lethal_authorized",
+   "gap_type": "normative_predicate"
   },
   {
    "value": "active validating nodes (ratification of axiom changes)",
@@ -268,7 +293,8 @@
    "text": "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy",
    "origin": "architecture_definition",
    "finding": "F-022",
-   "lab_input": "axiom_constraints (declared ratification_share)"
+   "lab_input": "axiom_constraints (declared ratification_share)",
+   "gap_type": "architectural_definition"
   },
   {
    "value": "re-identification threshold of a Privacy Breach",
@@ -276,7 +302,8 @@
    "at": "§4",
    "text": "Privacy Breach — any condition enabling identity reconstruction beyond defined thresholds.",
    "origin": "l8_parameter",
-   "lab_input": "privacy_transparency.reidentification_k"
+   "lab_input": "privacy_transparency.reidentification_k",
+   "gap_type": "l8_number"
   }
  ],
  "external_dependencies": [
@@ -322,5 +349,14 @@
   "DKP-5-EDU-001": "signals informational without L8 calibration (§12)",
   "DKP-5-CULTURE-001": "interactions informational and non-binding without L8 calibration (§11)",
   "DKP-0-ORACLE-001": "B(t) informational until a bundle exists (§12); nothing else in ORACLE refers to a bundle"
- }
+ },
+ "gap_types": {
+  "l8_number": "a number, threshold or duration that L8 calibration would supply",
+  "l8_model": "a model (aggregation, weights, uncertainty) that L8 must specify",
+  "empirical_model": "real-world data or an empirical/physical model (e.g. physical limits)",
+  "architectural_definition": "a set, structure or quantity the corpus refers to but never defines (not a calibration value)",
+  "normative_predicate": "a condition that decides whether an act is allowed; only the author can define it (not a calibration value)",
+  "external_document": "a referenced document that is not in the corpus"
+ },
+ "reading": "SIMULATION §4 read literally: protocols lacking a valid L8 Calibration Bundle are NON-ENFORCEABLE. This concerns the enforceability of their outputs. It does not remove physical records or written constraints, nor the right to check them in an isolated research model; every lab run is research (operational_use: false), and no lab parameter is a calibration."
 }

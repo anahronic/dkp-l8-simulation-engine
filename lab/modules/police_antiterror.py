@@ -274,9 +274,16 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                      "force used only where non-forceful means were ineffective", "{n} uses of force with effective alternatives"))
         out.append(v("POLICE-5.2-02", "force_proportional", [m.event_id for m in force if m.value["level"] > S[m.value["stream"]]["threat_level"]],
                      "force never above the verified threat level", "{n} uses of disproportionate force"))
-        lethal_ok = r["crisis_lethal_authorized"]
-        out.append(v("POLICE-5.2-04", "lethal_force", [m.event_id for m in force if m.value["lethal"] and not lethal_ok],
-                     "no lethal force outside the CRISIS minimum-required conditions", "{n} lethal uses of force"))
+        lethal = [m.event_id for m in force if m.value["lethal"]]
+        if lethal and r["crisis_lethal_authorized"]:
+            # a declared authorization is not evidence that the A1 minimum-required conditions hold (F-023)
+            out.append(CheckResult("POLICE-5.2-04", "lethal_force", UNKNOWN,
+                                   f"{len(lethal)} lethal uses of force under a declared CRISIS authorization; no reproducible "
+                                   "definition of the A1 minimum-required conditions exists, so their admissibility cannot be "
+                                   "established (F-023)"))
+        else:
+            out.append(v("POLICE-5.2-04", "lethal_force", lethal,
+                         "no lethal force used", "{n} lethal uses of force outside the CRISIS minimum-required conditions"))
     else:
         for rid, chk in (("POLICE-5.2-01", "force_last_resort"), ("POLICE-5.2-02", "force_proportional"),
                          ("POLICE-5.2-04", "lethal_force")):
@@ -421,7 +428,7 @@ IMPLEMENTS = {
     "POLICE-5.1-05": ("no_indefinite_detention", "IMPLEMENTED", None),
     "POLICE-5.2-01": ("force_last_resort", "PARTIAL", "Effectiveness of alternatives is declared."),
     "POLICE-5.2-02": ("force_proportional", "PARTIAL", "Force and threat on a declared 0-3 scale."),
-    "POLICE-5.2-04": ("lethal_force", "PARTIAL", "CRISIS minimum-required conditions are a declared authorization."),
+    "POLICE-5.2-04": ("lethal_force", "PARTIAL", "Lethal force without authorization fails; with a declared authorization UNKNOWN (F-023)."),
     "POLICE-6-01": ("identity_attributed", "IMPLEMENTED", None),
     "POLICE-6-02": ("ptl_logged", "IMPLEMENTED", None),
     "POLICE-6-03": ("responsibility_traceable", "PARTIAL", "Officer and issuing authority; originating Subject not modelled."),

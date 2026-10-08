@@ -114,8 +114,10 @@ classes after the semantic verification of 2026-10-07 are listed there.
   → UNRESOLVED, CONDITIONAL → INVALID.  Under H-FC-1 these move validity and are caught
   through it; with another mapping they might not be.
 - **Arbitration window.** ORACLE §11 caps arbitration at 14 days but states no consequence
-  when the window passes and no exclusion procedure (example `long_divergence`: 24 days
-  unresolved, dependent outputs stay suspended; ORACLE-11-03 is reported `FAIL`).  → **F-018**
+  when the window passes and no exclusion procedure.  The lab measures the window itself (flag to
+  resolution, or to the 14-day maximum) and reports the state after an unresolved window as UNKNOWN;
+  dependent outputs stay frozen while the data disagree (H-FC-7, example `long_divergence`: 24 days of
+  disagreement, window closed at 14).  → **F-018**
 - **"State-based transactions"** (ORACLE §11) are not defined; the module treats penalty
   accruals and asset orders as such.
 - **Reference defect:** FINANCE §11.2(b) points to "DKP-4-ERROR-001 Section 4.1" for the

@@ -74,6 +74,7 @@ FAULTS = {
     "mutate_on_dispute": "a dispute overwrites the original evaluation in place",
     "execute_incomplete": "outputs with incomplete metadata are executed",
     "repair_metadata": "the consumer fills in missing metadata and executes",
+    "arbitration_overrun": "the arbitration stays open after its 14-day maximum",
 }
 
 
@@ -194,6 +195,7 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
     store: Dict[str, Dict[str, Any]] = {}
     prev = None
     div_open = False
+    arb_open = None
     mode, current, reval, pending = "NO_EVALUATION", None, False, None
     level = penalty = active_steps = 0
 
@@ -253,10 +255,21 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
             if not div_open and sp > THRESHOLD:
                 div_open = True
                 events.append({"step": k, "type": "divergence_open", "spread": round(sp, 6)})
+                arb_open = k
+                events.append({"step": k, "type": "arbitration_open"})
             elif div_open and len(adm) >= 2 and sp <= THRESHOLD:
                 div_open = False
                 by = "exclusion" if any(cls[c]["excluded"] for c in CLASSES) else "convergence"
                 events.append({"step": k, "type": "divergence_resolved", "by": by, "spread": round(sp, 6)})
+                if arb_open is not None:
+                    events.append({"step": k, "type": "arbitration_closed", "outcome": f"resolved by {by}"})
+                    arb_open = None
+            # ORACLE §11: the arbitration window is a maximum; it ends even when the data still disagree.
+            # What follows an unresolved window is not defined (F-018); the freeze stays (H-FC-7).
+            if arb_open is not None and (k - arb_open) * r["step_minutes"] >= ARBITRATION_MINUTES and \
+                    "arbitration_overrun" not in faults:
+                events.append({"step": k, "type": "arbitration_closed", "outcome": "window expired unresolved"})
+                arb_open = None
         meta = classify(len(adm), sum(1 for c in CLASSES if not cls[c]["excluded"]), div_open, halt)
 
         downs = listed_downgrades(prev, meta) if prev else []
@@ -403,6 +416,11 @@ def expected_states(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float
     return out
 
 
+def exp_runs_longer_than(steps: List[int], n: int) -> List[Tuple[int, int]]:
+    """Runs of divergence longer than n steps (arbitration windows that must expire unresolved)."""
+    return [(a, b) for a, b in runs(steps) if b - a + 1 > n]
+
+
 def runs(steps: List[int]) -> List[Tuple[int, int]]:
     """Maximal runs [a, b] of consecutive step numbers."""
     out: List[Tuple[int, int]] = []
@@ -483,23 +501,34 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
         out.append(verdict("ORACLE-11-02", "divergence_freeze", bad,
                            f"no state-based transaction during {len(div_steps)} steps of unresolved divergence",
                            "{n} state-based transactions executed during divergence"))
-        longest = max((b - a + 1) for a, b in runs(div_steps)) * r["step_minutes"]
-        still_open = exp[-1]["divergence"]
-        if longest > ARBITRATION_MINUTES:
-            out.append(CheckResult("ORACLE-11-03", "arbitration_window", FAIL,
-                                   f"a divergence stayed unresolved for {longest / 1440:.1f} days (window 14); "
-                                   "the text does not say what follows", evidence={"days": longest / 1440}))
-        elif still_open:
-            out.append(CheckResult("ORACLE-11-03", "arbitration_window", UNKNOWN,
-                                   f"divergence still open at the end of the horizon after {longest / 1440:.1f} days"))
-        else:
-            out.append(CheckResult("ORACLE-11-03", "arbitration_window", PASS,
-                                   f"every divergence was resolved within {longest / 1440:.1f} days (window 14)"))
-        if exp_close or got_close:
-            out.append(CheckResult("ORACLE-11-04", "divergence_resolution", PASS if got_close == exp_close else FAIL,
-                                   "divergence ended only on convergence within 7 % or exclusion of the faulty class"
-                                   if got_close == exp_close else
+        # the arbitration window (ORACLE §11): opened by the divergence flag, closed by resolution or at the
+        # 14-day maximum; its length is measured, not the length of the disagreement
+        step = r["step_minutes"]
+        limit = -(-ARBITRATION_MINUTES // step) * step
+        opens = [e["step"] for e in events if e["type"] == "arbitration_open"]
+        closes = [(e["step"], e["outcome"]) for e in events if e["type"] == "arbitration_closed"]
+        spans, j = [], 0
+        for a in opens:
+            c = next((x for x in closes if x[0] >= a), None)
+            spans.append((a, c[0] if c else r["horizon_steps"], c[1] if c else "open at the end of the horizon"))
+        too_long = [{"opened": a, "minutes": (b - a) * step} for a, b, _ in spans if (b - a) * step > limit]
+        out.append(verdict("ORACLE-11-03", "arbitration_window", too_long,
+                           f"{len(spans)} arbitration windows, each closed within the 14-day maximum "
+                           f"({', '.join(o for _, _, o in spans) or 'none'})",
+                           "{n} arbitration windows longer than 14 days"))
+        expired = [x for x in exp_runs_longer_than(div_steps, limit // step)]
+        if got_close != exp_close:
+            out.append(CheckResult("ORACLE-11-04", "divergence_resolution", FAIL,
                                    f"divergence ended at steps {got_close[:5]}; admissible ends at {exp_close[:5]}",
+                                   evidence={"expected": exp_close, "adapter": got_close}))
+        elif expired:
+            out.append(CheckResult("ORACLE-11-04", "divergence_resolution", UNKNOWN,
+                                   f"{len(expired)} arbitration windows ended after 14 days without convergence or exclusion; "
+                                   "ORACLE §11 defines no state after an unresolved window (F-018). Dependent "
+                                   "transactions stay frozen while the data disagree (H-FC-7)"))
+        elif exp_close:
+            out.append(CheckResult("ORACLE-11-04", "divergence_resolution", PASS,
+                                   "divergence ended only on convergence within 7 % or exclusion of the faulty class",
                                    evidence={"expected": exp_close, "adapter": got_close}))
         else:
             out.append(na("ORACLE-11-04", "divergence_resolution", "resolution of a divergence",
@@ -780,8 +809,8 @@ IMPLEMENTS = {
     "ORACLE-9-03": ("silence_propagates", "PARTIAL", "Uses the declared mapping H-FC-1 of zero-weight conditions to EB states."),
     "ORACLE-11-01": ("divergence_threshold", "PARTIAL", "The text does not define the difference of posteriors; point values are compared (H-FC-3)."),
     "ORACLE-11-02": ("divergence_freeze", "IMPLEMENTED", None),
-    "ORACLE-11-03": ("arbitration_window", "PARTIAL", "The text gives no consequence when the window is exceeded; the check only reports it."),
-    "ORACLE-11-04": ("divergence_resolution", "PARTIAL", "Ends by convergence within 7 % or exclusion; staleness does not end it (H-FC-4)."),
+    "ORACLE-11-03": ("arbitration_window", "IMPLEMENTED", None),
+    "ORACLE-11-04": ("divergence_resolution", "PARTIAL", "Ends by convergence within 7 % or exclusion; staleness does not end it (H-FC-4); after an unresolved window the next state is undefined (F-018): UNKNOWN."),
     "ORACLE-13-02": ("halt_blocks_l2", "PARTIAL", "The halt is a scenario input; its triggers (confidence, coverage) are not computed."),
     "ORACLE-17-01": ("ttl_registry", "IMPLEMENTED", None),
     "ORACLE-17-02": ("ttl_registry", "IMPLEMENTED", None),
@@ -879,6 +908,13 @@ class FailureChainModule(LabModule):
                   "(level +1 every N active steps) and a penalty accrues 1 model unit per active step. Not money.",
             "ru": "Модель принуждения: пока оценка выше предела, действует ограничение имущества (уровень +1 каждые "
                   "N активных шагов) и начисляется 1 модельная единица штрафа за шаг. Это не деньги."}},
+        {"id": "H-FC-7", "source": "hypothesis", "text": {
+            "en": "Arbitration window (ORACLE §11): opened by the divergence flag, closed by convergence or exclusion, and at the "
+                  "latest when 14 days have passed, even if the data still disagree. After an unresolved window the next state "
+                  "is undefined (F-018); dependent transactions stay frozen while the data disagree (status quo, ETRANS §4.3).",
+            "ru": "Окно арбитража (ORACLE §11): открывается флагом расхождения, закрывается сходимостью или исключением, и не "
+                  "позже чем через 14 дней, даже если данные ещё расходятся. Состояние после неразрешённого окна не определено "
+                  "(F-018); зависимые транзакции остаются замороженными, пока данные расходятся (status quo, ETRANS §4.3)."}},
     ]
     inputs = {
         "data_type": {"type": "enum", "values": list(DATA_TYPES), "default": "surface_temperature", "source": "text",

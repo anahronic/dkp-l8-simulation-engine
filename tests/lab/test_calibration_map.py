@@ -40,3 +40,12 @@ def test_known_constants_are_found():
 
 def test_markdown_is_current():
     assert cm.main(["--check"]) == 0
+
+
+def test_gap_types_keep_definitions_and_predicates_out_of_calibration():
+    """Review 2026-10-08: a missing set or normative predicate is not a numeric setting."""
+    assert all(r["gap_type"] in M["gap_types"] for r in M["missing_values"] + M["deferred_to_l8"])
+    by = {r.get("finding"): r["gap_type"] for r in M["missing_values"] if r.get("finding")}
+    assert by["F-022"] == "architectural_definition" and by["F-023"] == "normative_predicate"
+    assert by["F-020"] == "normative_predicate" and by["F-007"] == "architectural_definition"
+    assert "operational_use: false" in M["reading"]

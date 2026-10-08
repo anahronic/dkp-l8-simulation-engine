@@ -1,9 +1,9 @@
 {
  "schema": "dkp-lab-verification/1",
  "corpus": "aad3e86ca293d61c7c6d3a0a05741d23676f0e18",
- "verifier": "Claude (Anthropic): manual reading of the pinned text. Not a human review and not an author decision.",
+ "verifier": "Claude (Anthropic) as the lab agent: reading of the pinned text. Not a human review and not an author decision.",
  "date": "2026-10-07",
- "rule": "Semantic verification gate: a finding, a FAIL of a reference example, a normative conflict, a systemic blocker or an author question gets that status only after the provisions involved are read against the literal pinned text. Codex drafts are never a source. Every quote below must occur verbatim (after markdown normalization) in the named document; 'absent' records a string that must not occur.",
+ "rule": "Semantic verification gate: a finding, a FAIL of a reference example, a normative conflict, a systemic blocker or an author question gets that status only after the provisions involved are read against the literal pinned text. Codex drafts are never a source. Every quote below must occur verbatim (after markdown normalization) in the named document; 'absent' records a string that must not occur. Since 2026-10-08 every finding has a kind; contradictions carry a structured analysis (subject, object, scope, conditions, modality of each rule, priority rule, joint compliance); missing definitions list the documents, terms and reference chain searched.",
  "classes": {
   "CONFIRMED_FINDING": "the literal texts produce the defect (contradiction, broken reference, wrong number, missing definition) without any lab reading",
   "INTERPRETATION_GAP": "the result depends on a reading or a definition the corpus does not give; no text is contradicted",
@@ -46,7 +46,13 @@
      "text": "Justice outputs SHALL be re-evaluated when: - impact metrics change,"
     }
    ],
-   "conclusion": "New admissible data is itself a trigger (EB §7.1) and leads to a new evaluation and recomputation (EB §7.2); ETRANS §4.2 forbids keeping an output active on a past VALID state once new admissible data is introduced. The lab's former hypothesis (only declared events trigger re-evaluation) contradicted these texts. Fixed in failure_chain 1.2.0; the former reading is kept only to reproduce the old result and now fails ETRANS-4.2-01."
+   "conclusion": "New admissible data is itself a trigger (EB §7.1) and leads to a new evaluation and recomputation (EB §7.2); ETRANS §4.2 forbids keeping an output active on a past VALID state once new admissible data is introduced. The lab's former hypothesis (only declared events trigger re-evaluation) contradicted these texts. Fixed in failure_chain 1.2.0; the former reading is kept only to reproduce the old result and now fails ETRANS-4.2-01.",
+   "kind": "lab_error",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-002",
@@ -68,7 +74,13 @@
      "text": "Posterior distributions define S(t)."
     }
    ],
-   "conclusion": "The 7 % threshold is stated, but not the metric between two distributions nor how classes sampled at different times are aligned. The divergences from asynchronous sampling come from the lab's point-value comparison (H-FC-3, H-FC-4)."
+   "conclusion": "The 7 % threshold is stated, but not the metric between two distributions nor how classes sampled at different times are aligned. The divergences from asynchronous sampling come from the lab's point-value comparison (H-FC-3, H-FC-4).",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-003",
@@ -90,7 +102,13 @@
      "text": "Absence of new data alone does NOT invalidate output if: - environment is stable - no conflicting signals exist"
     }
    ],
-   "conclusion": "Zero weight past TTL is literal; which of 'uncertainty, degradation, or halt' follows, and how it maps to the EB validity/confidence/consistency fields, is not defined. The suspension of dependent outputs follows from the lab's mapping H-FC-1; EB §9 points the other way for stable environments."
+   "conclusion": "Zero weight past TTL is literal; which of 'uncertainty, degradation, or halt' follows, and how it maps to the EB validity/confidence/consistency fields, is not defined. The suspension of dependent outputs follows from the lab's mapping H-FC-1; EB §9 points the other way for stable environments.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-004",
@@ -111,7 +129,13 @@
      "absent": "4.1"
     }
    ],
-   "conclusion": "The cited section does not exist; the Status Quo Suspension is defined in ERROR §7."
+   "conclusion": "The cited section does not exist; the Status Quo Suspension is defined in ERROR §7.",
+   "kind": "broken_reference",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-005",
@@ -148,7 +172,13 @@
      "text": "This example is illustrative only and not normative."
     }
    ],
-   "conclusion": "0.09 / 450 = 0.0002, not 0.004: the non-normative example disagrees with the normative formula (confirmed). Whether Bᵢ is a scale or a level is a separate normative ambiguity (Q-023)."
+   "conclusion": "0.09 / 450 = 0.0002, not 0.004: the non-normative example disagrees with the normative formula (confirmed). Whether Bᵢ is a scale or a level is a separate normative ambiguity (Q-023).",
+   "kind": "inconsistent_values",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-006",
@@ -180,7 +210,13 @@
      "text": "impact is irreversible (Rᵢ = False), or"
     }
    ],
-   "conclusion": "IMPACT names Rᵢ a reversibility flag and does not state which value means what; JUSTICE §6/§8 do (True = reversible). No normative text contradicts that polarity; only the non-normative §13 example reads more naturally the other way. With one polarity in both protocols the JUSTICE outcome is the same; only the emitted flag differs. A mixed implementation swaps restitution and isolation."
+   "conclusion": "IMPACT names Rᵢ a reversibility flag and does not state which value means what; JUSTICE §6/§8 do (True = reversible). No normative text contradicts that polarity; only the non-normative §13 example reads more naturally the other way. With one polarity in both protocols the JUSTICE outcome is the same; only the emitted flag differs. A mixed implementation swaps restitution and isolation.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-007",
@@ -206,7 +242,28 @@
      "absent": "N_eff"
     }
    ],
-   "conclusion": "Both texts refer N_eff and N_eff_min to ORACLE, which does not contain them; no other document defines them."
+   "conclusion": "Both texts refer N_eff and N_eff_min to ORACLE, which does not contain them; no other document defines them.",
+   "kind": "missing_definition",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "N_eff",
+     "effective number",
+     "N_eff_min"
+    ],
+    "reference_chain": [
+     "CRISIS PATCH §2 'Reference: DKP-0-ORACLE-001'",
+     "RESILIENCE §5.1 '(DKP-0-ORACLE-001)'",
+     "ORACLE: no N_eff; §4.4 and §8 define weights and caps, from which a formula such as 1/Σwᵢ² would be the lab's choice, not a definition"
+    ]
+   }
   },
   {
    "id": "F-008",
@@ -233,7 +290,34 @@
      "text": "Crisis Mercy may reduce response severity and allow narrowly authorized oracle TTL extensions only when explicitly defined by Crisis/Mercy logic."
     }
    ],
-   "conclusion": "CRISIS (L4) allows extending oracle data TTLs; ORACLE forbids any higher-layer protocol to modify TTL values and says the Crisis Mercy deferral does not modify them. AI-SUBJECT §7.5 also allows 'narrowly authorized oracle TTL extensions' under Crisis Mercy, on the side of CRISIS."
+   "conclusion": "CRISIS §6 lists, as an allowed Crisis action, Crisis Mercy Mode 'allowing limited extension of oracle data TTLs'; ORACLE §14 says the Crisis Mercy deferral 'DOES NOT modify TTL values' and §15 forbids any higher-layer protocol to modify TTL values. Behaviour can comply with both by never extending TTLs, but the texts describe the same mechanism in mutually exclusive terms; ORACLE §15 resolves it against the CRISIS clause, which is inoperative as written. AI-SUBJECT §7.5 takes the side of CRISIS.",
+   "kind": "contradiction",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "CRISIS §6",
+     "subject": "Crisis (L4) in Crisis Mercy Mode",
+     "object": "oracle data TTLs",
+     "scope": "non-anthropogenic events",
+     "conditions": "Crisis Mercy Mode activated",
+     "modality": "permission (allowed action: limited extension)"
+    },
+    "rule_b": {
+     "text": "ORACLE §14, §15",
+     "subject": "the Crisis Mercy deferral (§14); every higher-layer protocol (§15)",
+     "object": "TTL values",
+     "scope": "all",
+     "conditions": "none",
+     "modality": "prohibition ('DOES NOT modify'; 'No higher-layer protocol may ... modify TTL values')"
+    },
+    "joint_compliance": "possible in behaviour (never extend TTLs); the two texts describe the same Crisis Mercy mechanism in mutually exclusive terms",
+    "priority": "ORACLE §15 names higher-layer protocols explicitly and calls a violation a critical integrity breach; no text makes CRISIS prevail over ORACLE",
+    "result": "contradictory grant resolved against CRISIS §6 by ORACLE §15: the CRISIS clause is inoperative and needs an editorial decision (Q-027)"
+   }
   },
   {
    "id": "F-009",
@@ -255,7 +339,13 @@
      "text": "#### Non-Precedent Rule:"
     }
    ],
-   "conclusion": "Section 8 is 'Governance During Crisis'; the Non-Precedent Rule stands under §6."
+   "conclusion": "Section 8 is 'Governance During Crisis'; the Non-Precedent Rule stands under §6.",
+   "kind": "broken_reference",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-010",
@@ -277,7 +367,13 @@
      "text": "All numerical parameters governing Crisis authority duration, decay behavior, revalidation cadence, or exit sensitivity SHALL be defined, tested, and validated exclusively under DKP-8-SIMULATION-001."
     }
    ],
-   "conclusion": "Escalation is mandatory and crisis entry waits for 'sustained' D3; the texts are compatible. The length of 'sustained' is a number assigned to L8. Missing calibration, not a normative conflict."
+   "conclusion": "Escalation is mandatory and crisis entry waits for 'sustained' D3; the texts are compatible. The length of 'sustained' is a number assigned to L8. Missing calibration, not a normative conflict.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-011",
@@ -299,11 +395,38 @@
      "text": "exit SHALL NOT be delayed for optimization or stability goals,"
     }
    ],
-   "conclusion": "EXIT delays exit execution by a cooling period whose first stated purpose is preventing cascading instability; SCOPE forbids delaying exit for stability goals. A reconciling reading (SCOPE's 'exit' = validity, not execution) is not stated in either text."
+   "conclusion": "EXIT delays exit execution by a cooling period whose first stated purpose is preventing cascading instability; SCOPE forbids delaying exit for stability goals. A reconciling reading (SCOPE's 'exit' = validity, not execution) is not stated in either text.",
+   "kind": "contradiction",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "EXIT §6",
+     "subject": "exit execution",
+     "object": "delay by a fixed cooling period",
+     "scope": "every exit",
+     "conditions": "always",
+     "modality": "obligation ('Exit execution occurs after a fixed cooling period'), purpose stated: 'prevent cascading instability' among four"
+    },
+    "rule_b": {
+     "text": "SCOPE §9",
+     "subject": "exit",
+     "object": "delay",
+     "scope": "every exit",
+     "conditions": "delay for optimization or stability goals",
+     "modality": "prohibition ('exit SHALL NOT be delayed for optimization or stability goals')"
+    },
+    "joint_compliance": "impossible as written: the mandatory delay serves, by EXIT's own words, a stability goal; possible after resolution if the delay serves only the other purposes",
+    "priority": "SCOPE §2: 'In case of conflict, DKP-7-SCOPE-001 prevails.'",
+    "result": "conflict of a stated purpose with a prohibition, resolved for SCOPE; the lab applies the resolution (cooling without the stability purpose); open: whether 'protect non-exiting parties from abrupt dependency loss' is a stability goal (Q-031)"
+   }
   },
   {
    "id": "F-012",
-   "classification": "CONFIRMED_FINDING",
+   "classification": "INTERPRETATION_GAP",
    "quotes": [
     {
      "doc": "DKP-6-EXIT-001",
@@ -321,7 +444,34 @@
      "text": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life."
     }
    ],
-   "conclusion": "EXIT forbids suspension without exception, including under crisis conditions; SCOPE allows temporary suspension within Crisis Scope."
+   "conclusion": "EXIT §4 forbids any suspension of exit; SCOPE §9 forbids it except temporarily within Crisis Scope to preserve immediate life. Never suspending exit complies with both, and no text makes suspension obligatory, so the requirements are compatible. What differs is the authority granted: SCOPE permits what EXIT forbids, and whether SCOPE §2 ('SCOPE prevails') applies to a permission against a prohibition is not said. Reclassified from CONFIRMED_FINDING after review (2026-10-08).",
+   "kind": "authority_difference",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "EXIT §4, §11",
+     "subject": "exit",
+     "object": "suspension or revocation",
+     "scope": "every exit, including crisis conditions",
+     "conditions": "none",
+     "modality": "prohibition ('SHALL NOT be revoked or suspended'; during crisis only 'temporary procedural adjustments')"
+    },
+    "rule_b": {
+     "text": "SCOPE §9",
+     "subject": "exit",
+     "object": "suspension",
+     "scope": "Crisis Scope",
+     "conditions": "temporarily, to preserve immediate life",
+     "modality": "prohibition with an exception, i.e. a permission inside the exception"
+    },
+    "joint_compliance": "possible: never suspending exit satisfies both; no text makes suspension obligatory",
+    "priority": "SCOPE §2 'In case of conflict, SCOPE prevails' — whether a permission against a prohibition is a 'conflict' in that sense is not said",
+    "result": "difference in granted authority, not incompatible requirements (reclassified after review, 2026-10-08)"
+   }
   },
   {
    "id": "F-013",
@@ -353,7 +503,13 @@
      "text": "verified loss or divergence of PTL outputs beyond correction tolerance,"
     }
    ],
-   "conclusion": "A source is either an External System (untrusted I1, never a substitute for PTL verification) or a registered PTL source governed by DKP protocols. The lab counted an external mirror as PTL; with the roles separated, INTEROP §9 and CRISIS §4 never apply to the same event. Fixed in interop_failure 1.1.0; the former premise is the counterexample fault 'mirror_feeds_ptl'."
+   "conclusion": "A source is either an External System (untrusted I1, never a substitute for PTL verification) or a registered PTL source governed by DKP protocols. The lab counted an external mirror as PTL; with the roles separated, INTEROP §9 and CRISIS §4 never apply to the same event. Fixed in interop_failure 1.1.0; the former premise is the counterexample fault 'mirror_feeds_ptl'.",
+   "kind": "lab_error",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-014",
@@ -380,7 +536,13 @@
      "text": "Expired calibration bundles automatically invalidate enforcement."
     }
    ],
-   "conclusion": "No Calibration Bundle exists in the corpus; read literally, protocols lacking one are non-enforceable. A systemic blocker, decomposed in lab/registry/calibration_map.json. The lab does not invent bundles."
+   "conclusion": "No Calibration Bundle exists in the corpus; read literally, protocols lacking one are non-enforceable. A systemic blocker, decomposed in lab/registry/calibration_map.json. The lab does not invent bundles.",
+   "kind": "systemic_blocker",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-015",
@@ -417,7 +579,34 @@
      "text": "No aggregated impact score SHALL be produced."
     }
    ],
-   "conclusion": "Confirmed: TRANSPORT has PTL quantify harm including systemic insurance exposure, an economic quantity; ORACLE limits PTL to physical state and forbids assigning value. Narrowed: the former claim that a single RED violates IMPACT §5/§10 is an interpretation gap ('computed via' does not say IMPACT combines the channels)."
+   "conclusion": "Confirmed: TRANSPORT has PTL quantify harm including systemic insurance exposure, an economic quantity; ORACLE limits PTL to physical state and forbids assigning value. Narrowed: the former claim that a single RED violates IMPACT §5/§10 is an interpretation gap ('computed via' does not say IMPACT combines the channels).",
+   "kind": "contradiction",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "TRANSPORT §7.1",
+     "subject": "the Physical Truth Layer",
+     "object": "harm incl. 'systemic insurance exposure', quantified as RED",
+     "scope": "private or high-risk transport",
+     "conditions": "every kilometre",
+     "modality": "obligation ('The Physical Truth Layer SHALL quantify this harm as: RED')"
+    },
+    "rule_b": {
+     "text": "ORACLE §1",
+     "subject": "the PTL",
+     "object": "its outputs",
+     "scope": "all",
+     "conditions": "none",
+     "modality": "restriction ('The PTL produces physical state only'; 'does not ... assign value')"
+    },
+    "joint_compliance": "impossible for the insurance-exposure component, which is a financial quantity, not a physical state",
+    "priority": "no explicit priority rule between TRANSPORT and ORACLE; TRANSPORT is downstream of ORACLE",
+    "result": "incompatible requirements for one component of RED (Q-036)"
+   }
   },
   {
    "id": "F-016",
@@ -439,7 +628,13 @@
      "text": "The PTL SHALL NOT emit outputs concerning: - intent, - dignity, - belief, - responsibility, - consent,"
     }
    ],
-   "conclusion": "The indicator's object is forced bodily contact, a physical state; the text does not require PTL to observe consent. Only a reading that makes PTL decide consent conflicts with ORACLE §5.3. What is missing is the measurement model and threshold (L8 / empirical)."
+   "conclusion": "The indicator's object is forced bodily contact, a physical state; the text does not require PTL to observe consent. Only a reading that makes PTL decide consent conflicts with ORACLE §5.3. What is missing is the measurement model and threshold (L8 / empirical).",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-017",
@@ -466,7 +661,13 @@
      "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"
     }
    ],
-   "conclusion": "2451545 = 6809 × 360 + 305: §5 gives DY6809-306; the table row states DY6815-026 for the same DTI-Day."
+   "conclusion": "2451545 = 6809 × 360 + 305: §5 gives DY6809-306; the table row states DY6815-026 for the same DTI-Day.",
+   "kind": "inconsistent_values",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-018",
@@ -486,9 +687,37 @@
      "doc": "DKP-0-ORACLE-001",
      "at": "§11",
      "text": "Resolution requires: - convergence within the threshold, or - exclusion of faulty or compromised sources."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "A.2",
+     "text": "Divergence > 7% → automatic arbitration with a $500M stake. All related tranches are frozen until resolution (max 14 days)."
     }
    ],
-   "conclusion": "The window is a maximum; neither the exclusion procedure nor the state after an unresolved window is defined. A persistent physical disagreement cannot be kept within the window without a choice the text does not make."
+   "conclusion": "The window is a maximum and the two ways to resolve are named; neither the exclusion procedure nor the state after a window that ends without convergence or exclusion is defined. Revised after review (2026-10-08): the lab measures the arbitration window (flag to resolution or to the 14-day maximum), not the duration of the disagreement; ORACLE-11-03 passes, and the transition after an unresolved window is UNKNOWN (ORACLE-11-04). The Code (Appendix A.2) restates the 14-day maximum for the frozen tranches and adds a stake; it too defines no state after an unresolved window.",
+   "kind": "missing_definition",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "arbitration",
+     "divergence",
+     "exclusion",
+     "resolution"
+    ],
+    "reference_chain": [
+     "ORACLE §11 window and the two resolutions",
+     "ORACLE §16 'Arbitration window 14 days'",
+     "Code of Planetary Synergy, Appendix A.2: 'Divergence > 7% → automatic arbitration with a $500M stake. All related tranches are frozen until resolution (max 14 days).' — restates the maximum and adds a stake; no state after an unresolved window",
+     "INTERNAL-SEC §6 defers to L0 on an arbitration flag; INFO 'informational arbitration' is a different mechanism"
+    ]
+   }
   },
   {
    "id": "F-019",
@@ -510,7 +739,13 @@
      "text": "All asset-related decisions are invalid in the presence of a Physical Truth Layer systemic halt or unresolved divergence."
     }
    ],
-   "conclusion": "Both windows are 30 DTI-Days; ASSETS counts from execution, ERROR from recording. They coincide when the revocation is executed when recorded; the texts do not say whether execution may come later (e.g. deferred by a PTL halt) nor which clock governs then. No text is contradicted."
+   "conclusion": "Both windows are 30 DTI-Days; ASSETS counts from execution, ERROR from recording. They coincide when the revocation is executed when recorded; the texts do not say whether execution may come later (e.g. deferred by a PTL halt) nor which clock governs then. No text is contradicted.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-020",
@@ -535,7 +770,30 @@
      "text": "During Crisis Mercy conditions: - audit continues uninterrupted,"
     }
    ],
-   "conclusion": "UPGRADE refers the post-crisis audit and stabilization period to AUDIT; AUDIT contains no such definition (neither length nor completion criterion). Upgrades touching Defense, Crisis, Identity or Justice after a Crisis cannot be shown to be allowed."
+   "conclusion": "UPGRADE refers the post-crisis audit and stabilization period to AUDIT; AUDIT contains no such definition (neither length nor completion criterion). Upgrades touching Defense, Crisis, Identity or Justice after a Crisis cannot be shown to be allowed.",
+   "kind": "missing_definition",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "stabiliz",
+     "post-crisis",
+     "cooldown",
+     "cool-down",
+     "audit period"
+    ],
+    "reference_chain": [
+     "UPGRADE §8 → DKP-8-AUDIT-001 (no 'stabiliz', no 'post-crisis')",
+     "CRISIS §8 'subject to post-crisis audit', §10 'publicly reviewable post-crisis under ... rules defined by higher-layer audit protocols' — no period",
+     "SCOPE §5 'MUST collapse to baseline execution upon stabilization' — no definition of stabilization"
+    ]
+   }
   },
   {
    "id": "F-021",
@@ -552,7 +810,13 @@
      "text": "State transitions MUST be evidence-driven, auditable, and automatically reverted to S0 upon expiration of the maximum duration unless escalated."
     }
    ],
-   "conclusion": "Maximum durations and automatic reversion are literal; whether evidence that persists after the reversion may drive the same state again at once is not said. The two readings keep every stated limit but give 8 or 3 days of containment for a 10-day compromise."
+   "conclusion": "Maximum durations and automatic reversion are literal; whether evidence that persists after the reversion may drive the same state again at once is not said. The two readings keep every stated limit but give 8 or 3 days of containment for a 10-day compromise.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-022",
@@ -578,7 +842,29 @@
      "absent": "validating node"
     }
    ],
-   "conclusion": "Appendix A.5 defines a startup cluster and a population referendum for new territories; it defines neither 'active validating nodes' nor a ratification procedure for axiom changes."
+   "conclusion": "Appendix A.5 defines a startup cluster and a population referendum for new territories; it defines neither 'active validating nodes' nor a ratification procedure for axiom changes.",
+   "kind": "missing_definition",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "validating node",
+     "validator",
+     "ratif",
+     "active node"
+    ],
+    "reference_chain": [
+     "AXIOMS §8 → Code Appendix A.5 (startup cluster; 67 % population referendum for new territories)",
+     "Code §14 'validators' verify public statements, weighted by reputation — not a node set for axiom ratification",
+     "INTEGRATION 'charter ratification' concerns joining jurisdictions"
+    ]
+   }
   },
   {
    "id": "F-023",
@@ -608,9 +894,38 @@
      "doc": "DKP-3-POLICE-001",
      "at": "§5.2",
      "text": "Lethal force is permitted only under Axiom A1 minimum-required conditions, as defined exclusively by DKP-4-CRISIS-001."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.2",
+     "text": "interpretation_authority: DKP-4-CRISIS-001 (not transferable)"
     }
    ],
-   "conclusion": "AXIOMS assigns the definition to CRISIS; CRISIS gives none, forbids its execution logic and every operational mechanism to operationalize it and permits interpretation only inside a Crisis Scope, which SCOPE says only CRISIS defines. No text defines the conditions or a component allowed to apply them; POLICE lethal force depends on them."
+   "conclusion": "AXIOMS assigns the definition of the A1 minimum required conditions to CRISIS. CRISIS names the interpreting authority (§12.2 'interpretation_authority: DKP-4-CRISIS-001') and restricts where and how the conditions may be interpreted (§7, SCOPE §4), but no text gives a reproducible admissibility test: which evidence and checks establish that a given action meets the conditions. POLICE §5.2 makes lethal force depend on it. Narrowed after review (2026-10-08): an authority is named; the admissibility definition is missing.",
+   "kind": "missing_definition",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "minimum required",
+     "minimum-required",
+     "required conditions"
+    ],
+    "reference_chain": [
+     "AXIOMS A1 → 'exclusively governed by DKP-4-CRISIS'",
+     "CRISIS §7: not to be operationalized by Crisis execution logic; only within the Crisis Scope of SCOPE",
+     "CRISIS §12.2: interpretation outputs carry 'interpretation_authority: DKP-4-CRISIS-001 (not transferable)' — an authority is named",
+     "SCOPE §4: only within a declared Crisis Scope, defined and activated by CRISIS",
+     "POLICE §5.2: lethal force depends on these conditions",
+     "no text gives the admissibility test: which evidence and checks establish that an action meets the conditions"
+    ]
+   }
   },
   {
    "id": "F-024",
@@ -627,7 +942,13 @@
      "text": "4. Conflicts between axioms are resolved only by higher-priority axioms."
     }
    ],
-   "conclusion": "With an axiom-clean action both rules agree; in a dilemma rule 2 invalidates every action and rule 4 resolves by priority. The text does not say which applies."
+   "conclusion": "With an axiom-clean action both rules agree; in a dilemma rule 2 invalidates every action and rule 4 resolves by priority. The text does not say which applies.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-025",
@@ -649,7 +970,13 @@
      "text": "Irreversible transitions require demonstrable necessity verified by irreversible impact models under DKP-1-IMPACT."
     }
    ],
-   "conclusion": "A4 alone uses SHOULD while every axiom is a constraint; the two readings choose differently. IMPACT has no irreversible impact models, so necessity can only be declared."
+   "conclusion": "A4 alone uses SHOULD while every axiom is a constraint; the two readings choose differently. IMPACT has no irreversible impact models, so necessity can only be declared.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "F-026",
@@ -676,24 +1003,16 @@
      "text": "system-wide metrics and aggregate indicators,"
     }
    ],
-   "conclusion": "§6 keeps the absolute domains non-public without a level and limits extraction at the individual level; §7 lists other domains for aggregate exposure; TRANSPARENCY §5 makes aggregate indicators public. Whether aggregates of an absolute domain may be published is not settled."
+   "conclusion": "§6 keeps the absolute domains non-public without a level and limits extraction at the individual level; §7 lists other domains for aggregate exposure; TRANSPARENCY §5 makes aggregate indicators public. Whether aggregates of an absolute domain may be published is not settled.",
+   "kind": "reading_dependent",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   }
  ],
  "reference_fails": [
-  {
-   "requirement": "SCOPE-9-02",
-   "module": "exit_integration",
-   "origin": "CONFIRMED_FINDING",
-   "finding": "F-011",
-   "quotes": [
-    {
-     "doc": "DKP-7-SCOPE-001",
-     "at": "§9",
-     "text": "exit SHALL NOT be delayed for optimization or stability goals,"
-    }
-   ],
-   "conclusion": "Every reference example follows EXIT §6 (cooling period), so SCOPE §9 fails: a rule conflict, not an example property."
-  },
   {
    "requirement": "TIME-9-04",
    "module": "time",
@@ -706,21 +1025,12 @@
      "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"
     }
    ],
-   "conclusion": "The table row contradicts §5; the check fails for every input."
-  },
-  {
-   "requirement": "ORACLE-11-03",
-   "module": "failure_chain",
-   "origin": "CONFIRMED_FINDING",
-   "finding": "F-018",
-   "quotes": [
-    {
-     "doc": "DKP-0-ORACLE-001",
-     "at": "§11",
-     "text": "Maximum arbitration window: 14 days."
-    }
-   ],
-   "conclusion": "A divergence that persists 24 days exceeds the window; the text defines no consequence and no exclusion procedure."
+   "conclusion": "The table row contradicts §5; the check fails for every input.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "ORACLE-1-02",
@@ -739,7 +1049,12 @@
      "text": "The Physical Truth Layer SHALL quantify this harm as:"
     }
    ],
-   "conclusion": "Following TRANSPORT §7.1 literally, PTL quantifies systemic insurance exposure."
+   "conclusion": "Following TRANSPORT §7.1 literally, PTL quantifies systemic insurance exposure.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   }
  ],
  "noncompliant_cases": [
@@ -756,7 +1071,12 @@
      "text": "Maximum consecutive workdays: 2"
     }
    ],
-   "conclusion": "The example's pattern W, W, W has three consecutive workdays; the provision is literal."
+   "conclusion": "The example's pattern W, W, W has three consecutive workdays; the provision is literal.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "WORKCYCLE-4.2-02",
@@ -771,7 +1091,12 @@
      "text": "Rest frequency: every ≤ 3 days"
     }
    ],
-   "conclusion": "W, W, W, R leaves a three-day window without a restday."
+   "conclusion": "W, W, W, R leaves a three-day window without a restday.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "WORKCYCLE-7-01",
@@ -791,7 +1116,12 @@
      "text": "An equivalent, demonstrably safe recovery compensation must be provided."
     }
    ],
-   "conclusion": "Three consecutive workdays and no declared compensation."
+   "conclusion": "Three consecutive workdays and no declared compensation.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "WORKCYCLE-8.1-02",
@@ -806,7 +1136,12 @@
      "text": "Continuous service SHALL NOT be achieved through exhaustion of individual workers."
     }
    ],
-   "conclusion": "Coverage relies on workers beyond the consecutive-workday limit (the lab reads exceeding §4.2/§7 as exhaustion)."
+   "conclusion": "Coverage relies on workers beyond the consecutive-workday limit (the lab reads exceeding §4.2/§7 as exhaustion).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "WORKCYCLE-8.1-01",
@@ -822,7 +1157,12 @@
      "text": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through: - multiple shifts, - workforce scaling, - shift overlap, - capacity buffering."
     }
    ],
-   "conclusion": "The declared roster (16 workers; three shift starts) leaves demand hours uncovered: the case is under-provisioned, the provision is literal."
+   "conclusion": "The declared roster (16 workers; three shift starts) leaves demand hours uncovered: the case is under-provisioned, the provision is literal.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "FINANCE-11.2-01",
@@ -837,7 +1177,12 @@
      "text": "a) Upon successful dispute resolution under DKP-4-ERROR-001 that results in exit from Exclusion Domain, financial access SHALL be automatically restored within one (1) DTI-Day."
     }
    ],
-   "conclusion": "With the Justice domain polled every 48 hours, the restoration after the successful dispute on day 19 comes on day 20 at the next poll: later than one DTI-Day. The provision is literal; the declared polling interval is the noncompliant input."
+   "conclusion": "With the Justice domain polled every 48 hours, the restoration after the successful dispute on day 19 comes on day 20 at the next poll: later than one DTI-Day. The provision is literal; the declared polling interval is the noncompliant input.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "requirement": "INTSEC-8-06",
@@ -852,7 +1197,12 @@
      "text": "No Subject, nor any Identity-linked group of Subjects, MAY control more than 4% of nodes executing DKP-3-INTERNAL-SEC-001 logic"
     }
    ],
-   "conclusion": "The declared node distribution gives one identity-linked group 5 % of the nodes; the cap is literal."
+   "conclusion": "The declared node distribution gives one identity-linked group 5 % of the nodes; the cap is literal.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   }
  ],
  "questions": [
@@ -867,7 +1217,12 @@
      "text": "An upgrade MAY be activated only if: - all simulations pass predefined safety and stability thresholds,"
     }
    ],
-   "reason": "Conditions for activation are given; who decides and activates after a successful check (S1) is not defined."
+   "reason": "Conditions for activation are given; who decides and activates after a successful check (S1) is not defined.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-002",
@@ -881,7 +1236,12 @@
      "text": "| 2000-01-01 | 2451545 | 6815 | 26 | DY6815-026 |"
     }
    ],
-   "reason": "Two normative statements give different values; only the author can say which is meant (presumably an erratum)."
+   "reason": "Two normative statements give different values; only the author can say which is meant (presumably an erratum).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-003",
@@ -895,7 +1255,12 @@
      "text": "MUST propagate upward as explicit uncertainty, degradation, or halt signals."
     }
    ],
-   "reason": "The mapping from PTL silence, staleness and zero weight to the EB state fields is not defined."
+   "reason": "The mapping from PTL silence, staleness and zero weight to the EB state fields is not defined.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-004",
@@ -909,7 +1274,12 @@
      "text": "A Divergence Event is triggered when posterior distributions across independent oracle classes differ by more than 7%."
     }
    ],
-   "reason": "The difference metric between posterior distributions and the time alignment of classes are not defined."
+   "reason": "The difference metric between posterior distributions and the time alignment of classes are not defined.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-005",
@@ -923,7 +1293,12 @@
      "text": "Maximum arbitration window: 14 days."
     }
    ],
-   "reason": "The state after an unresolved window and the exclusion procedure are not defined."
+   "reason": "The state after an unresolved window and the exclusion procedure are not defined.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-006",
@@ -937,7 +1312,12 @@
      "text": "new admissible data is introduced"
     }
    ],
-   "reason": "Answered by EB §7.1/§7.2 and ETRANS §4.2: new admissible data triggers re-evaluation. The lab error is fixed (F-001)."
+   "reason": "Answered by EB §7.1/§7.2 and ETRANS §4.2: new admissible data triggers re-evaluation. The lab error is fixed (F-001).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-007",
@@ -950,7 +1330,12 @@
      "text": "If any upstream epistemic field changes: - VALID → CONDITIONAL / INVALID - CONSISTENT → ORACLE_CONFLICT - SUFFICIENT_DATA → DEGRADED_SIGNAL"
     }
    ],
-   "reason": "'any upstream epistemic field changes' and a list of three transitions: whether the list is exhaustive (e.g. → INSUFFICIENT_DATA, CONDITIONAL → INVALID) changes which outputs are suspended."
+   "reason": "'any upstream epistemic field changes' and a list of three transitions: whether the list is exhaustive (e.g. → INSUFFICIENT_DATA, CONDITIONAL → INVALID) changes which outputs are suspended.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-008",
@@ -969,7 +1354,12 @@
      "text": "Data exceeding its TTL SHALL have its confidence weight set to zero."
     }
    ],
-   "reason": "EB §9 keeps an output valid without new data in a stable environment; ORACLE §9 zeroes stale weights and requires uncertainty or degradation signals. How they combine changes the result."
+   "reason": "EB §9 keeps an output valid without new data in a stable environment; ORACLE §9 zeroes stale weights and requires uncertainty or degradation signals. How they combine changes the result.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-009",
@@ -983,7 +1373,12 @@
      "text": "during the Status Quo Suspension period defined in DKP-4-ERROR-001 Section 4.1."
     }
    ],
-   "reason": "Broken reference; which section is meant (presumably ERROR §7) is the author's call."
+   "reason": "Broken reference; which section is meant (presumably ERROR §7) is the author's call.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-010",
@@ -997,7 +1392,12 @@
      "text": "all dependent state-based transactions SHALL be frozen."
     }
    ],
-   "reason": "'dependent state-based transactions' is not defined (which outputs, which dependency relation)."
+   "reason": "'dependent state-based transactions' is not defined (which outputs, which dependency relation).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-011",
@@ -1015,7 +1415,12 @@
      "text": "Under no circumstances may a system-approved schedule violate the following invariant:"
     }
    ],
-   "reason": "Cycle6 is the 'normative default'; §7 constrains any system-approved schedule. Other cycles are allowed if they keep §7. No author decision needed."
+   "reason": "Cycle6 is the 'normative default'; §7 constrains any system-approved schedule. Other cycles are allowed if they keep §7. No author decision needed.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-012",
@@ -1033,7 +1438,12 @@
      "text": "Continuous operation (e.g., hospitals, emergency services, infrastructure control) SHALL be achieved through:"
     }
    ],
-   "reason": "Cycle6 is a global overlay of DTI-Day; whether each worker may run it with an own phase is not said. With one phase for all, every worker rests on the same days and continuity needs non-default cycles (example aligned_phases)."
+   "reason": "Cycle6 is a global overlay of DTI-Day; whether each worker may run it with an own phase is not said. With one phase for all, every worker rests on the same days and continuity needs non-default cycles (example aligned_phases).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-013",
@@ -1051,7 +1461,12 @@
      "text": "3–4 hours recovery per shift is recommended, potentially fragmented."
     }
    ],
-   "reason": "With 10 h presence and 8 h work, recovery is 2 h; the recommended 3–4 h can only be followed by changing one of the SHALL values. Which one gives way is not said."
+   "reason": "With 10 h presence and 8 h work, recovery is 2 h; the recommended 3–4 h can only be followed by changing one of the SHALL values. Which one gives way is not said.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-014",
@@ -1074,7 +1489,12 @@
      "text": "DKP-7 scope boundaries"
     }
    ],
-   "reason": "Two referenced documents are not in the corpus: an external dependency (listed in lab/registry/calibration_map.json), not an author decision. 'DKP-7 scope boundaries' reads the same whether it means layer L7 or DKP-7-SCOPE-001."
+   "reason": "Two referenced documents are not in the corpus: an external dependency (listed in lab/registry/calibration_map.json), not an author decision. 'DKP-7 scope boundaries' reads the same whether it means layer L7 or DKP-7-SCOPE-001.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-015",
@@ -1092,7 +1512,12 @@
      "text": "SEₖ_intensity ≥ TAₖ_intensity then: Sₖ = 0"
     }
    ],
-   "reason": "Narrowed to the meaning of SE: defined as the reduction, but the §3.6 formula gives zero completeness when SE reaches the threat intensity, which fits only a residual. The other parts of the former question (shares §6, recurrence §9.3) are a causal model and an L8 parameter, not author questions."
+   "reason": "Narrowed to the meaning of SE: defined as the reduction, but the §3.6 formula gives zero completeness when SE reaches the threat intensity, which fits only a residual. The other parts of the former question (shares §6, recurrence §9.3) are a causal model and an L8 parameter, not author questions.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-016",
@@ -1105,7 +1530,12 @@
      "text": "Aₖ > 0 ⇔ causal linkage traceable"
     }
    ],
-   "reason": "Establishing causal linkage from measurements needs a causal/empirical model; the lab takes it as a declared input. Not an author decision."
+   "reason": "Establishing causal linkage from measurements needs a causal/empirical model; the lab takes it as a declared input. Not an author decision.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-017",
@@ -1118,7 +1548,12 @@
      "text": "Any composite index (including B(t)): - MUST have its model fully specified in L8,"
     }
    ],
-   "reason": "Composite index models are assigned to L8 by the text. Listed in the calibration map."
+   "reason": "Composite index models are assigned to L8 by the text. Listed in the calibration map.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-018",
@@ -1136,7 +1571,12 @@
      "text": "System must not selectively restore enforcement for subsets"
     }
    ],
-   "reason": "The PATCH forbids partial and selective enforcement: the scope is global as written. A regional N_eff would be part of the missing N_eff definition (Q-026)."
+   "reason": "The PATCH forbids partial and selective enforcement: the scope is global as written. A regional N_eff would be part of the missing N_eff definition (Q-026).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-019",
@@ -1154,7 +1594,12 @@
      "text": "Resumption of enforcement requires: - new valid output - full epistemic metadata - recomputation under updated inputs Previous outputs SHALL NOT auto-reactivate."
     }
    ],
-   "reason": "Compatible: resumption is automatic (no approval or restart) and happens through new recomputed outputs; previous outputs are not reactivated."
+   "reason": "Compatible: resumption is automatic (no approval or restart) and happens through new recomputed outputs; previous outputs are not reactivated.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-020",
@@ -1172,7 +1617,12 @@
      "text": "a) the dispute introduces new admissible data not present in prior evaluation,"
     }
    ],
-   "reason": "The conditions a)–c) are listed without 'and' or 'or'; joint and alternative readings accept different disputes."
+   "reason": "The conditions a)–c) are listed without 'and' or 'or'; joint and alternative readings accept different disputes.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-021",
@@ -1190,7 +1640,12 @@
      "text": "ERROR handling never introduces new penalties."
     }
    ],
-   "reason": "Whether a harsher outcome recomputed from corrected inputs is a 'new penalty' introduced by ERROR handling is not settled."
+   "reason": "Whether a harsher outcome recomputed from corrected inputs is a 'new penalty' introduced by ERROR handling is not settled.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-022",
@@ -1209,7 +1664,12 @@
      "text": "impact is reversible (Rᵢ = True), and"
     }
    ],
-   "reason": "Rephrased: should IMPACT state the polarity of Rᵢ (as JUSTICE does), and is the §13 output 'Rᵢ = False' meant for a reversible change?"
+   "reason": "Rephrased: should IMPACT state the polarity of Rᵢ (as JUSTICE does), and is the §13 output 'Rᵢ = False' meant for a reversible change?",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-023",
@@ -1228,7 +1688,12 @@
      "text": "Invariant physical limits imported from DKP-1-AXIOMS-001 or Physical Truth Layer indices."
     }
    ],
-   "reason": "Bᵢ is called a limit but used as a divisor: a state beyond the limit is not flagged unless the change itself reaches Bᵢ."
+   "reason": "Bᵢ is called a limit but used as a divisor: a state beyond the limit is not flagged unless the change itself reaches Bᵢ.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-024",
@@ -1246,7 +1711,12 @@
      "text": "traceable to DKP-1-AXIOMS-001 or Physical Truth Layer indices."
     }
    ],
-   "reason": "Numeric physical bounds and margins are data not present in AXIOMS; listed in the calibration map as values missing from the corpus. Not an author decision about meaning."
+   "reason": "Numeric physical bounds and margins are data not present in AXIOMS; listed in the calibration map as values missing from the corpus. Not an author decision about meaning.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-025",
@@ -1259,7 +1729,12 @@
      "text": "Where attribution confidence falls below minimum admissibility threshold (as defined by DKP-8-SIMULATION-001 calibration), the protocol SHALL produce:"
     }
    ],
-   "reason": "The threshold is assigned to L8 calibration. Listed in the calibration map."
+   "reason": "The threshold is assigned to L8 calibration. Listed in the calibration map.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-026",
@@ -1273,7 +1748,12 @@
      "text": "System must remain valid only if N_eff ≥ N_eff_min (DKP-0-ORACLE-001)"
     }
    ],
-   "reason": "N_eff (what is counted, over which region) is referenced to a document that does not define it; N_eff_min is then an L8 value."
+   "reason": "N_eff (what is counted, over which region) is referenced to a document that does not define it; N_eff_min is then an L8 value.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-027",
@@ -1287,7 +1767,12 @@
      "text": "allowing limited extension of oracle data TTLs to prevent false system halts while preserving life-support continuity."
     }
    ],
-   "reason": "Contradiction between CRISIS §6 and ORACLE §14/§15; only the author can choose."
+   "reason": "Contradiction between CRISIS §6 and ORACLE §14/§15; only the author can choose.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-028",
@@ -1301,7 +1786,12 @@
      "text": "per Section 8 (Non-Precedent Rule) of this protocol."
     }
    ],
-   "reason": "Broken reference (presumably §6)."
+   "reason": "Broken reference (presumably §6).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-029",
@@ -1314,7 +1804,12 @@
      "text": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol."
     }
    ],
-   "reason": "CRISIS assigns its numbers to DKP-8-SIMULATION-001; their absence is missing calibration (calibration map), not an author question."
+   "reason": "CRISIS assigns its numbers to DKP-8-SIMULATION-001; their absence is missing calibration (calibration map), not an author question.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-030",
@@ -1328,7 +1823,12 @@
      "text": "sustained D3 state escalation from DKP-3-DEFENSE-001,"
     }
    ],
-   "reason": "The duration of 'sustained' is an L8 parameter (CRISIS §6); DEFENSE §5 and CRISIS §4 are compatible."
+   "reason": "The duration of 'sustained' is an L8 parameter (CRISIS §6); DEFENSE §5 and CRISIS §4 are compatible.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-031",
@@ -1342,7 +1842,12 @@
      "text": "exit SHALL NOT be delayed for optimization or stability goals,"
     }
    ],
-   "reason": "Contradiction between EXIT §6 and SCOPE §9."
+   "reason": "EXIT §6 states 'prevent cascading instability' as a purpose of the mandatory cooling period; SCOPE §9 forbids delaying exit for stability goals and SCOPE §2 makes SCOPE prevail. Open: should EXIT drop that purpose, and is 'protect non-exiting parties from abrupt dependency loss' a stability goal?",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-032",
@@ -1356,7 +1861,12 @@
      "text": "exit SHALL NOT be suspended except temporarily within Crisis Scope to preserve immediate life."
     }
    ],
-   "reason": "Contradiction between EXIT §4 and SCOPE §9."
+   "reason": "Authority difference, not incompatible requirements: SCOPE §9 permits a temporary suspension within Crisis Scope to preserve immediate life, EXIT §4 forbids any suspension; does SCOPE's permission override EXIT's prohibition (SCOPE §2)?",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-033",
@@ -1370,7 +1880,12 @@
      "text": "External consensus, authority, or institutional validation SHALL NOT substitute PTL verification."
     }
    ],
-   "reason": "The conflict came from the lab's premise (F-013, implementation bug)."
+   "reason": "The conflict came from the lab's premise (F-013, implementation bug).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-034",
@@ -1389,7 +1904,12 @@
      "text": "Expired calibration bundles automatically invalidate enforcement."
     }
    ],
-   "reason": "Whether a recalibration trigger invalidates a bundle before its validity window ends is not defined."
+   "reason": "Whether a recalibration trigger invalidates a bundle before its validity window ends is not defined.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-035",
@@ -1413,7 +1933,12 @@
      "text": "| Divergence threshold | 7% |"
     }
    ],
-   "reason": "Read literally, §4 covers every protocol; §2 places SIMULATION downstream of ORACLE, AXIOMS and SCOPE, and several protocols write their constants into the text. Whether such constants (and upstream protocols) need a bundle is not settled."
+   "reason": "Read literally, §4 covers every protocol; §2 places SIMULATION downstream of ORACLE, AXIOMS and SCOPE, and several protocols write their constants into the text. Whether such constants (and upstream protocols) need a bundle is not settled.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-036",
@@ -1432,7 +1957,12 @@
      "text": "The PTL produces physical state only."
     }
    ],
-   "reason": "Rephrased: who quantifies systemic insurance exposure — PTL (TRANSPORT §7.1, against ORACLE §1) or another layer — and where RED combines its channels."
+   "reason": "Rephrased: who quantifies systemic insurance exposure — PTL (TRANSPORT §7.1, against ORACLE §1) or another layer — and where RED combines its channels.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-037",
@@ -1446,7 +1976,12 @@
      "text": "prohibition of forced bodily contact between non-consenting passengers,"
     }
    ],
-   "reason": "The indicator is physical (forced contact); its measurement model and threshold belong to calibration. No conflict with ORACLE §5.3 under the text's own wording."
+   "reason": "The indicator is physical (forced contact); its measurement model and threshold belong to calibration. No conflict with ORACLE §5.3 under the text's own wording.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-038",
@@ -1465,7 +2000,12 @@
      "text": "be submitted within 30 DTI-Days from the moment the decision was recorded in PTL,"
     }
    ],
-   "reason": "Two normative clocks for the same window; they differ when a revocation is executed later than recorded, and the result (accept or refuse the dispute) changes."
+   "reason": "Two normative clocks for the same window; they differ when a revocation is executed later than recorded, and the result (accept or refuse the dispute) changes.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-039",
@@ -1479,7 +2019,12 @@
      "text": "until a full post-crisis audit and stabilization period has completed, as defined by DKP-8-AUDIT-001."
     }
    ],
-   "reason": "A referenced definition (completion criterion or length of the stabilization period) does not exist in the cited document or elsewhere."
+   "reason": "A referenced definition (completion criterion or length of the stabilization period) does not exist in the cited document or elsewhere.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-040",
@@ -1493,7 +2038,12 @@
      "text": "State transitions MUST be evidence-driven, auditable, and automatically reverted to S0 upon expiration of the maximum duration unless escalated."
     }
    ],
-   "reason": "Re-entry after an automatic reversion is neither allowed nor forbidden; the readings change how long an ongoing compromise is contained."
+   "reason": "Re-entry after an automatic reversion is neither allowed nor forbidden; the readings change how long an ongoing compromise is contained.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-041",
@@ -1507,7 +2057,12 @@
      "text": "ratification by no less than 67% of active validating nodes, as defined in Appendix A.5 of the Code of Planetary Synergy"
     }
    ],
-   "reason": "The referenced set and ratification procedure are not defined where cited."
+   "reason": "The referenced set and ratification procedure are not defined where cited.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-042",
@@ -1521,7 +2076,12 @@
      "text": "The definition of such minimum required conditions is exclusively governed by DKP-4-CRISIS"
     }
    ],
-   "reason": "No text defines the conditions or the component allowed to apply them inside a Crisis Scope."
+   "reason": "CRISIS is the named interpreting authority, but no text gives the admissibility test for the A1 minimum required conditions.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-043",
@@ -1535,7 +2095,12 @@
      "text": "4. Conflicts between axioms are resolved only by higher-priority axioms."
     }
    ],
-   "reason": "Rules 2 and 4 of §5 give different results when no action is axiom-clean."
+   "reason": "Rules 2 and 4 of §5 give different results when no action is axiom-clean.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-044",
@@ -1549,7 +2114,12 @@
      "text": "System actions SHOULD minimize irreversible damage when reversible alternatives exist."
     }
    ],
-   "reason": "SHOULD in an axiom that §3/§5 treat as a constraint; the readings choose differently."
+   "reason": "SHOULD in an axiom that §3/§5 treat as a constraint; the readings choose differently.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   },
   {
    "id": "Q-045",
@@ -1563,7 +2133,18 @@
      "text": "These domains are non-extractable and non-auditable at the individual level."
     }
    ],
-   "reason": "The level to which 'private and non-public' applies decides whether aggregate statistics of these domains may be published."
+   "reason": "The level to which 'private and non-public' applies decides whether aggregate statistics of these domains may be published.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   }
- ]
+ ],
+ "acceptance": {
+  "agent_reading": "every record: the conclusion is the lab agent's reading of the quoted texts",
+  "quote_check": "automatic: tests/lab/test_semantic_gate.py checks every quote verbatim and every 'absent' string",
+  "human_acceptance": "none: no record has been accepted by a human reviewer (criterion A6 open)",
+  "limits": "A verbatim quote shows that the words are in the pinned edition, not that the conclusion follows from them; an absent string does not exclude a definition under another term, so missing-definition records list the documents, terms and reference chain searched."
+ }
 }

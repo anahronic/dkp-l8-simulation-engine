@@ -37,6 +37,7 @@ FAULT_CASES = {
     "enforce_no_attribution": ({"attribution_confidence": 0.6, "s0": 0.0, "s1_recorded": 1.0},
                                ["IDENTITY-4.1-02", "IDENTITY-4.1-03"]),
     "suppress_by_uncertainty": ({"s1_recorded": 0.905}, ["IMPACT-9-03", "IMPACT-5-03"]),
+    "override_flag": ({}, ["IMPACT-11-01"]),
 }
 
 
@@ -64,20 +65,20 @@ def test_impact_formula_and_example_s13():
 
 
 @pytest.mark.parametrize("irreversible", [False, True])
-def test_r_polarity_matters_only_when_mixed(irreversible):
-    """F-006 (INTERPRETATION_GAP): IMPACT §4 does not fix the polarity of Rᵢ, JUSTICE §6/§8 do.  A consistent
-    polarity changes only the emitted flag; a mixed one swaps restitution and isolation and fails §6/§8."""
+def test_only_the_justice_polarity_complies(irreversible):
+    """F-006 (INTERPRETATION_GAP), revised after review: JUSTICE §6/§8 are checked literally on the received flag and
+    the flag contract separately.  Only the JUSTICE polarity passes both; a uniform opposite polarity breaks JUSTICE
+    §6/§8 and the contract, a mixed chain breaks the contract (JUSTICE itself acts correctly on what it receives)."""
     base = {**M.examples()["impact_example_s13"], "irreversible": irreversible}
     res = {p: run(**base, r_polarity=p) for p in ("true_means_reversible", "true_means_irreversible", "mixed")}
-    flags = {p: x.outputs["impact"][0]["R"] for p, x in res.items()}
-    assert flags["true_means_reversible"] is (not irreversible) and flags["true_means_irreversible"] is irreversible
+    fails = {p: sorted(k for k, v in statuses(x).items() if v == "FAIL") for p, x in res.items()}
+    assert fails == {"true_means_reversible": [],
+                     "true_means_irreversible": ["JUSTICE-3.1-01", "JUSTICE-6-01", "JUSTICE-8-01"],
+                     "mixed": ["JUSTICE-3.1-01"]}
     dom = {p: x.outputs["decisions"][0]["domains"] for p, x in res.items()}
-    assert dom["true_means_reversible"] == dom["true_means_irreversible"]
     assert dom["true_means_reversible"]["isolation"] is irreversible
-    assert dom["mixed"]["isolation"] is (not irreversible) and dom["mixed"]["restitution"] is irreversible
-    for p in ("true_means_reversible", "true_means_irreversible"):
-        assert statuses(res[p])["JUSTICE-8-01"] == "PASS"
-    assert statuses(res["mixed"])["JUSTICE-6-01"] == statuses(res["mixed"])["JUSTICE-8-01"] == "FAIL"
+    flag = res["true_means_reversible"].outputs["decisions"][0]["flag"]
+    assert flag["emitted_by_impact"] == flag["received"] is (not irreversible)
 
 
 def test_open_questions_surface_as_unknown():
