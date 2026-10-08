@@ -912,11 +912,17 @@
     "effective-cost accounting",
     "Code of Planetary Synergy Article 12"
    ],
-   "gap": "Article 12 and the full-cost valuation method are absent. No lab check implemented yet.",
+   "gap": "Same check as Code §12.1.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "externalities_in_cost"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

@@ -386,14 +386,20 @@
     "economic activity classifications",
     "cross-circuit transactions"
    ],
-   "gap": "Independence and classification of mixed or unlisted activities are undefined. No lab check implemented yet.",
+   "gap": "Classification only; 'independent' is not defined.",
    "hypotheses_needed": [
     "Define circuit independence and classification rules."
    ],
    "section_label": "1.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "two_circuits"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -424,14 +430,20 @@
     "country development classifications",
     "asset and currency valuations"
    ],
-   "gap": "The ranking basis, aggregation method, and numerical peg function are unspecified. No lab check implemented yet.",
+   "gap": "The anchor is computed; the peg function and 'developed nations' are not defined.",
    "hypotheses_needed": [
     "Define quintile membership, country weighting, moving-average sampling, and the peg function."
    ],
    "section_label": "1.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "mirror_peg_anchor"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -463,14 +475,20 @@
     "tax and peg records",
     "development rights records"
    ],
-   "gap": "The five-year clock origin, scope of developments, and consequences of breach are unspecified. No lab check implemented yet.",
+   "gap": "The 5 years run from the development (H-CE-2).",
    "hypotheses_needed": [
     "Define the clock origin and developments covered by each pledge."
    ],
    "section_label": "1.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "venture_gateway"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -544,14 +562,20 @@
     "global-fund ledger",
     "contract metadata"
    ],
-   "gap": "The scope of global funds and the required targeting semantics are undefined. No lab check implemented yet.",
+   "gap": "Channel and target are declared.",
    "hypotheses_needed": [
     "Define the global-fund registry and qualifying contract targets."
    ],
    "section_label": "2.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "targeted_smart_contracts"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -580,14 +604,20 @@
     "physical KPI verification",
     "tranche execution logs"
    ],
-   "gap": "KPI completion criteria and tranche-to-KPI mappings are not supplied. No lab check implemented yet.",
+   "gap": "KPI verification is a declared month.",
    "hypotheses_needed": [
     "Declare KPI verification rules and tranche mappings."
    ],
    "section_label": "2.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "tranche_on_verified_kpi"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -615,14 +645,20 @@
     "export records",
     "value-chain participation records"
    ],
-   "gap": "Qualifying value-added-chain participation is undefined. No lab check implemented yet.",
+   "gap": "Participation is a declared flag.",
    "hypotheses_needed": [
     "Define participation and the relevant value-added chain."
    ],
    "section_label": "3.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "export_requires_participation"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -652,14 +688,20 @@
     "enterprise processing records",
     "equity token ledger"
    ],
-   "gap": "Equity amounts, resource tracing rules, and allocation timing are unspecified. No lab check implemented yet.",
+   "gap": "The token share is not given (source missing).",
    "hypotheses_needed": [
     "Define the equity allocation function and resource provenance model."
    ],
    "section_label": "3.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "equity_tokens"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -689,14 +731,20 @@
     "technology classifications",
     "patent and public-domain records"
    ],
-   "gap": "Life-support necessity and treatment of unpatented technology are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define life-support necessity and treatment of technology lacking patent registration."
    ],
    "section_label": "4.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "public_domain_after_5_years"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -727,14 +775,20 @@
     "exam results",
     "diploma recognition records"
    ],
-   "gap": "The competence standard and exam specification are absent. No lab check implemented yet.",
+   "gap": "The standard and the exam are not defined.",
    "hypotheses_needed": [
     "Declare the common exam, pass criteria, and recognition test."
    ],
    "section_label": "5.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "ai_exam_recognition"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -763,14 +817,20 @@
     "exit policies and decisions",
     "citizenship records"
    ],
-   "gap": "An operational test of an absolute exit right is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define which policies and actions constitute restrictions on exit."
    ],
    "section_label": "6.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "absolute_exit"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -800,14 +860,20 @@
     "relocation invoices",
     "fund disbursements"
    ],
-   "gap": "Depressed-zone classification and covered-cost rules are unspecified. No lab check implemented yet.",
+   "gap": "'Depressed zone' is a declared flag.",
    "hypotheses_needed": [
     "Define depressed zones and covered relocation costs."
    ],
    "section_label": "6.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "relocation_costs"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -837,14 +903,20 @@
     "specialist relocation registry",
     "Lease Fee payments"
    ],
-   "gap": "Fee calculation, specialist eligibility, and obligation duration are missing. No lab check implemented yet.",
+   "gap": "The fee amount is not given (source missing).",
    "hypotheses_needed": [
     "Define specialist eligibility, fee calculation, and payment duration."
    ],
    "section_label": "6.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "lease_fee"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -874,14 +946,20 @@
     "work success determinations",
     "payment dates"
    ],
-   "gap": "Successful work and application of the gate to recurring payments are undefined. No lab check implemented yet.",
+   "gap": "Success is a declared number of months.",
    "hypotheses_needed": [
     "Define successful work and whether each payment requires a separate successful year."
    ],
    "section_label": "6.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "post_factum"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -912,14 +990,20 @@
     "origin records",
     "Education Fund disclosures"
    ],
-   "gap": "Region of origin and fund transparency are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define origin assignment and transparency requirements."
    ],
    "section_label": "6.4",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "education_fund"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1171,14 +1255,20 @@
     "governance structure",
     "appointment and removal rules"
    ],
-   "gap": "The scope of power and the operational meaning of removability are undefined. No lab check implemented yet.",
+   "gap": "Irremovability is a declared flag.",
    "hypotheses_needed": [
     "Define governing offices and an effective removability test."
    ],
    "section_label": "9.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "no_irremovable_power"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1209,14 +1299,20 @@
     "Operator contracts",
     "KPI schedules and evaluations"
    ],
-   "gap": "KPI duration, evaluation, and failure criteria are external to the text. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare KPI deadlines and failure conditions."
    ],
    "section_label": "9.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "kpi_contract"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1246,14 +1342,20 @@
     "complete budget ledger",
     "public blockchain and publication timestamps"
    ],
-   "gap": "Real-time latency and sufficient disclosure of expenditure items are unspecified. No lab check implemented yet.",
+   "gap": "'Real-time' = the month of booking (H-CE-5).",
    "hypotheses_needed": [
     "Define real-time publication and disclosure completeness."
    ],
    "section_label": "10.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "glass_pocket"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1284,14 +1386,20 @@
     "capital affiliation and disclosure records",
     "offense registry"
    ],
-   "gap": "Covert interaction and private-capital participation are undefined. No lab check implemented yet.",
+   "gap": "Covertness is a declared flag.",
    "hypotheses_needed": [
     "Define qualifying interactions, disclosure, and capital affiliations."
    ],
    "section_label": "11.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "covert_lobbying"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1322,14 +1430,20 @@
     "disposal and restoration valuations",
     "pricing algorithms"
    ],
-   "gap": "Full disposal and environmental restoration valuation methods are missing. No lab check implemented yet.",
+   "gap": "Disposal and restoration costs are declared.",
    "hypotheses_needed": [
     "Declare lifecycle boundaries and environmental cost estimation methods."
    ],
    "section_label": "12.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "full_product_cost"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1356,12 +1470,18 @@
    "data_dependencies": [
     "land and reserve area inventory"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
    "section_label": "13.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "reserve_share"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1387,15 +1507,21 @@
     "extraction activity records",
     "surface integrity measurements"
    ],
-   "gap": "Surface integrity and the scope of the open-pit and logging prohibition are unspecified. No lab check implemented yet.",
+   "gap": "Listed methods only; no surface-integrity test.",
    "hypotheses_needed": [
     "Define a surface-integrity test.",
     "Declare whether the categorical bans apply only within reserves."
    ],
    "section_label": "13.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "invisible_extraction"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1428,14 +1554,20 @@
     "environmental sensors",
     "income contract execution"
    ],
-   "gap": "Residency eligibility and the sensor-to-income function are unspecified. No lab check implemented yet.",
+   "gap": "The income function is not given (source missing).",
    "hypotheses_needed": [
     "Define residency and the income calculation."
    ],
    "section_label": "13.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "sensor_income"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1465,14 +1597,20 @@
     "verification records",
     "validator network ownership and control"
    ],
-   "gap": "The text lacks statement coverage, verification, and decentralization criteria. No lab check implemented yet.",
+   "gap": "Routing to validators only.",
    "hypotheses_needed": [
     "Define covered statements and a decentralized verification procedure."
    ],
    "section_label": "14.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "statements_verified"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1499,15 +1637,27 @@
    "data_dependencies": [
     "vote quantities and purchase costs"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
    "section_label": "14.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "quadratic_cost"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-053"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "CODEX-14.3-01",
@@ -1531,14 +1681,20 @@
     "knowledge-domain assignments",
     "EigenTrust implementation"
    ],
-   "gap": "The EigenTrust calculation and mapping from reputation to vote weight are absent. No lab check implemented yet.",
+   "gap": "EigenTrust values are declared.",
    "hypotheses_needed": [
     "Declare the EigenTrust implementation and field-to-vote mapping."
    ],
    "section_label": "14.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "field_weight"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1568,15 +1724,21 @@
     "algorithm dependency inventory",
     "source repositories and licenses"
    ],
-   "gap": "The document does not define influence coverage or qualifying Open Source conditions. No lab check implemented yet.",
+   "gap": "Domains are declared.",
    "hypotheses_needed": [
     "Define influence tracing and the Open Source acceptance rule."
    ],
    "section_label": "15.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "open_algorithms"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1603,14 +1765,20 @@
    "data_dependencies": [
     "estate and asset classifications"
    ],
-   "gap": "Personal-asset classification and precedence of the ultra-large-fortune rule are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define personal assets and interaction with mandatory fortune transfers."
    ],
    "section_label": "16.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "personal_assets_heritable"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1639,14 +1807,20 @@
     "estate transfers",
     "infrastructure ownership and governance rights"
    ],
-   "gap": "Infrastructure capital and power are not operationally defined. No lab check implemented yet.",
+   "gap": "Destination of infrastructure capital outside ultra-large estates is not defined.",
    "hypotheses_needed": [
     "Define prohibited asset and control categories, including indirect transfers."
    ],
    "section_label": "16.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "no_infrastructure_inheritance"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1676,14 +1850,20 @@
     "estate valuations",
     "Global Development Fund receipts"
    ],
-   "gap": "Ultra-large eligibility, transfer scope, and timing are undefined. No lab check implemented yet.",
+   "gap": "Threshold not given (source missing); whole fortune (H-CE-8).",
    "hypotheses_needed": [
     "Define the fortune threshold, whether the whole fortune transfers, and the transfer deadline."
    ],
    "section_label": "16.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "ultra_large_return"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1712,14 +1892,20 @@
     "population registry",
     "resource entitlements and delivery"
    ],
-   "gap": "Minimum resource levels and the operational meaning of guaranteed provision are undefined. No lab check implemented yet.",
+   "gap": "Quantities are not given.",
    "hypotheses_needed": [
     "Define minimum levels and whether entitlement, availability, or delivery satisfies the guarantee."
    ],
    "section_label": "17.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "ubr_by_birth"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1748,15 +1934,21 @@
     "UBR recipient registry",
     "activity participation records"
    ],
-   "gap": "Qualifying activity and sufficient participation over time are unspecified. No lab check implemented yet.",
+   "gap": "Activities are declared.",
    "hypotheses_needed": [
     "Define activity eligibility, participation requirements, and assessment periods."
    ],
    "section_label": "18.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "contribution_obligation"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -1784,20 +1976,28 @@
     "activity histories",
     "rating change logs"
    ],
-   "gap": "Total passivity, assessment duration, and rating reduction magnitude are undefined. No lab check implemented yet.",
+   "gap": "The rating scale is not given; relation to PRIVACY and LABOR: F-033.",
    "hypotheses_needed": [
     "Define total passivity and the rating reduction rule."
    ],
    "section_label": "18.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "passivity_rating"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-052"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "l8_parameter",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {

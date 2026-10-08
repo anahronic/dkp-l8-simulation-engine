@@ -1408,6 +1408,126 @@
     "priority": "A.4 binds Mercy decisions to SCOPE; SCOPE §2 'In case of conflict, DKP-7-SCOPE-001 prevails'",
     "result": "reading-dependent; the content of the Council's 'control' is not defined"
    }
+  },
+  {
+   "id": "F-033",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§18.1",
+     "text": "18.1. Receipt of UBR imposes an obligation to participate in education, creativity, or socially useful activity. Total passivity leads to a reduced rating for access to additional benefits."
+    },
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§15.1",
+     "text": "15.1. The source code of all algorithms influencing resource allocation, social rating, or news feeds must be Open Source."
+    },
+    {
+     "doc": "DKP-2-LABOR-001",
+     "at": "§3.1",
+     "text": "Labor is any voluntary, sustained activity that:"
+    },
+    {
+     "doc": "DKP-2-LABOR-001",
+     "at": "§3.1",
+     "text": "- cognitive and creative activity,"
+    },
+    {
+     "doc": "DKP-2-LABOR-001",
+     "at": "§9.1",
+     "text": "Outside formally declared crisis conditions, no Subject SHALL be compelled to participate in labor."
+    },
+    {
+     "doc": "DKP-2-LABOR-001",
+     "at": "§9.1",
+     "text": "- does not trigger punishment,"
+    },
+    {
+     "doc": "DKP-2-LABOR-001",
+     "at": "§4.1",
+     "text": "Baseline survival access SHALL NOT be contingent on labor, obedience, loyalty, or economic productivity."
+    },
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§10",
+     "text": "- social credit scoring,"
+    },
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§10",
+     "text": "- behavioral profiling,"
+    },
+    {
+     "doc": "DKP-7-TRANSPARENCY-001",
+     "at": "§9",
+     "text": "- identity-based scoring or profiling,"
+    }
+   ],
+   "conclusion": "Code §18.1 obliges every UBR recipient to take part in education, creativity or socially useful activity and reduces the rating for additional benefits after total passivity; LABOR counts creative and social activity as labor, forbids compelling it outside crisis and says refusal triggers no punishment; PRIVACY forbids social credit scoring and behavioral profiling. UBR itself stays unconditional; whether the reduced rating is punishment or social credit scoring depends on terms the corpus does not define.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "Code §18.1",
+     "subject": "every UBR recipient",
+     "object": "participation; a rating for additional benefits",
+     "scope": "always",
+     "conditions": "receipt of UBR; total passivity",
+     "modality": "obligation; automatic reduced rating"
+    },
+    "rule_b": {
+     "text": "LABOR §9.1 with §3.1; PRIVACY §10",
+     "subject": "every Subject; the system",
+     "object": "participation in labor (incl. creative and social activity); social credit scoring, behavioral profiling",
+     "scope": "outside declared crisis; always",
+     "conditions": "none",
+     "modality": "no compulsion, refusal triggers no punishment; prohibition"
+    },
+    "joint_compliance": "possible only if the reduced rating is neither punishment nor social credit scoring or behavioral profiling; none of these terms is defined",
+    "priority": "no text ranks the Code against LABOR or PRIVACY",
+    "result": "reading-dependent"
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "social credit",
+     "scoring",
+     "rating",
+     "punishment",
+     "compelled",
+     "passiv"
+    ],
+    "reference_chain": [
+     "'social credit scoring' occurs only in PRIVACY §10, undefined",
+     "'rating' occurs only in Code §15.1 and §18.1",
+     "LABOR §3.1 defines labor to include cognitive, creative and social-support activity"
+    ]
+   }
+  },
+  {
+   "id": "F-034",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "inconsistent_values",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§14.2",
+     "text": "14.2. Quadratic Protection: The cost of buying validator votes grows exponentially (Cost = Votes²), making a capital attack economically impossible."
+    }
+   ],
+   "conclusion": "The title and the formula give a quadratic cost (Votes²); the prose calls the growth exponential. A quadratic function is not exponential; the lab computes with the formula.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   }
  ],
  "reference_fails": [
@@ -2687,6 +2807,44 @@
     }
    ],
    "reason": "Whether S3 covers an authority the Code establishes in advance is not said; A.4 binds the Council to SCOPE.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-052",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-033",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§18.1",
+     "text": "18.1. Receipt of UBR imposes an obligation to participate in education, creativity, or socially useful activity. Total passivity leads to a reduced rating for access to additional benefits."
+    }
+   ],
+   "reason": "The terms that decide compatibility ('punishment', 'social credit scoring', 'compelled') are not defined.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-053",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-034",
+   "quotes": [
+    {
+     "doc": "CODE-OF-PLANETARY-SYNERGY",
+     "at": "§14.2",
+     "text": "14.2. Quadratic Protection: The cost of buying validator votes grows exponentially (Cost = Votes²), making a capital attack economically impossible."
+    }
+   ],
+   "reason": "Formula and prose describe different growth laws.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

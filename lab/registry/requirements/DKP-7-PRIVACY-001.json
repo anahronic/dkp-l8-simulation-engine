@@ -840,25 +840,35 @@
    "data_dependencies": [
     "system operation descriptions and practice assessments"
    ],
-   "gap": "Purposes are declared on the request.",
+   "gap": "code_economy: Only the Code's passivity rating is examined (F-033). privacy_transparency: Purposes are declared on the request.",
    "hypotheses_needed": [
     "Declare classification rules for each prohibited practice."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "privacy_transparency",
+    "module": "code_economy",
     "version": "1.0.0",
-    "check": "prohibited_purposes"
+    "check": "no_social_credit_scoring",
+    "also": [
+     {
+      "module": "privacy_transparency",
+      "version": "1.0.0",
+      "check": "prohibited_purposes"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_code_economy_module.py",
     "tests/lab/test_privacy_transparency_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-052"
+   ],
    "open_point": {
-    "origin": "empirical_model_data",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {

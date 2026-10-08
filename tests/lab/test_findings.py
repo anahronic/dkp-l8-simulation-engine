@@ -239,3 +239,11 @@ def test_f027_to_f032_code():
         "legislative_act": ("PASS", "PASS", "PASS", "PASS", "PASS")}
     assert _code("F-032", ("CODEX-A.4-02", "SCOPE-3-19")) == {"council_formed": ("PASS", "UNKNOWN"),
                                                               "no_mercy": ("NOT_APPLICABLE", "NOT_APPLICABLE")}
+
+
+def test_f033_f034_code_economy():
+    assert _code("F-033", ("CODEX-18.1-02", "LABOR-4.1-02", "PRIVACY-10-01", "LABOR-9.1-02")) == {
+        "one_passive_person": ("PASS", "PASS", "UNKNOWN", "UNKNOWN"),
+        "nobody_passive": ("PASS", "PASS", "NOT_APPLICABLE", "NOT_APPLICABLE")}
+    assert _code("F-034", ("CODEX-14.2-01", "IDENTITY-6-02")) == {"one_subject": ("PASS", "PASS"),
+                                                                  "independent_buyers": ("PASS", "NOT_APPLICABLE")}

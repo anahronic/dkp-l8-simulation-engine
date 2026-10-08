@@ -3,6 +3,7 @@
 from lab.modules.ai_subject import AiSubjectModule
 from lab.modules.axiom_constraints import AxiomConstraintsModule
 from lab.modules.calibration_expiry import CalibrationExpiryModule
+from lab.modules.code_economy import CodeEconomyModule
 from lab.modules.code_synergy import CodeSynergyModule
 from lab.modules.contribution import ContributionModule
 from lab.modules.crisis_recovery import CrisisRecoveryModule
@@ -31,4 +32,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              UpgradeLifecycleModule(), InternalSecurityModule(),
                              PoliceAntiterrorModule(), AxiomConstraintsModule(),
                              InfoTruthModule(), PrivacyTransparencyModule(),
-                             EduCultureModule(), AiSubjectModule(), CodeSynergyModule())}
+                             EduCultureModule(), AiSubjectModule(), CodeSynergyModule(),
+                             CodeEconomyModule())}
