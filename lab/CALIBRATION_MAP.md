@@ -127,6 +127,7 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | revalidation interval after which an output under activity is stale | l8_number | DKP-1-EPISTEMIC-BOUNDARIES-001 | §4 | "Persistent outputs without revalidation degrade in reliability." | — | epistemic_gate.revalidation_interval |
 | number of independent nodes that must reproduce a simulation | l8_number | DKP-8-SIMULATION-001 | §8 | "results are reproducible by independent nodes." | — | simulation_gate.min_independent_nodes |
 | tolerance of divergence between deployed and simulated behaviour | l8_number | DKP-8-SIMULATION-001 | §13 | "flag divergence beyond tolerance," | — | simulation_gate.divergence_tolerance |
+| probability above which a collective security risk is 'non-trivial' | l8_number | DKP-3-DEFENSE-001 | §3.4 | "A Verified Collective Security Risk exists when PTL confirms that participation in a Defensive Action exposes a subject to a non-trivial probability of:" | — | defense_envelope.risk_floor |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -151,7 +152,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-2-FINANCE-001 | not listed | — | 1 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-2-LABOR-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-3-ANTITERROR-001 | not listed | — | 0 | acceptable civilian casualty risk (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-3-DEFENSE-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-3-DEFENSE-001 | not listed | — | 0 | probability above which a collective security risk is 'non-trivial' (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-3-INTERNAL-SEC-001 | not listed | — | 4 | elevated authorization thresholds for irreversible security actions (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-3-POLICE-001 | not listed | — | 0 | detention limit (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-4-CRISIS-001 | not listed | — | 0 | Crisis authority duration, decay, revalidation cadence, exit sensitivity (l8_number); any threshold of a crisis trigger ('sustained' D3/T3, PTL 'correction tolerance', 'axiomatic survival margins') (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

@@ -11,6 +11,7 @@
   "code_synergy",
   "contribution",
   "crisis_recovery",
+  "defense_envelope",
   "dispute_correction",
   "economic_access",
   "edu_culture",
@@ -1158,6 +1159,31 @@
    "module": "simulation_gate",
    "example": "proposed_changes",
    "kind": "reference"
+  },
+  {
+   "module": "defense_envelope",
+   "example": "faulty_defense",
+   "kind": "counterexample"
+  },
+  {
+   "module": "defense_envelope",
+   "example": "harm_episode",
+   "kind": "reference"
+  },
+  {
+   "module": "defense_envelope",
+   "example": "quiet_perimeter",
+   "kind": "reference"
+  },
+  {
+   "module": "defense_envelope",
+   "example": "single_attack",
+   "kind": "reference"
+  },
+  {
+   "module": "defense_envelope",
+   "example": "vpi_lapse",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1165,20 +1191,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 896,
-  "covered_percent": 51.6,
+  "covered": 932,
+  "covered_percent": 53.7,
   "statuses": {
-   "PASS": 824,
+   "PASS": 859,
    "FAIL": 3,
-   "UNKNOWN": 55,
+   "UNKNOWN": 56,
    "NOT_APPLICABLE": 14,
-   "UNCOVERED": 841
+   "UNCOVERED": 805
   },
   "resolvable": 330,
-  "resolvable_uncovered": 136,
+  "resolvable_uncovered": 130,
   "unresolved_decisions": 1407,
-  "covered_with_open_point": 702,
-  "pass_with_open_point": 637
+  "covered_with_open_point": 732,
+  "pass_with_open_point": 666
  },
  "stages": [
   {
@@ -1228,20 +1254,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 896,
-    "covered_percent": 51.6,
+    "covered": 932,
+    "covered_percent": 53.7,
     "statuses": {
-     "PASS": 824,
+     "PASS": 859,
      "FAIL": 3,
-     "UNKNOWN": 55,
+     "UNKNOWN": 56,
      "NOT_APPLICABLE": 14,
-     "UNCOVERED": 841
+     "UNCOVERED": 805
     },
     "resolvable": 330,
-    "resolvable_uncovered": 136,
+    "resolvable_uncovered": 130,
     "unresolved_decisions": 1407,
-    "covered_with_open_point": 702,
-    "pass_with_open_point": 637
+    "covered_with_open_point": 732,
+    "pass_with_open_point": 666
    }
   },
   {
@@ -1412,20 +1438,20 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 235,
-    "covered_percent": 46.0,
+    "covered": 271,
+    "covered_percent": 53.0,
     "statuses": {
-     "PASS": 215,
+     "PASS": 250,
      "FAIL": 0,
-     "UNKNOWN": 17,
+     "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 276
+     "UNCOVERED": 240
     },
     "resolvable": 79,
-    "resolvable_uncovered": 39,
+    "resolvable_uncovered": 33,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 195,
-    "pass_with_open_point": 175
+    "covered_with_open_point": 225,
+    "pass_with_open_point": 204
    }
   },
   {
@@ -1931,6 +1957,12 @@
    "title": "AUDIT §4 / §7: is missing epistemic metadata a D2 'Constraint Violation', and what does 'Consistency or Integrity Anomaly' refer to",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-058",
+   "title": "DEFENSE §5: to which state does Defense move when confirmation lapses in D1.5, D2 or D3, and is D1 deliberately left out of the refresh rule",
+   "status": "UNRESOLVED",
+   "category": "architecture_definition"
   }
  ],
  "semantic_gate": {
@@ -2202,10 +2234,17 @@
     "classification": "CONFIRMED_FINDING",
     "kind": "inconsistent_values",
     "effect": "wording_only"
+   },
+   {
+    "id": "F-039",
+    "title": "DEFENSE §5: a state that may not be kept without refreshed confirmation, but no state to leave to",
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 19,
+   "CONFIRMED_FINDING": 20,
    "INTERPRETATION_GAP": 17,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
@@ -2220,7 +2259,7 @@
   },
   "effect_counts": {
    "CONFIRMED_FINDING": {
-    "changes_execution": 13,
+    "changes_execution": 14,
     "wording_only": 4,
     "resolved_by_priority": 1,
     "systemic_blocker": 1
@@ -2369,7 +2408,7 @@
    {
     "status": "UNRESOLVED",
     "category": "architecture_definition",
-    "count": 15
+    "count": 16
    },
    {
     "status": "UNRESOLVED",
@@ -2410,8 +2449,8 @@
    },
    {
     "origin": "architecture_definition",
-    "agent_verified": 34,
-    "codex_draft": 221,
+    "agent_verified": 37,
+    "codex_draft": 218,
     "human_accepted": 0,
     "total": 255
    },
@@ -2451,7 +2490,7 @@
     "total": 0
    }
   ],
-  "draft_author_question_candidates": 366,
+  "draft_author_question_candidates": 363,
   "draft_provenance": {
    "tool": "lab/tools/codex/classify_prompt.md + classify_schema.json",
    "prompt_sha256": "5387970b69ca9764f953b7a5b72998f7c097e56e81be5cde7aa0b8aca3d87876",
@@ -25938,24 +25977,32 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Axiomatic admissibility rules and a method for establishing actual operational purpose are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "not_political_or_punitive",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Uses are declared action kinds and objectives.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -25970,24 +26017,32 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced axioms and a complete test for voluntary participation are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "voluntary_lethal_risk",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26002,23 +26057,29 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Admissible operation and the comparison method for minimal irreversible damage are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "stop_harm_objective",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Objectives are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26034,23 +26095,29 @@
    "section": "10",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DTI validity, evidence anchoring, and the tamper-evidence verification scheme are not defined here. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "logged_actions",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26066,23 +26133,29 @@
    "section": "10",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The applicable transparency, delay, redaction, and public-verification requirements are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "post_factum_publication",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Redaction rules belong to higher layers.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26098,23 +26171,29 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The semantic boundaries of governing information flows and managing populations are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "cross_layer_isolation",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26130,23 +26209,29 @@
    "section": "12",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced procedures and their acceptance, timing, and rollback requirements are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "upgrade_only",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Declared properties of the change.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26162,23 +26247,29 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Simulation and transparency requirements are absent, and the scope of any modification depends on reconciling the subsequent exception. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "change_requirements",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26287,23 +26378,29 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A method for classifying operations and their effects as the prohibited functions is not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "hard_constraints",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26319,24 +26416,32 @@
    "section": "3.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The method for determining an intervention's sole function is unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "defensive_action_definition",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26351,23 +26456,29 @@
    "section": "3.2",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The controlled execution boundary and referenced Impact measurement rules are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "external_harm",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "'External' is a declared property of the harm stream.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26383,23 +26494,29 @@
    "section": "3.3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Criticality criteria, the referenced biospheric definitions, and the operational meaning of A1 priority are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "protected_domains",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26415,23 +26532,29 @@
    "section": "3.4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The threshold for a non-trivial probability is undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "verified_risk",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "'Non-trivial probability' = above a declared floor (source missing).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26447,23 +26570,29 @@
    "section": "3.4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "risk_by_ptl",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26476,24 +26605,32 @@
    "section": "3.5",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Subordinate thresholds and the referenced Identity registration requirements are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "volunteer_definition",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Qualification thresholds belong to subordinate protocols; declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26540,23 +26677,29 @@
    "section": "3.6",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "vpi_is_defense",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Classification recorded.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26569,27 +26712,35 @@
    "section": "4.1",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "ptl_supremacy",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-039"
+   ],
    "open_point": null
   },
   {
@@ -26598,24 +26749,32 @@
    "section": "4.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The causal meaning of based on and the classification of mixed evidence bases are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "non_preemption",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26630,23 +26789,29 @@
    "section": "4.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Admissible operation and the method for determining actual objectives are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "containment_only",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Objectives are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26662,23 +26827,29 @@
    "section": "4.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Minimality, proportionality, and physical or logical reversibility evaluation rules are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "minimal_action",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Scope is a declared property; proportionality is not measured.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26694,23 +26865,29 @@
    "section": "4.5",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between evidence processing and substantive verdict production is not formally specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "evidence_not_verdicts",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Requests outside the protocol are refused.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26726,24 +26903,32 @@
    "section": "4.6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Imposition and expectation are not operationally defined or tied to a specified observation source. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "voluntary_participation",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26758,24 +26943,32 @@
    "section": "4.6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The rights baseline and the causal attribution method for adverse outcomes are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "refusal_free",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26790,30 +26983,38 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A1/A2 thresholds, state precedence, transition rules, and several event classifications are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "finite_dti_states",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Fall-back after a lapse is a hypothesis (H-DE-2, F-039).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-058"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -26826,23 +27027,31 @@
    "module": "crisis_recovery",
    "check": "d3_needs_confirmation",
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "defense_envelope · refresh_or_leave"
+   ],
    "hypotheses": [
     "H-CR-1",
     "H-CR-2",
-    "H-CR-3"
+    "H-CR-3",
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-058"
+   ],
    "observed": {
-    "PASS": 2,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -26850,10 +27059,13 @@
     "PASS": 1
    },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-039",
+    "questions:Q-058"
+   ],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -26862,24 +27074,32 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A causal physical-effect model and the distinction between expected capability and achieved containment are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "allowed_actions",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26894,23 +27114,29 @@
    "section": "6.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The feasible-operation set and minimality ordering are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "neutralization_minimal",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Scope is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26926,23 +27152,29 @@
    "section": "6.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The admissible horizon and a complete method for determining feasible alternatives are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "neutralization_at_source",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Feasibility of alternatives is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26958,23 +27190,29 @@
    "section": "6.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Persistent presence and the semantic boundaries of retaliation, governance, occupation, and independent harm objectives are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "no_occupation",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -26990,24 +27228,32 @@
    "section": "6.1",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "volunteers_only",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -27019,24 +27265,32 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A formal classification method for the prohibited uses is not provided. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "hard_bans",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -27051,23 +27305,29 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Justice evidence acceptance requirements and semantic output classification rules are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "no_legitimacy_ruling",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Requests outside the protocol are refused.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -27087,26 +27347,34 @@
    "module": "crisis_recovery",
    "check": "resource_recovery_claim",
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "defense_envelope · resource_recovery_claim"
+   ],
    "hypotheses": [
     "H-CR-1",
     "H-CR-2",
-    "H-CR-3"
+    "H-CR-3",
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {
     "PASS": 1
    },
@@ -27120,23 +27388,29 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Downstream use observability and criteria for prohibited interpretations are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "risk_symmetry_forwarding",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -27156,25 +27430,33 @@
    "module": "crisis_recovery",
    "check": "wind_down",
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
-   "gap": "Admissible-state restoration is the end of the harm window.",
-   "also_checked_by": [],
+   "gap": "crisis_recovery: Admissible-state restoration is the end of the harm window. defense_envelope: After a lapse in D2/D3 the state is reading-dependent (F-039).",
+   "also_checked_by": [
+    "defense_envelope · wind_down"
+   ],
    "hypotheses": [
     "H-CR-1",
     "H-CR-2",
-    "H-CR-3"
+    "H-CR-3",
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-058"
+   ],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
-    "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "UNKNOWN": 1,
+    "NOT_APPLICABLE": 4
    },
-   "status": "PASS",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
     "PASS": 1
@@ -27183,7 +27465,7 @@
    "text_verification": [],
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -27196,23 +27478,29 @@
    "module": "crisis_recovery",
    "check": "escalation_to_crisis",
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "defense_envelope · escalation_to_crisis"
+   ],
    "hypotheses": [
     "H-CR-1",
     "H-CR-2",
-    "H-CR-3"
+    "H-CR-3",
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 5
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -27232,23 +27520,29 @@
    "section": "Epistemic Classification of Trajectory-Based Authorization",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Confidence propagation, consistency determination, and PTL TTL rules are not specified here. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "vpi_marking",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -27264,23 +27558,29 @@
    "section": "Epistemic Classification of Trajectory-Based Authorization",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "vpi_revalidation",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -27293,23 +27593,29 @@
    "section": "Epistemic Classification of Trajectory-Based Authorization",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "defense_envelope",
+   "check": "vpi_termination",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -27322,24 +27628,32 @@
    "section": "Epistemic Classification of Trajectory-Based Authorization",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational distinction between measured active trajectory and unmeasured-future inference is not fully defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "defense_envelope",
+   "check": "vpi_not_projection",
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "gap": "Basis is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DE-1",
+    "H-DE-2",
+    "H-DE-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "defense_envelope:faulty_defense"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],

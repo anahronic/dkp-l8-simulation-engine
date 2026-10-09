@@ -36,13 +36,19 @@
     "protected-domain registry",
     "axiomatic admissibility assessments"
    ],
-   "gap": "Axiomatic admissibility rules and a method for establishing actual operational purpose are not supplied. No lab check implemented yet.",
+   "gap": "Uses are declared action kinds and objectives.",
    "hypotheses_needed": [
     "Declare how operational purposes and axiomatic admissibility are evaluated."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "not_political_or_punitive"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -75,13 +81,19 @@
     "risk assessments",
     "axiomatic participation requirements"
    ],
-   "gap": "The referenced axioms and a complete test for voluntary participation are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how voluntariness is established beyond the existence of a consent record."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "voluntary_lethal_risk"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -115,13 +127,19 @@
     "system admissibility assessments",
     "response consequence estimates"
    ],
-   "gap": "Admissible operation and the comparison method for minimal irreversible damage are undefined. No lab check implemented yet.",
+   "gap": "Objectives are declared.",
    "hypotheses_needed": [
     "Declare the feasible-response set, damage comparison method, and admissible-operation predicate."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "stop_harm_objective"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -198,13 +216,19 @@
     "PTL change records",
     "axiom enforcement records"
    ],
-   "gap": "A method for classifying operations and their effects as the prohibited functions is not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare an operation and output classification that detects the prohibited functions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "hard_constraints"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -235,13 +259,19 @@
     "PTL harm confirmations",
     "protected-domain classifications"
    ],
-   "gap": "The method for determining an intervention's sole function is unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how intervention functions are inferred from operations and effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "defensive_action_definition"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -273,13 +303,19 @@
     "execution-boundary membership",
     "Impact harm measurements and inevitability assessments"
    ],
-   "gap": "The controlled execution boundary and referenced Impact measurement rules are not supplied. No lab check implemented yet.",
+   "gap": "'External' is a declared property of the harm stream.",
    "hypotheses_needed": [
     "Declare the functional execution boundary and how unavoidable harm is established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "external_harm"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -312,13 +348,19 @@
     "public infrastructure registry",
     "A1 priority rules"
    ],
-   "gap": "Criticality criteria, the referenced biospheric definitions, and the operational meaning of A1 priority are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare criticality and priority rules and whether the listed categories exhaust eligibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "protected_domains"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -349,13 +391,19 @@
    "data_dependencies": [
     "PTL participation-risk confirmations"
    ],
-   "gap": "The threshold for a non-trivial probability is undefined. No lab check implemented yet.",
+   "gap": "'Non-trivial probability' = above a declared floor (source missing).",
    "hypotheses_needed": [
     "Declare the non-trivial probability threshold and the treatment of overlapping adverse outcomes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "verified_risk"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -386,11 +434,17 @@
     "PTL risk evidence",
     "risk-verifier dependency records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "risk_by_ptl"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -421,13 +475,19 @@
     "subordinate qualification and safety thresholds",
     "Identity voluntary-defense registration"
    ],
-   "gap": "Subordinate thresholds and the referenced Identity registration requirements are not supplied. No lab check implemented yet.",
+   "gap": "Qualification thresholds belong to subordinate protocols; declared.",
    "hypotheses_needed": [
     "Declare which subordinate protocols apply and how consent revocation takes effect."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "volunteer_definition"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -493,11 +553,17 @@
     "qualified VPI determinations",
     "action function records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Classification recorded.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "vpi_is_defense"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -524,13 +590,19 @@
     "multi-oracle trajectory agreement",
     "PTL trajectory TTL"
    ],
-   "gap": "Confidence propagation, consistency determination, and PTL TTL rules are not specified here. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare confidence and consistency mappings and how the metadata interval relates to the minimum component TTL."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "vpi_marking"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -559,11 +631,17 @@
     "trajectory component TTLs",
     "authorization revalidation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "vpi_revalidation"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -589,11 +667,17 @@
    "data_dependencies": [
     "PTL trajectory confirmation lifecycle events"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "vpi_termination"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -619,13 +703,19 @@
     "active-vector measurement series",
     "evidence provenance and classifications"
    ],
-   "gap": "The operational distinction between measured active trajectory and unmeasured-future inference is not fully defined. No lab check implemented yet.",
+   "gap": "Basis is declared.",
    "hypotheses_needed": [
     "Declare the active-process predicate and evidence classification method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "vpi_not_projection"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -654,12 +744,18 @@
    "data_dependencies": [
     "PTL harm evidence and confirmation status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "ptl_supremacy"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
   },
@@ -684,13 +780,19 @@
     "authorization evidence provenance",
     "PTL-confirmed VPI determinations"
    ],
-   "gap": "The causal meaning of based on and the classification of mixed evidence bases are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how supporting evidence is distinguished from an operative authorization basis."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "non_preemption"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -720,13 +822,19 @@
     "harm-state records",
     "operation admissibility assessments"
    ],
-   "gap": "Admissible operation and the method for determining actual objectives are undefined. No lab check implemented yet.",
+   "gap": "Objectives are declared.",
    "hypotheses_needed": [
     "Declare admissibility and objective-attribution criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "containment_only"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -761,13 +869,19 @@
     "physical feasibility assessments",
     "reversibility assessments"
    ],
-   "gap": "Minimality, proportionality, and physical or logical reversibility evaluation rules are unspecified. No lab check implemented yet.",
+   "gap": "Scope is a declared property; proportionality is not measured.",
    "hypotheses_needed": [
     "Declare the feasible alternatives, scope ordering, proportionality rule, and reversibility test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "minimal_action"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -795,13 +909,19 @@
    "data_dependencies": [
     "Justice decision-flow records"
    ],
-   "gap": "The boundary between evidence processing and substantive verdict production is not formally specified. No lab check implemented yet.",
+   "gap": "Requests outside the protocol are refused.",
    "hypotheses_needed": [
     "Declare an output classification and the permitted Defense-to-Justice interface."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "evidence_not_verdicts"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -834,13 +954,19 @@
     "subject consent records",
     "participation assignment records"
    ],
-   "gap": "Imposition and expectation are not operationally defined or tied to a specified observation source. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare observable indicators of imposed or expected participation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "voluntary_participation"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -873,13 +999,19 @@
     "sanction records",
     "subject status decisions and reasons"
    ],
-   "gap": "The rights baseline and the causal attribution method for adverse outcomes are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the rights baseline and how outcomes are attributed to refusal."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "refusal_free"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -921,19 +1053,27 @@
     "systemic survival assessments",
     "crisis escalation records"
    ],
-   "gap": "A1/A2 thresholds, state precedence, transition rules, and several event classifications are absent. No lab check implemented yet.",
+   "gap": "Fall-back after a lapse is a hypothesis (H-DE-2, F-039).",
    "hypotheses_needed": [
     "Declare state selection under overlapping conditions and operational definitions of hostile activation, sustained harm, and systemic survival threat."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "finite_dti_states"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-058"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -963,17 +1103,27 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "d3_needs_confirmation"
+    "check": "d3_needs_confirmation",
+    "also": [
+     {
+      "module": "defense_envelope",
+      "version": "1.0.0",
+      "check": "refresh_or_leave"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-058"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -997,13 +1147,19 @@
     "physical action-effect assessments",
     "harm-stream observations"
    ],
-   "gap": "A causal physical-effect model and the distinction between expected capability and achieved containment are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether eligibility uses predicted effects, observed effects, or both, and supply a causal model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "allowed_actions"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1033,13 +1189,19 @@
     "harm-stream status",
     "physical operation feasibility and termination assessments"
    ],
-   "gap": "The feasible-operation set and minimality ordering are not defined. No lab check implemented yet.",
+   "gap": "Scope is declared.",
    "hypotheses_needed": [
     "Declare feasible alternatives and the ordering used to identify a minimal operation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "neutralization_minimal"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1071,13 +1233,19 @@
     "harm-source location",
     "alternative-method feasibility and timing assessments"
    ],
-   "gap": "The admissible horizon and a complete method for determining feasible alternatives are unspecified. No lab check implemented yet.",
+   "gap": "Feasibility of alternatives is declared.",
    "hypotheses_needed": [
     "Declare the admissible horizon and the alternative-method search domain."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "neutralization_at_source"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1110,13 +1278,19 @@
     "operation records",
     "post-operation presence and governance observations"
    ],
-   "gap": "Persistent presence and the semantic boundaries of retaliation, governance, occupation, and independent harm objectives are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare persistence criteria and the prohibited-activity classification method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "no_occupation"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1145,11 +1319,17 @@
     "verified risk classifications",
     "qualified voluntary participant status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "volunteers_only"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1174,13 +1354,19 @@
    "data_dependencies": [
     "operation purpose and effect assessments"
    ],
-   "gap": "A formal classification method for the prohibited uses is not provided. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how each prohibited use is recognized in operation traces and effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "hard_bans"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1212,13 +1398,19 @@
     "PTL evidence references",
     "Justice evidence acceptance requirements"
    ],
-   "gap": "Justice evidence acceptance requirements and semantic output classification rules are absent. No lab check implemented yet.",
+   "gap": "Requests outside the protocol are refused.",
    "hypotheses_needed": [
     "Declare the Justice evidence interface and how legitimacy or fault determinations are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "no_legitimacy_ruling"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1259,10 +1451,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "resource_recovery_claim"
+    "check": "resource_recovery_claim",
+    "also": [
+     {
+      "module": "defense_envelope",
+      "version": "1.0.0",
+      "check": "resource_recovery_claim"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -1293,13 +1493,19 @@
     "Identity and Finance receipt records",
     "downstream data-use and interpretation records"
    ],
-   "gap": "Downstream use observability and criteria for prohibited interpretations are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare data-use tracing and interpretation classification rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "risk_symmetry_forwarding"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1329,7 +1535,7 @@
     "PTL cessation or neutralization confirmations",
     "system admissibility assessments"
    ],
-   "gap": "Admissible-state restoration is the end of the harm window.",
+   "gap": "crisis_recovery: Admissible-state restoration is the end of the harm window. defense_envelope: After a lapse in D2/D3 the state is reading-dependent (F-039).",
    "hypotheses_needed": [
     "Declare admissible-state predicates and wind-down transition semantics."
    ],
@@ -1337,17 +1543,27 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "wind_down"
+    "check": "wind_down",
+    "also": [
+     {
+      "module": "defense_envelope",
+      "version": "1.0.0",
+      "check": "wind_down"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-058"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "architecture_definition",
-    "source": "codex_draft"
+    "source": "agent_verified"
    }
   },
   {
@@ -1384,10 +1600,18 @@
    "implementation": {
     "module": "crisis_recovery",
     "version": "1.0.0",
-    "check": "escalation_to_crisis"
+    "check": "escalation_to_crisis",
+    "also": [
+     {
+      "module": "defense_envelope",
+      "version": "1.0.0",
+      "check": "escalation_to_crisis"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_crisis_recovery_module.py"
+    "tests/lab/test_crisis_recovery_module.py",
+    "tests/lab/test_defense_envelope_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -1420,13 +1644,19 @@
     "PTL evidence records",
     "audit integrity proofs"
    ],
-   "gap": "DTI validity, evidence anchoring, and the tamper-evidence verification scheme are not defined here. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the DTI and evidence-reference validators and the log integrity verification method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "logged_actions"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1459,13 +1689,19 @@
     "higher-layer governance and audit publication rules",
     "public log access and verification records"
    ],
-   "gap": "The applicable transparency, delay, redaction, and public-verification requirements are absent. No lab check implemented yet.",
+   "gap": "Redaction rules belong to higher layers.",
    "hypotheses_needed": [
     "Identify the governing protocols and declare a public-verifiability test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "post_factum_publication"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1500,13 +1736,19 @@
     "information control records",
     "Impact and Justice computation provenance"
    ],
-   "gap": "The semantic boundaries of governing information flows and managing populations are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare operation classifications that distinguish prohibited governance effects from permitted containment."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "cross_layer_isolation"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1547,13 +1789,19 @@
     "acceptance and activation controls",
     "rollback provisions"
    ],
-   "gap": "The referenced procedures and their acceptance, timing, and rollback requirements are not supplied. No lab check implemented yet.",
+   "gap": "Declared properties of the change.",
    "hypotheses_needed": [
     "Declare rollback semantics and resolve procedural details from the identified protocols."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "upgrade_only"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1589,13 +1837,19 @@
     "system simulation records",
     "transparency and public disclosure requirements"
    ],
-   "gap": "Simulation and transparency requirements are absent, and the scope of any modification depends on reconciling the subsequent exception. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Treat presentation-only corrections as exempt from modification requirements and declare applicable disclosure rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "defense_envelope",
+    "version": "1.0.0",
+    "check": "change_requirements"
+   },
+   "tests": [
+    "tests/lab/test_defense_envelope_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

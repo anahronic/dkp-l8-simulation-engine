@@ -272,3 +272,11 @@ def test_f038_d2_label():
         v = run_request(json.load(f))["variants"]["missing_metadata"]
     assert [d["level"] for d in v["outputs"]["deviations"]] == ["D2"]
     assert v["outputs"]["responses"][0]["response"] == "remediation protocol"
+
+
+def test_f039_defense_fallback():
+    assert _code("F-039", ("DEFENSE-5-02", "DEFENSE-8-04")) == {"lapse_in_d3": ("PASS", "UNKNOWN"),
+                                                                "single_attack": ("NOT_APPLICABLE", "PASS")}
+    with open(os.path.join(FINDINGS, "F-039.request.json"), encoding="utf-8") as f:
+        v = run_request(json.load(f))["variants"]
+    assert [x["level"] for x in v["lapse_in_d3"]["outputs"]["levels"]] == ["D3", "D1", "D0"]

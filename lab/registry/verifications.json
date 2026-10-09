@@ -1819,6 +1819,58 @@
     ]
    },
    "effect": "wording_only"
+  },
+  {
+   "id": "F-039",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "missing_definition",
+   "effect": "changes_execution",
+   "quotes": [
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§5",
+     "text": "Defense SHALL NOT remain in D1.5, D2, or D3 without continuously refreshed PTL confirmation."
+    },
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§5",
+     "text": "D1 – Active External Harm PTL confirms an active harm stream. Localized defensive actions permitted."
+    },
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§4.1",
+     "text": "No Defensive Action is permitted without PTL-confirmed evidence of an active or physically inevitable harm stream."
+    },
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§8",
+     "text": "Defense automatically winds down when:"
+    }
+   ],
+   "conclusion": "DEFENSE §5 forbids remaining in D1.5, D2 or D3 without refreshed confirmation but names no state to move to, and leaves D1 out of the rule. Two literal implementations can end a lapse in D2 or D3 in D0 or D1, with different permitted actions.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "D1.5",
+     "remain in",
+     "fall back",
+     "revert",
+     "D0",
+     "wind down",
+     "winds down"
+    ],
+    "reference_chain": [
+     "the D-states occur only in DEFENSE §5; AUDIT D1-D4 are another scale",
+     "CRISIS enters on D3 (F-010) and defines no return path for DEFENSE"
+    ]
+   }
   }
  ],
  "reference_fails": [
@@ -3301,6 +3353,25 @@
     }
    ],
    "reason": "The label in §4 could be read as an integrity breach (D3, halt) instead of D2 (remediation).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-058",
+   "category": "architecture_definition",
+   "status": "UNRESOLVED",
+   "finding": "F-039",
+   "quotes": [
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§5",
+     "text": "Defense SHALL NOT remain in D1.5, D2, or D3 without continuously refreshed PTL confirmation."
+    }
+   ],
+   "reason": "The target state of the DEFENSE state machine after a lapse of confirmation is an architectural definition absent from the corpus.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

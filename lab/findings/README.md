@@ -61,6 +61,7 @@ documented numbers as regressions.
 | [F-036](F-036.md) | Code A.1 activates the Kill Switches on B(t); ORACLE §12 forbids B(t) to trigger enforcement without an L8 bundle | CONFIRMED_FINDING (contradiction) | Q-055 |
 | [F-037](F-037.md) | Cognitive and cultural impact channels must come from the PTL, which excludes cultural harm | INTERPRETATION_GAP | Q-056 |
 | [F-038](F-038.md) | AUDIT §4 names D2 'Consistency or Integrity Anomaly'; §7 names D2 'Constraint Violation' | CONFIRMED_FINDING (wording) | Q-057 |
+| [F-039](F-039.md) | DEFENSE §5: a state that may not be kept without refreshed confirmation, but no state to leave to | CONFIRMED_FINDING | Q-058 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

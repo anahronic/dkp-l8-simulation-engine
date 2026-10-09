@@ -8,6 +8,7 @@ from lab.modules.code_economy import CodeEconomyModule
 from lab.modules.code_synergy import CodeSynergyModule
 from lab.modules.contribution import ContributionModule
 from lab.modules.crisis_recovery import CrisisRecoveryModule
+from lab.modules.defense_envelope import DefenseEnvelopeModule
 from lab.modules.dispute_correction import DisputeCorrectionModule
 from lab.modules.economic_access import EconomicAccessModule
 from lab.modules.edu_culture import EduCultureModule
@@ -42,4 +43,4 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              CodeEconomyModule(), ScopeGateModule(),
                              OracleIngestionModule(), ImpactAttributionModule(),
                              EpistemicGateModule(), AuditTraceModule(),
-                             SimulationGateModule())}
+                             SimulationGateModule(), DefenseEnvelopeModule())}
