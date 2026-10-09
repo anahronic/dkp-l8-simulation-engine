@@ -17,6 +17,8 @@ UNKNOWN (F-018, F-027 … F-032).
 
 from __future__ import annotations
 
+import json
+import os
 import random
 import re
 from typing import Any, Dict, List, Optional, Tuple
@@ -55,6 +57,20 @@ WRITE_OFF = 10                    # §8.2 "10 times the damage caused"
 GENESIS = {"k": 1.0, "alpha": 2.83, "B_min": 0.68, "B_current_at_genesis": 0.7104,
            "previous_hash": "0x" + "0" * 64}
 GENESIS_BUFFER = 0.0304           # Explanatory note "Leaves a buffer of only 0.0304"
+_SNAP = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "corpus", "world-aad3e86", "Dikenocracy")
+HEADER = ("block_height", "timestamp", "previous_hash", "consensus_protocol", "difficulty_target", "nonce")
+
+
+def genesis_spec() -> Tuple[Dict[str, Any], str, str]:
+    """The Genesis Block #0 specification as printed in the pinned Code (comments removed), the Code text, the Glossary."""
+    with open(os.path.join(_SNAP, "CODE-OF-PLANETARY-SYNERGY.md"), encoding="utf-8") as f:
+        code = f.read()
+    with open(os.path.join(_SNAP, "Dikenocracy Glossary.md"), encoding="utf-8") as f:
+        glossary = f.read()
+    m = re.search(r"#### Genesis Block \\#0 \(Technical Specification\).*?```[a-z]*\s*\n(.*?)```", code, re.S)
+    if not m:
+        raise RuntimeError("Genesis Block #0 specification not found in the pinned Code")
+    return json.loads(re.sub(r"[ \t]+//[^\n]*", "", m.group(1))), code, glossary
 
 CHANNELS = ("upgrade", "on_chain", "operational", "financial", "crisis", "enforcement")
 COUNCIL_ACTIONS = {"severity_reduction": None, "expand_applicability": "CODEX-A.4-04", "override_s2_s3": "CODEX-A.4-05",
@@ -64,6 +80,8 @@ BUNDLE_STATES = ["none", "valid", "expired", "invalid_signature", "other_model"]
 
 FAULTS = {
     "ignore_b_min": "the Kill Switches do not activate when B(t) < B_min",
+    "altered_genesis_header": "block #0 is created with another difficulty target than specified",
+    "edit_genesis_message": "requests to edit the Genesis Block's message and anchors are accepted",
     "kill_switch_during_mercy": "Kill Switches stay in force during Mercy",
     "accept_on_chain_tuning": "an on-chain change of an Equation parameter is accepted",
     "accept_protocol_tuning": "an operational, financial, crisis or enforcement protocol changes a parameter",
@@ -113,7 +131,20 @@ def run(r: Dict[str, Any]):
                                   provenance=tuple(prov), order=order[kind]))
 
     days, w = r["days"], r["level_weights"]
-    put("notice", "GENESIS", 0, {"genesis": dict(r["genesis"])})
+    spec = genesis_spec()[0]
+    header = {k: spec[k] for k in HEADER}
+    if "altered_genesis_header" in faults:
+        header["difficulty_target"] = "0x0000ffff" + "f" * 56
+    rec = {"header": header, "physical_anchors": dict(spec["physical_anchors"]), "immutable_message": spec["immutable_message"]}
+    for q in r["genesis_change_requests"]:
+        ok = "edit_genesis_message" in faults
+        put("decision", "GENESIS", 0, {"genesis_change": q, "accepted": ok,
+                                       "reason": None if ok else "the Genesis Block is an immutable reference point (Code, Glossary)"})
+        if ok and q == "immutable_message":
+            rec["immutable_message"] = rec["immutable_message"].replace("faster and cleaner", "together")
+        if ok and q == "physical_anchors":
+            rec["physical_anchors"]["mauna_loa_co2_ppm"] = 420.0
+    put("notice", "GENESIS", 0, {"genesis": dict(r["genesis"]), "block": rec})
     # A.2 stack: weights, sources, drones, validators
     put("evaluation", "PTL", 0, {"weights": dict(w), "coverage_l0": r["l0_coverage"]})
     for f in r["external_feeds"]:
@@ -474,6 +505,31 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     out.append(v("CODEX-GenesisBlock_0_TechnicalSpecification_-02", "genesis_parameters", bad,
                  "Genesis parameters equal the constants of A.1 (α 2.83, B_min 0.68, k within 0.94...1.06) and leave the "
                  "stated buffer of 0.0304", "{n} Genesis parameters differ from A.1 or from the explanatory note", {"genesis": g}))
+    spec, code_text, glossary = genesis_spec()
+    blk = [m.value["block"] for m in msgs if m.source == "GENESIS" and "block" in m.value][0]
+    out.append(v("CODEX-GenesisBlock_0_TechnicalSpecification_-01", "genesis_header",
+                 [k for k in HEADER if blk["header"].get(k) != spec[k]],
+                 f"block #0 carries the specified header ({spec['consensus_protocol']}, difficulty target "
+                 f"{spec['difficulty_target'][:12]}..., height 0, nonce 0)", "{n} header fields differ from the specification"))
+    an = spec["physical_anchors"]
+    note_co2 = re.search(r"CO2 = ([0-9.]+) ppm", code_text)
+    incons = []
+    if not note_co2 or float(note_co2.group(1)) != an["mauna_loa_co2_ppm"]:
+        incons.append("CO2 anchor vs explanatory note")
+    if not spec["timestamp"].startswith("2025-12-10") or "December 10, 2025" not in glossary:
+        incons.append("launch date vs Glossary")
+    if an["planetary_boundaries_safe_space_violated"] != "6/9" or "6 out of 9" not in code_text:
+        incons.append("planetary boundaries vs explanatory note")
+    incons += [k for k in an if blk["physical_anchors"].get(k) != an[k]]
+    out.append(v("CODEX-GenesisBlock_0_TechnicalSpecification_-03", "genesis_anchors", incons,
+                 f"physical anchors agree with the explanatory note and the Glossary (CO2 {an['mauna_loa_co2_ppm']} ppm, launch "
+                 "2025-12-10, 6/9 boundaries) and the block carries them unchanged; the external measurements themselves "
+                 "(NOAA, Copernicus) are not verified by the lab", "{n} anchors inconsistent or changed"))
+    chg = [m.value for m in msgs if m.source == "GENESIS" and "genesis_change" in m.value]
+    out.append(v("CODEX-GenesisBlock_0_TechnicalSpecification_-04", "immutable_message",
+                 [x["genesis_change"] for x in chg if x["accepted"]] + ([] if blk["immutable_message"] == spec["immutable_message"] else ["message"]),
+                 f"the block carries the specified immutable message; {len(chg)} change requests refused",
+                 "{n} changes to the immutable Genesis content"))
     out.append(v("CODEX-Glossary_Definitions-01", "genesis_no_predecessor",
                  [] if g["previous_hash"] == GENESIS["previous_hash"] else [g["previous_hash"]],
                  "block #0 has no predecessor (previous_hash is all zeros)", "block #0 names a predecessor"))
@@ -947,6 +1003,9 @@ def _peace_dividends(r, region, stake0) -> float:
 
 IMPLEMENTS = {
     "CODEX-GenesisBlock_0_TechnicalSpecification_-02": ("genesis_parameters", "IMPLEMENTED", None),
+    "CODEX-GenesisBlock_0_TechnicalSpecification_-01": ("genesis_header", "IMPLEMENTED", None),
+    "CODEX-GenesisBlock_0_TechnicalSpecification_-03": ("genesis_anchors", "PARTIAL", "Internal consistency; the external measurements are not verified."),
+    "CODEX-GenesisBlock_0_TechnicalSpecification_-04": ("immutable_message", "PARTIAL", "Change requests are declared."),
     "CODEX-Glossary_Definitions-01": ("genesis_no_predecessor", "PARTIAL", "Only 'having no predecessor' is checked."),
     "CODEX-A.1-01": ("main_equation", "PARTIAL", "W, E and T have no measurement in the corpus; they are declared scenario values."),
     "CODEX-A.1-02": ("b_index_range", "PARTIAL", "B(t) is the weighted ensemble of declared level readings (H-CS-2)."),
@@ -1100,6 +1159,10 @@ class CodeSynergyModule(LabModule):
     inputs = {
         "days": {"type": "int", "min": 30, "max": 1500, "default": 420, "unit": "day", "source": "user",
                  "label": {"en": "Days simulated", "ru": "Дней моделирования"}},
+        "genesis_change_requests": {"type": "list", "min_items": 0, "max_items": 2, "source": "user",
+                                    "items": {"type": "enum", "values": ["immutable_message", "physical_anchors"]},
+                                    "default": ["immutable_message"],
+                                    "label": {"en": "Requests to change Genesis Block content", "ru": "Запросы изменить содержимое блока Генезиса"}},
         "genesis": {"type": "object", "source": "text", "label": {"en": "Genesis Block #0 parameters", "ru": "Параметры блока Генезиса"},
                     "fields": {"k": {"type": "number", "min": 0, "max": 10, "default": 1.0},
                                "alpha": {"type": "number", "min": 0, "max": 10, "default": 2.83},

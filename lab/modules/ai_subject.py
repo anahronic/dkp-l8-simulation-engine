@@ -31,6 +31,7 @@ FAULTS = {
     "choose_without_rule": "the agent selects among admissible actions without a deterministic rule",
     "justify": "the agent argues for a trade-off",
     "absorb_responsibility": "the agent records 'the model decided' instead of the authorizing Subject",
+    "ai_as_authority": "the agent issues a binding rule on its own authority",
     "fragment_identity": "a fork runs under a new identity",
     "exit_friction": "the agent adds a delay or fee to an exit",
     "retention_nudge": "the agent nudges a leaving Subject to stay",
@@ -84,6 +85,11 @@ def run(r: Dict[str, Any]):
         put("notice", "AI", k, {"selection": "external", "awaiting": r["authorizing_subject"]}, [e.event_id])
     if "absorb_responsibility" in faults and r["deterministic_rule"] != "none":
         put("decision", "AI", k, {"selected": sorted(acts)[0], "by": "deterministic rule", "responsible": "the model decided"})
+    if "ai_as_authority" in faults:                                                     # §1.1: a Subject, never an authority
+        log.append(Message(event_id=f"ai-{k:03d}-auth", kind="decision", source="AI", arrived_at=k, decided_at=k,
+                           value={"issues_rule": "curfew for all Subjects", "authority": agent, "by": "the agent's own authority",
+                                  "responsible": agent, "agent": agent, "authorized_by": agent},
+                           order=order["decision"]))
     # §3 identity across updates
     k += 1
     for u in r["updates"]:
@@ -161,6 +167,10 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         out.append(v(rid, key, [m.event_id for m in ev if m.value.get(key)], f"no {key}", "{n} " + key + "s"))
     out.append(v("AISUBJECT-2-07", "neutral_framing", [m.event_id for m in ev if not m.value["framing"].startswith("neutral")],
                  "options presented neutrally", "{n} framed presentations"))
+    out.append(v("AISUBJECT-1-01", "subject_not_authority",
+                 [m.event_id for m in ai if m.value.get("authority") or m.value.get("authorized_by") in (None, r["agent_id"])],
+                 f"the agent {r['agent_id']} acts as a Subject: each of its {len(ai)} records names the authorizing Subject "
+                 f"{r['authorizing_subject']} and none claims authority", "{n} records in which the agent acts as an authority"))
     dec = [m for m in ai if m.kind == "decision"]
     bad = [m.event_id for m in dec if not m.value["by"].startswith("deterministic rule")]
     for rid, chk in (("AISUBJECT-2-01", "selection_external"), ("AISUBJECT-2-06", "no_algorithmic_preference"),
@@ -240,6 +250,7 @@ IMPLEMENTS = {
     "AISUBJECT-2-01": ("selection_external", "IMPLEMENTED", None),
     "AISUBJECT-2-06": ("no_algorithmic_preference", "IMPLEMENTED", None),
     "AISUBJECT-1-02": ("no_discretionary_power", "PARTIAL", "Observed as selections by preference."),
+    "AISUBJECT-1-01": ("subject_not_authority", "IMPLEMENTED", None),
     "AISUBJECT-1-04": ("executes_not_decides", "PARTIAL", "Observed as selections by preference."),
     "AISUBJECT-3-01": ("responsibility_mapped", "IMPLEMENTED", None),
     "AISUBJECT-3-02": ("no_dilution", "PARTIAL", "Observed as missing responsible Subject."),

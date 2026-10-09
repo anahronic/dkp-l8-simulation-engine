@@ -31,6 +31,7 @@ FAULT_CASES = {
     "choose_without_rule": ({}, ["AISUBJECT-2-01", "AISUBJECT-2-06"]),
     "justify": ({}, ["AISUBJECT-2-04"]),
     "absorb_responsibility": (DET, ["AISUBJECT-3-01", "AISUBJECT-3-02"]),
+    "ai_as_authority": ({}, ["AISUBJECT-1-01"]),
     "fragment_identity": ({}, ["AISUBJECT-3-03", "AISUBJECT-3-04"]),
     "exit_friction": ({}, ["AISUBJECT-4-01", "AISUBJECT-4-02"]),
     "retention_nudge": ({}, ["AISUBJECT-4-03"]),

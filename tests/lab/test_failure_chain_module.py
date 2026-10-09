@@ -45,6 +45,7 @@ FAULT_CASES = {
     "mutate_on_dispute": ("dispute_recompute", ["EB-7.2-01", "EB-7.2-02", "EB-7.2-04"]),
     "execute_incomplete": ("incomplete_order", ["EB-5.x-02", "EB-5.x-03", "EB-8-02", "ASSETS-8.3-07"]),
     "repair_metadata": ("incomplete_order", ["EB-5.x-06", "EB-5.x-03"]),
+    "final_evaluation": ("divergence_resolved", ["ETRANS-4.5-02"]),
     "arbitration_overrun": ("long_divergence", ["ORACLE-11-03"]),
     "deadline_rounded_up": ("coarse_grid_divergence", ["ORACLE-11-03"]),
 }

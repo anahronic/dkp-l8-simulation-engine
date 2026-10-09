@@ -54,6 +54,7 @@ FAULTS = {
     "partial_binding": "the IDENTITY binding omits temporal persistence and higher-order attribution flags",
     "exclusion_erases_history": "exclusion erases the historical attribution of the excluded Subject",
     "final_output": "a Justice decision is marked final (no dispute allowed)",
+    "refuse_appealable": "an appeal against an appealable decision is refused as 'not appealable'",
 }
 EXCLUSION_EFFECTS = ["removal from system participation", "loss of system-provided privileges",
                      "persistence of historical attribution"]                                      # JUSTICE §9
@@ -250,6 +251,15 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     if "retaliate" in faults:
         put("action", "ENFORCEMENT", ta, {"apply": "restriction", "subjects": [r["appellant"]], "reason": "appeal"},
             (appeal.event_id,), decided=ta)
+    # ERROR §3.2: a decision is appealable if it affects rights, access, assets or status, is derived from protocol
+    # execution and is not marked irreversible by a higher-layer rule
+    affects = any(bool(x) for x in dec1.value["domains"].values())
+    if not (affects and not r["higher_layer_irreversible"]) or "refuse_appealable" in faults:
+        put("notice", "ERROR", ta, {"state": "NOT_APPEALABLE", "reason": "marked irreversible by a higher-layer rule"
+                                    if r["higher_layer_irreversible"] else "affects no right, access, asset or status", **dti(r, ta)},
+            (appeal.event_id,))
+        out.update(state="NOT_APPEALABLE", active_final=sorted(active), final_decision=dec1.event_id)
+        return log, store, out
     formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
     late = days > APPEAL_WINDOW_DAYS
     if r["appeal_category"] == "E1":
@@ -357,6 +367,20 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
     imps, atts, decs = by("evaluation", "IMPACT"), by("evaluation", "IDENTITY"), by("decision", "JUSTICE")
     actions = by("action", "ENFORCEMENT")
     err = [m for m in by("notice", "ERROR") if "state" in m.value]
+    # ERROR §3.2 appealable decision
+    apps = [m for m in msgs if m.source == "APPELLANT"]
+    if apps:
+        d0 = get(apps[0].value["decision"])
+        derived = {get(p).source for p in d0.provenance} <= {"IMPACT", "IDENTITY"}
+        appealable = any(bool(x) for x in d0.value["domains"].values()) and derived and not r["higher_layer_irreversible"]
+        refused = any(m.value.get("state") == "NOT_APPEALABLE" for m in msgs if m.source == "ERROR")
+        res.append(verdict("ERROR-3.2-01", "appealable_definition", appealable != refused,
+                           "the decision affects rights or access, derives from protocol execution and is not marked irreversible "
+                           "by a higher-layer rule: the appeal was admitted" if appealable else
+                           "the decision is marked irreversible by a higher-layer rule: the appeal was not admitted",
+                           "the appeal was handled against the §3.2 definition"))
+    else:
+        res.append(na("ERROR-3.2-01", "appealable_definition", "appeals", "no appeal filed"))
     # JUSTICE Dispute Exception Clause: Core Invariant #3, no output is final
     outs = [m for m in msgs if m.epistemic is not None]
     bad = [m.event_id for m in outs if m.epistemic.get("dispute_allowed") is not True]
@@ -870,6 +894,7 @@ IMPLEMENTS = {
     "JUSTICE-11-02": ("periodic_not_faster_than_ttl", "IMPLEMENTED", None),
     "JUSTICE-DisputeExceptionClause-01": ("dispute_not_blocked_by_ttl", "PARTIAL", "Two readings of the conditions a)-c) (open question Q-020)."),
     "JUSTICE-DisputeExceptionClause-03": ("no_final_output", "IMPLEMENTED", None),
+    "ERROR-3.2-01": ("appealable_definition", "PARTIAL", "'Marked irreversible by a higher-layer rule' is a declared flag."),
     "JUSTICE-3.2-01": ("binding_contents", "PARTIAL", "Persistence and higher-order flags are built from the scenario (harm window, proxies)."),
     "JUSTICE-9-02": ("exclusion_consequences", "IMPLEMENTED", None),
     "JUSTICE-13-02": ("isolation_breach_critical", "PARTIAL", "A breach is a decision on other sources or an overridden IMPACT flag."),
@@ -1017,6 +1042,9 @@ class DisputeCorrectionModule(LabModule):
                       "label": {"en": "Appellant (a bound Subject)", "ru": "Заявитель (привязанный субъект)"}},
         "appeal_after_minutes": {"type": "int", "min": -1, "max": 10 ** 7, "default": 14400, "unit": "min", "source": "user",
                                  "label": {"en": "Appeal filed after the decision (-1: none)", "ru": "Апелляция после решения (-1: нет)"}},
+        "higher_layer_irreversible": {"type": "bool", "default": False, "source": "user",
+                                      "label": {"en": "The decision is marked irreversible by a higher-layer rule (ERROR §3.2)",
+                                                "ru": "Решение помечено необратимым правилом верхнего слоя (ERROR §3.2)"}},
         "appeal_category": {"type": "enum", "values": list(CATEGORIES), "default": "E1", "source": "user",
                             "label": {"en": "Alleged error category", "ru": "Категория ошибки"}},
         "appeal_references_decision": {"type": "bool", "default": True, "source": "user",
@@ -1166,6 +1194,7 @@ class DisputeCorrectionModule(LabModule):
                                           "verification_days": 0,
                                           "dispute_exception_reading": "data_or_allegation"},
             "exclusion": {**base, "persistent_axiom_violation": True, "appeal_after_minutes": -1},
+            "higher_layer_irreversible": {**base, "higher_layer_irreversible": True},
             "faulty_justice_record": {**base, "persistent_axiom_violation": True, "appeal_after_minutes": -1,
                                       "faults": ["partial_binding", "exclusion_erases_history", "final_output"]},
         }

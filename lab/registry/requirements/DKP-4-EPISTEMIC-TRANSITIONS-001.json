@@ -743,11 +743,17 @@
     "output inventory",
     "reclassification eligibility rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Observed as the dispute_allowed flag of every emitted output.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.2.0",
+    "check": "open_to_reclassification"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

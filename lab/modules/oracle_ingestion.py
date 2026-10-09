@@ -36,6 +36,7 @@ GENESIS_CO2 = 426.91                                           # Genesis Block #
 
 FAULTS = {
     "accept_human_input": "human reports enter the PTL",
+    "ptl_absolute": "PTL outputs are published as final truth: no revalidation, no dispute, no expiry",
     "accept_proprietary": "a proprietary schema is accepted because it is signed",
     "accept_unsigned": "an unsigned source is accepted",
     "normalize_at_ingestion": "values are normalized when ingested",
@@ -182,7 +183,10 @@ def run(r: Dict[str, Any]):
             "classification": "direct", "signed": True, "silent_sources": len(silent),
             "signal": ("degradation: " + f"{len(silent)} sources silent or stale") if silent else None,
             "B_raw": None if b_raw is None else round(b_raw, 9), "B_model": "not defined in PTL (DKP-8-SIMULATION-001; no bundle attached)",
-            "B_informational_only": r["calibration_bundle"] != "valid", "measured_at": t})
+            "B_informational_only": r["calibration_bundle"] != "valid", "measured_at": t,
+            "bounds": {"revalidation_required": False, "dispute_allowed": False, "valid_until_min": None, "absolute_truth": True}
+            if "ptl_absolute" in faults else
+            {"revalidation_required": True, "dispute_allowed": True, "valid_until_min": t + ttl, "absolute_truth": False}})
         if reasons:
             if mercy["active"] and t < mercy["until_min"] and (defer_ok or "mercy_without_confirmation" in faults):
                 put("decision", "PTL", t, {"halt": "deferred", "reasons": reasons, "mercy_cause": mercy["cause"],
@@ -419,6 +423,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                  "outputs are time-stamped measurement records", "{n} records without their time"))
     out.append(v("ORACLE-EpistemicInterpretationNote-03", "bounded_validity", agg_bad, "no output used beyond its TTL (stale data zeroed)",
                  "{n} outputs used stale data"))
+    unbounded = [m.arrived_at for m in obs if not (m.value["bounds"]["revalidation_required"] and m.value["bounds"]["dispute_allowed"]
+                                                   and m.value["bounds"]["valid_until_min"] is not None and not m.value["bounds"]["absolute_truth"])]
+    out.append(v("ORACLE-EpistemicInterpretationNote-04", "bounded_evaluations", unbounded,
+                 f"all {len(obs)} PTL outputs are bounded evaluations: revalidation required, disputable, valid until a TTL, "
+                 "no claim to absolute truth (EPISTEMIC-BOUNDARIES)", "{n} PTL outputs published as final truth"))
     return out
 
 
@@ -516,6 +525,7 @@ IMPLEMENTS = {
     "ORACLE-18-02": ("modification_requirements", "PARTIAL", "Declared properties of the change."),
     "ORACLE-EpistemicInterpretationNote-01": ("measurement_records", "PARTIAL", "Time stamps only."),
     "ORACLE-EpistemicInterpretationNote-03": ("bounded_validity", "PARTIAL", "TTL bound only."),
+    "ORACLE-EpistemicInterpretationNote-04": ("bounded_evaluations", "PARTIAL", "Bounds recorded on each output (revalidation, dispute, TTL)."),
 }
 
 B = {"type": "bool"}

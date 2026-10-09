@@ -26,6 +26,7 @@ FAULT_CASES = {
     "accept_human_input": ({}, ["ORACLE-3-01", "ORACLE-1-01"]),
     "accept_proprietary": ({}, ["ORACLE-7-02"]),
     "accept_unsigned": ({}, ["ORACLE-7-01"]),
+    "ptl_absolute": ({}, ["ORACLE-EpistemicInterpretationNote-04"]),
     "normalize_at_ingestion": ({}, ["ORACLE-7-03"]),
     "no_owner_cap": (EX["few_owners"], ["ORACLE-8-01", "ORACLE-8-02"]),
     "redistribute_excess": (EX["few_owners"], ["ORACLE-8-02"]),

@@ -37,6 +37,9 @@ def test_noncompliant_cases_fail_only_the_broken_provision():
 
 FAULT_CASES = {
     "ignore_b_min": ({}, ["CODEX-A.1-04"]),
+    "altered_genesis_header": ({}, ["CODEX-GenesisBlock_0_TechnicalSpecification_-01"]),
+    "edit_genesis_message": ({"genesis_change_requests": ["immutable_message", "physical_anchors"]},
+                             ["CODEX-GenesisBlock_0_TechnicalSpecification_-03", "CODEX-GenesisBlock_0_TechnicalSpecification_-04"]),
     "kill_switch_during_mercy": ({}, ["CODEX-A.4-01", "CODEX-A.1-04"]),
     "accept_on_chain_tuning": (EX["tuning_attempts"], ["CODEX-A.1a-01", "CODEX-A.1-03"]),
     "accept_protocol_tuning": (EX["tuning_attempts"], ["CODEX-A.1a-03"]),

@@ -41,6 +41,7 @@ FAULT_CASES = {
     "partial_binding": ({}, ["JUSTICE-3.2-01"]),
     "exclusion_erases_history": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-02"]),
     "final_output": ({}, ["JUSTICE-DisputeExceptionClause-03"]),
+    "refuse_appealable": ({}, ["ERROR-3.2-01"]),
 }
 
 

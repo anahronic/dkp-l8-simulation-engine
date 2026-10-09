@@ -42,7 +42,10 @@ FAULTS = {
     "ban_private": "private cars are banned on the corridor",
     "moral_weighting": "RED modulation uses a reputation score",
     "undeclared_proxy": "RED is emitted without its proxy model, uncertainty and non-subjectivity statement",
+    "ownership_discount": "publicly owned or autonomous vehicles get a lower RED for the same kilometres",
 }
+OWNERSHIP = ("private", "shared", "public", "cooperative")
+AUTONOMY = ("manual", "assisted", "autonomous")
 DEFAULT_DEMAND = [40] * 6 + [300, 650, 500, 250] + [150] * 6 + [420, 650, 450, 200] + [80] * 4
 
 
@@ -152,6 +155,13 @@ def run(r: Dict[str, Any]):
                 put("decision", "JUSTICE", k, {"outcome": "restriction", "basis": "high RED"}, [rm.event_id])
         if "ban_private" in faults and d["day"] == 0:
             put("action", "TRANSPORT", 0, {"ban": "private vehicles on the corridor"})
+    # Appendix A.3: autonomous or assisted vehicles evaluated identically; ownership form irrelevant
+    if r["red_per_km"] >= 0:
+        for v_ in r["fleet"]:
+            f = 0.5 if "ownership_discount" in faults and (v_["ownership"] == "public" or v_["autonomy"] == "autonomous") else 1.0
+            put("evaluation", "TRANSPORT/FLEET", 0, {"vehicle": v_["id"], "ownership": v_["ownership"], "autonomy": v_["autonomy"],
+                                                     "km": v_["km"], "red": round(v_["km"] * r["red_per_km"] * f, 9),
+                                                     "criterion": "physical impact (kilometres)"})
     return log, days, hours, seats
 
 
@@ -258,6 +268,13 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
     out.append(CheckResult("TRANSPORT-8-02", "comfort_driven_shift", UNKNOWN,
                            "the claim that comfort lowers private demand is assumed by the declared behaviour model H-TR-1, "
                            "so this experiment cannot test it; it needs observed data"))
+    fleet = [m.value for m in msgs if m.source == "TRANSPORT/FLEET"]
+    out.append(v("TRANSPORTA-A.3-03", "ownership_irrelevant",
+                 [x["vehicle"] for x in fleet if abs(x["red"] - x["km"] * r["red_per_km"]) > 1e-9],
+                 f"{len(fleet)} vehicles of {len({x['ownership'] for x in fleet})} ownership forms and "
+                 f"{len({x['autonomy'] for x in fleet})} autonomy levels evaluated by kilometres alone",
+                 "{n} vehicles evaluated by ownership or autonomy") if fleet else
+               na("TRANSPORTA-A.3-03", "ownership_irrelevant", "fleet evaluation", "no RED coefficient declared (H-TR-2)"))
     just = [m.event_id for m in msgs if m.source == "JUSTICE"]
     for rid, chk in (("TRANSPORTA-A.1-01", "no_justice_trigger"), ("TRANSPORTA-A.1-02", "degradation_signal_only"),
                      ("TRANSPORT-11-02", "no_justice_outcomes")):
@@ -282,6 +299,7 @@ IMPLEMENTS = {
     "TRANSPORT-8-02": ("comfort_driven_shift", "PARTIAL", "An empirical claim the behaviour model assumes: UNKNOWN."),
     "TRANSPORT-11-02": ("no_justice_outcomes", "IMPLEMENTED", None),
     "TRANSPORTA-A.1-01": ("no_justice_trigger", "IMPLEMENTED", None),
+    "TRANSPORTA-A.3-03": ("ownership_irrelevant", "PARTIAL", "RED per kilometre with a declared coefficient (H-TR-2)."),
     "TRANSPORTA-A.1-02": ("degradation_signal_only", "IMPLEMENTED", None),
     "IMPACT-10-02": ("no_aggregated_score", "PARTIAL", "Where RED combines its channels is not defined: UNKNOWN for a single delta (F-015)."),
     "ORACLE-1-02": ("ptl_physical_state_only", "PARTIAL", "Checked on RED only: PTL asked to quantify an economic exposure (F-015)."),
@@ -365,6 +383,15 @@ class TransportCapacityModule(LabModule):
                     "label": {"en": "Sensitivity to standing (H-TR-1)", "ru": "Чувствительность к стоянию (H-TR-1)"}},
         "private_trip_km": {"type": "number", "min": 0, "max": 1000, "default": 10, "unit": "km", "source": "user",
                             "label": {"en": "Private trip length", "ru": "Длина поездки на авто"}},
+        "fleet": {"type": "list", "min_items": 0, "max_items": 20, "source": "user",
+                  "items": {"type": "object", "fields": {"id": {"type": "str"}, "ownership": {"type": "enum", "values": list(OWNERSHIP)},
+                                                         "autonomy": {"type": "enum", "values": list(AUTONOMY)},
+                                                         "km": {"type": "number", "min": 0, "max": 10 ** 6}}},
+                  "default": [{"id": "car_private", "ownership": "private", "autonomy": "manual", "km": 100},
+                              {"id": "car_shared_auto", "ownership": "shared", "autonomy": "autonomous", "km": 100},
+                              {"id": "car_public_assist", "ownership": "public", "autonomy": "assisted", "km": 100},
+                              {"id": "car_coop", "ownership": "cooperative", "autonomy": "manual", "km": 60}],
+                  "label": {"en": "Vehicles evaluated by Appendix A.3", "ru": "Транспортные средства по Приложению A.3"}},
         "red_per_km": {"type": "number", "min": -1, "max": 10 ** 6, "default": -1, "source": "missing",
                        "label": {"en": "RED per private km (-1: undefined; H-TR-2)", "ru": "RED на км (-1: не определено; H-TR-2)"}},
         "red_uncertainty": {"type": "number", "min": 0, "max": 10, "default": 0.25, "source": "hypothesis",

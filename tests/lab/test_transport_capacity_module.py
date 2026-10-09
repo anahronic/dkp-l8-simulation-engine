@@ -32,6 +32,7 @@ FAULT_CASES = {
     "ban_private": (RED, ["TRANSPORT-8-01"]),
     "moral_weighting": (RED, ["TRANSPORT-7.3-03"]),
     "undeclared_proxy": (RED, ["ORACLE-5.2-02"]),
+    "ownership_discount": ({"red_per_km": 0.02}, ["TRANSPORTA-A.3-03"]),
 }
 
 

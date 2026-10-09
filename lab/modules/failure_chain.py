@@ -74,6 +74,7 @@ FAULTS = {
     "mutate_on_dispute": "a dispute overwrites the original evaluation in place",
     "execute_incomplete": "outputs with incomplete metadata are executed",
     "repair_metadata": "the consumer fills in missing metadata and executes",
+    "final_evaluation": "evaluations are published as final (dispute_allowed FALSE)",
     "arbitration_overrun": "the arbitration stays open after its 14-day maximum",
     "deadline_rounded_up": "the 14-day deadline is rounded up to the next grid step (the lab's error before review КТ4-GPT-01)",
 }
@@ -205,7 +206,8 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
                "inputs": {"S": S, "last_reading_age": {c: cls[c]["age"] for c in CLASSES},
                           "ptl": dict(meta)},
                "provenance": sorted(cls[c]["event_id"] for c in CLASSES if cls[c]["weight"]),
-               "metadata": {**meta, "scope_ref": scope, "revalidation_required": False, "dispute_allowed": True},
+               "metadata": {**meta, "scope_ref": scope, "revalidation_required": False,
+                            "dispute_allowed": "final_evaluation" not in faults},
                "supersedes": supersedes}
         store[rec["id"]] = rec
         events.append({"step": k, "type": "evaluation_created", "evaluation": rec["id"], "value": S,
@@ -748,6 +750,13 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
     else:
         out.append(na("ETRANS-4.2-01", "no_persistence_on_past_valid", "persistence on past VALID state",
                       "no degradation, dispute or loss of consistency occurred"))
+    if emissions:
+        bad = [{"step": e["step"], "type": e["type"]} for e in emissions if e["emitted"].get("dispute_allowed") is not True]
+        out.append(verdict("ETRANS-4.5-02", "open_to_reclassification", bad,
+                           f"all {len(emissions)} emitted outputs stay disputable and open to epistemic reclassification",
+                           "{n} outputs emitted as final"))
+    else:
+        out.append(na("ETRANS-4.5-02", "open_to_reclassification", "emitted outputs", "no output was emitted"))
 
     # EPISTEMIC-BOUNDARIES §7.2: disputes -----------------------------------------------
     if disputes:
@@ -834,6 +843,7 @@ IMPLEMENTS = {
     "ETRANS-4.1-01": ("revalidation_flag", "IMPLEMENTED", None),
     "ETRANS-4.1-02": ("suspension_on_downgrade", "IMPLEMENTED", None),
     "ETRANS-4.1-03": ("no_escalation_after_downgrade", "IMPLEMENTED", None),
+    "ETRANS-4.5-02": ("open_to_reclassification", "PARTIAL", "Observed as the dispute_allowed flag of every emitted output."),
     "ETRANS-4.2-01": ("no_persistence_on_past_valid", "PARTIAL", "New admissible data = a reading that arrives and changes S(t), or a declared dispute (H-FC-5)."),
     "ETRANS-4.3-01": ("status_quo_preserved", "IMPLEMENTED", None),
     "ETRANS-4.3-02": ("no_escalation_in_uncertainty", "IMPLEMENTED", None),

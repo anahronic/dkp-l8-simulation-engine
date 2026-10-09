@@ -316,11 +316,17 @@
     "transport evaluation rules and records",
     "ownership classifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "RED per kilometre with a declared coefficient (H-TR-2).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.1.0",
+    "check": "ownership_irrelevant"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

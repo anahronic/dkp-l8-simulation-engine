@@ -15,14 +15,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1204 (69.3 %) | 889 | 1122 | 814 | 4 | 63 | 15 | 533 | 8 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 0 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 0 | 36 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 340 (93.2 %) | 243 | 327 | 231 | 3 | 8 | 2 | 25 | 2 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 224 (52.8 %) | 138 | 204 | 121 | 1 | 17 | 2 | 200 | 1 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 187 (63.8 %) | 146 | 171 | 132 | 0 | 9 | 7 | 106 | 1 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 359 (70.3 %) | 281 | 338 | 260 | 0 | 18 | 3 | 152 | 1 | 432 |
-| G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1204 (69.3 %) | 889 | 1122 | 814 | 4 | 63 | 15 | 533 | 8 | 1414 |
+| C. Common checks | DONE | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 0 | 266 |
+| D. Transitions and rights | DONE | 9/9 | 424 | 225 (53.1 %) | 138 | 205 | 121 | 1 | 17 | 2 | 199 | 0 | 337 |
+| E. Applied modules | DONE | 7/7 | 293 | 188 (64.2 %) | 146 | 172 | 132 | 0 | 9 | 7 | 105 | 0 | 251 |
+| F. Remaining constraints and stress | DONE | 12/12 | 511 | 360 (70.5 %) | 281 | 339 | 260 | 0 | 18 | 3 | 151 | 0 | 432 |
+| G. General release | PARTIAL | — | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 0 | 1414 |
 
 ### Stage criteria
 
@@ -36,11 +36,11 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
-- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 **not met**: all parts implementable without unresolved decisions are checked
+- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
+- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- E / E1 met: real checks, declared models and their limits; gaps exact by section
+- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 met: all parts implementable without unresolved decisions are checked
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 
@@ -249,8 +249,8 @@ Withdrawn after verification (not author decisions):
 
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CODE-OF-PLANETARY-SYNERGY | 101 | 72 | 61 | 0 | 10 | 1 | 29 | 92 |
-| DKP-0-ORACLE-001 | 58 | 54 | 49 | 2 | 2 | 1 | 4 | 49 |
+| CODE-OF-PLANETARY-SYNERGY | 101 | 75 | 64 | 0 | 10 | 1 | 26 | 92 |
+| DKP-0-ORACLE-001 | 58 | 55 | 50 | 2 | 2 | 1 | 3 | 49 |
 | DKP-0-TIME-001 | 35 | 30 | 29 | 1 | 0 | 0 | 5 | 6 |
 | DKP-1-AXIOMS-001 | 44 | 35 | 29 | 0 | 4 | 2 | 9 | 26 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
@@ -267,20 +267,20 @@ Withdrawn after verification (not author decisions):
 | DKP-3-POLICE-001 | 45 | 29 | 29 | 0 | 0 | 0 | 16 | 37 |
 | DKP-4-CRISIS-001 | 53 | 26 | 22 | 1 | 3 | 0 | 27 | 43 |
 | DKP-4-CRISIS-001-PATCH | 31 | 24 | 23 | 0 | 1 | 0 | 7 | 21 |
-| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 19 | 19 | 0 | 0 | 0 | 10 | 23 |
-| DKP-4-ERROR-001 | 52 | 24 | 20 | 0 | 3 | 1 | 28 | 46 |
+| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 20 | 20 | 0 | 0 | 0 | 9 | 23 |
+| DKP-4-ERROR-001 | 52 | 25 | 21 | 0 | 3 | 1 | 27 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
 | DKP-5-CULTURE-001 | 43 | 27 | 27 | 0 | 0 | 0 | 16 | 37 |
 | DKP-5-EDU-001 | 64 | 34 | 30 | 0 | 1 | 3 | 30 | 55 |
 | DKP-5-HABITAT-001 | 56 | 52 | 48 | 0 | 1 | 3 | 4 | 50 |
 | DKP-5-INFO-001 | 39 | 27 | 25 | 0 | 2 | 0 | 12 | 37 |
 | DKP-5-TRANSPORT-001 | 35 | 15 | 10 | 0 | 5 | 0 | 20 | 35 |
-| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 8 | 8 | 0 | 0 | 0 | 9 | 14 |
+| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 9 | 9 | 0 | 0 | 0 | 8 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
 | DKP-6-EXIT-001 | 62 | 30 | 29 | 0 | 0 | 1 | 32 | 49 |
 | DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 35 | 31 | 0 | 4 | 0 | 2 | 37 |
-| DKP-7-AI-SUBJECT-001 | 39 | 28 | 28 | 0 | 0 | 0 | 11 | 37 |
+| DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 31 | 28 | 0 | 3 | 0 | 8 | 31 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 25 | 25 | 0 | 0 | 0 | 19 | 41 |
@@ -362,7 +362,10 @@ Withdrawn after verification (not author decisions):
 | CODEX-A.5-03 | PARTIAL | code_synergy · connection_by_referendum | PASS | — | Q-050 |
 | CODEX-A.6-01 | PARTIAL | code_synergy · ownership_caps | PASS | — | — |
 | CODEX-A.6-02 | IMPLEMENTED | code_synergy · cap_violation_sanction | NOT_APPLICABLE | — | — |
+| CODEX-GenesisBlock_0_TechnicalSpecification_-01 | IMPLEMENTED | code_synergy · genesis_header | PASS | — | — |
 | CODEX-GenesisBlock_0_TechnicalSpecification_-02 | IMPLEMENTED | code_synergy · genesis_parameters | PASS | — | — |
+| CODEX-GenesisBlock_0_TechnicalSpecification_-03 | PARTIAL | code_synergy · genesis_anchors | PASS | — | — |
+| CODEX-GenesisBlock_0_TechnicalSpecification_-04 | PARTIAL | code_synergy · immutable_message | PASS | — | — |
 | CODEX-Glossary_Definitions-01 | PARTIAL | code_synergy · genesis_no_predecessor | PASS | — | — |
 | ORACLE-1-01 | PARTIAL | oracle_ingestion · sole_interface | PASS | yes | — |
 | ORACLE-1-02 | PARTIAL | transport_capacity · ptl_physical_state_only | FAIL | yes | — |
@@ -418,6 +421,7 @@ Withdrawn after verification (not author decisions):
 | ORACLE-9-03 | IMPLEMENTED | failure_chain · silence_propagates | PASS | yes | Q-003 |
 | ORACLE-EpistemicInterpretationNote-01 | PARTIAL | oracle_ingestion · measurement_records | PASS | — | — |
 | ORACLE-EpistemicInterpretationNote-03 | PARTIAL | oracle_ingestion · bounded_validity | PASS | yes | — |
+| ORACLE-EpistemicInterpretationNote-04 | PARTIAL | oracle_ingestion · bounded_evaluations | PASS | — | — |
 | TIME-10-01 | IMPLEMENTED | time · reference_forward | PASS | — | — |
 | TIME-10-02 | IMPLEMENTED | time · reference_inverse | PASS | — | — |
 | TIME-10-03 | IMPLEMENTED | time · reference_frozen | PASS | — | — |
@@ -651,7 +655,7 @@ Withdrawn after verification (not author decisions):
 | ASSETS-8.3-03 | IMPLEMENTED | economic_access · claims_preserved | PASS | — | — |
 | ASSETS-8.3-04 | PARTIAL | economic_access · return_or_equivalent | PASS | — | — |
 | ASSETS-8.3-05 | IMPLEMENTED | economic_access · no_prejudice | PASS | yes | — |
-| ASSETS-8.3-06 | IMPLEMENTED | economic_access · revocation_metadata | PASS | — | — |
+| ASSETS-8.3-06 | IMPLEMENTED | economic_access · revocation_metadata | PASS | yes | — |
 | ASSETS-8.3-07 | IMPLEMENTED | economic_access · missing_metadata_non_operational | PASS | yes | — |
 | ASSETS-8.3-08 | IMPLEMENTED | economic_access · missing_metadata_non_operational | PASS | — | — |
 | ASSETS-IdentityBindingRequirement-01 | PARTIAL | economic_access · shell_invalid | PASS | — | — |
@@ -888,6 +892,7 @@ Withdrawn after verification (not author decisions):
 | ETRANS-4.3-04 | IMPLEMENTED | failure_chain · awaits_recomputation | PASS | yes | — |
 | ETRANS-4.4-01 | IMPLEMENTED | failure_chain · reentry_new_output | PASS | yes | — |
 | ETRANS-4.4-02 | IMPLEMENTED | calibration_expiry · no_reactivation_after_recalibration | PASS | yes | — |
+| ETRANS-4.5-02 | PARTIAL | failure_chain · open_to_reclassification | PASS | yes | — |
 | ETRANS-7-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | ETRANS-7-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | ETRANS-7-03 | IMPLEMENTED | edition_finality · incompatibility_declared | PASS | — | — |
@@ -903,6 +908,7 @@ Withdrawn after verification (not author decisions):
 | ERROR-12-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ERROR-12-05 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
 | ERROR-2-05 | IMPLEMENTED | dispute_correction · request_not_override | PASS | yes | Q-021 |
+| ERROR-3.2-01 | PARTIAL | dispute_correction · appealable_definition | PASS | — | — |
 | ERROR-5-03 | PARTIAL | dispute_correction · r2_validated | PASS | — | — |
 | ERROR-5-04 | IMPLEMENTED | dispute_correction · r3_requires_correction | PASS | — | — |
 | ERROR-5-05 | IMPLEMENTED | dispute_correction · r4_after_r3 | NOT_APPLICABLE | — | — |
@@ -1110,6 +1116,7 @@ Withdrawn after verification (not author decisions):
 | TRANSPORT-8-02 | PARTIAL | transport_capacity · comfort_driven_shift | UNKNOWN | — | — |
 | TRANSPORTA-A.1-01 | IMPLEMENTED | transport_capacity · no_justice_trigger | PASS | yes | — |
 | TRANSPORTA-A.1-02 | IMPLEMENTED | transport_capacity · degradation_signal_only | PASS | yes | — |
+| TRANSPORTA-A.3-03 | PARTIAL | transport_capacity · ownership_irrelevant | PASS | — | — |
 | TRANSPORTA-A.5-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | TRANSPORTA-A.5-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | TRANSPORTA-A.5-03 | IMPLEMENTED | edition_finality · incompatibility_declared | PASS | — | — |
@@ -1227,6 +1234,7 @@ Withdrawn after verification (not author decisions):
 | RESILIENCE-8.4-01 | PARTIAL | resilience_structure · statistical_collapse | UNKNOWN | — | — |
 | RESILIENCE-8.5-01 | IMPLEMENTED | resilience_structure · interface_degradation | PASS | — | — |
 | RESILIENCE-9-01 | PARTIAL | resilience_structure · resilience_mechanism | PASS | yes | — |
+| AISUBJECT-1-01 | IMPLEMENTED | ai_subject · subject_not_authority | PASS | — | — |
 | AISUBJECT-1-02 | PARTIAL | ai_subject · no_discretionary_power | PASS | — | — |
 | AISUBJECT-1-04 | PARTIAL | ai_subject · executes_not_decides | PASS | — | — |
 | AISUBJECT-2-01 | IMPLEMENTED | ai_subject · selection_external | PASS | — | — |
