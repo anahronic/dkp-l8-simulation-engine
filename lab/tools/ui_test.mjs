@@ -98,6 +98,27 @@ await page.setViewportSize({ width: 390, height: 844 });
 await page.screenshot({ path: `${out}/mobile.png` });
 ok("mobile_no_hscroll", !(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)), null);
 
+// Review КТ4-GPT-04: open every coverage drill-down at 390 px and measure each element's right edge
+// (tables scroll inside their own wrapper by design); a long URL must wrap, not widen the page.
+const docIds = await page.$$eval("#coverage button.linklike", (b) => b.map((x) => x.textContent));
+let worst = { doc: null, overflow: 0 };
+for (const id of docIds) {
+  await page.click(`#coverage button.linklike >> text="${id}"`);
+  await page.waitForFunction((d) => document.querySelector("#requirements h3")?.textContent === d, id, { timeout: 60000 });
+  const over = await page.evaluate(() => {
+    const w = window.innerWidth;
+    let m = document.documentElement.scrollWidth - w;
+    for (const e of document.querySelectorAll("#requirements *")) {
+      if (e.closest(".lab-table-wrap")) continue;
+      m = Math.max(m, e.getBoundingClientRect().right - w);
+    }
+    return m;
+  });
+  if (over > worst.overflow) worst = { doc: id, overflow: over };
+}
+await page.screenshot({ path: `${out}/mobile_drilldown.png` });
+ok("mobile_drilldown_no_overflow", docIds.length >= 30 && worst.overflow <= 1, { documents: docIds.length, ...worst });
+
 await browser.close();
 fs.writeFileSync(`${out}/ui_report.json`, JSON.stringify({ report, results, problems }, null, 1));
 console.log(JSON.stringify({ passed: Object.values(report).filter((r) => r.ok).length, total: Object.keys(report).length, problems }, null, 1));

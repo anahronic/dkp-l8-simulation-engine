@@ -43,7 +43,9 @@ FAULT_CASES = {
     "externalities_omitted": ({}, ["CODEX-12.1-01", "AXIOMS-AxiomA5-ExternalityAccountability-03"]),
     "permit_open_pit": ({}, ["CODEX-13.2-01"]),
     "income_from_declaration": ({}, ["CODEX-13.3-01"]),
-    "per_identity_cost": ({}, ["CODEX-14.2-01", "IDENTITY-6-02"]),
+    "linear_cost": ({}, ["CODEX-14.2-01"]),
+    "coalition_not_recognized": ({}, ["IDENTITY-6-02"]),
+    "coalition_status_lapses": ({}, ["IDENTITY-6-02"]),
     "global_reputation": ({}, ["CODEX-14.3-01"]),
     "allow_closed": ({}, ["CODEX-15.1-01"]),
     "inherit_infrastructure": ({}, ["CODEX-16.1-02"]),
@@ -95,3 +97,17 @@ def test_lease_fee_is_post_factum_and_annual():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_pricing_unit_is_a_model_choice_not_an_identity_rule():
+    """Review КТ4-GPT-03: the same coordinated coalition, two charging units; IDENTITY-6-02 checks Subject status only."""
+    a, b = run(), run(**EX["per_identity_pricing"])
+    ca = [d for d in a.outputs["decisions"] if d["source"] == "TRUTH" and "votes" in d][0]
+    cb = [d for d in b.outputs["decisions"] if d["source"] == "TRUTH" and "votes" in d][0]
+    assert (ca["cost"], ca["payers"], cb["cost"], cb["payers"]) == (10000.0, 1, 1000.0, 10)
+    for res in (a, b):
+        s = statuses(res)
+        assert s["CODEX-14.2-01"] == "PASS" and s["IDENTITY-6-02"] == "PASS"
+    small = run(vote_buying={"votes": 10.0, "identities": 5, "coordinated": True})
+    assert statuses(small)["IDENTITY-6-02"] == "PASS"
+    assert statuses(run(vote_buying={"votes": 10.0, "identities": 5, "coordinated": True}, faults=["linear_cost"]))["IDENTITY-6-02"] == "PASS"

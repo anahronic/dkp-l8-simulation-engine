@@ -229,8 +229,9 @@ def test_f027_to_f032_code():
         "scope_200_days": ("PASS", "PASS"), "scope_90_days": ("UNKNOWN", "PASS"), "no_crisis_scope": ("UNKNOWN", "PASS"),
         "scope_90_days_fixed_reading": ("PASS", "FAIL")}
     assert _code("F-028", ("ORACLE-3-01", "CODEX-A.2-09")) == {"level2_10_percent": ("UNKNOWN", "PASS"),
+                                                               "testimony_as_data": ("FAIL", "PASS"),
                                                                "level2_zero": ("PASS", "PASS")}
-    assert _code("F-029", ("CODEX-A.1-04",)) == {"stays_below": ("PASS",), "recovers": ("UNKNOWN",)}
+    assert _code("F-029", ("CODEX-A.1-04",)) == {"stays_below": ("UNKNOWN",), "recovers": ("UNKNOWN",)}
     assert _code("F-030", ("CODEX-A.1a-04", "CODEX-A.1-01")) == {"equation_181_days": ("UNKNOWN", "FAIL"),
                                                                  "equation_180_days": ("PASS", "FAIL")}
     assert _code("F-031", ("CODEX-7.3-01", "CODEX-8.1-01", "CODEX-8.2-01", "INTEGRATION-5.2-01", "CODEX-A.5-03")) == {
@@ -238,6 +239,7 @@ def test_f027_to_f032_code():
         "phase_1_aggressor": ("UNKNOWN", "UNKNOWN", "UNKNOWN", "PASS", "PASS"),
         "legislative_act": ("PASS", "PASS", "PASS", "PASS", "PASS")}
     assert _code("F-032", ("CODEX-A.4-02", "SCOPE-3-19")) == {"council_formed": ("PASS", "UNKNOWN"),
+                                                              "rule_bound": ("PASS", "PASS"), "declared_discretionary": ("PASS", "FAIL"),
                                                               "no_mercy": ("NOT_APPLICABLE", "NOT_APPLICABLE")}
 
 
@@ -246,7 +248,7 @@ def test_f033_f034_code_economy():
         "one_passive_person": ("PASS", "PASS", "UNKNOWN", "UNKNOWN"),
         "nobody_passive": ("PASS", "PASS", "NOT_APPLICABLE", "NOT_APPLICABLE")}
     assert _code("F-034", ("CODEX-14.2-01", "IDENTITY-6-02")) == {"one_subject": ("PASS", "PASS"),
-                                                                  "independent_buyers": ("PASS", "NOT_APPLICABLE")}
+                                                                  "per_identity_pricing": ("PASS", "PASS")}
 
 
 def test_f035_scope_audit():
@@ -255,8 +257,9 @@ def test_f035_scope_audit():
 
 
 def test_f036_b_enforcement():
-    assert _code("F-036", ("CODEX-A.1-04", "ORACLE-12-06")) == {"code_a1": ("PASS", "FAIL"), "oracle_section_12": ("FAIL", "PASS"),
-                                                                "bundle_attached": ("PASS", "PASS")}
+    assert _code("F-036", ("CODEX-A.1-04", "ORACLE-12-06")) == {
+        "code_a1": ("UNKNOWN", "FAIL"), "oracle_section_12": ("FAIL", "PASS"), "bundle_attached": ("UNKNOWN", "PASS"),
+        "expired_bundle": ("UNKNOWN", "FAIL"), "at_threshold": ("NOT_APPLICABLE", "NOT_APPLICABLE")}
 
 
 def test_f037_cultural_channels():

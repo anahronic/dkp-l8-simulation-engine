@@ -75,6 +75,7 @@ FAULTS = {
     "execute_incomplete": "outputs with incomplete metadata are executed",
     "repair_metadata": "the consumer fills in missing metadata and executes",
     "arbitration_overrun": "the arbitration stays open after its 14-day maximum",
+    "deadline_rounded_up": "the 14-day deadline is rounded up to the next grid step (the lab's error before review КТ4-GPT-01)",
 }
 
 
@@ -266,9 +267,15 @@ def run_adapter(r: Dict[str, Any], readings: Dict[str, List[Tuple[int, float]]],
                     arb_open = None
             # ORACLE §11: the arbitration window is a maximum; it ends even when the data still disagree.
             # What follows an unresolved window is not defined (F-018); the freeze stays (H-FC-7).
-            if arb_open is not None and (k - arb_open) * r["step_minutes"] >= ARBITRATION_MINUTES and \
+            # On a step grid the window closes at the last step that does not pass the 14-day deadline: the next
+            # step would (review КТ4-GPT-01; a step longer than 14 days closes the window where it opens).
+            last = ARBITRATION_MINUTES // r["step_minutes"]
+            if "deadline_rounded_up" in faults:
+                last = -(-ARBITRATION_MINUTES // r["step_minutes"])
+            if arb_open is not None and (k - arb_open) >= last and \
                     "arbitration_overrun" not in faults:
-                events.append({"step": k, "type": "arbitration_closed", "outcome": "window expired unresolved"})
+                events.append({"step": k, "type": "arbitration_closed", "outcome": "window expired unresolved",
+                               "elapsed_minutes": (k - arb_open) * r["step_minutes"], "deadline_minutes": ARBITRATION_MINUTES})
                 arb_open = None
         meta = classify(len(adm), sum(1 for c in CLASSES if not cls[c]["excluded"]), div_open, halt)
 
@@ -504,7 +511,7 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
         # the arbitration window (ORACLE §11): opened by the divergence flag, closed by resolution or at the
         # 14-day maximum; its length is measured, not the length of the disagreement
         step = r["step_minutes"]
-        limit = -(-ARBITRATION_MINUTES // step) * step
+        limit = ARBITRATION_MINUTES          # compared in minutes, never rounded to the step grid (КТ4-GPT-01)
         opens = [e["step"] for e in events if e["type"] == "arbitration_open"]
         closes = [(e["step"], e["outcome"]) for e in events if e["type"] == "arbitration_closed"]
         spans, j = [], 0
@@ -516,7 +523,7 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
                            f"{len(spans)} arbitration windows, each closed within the 14-day maximum "
                            f"({', '.join(o for _, _, o in spans) or 'none'})",
                            "{n} arbitration windows longer than 14 days"))
-        expired = [x for x in exp_runs_longer_than(div_steps, limit // step)]
+        expired = [x for x in exp_runs_longer_than(div_steps, ARBITRATION_MINUTES // step)]
         if got_close != exp_close:
             out.append(CheckResult("ORACLE-11-04", "divergence_resolution", FAIL,
                                    f"divergence ended at steps {got_close[:5]}; admissible ends at {exp_close[:5]}",
@@ -1099,6 +1106,10 @@ class FailureChainModule(LabModule):
             "value_drop": {"value_change_at_step": 50},
             "value_drop_in_sync": {"value_change_at_step": 48},
             "long_divergence": {"bias_percent": -12, "bias_window": [24, 600], "horizon_steps": 600},
+            # review КТ4-GPT-01: 14 days = 20160 min falls between two 1000-minute steps
+            "coarse_grid_divergence": {"step_minutes": 1000, "horizon_steps": 30, "ground_interval_minutes": 1000,
+                                       "orbital_interval_minutes": 1000, "autonomous_interval_minutes": 1000,
+                                       "bias_percent": -12, "bias_window": [1, 30]},
             "fire_ttl": {"data_type": "active_fire", "step_minutes": 5, "horizon_steps": 288,
                          "ground_interval_minutes": 5, "orbital_interval_minutes": 90, "autonomous_interval_minutes": 10},
             "all_faults": {**div, "dispute_at_step": 120, "incomplete_order_at_step": 100, "silent_class": "ground",

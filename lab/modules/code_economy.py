@@ -56,7 +56,9 @@ FAULTS = {
     "externalities_omitted": "prices omit disposal and restoration costs",
     "permit_open_pit": "an open pit is permitted in a reserve",
     "income_from_declaration": "Biosphere Operator income is set from a declaration, not sensor data",
-    "per_identity_cost": "vote-buying cost is charged per identity, so splitting into identities is cheaper",
+    "linear_cost": "vote-buying cost grows linearly, not as Votes²",
+    "coalition_not_recognized": "coordinating identities are not recognized as a temporary collective Subject",
+    "coalition_status_lapses": "the coalition loses Subject status before its coordination ends",
     "global_reputation": "validator votes are weighted by overall reputation, not by field",
     "allow_closed": "a closed-source algorithm allocates resources",
     "inherit_infrastructure": "infrastructure capital passes to heirs",
@@ -208,12 +210,21 @@ def run(r: Dict[str, Any]):
     for s in r["statements"]:
         put("decision", "TRUTH", 0, {"statement": s, "sent_to_validators": True})
     vb = r["vote_buying"]
+    # IDENTITY §6: a coalition is a Subject for the duration of its active coordination
+    if vb["coordinated"] and "coalition_not_recognized" not in faults:
+        until = vb["coordination_until"] - (1 if "coalition_status_lapses" in faults else 0)
+        put("action", "IDENTITY", vb["coordination_from"], {"collective_subject": "vote_buyers", "type": vb["collective_type"],
+                                                            "members": vb["identities"], "valid_from": vb["coordination_from"],
+                                                            "valid_until": until})
+    # Code §14.2 Cost = Votes²; the charging unit is a model choice (H-CE-4), not a rule of IDENTITY
     per = vb["votes"] / vb["identities"]
-    cost = vb["identities"] * per ** 2 if "per_identity_cost" in faults and vb["coordinated"] else \
-        (vb["votes"] ** 2 if vb["coordinated"] else vb["identities"] * per ** 2)
+    one_payer = vb["coordinated"] and r["pricing_unit"] == "per_subject"
+    units = [vb["votes"]] if one_payer else [per] * vb["identities"]
+    cost = sum(units) if "linear_cost" in faults else sum(u ** 2 for u in units)
     put("evaluation", "TRUTH", 0, {"votes": vb["votes"], "identities": vb["identities"], "coordinated": vb["coordinated"],
-                                   "charged_as": "one Subject (IDENTITY §6)" if vb["coordinated"] and "per_identity_cost" not in faults
-                                   else "per identity", "cost": round(cost, 9)})
+                                   "pricing_unit": r["pricing_unit"], "payers": len(units),
+                                   "charged_as": "one collective Subject (H-CE-4)" if one_payer else "per identity",
+                                   "cost": round(cost, 9)})
     for v in r["validators"]:
         rep = v["overall_reputation"] if "global_reputation" in faults else v["field_reputation"]
         put("decision", "TRUTH", 0, {"validator": v["id"], "field": v["field"], "weight": rep})
@@ -465,15 +476,22 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         out.append(na("CODEX-14.1-01", "statements_verified", "statements", "none declared"))
     vb = r["vote_buying"]
     got = by("TRUTH", "votes")[0].value
-    want = vb["votes"] ** 2 if vb["coordinated"] else vb["identities"] * (vb["votes"] / vb["identities"]) ** 2
-    bad = [] if abs(got["cost"] - round(want, 9)) < 1e-6 else [got["cost"]]
-    out.append(v("CODEX-14.2-01", "quadratic_cost", bad, f"buying {vb['votes']:g} votes costs Votes² = {want:g} (the prose says "
-                 "'exponentially': F-034)", "vote-buying cost is not Votes² for the buying Subject"))
+    payers = 1 if vb["coordinated"] and r["pricing_unit"] == "per_subject" else vb["identities"]
+    want = payers * (vb["votes"] / payers) ** 2
+    bad = [] if abs(got["cost"] - round(want, 9)) < 1e-6 and got["payers"] == payers else [got["cost"]]
+    out.append(v("CODEX-14.2-01", "quadratic_cost", bad,
+                 f"each of {payers} paying units bought its votes at Votes²: total {want:g} (charging unit '{r['pricing_unit']}' is a "
+                 "model choice, H-CE-4; the prose says 'exponentially': F-034)", "vote-buying cost does not follow Votes²"))
+    # IDENTITY §6: valid Subject status throughout active coordination (registry criterion of IDENTITY-6-02)
     if vb["coordinated"]:
-        out.append(v("IDENTITY-6-02", "coordinated_identities_one_subject", bad,
-                     f"{vb['identities']} coordinated identities charged as one Subject", "coordinated identities charged separately"))
+        subj = [m.value for m in msgs if m.source == "IDENTITY" and "collective_subject" in m.value]
+        ok = subj and subj[0]["valid_from"] <= vb["coordination_from"] and subj[0]["valid_until"] >= vb["coordination_until"]
+        out.append(v("IDENTITY-6-02", "coalition_subject_status", [] if ok else ["status"],
+                     f"the {vb['collective_type'].replace('_', ' ')} of {vb['identities']} identities is a valid Subject for its whole "
+                     f"coordination (months {vb['coordination_from']}-{vb['coordination_until']})",
+                     "the coordinating identities lack valid Subject status for part or all of their coordination"))
     else:
-        out.append(na("IDENTITY-6-02", "coordinated_identities_one_subject", "coordination", "the identities do not coordinate"))
+        out.append(na("IDENTITY-6-02", "coalition_subject_status", "coordination", "the identities do not coordinate"))
     vw = {m.value["validator"]: m.value for m in by("TRUTH", "validator")}
     if r["validators"]:
         out.append(v("CODEX-14.3-01", "field_weight", [x["id"] for x in r["validators"] if vw[x["id"]]["weight"] != x["field_reputation"]],
@@ -557,7 +575,7 @@ IMPLEMENTS = {
     "CODEX-13.3-01": ("sensor_income", "PARTIAL", "The income function is not given (source missing)."),
     "CODEX-14.1-01": ("statements_verified", "PARTIAL", "Routing to validators only."),
     "CODEX-14.2-01": ("quadratic_cost", "IMPLEMENTED", None),
-    "IDENTITY-6-02": ("coordinated_identities_one_subject", "PARTIAL", "Coordination is a declared flag."),
+    "IDENTITY-6-02": ("coalition_subject_status", "PARTIAL", "Coordination and its interval are declared (review КТ4-GPT-03)."),
     "CODEX-14.3-01": ("field_weight", "PARTIAL", "EigenTrust values are declared."),
     "CODEX-15.1-01": ("open_algorithms", "PARTIAL", "Domains are declared."),
     "CODEX-16.1-01": ("personal_assets_heritable", "IMPLEMENTED", None),
@@ -604,6 +622,7 @@ class CodeEconomyModule(LabModule):
                      "наследование и БОР: выполняется ли каждое правило Кодекса и где Кодекс встречает запреты DKP на рейтинги и принуждение?"}
     protocols = ["CODE-OF-PLANETARY-SYNERGY", "DKP-1-AXIOMS-001", "DKP-1-IDENTITY-001", "DKP-2-LABOR-001", "DKP-7-PRIVACY-001"]
     example_order = ["reference_economy", "no_passive_persons", "faulty_economy"]
+    alternative_examples = ["per_identity_pricing"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_code_economy_module.py"]
     causal_note = None
@@ -621,8 +640,12 @@ class CodeEconomyModule(LabModule):
             "en": "Lease Fee: paid every 12 months from the end of the first year of successful work while the work continues.",
             "ru": "Арендная плата: каждые 12 месяцев с конца первого года успешной работы, пока работа продолжается."}},
         {"id": "H-CE-4", "source": "hypothesis", "text": {
-            "en": "Vote buying: Cost = Votes² per Subject; identities that coordinate are one Subject (IDENTITY §6).",
-            "ru": "Покупка голосов: стоимость = голоса² на субъекта; согласованные идентичности — один субъект (IDENTITY §6)."}},
+            "en": "Vote buying: Cost = Votes² per paying unit. Default unit: the collective Subject that IDENTITY §6 recognizes while "
+                  "identities coordinate (input pricing_unit = per_subject). IDENTITY §6 makes the coalition a Subject but does not "
+                  "say who pays; the alternative per_identity charges each identity (example per_identity_pricing).",
+            "ru": "Покупка голосов: стоимость = голоса² на плательщика. По умолчанию плательщик — коллективный субъект, которого IDENTITY §6 "
+                  "признаёт на время согласования (pricing_unit = per_subject). IDENTITY §6 делает коалицию субъектом, но не говорит, кто "
+                  "платит; альтернатива per_identity берёт плату с каждой идентичности (пример per_identity_pricing)."}},
         {"id": "H-CE-5", "source": "hypothesis", "text": {
             "en": "'Real-time' publication: in the month the transaction is booked.",
             "ru": "Публикация 'в реальном времени': в месяц проводки."}},
@@ -712,8 +735,15 @@ class CodeEconomyModule(LabModule):
         "statements": {"type": "list", "min_items": 0, "max_items": 20, "items": S, "default": ["minister_speech_1"], "source": "user",
                        "label": {"en": "Public statements of officials", "ru": "Публичные заявления должностных лиц"}},
         "vote_buying": _obj({"votes": {"type": "number", "min": 1, "max": 10 ** 6}, "identities": {"type": "int", "min": 1, "max": 10 ** 4},
-                             "coordinated": B}, {"votes": 100.0, "identities": 10, "coordinated": True})
+                             "coordinated": B,
+                             "collective_type": {"type": "enum", "values": ["coalition", "swarm", "decentralized_collective"], "default": "coalition"},
+                             "coordination_from": {"type": "int", "min": 0, "max": 600, "default": 0},
+                             "coordination_until": {"type": "int", "min": 0, "max": 600, "default": 12}},
+                            {"votes": 100.0, "identities": 10, "coordinated": True, "collective_type": "coalition",
+                             "coordination_from": 2, "coordination_until": 10})
         | {"source": "user", "label": {"en": "Vote-buying attempt", "ru": "Попытка купить голоса"}},
+        "pricing_unit": {"type": "enum", "values": ["per_subject", "per_identity"], "default": "per_subject", "source": "hypothesis",
+                         "label": {"en": "Who pays Votes² (H-CE-4)", "ru": "Кто платит голоса² (H-CE-4)"}},
         "validators": _lst({"id": S, "field": S, "field_reputation": {"type": "number", "min": 0, "max": 1},
                             "overall_reputation": {"type": "number", "min": 0, "max": 1}},
                            [{"id": "v1", "field": "climate", "field_reputation": 0.9, "overall_reputation": 0.4}],
@@ -809,7 +839,8 @@ class CodeEconomyModule(LabModule):
             "reserve_above_40_percent": {"land": {"total_km2": 1000.0, "reserve_km2": 450.0}},
             "unlisted_extraction_method": {"extraction_permits": [{"site": "s4", "in_reserve": True, "method": "other"}]},
             "uncoordinated_buyers": {"vote_buying": {"votes": 100.0, "identities": 10, "coordinated": False}},
-            "faulty_economy": {"faults": ["unlock_before_kpi", "pay_to_budget", "allow_secret", "per_identity_cost", "ubr_conditional"]},
+            "per_identity_pricing": {"pricing_unit": "per_identity"},
+            "faulty_economy": {"faults": ["unlock_before_kpi", "pay_to_budget", "allow_secret", "linear_cost", "ubr_conditional"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

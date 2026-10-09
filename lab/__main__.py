@@ -85,7 +85,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         with open(args.package, "rb") as f:
             rep = replay(f.read())
         print(json.dumps(rep, indent=1))
-        return 0 if rep["same_input"] and rep["same_result"] else 1
+        return 0 if rep["verified"] else 1
     return 2
 
 

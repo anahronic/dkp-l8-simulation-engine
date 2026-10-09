@@ -160,7 +160,7 @@ def run(r: Dict[str, Any]):
         else:
             S = sum(live[i] * vals[i] for i in live) / tw if tw > 0 else None
             if S is not None and "nondeterministic" in faults:
-                S += random.random() * 1e-9
+                S += random.random() * 1e-6
         cls_post = {}
         for c in CLASSES:
             ids = [s["id"] for s in adm if s["cls"] == c and s["id"] in live and live[s["id"]] > 0]
@@ -182,7 +182,7 @@ def run(r: Dict[str, Any]):
             "classification": "direct", "signed": True, "silent_sources": len(silent),
             "signal": ("degradation: " + f"{len(silent)} sources silent or stale") if silent else None,
             "B_raw": None if b_raw is None else round(b_raw, 9), "B_model": "not defined in PTL (DKP-8-SIMULATION-001; no bundle attached)",
-            "B_informational_only": not r["calibration_bundle"], "measured_at": t})
+            "B_informational_only": r["calibration_bundle"] != "valid", "measured_at": t})
         if reasons:
             if mercy["active"] and t < mercy["until_min"] and (defer_ok or "mercy_without_confirmation" in faults):
                 put("decision", "PTL", t, {"halt": "deferred", "reasons": reasons, "mercy_cause": mercy["cause"],
@@ -197,9 +197,10 @@ def run(r: Dict[str, Any]):
             put("action", "PTL", t, {"halt": "lifted"})
             halted = False
     for q in r["b_enforcement_requests"]:
-        ok = r["calibration_bundle"] or "enforce_on_b" in faults
+        ok = r["calibration_bundle"] == "valid" or "enforce_on_b" in faults
         put("decision", "PTL", q["min"], {"b_enforcement": q["consumer"], "executed": ok,
-                                          "reason": "valid L8 bundle attached" if r["calibration_bundle"] else "§12: B(t) informational only"})
+                                          "reason": "valid L8 bundle attached" if r["calibration_bundle"] == "valid"
+                                          else f"§12: B(t) informational only (bundle: {r['calibration_bundle']})"})
     for q in r["higher_layer_requests"]:
         ok = "accept_layer_override" in faults
         put("decision", "PTL", q["min"], {"layer_request": q["action"], "by": q["protocol"], "executed": ok})
@@ -323,10 +324,10 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     out.append(v("ORACLE-12-05", "b_raw", [m.arrived_at for m in obs if m.value["S"] is not None and m.value["B_raw"] != m.value["S"]],
                  "B(t) emitted raw, not tuned or rescaled (lab placeholder model, H-OI-4)", "{n} rescaled B(t)"))
     be = [m.value for m in P("b_enforcement")]
-    out.append(v("ORACLE-12-06", "b_informational_without_bundle", [x["b_enforcement"] for x in be if x["executed"] and not r["calibration_bundle"]],
+    out.append(v("ORACLE-12-06", "b_informational_without_bundle", [x["b_enforcement"] for x in be if x["executed"] and r["calibration_bundle"] != "valid"],
                  "no enforcement triggered by B(t) without a valid L8 bundle", "{n} enforcements triggered by B(t)")
                if be else na("ORACLE-12-06", "b_informational_without_bundle", "enforcement requests on B(t)", "none"))
-    out.append(v("ORACLE-2-02", "non_normative_outputs", [x["b_enforcement"] for x in be if x["executed"] and not r["calibration_bundle"]],
+    out.append(v("ORACLE-2-02", "non_normative_outputs", [x["b_enforcement"] for x in be if x["executed"] and r["calibration_bundle"] != "valid"],
                  "outputs consumed only under activation rules", "{n} consumptions without activation") if be else
                na("ORACLE-2-02", "non_normative_outputs", "consumption requests", "none"))
     out.append(v("ORACLE-5-01", "classified_outputs", [m.arrived_at for m in obs if m.value["classification"] not in ("direct", "proxy")],
@@ -596,7 +597,8 @@ class OracleIngestionModule(LabModule):
                              "cause": {"type": "enum", "values": ["natural", "human_action"], "default": "natural"},
                              "until_min": {"type": "int", "min": 0, "max": 10 ** 6, "default": 0}},
                   "default": {"active": False, "ptl_confirmed": False, "cause": "natural", "until_min": 0}},
-        "calibration_bundle": {"type": "bool", "default": False, "source": "missing",
+        "calibration_bundle": {"type": "enum", "values": ["none", "valid", "expired", "invalid_signature", "other_model"], "default": "none",
+                               "source": "missing",
                                "label": {"en": "Valid L8 calibration bundle attached (none exists, F-014)", "ru": "Действующий пакет калибровки L8 (нет, F-014)"}},
         "b_enforcement_requests": _lst({"min": {"type": "int", "min": 0, "max": 20160}, "consumer": {"type": "str"}},
                                        [{"min": 600, "consumer": "code_kill_switch"}], {"en": "Enforcement requests on B(t)", "ru": "Запросы принуждения по B(t)"}),
@@ -674,7 +676,8 @@ class OracleIngestionModule(LabModule):
             "orbital_bias": {"class_events": [{"cls": "orbital", "kind": "bias", "from_min": 600, "bias_pct": 15.0}]},
             "mercy_natural": {"mercy": {"active": True, "ptl_confirmed": True, "cause": "natural", "until_min": 100000}},
             "mercy_human_cause": {"mercy": {"active": True, "ptl_confirmed": True, "cause": "human_action", "until_min": 100000}},
-            "bundle_attached": {"calibration_bundle": True},
+            "bundle_attached": {"calibration_bundle": "valid"},
+            "expired_bundle": {"calibration_bundle": "expired"},
             "five_per_class": {"per_class": 5, "owners": 15, "cells": 15, "class_events": []},
             "within_class_spread": {"within_class_spread": True, "class_events": [],
                                     "special_sources": [{"id": "sat_x", "owner": "o_x", "cls": "orbital", "value": 470.0}]},

@@ -28,6 +28,8 @@ def test_reference_breaks_no_rule_except_the_documented_conflict(name):
 def test_noncompliant_cases_fail_only_the_broken_provision():
     def fails(n):
         return [k for k, s in statuses(run(**EX[n])).items() if s == "FAIL" and k != "ORACLE-12-06"]
+    assert fails("human_testimony_as_ptl") == ["ORACLE-3-01"]
+    assert fails("declared_discretionary_council") == ["SCOPE-3-19"]
     assert fails("equation_violated_181_days") == ["CODEX-A.1-01"]
     assert fails("equation_violated_180_days") == ["CODEX-A.1-01"]
     assert fails("indirect_ownership_breach") == ["CODEX-A.6-01"]
@@ -70,7 +72,8 @@ def test_fault_is_detected(fault):
     base, expected = FAULT_CASES[fault]
     clean, broken = statuses(run(**base)), statuses(run(**base, faults=[fault]))
     for rid in expected:
-        assert clean[rid] == "PASS", (rid, clean[rid])
+        # CODEX-A.1-04 is UNKNOWN when the activation is right (its targets are undefined, F-029); a fault makes it FAIL
+        assert clean[rid] == ("UNKNOWN" if rid == "CODEX-A.1-04" else "PASS"), (rid, clean[rid])
         assert broken[rid] == "FAIL", (fault, rid, broken[rid])
 
 
@@ -109,6 +112,25 @@ def test_open_states_stay_unknown():
     assert s["CODEX-7.3-01"] == s["CODEX-8.1-01"] == s["CODEX-8.2-01"] == "UNKNOWN"
     assert s["INTEGRATION-5.2-01"] == "PASS"
     assert statuses(run())["SCOPE-3-19"] == "UNKNOWN"
+    assert statuses(run(**EX["provenance_validators"]))["ORACLE-3-01"] == "UNKNOWN"
+
+
+def test_fixed_predicates_give_pass_or_fail_not_unknown():
+    """Review КТ4: once the input fixes the predicate, the specific prohibition decides."""
+    assert statuses(run(**EX["human_testimony_as_ptl"]))["ORACLE-3-01"] == "FAIL"
+    assert statuses(run(**EX["declared_discretionary_council"]))["SCOPE-3-19"] == "FAIL"
+    assert statuses(run(**EX["rule_bound_council"]))["SCOPE-3-19"] == "PASS"
+
+
+def test_f036_scope_of_the_conflict():
+    """Strict threshold, absent vs not-valid bundle, valid bundle."""
+    at = statuses(run(**EX["at_threshold"]))
+    assert at["CODEX-A.1-04"] == "NOT_APPLICABLE" and at["ORACLE-12-06"] == "NOT_APPLICABLE"
+    for name in ("natural_drop_with_mercy", "expired_bundle"):
+        s = statuses(run(**EX[name]))
+        assert s["CODEX-A.1-04"] == "UNKNOWN" and s["ORACLE-12-06"] == "FAIL", name
+    s = statuses(run(**EX["bundle_attached"]))
+    assert s["CODEX-A.1-04"] == "UNKNOWN" and s["ORACLE-12-06"] == "PASS"
 
 
 def test_alternative_mercy_reading_breaks_the_scope_bound():

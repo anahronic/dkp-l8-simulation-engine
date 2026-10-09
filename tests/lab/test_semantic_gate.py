@@ -49,6 +49,18 @@ def test_every_reference_fail_is_verified():
     assert set(ref) == set(obs["reference_fails"]), "stale verification records"
 
 
+def test_every_finding_states_its_effect():
+    """Review of checkpoint 4: wording defects, missing definitions and contradictions are not one risk measure."""
+    eff = V["effects"]
+    for f in V["findings"]:
+        assert f.get("effect") in eff, f["id"]
+        if f["classification"] == "INTERPRETATION_GAP":
+            assert f["effect"] == "reading_dependent", f["id"]
+        if f["classification"] == "IMPLEMENTATION_BUG":
+            assert f["effect"] == "lab_error", f["id"]
+    assert {f["id"] for f in V["findings"] if f["effect"] == "wording_only"} >= {"F-034", "F-038"}
+
+
 def test_rule_conflict_fails_cite_a_confirmed_finding():
     from lab.modules import MODULES
     cls = verification.classifications(V)

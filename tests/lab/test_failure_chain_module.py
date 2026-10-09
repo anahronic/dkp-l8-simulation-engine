@@ -46,7 +46,21 @@ FAULT_CASES = {
     "execute_incomplete": ("incomplete_order", ["EB-5.x-02", "EB-5.x-03", "EB-8-02", "ASSETS-8.3-07"]),
     "repair_metadata": ("incomplete_order", ["EB-5.x-06", "EB-5.x-03"]),
     "arbitration_overrun": ("long_divergence", ["ORACLE-11-03"]),
+    "deadline_rounded_up": ("coarse_grid_divergence", ["ORACLE-11-03"]),
 }
+
+
+def test_arbitration_deadline_is_not_rounded_up():
+    """Review КТ4-GPT-01: with 1000-minute steps the window must close by 20160 minutes, not at 21000."""
+    _, res = run(**M.examples()["coarse_grid_divergence"])
+    ev = [e for e in res.outputs["events"] if e["type"] in ("arbitration_open", "arbitration_closed")]
+    assert [e["type"] for e in ev] == ["arbitration_open", "arbitration_closed"]
+    minutes = (ev[1]["step"] - ev[0]["step"]) * 1000
+    assert minutes == 20000 <= 20160 and ev[1]["outcome"] == "window expired unresolved"
+    st = statuses(res)
+    assert st["ORACLE-11-03"] == "PASS" and st["ORACLE-11-04"] == "UNKNOWN"
+    _, broken = run(**{**M.examples()["coarse_grid_divergence"], "faults": ["deadline_rounded_up"]})
+    assert statuses(broken)["ORACLE-11-03"] == "FAIL"
 
 
 def test_every_fault_has_a_case():

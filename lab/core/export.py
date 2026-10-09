@@ -46,8 +46,9 @@ REPLAY = """# Replay
 1. Get the code: `git clone https://github.com/anahronic/dkp-l8-simulation-engine`
    and check out the commit named in provenance.json (or the release tag).
 2. `pip install -r requirements.txt`
-3. `python -m lab replay <this zip>` — recomputes request.json and compares
-   input_id and result_id with result.json.
+3. `python -m lab replay <this zip>` — checks that the ids in result.json name its own
+   content, recomputes request.json, compares the whole result document (not only the ids)
+   and regenerates the reports and records; `verified` is true only if everything matches.
 
 input_id names what was computed (code digests, corpus, module version, inputs);
 result_id names what came out. Provenance (machine, time) is not part of either.
@@ -83,8 +84,42 @@ class ReplayMismatch(RuntimeError):
     pass
 
 
+def stored_inconsistencies(stored: Dict[str, Any], request: Dict[str, Any]) -> list:
+    """Do the identifiers written in result.json name the content written next to them?
+
+    Recomputes every variant's input_id and result_id from its own resolved input and body, and the
+    document's input_id and result_id from its request and variant ids.  A package whose content was
+    edited while its ids were kept fails here, whatever its file manifest says (review КТ4-GPT-02)."""
+    from lab.core.run import sha256_text
+    bad = []
+    if canonical_json(request) != canonical_json(stored.get("request")):
+        bad.append("request.json differs from the request inside result.json")
+    mod = stored["module"]
+    for name, v in stored["variants"].items():
+        body = {"outputs": v["outputs"], "checks": v["checks"], "summary": v["summary"]}
+        if sha256_text(canonical_json(body)) != v["result_id"]:
+            bad.append(f"variant {name}: result_id does not match its outputs, checks and summary")
+        iid = sha256_text(canonical_json({"identity": stored["identity"], "module": [mod["id"], mod["version"]],
+                                          "input": v["resolved_input"]}))
+        if iid != v["input_id"]:
+            bad.append(f"variant {name}: input_id does not match its resolved input")
+    names = [x["name"] for x in stored["request"]["variants"]]
+    if sha256_text(canonical_json({"identity": stored["identity"], "request": stored["request"]})) != stored["input_id"]:
+        bad.append("input_id does not match identity and request")
+    if sha256_text(canonical_json({n: stored["variants"][n]["result_id"] for n in names})) != stored["result_id"]:
+        bad.append("result_id does not match the variant result_ids")
+    return bad
+
+
 def replay(package: bytes) -> Dict[str, Any]:
-    """Verify the package digests, recompute, compare ids.  Returns a report dict."""
+    """Verify a package: file digests, internal identifiers, a fresh recomputation of the whole result
+    document, and the reports and records derived from it.  Returns a report dict.
+
+    same_input   the fresh input_id equals the stored one (same code, corpus, registry, inputs)
+    same_result  the stored result is internally consistent AND equal to the fresh result document
+                 (every output, check, summary, explanation and comparison, not only the ids)
+    reports_match / records_match   the shipped reports and records are those the stored result gives
+    verified     all of the above; provenance.json (machine, time) is outside every comparison"""
     with zipfile.ZipFile(io.BytesIO(package)) as z:
         names = set(z.namelist())
         sums = z.read("SHA256SUMS").decode()
@@ -97,11 +132,27 @@ def replay(package: bytes) -> Dict[str, Any]:
             raise ReplayMismatch(f"unlisted files: {sorted(names - listed - {'SHA256SUMS'})}")
         request = json.loads(z.read("request.json"))
         stored = json.loads(z.read("result.json"))
-    fresh = run_request(request)
+        reports = {n: z.read(n) for n in ("report.en.md", "report.ru.md", "report.html") if n in names}
+        recs = {n: z.read(n) for n in names if n.startswith("records/")}
+    inconsistent = stored_inconsistencies(stored, request)
+    fresh_records: Dict[str, list] = {}
+    fresh = run_request(request, records_out=fresh_records)
+    same_doc = canonical_json(stored) == canonical_json(fresh)
+    # reports are generated from the fresh document (equal to the stored one when same_document holds)
+    want_reports = {"report.en.md": markdown(fresh, "en").encode("utf-8"), "report.ru.md": markdown(fresh, "ru").encode("utf-8"),
+                    "report.html": html_page(fresh, "en").encode("utf-8")}
+    reports_match = all(reports.get(n) == b for n, b in want_reports.items())
+    want_recs = {f"records/{n}.jsonl": "".join(json.dumps(r, sort_keys=True, separators=(",", ":"), ensure_ascii=True) + "\n"
+                                                for r in rows).encode() for n, rows in fresh_records.items()}
+    records_match = recs == want_recs
     report = {"stored_input_id": stored["input_id"], "fresh_input_id": fresh["input_id"],
               "stored_result_id": stored["result_id"], "fresh_result_id": fresh["result_id"],
+              "stored_consistent": not inconsistent, "inconsistencies": inconsistent,
+              "same_document": same_doc,
               "same_input": stored["input_id"] == fresh["input_id"],
-              "same_result": stored["result_id"] == fresh["result_id"]}
+              "same_result": not inconsistent and same_doc and stored["result_id"] == fresh["result_id"],
+              "reports_match": reports_match, "records_match": records_match}
+    report["verified"] = report["same_input"] and report["same_result"] and reports_match and records_match
     if not report["same_input"]:
         report["note"] = ("different input_id: code, corpus, registry or module version differ from the "
                           "package; check out the commit in provenance.json")

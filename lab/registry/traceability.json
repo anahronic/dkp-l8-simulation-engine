@@ -111,6 +111,11 @@
   },
   {
    "module": "failure_chain",
+   "example": "coarse_grid_divergence",
+   "kind": "reference"
+  },
+  {
+   "module": "failure_chain",
    "example": "dispute_recompute",
    "kind": "reference"
   },
@@ -796,6 +801,11 @@
   },
   {
    "module": "code_synergy",
+   "example": "at_threshold",
+   "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
    "example": "b_recovers",
    "kind": "reference"
   },
@@ -808,6 +818,11 @@
    "module": "code_synergy",
    "example": "connection_by_legislative_act",
    "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
+   "example": "declared_discretionary_council",
+   "kind": "noncompliant"
   },
   {
    "module": "code_synergy",
@@ -826,8 +841,18 @@
   },
   {
    "module": "code_synergy",
+   "example": "expired_bundle",
+   "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
    "example": "faulty_network",
    "kind": "counterexample"
+  },
+  {
+   "module": "code_synergy",
+   "example": "human_testimony_as_ptl",
+   "kind": "noncompliant"
   },
   {
    "module": "code_synergy",
@@ -886,12 +911,22 @@
   },
   {
    "module": "code_synergy",
+   "example": "provenance_validators",
+   "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
    "example": "quiet_world",
    "kind": "reference"
   },
   {
    "module": "code_synergy",
    "example": "resolved_divergence",
+   "kind": "reference"
+  },
+  {
+   "module": "code_synergy",
+   "example": "rule_bound_council",
    "kind": "reference"
   },
   {
@@ -923,6 +958,11 @@
    "module": "code_economy",
    "example": "no_passive_persons",
    "kind": "reference"
+  },
+  {
+   "module": "code_economy",
+   "example": "per_identity_pricing",
+   "kind": "alternative"
   },
   {
    "module": "code_economy",
@@ -982,6 +1022,11 @@
   {
    "module": "oracle_ingestion",
    "example": "class_goes_silent",
+   "kind": "reference"
+  },
+  {
+   "module": "oracle_ingestion",
+   "example": "expired_bundle",
    "kind": "reference"
   },
   {
@@ -1859,7 +1904,7 @@
   },
   {
    "id": "Q-053",
-   "title": "Code §14.2: is the vote-buying cost quadratic (Cost = Votes², as the formula and title say) or exponential, as the prose says",
+   "title": "Code §14.2: is the vote-buying cost quadratic (Cost = Votes², as the formula and title say) or exponential, as the prose says; and is Votes² charged to a coordinating coalition as one Subject or to each identity",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
   },
@@ -1895,192 +1940,268 @@
    {
     "id": "F-001",
     "title": "A synchronous change of physical state triggered no re-evaluation (lab error, fixed)",
-    "classification": "IMPLEMENTATION_BUG"
+    "classification": "IMPLEMENTATION_BUG",
+    "kind": "lab_error",
+    "effect": "lab_error"
    },
    {
     "id": "F-002",
     "title": "Asynchronous sampling turns a real change into a divergence",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-003",
     "title": "A class slower than its TTL keeps dependent outputs suspended",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-004",
     "title": "FINANCE §11.2(b) points to a section of ERROR that does not exist",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "broken_reference",
+    "effect": "changes_execution"
    },
    {
     "id": "F-005",
     "title": "IMPACT: Bᵢ is used as a scale, a limit is crossed without a flag, and the §13 example disagrees with §5",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "inconsistent_values",
+    "effect": "wording_only"
    },
    {
     "id": "F-006",
     "title": "The polarity of Rᵢ is not fixed by IMPACT",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-007",
     "title": "N_eff and N_eff_min decide the null-output state but are defined nowhere",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-008",
     "title": "CRISIS allows extending oracle TTLs; ORACLE forbids it",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "contradiction",
+    "effect": "changes_execution"
    },
    {
     "id": "F-009",
     "title": "CRISIS §12.3 cites \"Section 8 (Non-Precedent Rule)\"; the rule is in §6",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "broken_reference",
+    "effect": "wording_only"
    },
    {
     "id": "F-010",
     "title": "DEFENSE makes escalation at D3 mandatory; CRISIS enters only on \"sustained\" D3, whose duration nobody defines",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-011",
     "title": "EXIT §6 delays exit \"to prevent cascading instability\"; SCOPE §9 forbids delays for stability goals",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "contradiction",
+    "effect": "resolved_by_priority"
    },
    {
     "id": "F-012",
     "title": "Exit in a crisis: SCOPE permits a temporary suspension that EXIT forbids",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "authority_difference",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-013",
     "title": "A failing external oracle mirror: no conflict between INTEROP and CRISIS (lab premise withdrawn)",
-    "classification": "IMPLEMENTATION_BUG"
+    "classification": "IMPLEMENTATION_BUG",
+    "kind": "lab_error",
+    "effect": "lab_error"
    },
    {
     "id": "F-014",
     "title": "No Calibration Bundle exists; by SIMULATION §4 every protocol that needs one is non-enforceable",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "systemic_blocker",
+    "effect": "systemic_blocker"
    },
    {
     "id": "F-015",
     "title": "TRANSPORT has PTL quantify \"systemic insurance exposure\"; ORACLE limits PTL to physical state",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "contradiction",
+    "effect": "changes_execution"
    },
    {
     "id": "F-016",
     "title": "PPDI \"forced bodily contact between non-consenting passengers\": how PTL measures it is undefined",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-017",
     "title": "TIME §9: the test vector for 2000-01-01 contradicts §5 and the reference code",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "inconsistent_values",
+    "effect": "changes_execution"
    },
    {
     "id": "F-018",
     "title": "ORACLE §11: nothing says what follows when the 14-day arbitration window ends unresolved",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-019",
     "title": "An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR)",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-020",
     "title": "UPGRADE defers the post-crisis audit and stabilization period to AUDIT, which does not define it",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-021",
     "title": "INTERNAL-SEC: after a state expires to S0, may persisting evidence raise it again at once?",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-022",
     "title": "AXIOMS §8: \"67% of active validating nodes, as defined in Appendix A.5\" — A.5 defines no such nodes",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-023",
     "title": "Axiom A1 \"minimum required conditions\": an authority is named, an admissibility test is not",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-024",
     "title": "AXIOMS §5: when every action violates some axiom, rule 2 and rule 4 lead to different results",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-025",
     "title": "Axiom A4 says SHOULD, while every axiom is a constraint",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-026",
     "title": "PRIVACY §6: may aggregate statistics of an absolute privacy domain be published?",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-027",
     "title": "Mercy: \"suspended for 180 days\" against \"SHALL NOT persist beyond explicitly declared Crisis Scope\"",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-028",
     "title": "Human validators: in the Code's oracle stack, outside ORACLE",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-029",
     "title": "B(t) < B_min \"activates all Kill Switches\": no target, no release",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-030",
     "title": "A.1a \"System Failure → temporary manual control\": which violation counts, and what bounds the control",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-031",
     "title": "\"Connect\" under the Code and the phases of INTEGRATION",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "authority_difference",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-032",
     "title": "The Council of Crisis Mercy and the SCOPE S3 ban on \"discretionary emergency authorities\"",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-033",
     "title": "Code §18.1: obligation to participate and a rating for \"total passivity\", against LABOR and PRIVACY",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-034",
     "title": "Code §14.2: \"grows exponentially (Cost = Votes²)\"",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "inconsistent_values",
+    "effect": "wording_only"
    },
    {
     "id": "F-035",
     "title": "SCOPE §8: the Scope Audit has a trigger but no procedure, no end and no stated object of confirmation",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "missing_definition",
+    "effect": "changes_execution"
    },
    {
     "id": "F-036",
     "title": "Code A.1 activates the Kill Switches on B(t); ORACLE §12 forbids B(t) to trigger enforcement without an L8 bundle",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "contradiction",
+    "effect": "changes_execution"
    },
    {
     "id": "F-037",
     "title": "Cognitive and cultural impact channels must come from the PTL, which excludes cultural harm and produces physical state only",
-    "classification": "INTERPRETATION_GAP"
+    "classification": "INTERPRETATION_GAP",
+    "kind": "reading_dependent",
+    "effect": "reading_dependent"
    },
    {
     "id": "F-038",
     "title": "AUDIT §4 names D2 \"Consistency or Integrity Anomaly\"; §7 names D2 \"Constraint Violation\"",
-    "classification": "CONFIRMED_FINDING"
+    "classification": "CONFIRMED_FINDING",
+    "kind": "inconsistent_values",
+    "effect": "wording_only"
    }
   ],
   "finding_counts": {
@@ -2088,6 +2209,29 @@
    "INTERPRETATION_GAP": 17,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
+  },
+  "effects": {
+   "wording_only": "a wording defect; a literal execution is the same under either wording",
+   "changes_execution": "a literal execution cannot proceed or gives a different result until the author decides",
+   "resolved_by_priority": "a conflict that a stated priority rule of the corpus resolves",
+   "systemic_blocker": "blocks the enforceability of many protocols",
+   "reading_dependent": "an interpretation gap: the result depends on a reading the corpus does not fix",
+   "lab_error": "an error of the lab, fixed"
+  },
+  "effect_counts": {
+   "CONFIRMED_FINDING": {
+    "changes_execution": 13,
+    "wording_only": 4,
+    "resolved_by_priority": 1,
+    "systemic_blocker": 1
+   },
+   "INTERPRETATION_GAP": {
+    "reading_dependent": 17
+   },
+   "IMPLEMENTATION_BUG": {
+    "lab_error": 2
+   },
+   "UNVERIFIED_FINDING": {}
   },
   "reference_fails": [
    {
@@ -2104,6 +2248,7 @@
      "code_synergy:anthropogenic_drop",
      "code_synergy:b_recovers",
      "code_synergy:connection_by_legislative_act",
+     "code_synergy:expired_bundle",
      "code_synergy:human_weight_zero",
      "code_synergy:insufficient_assets",
      "code_synergy:mercy_shorter_crisis_scope",
@@ -2112,6 +2257,7 @@
      "code_synergy:node_seized",
      "code_synergy:nuclear_equivalent",
      "code_synergy:phase_1_aggressor",
+     "code_synergy:provenance_validators",
      "code_synergy:tuning_attempts",
      "code_synergy:unconfirmed_spare_node",
      "code_synergy:unidentified_aggressor"
@@ -2164,6 +2310,20 @@
     "requirement": "INTSEC-8-06",
     "runs": [
      "internal_security:concentrated_nodes"
+    ],
+    "verified": true
+   },
+   {
+    "requirement": "ORACLE-3-01",
+    "runs": [
+     "code_synergy:human_testimony_as_ptl"
+    ],
+    "verified": true
+   },
+   {
+    "requirement": "SCOPE-3-19",
+    "runs": [
+     "code_synergy:declared_discretionary_council"
     ],
     "verified": true
    },
@@ -2734,7 +2894,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -2777,7 +2939,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -2820,7 +2984,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -2846,6 +3012,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -2859,7 +3026,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 16,
+    "PASS": 20,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 2
@@ -2913,7 +3080,9 @@
    "counterexample_detected_by": [
     "code_economy:faulty_economy"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -2956,7 +3125,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -2999,7 +3170,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3042,7 +3215,9 @@
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -3082,7 +3257,9 @@
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3125,7 +3302,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3168,7 +3347,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3215,7 +3396,9 @@
    "counterexample_detected_by": [
     "code_economy:faulty_economy"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-034",
@@ -3261,7 +3444,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3304,7 +3489,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-033"
@@ -3349,7 +3536,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3392,7 +3581,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3435,7 +3626,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3480,7 +3673,9 @@
    "counterexample_detected_by": [
     "code_economy:faulty_economy"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3523,7 +3718,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-033",
@@ -3571,7 +3768,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-033",
@@ -3649,7 +3848,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3694,7 +3895,9 @@
    "counterexample_detected_by": [
     "code_economy:faulty_economy"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3769,7 +3972,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3812,7 +4017,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3855,7 +4062,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3898,7 +4107,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3941,7 +4152,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -3984,7 +4197,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -4027,7 +4242,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -4070,7 +4287,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -4115,7 +4334,9 @@
    "counterexample_detected_by": [
     "code_economy:faulty_economy"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -4141,6 +4362,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4154,7 +4376,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4191,6 +4413,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4204,7 +4427,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4239,6 +4462,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4254,7 +4478,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 17,
+    "PASS": 21,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 1
@@ -4293,6 +4517,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4308,7 +4533,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 17,
+    "PASS": 21,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 1
@@ -4346,6 +4571,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4361,7 +4587,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 15,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 2,
     "NOT_APPLICABLE": 2
@@ -4413,7 +4639,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -4456,7 +4684,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -4482,6 +4712,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4495,7 +4726,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4536,6 +4767,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4549,7 +4781,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4583,6 +4815,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4596,7 +4829,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4631,6 +4864,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4647,17 +4881,17 @@
     "Q-055"
    ],
    "observed": {
-    "PASS": 14,
+    "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 1,
-    "NOT_APPLICABLE": 4
+    "UNKNOWN": 17,
+    "NOT_APPLICABLE": 6
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [
     "code_synergy:faulty_network"
    ],
    "under_alternative_readings": {
-    "PASS": 1,
+    "UNKNOWN": 1,
     "FAIL": 1
    },
    "violated_by_noncompliant_case": [],
@@ -4690,6 +4924,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4706,7 +4941,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 18
+    "NOT_APPLICABLE": 22
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -4740,6 +4975,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4756,7 +4992,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 18
+    "NOT_APPLICABLE": 22
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -4788,6 +5024,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4804,7 +5041,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 18
+    "NOT_APPLICABLE": 22
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -4836,6 +5073,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4851,7 +5089,7 @@
     "Q-049"
    ],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4889,6 +5127,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4902,7 +5141,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4939,6 +5178,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4952,7 +5192,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -4984,6 +5224,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -4997,7 +5238,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5096,6 +5337,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5109,7 +5351,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5173,6 +5415,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5186,7 +5429,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 17,
+    "PASS": 21,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -5220,6 +5463,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5235,7 +5479,7 @@
     "Q-047"
    ],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5304,6 +5548,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5317,7 +5562,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5352,6 +5597,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5368,7 +5614,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 17
+    "NOT_APPLICABLE": 21
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
@@ -5402,6 +5648,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5415,7 +5662,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 18,
+    "PASS": 22,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
@@ -5450,6 +5697,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5463,7 +5711,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5530,6 +5778,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5543,7 +5792,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -5578,6 +5827,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5594,7 +5844,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 18
+    "NOT_APPLICABLE": 22
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -5626,6 +5876,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5641,7 +5892,7 @@
     "Q-046"
    ],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 2,
     "NOT_APPLICABLE": 3
@@ -5679,6 +5930,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5694,7 +5946,7 @@
     "Q-051"
    ],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5731,6 +5983,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5744,7 +5997,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5784,6 +6037,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5797,7 +6051,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5832,6 +6086,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5845,7 +6100,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5880,6 +6135,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5893,7 +6149,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -5930,6 +6186,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5945,7 +6202,7 @@
     "Q-046"
    ],
    "observed": {
-    "PASS": 16,
+    "PASS": 20,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -5984,6 +6241,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -5997,7 +6255,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 5
@@ -6036,6 +6294,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6049,7 +6308,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -6116,6 +6375,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6131,7 +6391,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 17,
+    "PASS": 21,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -6169,6 +6429,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6182,7 +6443,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -6221,6 +6482,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6237,7 +6499,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 19
+    "NOT_APPLICABLE": 23
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -6362,6 +6624,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6375,7 +6638,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -6497,6 +6760,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -6510,7 +6774,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7031,7 +7295,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7121,7 +7385,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7164,7 +7428,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7241,7 +7505,7 @@
     "Q-004"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7291,7 +7555,7 @@
     "Q-010"
    ],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -7342,7 +7606,7 @@
     "Q-005"
    ],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -7392,7 +7656,7 @@
    "observed": {
     "PASS": 2,
     "FAIL": 0,
-    "UNKNOWN": 1,
+    "UNKNOWN": 2,
     "NOT_APPLICABLE": 6
    },
    "status": "UNKNOWN",
@@ -7433,7 +7697,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7472,7 +7736,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7511,7 +7775,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7552,7 +7816,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7588,7 +7852,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7624,6 +7888,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -7643,10 +7908,10 @@
     "Q-055"
    ],
    "observed": {
-    "PASS": 10,
-    "FAIL": 14,
+    "PASS": 11,
+    "FAIL": 16,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 4
+    "NOT_APPLICABLE": 6
    },
    "status": "FAIL",
    "counterexample_detected_by": [
@@ -7698,7 +7963,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 8
@@ -7750,10 +8015,10 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 13
+    "NOT_APPLICABLE": 14
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7792,7 +8057,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7831,7 +8096,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7872,7 +8137,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7913,7 +8178,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -7953,7 +8218,7 @@
     "Q-027"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -7998,7 +8263,7 @@
     "Q-035"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8041,7 +8306,7 @@
     "Q-035"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8084,7 +8349,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8127,7 +8392,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 10
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -8160,7 +8425,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8196,7 +8461,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8235,7 +8500,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8274,7 +8539,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8312,6 +8577,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -8331,9 +8597,9 @@
     "Q-047"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
-    "UNKNOWN": 18,
+    "UNKNOWN": 22,
     "NOT_APPLICABLE": 1
    },
    "status": "UNKNOWN",
@@ -8343,9 +8609,12 @@
    "under_alternative_readings": {
     "UNKNOWN": 2
    },
-   "violated_by_noncompliant_case": [],
+   "violated_by_noncompliant_case": [
+    "code_synergy:human_testimony_as_ptl"
+   ],
    "text_verification": [
     "findings:F-028",
+    "noncompliant_cases:ORACLE-3-01",
     "questions:Q-047"
    ],
    "open_point": {
@@ -8377,7 +8646,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8418,7 +8687,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8461,7 +8730,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8500,7 +8769,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8539,7 +8808,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8584,7 +8853,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8622,7 +8891,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8668,7 +8937,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -8706,7 +8975,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8742,7 +9011,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8863,7 +9132,7 @@
     "Q-056"
    ],
    "observed": {
-    "PASS": 15,
+    "PASS": 16,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8907,7 +9176,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -8949,7 +9218,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -8982,7 +9251,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -9021,7 +9290,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -9060,7 +9329,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -9101,7 +9370,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 14,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -9142,7 +9411,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -9184,7 +9453,7 @@
     "Q-008"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -9237,7 +9506,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 10,
+    "PASS": 11,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -9291,10 +9560,10 @@
     "Q-003"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 12
+    "NOT_APPLICABLE": 13
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -9336,7 +9605,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -9407,7 +9676,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -11957,7 +12226,9 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -12841,7 +13112,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 10
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -12888,7 +13159,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 10
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13008,7 +13279,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 10
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13245,7 +13516,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 15
+    "NOT_APPLICABLE": 16
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13300,7 +13571,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 15
+    "NOT_APPLICABLE": 16
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13360,7 +13631,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 15
+    "NOT_APPLICABLE": 16
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13419,7 +13690,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 15
+    "NOT_APPLICABLE": 16
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13501,7 +13772,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -15046,11 +15317,11 @@
    "checkable": "partial",
    "coverage": "PARTIAL",
    "module": "code_economy",
-   "check": "coordinated_identities_one_subject",
+   "check": "coalition_subject_status",
    "tests": [
     "tests/lab/test_code_economy_module.py"
    ],
-   "gap": "Coordination is a declared flag.",
+   "gap": "Coordination and its interval are declared (review КТ4-GPT-03).",
    "also_checked_by": [],
    "hypotheses": [
     "H-CE-1",
@@ -15072,10 +15343,10 @@
     "NOT_APPLICABLE": 1
    },
    "status": "PASS",
-   "counterexample_detected_by": [
-    "code_economy:faulty_economy"
-   ],
-   "under_alternative_readings": {},
+   "counterexample_detected_by": [],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -20298,7 +20569,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 16
@@ -21003,7 +21274,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 17,
+    "PASS": 18,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -21060,7 +21331,7 @@
     "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 9
+    "NOT_APPLICABLE": 10
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -21742,7 +22013,7 @@
     "Q-009"
    ],
    "observed": {
-    "PASS": 14,
+    "PASS": 15,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 4
@@ -23592,7 +23863,9 @@
    "counterexample_detected_by": [
     "code_economy:faulty_economy"
    ],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-033"
@@ -24160,7 +24433,8 @@
     "work_cycle:refusals_faulty"
    ],
    "under_alternative_readings": {
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 1,
+    "UNKNOWN": 1
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -33480,7 +33754,7 @@
     "Q-003"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -33526,7 +33800,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -33644,7 +33918,7 @@
     "Q-007"
    ],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 4
@@ -33694,7 +33968,7 @@
     "Q-007"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -33741,7 +34015,7 @@
     "Q-007"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -33787,7 +34061,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -33835,7 +34109,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -33881,7 +34155,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -33927,7 +34201,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -33973,7 +34247,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -34022,7 +34296,7 @@
     "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 4
+    "NOT_APPLICABLE": 5
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -34082,7 +34356,7 @@
     "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -51566,6 +51840,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -51581,7 +51856,7 @@
     "Q-050"
    ],
    "observed": {
-    "PASS": 19,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -54877,7 +55152,8 @@
     "privacy_transparency:faulty_disclosure"
    ],
    "under_alternative_readings": {
-    "PASS": 1
+    "PASS": 1,
+    "UNKNOWN": 1
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -57536,6 +57812,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -57554,9 +57831,9 @@
     "Q-051"
    ],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
-    "UNKNOWN": 14,
+    "UNKNOWN": 17,
     "NOT_APPLICABLE": 8
    },
    "status": "UNKNOWN",
@@ -57566,9 +57843,12 @@
    "under_alternative_readings": {
     "UNKNOWN": 2
    },
-   "violated_by_noncompliant_case": [],
+   "violated_by_noncompliant_case": [
+    "code_synergy:declared_discretionary_council"
+   ],
    "text_verification": [
-    "findings:F-032"
+    "findings:F-032",
+    "noncompliant_cases:SCOPE-3-19"
    ],
    "open_point": {
     "origin": "normative_ambiguity",
@@ -60945,6 +61225,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -60958,7 +61239,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 15,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -60999,6 +61280,7 @@
     "H-CS-1",
     "H-CS-10",
     "H-CS-11",
+    "H-CS-12",
     "H-CS-2",
     "H-CS-3",
     "H-CS-4",
@@ -61012,7 +61294,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 15,
+    "PASS": 19,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6

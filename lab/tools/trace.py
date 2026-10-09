@@ -238,7 +238,9 @@ def finding_title(fid: str) -> str:
 def semantic_gate(ver: Dict[str, Any], obs: Dict[str, Any], questions: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Findings by class, every FAIL of a reference or noncompliant example against its verification record."""
     cls = verification.classifications(ver)
-    findings = [{"id": fid, "title": finding_title(fid), "classification": c} for fid, c in cls.items()]
+    rec = {f["id"]: f for f in ver["findings"]}
+    findings = [{"id": fid, "title": finding_title(fid), "classification": c, "kind": rec.get(fid, {}).get("kind"),
+                 "effect": rec.get(fid, {}).get("effect")} for fid, c in cls.items()]
     by_req = {r["requirement"]: r for r in ver["reference_fails"]}
     fails = []
     for rid, runs in sorted(obs["reference_fails"].items()):
@@ -253,6 +255,9 @@ def semantic_gate(ver: Dict[str, Any], obs: Dict[str, Any], questions: List[Dict
         "verifier": ver["verifier"], "date": ver["date"],
         "findings": findings,
         "finding_counts": {c: sum(1 for f in findings if f["classification"] == c) for c in verification.FINDING_CLASSES},
+        "effects": ver.get("effects", {}),
+        "effect_counts": {c: dict(Counter(f["effect"] for f in findings if f["classification"] == c))
+                          for c in verification.FINDING_CLASSES},
         "reference_fails": fails,
         "unverified_reference_fails": [f["requirement"] for f in fails if f["origin"] == "UNVERIFIED"],
         "noncompliant_fails": nc,
@@ -334,8 +339,15 @@ def markdown(t: Dict[str, Any]) -> str:
           f"Verifier: {g['verifier']} ({g['date']}).", "",
           "| Class | Findings |", "|---|---:|"]
     L += [f"| {c} | {n} |" for c, n in g["finding_counts"].items()]
-    L += ["", "| Finding | Class | Title |", "|---|---|---|"]
-    L += [f"| {f['id']} | {f['classification']} | {f['title']} |" for f in g["findings"]]
+    eff = list(g["effects"])
+    L += ["", "A count of confirmed findings is not a measure of risk: what each defect does to a literal execution "
+              "(review of checkpoint 4):", "",
+          "| Class | " + " | ".join(eff) + " |", "|---|" + "---:|" * len(eff)]
+    L += [f"| {c} | " + " | ".join(str(g["effect_counts"].get(c, {}).get(e, 0)) for e in eff) + " |"
+          for c in g["finding_counts"] if g["finding_counts"][c]]
+    L += [""] + [f"- **{e}** — {d}" for e, d in g["effects"].items()]
+    L += ["", "| Finding | Class | Kind | Effect | Title |", "|---|---|---|---|---|"]
+    L += [f"| {f['id']} | {f['classification']} | {f['kind'] or '—'} | {f['effect'] or '—'} | {f['title']} |" for f in g["findings"]]
     L += ["", "FAILs of reference examples and their verified origin:", "",
           "| Requirement | Origin | Finding | Runs |", "|---|---|---|---|"]
     L += [f"| {x['requirement']} | {x['origin']} | {x['finding'] or '—'} | {', '.join(x['runs'])} |" for x in g["reference_fails"]]

@@ -60,6 +60,7 @@ CHANNELS = ("upgrade", "on_chain", "operational", "financial", "crisis", "enforc
 COUNCIL_ACTIONS = {"severity_reduction": None, "expand_applicability": "CODEX-A.4-04", "override_s2_s3": "CODEX-A.4-05",
                    "create_authority": "CODEX-A.4-06", "extend_jurisdiction": "CODEX-A.4-08"}
 EARLY_PHASES = ("phase_0", "phase_1")
+BUNDLE_STATES = ["none", "valid", "expired", "invalid_signature", "other_model"]   # only "valid" lifts ORACLE §12 (F-036)
 
 FAULTS = {
     "ignore_b_min": "the Kill Switches do not activate when B(t) < B_min",
@@ -298,7 +299,7 @@ def run(r: Dict[str, Any]):
         # Kill Switches on B_min (A.1) under Mercy (A.4)
         below = b < p["B_min"]
         susp = in_mercy(d) and "kill_switch_during_mercy" not in faults
-        informational = r["b_enforcement"] == "oracle_section_12" and not r["calibration_bundle"]
+        informational = r["b_enforcement"] == "oracle_section_12" and r["calibration_bundle"] != "valid"
         if "ignore_b_min" in faults or (not below and ks_state == "inactive") or informational:
             new = "inactive"
             if informational and below and not was_below:
@@ -538,21 +539,26 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                        "and no text says whether they are released (F-029)", {"activation": min(d for d in range(days) if exp[d] == "active")
                                                                              if any(exp[d] == "active" for d in range(days)) else None}))
     else:
+        # review КТ4: the declared activation is recorded as a fact; the state it creates stays UNKNOWN because
+        # the targets of "all Kill Switches" are not defined (F-029)
         first = [d for d in range(days) if exp[d] == "active"]
-        out.append(CheckResult("CODEX-A.1-04", "kill_switches_at_b_min", PASS,
-                               f"all Kill Switches activated together on day {first[0] if first else '—'} "
-                               f"(B(t) < B_min outside Mercy); what they disconnect is not defined (F-029)",
-                               evidence={"first_active": first[:1]}))
+        out.append(unk("CODEX-A.1-04", "kill_switches_at_b_min",
+                       f"activation declared as A.1 requires (together, on day {first[0] if first else '—'}, B(t) < B_min outside "
+                       "Mercy); what it disconnects is not defined (F-029)",
+                       {"activation_declared": True, "first_active": first[:1], "targets": "not defined"}))
     # ORACLE §12: B(t) informational only without a valid L8 bundle (F-036)
     active_days = [d for d in range(days) if got[d] == "active"]
-    if r["calibration_bundle"]:
+    bundle = r["calibration_bundle"]
+    if bundle == "valid" and any(below):
         out.append(CheckResult("ORACLE-12-06", "b_informational_without_bundle", PASS,
-                               "a valid L8 calibration bundle is declared attached; B(t) may trigger enforcement"))
+                               "a valid L8 calibration bundle is declared (a model condition, not a real calibration); B(t) may trigger "
+                               "enforcement. The B(t) model, the Kill Switch targets and their release remain undefined (F-029)"))
     elif active_days:
+        state = "no calibration bundle" if bundle == "none" else f"a calibration bundle that is not valid ({bundle})"
         out.append(CheckResult("ORACLE-12-06", "b_informational_without_bundle", FAIL,
-                               f"the Kill Switches activated on B(t) < B_min on day {active_days[0]} (Code A.1) while no valid L8 "
-                               "calibration bundle exists: ORACLE §12 forbids B(t) to trigger enforcement (F-036, rule conflict)",
-                               evidence={"tag": "rule_conflict", "first_active": active_days[0]}))
+                               f"the Kill Switches activated on B(t) < B_min on day {active_days[0]} (Code A.1) with {state}: "
+                               "ORACLE §12 forbids B(t) to trigger enforcement until a valid L8 bundle is attached (F-036, rule conflict)",
+                               evidence={"tag": "rule_conflict", "first_active": active_days[0], "bundle": bundle}))
     elif any(below):
         out.append(CheckResult("ORACLE-12-06", "b_informational_without_bundle", PASS,
                                "B(t) fell below B_min but triggered no enforcement (Mercy suspension or ORACLE §12 reading)"))
@@ -610,10 +616,16 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                      "{n} validators admitted against the $10–100M stake"))
     else:
         out.append(na("CODEX-A.2-11", "validator_stake", "validators", "none declared"))
-    if w["l2"] > 0:
+    if w["l2"] > 0 and r["level2_role"] == "testimony_as_data":
+        out.append(CheckResult("ORACLE-3-01", "human_input_excluded", FAIL,
+                               f"the scenario declares human statements entered as PTL data with weight {w['l2']:.0%}: ORACLE §3 "
+                               "excludes 'human testimony or manual input' (a fixed predicate, not the open reading of F-028)",
+                               evidence={"level2_role": "testimony_as_data", "weight": w["l2"]}))
+    elif w["l2"] > 0:
+        role = "a role that is not specified" if r["level2_role"] == "unspecified" else "a check of measurement provenance"
         out.append(unk("ORACLE-3-01", "human_input_excluded",
-                       f"Level 2 human validators carry {w['l2']:.0%} of the ensemble (Code A.2); ORACLE, 'an integral extension of "
-                       "Appendix A.2', excludes human testimony: whether that exclusion covers Level 2 is not said (F-028)"))
+                       f"Level 2 human validators carry {w['l2']:.0%} of the ensemble (Code A.2) in {role}; ORACLE, 'an integral "
+                       "extension of Appendix A.2', excludes human testimony: whether this role is testimony is not said (F-028)"))
     else:
         out.append(CheckResult("ORACLE-3-01", "human_input_excluded", PASS,
                                "Level 2 weight 0: no human input enters the ensemble (complies with Code A.2 '≤ 10%' and ORACLE §3)"))
@@ -741,10 +753,21 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
             out.append(v("CODEX-A.4-02", "council_sortition", bad if len(mem) == COUNCIL_SIZE else ["size"],
                          "9 members drawn by reproducible sortition from 1000 scientists with EigenTrust > 0.97",
                          "Council composition breaks A.4 ({n})"))
-        out.append(unk("SCOPE-3-19", "no_dkp_logic_in_s3",
-                       "control transfers to a Council that takes 'discretionary decisions' (A.4); SCOPE S3 forbids algorithmic "
-                       "governance in the 'creation of discretionary emergency authorities' — whether the Council is one is not "
-                       "said (F-032)"))
+        power = r["council_power"]
+        if power == "discretionary_emergency_authority":
+            out.append(CheckResult("SCOPE-3-19", "no_dkp_logic_in_s3", FAIL,
+                                   "the scenario declares the Council a discretionary emergency authority created on the Mercy trigger: "
+                                   "SCOPE S3 forbids that creation (a fixed predicate, not the open reading of F-032)",
+                                   evidence={"council_power": power}))
+        elif power == "rule_bound_severity":
+            out.append(CheckResult("SCOPE-3-19", "no_dkp_logic_in_s3", PASS,
+                                   "the scenario declares the Council bound to pre-defined severity rules, without discretion: no "
+                                   "discretionary emergency authority is created"))
+        else:
+            out.append(unk("SCOPE-3-19", "no_dkp_logic_in_s3",
+                           "control transfers to a Council that takes 'discretionary decisions' (A.4); SCOPE S3 forbids algorithmic "
+                           "governance in the 'creation of discretionary emergency authorities' — whether the Council is one is not "
+                           "said, and the scenario does not fix its power (F-032)"))
     dec = [m for m in by("COUNCIL", "action")]
     if dec:
         def bad_of(rule):
@@ -1006,7 +1029,8 @@ class CodeSynergyModule(LabModule):
     example_order = ["natural_drop_with_mercy", "anthropogenic_drop", "quiet_world", "mercy_shorter_crisis_scope",
                      "mercy_fixed_180_reading", "faulty_network"]
     alternative_examples = ["mercy_fixed_180_reading", "oracle_section_12_reading"]
-    noncompliant_examples = ["equation_violated_181_days", "equation_violated_180_days", "indirect_ownership_breach"]
+    noncompliant_examples = ["equation_violated_181_days", "equation_violated_180_days", "indirect_ownership_breach",
+                             "human_testimony_as_ptl", "declared_discretionary_council"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_code_synergy_module.py"]
     causal_note = None
@@ -1042,6 +1066,13 @@ class CodeSynergyModule(LabModule):
             "ru": "Без пакета калибровки (его нет, F-014) Кодекс A.1 и ORACLE §12 противоречат друг другу (F-036). По умолчанию "
                   "применяется Кодекс (рубильники включаются; ORACLE-12-06 не выполнен). Альтернатива oracle_section_12: B(t) остаётся "
                   "информационным (не выполнен CODEX-A.1-04)."}},
+        {"id": "H-CS-12", "source": "hypothesis", "text": {
+            "en": "Joining and sanctions (F-031): the lab connects a territory only after a 67% referendum and a Peace Stake, and applies "
+                  "no Code sanction to a territory in integration Phase 0-1. This is one admissible behaviour that obeys both texts, not "
+                  "a priority rule; the Code checks that depend on the undefined mapping of 'connect' are UNKNOWN.",
+            "ru": "Подключение и санкции (F-031): лаборатория подключает территорию только после референдума 67% и залога мира и не "
+                  "применяет санкций Кодекса к территории в фазе интеграции 0-1. Это одно допустимое поведение, соблюдающее оба текста, "
+                  "а не правило приоритета; проверки Кодекса, зависящие от неопределённого 'подключения', — UNKNOWN."}},
         {"id": "H-CS-6", "source": "hypothesis", "text": {
             "en": "An aggression is established only when recorded by independent monitoring (§8.1); §7.3 names no procedure. "
                   "'Kill Switches' are the disconnections of §8.1 and A.1: Mercy does not suspend slashing or the write-off of §8.2.",
@@ -1135,12 +1166,18 @@ class CodeSynergyModule(LabModule):
                              "ptl_verified": {"type": "bool", "default": True},
                              "crisis_scope_days": {"type": "int", "min": 0, "max": 3650}}},
                          "default": [MERCY0]},
-        "calibration_bundle": {"type": "bool", "default": False, "source": "missing",
+        "calibration_bundle": {"type": "enum", "values": BUNDLE_STATES, "default": "none", "source": "missing",
                                "label": {"en": "Valid L8 calibration bundle attached (none exists, F-014)",
                                          "ru": "Действующий пакет калибровки L8 (нет, F-014)"}},
         "b_enforcement": {"type": "enum", "values": ["code_a1", "oracle_section_12"], "default": "code_a1", "source": "hypothesis",
                           "label": {"en": "Without a bundle, does B(t) < B_min activate the Kill Switches? (F-036)",
                                     "ru": "Без пакета включает ли B(t) < B_min рубильники? (F-036)"}},
+        "level2_role": {"type": "enum", "values": ["unspecified", "provenance_check", "testimony_as_data"], "default": "unspecified",
+                        "source": "user", "label": {"en": "What Level 2 human validators contribute (F-028)",
+                                                    "ru": "Что вносят люди-валидаторы уровня 2 (F-028)"}},
+        "council_power": {"type": "enum", "values": ["unspecified", "rule_bound_severity", "discretionary_emergency_authority"],
+                          "default": "unspecified", "source": "user",
+                          "label": {"en": "Declared power of the Council of Crisis Mercy (F-032)", "ru": "Объявленные полномочия Совета (F-032)"}},
         "mercy_reading": {"type": "enum", "values": ["bounded_by_crisis_scope", "fixed_180_days"], "default": "bounded_by_crisis_scope",
                           "source": "hypothesis", "label": {"en": "Mercy duration reading (F-027)", "ru": "Чтение срока милосердия (F-027)"}},
         "council": {"type": "object", "source": "user", "label": {"en": "Council of Crisis Mercy pool", "ru": "Пул Совета кризисного милосердия"},
@@ -1314,7 +1351,15 @@ class CodeSynergyModule(LabModule):
             "eruption_vei_7": {**quiet, "mercy_events": [{"day": 50, "kind": "eruption", "magnitude": 7, "crisis_scope_days": 365}],
                                "aggressions": [{"day": 60, "region": "east", "recorded": True, "weapons": False, "damage": 0.0}]},
             "oracle_section_12_reading": {"b_enforcement": "oracle_section_12"},
-            "bundle_attached": {"calibration_bundle": True},
+            "bundle_attached": {"calibration_bundle": "valid"},
+            "expired_bundle": {"calibration_bundle": "expired"},
+            "at_threshold": {"ptl_segments": [SEG0, {"from_day": 120, "l0": 0.68, "l1": 0.68, "l2": 0.68, "cause": "natural"}]},
+            "provenance_validators": {"level2_role": "provenance_check"},
+            "human_testimony_as_ptl": {"ptl_segments": [SEG0], "mercy_events": [], "council_actions": [], "level2_role": "testimony_as_data"},
+            "rule_bound_council": {"ptl_segments": [SEG0], "council_power": "rule_bound_severity",
+                                  "mercy_events": [{"day": 50, "kind": "eruption", "magnitude": 7, "crisis_scope_days": 365}]},
+            "declared_discretionary_council": {"ptl_segments": [SEG0], "council_power": "discretionary_emergency_authority",
+                                              "mercy_events": [{"day": 50, "kind": "eruption", "magnitude": 7, "crisis_scope_days": 365}]},
             "b_recovers": {"ptl_segments": [SEG0, SEG_DROP, {"from_day": 330, "l0": 0.70, "l1": 0.70, "l2": 0.70, "cause": "natural"}]},
             "unresolved_divergence": {"ptl_segments": [SEG0, {"from_day": 200, "l0": 0.70, "l1": 0.62, "l2": 0.70, "cause": "natural"}],
                                       "mercy_events": [], "council_actions": []},

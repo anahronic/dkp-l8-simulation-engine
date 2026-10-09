@@ -85,7 +85,7 @@ def test_package_is_deterministic_and_replays():
     p1, p2 = build_package(doc, {}, prov), build_package(doc, {}, prov)
     assert p1 == p2
     rep = replay(p1)
-    assert rep["same_input"] and rep["same_result"]
+    assert rep["same_input"] and rep["same_result"] and rep["verified"]
 
 
 def test_tampered_package_is_refused():
@@ -100,6 +100,64 @@ def test_tampered_package_is_refused():
             zout.writestr(n, body)
     with pytest.raises(ReplayMismatch, match="request.json"):
         replay(buf.getvalue())
+
+
+def _rewrite(data, edit):
+    """Edit files of a package and refresh its SHA256SUMS, as an attacker with the zip could."""
+    import hashlib
+    with zipfile.ZipFile(io.BytesIO(data)) as zin:
+        files = {n: zin.read(n) for n in zin.namelist()}
+    files = edit(files)
+    files["SHA256SUMS"] = "".join(f"{hashlib.sha256(files[n]).hexdigest()}  {n}\n"
+                                  for n in sorted(files) if n != "SHA256SUMS").encode()
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as zout:
+        for n in sorted(files):
+            zout.writestr(n, files[n])
+    return buf.getvalue()
+
+
+def _work_cycle_package():
+    from lab import api
+    req = api.example_request("work_cycle")
+    req["variants"] = req["variants"][:1]
+    records = {}
+    doc = run_request(req, records_out=records)
+    return build_package(doc, records, {"fixed": True})
+
+
+def test_edited_result_with_kept_ids_and_fresh_manifest_is_refused():
+    """Review КТ4-GPT-02: change one check status in result.json, keep input_id/result_id, refresh SHA256SUMS."""
+    data = _work_cycle_package()
+    assert replay(data)["verified"]
+
+    def flip(files):
+        doc = json.loads(files["result.json"])
+        name = next(iter(doc["variants"]))
+        chk = next(c for c in doc["variants"][name]["checks"] if c["status"] == "PASS")
+        chk["status"] = "FAIL"
+        files["result.json"] = (json.dumps(doc, indent=1, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
+        return files
+    rep = replay(_rewrite(data, flip))
+    assert rep["same_input"] and not rep["same_result"] and not rep["verified"]
+    assert not rep["stored_consistent"] and not rep["same_document"]
+    assert any("result_id does not match" in x for x in rep["inconsistencies"])
+
+
+def test_edited_report_or_records_are_refused():
+    data = _work_cycle_package()
+
+    def report(files):
+        files["report.en.md"] = files["report.en.md"].replace(b"PASS", b"FAIL", 1)
+        return files
+    rep = replay(_rewrite(data, report))
+    assert rep["same_result"] and not rep["reports_match"] and not rep["verified"]
+
+    def records(files):
+        files["records/extra.jsonl"] = b'{"x":1}\n'
+        return files
+    rep = replay(_rewrite(data, records))
+    assert not rep["records_match"] and not rep["verified"]
 
 
 def test_report_escapes_markup():
@@ -126,6 +184,7 @@ def test_every_module_example_package_replays():
     for mid in sorted(MODULES):
         req = api.example_request(mid)
         req["variants"] = req["variants"][:2]
-        doc = run_request(req)
-        rep = replay(build_package(doc, {}, {"fixed": True}))
-        assert rep["same_input"] and rep["same_result"], mid
+        records = {}
+        doc = run_request(req, records_out=records)
+        rep = replay(build_package(doc, records, {"fixed": True}))
+        assert rep["verified"], (mid, rep)

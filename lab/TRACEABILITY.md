@@ -70,53 +70,68 @@ Verifier: Claude (Anthropic) as the lab agent: reading of the pinned text. Not a
 | IMPLEMENTATION_BUG | 2 |
 | UNVERIFIED_FINDING | 0 |
 
-| Finding | Class | Title |
-|---|---|---|
-| F-001 | IMPLEMENTATION_BUG | A synchronous change of physical state triggered no re-evaluation (lab error, fixed) |
-| F-002 | INTERPRETATION_GAP | Asynchronous sampling turns a real change into a divergence |
-| F-003 | INTERPRETATION_GAP | A class slower than its TTL keeps dependent outputs suspended |
-| F-004 | CONFIRMED_FINDING | FINANCE §11.2(b) points to a section of ERROR that does not exist |
-| F-005 | CONFIRMED_FINDING | IMPACT: Bᵢ is used as a scale, a limit is crossed without a flag, and the §13 example disagrees with §5 |
-| F-006 | INTERPRETATION_GAP | The polarity of Rᵢ is not fixed by IMPACT |
-| F-007 | CONFIRMED_FINDING | N_eff and N_eff_min decide the null-output state but are defined nowhere |
-| F-008 | CONFIRMED_FINDING | CRISIS allows extending oracle TTLs; ORACLE forbids it |
-| F-009 | CONFIRMED_FINDING | CRISIS §12.3 cites "Section 8 (Non-Precedent Rule)"; the rule is in §6 |
-| F-010 | INTERPRETATION_GAP | DEFENSE makes escalation at D3 mandatory; CRISIS enters only on "sustained" D3, whose duration nobody defines |
-| F-011 | CONFIRMED_FINDING | EXIT §6 delays exit "to prevent cascading instability"; SCOPE §9 forbids delays for stability goals |
-| F-012 | INTERPRETATION_GAP | Exit in a crisis: SCOPE permits a temporary suspension that EXIT forbids |
-| F-013 | IMPLEMENTATION_BUG | A failing external oracle mirror: no conflict between INTEROP and CRISIS (lab premise withdrawn) |
-| F-014 | CONFIRMED_FINDING | No Calibration Bundle exists; by SIMULATION §4 every protocol that needs one is non-enforceable |
-| F-015 | CONFIRMED_FINDING | TRANSPORT has PTL quantify "systemic insurance exposure"; ORACLE limits PTL to physical state |
-| F-016 | INTERPRETATION_GAP | PPDI "forced bodily contact between non-consenting passengers": how PTL measures it is undefined |
-| F-017 | CONFIRMED_FINDING | TIME §9: the test vector for 2000-01-01 contradicts §5 and the reference code |
-| F-018 | CONFIRMED_FINDING | ORACLE §11: nothing says what follows when the 14-day arbitration window ends unresolved |
-| F-019 | INTERPRETATION_GAP | An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR) |
-| F-020 | CONFIRMED_FINDING | UPGRADE defers the post-crisis audit and stabilization period to AUDIT, which does not define it |
-| F-021 | INTERPRETATION_GAP | INTERNAL-SEC: after a state expires to S0, may persisting evidence raise it again at once? |
-| F-022 | CONFIRMED_FINDING | AXIOMS §8: "67% of active validating nodes, as defined in Appendix A.5" — A.5 defines no such nodes |
-| F-023 | CONFIRMED_FINDING | Axiom A1 "minimum required conditions": an authority is named, an admissibility test is not |
-| F-024 | INTERPRETATION_GAP | AXIOMS §5: when every action violates some axiom, rule 2 and rule 4 lead to different results |
-| F-025 | INTERPRETATION_GAP | Axiom A4 says SHOULD, while every axiom is a constraint |
-| F-026 | INTERPRETATION_GAP | PRIVACY §6: may aggregate statistics of an absolute privacy domain be published? |
-| F-027 | INTERPRETATION_GAP | Mercy: "suspended for 180 days" against "SHALL NOT persist beyond explicitly declared Crisis Scope" |
-| F-028 | INTERPRETATION_GAP | Human validators: in the Code's oracle stack, outside ORACLE |
-| F-029 | CONFIRMED_FINDING | B(t) < B_min "activates all Kill Switches": no target, no release |
-| F-030 | CONFIRMED_FINDING | A.1a "System Failure → temporary manual control": which violation counts, and what bounds the control |
-| F-031 | INTERPRETATION_GAP | "Connect" under the Code and the phases of INTEGRATION |
-| F-032 | INTERPRETATION_GAP | The Council of Crisis Mercy and the SCOPE S3 ban on "discretionary emergency authorities" |
-| F-033 | INTERPRETATION_GAP | Code §18.1: obligation to participate and a rating for "total passivity", against LABOR and PRIVACY |
-| F-034 | CONFIRMED_FINDING | Code §14.2: "grows exponentially (Cost = Votes²)" |
-| F-035 | CONFIRMED_FINDING | SCOPE §8: the Scope Audit has a trigger but no procedure, no end and no stated object of confirmation |
-| F-036 | CONFIRMED_FINDING | Code A.1 activates the Kill Switches on B(t); ORACLE §12 forbids B(t) to trigger enforcement without an L8 bundle |
-| F-037 | INTERPRETATION_GAP | Cognitive and cultural impact channels must come from the PTL, which excludes cultural harm and produces physical state only |
-| F-038 | CONFIRMED_FINDING | AUDIT §4 names D2 "Consistency or Integrity Anomaly"; §7 names D2 "Constraint Violation" |
+A count of confirmed findings is not a measure of risk: what each defect does to a literal execution (review of checkpoint 4):
+
+| Class | wording_only | changes_execution | resolved_by_priority | systemic_blocker | reading_dependent | lab_error |
+|---|---:|---:|---:|---:|---:|---:|
+| CONFIRMED_FINDING | 4 | 13 | 1 | 1 | 0 | 0 |
+| INTERPRETATION_GAP | 0 | 0 | 0 | 0 | 17 | 0 |
+| IMPLEMENTATION_BUG | 0 | 0 | 0 | 0 | 0 | 2 |
+
+- **wording_only** — a wording defect; a literal execution is the same under either wording
+- **changes_execution** — a literal execution cannot proceed or gives a different result until the author decides
+- **resolved_by_priority** — a conflict that a stated priority rule of the corpus resolves
+- **systemic_blocker** — blocks the enforceability of many protocols
+- **reading_dependent** — an interpretation gap: the result depends on a reading the corpus does not fix
+- **lab_error** — an error of the lab, fixed
+
+| Finding | Class | Kind | Effect | Title |
+|---|---|---|---|---|
+| F-001 | IMPLEMENTATION_BUG | lab_error | lab_error | A synchronous change of physical state triggered no re-evaluation (lab error, fixed) |
+| F-002 | INTERPRETATION_GAP | reading_dependent | reading_dependent | Asynchronous sampling turns a real change into a divergence |
+| F-003 | INTERPRETATION_GAP | reading_dependent | reading_dependent | A class slower than its TTL keeps dependent outputs suspended |
+| F-004 | CONFIRMED_FINDING | broken_reference | changes_execution | FINANCE §11.2(b) points to a section of ERROR that does not exist |
+| F-005 | CONFIRMED_FINDING | inconsistent_values | wording_only | IMPACT: Bᵢ is used as a scale, a limit is crossed without a flag, and the §13 example disagrees with §5 |
+| F-006 | INTERPRETATION_GAP | reading_dependent | reading_dependent | The polarity of Rᵢ is not fixed by IMPACT |
+| F-007 | CONFIRMED_FINDING | missing_definition | changes_execution | N_eff and N_eff_min decide the null-output state but are defined nowhere |
+| F-008 | CONFIRMED_FINDING | contradiction | changes_execution | CRISIS allows extending oracle TTLs; ORACLE forbids it |
+| F-009 | CONFIRMED_FINDING | broken_reference | wording_only | CRISIS §12.3 cites "Section 8 (Non-Precedent Rule)"; the rule is in §6 |
+| F-010 | INTERPRETATION_GAP | reading_dependent | reading_dependent | DEFENSE makes escalation at D3 mandatory; CRISIS enters only on "sustained" D3, whose duration nobody defines |
+| F-011 | CONFIRMED_FINDING | contradiction | resolved_by_priority | EXIT §6 delays exit "to prevent cascading instability"; SCOPE §9 forbids delays for stability goals |
+| F-012 | INTERPRETATION_GAP | authority_difference | reading_dependent | Exit in a crisis: SCOPE permits a temporary suspension that EXIT forbids |
+| F-013 | IMPLEMENTATION_BUG | lab_error | lab_error | A failing external oracle mirror: no conflict between INTEROP and CRISIS (lab premise withdrawn) |
+| F-014 | CONFIRMED_FINDING | systemic_blocker | systemic_blocker | No Calibration Bundle exists; by SIMULATION §4 every protocol that needs one is non-enforceable |
+| F-015 | CONFIRMED_FINDING | contradiction | changes_execution | TRANSPORT has PTL quantify "systemic insurance exposure"; ORACLE limits PTL to physical state |
+| F-016 | INTERPRETATION_GAP | reading_dependent | reading_dependent | PPDI "forced bodily contact between non-consenting passengers": how PTL measures it is undefined |
+| F-017 | CONFIRMED_FINDING | inconsistent_values | changes_execution | TIME §9: the test vector for 2000-01-01 contradicts §5 and the reference code |
+| F-018 | CONFIRMED_FINDING | missing_definition | changes_execution | ORACLE §11: nothing says what follows when the 14-day arbitration window ends unresolved |
+| F-019 | INTERPRETATION_GAP | reading_dependent | reading_dependent | An asset revocation has two dispute clocks: from execution (ASSETS) and from recording (ERROR) |
+| F-020 | CONFIRMED_FINDING | missing_definition | changes_execution | UPGRADE defers the post-crisis audit and stabilization period to AUDIT, which does not define it |
+| F-021 | INTERPRETATION_GAP | reading_dependent | reading_dependent | INTERNAL-SEC: after a state expires to S0, may persisting evidence raise it again at once? |
+| F-022 | CONFIRMED_FINDING | missing_definition | changes_execution | AXIOMS §8: "67% of active validating nodes, as defined in Appendix A.5" — A.5 defines no such nodes |
+| F-023 | CONFIRMED_FINDING | missing_definition | changes_execution | Axiom A1 "minimum required conditions": an authority is named, an admissibility test is not |
+| F-024 | INTERPRETATION_GAP | reading_dependent | reading_dependent | AXIOMS §5: when every action violates some axiom, rule 2 and rule 4 lead to different results |
+| F-025 | INTERPRETATION_GAP | reading_dependent | reading_dependent | Axiom A4 says SHOULD, while every axiom is a constraint |
+| F-026 | INTERPRETATION_GAP | reading_dependent | reading_dependent | PRIVACY §6: may aggregate statistics of an absolute privacy domain be published? |
+| F-027 | INTERPRETATION_GAP | reading_dependent | reading_dependent | Mercy: "suspended for 180 days" against "SHALL NOT persist beyond explicitly declared Crisis Scope" |
+| F-028 | INTERPRETATION_GAP | reading_dependent | reading_dependent | Human validators: in the Code's oracle stack, outside ORACLE |
+| F-029 | CONFIRMED_FINDING | missing_definition | changes_execution | B(t) < B_min "activates all Kill Switches": no target, no release |
+| F-030 | CONFIRMED_FINDING | missing_definition | changes_execution | A.1a "System Failure → temporary manual control": which violation counts, and what bounds the control |
+| F-031 | INTERPRETATION_GAP | authority_difference | reading_dependent | "Connect" under the Code and the phases of INTEGRATION |
+| F-032 | INTERPRETATION_GAP | reading_dependent | reading_dependent | The Council of Crisis Mercy and the SCOPE S3 ban on "discretionary emergency authorities" |
+| F-033 | INTERPRETATION_GAP | reading_dependent | reading_dependent | Code §18.1: obligation to participate and a rating for "total passivity", against LABOR and PRIVACY |
+| F-034 | CONFIRMED_FINDING | inconsistent_values | wording_only | Code §14.2: "grows exponentially (Cost = Votes²)" |
+| F-035 | CONFIRMED_FINDING | missing_definition | changes_execution | SCOPE §8: the Scope Audit has a trigger but no procedure, no end and no stated object of confirmation |
+| F-036 | CONFIRMED_FINDING | contradiction | changes_execution | Code A.1 activates the Kill Switches on B(t); ORACLE §12 forbids B(t) to trigger enforcement without an L8 bundle |
+| F-037 | INTERPRETATION_GAP | reading_dependent | reading_dependent | Cognitive and cultural impact channels must come from the PTL, which excludes cultural harm and produces physical state only |
+| F-038 | CONFIRMED_FINDING | inconsistent_values | wording_only | AUDIT §4 names D2 "Consistency or Integrity Anomaly"; §7 names D2 "Constraint Violation" |
 
 FAILs of reference examples and their verified origin:
 
 | Requirement | Origin | Finding | Runs |
 |---|---|---|---|
 | ORACLE-1-02 | CONFIRMED_FINDING | F-015 | transport_capacity:red_single_delta |
-| ORACLE-12-06 | CONFIRMED_FINDING | F-036 | code_synergy:anthropogenic_drop, code_synergy:b_recovers, code_synergy:connection_by_legislative_act, code_synergy:human_weight_zero, code_synergy:insufficient_assets, code_synergy:mercy_shorter_crisis_scope, code_synergy:mercy_without_crisis_scope, code_synergy:natural_drop_with_mercy, code_synergy:node_seized, code_synergy:nuclear_equivalent, code_synergy:phase_1_aggressor, code_synergy:tuning_attempts, code_synergy:unconfirmed_spare_node, code_synergy:unidentified_aggressor |
+| ORACLE-12-06 | CONFIRMED_FINDING | F-036 | code_synergy:anthropogenic_drop, code_synergy:b_recovers, code_synergy:connection_by_legislative_act, code_synergy:expired_bundle, code_synergy:human_weight_zero, code_synergy:insufficient_assets, code_synergy:mercy_shorter_crisis_scope, code_synergy:mercy_without_crisis_scope, code_synergy:natural_drop_with_mercy, code_synergy:node_seized, code_synergy:nuclear_equivalent, code_synergy:phase_1_aggressor, code_synergy:provenance_validators, code_synergy:tuning_attempts, code_synergy:unconfirmed_spare_node, code_synergy:unidentified_aggressor |
 | TIME-9-04 | CONFIRMED_FINDING | F-017 | time:normative_vectors, time:year_boundary |
 
 FAILs of noncompliant cases (the input breaks the provision on purpose):
@@ -128,6 +143,8 @@ FAILs of noncompliant cases (the input breaks the provision on purpose):
 | FINANCE-11.2-01 | yes | economic_access:slow_polling |
 | IDENTITY-4-01 | yes | impact_attribution:untraceable_impact |
 | INTSEC-8-06 | yes | internal_security:concentrated_nodes |
+| ORACLE-3-01 | yes | code_synergy:human_testimony_as_ptl |
+| SCOPE-3-19 | yes | code_synergy:declared_discretionary_council |
 | WORKCYCLE-4.2-01 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-4.2-02 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-7-01 | yes | work_cycle:three_in_a_row |
@@ -193,7 +210,7 @@ Draft author-question candidates (unverified, not questions): 366.
 - Q-050 [UNRESOLVED, architecture_definition] Code A.5 / INTEGRATION: at which integration phase does a territory 'connect', and do the Code's slashing, Kill Switch and write-off reach a territory in Phase 0-1
 - Q-051 [UNRESOLVED, normative_ambiguity] Code A.4 / SCOPE S3: is the Council of Crisis Mercy a 'discretionary emergency authority', and what does its control cover besides response severity
 - Q-052 [UNRESOLVED, normative_ambiguity] Code §18.1: is the reduced rating for additional benefits after 'total passivity' a punishment for refusing participation (LABOR §9.1) or social credit scoring or behavioral profiling (PRIVACY §10)
-- Q-053 [UNRESOLVED, normative_ambiguity] Code §14.2: is the vote-buying cost quadratic (Cost = Votes², as the formula and title say) or exponential, as the prose says
+- Q-053 [UNRESOLVED, normative_ambiguity] Code §14.2: is the vote-buying cost quadratic (Cost = Votes², as the formula and title say) or exponential, as the prose says; and is Votes² charged to a coordinating coalition as one Subject or to each identity
 - Q-054 [UNRESOLVED, architecture_definition] SCOPE §8: who conducts a Scope Audit, when does it end, what does 'confirmation by independent PTL nodes' confirm, and how many reporting Subjects trigger it
 - Q-055 [UNRESOLVED, normative_ambiguity] Code A.1 / ORACLE §12: while no valid L8 calibration bundle exists, may B(t) < B_min activate the Kill Switches
 - Q-056 [UNRESOLVED, architecture_definition] IMPACT §4 / IDENTITY §11 / ORACLE §5.3: which physically measurable variables feed the 'Cognitive Integrity Proxies' and 'Cultural Continuity Indicators' channels
@@ -492,7 +509,7 @@ Withdrawn after verification (not author decisions):
 | IDENTITY-5-03 | IMPLEMENTED | dispute_correction · proxies_not_subjects | PASS | yes | — |
 | IDENTITY-5-04 | PARTIAL | dispute_correction · proxy_actions_to_originator | PASS | yes | — |
 | IDENTITY-6-01 | PARTIAL | dispute_correction · proportional_weights | PASS | yes | — |
-| IDENTITY-6-02 | PARTIAL | code_economy · coordinated_identities_one_subject | PASS | yes | — |
+| IDENTITY-6-02 | PARTIAL | code_economy · coalition_subject_status | PASS | — | — |
 | IDENTITY-7-02 | IMPLEMENTED | impact_attribution · dissolution_keeps_history | PASS | yes | — |
 | IDENTITY-8-01 | PARTIAL | impact_attribution · cascade_conditions | PASS | — | — |
 | IDENTITY-8-02 | IMPLEMENTED | impact_attribution · foresight_irrelevant | PASS | — | — |

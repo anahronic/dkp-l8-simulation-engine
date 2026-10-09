@@ -82,7 +82,7 @@ def measure(r, faults=frozenset()):
         u = c["sigma"] / b
         if "nondeterministic_uncertainty" in faults:
             import random
-            u += random.random() * 1e-9
+            u += random.random() * 1e-6
         out[c["name"]] = {"emitted": True, "I": round(i, 9), "B": b, "R": rr, "X": x, "U": round(u, 9),
                           "approach": approach, "crossing": cross, "boundary": boundary, "kind": c["kind"]}
     return out
