@@ -15,6 +15,7 @@ from lab.modules.edu_culture import EduCultureModule
 from lab.modules.epistemic_gate import EpistemicGateModule
 from lab.modules.exit_integration import ExitIntegrationModule
 from lab.modules.failure_chain import FailureChainModule
+from lab.modules.habitat_dignity import HabitatDignityModule
 from lab.modules.impact_attribution import ImpactAttributionModule
 from lab.modules.info_truth import InfoTruthModule
 from lab.modules.internal_security import InternalSecurityModule
@@ -43,4 +44,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              CodeEconomyModule(), ScopeGateModule(),
                              OracleIngestionModule(), ImpactAttributionModule(),
                              EpistemicGateModule(), AuditTraceModule(),
-                             SimulationGateModule(), DefenseEnvelopeModule())}
+                             SimulationGateModule(), DefenseEnvelopeModule(),
+                             HabitatDignityModule())}

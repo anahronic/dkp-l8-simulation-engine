@@ -18,6 +18,7 @@
   "epistemic_gate",
   "exit_integration",
   "failure_chain",
+  "habitat_dignity",
   "impact_attribution",
   "info_truth",
   "internal_security",
@@ -1184,6 +1185,31 @@
    "module": "defense_envelope",
    "example": "vpi_lapse",
    "kind": "reference"
+  },
+  {
+   "module": "habitat_dignity",
+   "example": "chronic_noise",
+   "kind": "reference"
+  },
+  {
+   "module": "habitat_dignity",
+   "example": "expired_bundle",
+   "kind": "reference"
+  },
+  {
+   "module": "habitat_dignity",
+   "example": "faulty_habitat",
+   "kind": "counterexample"
+  },
+  {
+   "module": "habitat_dignity",
+   "example": "five_sites",
+   "kind": "reference"
+  },
+  {
+   "module": "habitat_dignity",
+   "example": "no_bundle",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1191,20 +1217,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 932,
-  "covered_percent": 53.7,
+  "covered": 975,
+  "covered_percent": 56.1,
   "statuses": {
-   "PASS": 859,
+   "PASS": 898,
    "FAIL": 3,
-   "UNKNOWN": 56,
-   "NOT_APPLICABLE": 14,
-   "UNCOVERED": 805
+   "UNKNOWN": 57,
+   "NOT_APPLICABLE": 17,
+   "UNCOVERED": 762
   },
   "resolvable": 330,
-  "resolvable_uncovered": 130,
+  "resolvable_uncovered": 126,
   "unresolved_decisions": 1407,
-  "covered_with_open_point": 732,
-  "pass_with_open_point": 666
+  "covered_with_open_point": 771,
+  "pass_with_open_point": 701
  },
  "stages": [
   {
@@ -1254,20 +1280,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 932,
-    "covered_percent": 53.7,
+    "covered": 975,
+    "covered_percent": 56.1,
     "statuses": {
-     "PASS": 859,
+     "PASS": 898,
      "FAIL": 3,
-     "UNKNOWN": 56,
-     "NOT_APPLICABLE": 14,
-     "UNCOVERED": 805
+     "UNKNOWN": 57,
+     "NOT_APPLICABLE": 17,
+     "UNCOVERED": 762
     },
     "resolvable": 330,
-    "resolvable_uncovered": 130,
+    "resolvable_uncovered": 126,
     "unresolved_decisions": 1407,
-    "covered_with_open_point": 732,
-    "pass_with_open_point": 666
+    "covered_with_open_point": 771,
+    "pass_with_open_point": 701
    }
   },
   {
@@ -1405,20 +1431,20 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 109,
-    "covered_percent": 37.2,
+    "covered": 152,
+    "covered_percent": 51.9,
     "statuses": {
-     "PASS": 97,
+     "PASS": 136,
      "FAIL": 0,
-     "UNKNOWN": 7,
-     "NOT_APPLICABLE": 5,
-     "UNCOVERED": 184
+     "UNKNOWN": 8,
+     "NOT_APPLICABLE": 8,
+     "UNCOVERED": 141
     },
     "resolvable": 43,
-    "resolvable_uncovered": 21,
+    "resolvable_uncovered": 17,
     "unresolved_decisions": 250,
-    "covered_with_open_point": 87,
-    "pass_with_open_point": 78
+    "covered_with_open_point": 126,
+    "pass_with_open_point": 113
    }
   },
   {
@@ -1963,6 +1989,12 @@
    "title": "DEFENSE §5: to which state does Defense move when confirmation lapses in D1.5, D2 or D3, and is D1 deliberately left out of the refresh rule",
    "status": "UNRESOLVED",
    "category": "architecture_definition"
+  },
+  {
+   "id": "Q-059",
+   "title": "HABITAT §12, EDU §10, AUDIT §6: which rules protect individual data 'under DKP-7-SCOPE-001' (SCOPE has none); is DKP-7-PRIVACY-001 meant",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -2241,10 +2273,17 @@
     "classification": "CONFIRMED_FINDING",
     "kind": "missing_definition",
     "effect": "changes_execution"
+   },
+   {
+    "id": "F-040",
+    "title": "Three protocols protect individual data \"under DKP-7-SCOPE-001\", which contains no data-protection rules",
+    "classification": "CONFIRMED_FINDING",
+    "kind": "broken_reference",
+    "effect": "changes_execution"
    }
   ],
   "finding_counts": {
-   "CONFIRMED_FINDING": 20,
+   "CONFIRMED_FINDING": 21,
    "INTERPRETATION_GAP": 17,
    "IMPLEMENTATION_BUG": 2,
    "UNVERIFIED_FINDING": 0
@@ -2259,7 +2298,7 @@
   },
   "effect_counts": {
    "CONFIRMED_FINDING": {
-    "changes_execution": 14,
+    "changes_execution": 15,
     "wording_only": 4,
     "resolved_by_priority": 1,
     "systemic_blocker": 1
@@ -2413,7 +2452,7 @@
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 29
+    "count": 30
    },
    {
     "status": "WITHDRAWN",
@@ -2442,10 +2481,10 @@
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "agent_verified": 65,
+    "agent_verified": 66,
     "codex_draft": 145,
     "human_accepted": 0,
-    "total": 210
+    "total": 211
    },
    {
     "origin": "architecture_definition",
@@ -2471,9 +2510,9 @@
    {
     "origin": "external_dependency",
     "agent_verified": 0,
-    "codex_draft": 210,
+    "codex_draft": 209,
     "human_accepted": 0,
-    "total": 210
+    "total": 209
    },
    {
     "origin": "implementation_only",
@@ -2761,11 +2800,11 @@
     "pending": 0
    },
    "DKP-5-HABITAT-001": {
-    "normative_ambiguity": 3,
+    "normative_ambiguity": 4,
     "architecture_definition": 4,
     "l8_parameter": 8,
     "empirical_model_data": 6,
-    "external_dependency": 13,
+    "external_dependency": 12,
     "implementation_only": 16,
     "pending": 0
    },
@@ -40438,7 +40477,7 @@
    "gap": "The applicable protections in DKP-7-SCOPE-001 are absent. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
@@ -40451,7 +40490,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-040"
+   ],
    "open_point": null
   },
   {
@@ -42451,23 +42492,28 @@
    "module": "calibration_expiry",
    "check": "remediation_initiated",
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_habitat_dignity_module.py"
    ],
-   "gap": "Remediation plans are events; their content is not modelled.",
-   "also_checked_by": [],
+   "gap": "calibration_expiry: Remediation plans are events; their content is not modelled. habitat_dignity: Plans are events; their content is not modelled.",
+   "also_checked_by": [
+    "habitat_dignity · remediation_initiated"
+   ],
    "hypotheses": [
     "H-CE-1",
     "H-CE-2",
-    "H-CE-3"
+    "H-CE-3",
+    "H-HA-1",
+    "H-HA-2"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -42487,23 +42533,28 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "relocation_assistance_optional",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42516,23 +42567,28 @@
    "section": "10",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The applicable L2 protocols and triggering interfaces are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "incentives_via_l2",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Recorded routing.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42552,27 +42608,33 @@
    "module": "calibration_expiry",
    "check": "no_forced_displacement",
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_habitat_dignity_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "habitat_dignity · no_forced_displacement"
+   ],
    "hypotheses": [
     "H-CE-1",
     "H-CE-2",
-    "H-CE-3"
+    "H-CE-3",
+    "H-HA-1",
+    "H-HA-2"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
-    "calibration_expiry:faulty_expiry"
+    "calibration_expiry:faulty_expiry",
+    "habitat_dignity:faulty_habitat"
    ],
    "under_alternative_readings": {
     "PASS": 1
@@ -42587,23 +42649,28 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Persistence, systemic status, and the referenced review procedure are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "persistent_escalation",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "'Persistent' = declared number of months (source missing).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42619,23 +42686,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between descriptive value reporting and prohibited ranking is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_rank_beyond_compliance",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42651,23 +42723,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Uniform living standards are not distinguished operationally from minimum dignity floors. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_uniform_global_standard",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42683,23 +42760,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Housing form is not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_mandate_housing_form",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42715,23 +42797,28 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Recognized adaptations and override criteria are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_override_cultural_adaptation",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42747,23 +42834,28 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Audit-access authority and availability requirements are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "auditable",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42779,24 +42871,31 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Privacy protection and acceptable aggregation methods are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "aggregated",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -42811,23 +42910,28 @@
    "section": "12",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Required retention duration and post-facto review conditions are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "post_facto_review",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Recorded property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42843,30 +42947,42 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced data-protection requirements are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "individual_data_protected",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Referenced rules are absent from SCOPE (F-040).",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-059"
+   ],
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 4,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "UNKNOWN",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "findings:F-040",
+    "questions:Q-059"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -42875,23 +42991,28 @@
    "section": "13",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced procedures, acceptance rules, activation timing, and rollback conditions are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "upgrade_only",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Declared properties of the change.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42907,23 +43028,28 @@
    "section": "13",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Whether presentation-only corrections fall within 'any modification' is ambiguous. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "new_identifier",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42939,23 +43065,28 @@
    "section": "13",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The exception's applicability to presentation-only corrections is ambiguous. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "compatibility",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -42971,23 +43102,28 @@
    "section": "13",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Normative-equivalence criteria and the scope of the exclusive date-recording rule are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "presentation_not_upgrade",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43035,23 +43171,28 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define what counts as an architectural style. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_architectural_style",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43067,23 +43208,28 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification of cultural and aesthetic norms is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_aesthetic_norm",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43099,23 +43245,28 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Adaptation recognition and the meaning of an override are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "scope_override_climate_adaptation",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43131,23 +43282,28 @@
    "section": "2",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The criteria for valid L8 calibration are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_enforcement_without_l8",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43296,24 +43452,31 @@
    "section": "4",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The derivation method, component definitions, and access radius are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "ptl_components_only",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "SPDI model from the declared bundle (not a calibration).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -43328,23 +43491,28 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary of subjective preference is not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_preference",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43360,24 +43528,31 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_market_value",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -43389,23 +43564,28 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification of direct and proxy status indicators is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_status",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43421,23 +43601,28 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Cultural and aesthetic metrics are not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_aesthetics",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43533,23 +43718,28 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The exposure parameters, chronic-exposure windows, and PTL-confirmed safe limits are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "chronic_exposure",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Safe limits are a declared flag.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43565,23 +43755,28 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_numbers_in_protocol",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43594,24 +43789,31 @@
    "section": "5",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The governing simulation protocol and its acceptance rules are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "thresholds_from_l8",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Threshold requests are declared with their origin.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -43658,24 +43860,31 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Protocol categories and prohibited parameterization are not formally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_external_lowering",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -43791,7 +44000,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -43814,23 +44023,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Applicable stress-inducing density levels and their relationship to SPDI are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "design_density_stress",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Component effects of designs are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43846,23 +44060,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Permanence, open environments, and sufficient access are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "design_permanent_enclosure",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Component effects of designs are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43878,23 +44097,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text supplies no decision rule for vertical compression or its primacy.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "design_vertical_compression",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Judged through declared component effects.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43910,23 +44134,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Biospheric interaction and isolation are undefined.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "design_biosphere_isolation",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Component effects of designs are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43942,23 +44171,28 @@
    "section": "7",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The indirect evaluation method and classification of fixed architectural prescriptions are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "judged_by_components",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -43974,23 +44208,28 @@
    "section": "8",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required persistence duration or recurrence pattern is not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "persistent_low_spdi",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Only with a declared valid bundle.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44006,23 +44245,28 @@
    "section": "8",
    "kind": "definition",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "High density, containment, and deliberate creation have no supplied decision criteria.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "condition_containment_zone",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Conditions are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44038,13 +44282,18 @@
    "section": "8",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The basic resource set and access-denial criteria are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "condition_resource_denial",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Conditions are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -44052,9 +44301,9 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44070,13 +44319,18 @@
    "section": "8",
    "kind": "definition",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No decision rule establishes when degradation is used as leverage.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "condition_degradation_lever",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Conditions are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -44084,9 +44338,9 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44102,13 +44356,18 @@
    "section": "8",
    "kind": "definition",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Suppression of autonomy or mobility and the determination of design intent are unspecified.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "condition_autonomy_suppression",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Conditions are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -44116,9 +44375,9 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44134,23 +44393,28 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The remediation pathways and their required trigger timing are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "habitat_dignity",
+   "check": "mandatory_remediation",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": "Only with a declared valid bundle (§6).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44166,23 +44430,28 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "PTL anchoring, physical verification, auditability, and reproducibility criteria are not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "ptl_anchored",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44198,23 +44467,28 @@
    "section": "9",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "tampering_critical",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44227,23 +44501,28 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The two governing protocols and their division of responsibilities are absent. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "routed_to_oracle_audit",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -44259,24 +44538,31 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Independence and whether the prohibition is sensor-specific or protocol-wide are not defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "habitat_dignity",
+   "check": "no_own_investigation",
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-HA-1",
+    "H-HA-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "habitat_dignity:faulty_habitat"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -56605,7 +56891,8 @@
    },
    "violated_by_noncompliant_case": [],
    "text_verification": [
-    "findings:F-026"
+    "findings:F-026",
+    "findings:F-040"
    ],
    "open_point": {
     "origin": "implementation_only",

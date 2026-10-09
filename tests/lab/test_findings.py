@@ -280,3 +280,7 @@ def test_f039_defense_fallback():
     with open(os.path.join(FINDINGS, "F-039.request.json"), encoding="utf-8") as f:
         v = run_request(json.load(f))["variants"]
     assert [x["level"] for x in v["lapse_in_d3"]["outputs"]["levels"]] == ["D3", "D1", "D0"]
+
+
+def test_f040_scope_data_protection():
+    assert _code("F-040", ("HABITAT-12-02", "HABITAT-12-04")) == {"aggregated": ("PASS", "UNKNOWN")}

@@ -1871,6 +1871,70 @@
      "CRISIS enters on D3 (F-010) and defines no return path for DEFENSE"
     ]
    }
+  },
+  {
+   "id": "F-040",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "broken_reference",
+   "effect": "changes_execution",
+   "quotes": [
+    {
+     "doc": "DKP-5-HABITAT-001",
+     "at": "§12",
+     "text": "Individual-level exposure data SHALL be protected under DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "DKP-5-EDU-001",
+     "at": "§10",
+     "text": "- SHALL be protected under DKP-7-SCOPE-001,"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§6",
+     "text": "- selectively anonymized under DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "DKP-7-PRIVACY-001",
+     "at": "§7",
+     "text": "The following MAY be exposed only in anonymized or aggregated form:"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "absent": "anonym"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "absent": "privacy"
+    },
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "absent": "personal data"
+    }
+   ],
+   "conclusion": "HABITAT §12, EDU §10 and AUDIT §6 protect or anonymize individual data 'under DKP-7-SCOPE-001'; SCOPE contains no rule on protecting, minimizing, aggregating or anonymizing data. Those rules are in PRIVACY, which none of the three names.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "protect",
+     "individual",
+     "privacy",
+     "anonym",
+     "personal data",
+     "exposure"
+    ],
+    "reference_chain": [
+     "HABITAT §12, EDU §10, AUDIT §6 → SCOPE",
+     "SCOPE §10 limits transparency obligations only",
+     "PRIVACY §7, §8, §10 hold the aggregation, anonymity and prohibited-practice rules"
+    ]
+   }
   }
  ],
  "reference_fails": [
@@ -3372,6 +3436,25 @@
     }
    ],
    "reason": "The target state of the DEFENSE state machine after a lapse of confirmation is an architectural definition absent from the corpus.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-059",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-040",
+   "quotes": [
+    {
+     "doc": "DKP-5-HABITAT-001",
+     "at": "§12",
+     "text": "Individual-level exposure data SHALL be protected under DKP-7-SCOPE-001."
+    }
+   ],
+   "reason": "Which protection rules apply to these data is a normative question; reading PRIVACY in place of SCOPE is an assumption.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

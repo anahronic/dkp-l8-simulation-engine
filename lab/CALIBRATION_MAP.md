@@ -128,6 +128,7 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | number of independent nodes that must reproduce a simulation | l8_number | DKP-8-SIMULATION-001 | §8 | "results are reproducible by independent nodes." | — | simulation_gate.min_independent_nodes |
 | tolerance of divergence between deployed and simulated behaviour | l8_number | DKP-8-SIMULATION-001 | §13 | "flag divergence beyond tolerance," | — | simulation_gate.divergence_tolerance |
 | probability above which a collective security risk is 'non-trivial' | l8_number | DKP-3-DEFENSE-001 | §3.4 | "A Verified Collective Security Risk exists when PTL confirms that participation in a Defensive Action exposes a subject to a non-trivial probability of:" | — | defense_envelope.risk_floor |
+| duration after which a habitat violation is 'persistent' | l8_number | DKP-5-HABITAT-001 | §10 | "Persistent or systemic violations escalate to system-level review under DKP-7-SCOPE-001." | — | habitat_dignity.persistence_months |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -162,7 +163,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-4-UPGRADE-001 | listed downstream | — | 1 | post-crisis audit and stabilization period (normative_predicate); length of the upgrade reversibility window (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-CULTURE-001 | listed downstream | interactions informational and non-binding without L8 calibration (§11) | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-EDU-001 | listed downstream | signals informational without L8 calibration (§12) | 0 | EDU competence-based restrictions (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-HABITAT-001 | listed downstream | non-enforceable without a bundle covering SPDI (§6) | 0 | SPDI model, SPDI_min and component survivability thresholds (l8_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-HABITAT-001 | listed downstream | non-enforceable without a bundle covering SPDI (§6) | 0 | SPDI model, SPDI_min and component survivability thresholds (l8_model); duration after which a habitat violation is 'persistent' (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-INFO-001 | listed downstream | non-enforceable without a bundle; classifications above I1 informational (§9) | 0 | INFO transition times T₁, T₂ (l8_number); INFO propagation thresholds for a Systemic Lie (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-TRANSPORT-001 | not listed | — | 0 | minimum PPDI threshold, 'regular' standing, forced-contact density (l8_number); RED coefficient (external_document) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-TRANSPORT-001-APPENDIX-A | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

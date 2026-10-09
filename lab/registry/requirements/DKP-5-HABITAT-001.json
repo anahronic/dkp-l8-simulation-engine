@@ -27,13 +27,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The text does not define what counts as an architectural style. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A classification distinguishing architectural styles from physical habitat requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_architectural_style"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -58,13 +64,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "A classification of cultural and aesthetic norms is missing. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A rule classification for cultural and aesthetic impositions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_aesthetic_norm"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -92,13 +104,19 @@
    "data_dependencies": [
     "Documented local climatic and cultural adaptations"
    ],
-   "gap": "Adaptation recognition and the meaning of an override are unspecified. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A definition of recognized adaptations and a method for detecting overrides."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_override_climate_adaptation"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -126,13 +144,19 @@
    "data_dependencies": [
     "L8 calibration and validity evidence"
    ],
-   "gap": "The criteria for valid L8 calibration are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A calibration validity predicate supplied by the L8 process."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_enforcement_without_l8"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -299,15 +323,21 @@
    "data_dependencies": [
     "PTL-verified habitat measurements and provenance"
    ],
-   "gap": "The derivation method, component definitions, and access radius are unspecified. No lab check implemented yet.",
+   "gap": "SPDI model from the declared bundle (not a calibration).",
    "hypotheses_needed": [
     "An SPDI aggregation method and component operationalization.",
     "A defined radius for green or open-space access.",
     "A PTL verification predicate."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "ptl_components_only"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -334,13 +364,19 @@
    "data_dependencies": [
     "SPDI input provenance and classifications"
    ],
-   "gap": "The boundary of subjective preference is not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A classification of subjective-preference inputs."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_preference"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -367,11 +403,17 @@
    "data_dependencies": [
     "Typed SPDI input lineage"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_market_value"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -394,13 +436,19 @@
    "data_dependencies": [
     "SPDI input provenance and indicator classifications"
    ],
-   "gap": "A classification of direct and proxy status indicators is missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A rule for identifying social and economic status indicators."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_status"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -427,13 +475,19 @@
    "data_dependencies": [
     "SPDI input provenance and metric classifications"
    ],
-   "gap": "Cultural and aesthetic metrics are not operationally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A classification of cultural and aesthetic metrics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_aesthetics"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -545,13 +599,19 @@
    "data_dependencies": [
     "Chronic exposure measurements and PTL-confirmed safe limits"
    ],
-   "gap": "The exposure parameters, chronic-exposure windows, and PTL-confirmed safe limits are not supplied. No lab check implemented yet.",
+   "gap": "Safe limits are a declared flag.",
    "hypotheses_needed": [
     "An operational definition of chronic exposure and applicable PTL-confirmed limits."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "chronic_exposure"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -575,11 +635,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_numbers_in_protocol"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -606,13 +672,19 @@
    "data_dependencies": [
     "Threshold specification, calibration, and validation records"
    ],
-   "gap": "The governing simulation protocol and its acceptance rules are absent. No lab check implemented yet.",
+   "gap": "Threshold requests are declared with their origin.",
    "hypotheses_needed": [
     "A conformance predicate for records under DKP-8-SIMULATION-001."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "thresholds_from_l8"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -674,13 +746,19 @@
    "data_dependencies": [
     "Threshold change provenance and protocol classifications"
    ],
-   "gap": "Protocol categories and prohibited parameterization are not formally defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A protocol-category taxonomy and a definition of threshold parameterization."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_external_lowering"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -834,13 +912,19 @@
    "data_dependencies": [
     "Population and habitat measurements and density-stress evidence"
    ],
-   "gap": "Applicable stress-inducing density levels and their relationship to SPDI are unspecified. No lab check implemented yet.",
+   "gap": "Component effects of designs are declared.",
    "hypotheses_needed": [
     "A context-sensitive density-stress model evaluated through SPDI components."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "design_density_stress"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -868,13 +952,19 @@
    "data_dependencies": [
     "Enclosure histories and open-environment access data"
    ],
-   "gap": "Permanence, open environments, and sufficient access are undefined. No lab check implemented yet.",
+   "gap": "Component effects of designs are declared.",
    "hypotheses_needed": [
     "Definitions of permanent enclosure, open environment, and qualifying access."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "design_permanent_enclosure"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -902,14 +992,20 @@
    "data_dependencies": [
     "Design and allocation rationale"
    ],
-   "gap": "The text supplies no decision rule for vertical compression or its primacy.",
+   "gap": "Judged through declared component effects.",
    "hypotheses_needed": [
     "An operational definition of vertical compression.",
     "A rule for determining which scarcity response is primary."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "design_vertical_compression"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -937,13 +1033,19 @@
    "data_dependencies": [
     "Population access and environmental interaction evidence"
    ],
-   "gap": "Biospheric interaction and isolation are undefined.",
+   "gap": "Component effects of designs are declared.",
    "hypotheses_needed": [
     "Operational definitions of biospheric interaction and population isolation."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "design_biosphere_isolation"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -971,13 +1073,19 @@
    "data_dependencies": [
     "SPDI component outputs and evaluation lineage"
    ],
-   "gap": "The indirect evaluation method and classification of fixed architectural prescriptions are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "An indirect evaluation method and a classification of architectural prescriptions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "judged_by_components"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1005,13 +1113,19 @@
    "data_dependencies": [
     "SPDI history and calibrated minimum threshold"
    ],
-   "gap": "The required persistence duration or recurrence pattern is not defined. No lab check implemented yet.",
+   "gap": "Only with a declared valid bundle.",
    "hypotheses_needed": [
     "A persistence rule and the applicable calibrated minimum threshold."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "persistent_low_spdi"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1040,13 +1154,19 @@
    "data_dependencies": [
     "Zone design, density, and intent evidence"
    ],
-   "gap": "High density, containment, and deliberate creation have no supplied decision criteria.",
+   "gap": "Conditions are declared.",
    "hypotheses_needed": [
     "A high-density criterion, containment definition, and intent determination method."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "condition_containment_zone"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1074,13 +1194,19 @@
    "data_dependencies": [
     "Resource access and denial records"
    ],
-   "gap": "The basic resource set and access-denial criteria are undefined. No lab check implemented yet.",
+   "gap": "Conditions are declared.",
    "hypotheses_needed": [
     "A basic biospheric resource classification and an access-denial rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "condition_resource_denial"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1109,13 +1235,19 @@
    "data_dependencies": [
     "Environmental changes and evidence of economic or political use"
    ],
-   "gap": "No decision rule establishes when degradation is used as leverage.",
+   "gap": "Conditions are declared.",
    "hypotheses_needed": [
     "An operational degradation definition and a method for determining instrumental use."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "condition_degradation_lever"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1144,13 +1276,19 @@
    "data_dependencies": [
     "Spatial design records and intent evidence"
    ],
-   "gap": "Suppression of autonomy or mobility and the determination of design intent are unspecified.",
+   "gap": "Conditions are declared.",
    "hypotheses_needed": [
     "Definitions of suppression and a method for determining design intent."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "condition_autonomy_suppression"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1178,13 +1316,19 @@
    "data_dependencies": [
     "Violation records, activation status, and remediation events"
    ],
-   "gap": "The remediation pathways and their required trigger timing are unspecified. No lab check implemented yet.",
+   "gap": "Only with a declared valid bundle (§6).",
    "hypotheses_needed": [
     "A mapping from violations to remediation pathways and an observation horizon for trigger verification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "mandatory_remediation"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1215,14 +1359,20 @@
    "data_dependencies": [
     "Measurement provenance, physical evidence, audit access, and reproduction evidence"
    ],
-   "gap": "PTL anchoring, physical verification, auditability, and reproducibility criteria are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Verification and auditability predicates.",
     "A reproducibility procedure with declared comparison criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "ptl_anchored"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1249,11 +1399,17 @@
    "data_dependencies": [
     "Established sensor-integrity event classifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "tampering_critical"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1280,13 +1436,19 @@
    "data_dependencies": [
     "Oracle and audit procedures and action provenance"
    ],
-   "gap": "The two governing protocols and their division of responsibilities are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Conformance predicates for the named protocols."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "routed_to_oracle_audit"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1317,13 +1479,19 @@
    "data_dependencies": [
     "Mechanism authority and governance records"
    ],
-   "gap": "Independence and whether the prohibition is sensor-specific or protocol-wide are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared scope and a definition of independent investigative or punitive mechanisms."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "no_own_investigation"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1351,7 +1519,7 @@
    "data_dependencies": [
     "Violation confirmations, activation status, and remediation-plan records"
    ],
-   "gap": "Remediation plans are events; their content is not modelled.",
+   "gap": "calibration_expiry: Remediation plans are events; their content is not modelled. habitat_dignity: Plans are events; their content is not modelled.",
    "hypotheses_needed": [
     "A confirmation predicate and an observation horizon for initiation."
    ],
@@ -1359,10 +1527,18 @@
    "implementation": {
     "module": "calibration_expiry",
     "version": "1.0.0",
-    "check": "remediation_initiated"
+    "check": "remediation_initiated",
+    "also": [
+     {
+      "module": "habitat_dignity",
+      "version": "1.0.0",
+      "check": "remediation_initiated"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_habitat_dignity_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1391,11 +1567,17 @@
    "data_dependencies": [
     "Confirmed violation and activation statuses"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "relocation_assistance_optional"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1420,13 +1602,19 @@
    "data_dependencies": [
     "L2 incentive interfaces and trigger provenance"
    ],
-   "gap": "The applicable L2 protocols and triggering interfaces are unspecified. No lab check implemented yet.",
+   "gap": "Recorded routing.",
    "hypotheses_needed": [
     "An authoritative identification of applicable L2 protocols and their incentive interface."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "incentives_via_l2"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1459,10 +1647,18 @@
    "implementation": {
     "module": "calibration_expiry",
     "version": "1.0.0",
-    "check": "no_forced_displacement"
+    "check": "no_forced_displacement",
+    "also": [
+     {
+      "module": "habitat_dignity",
+      "version": "1.0.0",
+      "check": "no_forced_displacement"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_calibration_expiry_module.py"
+    "tests/lab/test_calibration_expiry_module.py",
+    "tests/lab/test_habitat_dignity_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -1489,14 +1685,20 @@
    "data_dependencies": [
     "Violation histories and system-level review records"
    ],
-   "gap": "Persistence, systemic status, and the referenced review procedure are unspecified. No lab check implemented yet.",
+   "gap": "'Persistent' = declared number of months (source missing).",
    "hypotheses_needed": [
     "Definitions of persistent and systemic violations.",
     "An escalation timing rule and review conformance predicate."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "persistent_escalation"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1524,13 +1726,19 @@
    "data_dependencies": [
     "Habitat evaluation outputs"
    ],
-   "gap": "The boundary between descriptive value reporting and prohibited ranking is unspecified. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A definition of ranking beyond minimum compliance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_rank_beyond_compliance"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1558,13 +1766,19 @@
    "data_dependencies": [
     "Geographically scoped enforcement rules"
    ],
-   "gap": "Uniform living standards are not distinguished operationally from minimum dignity floors. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A distinction between prohibited global uniformity and permitted minimum-compliance requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_uniform_global_standard"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1589,13 +1803,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "Housing form is not operationally defined. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A classification distinguishing housing forms from physical performance requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_mandate_housing_form"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1623,13 +1843,19 @@
    "data_dependencies": [
     "Recognized cultural and climatic adaptations"
    ],
-   "gap": "Recognized adaptations and override criteria are undefined. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "An adaptation-recognition rule and an override-detection method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "scope_override_cultural_adaptation"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1657,13 +1883,19 @@
    "data_dependencies": [
     "Audit access records for SPDI values and violation flags"
    ],
-   "gap": "Audit-access authority and availability requirements are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "An authorized-auditor model and a test for audit availability."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "auditable"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1692,13 +1924,19 @@
    "data_dependencies": [
     "Aggregation provenance and privacy-protection evidence"
    ],
-   "gap": "Privacy protection and acceptable aggregation methods are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A privacy model and an aggregation method compatible with audit and review."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "aggregated"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1727,13 +1965,19 @@
    "data_dependencies": [
     "Historical outputs and review access records"
    ],
-   "gap": "Required retention duration and post-facto review conditions are unspecified. No lab check implemented yet.",
+   "gap": "Recorded property.",
    "hypotheses_needed": [
     "A review-access model and a retention or observation horizon."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "post_facto_review"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1763,19 +2007,27 @@
    "data_dependencies": [
     "Exposure-data handling records and scope protection requirements"
    ],
-   "gap": "The referenced data-protection requirements are absent. No lab check implemented yet.",
+   "gap": "Referenced rules are absent from SCOPE (F-040).",
    "hypotheses_needed": [
     "A protection-conformance predicate supplied by DKP-7-SCOPE-001."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "individual_data_protected"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-059"
+   ],
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1805,13 +2057,19 @@
    "data_dependencies": [
     "Upgrade, simulation, audit, acceptance, activation, and rollback records"
    ],
-   "gap": "The referenced procedures, acceptance rules, activation timing, and rollback conditions are absent. No lab check implemented yet.",
+   "gap": "Declared properties of the change.",
    "hypotheses_needed": [
     "Conformance predicates for the referenced procedures and a classification of presentation-only changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "upgrade_only"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1839,13 +2097,19 @@
    "data_dependencies": [
     "Protocol identifier history"
    ],
-   "gap": "Whether presentation-only corrections fall within 'any modification' is ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared interpretation of the presentation-only exception's effect on identifier changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1876,13 +2140,19 @@
    "data_dependencies": [
     "Modification compatibility declarations"
    ],
-   "gap": "The exception's applicability to presentation-only corrections is ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared scope for modifications requiring compatibility declarations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "compatibility"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1914,14 +2184,20 @@
    "data_dependencies": [
     "Edition comparisons and change records"
    ],
-   "gap": "Normative-equivalence criteria and the scope of the exclusive date-recording rule are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A method for establishing unchanged normative content.",
     "An interpretation reconciling correction recording with edition-integrity records."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "habitat_dignity",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_habitat_dignity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
