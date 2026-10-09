@@ -134,7 +134,11 @@ def build() -> Dict[str, Any]:
         sel = [row for d in ids for row in by_doc.get(d, [])]
         covered = sum(1 for x in sel if x["coverage"] in ("IMPLEMENTED", "PARTIAL"))
         st = Counter(x["status"] for x in sel)
-        resolvable = [x for x in sel if x["checkable"] != "no" and x["decision_status"] == "NONE_IDENTIFIED"]
+        # resolvable = implementable without an author decision: no open point, or an open point whose (draft) origin is
+        # implementation_only ("the text is clear enough; only lab code, a record or a data structure is missing")
+        impl_only = [x for x in sel if x["checkable"] != "no" and x["decision_status"] == "UNRESOLVED"
+                     and (x.get("open_point") or {}).get("origin") == "implementation_only"]
+        resolvable = [x for x in sel if x["checkable"] != "no" and x["decision_status"] == "NONE_IDENTIFIED"] + impl_only
         return {
             "documents": len(ids),
             "registered": sum(1 for d in ids if d in regs),
@@ -144,6 +148,7 @@ def build() -> Dict[str, Any]:
             "statuses": {s: st.get(s, 0) for s in STATUSES},
             "resolvable": len(resolvable),
             "resolvable_uncovered": sum(1 for x in resolvable if x["coverage"] not in ("IMPLEMENTED", "PARTIAL")),
+            "resolvable_uncovered_implementation_only": sum(1 for x in impl_only if x["coverage"] not in ("IMPLEMENTED", "PARTIAL")),
             "unresolved_decisions": sum(1 for x in sel if x["decision_status"] == "UNRESOLVED"),
             # a PASS on the checkable part of a provision does not close its open point
             "covered_with_open_point": sum(1 for x in sel if x["coverage"] in ("IMPLEMENTED", "PARTIAL")
@@ -303,7 +308,9 @@ def markdown(t: Dict[str, Any]) -> str:
          "cases, e.g. an understaffed roster) and counterexamples with deliberate faults are reported apart.",
          "Every reference FAIL passes the semantic verification gate (`lab/registry/verifications.json`).",
          "Interpretations are machine drafts; TEXT_VERIFIED means the wording was read against the literal",
-         "text by the lab (not a human review).  Author questions: `lab/registry/open_questions.json`.", "",
+         "text by the lab (not a human review).  Author questions: `lab/registry/open_questions.json`.",
+         "*Resolvable* = implementable without an author decision: no open point, or an open point whose draft origin is",
+         "`implementation_only` (the text is clear; only lab code is missing).  The draft origin is a machine classification.", "",
          "## Stages of the specification", "",
          "| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |",
          "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]

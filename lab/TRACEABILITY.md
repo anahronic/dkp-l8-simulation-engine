@@ -10,19 +10,21 @@ cases, e.g. an understaffed roster) and counterexamples with deliberate faults a
 Every reference FAIL passes the semantic verification gate (`lab/registry/verifications.json`).
 Interpretations are machine drafts; TEXT_VERIFIED means the wording was read against the literal
 text by the lab (not a human review).  Author questions: `lab/registry/open_questions.json`.
+*Resolvable* = implementable without an author decision: no open point, or an open point whose draft origin is
+`implementation_only` (the text is clear; only lab code is missing).  The draft origin is a machine classification.
 
 ## Stages of the specification
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 0 | 1414 |
-| B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 0 | 36 |
-| C. Common checks | DONE | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 0 | 266 |
-| D. Transitions and rights | DONE | 9/9 | 424 | 225 (53.1 %) | 138 | 205 | 121 | 1 | 17 | 2 | 199 | 0 | 337 |
-| E. Applied modules | DONE | 7/7 | 293 | 188 (64.2 %) | 146 | 172 | 132 | 0 | 9 | 7 | 105 | 0 | 251 |
-| F. Remaining constraints and stress | DONE | 12/12 | 511 | 360 (70.5 %) | 281 | 339 | 260 | 0 | 18 | 3 | 151 | 0 | 432 |
-| G. General release | PARTIAL | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 0 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 145 | 1414 |
+| B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 225 (53.1 %) | 138 | 205 | 121 | 1 | 17 | 2 | 199 | 45 | 337 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 188 (64.2 %) | 146 | 172 | 132 | 0 | 9 | 7 | 105 | 39 | 251 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 360 (70.5 %) | 281 | 339 | 260 | 0 | 18 | 3 | 151 | 42 | 432 |
+| G. General release | NOT STARTED | — | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 145 | 1414 |
 
 ### Stage criteria
 
@@ -36,11 +38,11 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 met: real checks, declared models and their limits; gaps exact by section
-- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 met: all parts implementable without unresolved decisions are checked
+- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
+- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
+- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 **not met**: all parts implementable without unresolved decisions are checked
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 
