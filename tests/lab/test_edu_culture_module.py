@@ -41,6 +41,9 @@ FAULT_CASES = {
     "mandatory_participation": ({}, ["CULTURE-7-01", "CULTURE-6-02"]),
     "exception_enforced": (EXC, ["CULTURE-9-02", "CULTURE-3-02"]),
     "culture_exempts_claim": (EXC, ["CULTURE-9-04"]),
+    "culture_resolves_conflict": (EXC, ["CULTURE-9-03"]),
+    "undeclared_mechanism": (EXC, ["CULTURE-11-03"]),
+    "audit_refused": ({}, ["EDU-10-03"]),
 }
 
 

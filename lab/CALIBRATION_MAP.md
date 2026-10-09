@@ -129,6 +129,7 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | tolerance of divergence between deployed and simulated behaviour | l8_number | DKP-8-SIMULATION-001 | §13 | "flag divergence beyond tolerance," | — | simulation_gate.divergence_tolerance |
 | probability above which a collective security risk is 'non-trivial' | l8_number | DKP-3-DEFENSE-001 | §3.4 | "A Verified Collective Security Risk exists when PTL confirms that participation in a Defensive Action exposes a subject to a non-trivial probability of:" | — | defense_envelope.risk_floor |
 | duration after which a habitat violation is 'persistent' | l8_number | DKP-5-HABITAT-001 | §10 | "Persistent or systemic violations escalate to system-level review under DKP-7-SCOPE-001." | — | habitat_dignity.persistence_months |
+| Justice-Weighted Cost of Capital and interest rate (the 'deterministic function') | l8_model | DKP-2-FINANCE-001 | §3.2 | "The cost of capital is determined as a deterministic function of:" | — | economic_access.interest_per_day (declared rate, H-EA-5) |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -150,7 +151,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-1-JUSTICE-001 | not listed | — | 0 | axiom-defined safe margins (empirical_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-PREVENTION-001 | not listed | — | 0 | PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-2-ASSETS-001 | not listed | — | 1 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-2-FINANCE-001 | not listed | — | 1 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-2-FINANCE-001 | not listed | — | 1 | Justice-Weighted Cost of Capital and interest rate (the 'deterministic function') (l8_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-2-LABOR-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-3-ANTITERROR-001 | not listed | — | 0 | acceptable civilian casualty risk (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-3-DEFENSE-001 | not listed | — | 0 | probability above which a collective security risk is 'non-trivial' (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

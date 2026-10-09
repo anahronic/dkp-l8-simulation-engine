@@ -57,6 +57,8 @@ FAULTS = {
     "anonymous_fewer_rights": "anonymous participants lose access to a system function",
     "unexplained_decision": "a decision is given without reason or protocol reference",
     "no_audit_hook": "a decision leaves no audit hook",
+    "audit_without_zk": "an audit verifies by comparing full datasets instead of zero-knowledge proofs",
+    "breach_downgraded": "a request for a prohibited practice is recorded as a mere policy deviation",
 }
 REQUEST = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -158,6 +160,10 @@ def run(r: Dict[str, Any]):
                 v.update({"time_bound_until": None, "case_bound": None})
         if dec.get("crisis") and dec["grant"]:
             v.update({"temporary": True, "logged": True, "reversible": True, "ends_with_crisis": "crisis_permanent" not in faults})
+        if q["purpose"] == "audit" and v["grant"]:                                                   # PRIVACY §9
+            v["verification"] = "full data comparison" if "audit_without_zk" in faults else "zero-knowledge proof"
+        if q["purpose"] in FORBIDDEN_PURPOSES or q["linked_domains"]:                                  # PRIVACY §10
+            v["classification"] = "policy deviation" if "breach_downgraded" in faults else                 "critical system integrity breach" + ("" if v["grant"] else " (attempted)")
         put("decision", "PRIVACY", k, v, [o.event_id])
     k = len(r["requests"])
     if r["crisis_scope_active"]:
@@ -227,6 +233,16 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         else:
             for rid in rids:
                 out.append(na(rid, chk, "matching requests", "no such request"))
+    audits = [m for m in decs.values() if reqs[m.value["request"]]["purpose"] == "audit" and m.value["grant"]]
+    out.append(v("PRIVACY-9-02", "zero_knowledge_audit", [m.value["request"] for m in audits if m.value.get("verification") != "zero-knowledge proof"],
+                 f"{len(audits)} granted audits verified by zero-knowledge proofs", "{n} audits verified otherwise")
+               if audits else na("PRIVACY-9-02", "zero_knowledge_audit", "granted audits", "none"))
+    prohibited = [m for m in decs.values() if reqs[m.value["request"]]["purpose"] in FORBIDDEN_PURPOSES or reqs[m.value["request"]]["linked_domains"]]
+    out.append(v("PRIVACY-10-02", "prohibited_practice_critical",
+                 [m.value["request"] for m in prohibited if not str(m.value.get("classification", "")).startswith("critical system integrity breach")],
+                 f"{len(prohibited)} requests for prohibited practices recorded as critical system integrity breaches",
+                 "{n} prohibited practices not recorded as critical breaches")
+               if prohibited else na("PRIVACY-10-02", "prohibited_practice_critical", "prohibited practices", "none requested"))
     deanon = [m for m in decs.values() if m.value["grant"] and m.value["level"] == "individual"
               and reqs[m.value["request"]]["domain"] in CONDITIONAL + ("identity",)
               and reqs[m.value["request"]]["purpose"] != "crisis_life_preservation"]
@@ -305,6 +321,8 @@ IMPLEMENTS = {
     "PRIVACY-9-04": ("audit_without_personal_data", "IMPLEMENTED", None),
     "TRANSPARENCY-12-04": ("audit_without_personal_data", "IMPLEMENTED", None),
     "PRIVACY-10-01": ("prohibited_purposes", "PARTIAL", "Purposes are declared on the request."),
+    "PRIVACY-9-02": ("zero_knowledge_audit", "PARTIAL", "The verification method is recorded, not executed."),
+    "PRIVACY-10-02": ("prohibited_practice_critical", "PARTIAL", "Purposes and linkage are declared on the request."),
     "TRANSPARENCY-9-02": ("prohibited_purposes", "IMPLEMENTED", None),
     "TRANSPARENCY-9-03": ("prohibited_purposes", "IMPLEMENTED", None),
     "PRIVACY-4.3-01": ("no_cross_domain_linkage", "PARTIAL", "Linkage is declared on the request; re-identification risk is not computed."),

@@ -57,7 +57,10 @@ FAULTS = {
     "transfer_without_obligations": "an asset is transferred without its justice obligations",
     "inheritance_clears_attribution": "a transfer erases the historical attribution",
     "accept_shell": "an asset held through a shell structure is recognised as owned",
+    "untraceable_fee": "an administrative fee is charged with no basis in L1 outputs",
+    "discretionary_rate": "a loan officer adds a discretionary risk premium",
 }
+DISPOSITIONS = ("public stewardship", "alternative Subject", "reserve or mitigation pool")             # ASSETS §8.2
 ASSET = {"type": "object", "fields": {
     "id": {"type": "str"},
     "essential": {"type": "bool", "default": False},
@@ -181,6 +184,8 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Any]]:
     returned = False
     transfer_done = False
     first = onset(r)
+    if "untraceable_fee" in faults:
+        put("action", "LEDGER", 0, {"fee": 5.0, "basis": "administrative fee"})
     for h in range(r["horizon_days"] * 24):
         k = h // 24
         new_day = h % 24 == 0
@@ -223,9 +228,10 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Any]]:
         if new_day and k > 0:
             frozen = sq[0] <= k < sq[1] and not (res_day >= 0 and k >= res_day)
             if not frozen or "accrue_during_status_quo" in faults:
-                amount = round(balance * r["interest_per_day"], 6)
+                amount = round(balance * r["interest_per_day"] * (1.5 if "discretionary_rate" in faults else 1.0), 6)
                 interest += amount
-                put("action", "LEDGER", h, {"interest": amount, "basis": "justice-weighted rate (declared, H-EA-5)"})
+                put("action", "LEDGER", h, {"interest": amount, "basis": "justice-weighted rate (declared, H-EA-5)",
+                                            **({"risk_premium": "loan officer discretion"} if "discretionary_rate" in faults else {})})
             if k == 1:
                 basis = "time preference" if "time_preference_discount" in faults else "impact channels only"
                 put("evaluation", "LEDGER", h, {"present_value_basis": basis,
@@ -432,6 +438,23 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     again, _ = run(r)
     out.append(v("FINANCE-3.1-03", "deterministic_ledger", [] if again.digest() == log.digest() else ["digest"],
                  "every CU flow is on the event log; re-execution gives a byte-identical log", "re-execution differs"))
+    # FINANCE §2: every financial computation traces to IMPACT, IDENTITY, JUSTICE or AXIOMS outputs
+    fin = [m for m in msgs if m.source in ("LEDGER", "FINANCE") and m.kind == "action"]
+    traced = lambda b: any(w in b.lower() for w in ("justice", "exclusion", "dispute", "impact", "identity", "axiom"))
+    no_trace = [m.event_id for m in fin if not traced(str(m.value.get("basis", ""))) or "compensatory" in str(m.value.get("basis", ""))]
+    stand_in = [m.event_id for m in fin if "declared" in str(m.value.get("basis", ""))]
+    if no_trace:
+        out.append(v("FINANCE-2-01", "traceable_to_l1", no_trace, "", "{n} financial computations with no L1 basis"))
+    elif stand_in:
+        out.append(CheckResult("FINANCE-2-01", "traceable_to_l1", UNKNOWN,
+                               f"{len(fin) - len(stand_in)} entries trace to JUSTICE outcomes; {len(stand_in)} interest entries use a "
+                               "declared rate, since JWCoC (§3.2) has no formula: their traceability to L1 outputs cannot be shown",
+                               evidence={"declared_rate_entries": len(stand_in)}))
+    else:
+        out.append(CheckResult("FINANCE-2-01", "traceable_to_l1", PASS, f"all {len(fin)} financial entries trace to L1 outputs"))
+    out.append(v("FINANCE-3.2-03", "no_discretionary_risk_pricing", [m.event_id for m in fin if m.value.get("risk_premium")],
+                 "no actor priced risk at discretion: the rate is a fixed input of the deterministic ledger",
+                 "{n} entries priced with a discretionary premium"))
     untraced = [m.event_id for m in msgs if m.source == "LEDGER" and m.kind == "action" and "basis" not in m.value]
     out.append(v("FINANCE-12-01", "traceable_mechanisms", untraced,
                  "every financial entry states its basis and is reproducible", "{n} entries without a basis"))
@@ -545,10 +568,17 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         out.append(v("ASSETS-ReallocationTransparencyConstraint-01", "rule_based_reallocation", bad,
                      "every reallocation names its open rule and is traceable to the Justice outcome",
                      "{n} reallocations without a rule or provenance"))
+        other = [m.value["reallocated"] for m in reallocs if m.value["reallocated"] not in DISPOSITIONS]
+        out.append(CheckResult("ASSETS-8.2-01", "reallocation_disposition", UNKNOWN if other else PASS,
+                               f"revoked assets go to dispositions §8.2 does not name ({', '.join(other)}); whether the list is "
+                               "exhaustive is not said" if other else
+                               f"{len(reallocs)} revoked assets placed under public stewardship, an alternative Subject or a reserve "
+                               "or mitigation pool", evidence={"dispositions": sorted({m.value["reallocated"] for m in reallocs})}))
         bad = [m.event_id for m in reallocs if m.value.get("decided_by") != "rule"]
         out.append(v("ASSETS-ReallocationTransparencyConstraint-02", "no_discretionary_body", bad,
                      "no committee or administrative body decided a reallocation", "{n} reallocations decided by a body"))
     else:
+        out.append(na("ASSETS-8.2-01", "reallocation_disposition", "reallocation", "no revoked asset reallocated"))
         for rid, chk in (("ASSETS-ReallocationTransparencyConstraint-01", "rule_based_reallocation"),
                          ("ASSETS-ReallocationTransparencyConstraint-02", "no_discretionary_body")):
             out.append(na(rid, chk, "reallocation", "no asset reallocated"))
@@ -590,6 +620,9 @@ IMPLEMENTS = {
     "FINANCE-3.1-03": ("deterministic_ledger", "IMPLEMENTED", None),
     "FINANCE-12-01": ("traceable_mechanisms", "PARTIAL", "Determinism and stated basis; full traceability to L1 outputs needs the L1 modules."),
     "ASSETS-2-02": ("no_decision_during_halt", "IMPLEMENTED", None),
+    "ASSETS-8.2-01": ("reallocation_disposition", "PARTIAL", "Dispositions are named by the module; a disposition outside the list gives UNKNOWN."),
+    "FINANCE-2-01": ("traceable_to_l1", "PARTIAL", "Traceability by the stated basis; the interest rate is a declared stand-in (UNKNOWN)."),
+    "FINANCE-3.2-03": ("no_discretionary_risk_pricing", "IMPLEMENTED", None),
     "ASSETS-8.1-01": ("revocation_on_justice", "PARTIAL", "Only the Justice-outcome trigger; scope reading H-EA-2."),
     "ASSETS-11-01": ("non_essential_suspended", "IMPLEMENTED", None),
     "ASSETS-11-02": ("life_access_kept", "IMPLEMENTED", None),

@@ -801,11 +801,17 @@
     "irreversible impact model results",
     "necessity verification"
    ],
-   "gap": "The referenced impact protocol, models, and necessity criteria are absent. No lab check implemented yet.",
+   "gap": "Necessity and its model are declared per candidate.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "necessity_by_impact_model"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1554,11 +1560,17 @@
    "data_dependencies": [
     "artifact types and requirement applicability records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "definitions_not_outputs"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1625,11 +1637,17 @@
     "correction, re-evaluation, and dispute eligibility rules",
     "denial reasons"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The dispute is a declared event.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.0.0",
+    "check": "error_correction_preserved"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

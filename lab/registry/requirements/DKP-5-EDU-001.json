@@ -1629,11 +1629,17 @@
    "data_dependencies": [
     "audit procedures and records"
    ],
-   "gap": "DKP-8-AUDIT-001 is not included in the supplied text. No lab check implemented yet.",
+   "gap": "Audit requests are declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "content_auditable"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1701,14 +1707,26 @@
     "scope protection requirements",
     "learning data access and protection records"
    ],
-   "gap": "The applicable protections in DKP-7-SCOPE-001 are absent. No lab check implemented yet.",
+   "gap": "Referenced rules are absent from SCOPE (F-040).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.0.0",
+    "check": "learning_data_protected"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-059"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "EDU-10-06",

@@ -1322,11 +1322,17 @@
     "qualifying cultural and cognitive harm determinations",
     "impact classification records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Conditional on feeding cultural channels from PTL proxies (F-037).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "cultural_harm_systemic"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1466,11 +1472,17 @@
    "data_dependencies": [
     "cross-layer isolation violation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Cross-layer requests are declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.0.0",
+    "check": "isolation_breach_critical"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

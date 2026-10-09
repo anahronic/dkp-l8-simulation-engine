@@ -50,6 +50,8 @@ FAULTS = {
     "stack_fix": "a fix is activated on top of a faulty version instead of rolling it back",
     "ignore_correlation": "correlated proposals from linked initiators are not flagged",
     "presentation_as_upgrade": "a presentation-only change is run through the upgrade procedure",
+    "threshold_as_cosmetic": "a threshold change is treated as a presentation change and skips the procedure",
+    "results_only": "the simulation methodology is withheld (results only) and the upgrade is activated anyway",
 }
 PROPOSAL = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -64,6 +66,7 @@ PROPOSAL = {"type": "object", "fields": {
     "simulation_passed": {"type": "bool", "default": True},
     "stress_and_capture_tested": {"type": "bool", "default": True},
     "results_published_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": 5},
+    "methodology_published": {"type": "bool", "default": True},
     "initiator_link": {"type": "str", "default": "independent"},
     "capture_convergence": {"type": "bool", "default": False},
     "announced_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": 20},
@@ -102,7 +105,7 @@ def run(r: Dict[str, Any]):
                 sub = put("observation", "UPGRADE", k, {"proposal": pid, "kind": p["kind"], "targets": p["targets"],
                                                         "initiator_link": p["initiator_link"], "fixes": p["fixes"]})
                 s["msg"] = sub.event_id
-                if p["kind"] == "presentation_only" and "presentation_as_upgrade" not in faults:
+                if (p["kind"] == "presentation_only" and "presentation_as_upgrade" not in faults) or                         (p["kind"] == "threshold" and "threshold_as_cosmetic" in faults):
                     s["status"] = "not_an_upgrade"
                     put("notice", "UPGRADE", k, {"proposal": pid, "status": "not an upgrade (§3): recorded by 'Last updated'"},
                         [sub.event_id])
@@ -139,7 +142,9 @@ def run(r: Dict[str, Any]):
                 continue
             if s["status"] == "proposed" and p["results_published_day"] == k:
                 ok = (p["simulation_passed"] and p["stress_and_capture_tested"]) or "no_simulation" in faults
-                put("notice", "SIMULATION", k, {"proposal": pid, "published": True, "passed": p["simulation_passed"],
+                put("notice", "SIMULATION", k, {"proposal": pid, "published": True,
+                                                "methodology": p["methodology_published"] and "results_only" not in faults,
+                                                "passed": p["simulation_passed"],
                                                 "stress_and_capture": p["stress_and_capture_tested"]}, [s["msg"]])
                 if p["capture_convergence"]:
                     ok = False
@@ -155,6 +160,8 @@ def run(r: Dict[str, Any]):
                 why = []
                 if not s.get("sim_ok"):
                     why.append("no passed and published simulation (§6)")
+                if not p["methodology_published"] and "results_only" not in faults:
+                    why.append("simulation methodology not published (§6)")
                 if p["results_published_day"] < 0 or (k - p["results_published_day"] < COOLING_DAYS and "short_cooling" not in faults):
                     why.append(f"cooling-off: fewer than {COOLING_DAYS} DTI-Days since publication (§8)")
                 if any(a <= k < b for a, b in appeals) and "activate_with_open_appeal" not in faults:
@@ -221,6 +228,12 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     else:
         for rid in ("UPGRADE-3-02", "UPGRADE-12-03"):
             out.append(na(rid, "presentation_not_upgrade", "presentation-only changes", "none proposed"))
+    # §3 definition: a change of formulas, thresholds, logic or cross-layer rules is an Upgrade
+    cosmetic = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and "not an upgrade" in str(m.value.get("status", ""))}
+    out.append(v("UPGRADE-3-01", "upgrade_definition", [p["id"] for p in upgrades if p["id"] in cosmetic],
+                 f"{len(upgrades)} changes of formulas, thresholds, logic or cross-layer rules entered the upgrade procedure",
+                 "{n} such changes treated as presentation-only") if upgrades else
+               na("UPGRADE-3-01", "upgrade_definition", "upgrades", "only presentation-only changes"))
     # §2 / §4.3 / §11: nothing during an active Crisis
     if hi > lo:
         bad = [p["id"] for p in upgrades if lo <= p["submitted_day"] < hi and p["id"] in accepted]
@@ -267,6 +280,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         for rid, chk in (("UPGRADE-6-01", "simulation_before_approval"), ("UPGRADE-11-03", "no_bypass")):
             out.append(v(rid, chk, bad, "every activated upgrade passed a published simulation, stress test and capture analysis",
                          "{n} upgrades activated without a passed simulation"))
+        pub = {m.value["proposal"]: m.value for m in msgs if m.source == "SIMULATION" and m.value.get("published")}
+        out.append(v("UPGRADE-6-03", "public_results_methodology",
+                     [pid for pid in acts if pid not in pub or not pub[pid]["methodology"]],
+                     "every activated upgrade published its simulation results and methodology",
+                     "{n} upgrades activated without published results and methodology"))
         bad = [pid for pid in acts if acts[pid].arrived_at - P[pid]["results_published_day"] < COOLING_DAYS]
         out.append(v("UPGRADE-Post-CrisisCooldownRule-02", "cooling_off_30", bad,
                      f"at least {COOLING_DAYS} DTI-Days between publication of final results and every activation",
@@ -290,7 +308,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                          ("UPGRADE-Post-CrisisCooldownRule-02", "cooling_off_30"), ("UPGRADE-8-01", "activation_conditions"),
                          ("UPGRADE-Post-CrisisCooldownRule-04", "deterministic_day"),
                          ("UPGRADE-Post-CrisisCooldownRule-06", "logged"),
-                         ("UPGRADE-Post-CrisisCooldownRule-05", "reversible_window")):
+                         ("UPGRADE-Post-CrisisCooldownRule-05", "reversible_window"), ("UPGRADE-6-03", "public_results_methodology")):
             out.append(na(rid, chk, "activation", "no upgrade activated"))
     # post-crisis stabilization (F-020)
     layered = [p for p in upgrades if set(p["targets"]) & set(COOLDOWN_LAYERS) and hi > lo and p["submitted_day"] >= hi]
@@ -368,6 +386,8 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 IMPLEMENTS = {
     "UPGRADE-3-02": ("presentation_not_upgrade", "IMPLEMENTED", None),
+    "UPGRADE-3-01": ("upgrade_definition", "PARTIAL", "The kind of change is declared."),
+    "UPGRADE-6-03": ("public_results_methodology", "PARTIAL", "Publication is a declared event."),
     "UPGRADE-12-03": ("presentation_not_upgrade", "IMPLEMENTED", None),
     "UPGRADE-4.3-01": ("no_crisis_upgrade", "PARTIAL", "Crisis only; 'urgency' and 'fear' are not measurable."),
     "UPGRADE-11-01": ("no_crisis_upgrade", "IMPLEMENTED", None),

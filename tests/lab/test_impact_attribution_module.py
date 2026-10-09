@@ -47,6 +47,8 @@ FAULT_CASES = {
     "cascade_on_no_attribution": (EX["low_confidence_crossing"], ["IDENTITY-4.1-02"]),
     "speculative_attribution": ({}, ["IDENTITY-10-02"]),
     "identity_measures_magnitude": ({}, ["IDENTITY-13-01"]),
+    "require_physical_damage": ({}, ["IDENTITY-11-02"]),
+    "breach_unflagged": ({}, ["IDENTITY-13-02"]),
 }
 
 

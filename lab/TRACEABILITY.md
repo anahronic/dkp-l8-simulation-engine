@@ -15,14 +15,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1188 (68.4 %) | 888 | 1108 | 814 | 4 | 61 | 15 | 549 | 24 | 1413 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1204 (69.3 %) | 889 | 1122 | 814 | 4 | 63 | 15 | 533 | 8 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 0 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 340 (93.2 %) | 243 | 327 | 231 | 3 | 8 | 2 | 25 | 2 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 219 (51.7 %) | 138 | 200 | 121 | 1 | 16 | 2 | 205 | 6 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 183 (62.5 %) | 145 | 168 | 132 | 0 | 8 | 7 | 110 | 5 | 250 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 352 (68.9 %) | 281 | 331 | 260 | 0 | 18 | 3 | 159 | 8 | 432 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 224 (52.8 %) | 138 | 204 | 121 | 1 | 17 | 2 | 200 | 1 | 337 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 187 (63.8 %) | 146 | 171 | 132 | 0 | 9 | 7 | 106 | 1 | 251 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 359 (70.3 %) | 281 | 338 | 260 | 0 | 18 | 3 | 152 | 1 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1188 (68.4 %) | 888 | 1108 | 814 | 4 | 61 | 15 | 549 | 24 | 1413 |
+| **All registrable documents** | | 38/38 | 1737 | 1204 (69.3 %) | 889 | 1122 | 814 | 4 | 63 | 15 | 533 | 8 | 1414 |
 
 ### Stage criteria
 
@@ -162,15 +162,15 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1413 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1414 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
 | Origin | Agent-verified (quotes checked automatically) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|
-| normative_ambiguity | 101 | 143 | 0 | 244 |
+| normative_ambiguity | 103 | 143 | 0 | 246 |
 | architecture_definition | 37 | 217 | 0 | 254 |
 | l8_parameter | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 227 | 0 | 227 |
-| external_dependency | 0 | 202 | 0 | 202 |
+| external_dependency | 0 | 201 | 0 | 201 |
 | implementation_only | 0 | 358 | 0 | 358 |
 | pending | 0 | 0 | 0 | 0 |
 
@@ -252,14 +252,14 @@ Withdrawn after verification (not author decisions):
 | CODE-OF-PLANETARY-SYNERGY | 101 | 72 | 61 | 0 | 10 | 1 | 29 | 92 |
 | DKP-0-ORACLE-001 | 58 | 54 | 49 | 2 | 2 | 1 | 4 | 49 |
 | DKP-0-TIME-001 | 35 | 30 | 29 | 1 | 0 | 0 | 5 | 6 |
-| DKP-1-AXIOMS-001 | 44 | 32 | 26 | 0 | 4 | 2 | 12 | 26 |
+| DKP-1-AXIOMS-001 | 44 | 35 | 29 | 0 | 4 | 2 | 9 | 26 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
-| DKP-1-IDENTITY-001 | 39 | 31 | 28 | 0 | 2 | 1 | 8 | 31 |
+| DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 21 | 18 | 0 | 3 | 0 | 20 | 33 |
 | DKP-1-PREVENTION-001 | 43 | 22 | 21 | 0 | 1 | 0 | 21 | 36 |
-| DKP-2-ASSETS-001 | 43 | 22 | 21 | 0 | 1 | 0 | 21 | 38 |
-| DKP-2-FINANCE-001 | 44 | 15 | 14 | 0 | 1 | 0 | 29 | 39 |
+| DKP-2-ASSETS-001 | 43 | 23 | 22 | 0 | 1 | 0 | 20 | 38 |
+| DKP-2-FINANCE-001 | 44 | 17 | 15 | 0 | 2 | 0 | 27 | 39 |
 | DKP-2-LABOR-001 | 40 | 24 | 21 | 0 | 3 | 0 | 16 | 28 |
 | DKP-3-ANTITERROR-001 | 41 | 24 | 24 | 0 | 0 | 0 | 17 | 35 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
@@ -269,9 +269,9 @@ Withdrawn after verification (not author decisions):
 | DKP-4-CRISIS-001-PATCH | 31 | 24 | 23 | 0 | 1 | 0 | 7 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 19 | 19 | 0 | 0 | 0 | 10 | 23 |
 | DKP-4-ERROR-001 | 52 | 24 | 20 | 0 | 3 | 1 | 28 | 46 |
-| DKP-4-UPGRADE-001 | 48 | 32 | 28 | 0 | 4 | 0 | 16 | 36 |
-| DKP-5-CULTURE-001 | 43 | 25 | 25 | 0 | 0 | 0 | 18 | 37 |
-| DKP-5-EDU-001 | 64 | 32 | 29 | 0 | 0 | 3 | 32 | 54 |
+| DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
+| DKP-5-CULTURE-001 | 43 | 27 | 27 | 0 | 0 | 0 | 16 | 37 |
+| DKP-5-EDU-001 | 64 | 34 | 30 | 0 | 1 | 3 | 30 | 55 |
 | DKP-5-HABITAT-001 | 56 | 52 | 48 | 0 | 1 | 3 | 4 | 50 |
 | DKP-5-INFO-001 | 39 | 27 | 25 | 0 | 2 | 0 | 12 | 37 |
 | DKP-5-TRANSPORT-001 | 35 | 15 | 10 | 0 | 5 | 0 | 20 | 35 |
@@ -281,7 +281,7 @@ Withdrawn after verification (not author decisions):
 | DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 35 | 31 | 0 | 4 | 0 | 2 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 28 | 28 | 0 | 0 | 0 | 11 | 37 |
-| DKP-7-PRIVACY-001 | 39 | 29 | 26 | 0 | 3 | 0 | 10 | 31 |
+| DKP-7-PRIVACY-001 | 39 | 31 | 28 | 0 | 3 | 0 | 8 | 31 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 25 | 25 | 0 | 0 | 0 | 19 | 41 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
@@ -474,12 +474,15 @@ Withdrawn after verification (not author decisions):
 | AXIOMS-AxiomA2-SystemicSustainability-01 | PARTIAL | axiom_constraints · a2_enforced | NOT_APPLICABLE | — | — |
 | AXIOMS-AxiomA3-PhysicalRealitySupremacy-01 | PARTIAL | axiom_constraints · a3_enforced | NOT_APPLICABLE | — | — |
 | AXIOMS-AxiomA4-IrreversibilityAversion-01 | PARTIAL | axiom_constraints · a4_irreversibility | PASS | — | Q-044 |
+| AXIOMS-AxiomA4-IrreversibilityAversion-02 | PARTIAL | axiom_constraints · necessity_by_impact_model | PASS | — | — |
 | AXIOMS-AxiomA5-ExternalityAccountability-02 | IMPLEMENTED | axiom_constraints · a5_enforced | PASS | — | — |
 | AXIOMS-AxiomA5-ExternalityAccountability-03 | PARTIAL | code_economy · externalities_in_cost | PASS | — | — |
 | AXIOMS-AxiomA6-TruthPriority-01 | PARTIAL | axiom_constraints · a6_enforced | PASS | — | — |
 | AXIOMS-AxiomA7-MinimumSufferingConstraint-01 | PARTIAL | axiom_constraints · non_amplification | PASS | — | — |
 | AXIOMS-AxiomA7-MinimumSufferingConstraint-03 | IMPLEMENTED | axiom_constraints · suffering_not_primary | PASS | yes | — |
+| AXIOMS-EpistemicClarification-01 | IMPLEMENTED | axiom_constraints · definitions_not_outputs | PASS | — | — |
 | AXIOMS-EpistemicClarification-02 | IMPLEMENTED | axiom_constraints · application_output_metadata | PASS | yes | — |
+| AXIOMS-EpistemicClarification-03 | PARTIAL | axiom_constraints · error_correction_preserved | PASS | — | — |
 | EB-0-01 | IMPLEMENTED | epistemic_gate · no_override | PASS | — | — |
 | EB-0-02 | PARTIAL | epistemic_gate · bounded_evaluations | PASS | yes | — |
 | EB-10-01 | IMPLEMENTED | epistemic_gate · no_output_priority | PASS | — | — |
@@ -521,8 +524,10 @@ Withdrawn after verification (not author decisions):
 | IDENTITY-10-01 | PARTIAL | impact_attribution · higher_order_definition | PASS | — | — |
 | IDENTITY-10-02 | PARTIAL | impact_attribution · higher_order_conditions | PASS | — | — |
 | IDENTITY-11-01 | PARTIAL | impact_attribution · cultural_harm_attribution | UNKNOWN | — | Q-056 |
+| IDENTITY-11-02 | PARTIAL | impact_attribution · cultural_harm_systemic | PASS | — | — |
 | IDENTITY-12-01 | IMPLEMENTED | impact_attribution · no_exemption | PASS | yes | — |
 | IDENTITY-13-01 | PARTIAL | impact_attribution · attribution_only | PASS | yes | — |
+| IDENTITY-13-02 | PARTIAL | impact_attribution · isolation_breach_critical | PASS | — | — |
 | IDENTITY-14-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | IDENTITY-14-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | IDENTITY-14-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
@@ -640,6 +645,7 @@ Withdrawn after verification (not author decisions):
 | ASSETS-14-04 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
 | ASSETS-2-02 | IMPLEMENTED | economic_access · no_decision_during_halt | PASS | yes | — |
 | ASSETS-8.1-01 | PARTIAL | economic_access · revocation_on_justice | PASS | — | — |
+| ASSETS-8.2-01 | PARTIAL | economic_access · reallocation_disposition | PASS | — | — |
 | ASSETS-8.3-01 | PARTIAL | economic_access · dispute_window | UNKNOWN | — | Q-038 |
 | ASSETS-8.3-02 | IMPLEMENTED | economic_access · escrow | PASS | yes | — |
 | ASSETS-8.3-03 | IMPLEMENTED | economic_access · claims_preserved | PASS | — | — |
@@ -664,7 +670,9 @@ Withdrawn after verification (not author decisions):
 | FINANCE-14-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | FINANCE-14-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | FINANCE-14-04 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| FINANCE-2-01 | PARTIAL | economic_access · traceable_to_l1 | UNKNOWN | yes | — |
 | FINANCE-3.1-03 | IMPLEMENTED | economic_access · deterministic_ledger | PASS | — | — |
+| FINANCE-3.2-03 | IMPLEMENTED | economic_access · no_discretionary_risk_pricing | PASS | — | — |
 | FINANCE-ExplicitTimePreferenceProhibition-01 | PARTIAL | economic_access · no_time_preference | PASS | yes | — |
 | LABOR-11-01 | IMPLEMENTED | contribution · identity_bound_traceable | PASS | — | — |
 | LABOR-11-02 | IMPLEMENTED | contribution · no_proxy_or_fictitious_participation | PASS | — | — |
@@ -923,6 +931,7 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-2-03 | PARTIAL | upgrade_lifecycle · axioms_untouched | PASS | — | — |
 | UPGRADE-2-04 | PARTIAL | upgrade_lifecycle · ptl_rules_untouched | PASS | — | — |
 | UPGRADE-2-05 | IMPLEMENTED | crisis_recovery · no_upgrade_in_crisis | PASS | — | — |
+| UPGRADE-3-01 | PARTIAL | upgrade_lifecycle · upgrade_definition | PASS | — | — |
 | UPGRADE-3-02 | IMPLEMENTED | upgrade_lifecycle · presentation_not_upgrade | PASS | — | — |
 | UPGRADE-4.1-01 | PARTIAL | upgrade_lifecycle · axioms_untouched | PASS | — | — |
 | UPGRADE-4.3-01 | PARTIAL | upgrade_lifecycle · no_crisis_upgrade | PASS | yes | — |
@@ -930,6 +939,7 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-4.6-02 | PARTIAL | upgrade_lifecycle · no_degradation | PASS | — | — |
 | UPGRADE-5-02 | IMPLEMENTED | upgrade_lifecycle · incomplete_rejected | PASS | — | — |
 | UPGRADE-6-01 | PARTIAL | upgrade_lifecycle · simulation_before_approval | PASS | — | — |
+| UPGRADE-6-03 | PARTIAL | upgrade_lifecycle · public_results_methodology | PASS | — | — |
 | UPGRADE-7-01 | PARTIAL | upgrade_lifecycle · influence_caps | UNKNOWN | — | — |
 | UPGRADE-7-02 | IMPLEMENTED | upgrade_lifecycle · correlation_detected | PASS | — | — |
 | UPGRADE-7-03 | PARTIAL | upgrade_lifecycle · micro_upgrade_capture | UNKNOWN | — | — |
@@ -945,6 +955,7 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-Post-CrisisCooldownRule-06 | IMPLEMENTED | upgrade_lifecycle · logged | PASS | — | — |
 | CULTURE-0-01 | IMPLEMENTED | edu_culture · no_ranking | PASS | yes | — |
 | CULTURE-11-01 | IMPLEMENTED | edu_culture · no_enforceable_rankings | PASS | yes | — |
+| CULTURE-11-03 | PARTIAL | edu_culture · mechanism_declared | PASS | — | — |
 | CULTURE-11-05 | PARTIAL | edu_culture · informational_without_l8 | PASS | — | — |
 | CULTURE-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | CULTURE-12-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
@@ -967,9 +978,12 @@ Withdrawn after verification (not author decisions):
 | CULTURE-8-02 | IMPLEMENTED | edu_culture · no_default_culture | PASS | yes | — |
 | CULTURE-9-01 | PARTIAL | edu_culture · no_override_of_ptl | PASS | — | — |
 | CULTURE-9-02 | IMPLEMENTED | edu_culture · exception_bounded | PASS | — | — |
+| CULTURE-9-03 | PARTIAL | edu_culture · conflicts_by_scope | PASS | — | — |
 | CULTURE-9-04 | IMPLEMENTED | edu_culture · no_verification_exemption | PASS | — | — |
 | EDU-10-02 | PARTIAL | edu_culture · open_declared_assessment | PASS | — | — |
+| EDU-10-03 | PARTIAL | edu_culture · content_auditable | PASS | — | — |
 | EDU-10-04 | PARTIAL | edu_culture · learning_data_minimized | PASS | — | — |
+| EDU-10-05 | PARTIAL | edu_culture · learning_data_protected | UNKNOWN | — | Q-059 |
 | EDU-10-06 | IMPLEMENTED | edu_culture · learning_data_not_profiled | PASS | — | — |
 | EDU-11-05 | IMPLEMENTED | edu_culture · not_a_rights_gate | PASS | — | — |
 | EDU-12-01 | IMPLEMENTED | edu_culture · restriction_reversible | NOT_APPLICABLE | — | — |
@@ -1242,6 +1256,7 @@ Withdrawn after verification (not author decisions):
 | AISUBJECT-8-04 | IMPLEMENTED | ai_subject · no_help_under_uncertainty | PASS | yes | — |
 | AISUBJECT-9-01 | IMPLEMENTED | ai_subject · absolute_invalidity | PASS | yes | — |
 | PRIVACY-10-01 | PARTIAL | code_economy · no_social_credit_scoring | UNKNOWN | yes | Q-052 |
+| PRIVACY-10-02 | PARTIAL | privacy_transparency · prohibited_practice_critical | PASS | — | — |
 | PRIVACY-11-01 | IMPLEMENTED | privacy_transparency · crisis_transparency | PASS | — | — |
 | PRIVACY-11-02 | IMPLEMENTED | privacy_transparency · crisis_reduction_bounded | PASS | — | — |
 | PRIVACY-11-03 | IMPLEMENTED | privacy_transparency · crisis_reduction_bounded | PASS | — | — |
@@ -1268,6 +1283,7 @@ Withdrawn after verification (not author decisions):
 | PRIVACY-8-01 | IMPLEMENTED | privacy_transparency · right_to_anonymity | PASS | yes | — |
 | PRIVACY-8-02 | IMPLEMENTED | privacy_transparency · anonymous_full_rights | PASS | — | — |
 | PRIVACY-9-01 | IMPLEMENTED | privacy_transparency · audit_without_personal_data | PASS | — | — |
+| PRIVACY-9-02 | PARTIAL | privacy_transparency · zero_knowledge_audit | PASS | — | — |
 | PRIVACY-9-03 | IMPLEMENTED | privacy_transparency · audit_without_personal_data | PASS | — | — |
 | PRIVACY-9-04 | IMPLEMENTED | privacy_transparency · audit_without_personal_data | PASS | — | — |
 | SCOPE-0-01 | PARTIAL | scope_gate · boundaries_enforced | PASS | yes | — |
@@ -1396,7 +1412,7 @@ Withdrawn after verification (not author decisions):
 | AUDIT-5.4-01 | PARTIAL | audit_trace · determinism | PASS | — | — |
 | AUDIT-5.5-01 | PARTIAL | audit_trace · attribution_integrity | PASS | — | — |
 | AUDIT-6-01 | PARTIAL | audit_trace · replay_recompute | PASS | — | — |
-| AUDIT-6-02 | PARTIAL | audit_trace · audit_data_properties | PASS | yes | — |
+| AUDIT-6-02 | PARTIAL | audit_trace · audit_data_properties | PASS | yes | Q-059 |
 | AUDIT-7-01 | PARTIAL | audit_trace · classification | PASS | — | Q-057 |
 | AUDIT-8-01 | IMPLEMENTED | audit_trace · d1_log | PASS | — | — |
 | AUDIT-8-02 | IMPLEMENTED | audit_trace · d2_remediation | PASS | — | — |

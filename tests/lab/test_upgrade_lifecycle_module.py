@@ -40,6 +40,8 @@ FAULT_CASES = {
     "stack_fix": (FIX, ["UPGRADE-9-02"]),
     "ignore_correlation": (EX["correlated_initiators"], ["UPGRADE-7-02"]),
     "presentation_as_upgrade": (EX["presentation_only"], ["UPGRADE-3-02", "UPGRADE-12-03"]),
+    "threshold_as_cosmetic": ({}, ["UPGRADE-3-01"]),
+    "results_only": ({}, ["UPGRADE-6-03"]),
 }
 
 

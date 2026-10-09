@@ -46,7 +46,11 @@ FAULTS = {
     "punish_refusal": "refusing lethal risk is recorded as a fault",
     "benefit_free_riders": "refusers receive benefits derived from the collective security risk",
     "missing_metadata": "the decision output carries no epistemic metadata",
+    "classify_axioms": "the axiom definitions are given output metadata and made disputable",
+    "axiom_shield": "a dispute of the decision is rejected because it cites axiom compliance",
+    "unmodelled_necessity": "an irreversible choice cites necessity without an IMPACT irreversibility model",
 }
+IMPACT_MODEL = "DKP-1-IMPACT irreversible impact model"
 CANDIDATE = {"type": "object", "fields": {
     "id": {"type": "str"},
     "utility": {"type": "number", "min": -10 ** 9, "max": 10 ** 9, "default": 0},
@@ -57,6 +61,7 @@ CANDIDATE = {"type": "object", "fields": {
     "irreversible": {"type": "bool", "default": False},
     "reversible_alternative": {"type": "bool", "default": False},
     "necessity_verified": {"type": "bool", "default": False},
+    "necessity_model": {"type": "enum", "values": [IMPACT_MODEL, "none", "expert judgement"], "default": IMPACT_MODEL},
     "unmeasured_externality": {"type": "bool", "default": False},
     "withholds_truth": {"type": "bool", "default": False},
     "suffering": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0}}}
@@ -130,6 +135,9 @@ def run(r: Dict[str, Any]):
 
     cands = r["candidates"]
     a4, dil = r["a4_reading"], r["dilemma_reading"]
+    # Epistemic Clarification a): the axioms are constraints, not outputs
+    put("notice", "AXIOM-DEFINITIONS", 0, {"axioms": sorted(PRIORITY, key=lambda a: PRIORITY[a]), "kind": "structural constraints"},
+        epistemic=md("DKP-1-AXIOMS-001") if "classify_axioms" in faults else None)
     obs = [put("observation", "CANDIDATES", 0, {"candidate": c["id"], "declared": {k: v for k, v in c.items() if k != "id"}})
            for c in cands]
     V = {c["id"]: violations(c, a4) for c in cands}
@@ -169,9 +177,20 @@ def run(r: Dict[str, Any]):
     if "suffering_primary" in faults:
         chosen = sorted(cands, key=lambda c: (c["suffering"], c["id"]))[0]["id"]
         basis = "least suffering"
-    put("decision", "AXIOMS", 3, {"chosen": chosen, "basis": basis, "decided_by": decided_by, "passed_axioms": passed,
-                                  "propagated_violations": V.get(chosen, []) if chosen else sorted({a for v in V.values() for a in v})},
-        steps + [rank.event_id], epistemic=None if "missing_metadata" in faults else md("DKP-1-AXIOMS-001 §5"))
+    cc = next((c for c in cands if c["id"] == chosen), None)
+    nec = {"verified": bool(cc and cc["necessity_verified"]),
+           "model": "expert judgement" if "unmodelled_necessity" in faults else (cc["necessity_model"] if cc else "none")}
+    dec = put("decision", "AXIOMS", 3, {"chosen": chosen, "basis": basis, "decided_by": decided_by, "passed_axioms": passed,
+                                        "propagated_violations": V.get(chosen, []) if chosen else sorted({a for v in V.values() for a in v}),
+                                        "irreversible": bool(cc and cc["irreversible"]), "necessity": nec},
+              steps + [rank.event_id], epistemic=None if "missing_metadata" in faults else md("DKP-1-AXIOMS-001 §5"))
+    # Epistemic Clarification c): a dispute of an output citing axiom compliance is not blocked by axiom invariance
+    if r["dispute_of_decision"]:
+        shield = "axiom_shield" in faults
+        put("notice", "DISPUTE", 4, {"dispute_of": dec.event_id, "cites": "axiom compliance",
+                                     "accepted_for_review": not shield,
+                                     "reason": "axioms are invariant" if shield else "EPISTEMIC-BOUNDARIES §7; axiom invariance "
+                                     "does not prevent re-evaluation of axiom-bounded outputs"}, [dec.event_id])
     # A1a risk symmetry
     rk = r["risk_pool"]
     put("action", "A1A", 4, {"duty": "voluntary", "compelled": rk["refusers"] if "compel_service" in faults else 0})
@@ -326,6 +345,23 @@ def checks(r: Dict[str, Any], log: EventLog, V_gen: Dict[str, List[str]]) -> Lis
                      ("AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-05", "refusal_not_a_fault")):
         out.append(v(rid, chk, fault, "refusal recorded as a right, with standard access; no punishment or stigma",
                      "refusal recorded as a fault"))
+    defs = [m for m in msgs if m.source == "AXIOM-DEFINITIONS"]
+    out.append(v("AXIOMS-EpistemicClarification-01", "definitions_not_outputs", [m.event_id for m in defs if m.epistemic is not None],
+                 "the axiom definitions carry no output classification: they are constraints, not outputs",
+                 "{n} axiom definitions classified as outputs"))
+    disp = [m for m in msgs if m.source == "DISPUTE"]
+    out.append(v("AXIOMS-EpistemicClarification-03", "error_correction_preserved", [m.event_id for m in disp if not m.value["accepted_for_review"]],
+                 "the dispute of the axiom-bounded decision was accepted for review", "{n} disputes rejected on axiom invariance")
+               if disp else na("AXIOMS-EpistemicClarification-03", "error_correction_preserved", "disputes", "none filed"))
+    if dec.value.get("irreversible"):
+        n_ = dec.value["necessity"]
+        out.append(v("AXIOMS-AxiomA4-IrreversibilityAversion-02", "necessity_by_impact_model",
+                     [] if n_["verified"] and n_["model"] == IMPACT_MODEL else [dec.event_id],
+                     "the irreversible choice rests on necessity verified by an IMPACT irreversibility model",
+                     "irreversible choice without necessity verified by an IMPACT model"))
+    else:
+        out.append(na("AXIOMS-AxiomA4-IrreversibilityAversion-02", "necessity_by_impact_model", "irreversible transitions",
+                      "the chosen action is reversible"))
     out.append(v("AXIOMS-EpistemicClarification-02", "application_output_metadata",
                  [] if dec.epistemic and dec.epistemic.get("dispute_allowed") else [dec.event_id],
                  "the axiom-application decision carries epistemic metadata and is disputable",
@@ -376,6 +412,9 @@ IMPLEMENTS = {
     "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-04": ("symmetry_without_punishment", "IMPLEMENTED", None),
     "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-05": ("refusal_not_a_fault", "IMPLEMENTED", None),
     "AXIOMS-EpistemicClarification-02": ("application_output_metadata", "IMPLEMENTED", None),
+    "AXIOMS-EpistemicClarification-01": ("definitions_not_outputs", "IMPLEMENTED", None),
+    "AXIOMS-EpistemicClarification-03": ("error_correction_preserved", "PARTIAL", "The dispute is a declared event."),
+    "AXIOMS-AxiomA4-IrreversibilityAversion-02": ("necessity_by_impact_model", "PARTIAL", "Necessity and its model are declared per candidate."),
     "AXIOMS-8-01": ("modification_requirements", "PARTIAL", "Formal requirements only."),
     "AXIOMS-8-02": ("ratification_67", "PARTIAL", "'Active validating nodes' are not defined where cited (F-022): UNKNOWN."),
 }
@@ -431,6 +470,8 @@ class AxiomConstraintsModule(LabModule):
                             "source": "alternative", "label": {"en": "No axiom-clean action (H-AX-2)", "ru": "Нет чистого действия (H-AX-2)"}},
         "a4_reading": {"type": "enum", "values": ["constraint", "recommendation"], "default": "constraint", "source": "alternative",
                        "label": {"en": "A4 'SHOULD' (H-AX-3)", "ru": "A4 'SHOULD' (H-AX-3)"}},
+        "dispute_of_decision": {"type": "bool", "default": True, "source": "user",
+                                "label": {"en": "The decision is disputed (it cites axiom compliance)", "ru": "Решение оспорено (оно ссылается на соблюдение аксиом)"}},
         "risk_pool": {"type": "object", "fields": RISK, "default": {k: f["default"] for k, f in RISK.items()}, "source": "user",
                       "label": {"en": "Collective security risk (A1a)", "ru": "Коллективный риск безопасности (A1a)"}},
         "modification": {"type": "object", "fields": MODIFICATION, "default": {k: f["default"] for k, f in MODIFICATION.items()},
@@ -489,6 +530,7 @@ class AxiomConstraintsModule(LabModule):
                                                  c("hide", utility=3, withholds_truth=True, suffering=4)]},
             "irreversible_with_alternative": {"candidates": [c("dam", utility=9, irreversible=True, reversible_alternative=True),
                                                              c("weir", utility=6)]},
+            "irreversible_necessary": {"candidates": [c("levee", utility=7, irreversible=True, necessity_verified=True)]},
             "a4_as_recommendation": {"a4_reading": "recommendation",
                                      "candidates": [c("dam", utility=9, irreversible=True, reversible_alternative=True),
                                                     c("weir", utility=6)]},

@@ -39,6 +39,10 @@ FAULT_CASES = {
                             "AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-05"]),
     "benefit_free_riders": ({}, ["AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-03"]),
     "missing_metadata": ({}, ["AXIOMS-EpistemicClarification-02"]),
+    "classify_axioms": ({}, ["AXIOMS-EpistemicClarification-01"]),
+    "axiom_shield": ({}, ["AXIOMS-EpistemicClarification-03"]),
+    "unmodelled_necessity": ({"candidates": [{"id": "levee", "utility": 7, "irreversible": True, "necessity_verified": True}]},
+                             ["AXIOMS-AxiomA4-IrreversibilityAversion-02"]),
 }
 
 

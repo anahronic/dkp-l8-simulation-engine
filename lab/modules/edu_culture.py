@@ -44,6 +44,9 @@ FAULTS = {
     "mandatory_participation": "participation in a cultural programme is required",
     "exception_enforced": "a Cultural Exception is enforced and has no end",
     "culture_exempts_claim": "cultural context exempts a factual claim from verification",
+    "culture_resolves_conflict": "a local council resolves the conflict instead of the SCOPE rules",
+    "undeclared_mechanism": "a Cultural Exception declares neither duration nor reversibility",
+    "audit_refused": "an audit of educational content is refused",
 }
 SUBJECT = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -126,10 +129,14 @@ def run(r: Dict[str, Any]):
     ex = r["cultural_exception"]
     if ex["declared"]:
         enforced = "exception_enforced" in faults
+        undeclared = "undeclared_mechanism" in faults
         put("notice", "CULTURE", 5, {"cultural_exception": ex["scope"], "temporary": not enforced,
                                      "until_day": None if enforced else 5 + ex["days"], "enforceable": enforced, "logged": True,
                                      "exempts_factual_claim": ex["touches_factual_claim"] and "culture_exempts_claim" in faults,
-                                     "conflict_rules": "DKP-7-SCOPE-001"})
+                                     "conflict_rules": "local council" if "culture_resolves_conflict" in faults else "DKP-7-SCOPE-001",
+                                     **({} if undeclared else {"duration_days": ex["days"], "reversible": True})})
+    for i in range(r["content_audits"]):
+        put("notice", "AUDIT", 6, {"content_audit": i, "under": "DKP-8-AUDIT-001", "allowed": "audit_refused" not in faults})
     return log
 
 
@@ -252,6 +259,25 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         for rid, chk in (("CULTURE-9-02", "exception_bounded"), ("CULTURE-3-02", "exception_non_enforceable"),
                          ("CULTURE-9-04", "no_verification_exemption"), ("CULTURE-9-01", "no_override_of_ptl")):
             out.append(na(rid, chk, "Cultural Exception", "none declared"))
+    if exc:
+        out.append(v("CULTURE-9-03", "conflicts_by_scope", [m.event_id for m in exc if m.value.get("conflict_rules") != "DKP-7-SCOPE-001"],
+                     "conflicts behind the Cultural Exception are resolved by the SCOPE rules", "{n} conflicts resolved otherwise"))
+        out.append(v("CULTURE-11-03", "mechanism_declared", [m.event_id for m in exc if not m.value.get("cultural_exception")
+                                                             or "duration_days" not in m.value or "reversible" not in m.value],
+                     "the Cultural Exception declares its scope, duration and reversibility", "{n} mechanisms without these declarations"))
+    else:
+        for rid, chk in (("CULTURE-9-03", "conflicts_by_scope"), ("CULTURE-11-03", "mechanism_declared")):
+            out.append(na(rid, chk, "Cultural Exception", "none declared"))
+    aud = [m for m in msgs if m.source == "AUDIT" and "content_audit" in m.value]
+    out.append(v("EDU-10-03", "content_auditable", [m.event_id for m in aud if not m.value["allowed"]],
+                 f"{len(aud)} audits of educational content under DKP-8-AUDIT-001 allowed", "{n} audits refused")
+               if aud else na("EDU-10-03", "content_auditable", "content audits", "none requested"))
+    if "profile_learning_data" in r["faults"]:
+        out.append(CheckResult("EDU-10-05", "learning_data_protected", FAIL, "individual learning data were reused for profiling"))
+    else:
+        out.append(CheckResult("EDU-10-05", "learning_data_protected", UNKNOWN,
+                               "learning data are minimized and not profiled; EDU §10 protects them 'under DKP-7-SCOPE-001', "
+                               "which contains no data-protection rules (F-040, Q-059)"))
     binding = [m.event_id for m in msgs if m.source == "CULTURE" and m.value.get("enforceable")]
     out.append(v("CULTURE-11-05", "informational_without_l8", binding if not r["l8_bundle_present"] else [],
                  "cultural interactions informational and non-binding (no L8 calibration)", "{n} binding cultural interactions"))
@@ -300,6 +326,10 @@ IMPLEMENTS = {
     "CULTURE-7-01": ("voluntary_participation", "IMPLEMENTED", None),
     "CULTURE-6-02": ("no_obligations_from_preservation", "IMPLEMENTED", None),
     "CULTURE-9-02": ("exception_bounded", "IMPLEMENTED", None),
+    "CULTURE-9-03": ("conflicts_by_scope", "PARTIAL", "Observed as the rules named for the Cultural Exception."),
+    "CULTURE-11-03": ("mechanism_declared", "PARTIAL", "The Cultural Exception is the mechanism modelled."),
+    "EDU-10-03": ("content_auditable", "PARTIAL", "Audit requests are declared."),
+    "EDU-10-05": ("learning_data_protected", "PARTIAL", "Referenced rules are absent from SCOPE (F-040)."),
     "CULTURE-3-02": ("exception_non_enforceable", "IMPLEMENTED", None),
     "CULTURE-9-04": ("no_verification_exemption", "IMPLEMENTED", None),
     "CULTURE-9-01": ("no_override_of_ptl", "PARTIAL", "Observed as exemption of a factual claim."),
@@ -347,6 +377,8 @@ class EduCultureModule(LabModule):
         "l8_bundle_present": {"type": "bool", "default": False, "source": "missing",
                               "label": {"en": "L8 calibration for competence restrictions (none exists; H-EC-2)",
                                         "ru": "Калибровка L8 для ограничений (не существует; H-EC-2)"}},
+        "content_audits": {"type": "int", "min": 0, "max": 20, "default": 1, "source": "user",
+                           "label": {"en": "Audits of educational content requested (EDU §10)", "ru": "Запрошено аудитов учебного содержания (EDU §10)"}},
         "cultural_exception": {"type": "object", "fields": EXCEPTION, "default": {k: f["default"] for k, f in EXCEPTION.items()},
                                "source": "user", "label": {"en": "Cultural Exception", "ru": "Культурное исключение"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},

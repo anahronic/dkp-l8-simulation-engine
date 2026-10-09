@@ -53,7 +53,10 @@ FAULTS = {
     "cascade_on_no_attribution": "enforcement proceeds on NO_ATTRIBUTION",
     "speculative_attribution": "a higher-order effect is attributed through speculative intent modelling",
     "identity_measures_magnitude": "the attribution record carries a sanction and a magnitude",
+    "require_physical_damage": "cultural or cognitive harm is not treated as a systemic externality without physical damage",
+    "breach_unflagged": "a cross-layer act of IDENTITY is not recorded as a critical architectural breach",
 }
+IDENTITY_REQUESTS = ("measure_magnitude", "evaluate_justice", "assign_sanction", "override_impact")        # IDENTITY §13
 
 
 def measure(r, faults=frozenset()):
@@ -165,12 +168,20 @@ def run(r: Dict[str, Any]):
         rec = {"impact": ch, "attribution": "ATTRIBUTED" if shares else "UNATTRIBUTED",
                "weights": {k: round(x / tot, 9) for k, x in sorted(shares.items())} if tot else {},
                "chain": chain, "confidence_state": "SUFFICIENT_DATA" if conf >= r["min_attribution_confidence"] else "DEGRADED_SIGNAL"}
+        if o.get("kind") in NON_PHYSICAL:                                                   # IDENTITY §11
+            rec["systemic_externality"] = "require_physical_damage" not in faults
         if "identity_measures_magnitude" in faults:
             rec["sanction"] = "fine"
             rec["magnitude"] = o["I"]
         put("decision", "IDENTITY", 2, rec)
+        if ("sanction" in rec or "magnitude" in rec) and "breach_unflagged" not in faults:
+            put("notice", "AUDIT", 2, {"critical_architectural_breach": "DKP-1-IDENTITY-001", "record": ch})
         if not shares:
             put("notice", "AUDIT", 2, {"critical_system_violation": ch, "reason": "unattributed impact"})
+    for q in r["identity_requests"]:
+        put("decision", "IDENTITY", 2, {"cross_layer_request": q, "executed": False})
+        if "breach_unflagged" not in faults:
+            put("notice", "AUDIT", 2, {"critical_architectural_breach": "DKP-1-IDENTITY-001", "attempt": q})
     for q in r["enforcement_requests"]:
         rec = [mm.value for mm in log.messages() if mm.source == "IDENTITY" and mm.value.get("impact") == q["impact"]]
         no_attr = bool(rec) and rec[-1]["attribution"] == "NO_ATTRIBUTION"
@@ -282,7 +293,21 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         out.append(CheckResult("IMPACT-ImpactChannel-01", "channel_inputs", PASS, "every emitted channel is fed by a physical PTL quantity"))
         out.append(na("IDENTITY-11-01", "cultural_harm_attribution", "cultural or cognitive channels", "none fed"))
     # IDENTITY
-    att = {m.value["impact"]: m.value for m in msgs if m.source == "IDENTITY"}
+    att = {m.value["impact"]: m.value for m in msgs if m.source == "IDENTITY" and "impact" in m.value}
+    np_att = [a for ch, a in att.items() if imp.get(ch, {}).get("kind") in NON_PHYSICAL and a["attribution"] == "ATTRIBUTED"]
+    out.append(v("IDENTITY-11-02", "cultural_harm_systemic", [a["impact"] for a in np_att if a.get("systemic_externality") is not True],
+                 f"{len(np_att)} attributed cultural or cognitive harms treated as systemic externalities without physical damage "
+                 "(given the PTL proxy reading of F-037)", "{n} cultural or cognitive harms not treated as systemic externalities")
+               if np_att else na("IDENTITY-11-02", "cultural_harm_systemic", "cultural or cognitive harm", "none attributed"))
+    flagged = [m.value for m in msgs if m.source == "AUDIT" and m.value.get("critical_architectural_breach") == "DKP-1-IDENTITY-001"]
+    reqs = [m.value["cross_layer_request"] for m in msgs if m.source == "IDENTITY" and "cross_layer_request" in m.value]
+    leaks = [ch for ch, a in att.items() if "sanction" in a or "magnitude" in a]
+    unflagged = [q for q in reqs if q not in {x.get("attempt") for x in flagged}] + \
+        [ch for ch in leaks if ch not in {x.get("record") for x in flagged}]
+    out.append(v("IDENTITY-13-02", "isolation_breach_critical", unflagged,
+                 f"{len(reqs)} cross-layer requests refused and {len(leaks)} cross-layer records, each recorded as a critical "
+                 "architectural breach", "{n} cross-layer acts not recorded as critical breaches")
+               if reqs or leaks else na("IDENTITY-13-02", "isolation_breach_critical", "cross-layer acts", "none"))
     subj = {s["id"]: s for s in r["subjects"]}
     emitted = {ch: o for ch, o in imp.items() if o["emitted"] and (o["I"] != 0 or o["crossing"])}
     exp = _expect_attribution(r, emitted)
@@ -463,6 +488,8 @@ IMPLEMENTS = {
     "IDENTITY-11-01": ("cultural_harm_attribution", "PARTIAL", "F-037."),
     "IDENTITY-12-01": ("no_exemption", "IMPLEMENTED", None),
     "IDENTITY-13-01": ("attribution_only", "PARTIAL", "Record fields only."),
+    "IDENTITY-11-02": ("cultural_harm_systemic", "PARTIAL", "Conditional on feeding cultural channels from PTL proxies (F-037)."),
+    "IDENTITY-13-02": ("isolation_breach_critical", "PARTIAL", "Cross-layer requests are declared."),
 }
 
 _ID = re.compile(r"[a-z0-9][a-z0-9_]{0,23}")
@@ -562,6 +589,9 @@ class ImpactAttributionModule(LabModule):
                                {"en": "Higher-layer requests to IMPACT", "ru": "Запросы верхних слоёв к IMPACT"}),
         "enforcement_requests": _lst({"impact": {"type": "str"}}, [{"impact": "co2_air"}],
                                      {"en": "Enforcement requests (JUSTICE consumer)", "ru": "Запросы на принуждение (потребитель JUSTICE)"}),
+        "identity_requests": {"type": "list", "min_items": 0, "max_items": 4, "items": {"type": "enum", "values": list(IDENTITY_REQUESTS)},
+                              "default": ["assign_sanction"], "source": "user",
+                              "label": {"en": "Cross-layer requests to IDENTITY (§13)", "ru": "Межслойные запросы к IDENTITY (§13)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -602,7 +632,8 @@ class ImpactAttributionModule(LabModule):
         res = checks(r, log)
         msgs = log.messages()
         outputs = {"impact": [m.value for m in msgs if m.source == "IMPACT" and "channel" in m.value],
-                   "attribution": [m.value for m in msgs if m.source == "IDENTITY"],
+                   "attribution": [m.value for m in msgs if m.source == "IDENTITY" and "impact" in m.value],
+                   "refused_requests": [m.value for m in msgs if m.source == "IDENTITY" and "cross_layer_request" in m.value],
                    "enforcement": [m.value for m in msgs if m.source == "JUSTICE"],
                    "audit": [m.value for m in msgs if m.source == "AUDIT"],
                    "violations": sorted(c.requirement_id for c in res if c.status == FAIL),

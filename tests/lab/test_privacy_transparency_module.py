@@ -38,6 +38,8 @@ FAULT_CASES = {
     "anonymous_fewer_rights": ({}, ["PRIVACY-8-02"]),
     "unexplained_decision": ({}, ["TRANSPARENCY-11-01"]),
     "no_audit_hook": ({}, ["TRANSPARENCY-12-01"]),
+    "audit_without_zk": ({}, ["PRIVACY-9-02"]),
+    "breach_downgraded": ({}, ["PRIVACY-10-02"]),
 }
 
 
