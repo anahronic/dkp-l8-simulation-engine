@@ -47,3 +47,45 @@ def test_invalid_dates_refused(bad):
 def test_invalid_doy_rejected(doy):
     with pytest.raises(ValueError):
         from_dy_doy(6836, doy)
+
+
+from lab.modules.time import FAULTS, parse_canonical, store  # noqa: E402
+
+
+@pytest.mark.parametrize("fault", sorted(FAULTS))
+def test_fault_is_detected(fault):
+    clean = {c.requirement_id: c.status for c in M.evaluate(M.validate({})).checks}
+    broken = {c.requirement_id: c.status for c in M.evaluate(M.validate({"faults": [fault]})).checks}
+    assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
+
+
+def test_store_keeps_dti_day_and_refuses_gregorian_only():
+    out = {x["id"]: x for x in M.evaluate(M.validate({})).outputs["records"]}
+    assert out["conflicting"]["dti_day"] == 2461042 and out["conflicting"]["conflicts"] == ["dy_doy", "gregorian"]
+    assert not out["gregorian_only"]["accepted"]
+    assert out["audit_of_conflict"]["reference"] == "DTI-Day 2461042"
+    assert out["by_dy_doy"]["gregorian_display"] == "2026-01-02"
+
+
+@pytest.mark.parametrize("s", ["DY6836-84", "DY06836-084", "DY+6836-084", "DY6836-361", "DY-0-001", "DY6836-000"])
+def test_non_canonical_strings_rejected(s):
+    with pytest.raises(ValueError):
+        parse_canonical(s)
+
+
+def test_year_table_has_leap_years_and_360_days():
+    years = M.evaluate(M.validate({})).outputs["years"]
+    assert all(y["last"] - y["first"] + 1 == 360 and y["first"] == y["dy"] * 360 for y in years)
+    assert {6810, 6834} <= {y["dy"] for y in years}          # the DTI-Years containing 2000-02-29 and 2024-02-29
+
+
+@pytest.mark.parametrize("name", sorted(M.failure_examples()))
+def test_invalid_inputs_are_refused(name):
+    with pytest.raises(LabInputError):
+        M.validate(M.failure_examples()[name])
+
+
+def test_store_without_records():
+    assert store([]) == []
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"records": []})).checks}
+    assert st["TIME-7-02"] == "NOT_APPLICABLE" and st["TIME-8-02"] == "NOT_APPLICABLE"

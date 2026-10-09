@@ -40,8 +40,19 @@ FAULT_CASES = {
     "protocol_bound_settlement": ["SCOPE-9-04", "SCOPE-9-07"],
     "settle_during_halt": ["ASSETS-2-02"],
     "release_before_tail": ["FINANCE-10-03"],
+    "stability_veto": ["EXIT-0-02", "EXIT-2-01"],
+    "exit_as_failure": ["EXIT-1-01"],
+    "criminalize_exit": ["EXIT-2-01"],
+    "erase_on_exit": ["EXIT-8-04", "EXIT-12-03"],
+    "crisis_redefines_exit": ["EXIT-11-04"],
+    "scope_creep": ["INTEGRATION-2-04", "INTEGRATION-4.4-01"],
+    "undefined_phase": ["INTEGRATION-3-02"],
+    "shadow_as_proof": ["INTEGRATION-5.1-04"],
+    "divergence_as_failure": ["INTEGRATION-9-03"],
+    "conditional_aid": ["INTEGRATION-11-02"],
 }
 EXTRA = {"shock_ignored": {"shock_window": [95, 110]}, "settle_during_halt": {"ptl_halt_window": [276, 282]},
+         "crisis_redefines_exit": {"crisis_window": [262, 280]},
          "punitive_tail": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                            {"day": 120, "kind": "punitive", "verified": True}]}}
 

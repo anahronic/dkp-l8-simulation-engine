@@ -29,6 +29,16 @@ from lab.core.schema import LabInputError
 from lab.modules.time import canonical, dy_doy
 
 DEFAULT_PATTERN = ["W", "W", "R", "W", "W", "R"]   # §4.1
+FAULTS = {
+    "assign_refusers": "workers who refuse participation are scheduled anyway",
+    "penalize_refusal": "refusal is recorded as a violation with a penalty",
+    "restday_work": "workers are called in for 4 productive hours on restdays",
+    "work_in_recovery": "the recovery block is used for work",
+    "recovery_buyout": "a request to monetize the recovery block is granted",
+    "justify_recovery": "recovery is granted only with a justification",
+}
+RECOVERY_REQUESTS = ("remove", "reduce", "monetize", "meal", "rest", "personal", "mobility", "work_task")
+PERMITTED_RECOVERY = ("meal", "rest", "personal", "mobility")                                   # §5.3
 
 
 IMPLEMENTS = {
@@ -38,7 +48,15 @@ IMPLEMENTS = {
     "WORKCYCLE-4.2-02": ("rest_frequency", "IMPLEMENTED", None),
     "WORKCYCLE-5.1-01": ("workday_allocation", "IMPLEMENTED", None),
     "WORKCYCLE-5.2-01": ("recommended_layout", "IMPLEMENTED", None),
-    "WORKCYCLE-5.3-01": ("recovery_not_work", "PARTIAL", "Holds by construction of the coverage model."),
+    "WORKCYCLE-5.3-01": ("recovery_not_work", "IMPLEMENTED", None),
+    "WORKCYCLE-3-03": ("workday_has_work", "IMPLEMENTED", None),
+    "WORKCYCLE-3-04": ("restday_no_work", "IMPLEMENTED", None),
+    "WORKCYCLE-3-05": ("presence_window", "IMPLEMENTED", None),
+    "WORKCYCLE-4.2-03": ("sixty_cycles", "IMPLEMENTED", None),
+    "WORKCYCLE-5.3-03": ("recovery_untouchable", "PARTIAL", "Requests to remove, reduce or monetize the block are declared."),
+    "WORKCYCLE-5.3-04": ("recovery_activities", "PARTIAL", "Requested activities are declared."),
+    "WORKCYCLE-6-04": ("year_recovery_480", "IMPLEMENTED", None),
+    "WORKCYCLE-11-01": ("three_layers", "IMPLEMENTED", None),
     "WORKCYCLE-6-01": ("cycle_accounting_days", "IMPLEMENTED", None),
     "WORKCYCLE-6-02": ("cycle_accounting_hours", "IMPLEMENTED", None),
     "WORKCYCLE-6-03": ("year_accounting", "IMPLEMENTED", None),
@@ -116,9 +134,14 @@ class WorkCycleModule(LabModule):
                            "label": {"en": "High-intensity environment (§8.2)", "ru": "Высокая нагрузка (§8.2)"}},
         "refusing_workers": {"type": "int", "min": 0, "max": 1000, "default": 0, "source": "user",
                              "label": {"en": "Workers who refuse participation (LABOR §9.1)", "ru": "Отказавшихся от участия (LABOR §9.1)"}},
-        "faults": {"type": "list", "min_items": 0, "max_items": 2,
-                   "items": {"type": "enum", "values": ["assign_refusers", "penalize_refusal"]}, "default": [], "source": "user",
-                   "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"}},
+        "recovery_requests": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "enum", "values": list(RECOVERY_REQUESTS)},
+                              "default": ["monetize", "meal", "personal", "work_task"], "source": "user",
+                              "label": {"en": "Requests concerning the recovery block (§5.3)", "ru": "Запросы о блоке восстановления (§5.3)"}},
+        "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS),
+                   "items": {"type": "enum", "values": list(FAULTS)}, "default": [], "source": "user",
+                   "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
+                   "help": {"en": "; ".join(f"{k}: {v}" for k, v in FAULTS.items()),
+                            "ru": "Каждая ошибка отключает одно правило, чтобы показать, что проверка её ловит."}},
         "compensation_declared": {"type": "bool", "default": False, "source": "user",
                                   "label": {"en": "Equivalent recovery compensation declared (§7)",
                                             "ru": "Заявлена равноценная компенсация восстановления (§7)"}},
@@ -162,16 +185,34 @@ class WorkCycleModule(LabModule):
         H = r["horizon_days"] * 24
         cover = [0.0] * (H + 72)
         wb, rec, pres = r["work_before_recovery"], r["recovery_hours"], r["presence_hours"]
+        faults = set(r["faults"])
+        day_hours = {}                                  # worker -> [{kind, productive, recovery, presence}] for the horizon
         for w in roster:
+            rows = []
             for k, kind in enumerate([w["day_before"]] + w["days"]):
-                if kind != "W":
-                    continue
                 t0 = (k - 1) * 24 + w["shift_start"]           # k = 0 is the day before the horizon
-                for h in range(int(math.ceil(pres))):
-                    rel = h + 0.5                       # hour midpoint inside the presence window
-                    productive = rel < wb or (wb + rec <= rel < pres and rel - rec < r["work_hours"])
-                    if productive and 0 <= t0 + h < H:
-                        cover[t0 + h] += 1
+                prod = recv = presence = 0
+                if kind == "W":
+                    presence = int(math.ceil(pres))
+                    for h in range(presence):
+                        rel = h + 0.5                       # hour midpoint inside the presence window
+                        in_recovery = wb <= rel < wb + rec
+                        productive = rel < wb or (wb + rec <= rel < pres and rel - rec < r["work_hours"]) or \
+                            (in_recovery and "work_in_recovery" in faults)
+                        if productive:
+                            prod += 1
+                            if 0 <= t0 + h < H:
+                                cover[t0 + h] += 1
+                        elif in_recovery:
+                            recv += 1
+                elif "restday_work" in faults:
+                    presence = prod = 4
+                    for h in range(4):
+                        if 0 <= t0 + h < H:
+                            cover[t0 + h] += 1
+                if k >= 1:
+                    rows.append({"kind": kind, "productive": prod, "recovery": recv, "presence": presence})
+            day_hours[w["worker"]] = rows
         demand = r["demand"]
         hours = []
         deficit_hours = 0
@@ -205,7 +246,16 @@ class WorkCycleModule(LabModule):
             "longest_workday_run": max(runs.values()),
             "workers_lower_bound_flat": lower_bound,
         }
-        checks = self.checks(r, roster, runs, deficit_hours) + self.labor_time_checks(r, roster)
+        decisions = []
+        for q in r["recovery_requests"]:
+            if q in PERMITTED_RECOVERY:
+                decisions.append({"request": q, "granted": True, "justification_required": "justify_recovery" in faults})
+            else:
+                decisions.append({"request": q, "granted": q == "monetize" and "recovery_buyout" in faults,
+                                  "reason": "the recovery block is mandatory non-working time (§3, §5.3)"})
+        outputs["recovery_requests"] = decisions
+        checks = [c for c in self.checks(r, roster, runs, deficit_hours) if c.requirement_id != "WORKCYCLE-5.3-01"] + \
+            self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions)
         explain = [
             {"en": f"{r['workers']} workers, shifts at {sorted(r['shift_starts'])} h: demand is fully covered in "
                    f"{H - deficit_hours} of {H} hours; largest shortfall {max_deficit:g} staff.",
@@ -220,6 +270,62 @@ class WorkCycleModule(LabModule):
             explain.append({"en": "Aligned phases: everybody rests on the same Cycle6 days, so those days have no staff.",
                             "ru": "Совпадающие фазы: все отдыхают в одни и те же дни Cycle6, в эти дни работать некому."})
         return ModuleResult(outputs=outputs, checks=checks, explain=explain)
+
+    def day_checks(self, r, day_hours, decisions) -> List[CheckResult]:
+        """§3 definitions, §4.2 sixty cycles, §5.3 recovery block, §6 yearly recovery, §11 three layers."""
+        out: List[CheckResult] = []
+
+        def v(rid, chk, bad, ok, no):
+            return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                               evidence={"violations": bad[:10]} if bad else {})
+
+        days = [(w, i, d) for w, rows in day_hours.items() for i, d in enumerate(rows)]
+        W = [(w, i, d) for w, i, d in days if d["kind"] == "W"]
+        R = [(w, i, d) for w, i, d in days if d["kind"] == "R"]
+        pres = int(math.ceil(r["presence_hours"]))
+        out.append(v("WORKCYCLE-3-03", "workday_has_work", [f"{w} day {i}" for w, i, d in W if d["productive"] <= 0],
+                     f"each of {len(W)} workdays carries productive work", "{n} workdays without productive work"))
+        out.append(v("WORKCYCLE-3-04", "restday_no_work", [f"{w} day {i}" for w, i, d in R if d["productive"] or d["presence"]],
+                     f"none of {len(R)} restdays carries productive work or presence", "{n} restdays with work"))
+        out.append(v("WORKCYCLE-3-05", "presence_window", [f"{w} day {i}" for w, i, d in W if d["presence"] != pres],
+                     f"every workday schedules a presence window of {r['presence_hours']:g} h", "{n} workdays with another window"))
+        out.append(v("WORKCYCLE-5.3-01", "recovery_not_work", [f"{w} day {i}" for w, i, d in W
+                                                               if d["recovery"] != int(math.ceil(r["recovery_hours"]))],
+                     "every recovery hour stays out of productive work and out of coverage", "{n} workdays whose recovery was worked"))
+        layered = [f"{w} day {i}" for w, i, d in days if (d["kind"] == "W" and d["productive"] + d["recovery"] > d["presence"])
+                   or (d["kind"] == "R" and (d["productive"] or d["recovery"] or d["presence"]))]
+        out.append(v("WORKCYCLE-11-01", "three_layers", layered,
+                     "every day is productive work plus mandatory recovery inside the presence window, or full rest",
+                     "{n} days mixing the layers"))
+        if r["pattern"] == DEFAULT_PATTERN:
+            starts = [dy * 360 for dy in range(r["start_dti_day"] // 360, (r["start_dti_day"] + r["horizon_days"]) // 360 + 1)]
+            bad = [s_ for s_ in starts if s_ % len(DEFAULT_PATTERN) != 0]
+            out.append(v("WORKCYCLE-4.2-03", "sixty_cycles", bad if 360 % len(DEFAULT_PATTERN) == 0 else ["360 mod 6"],
+                         f"360 / 6 = {360 // len(DEFAULT_PATTERN)} whole cycles; every DTI-Year starts on CycleDay 0", "{n} years off"))
+        else:
+            out.append(CheckResult("WORKCYCLE-4.2-03", "sixty_cycles", NOT_APPLICABLE, "60 cycles per year",
+                                   applicability="stated for the default 6-day cycle"))
+        if r["horizon_days"] >= 360 and r["pattern"] == DEFAULT_PATTERN:
+            yearly = sorted({sum(d["recovery"] for d in rows[:360]) for rows in day_hours.values()})
+            out.append(CheckResult("WORKCYCLE-6-04", "year_recovery_480", PASS if yearly == [480] else FAIL,
+                                   f"recovery per 360 days: {yearly} h (text: 480 h)"))
+        else:
+            out.append(CheckResult("WORKCYCLE-6-04", "year_recovery_480", NOT_APPLICABLE, "yearly recovery",
+                                   applicability="horizon shorter than one DTI-Year or non-default cycle"))
+        removal = [d["request"] for d in decisions if d["request"] in ("remove", "reduce", "monetize") and d["granted"]]
+        justified = [d["request"] for d in decisions if d.get("justification_required")]
+        out.append(v("WORKCYCLE-5.3-03", "recovery_untouchable", removal + justified,
+                     "requests to remove, reduce or monetize the block refused; recovery needs no justification",
+                     "{n} requests granted against the block or recovery made conditional") if decisions else
+                   CheckResult("WORKCYCLE-5.3-03", "recovery_untouchable", NOT_APPLICABLE, "requests", applicability="none"))
+        act = [d for d in decisions if d["request"] in PERMITTED_RECOVERY or d["request"] == "work_task"]
+        bad = [d["request"] for d in act if d["granted"] != (d["request"] in PERMITTED_RECOVERY)]
+        bad += [f"{w} day {i}" for w, i, d in W if d["recovery"] < int(math.ceil(r["recovery_hours"]))][:5]
+        out.append(v("WORKCYCLE-5.3-04", "recovery_activities", bad,
+                     "meals, rest, personal needs and mobility granted in the block; work tasks refused",
+                     "{n} activity decisions against §5.3") if act else
+                   CheckResult("WORKCYCLE-5.3-04", "recovery_activities", NOT_APPLICABLE, "activities", applicability="none requested"))
+        return out
 
     def labor_time_checks(self, r, roster) -> List[CheckResult]:
         """LABOR §6, §9.1 (refusal without compulsion or punishment) and TIME §5 (DTI-indexed roster days)."""
@@ -357,6 +463,8 @@ class WorkCycleModule(LabModule):
             "high_intensity": {"high_intensity": True},
             "refusals": {"refusing_workers": 6},
             "refusals_faulty": {"refusing_workers": 6, "faults": ["assign_refusers", "penalize_refusal"]},
+            "one_year": {"horizon_days": 360, "workers": 36},
+            "recovery_faulty": {"faults": ["restday_work", "work_in_recovery", "recovery_buyout", "justify_recovery"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

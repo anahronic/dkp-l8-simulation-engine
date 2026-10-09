@@ -171,11 +171,17 @@
     "phase authority declarations",
     "authority action records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "no_authority_beyond_phase"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -198,11 +204,17 @@
    "data_dependencies": [
     "entity classification and application records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "integrating_entity"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -228,11 +240,17 @@
    "data_dependencies": [
     "phase specifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "phase_terms_defined"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -410,7 +428,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "explicit_consent"
    },
    "tests": [
@@ -450,7 +468,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "sequential_phases"
    },
    "tests": [
@@ -486,7 +504,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "explicit_validation"
    },
    "tests": [
@@ -556,12 +574,18 @@
     "scope declarations",
     "authority, enforcement, and dependency inventories"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Dependencies are declared events.",
    "hypotheses_needed": [],
    "section_label": "4.4",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "scope_containment"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -597,7 +621,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "shadow_mode_no_effects"
    },
    "tests": [
@@ -704,12 +728,18 @@
    "data_dependencies": [
     "compatibility claim provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
    "section_label": "5.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "shadow_not_proof"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -867,7 +897,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "phase2_domains_only"
    },
    "tests": [
@@ -1155,7 +1185,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "shock_halts_and_suspends"
    },
    "tests": [
@@ -1232,7 +1262,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "rollback_logged"
    },
    "tests": [
@@ -1447,11 +1477,17 @@
     "assessment rules",
     "failure decision reasons"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Divergences are declared events.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "divergence_not_failure"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1485,7 +1521,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "steps_documented"
    },
    "tests": [
@@ -1589,11 +1625,17 @@
    "data_dependencies": [
     "aid terms and conditionality rules"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Aid offers are declared events.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.2.0",
+    "check": "no_conditional_aid"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1628,7 +1670,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_retroactive_enforcement"
    },
    "tests": [

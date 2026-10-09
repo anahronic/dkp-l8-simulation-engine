@@ -71,3 +71,25 @@ def test_roster_days_are_dti_labels():
     res = M.evaluate(M.validate({"start_dti_day": 2461042, "horizon_days": 6}))
     assert res.outputs["roster_days"][0] == "DY6836-083"
     assert {c.requirement_id: c.status for c in res.checks}["TIME-5.1-01"] == "PASS"
+
+
+from lab.modules.work_cycle import FAULTS  # noqa: E402
+
+
+@pytest.mark.parametrize("fault", sorted(FAULTS))
+def test_fault_is_detected(fault):
+    base = {"refusing_workers": 6} if fault in ("assign_refusers", "penalize_refusal") else {}
+    clean = {c.requirement_id: c.status for c in M.evaluate(M.validate(base)).checks}
+    broken = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
+    assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
+
+
+def test_one_year_recovery_and_cycles():
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate(M.examples()["one_year"])).checks}
+    assert st["WORKCYCLE-6-03"] == st["WORKCYCLE-6-04"] == st["WORKCYCLE-4.2-03"] == "PASS"
+
+
+def test_recovery_requests():
+    d = {x["request"]: x for x in M.evaluate(M.validate({})).outputs["recovery_requests"]}
+    assert not d["monetize"]["granted"] and not d["work_task"]["granted"]
+    assert d["meal"]["granted"] and not d["meal"]["justification_required"]

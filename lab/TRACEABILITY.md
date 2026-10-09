@@ -15,14 +15,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1119 (64.4 %) | 886 | 1039 | 813 | 3 | 60 | 17 | 618 | 93 | 1411 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1160 (66.8 %) | 886 | 1082 | 813 | 3 | 60 | 15 | 577 | 52 | 1411 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 0 | 36 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 322 (88.2 %) | 243 | 309 | 231 | 3 | 8 | 2 | 43 | 20 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 189 (44.6 %) | 136 | 171 | 120 | 0 | 15 | 3 | 235 | 36 | 335 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 175 (59.7 %) | 145 | 159 | 132 | 0 | 8 | 8 | 118 | 13 | 250 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 340 (93.2 %) | 243 | 327 | 231 | 3 | 8 | 2 | 25 | 2 | 266 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 204 (48.1 %) | 136 | 187 | 120 | 0 | 15 | 2 | 220 | 21 | 335 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 183 (62.5 %) | 145 | 168 | 132 | 0 | 8 | 7 | 110 | 5 | 250 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 339 (66.3 %) | 281 | 318 | 260 | 0 | 18 | 3 | 172 | 21 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1119 (64.4 %) | 886 | 1039 | 813 | 3 | 60 | 17 | 618 | 93 | 1411 |
+| **All registrable documents** | | 38/38 | 1737 | 1160 (66.8 %) | 886 | 1082 | 813 | 3 | 60 | 15 | 577 | 52 | 1411 |
 
 ### Stage criteria
 
@@ -248,7 +248,7 @@ Withdrawn after verification (not author decisions):
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | CODE-OF-PLANETARY-SYNERGY | 101 | 72 | 61 | 0 | 10 | 1 | 29 | 92 |
 | DKP-0-ORACLE-001 | 58 | 54 | 49 | 2 | 2 | 1 | 4 | 49 |
-| DKP-0-TIME-001 | 35 | 12 | 11 | 1 | 0 | 0 | 23 | 6 |
+| DKP-0-TIME-001 | 35 | 30 | 29 | 1 | 0 | 0 | 5 | 6 |
 | DKP-1-AXIOMS-001 | 44 | 32 | 26 | 0 | 4 | 2 | 12 | 26 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
 | DKP-1-IDENTITY-001 | 39 | 31 | 28 | 0 | 2 | 1 | 8 | 31 |
@@ -273,9 +273,9 @@ Withdrawn after verification (not author decisions):
 | DKP-5-INFO-001 | 39 | 27 | 25 | 0 | 2 | 0 | 12 | 37 |
 | DKP-5-TRANSPORT-001 | 35 | 15 | 10 | 0 | 5 | 0 | 20 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 8 | 8 | 0 | 0 | 0 | 9 | 14 |
-| DKP-5-WORK-CYCLE-001 | 39 | 16 | 14 | 0 | 0 | 2 | 23 | 23 |
-| DKP-6-EXIT-001 | 62 | 22 | 20 | 0 | 0 | 2 | 40 | 49 |
-| DKP-6-INTEGRATION-001 | 51 | 15 | 15 | 0 | 0 | 0 | 36 | 37 |
+| DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
+| DKP-6-EXIT-001 | 62 | 30 | 29 | 0 | 0 | 1 | 32 | 49 |
+| DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 35 | 31 | 0 | 4 | 0 | 2 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 28 | 28 | 0 | 0 | 0 | 11 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 29 | 26 | 0 | 3 | 0 | 10 | 31 |
@@ -417,16 +417,34 @@ Withdrawn after verification (not author decisions):
 | ORACLE-EpistemicInterpretationNote-03 | PARTIAL | oracle_ingestion · bounded_validity | PASS | yes | — |
 | TIME-10-01 | IMPLEMENTED | time · reference_forward | PASS | — | — |
 | TIME-10-02 | IMPLEMENTED | time · reference_inverse | PASS | — | — |
+| TIME-10-03 | IMPLEMENTED | time · reference_frozen | PASS | — | — |
+| TIME-10-04 | IMPLEMENTED | time · reference_rejects_doy | PASS | — | — |
+| TIME-2-02 | IMPLEMENTED | time · unique_from_canonical | PASS | — | — |
 | TIME-3-02 | IMPLEMENTED | time · dti_day_is_jdn | PASS | — | — |
+| TIME-3-03 | IMPLEMENTED | time · year_360_days | PASS | yes | — |
+| TIME-3-04 | IMPLEMENTED | time · doy_1_to_360 | PASS | yes | — |
+| TIME-4.1-01 | IMPLEMENTED | time · civil_day_unit | PASS | — | — |
+| TIME-4.1-02 | IMPLEMENTED | time · no_sub_day_units | PASS | — | — |
+| TIME-4.2-01 | IMPLEMENTED | time · no_leap_rule | PASS | yes | — |
+| TIME-4.2-02 | IMPLEMENTED | time · arithmetic_boundaries | PASS | yes | — |
 | TIME-5.1-01 | IMPLEMENTED | time · dy_formula | PASS | — | — |
 | TIME-5.1-02 | IMPLEMENTED | time · doy_formula | PASS | — | — |
 | TIME-5.2-01 | IMPLEMENTED | contribution · record_time_index | PASS | — | — |
+| TIME-5.2-02 | IMPLEMENTED | time · string_fields | PASS | — | — |
+| TIME-6.1-01 | IMPLEMENTED | time · standard_jdn | PASS | — | — |
 | TIME-6.2-01 | IMPLEMENTED | time · roundtrip | PASS | — | — |
 | TIME-6.3-01 | IMPLEMENTED | time · invalid_doy_rejected | PASS | — | — |
+| TIME-6.3-02 | IMPLEMENTED | time · negative_dy | PASS | — | — |
+| TIME-6.3-03 | IMPLEMENTED | time · derived_never_override | PASS | yes | — |
+| TIME-7-01 | IMPLEMENTED | time · gregorian_for_reading | PASS | yes | — |
+| TIME-7-02 | IMPLEMENTED | time · authoritative_has_index | PASS | yes | — |
+| TIME-7-03 | IMPLEMENTED | time · dti_day_wins | PASS | yes | — |
+| TIME-8-01 | PARTIAL | time · signed_store_dti_day | PASS | — | — |
+| TIME-8-02 | IMPLEMENTED | time · audits_reference_dti_day | PASS | yes | — |
 | TIME-9-01 | IMPLEMENTED | time · normative_vector | PASS | — | — |
 | TIME-9-02 | IMPLEMENTED | time · normative_vector | PASS | — | — |
 | TIME-9-03 | IMPLEMENTED | time · normative_vector | PASS | — | — |
-| TIME-9-04 | IMPLEMENTED | time · normative_vector | FAIL | — | Q-002 |
+| TIME-9-04 | IMPLEMENTED | time · normative_vector | FAIL | yes | Q-002 |
 | AXIOMS-1-01 | PARTIAL | axiom_constraints · no_violation_for_benefit | UNKNOWN | yes | — |
 | AXIOMS-3-02 | IMPLEMENTED | axiom_constraints · constraints_not_terms | PASS | yes | — |
 | AXIOMS-5-01 | IMPLEMENTED | axiom_constraints · axioms_before_optimization | PASS | — | — |
@@ -1057,26 +1075,39 @@ Withdrawn after verification (not author decisions):
 | TRANSPORTA-A.5-04 | PARTIAL | edition_finality · full_system_simulation | PASS | — | — |
 | TRANSPORTA-A.5-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | TRANSPORTA-A.5-06 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
+| WORKCYCLE-11-01 | IMPLEMENTED | work_cycle · three_layers | PASS | yes | — |
 | WORKCYCLE-3-02 | IMPLEMENTED | work_cycle · cycle_day | PASS | — | Q-012 |
+| WORKCYCLE-3-03 | IMPLEMENTED | work_cycle · workday_has_work | PASS | — | — |
+| WORKCYCLE-3-04 | IMPLEMENTED | work_cycle · restday_no_work | PASS | yes | — |
+| WORKCYCLE-3-05 | IMPLEMENTED | work_cycle · presence_window | PASS | — | — |
 | WORKCYCLE-4.1-01 | PARTIAL | work_cycle · default_cycle | PASS | — | — |
 | WORKCYCLE-4.2-01 | IMPLEMENTED | work_cycle · max_consecutive | PASS | — | — |
 | WORKCYCLE-4.2-02 | IMPLEMENTED | work_cycle · rest_frequency | PASS | — | — |
+| WORKCYCLE-4.2-03 | IMPLEMENTED | work_cycle · sixty_cycles | PASS | — | — |
 | WORKCYCLE-5.1-01 | IMPLEMENTED | work_cycle · workday_allocation | PASS | — | Q-013 |
 | WORKCYCLE-5.2-01 | IMPLEMENTED | work_cycle · recommended_layout | PASS | — | — |
-| WORKCYCLE-5.3-01 | PARTIAL | work_cycle · recovery_not_work | PASS | — | — |
+| WORKCYCLE-5.3-01 | IMPLEMENTED | work_cycle · recovery_not_work | PASS | yes | — |
+| WORKCYCLE-5.3-03 | PARTIAL | work_cycle · recovery_untouchable | PASS | yes | — |
+| WORKCYCLE-5.3-04 | PARTIAL | work_cycle · recovery_activities | PASS | yes | — |
 | WORKCYCLE-6-01 | IMPLEMENTED | work_cycle · cycle_accounting_days | PASS | — | — |
 | WORKCYCLE-6-02 | IMPLEMENTED | work_cycle · cycle_accounting_hours | PASS | — | — |
-| WORKCYCLE-6-03 | IMPLEMENTED | work_cycle · year_accounting | NOT_APPLICABLE | — | — |
+| WORKCYCLE-6-03 | IMPLEMENTED | work_cycle · year_accounting | PASS | — | — |
+| WORKCYCLE-6-04 | IMPLEMENTED | work_cycle · year_recovery_480 | PASS | — | — |
 | WORKCYCLE-7-01 | PARTIAL | work_cycle · recovery_invariant | PASS | — | — |
 | WORKCYCLE-7-02 | IMPLEMENTED | work_cycle · planning_failure | PASS | — | — |
 | WORKCYCLE-8.1-01 | PARTIAL | work_cycle · continuity_by_shifts | PASS | — | Q-012 |
 | WORKCYCLE-8.1-02 | IMPLEMENTED | work_cycle · no_exhaustion | PASS | — | — |
 | WORKCYCLE-8.2-01 | IMPLEMENTED | work_cycle · shift_allocation | PASS | — | — |
 | WORKCYCLE-8.2-02 | IMPLEMENTED | work_cycle · high_intensity_recovery | NOT_APPLICABLE | — | Q-013 |
+| EXIT-0-02 | IMPLEMENTED | exit_integration · exit_not_denied | PASS | yes | — |
+| EXIT-1-01 | IMPLEMENTED | exit_integration · not_sanction_or_failure | PASS | yes | — |
 | EXIT-10-02 | PARTIAL | exit_integration · delayed_settlement_bounded | NOT_APPLICABLE | — | — |
-| EXIT-11-01 | IMPLEMENTED | exit_integration · valid_during_crisis | NOT_APPLICABLE | — | — |
+| EXIT-11-01 | IMPLEMENTED | exit_integration · valid_during_crisis | PASS | — | — |
+| EXIT-11-04 | PARTIAL | exit_integration · crisis_scoped | PASS | yes | — |
 | EXIT-12-01 | PARTIAL | exit_integration · finance_settlement | PASS | — | — |
 | EXIT-12-02 | IMPLEMENTED | exit_integration · data_frozen | PASS | yes | — |
+| EXIT-12-03 | IMPLEMENTED | exit_integration · retention_purposes | PASS | yes | — |
+| EXIT-13-01 | IMPLEMENTED | exit_integration · may_reapply | PASS | — | — |
 | EXIT-13-03 | IMPLEMENTED | exit_integration · reentry_not_delayed | PASS | yes | — |
 | EXIT-13-04 | IMPLEMENTED | exit_integration · restitution_before_reentry | PASS | — | — |
 | EXIT-15-03 | IMPLEMENTED | exit_integration · authority_terminates | PASS | — | — |
@@ -1085,6 +1116,8 @@ Withdrawn after verification (not author decisions):
 | EXIT-16-03 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | EXIT-16-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | EXIT-16-05 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| EXIT-2-01 | IMPLEMENTED | exit_integration · not_prohibited_or_criminalized | PASS | yes | — |
+| EXIT-3-02 | IMPLEMENTED | exit_integration · exiting_entity | PASS | — | — |
 | EXIT-4-02 | IMPLEMENTED | exit_integration · no_approval_needed | PASS | yes | — |
 | EXIT-4-03 | PARTIAL | exit_integration · never_suspended | PASS | — | Q-032 |
 | EXIT-5-01 | PARTIAL | exit_integration · signed_scoped_declaration | PASS | — | — |
@@ -1092,24 +1125,32 @@ Withdrawn after verification (not author decisions):
 | EXIT-6-02 | PARTIAL | exit_integration · cooling_bounded | PASS | — | Q-031 |
 | EXIT-7-02 | IMPLEMENTED | exit_integration · phases_declared | PASS | — | — |
 | EXIT-8-02 | IMPLEMENTED | exit_integration · mechanisms_disengage | PASS | — | — |
+| EXIT-8-04 | IMPLEMENTED | exit_integration · records_and_tail_kept | PASS | yes | — |
 | EXIT-9-01 | IMPLEMENTED | exit_integration · only_prior_verified | PASS | yes | — |
 | EXIT-9-03 | IMPLEMENTED | exit_integration · no_punitive_tail | PASS | yes | — |
 | EXIT-9-04 | IMPLEMENTED | exit_integration · no_new_obligations | PASS | yes | — |
 | INTEGRATION-10-01 | IMPLEMENTED | exit_integration · steps_documented | PASS | — | — |
+| INTEGRATION-11-02 | PARTIAL | exit_integration · no_conditional_aid | PASS | yes | — |
 | INTEGRATION-11-03 | IMPLEMENTED | exit_integration · no_retroactive_enforcement | PASS | yes | — |
 | INTEGRATION-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | INTEGRATION-12-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | INTEGRATION-12-03 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | INTEGRATION-12-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | INTEGRATION-12-05 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| INTEGRATION-2-04 | IMPLEMENTED | exit_integration · no_authority_beyond_phase | PASS | yes | — |
+| INTEGRATION-3-01 | IMPLEMENTED | exit_integration · integrating_entity | PASS | — | — |
+| INTEGRATION-3-02 | IMPLEMENTED | exit_integration · phase_terms_defined | PASS | yes | — |
 | INTEGRATION-4.1-01 | PARTIAL | exit_integration · explicit_consent | PASS | — | — |
 | INTEGRATION-4.2-01 | IMPLEMENTED | exit_integration · sequential_phases | PASS | yes | — |
 | INTEGRATION-4.2-02 | IMPLEMENTED | exit_integration · explicit_validation | PASS | yes | — |
+| INTEGRATION-4.4-01 | PARTIAL | exit_integration · scope_containment | PASS | yes | — |
 | INTEGRATION-5.1-01 | IMPLEMENTED | exit_integration · shadow_mode_no_effects | PASS | yes | — |
+| INTEGRATION-5.1-04 | IMPLEMENTED | exit_integration · shadow_not_proof | PASS | yes | — |
 | INTEGRATION-5.2-01 | PARTIAL | code_synergy · no_kill_switch_in_phase_1 | PASS | — | Q-050 |
-| INTEGRATION-5.3-01 | IMPLEMENTED | exit_integration · phase2_domains_only | PASS | — | — |
+| INTEGRATION-5.3-01 | IMPLEMENTED | exit_integration · phase2_domains_only | PASS | yes | — |
 | INTEGRATION-7-01 | PARTIAL | exit_integration · shock_halts_and_suspends | PASS | — | — |
 | INTEGRATION-7-03 | IMPLEMENTED | exit_integration · rollback_logged | PASS | — | — |
+| INTEGRATION-9-03 | PARTIAL | exit_integration · divergence_not_failure | PASS | yes | — |
 | RESILIENCE-1-01 | PARTIAL | resilience_structure · continuity_under_pressure | PASS | yes | — |
 | RESILIENCE-10.1-01 | PARTIAL | resilience_structure · crisis_not_overridden | PASS | — | — |
 | RESILIENCE-10.1-02 | IMPLEMENTED | resilience_structure · crisis_no_centralization | PASS | — | — |

@@ -60,6 +60,11 @@
   },
   {
    "module": "time",
+   "example": "faulty_time",
+   "kind": "counterexample"
+  },
+  {
+   "module": "time",
    "example": "normative_vectors",
    "kind": "reference"
   },
@@ -77,6 +82,16 @@
    "module": "work_cycle",
    "example": "high_intensity",
    "kind": "reference"
+  },
+  {
+   "module": "work_cycle",
+   "example": "one_year",
+   "kind": "reference"
+  },
+  {
+   "module": "work_cycle",
+   "example": "recovery_faulty",
+   "kind": "counterexample"
   },
   {
    "module": "work_cycle",
@@ -345,8 +360,18 @@
   },
   {
    "module": "exit_integration",
+   "example": "exit_during_crisis",
+   "kind": "reference"
+  },
+  {
+   "module": "exit_integration",
    "example": "exit_in_crisis_scope_reading",
    "kind": "alternative"
+  },
+  {
+   "module": "exit_integration",
+   "example": "faulty_crisis_terms",
+   "kind": "counterexample"
   },
   {
    "module": "exit_integration",
@@ -355,7 +380,22 @@
   },
   {
    "module": "exit_integration",
+   "example": "faulty_exit_records",
+   "kind": "counterexample"
+  },
+  {
+   "module": "exit_integration",
+   "example": "faulty_exit_rights",
+   "kind": "counterexample"
+  },
+  {
+   "module": "exit_integration",
    "example": "faulty_integration",
+   "kind": "counterexample"
+  },
+  {
+   "module": "exit_integration",
+   "example": "faulty_integration_scope",
    "kind": "counterexample"
   },
   {
@@ -1269,17 +1309,17 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1119,
-  "covered_percent": 64.4,
+  "covered": 1160,
+  "covered_percent": 66.8,
   "statuses": {
-   "PASS": 1039,
+   "PASS": 1082,
    "FAIL": 3,
    "UNKNOWN": 60,
-   "NOT_APPLICABLE": 17,
-   "UNCOVERED": 618
+   "NOT_APPLICABLE": 15,
+   "UNCOVERED": 577
   },
   "resolvable": 326,
-  "resolvable_uncovered": 93,
+  "resolvable_uncovered": 52,
   "unresolved_decisions": 1411,
   "covered_with_open_point": 886,
   "pass_with_open_point": 813
@@ -1332,17 +1372,17 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1119,
-    "covered_percent": 64.4,
+    "covered": 1160,
+    "covered_percent": 66.8,
     "statuses": {
-     "PASS": 1039,
+     "PASS": 1082,
      "FAIL": 3,
      "UNKNOWN": 60,
-     "NOT_APPLICABLE": 17,
-     "UNCOVERED": 618
+     "NOT_APPLICABLE": 15,
+     "UNCOVERED": 577
     },
     "resolvable": 326,
-    "resolvable_uncovered": 93,
+    "resolvable_uncovered": 52,
     "unresolved_decisions": 1411,
     "covered_with_open_point": 886,
     "pass_with_open_point": 813
@@ -1417,17 +1457,17 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 322,
-    "covered_percent": 88.2,
+    "covered": 340,
+    "covered_percent": 93.2,
     "statuses": {
-     "PASS": 309,
+     "PASS": 327,
      "FAIL": 3,
      "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 43
+     "UNCOVERED": 25
     },
     "resolvable": 99,
-    "resolvable_uncovered": 20,
+    "resolvable_uncovered": 2,
     "unresolved_decisions": 266,
     "covered_with_open_point": 243,
     "pass_with_open_point": 231
@@ -1450,17 +1490,17 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 189,
-    "covered_percent": 44.6,
+    "covered": 204,
+    "covered_percent": 48.1,
     "statuses": {
-     "PASS": 171,
+     "PASS": 187,
      "FAIL": 0,
      "UNKNOWN": 15,
-     "NOT_APPLICABLE": 3,
-     "UNCOVERED": 235
+     "NOT_APPLICABLE": 2,
+     "UNCOVERED": 220
     },
     "resolvable": 89,
-    "resolvable_uncovered": 36,
+    "resolvable_uncovered": 21,
     "unresolved_decisions": 335,
     "covered_with_open_point": 136,
     "pass_with_open_point": 120
@@ -1483,17 +1523,17 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 175,
-    "covered_percent": 59.7,
+    "covered": 183,
+    "covered_percent": 62.5,
     "statuses": {
-     "PASS": 159,
+     "PASS": 168,
      "FAIL": 0,
      "UNKNOWN": 8,
-     "NOT_APPLICABLE": 8,
-     "UNCOVERED": 118
+     "NOT_APPLICABLE": 7,
+     "UNCOVERED": 110
     },
     "resolvable": 43,
-    "resolvable_uncovered": 13,
+    "resolvable_uncovered": 5,
     "unresolved_decisions": 250,
     "covered_with_open_point": 145,
     "pass_with_open_point": 132
@@ -9962,23 +10002,25 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "reference_frozen",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -9991,23 +10033,25 @@
    "section": "10",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "reference_rejects_doy",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10052,23 +10096,25 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "unique_from_canonical",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10240,24 +10286,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "year_360_days",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10269,24 +10319,28 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "doy_1_to_360",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10298,23 +10352,25 @@
    "section": "4.1",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "civil_day_unit",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10327,23 +10383,25 @@
    "section": "4.1",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "no_sub_day_units",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10356,24 +10414,28 @@
    "section": "4.2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "no_leap_rule",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10385,24 +10447,28 @@
    "section": "4.2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "arithmetic_boundaries",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10435,7 +10501,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -10527,23 +10593,25 @@
    "section": "5.2",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "string_fields",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10556,23 +10624,25 @@
    "section": "6.1",
    "kind": "formula",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "standard_jdn",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10647,23 +10717,25 @@
    "section": "6.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "negative_dy",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10676,24 +10748,28 @@
    "section": "6.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "derived_never_override",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10705,24 +10781,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "gregorian_for_reading",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10734,24 +10814,28 @@
    "section": "7",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "authoritative_has_index",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10763,24 +10847,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "dti_day_wins",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10792,23 +10880,25 @@
    "section": "8",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "time",
+   "check": "signed_store_dti_day",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": "A SHOULD: a deviation is reported UNKNOWN, not FAIL.",
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -10821,24 +10911,28 @@
    "section": "8",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "audits_reference_dti_day",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -10964,7 +11058,9 @@
     "NOT_APPLICABLE": 0
    },
    "status": "FAIL",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "time:faulty_time"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -20948,7 +21044,7 @@
     "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 16
+    "NOT_APPLICABLE": 17
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -22113,7 +22209,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -24560,7 +24656,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -24831,7 +24927,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -24886,7 +24982,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 4,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [
@@ -49160,25 +49256,36 @@
    "section": "11",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "three_layers",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "work_cycle:recovery_faulty"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49305,7 +49412,7 @@
     "Q-012"
    ],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49330,25 +49437,34 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "workday_has_work",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49359,25 +49475,36 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "restday_no_work",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "work_cycle:recovery_faulty"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49388,25 +49515,34 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "presence_window",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49499,7 +49635,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49542,7 +49678,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49584,7 +49720,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49611,25 +49747,34 @@
    "section": "4.2",
    "kind": "formula",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "sixty_cycles",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49692,7 +49837,7 @@
     "Q-013"
    ],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49733,7 +49878,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49753,13 +49898,13 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "module": "work_cycle",
    "check": "recovery_not_work",
    "tests": [
     "tests/lab/test_work_cycle_module.py"
    ],
-   "gap": "Holds by construction of the coverage model.",
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [
     "H-WC-1",
@@ -49771,13 +49916,15 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "work_cycle:recovery_faulty"
+   ],
    "under_alternative_readings": {
     "PASS": 1
    },
@@ -49823,25 +49970,36 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "work_cycle",
+   "check": "recovery_untouchable",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": "Requests to remove, reduce or monetize the block are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "work_cycle:recovery_faulty"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49852,25 +50010,36 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "work_cycle",
+   "check": "recovery_activities",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": "Requested activities are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "work_cycle:recovery_faulty"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -49899,7 +50068,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49937,7 +50106,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -49975,12 +50144,12 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
    },
-   "status": "NOT_APPLICABLE",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
     "NOT_APPLICABLE": 1
@@ -49995,25 +50164,34 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "year_recovery_480",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -50042,7 +50220,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50087,7 +50265,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50127,7 +50305,7 @@
     "Q-012"
    ],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50174,7 +50352,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50219,7 +50397,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 3,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50264,7 +50442,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -50414,25 +50592,36 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "exit_not_denied",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit_rights"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -50475,25 +50664,36 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "not_sanction_or_failure",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit_rights"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -50557,7 +50757,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 4
+    "NOT_APPLICABLE": 5
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -50691,12 +50891,12 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 4
    },
-   "status": "NOT_APPLICABLE",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {
     "NOT_APPLICABLE": 1,
@@ -50778,25 +50978,37 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-7-SCOPE-001 is absent, so required scope compliance cannot be determined from this text. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "crisis_scoped",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Crisis handling is a declared window; 'strictly scoped under SCOPE' is checked as unchanged exit terms.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_crisis_terms"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -50825,7 +51037,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50866,7 +51078,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -50891,25 +51103,36 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "retention_purposes",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit_records"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -50952,25 +51175,34 @@
    "section": "13",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The integration protocol governing reapplication is not supplied. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "may_reapply",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51031,7 +51263,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -51071,7 +51303,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -51272,7 +51504,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -51507,25 +51739,36 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "not_prohibited_or_criminalized",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit_rights"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51600,25 +51843,34 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "exiting_entity",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -51807,7 +52059,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -51851,7 +52103,7 @@
     "Q-032"
    ],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -51927,7 +52179,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52000,7 +52252,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52078,7 +52330,7 @@
     "Q-031"
    ],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52215,7 +52467,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52317,7 +52569,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52372,25 +52624,36 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "records_and_tail_kept",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit_records"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52419,7 +52682,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52494,7 +52757,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52537,7 +52800,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52612,7 +52875,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -52696,25 +52959,36 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_conditional_aid",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Aid offers are declared events.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -52743,7 +53017,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53137,25 +53411,37 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "no_authority_beyond_phase",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration",
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -53166,25 +53452,34 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "integrating_entity",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-031"
@@ -53197,25 +53492,36 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "phase_terms_defined",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -53372,7 +53678,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53413,7 +53719,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53453,7 +53759,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53507,25 +53813,37 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "scope_containment",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Dependencies are declared events.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration",
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -53554,7 +53872,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53643,25 +53961,36 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "shadow_not_proof",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -53808,13 +54137,15 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration_scope"
+   ],
    "under_alternative_readings": {
     "PASS": 2
    },
@@ -54043,7 +54374,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -54113,7 +54444,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 3
+    "NOT_APPLICABLE": 4
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -54290,25 +54621,36 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "divergence_not_failure",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Divergences are declared events.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": null
@@ -61364,7 +61706,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -61408,7 +61750,7 @@
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 4,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
    "status": "UNKNOWN",
@@ -61453,7 +61795,7 @@
     "Q-032"
    ],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -61497,7 +61839,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -61611,7 +61953,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
