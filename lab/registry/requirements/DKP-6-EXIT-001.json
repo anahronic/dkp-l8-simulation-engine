@@ -2044,13 +2044,19 @@
    "data_dependencies": [
     "upgrade workflow, simulation results, audit results, and activation records"
    ],
-   "gap": "The referenced upgrade, simulation, and audit procedures and the required meaning of rollback are absent. No lab check implemented yet.",
+   "gap": "Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Declare whether rollback denotes a required capability, procedure, or executed event."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "upgrade_procedure"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2080,13 +2086,19 @@
    "data_dependencies": [
     "protocol identifier and edition history"
    ],
-   "gap": "The document does not reconcile 'any modification' with presentation-only corrections recorded only by date. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether presentation-only corrections are excluded from modifications requiring new identifiers."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2118,13 +2130,19 @@
    "data_dependencies": [
     "modification simulation evidence and scope compatibility declarations"
    ],
-   "gap": "The referenced protocols are absent and applicability to presentation-only corrections is unresolved. No lab check implemented yet.",
+   "gap": "Simulation results are declared.",
    "hypotheses_needed": [
     "Declare whether these requirements exclude presentation-only corrections."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "modification_requirements"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2157,19 +2175,27 @@
    "data_dependencies": [
     "edition comparison and change metadata"
    ],
-   "gap": "Normative-equivalence criteria and the referenced Upgrade definition are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how presentation-only changes are distinguished from normative changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "empirical_model_data",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -2192,13 +2218,19 @@
    "data_dependencies": [
     "published canonical sources and canonical repository digest manifest"
    ],
-   "gap": "Canonical source identification, byte canonicalization, and edition-to-manifest mapping are unspecified. No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [
     "Declare how canonical source bytes and corresponding manifest entries are selected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

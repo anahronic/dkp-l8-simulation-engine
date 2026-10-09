@@ -1845,13 +1845,19 @@
     "acceptance and activation records",
     "rollback evidence"
    ],
-   "gap": "The referenced procedures and their acceptance, activation, and rollback requirements are absent. No lab check implemented yet.",
+   "gap": "Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Declare surrogate procedural criteria if simulating without the referenced documents, including the meaning of rollback."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "upgrade_procedure"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1882,13 +1888,19 @@
     "identifier registry",
     "normative change assessment"
    ],
-   "gap": "The boundary between normative modification and presentation-only correction requires a content assessment. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how normative changes are identified and whether new means changed from the prior identifier or globally unused."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1916,14 +1928,26 @@
     "modification package",
     "compatibility declaration"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "No target named (F-041): FAIL without a declaration, UNKNOWN otherwise.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "compatibility_declared"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-060"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "ERROR-12-04",
@@ -1950,19 +1974,27 @@
     "document versions",
     "change classification records"
    ],
-   "gap": "Normative-equivalence criteria, the referenced exception details, and the exact date-field mapping are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a normative-equivalence test and map Last updated to the document's date metadata."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1987,13 +2019,19 @@
     "canonical source files",
     "canonical repository SHA256SUMS.txt"
    ],
-   "gap": "Canonical source identification, byte representation, and edition-to-manifest mapping are not supplied. No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [
     "Declare which exact source bytes and manifest entry correspond to each published edition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",

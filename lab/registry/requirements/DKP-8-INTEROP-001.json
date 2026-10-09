@@ -1575,14 +1575,20 @@
     "audit results",
     "activation and rollback records"
    ],
-   "gap": "The referenced procedures, acceptance conditions, activation window rules, and rollback semantics are absent. No lab check implemented yet.",
+   "gap": "Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Declare the upgrade state machine and timing rules if the referenced protocols remain unavailable.",
     "Declare how upgrade rollback relates to the section 9 rollback prohibition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "upgrade_procedure"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1612,13 +1618,19 @@
     "protocol identifier registry",
     "modification classifications"
    ],
-   "gap": "It is unclear whether presentation-only corrections are exempt and whether new requires global uniqueness or only a changed identifier. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the interaction with the presentation-only correction exception and the scope of identifier freshness."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1649,13 +1661,19 @@
     "simulation requirements",
     "simulation execution records and results"
    ],
-   "gap": "DKP-8-SIMULATION-001 is absent, so conforming simulation cannot be established. No lab check implemented yet.",
+   "gap": "Simulation results are declared.",
    "hypotheses_needed": [
     "Declare a conforming simulation procedure if the referenced protocol remains unavailable."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "simulated"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1685,11 +1703,17 @@
    "data_dependencies": [
     "modification records and compatibility declarations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "compatibility_declared"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1720,20 +1744,28 @@
     "upgrade classification rules",
     "edition metadata"
    ],
-   "gap": "DKP-4-UPGRADE-001 §3 and a normative-equivalence test are absent, and the scope of date-only recording is ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how preservation of normative content is established.",
     "Declare how date-only correction recording interacts with identifier and edition digest requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1758,13 +1790,19 @@
     "canonical source artifacts",
     "canonical repository checksum file"
    ],
-   "gap": "The method for identifying each edition's canonical source and any required canonicalization is unspecified. No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [
     "Declare the canonical source artifact for each edition and whether hashing uses its exact stored bytes or a defined canonicalized representation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

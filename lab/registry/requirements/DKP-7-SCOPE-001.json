@@ -2883,17 +2883,25 @@
    "data_dependencies": [
     "upgrade proposals, simulation and audit results, acceptance decisions, activation records, and rollback provisions"
    ],
-   "gap": "Audit, acceptance window and rollback are UPGRADE's checks.",
+   "gap": "edition_finality: Declared stages of the change; the procedure itself is upgrade_lifecycle. scope_gate: Audit, acceptance window and rollback are UPGRADE's checks.",
    "hypotheses_needed": [
     "Supply the referenced procedure and distinguish rollback capability from any condition requiring actual rollback."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "scope_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "upgrade_only"
+    "check": "upgrade_procedure",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "upgrade_only"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -2931,11 +2939,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "scope_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "new_identifier"
+    "check": "new_identifier",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "new_identifier"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -2971,19 +2987,29 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "scope_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "compatibility_declared"
+    "check": "compatibility_declared",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "compatibility_declared"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_scope_gate_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-061"
+   ],
    "open_point": {
-    "origin": "architecture_definition",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -3016,19 +3042,29 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "scope_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "presentation_not_upgrade"
+    "check": "presentation_not_upgrade",
+    "also": [
+     {
+      "module": "scope_gate",
+      "version": "1.0.0",
+      "check": "presentation_not_upgrade"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_scope_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -3053,13 +3089,19 @@
     "canonical source bytes",
     "SHA256SUMS.txt from github.com/anahronic/World"
    ],
-   "gap": "Canonical source serialization and edition-to-digest mapping are not specified or supplied. No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [
     "Declare the exact canonical bytes and mapping used for each published edition."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

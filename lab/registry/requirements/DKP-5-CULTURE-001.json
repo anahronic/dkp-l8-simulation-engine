@@ -1454,13 +1454,19 @@
     "simulation and audit records",
     "acceptance, activation, and rollback evidence"
    ],
-   "gap": "The referenced procedures, acceptance conditions, timing rules, and meaning of rollback are absent. No lab check implemented yet.",
+   "gap": "Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Declare how the presentation-only exception limits this change procedure and what rollback evidence is required."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "upgrade_procedure"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1491,13 +1497,19 @@
     "protocol identifier registry",
     "modification classification records"
    ],
-   "gap": "The scope of any modification relative to presentation-only corrections and the required domain of identifier novelty are unclear. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether presentation-only corrections are excluded and whether new means different from the preceding identifier or unused in the registry."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "new_identifier"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1526,11 +1538,17 @@
    "data_dependencies": [
     "modification compatibility declarations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "compatibility_declared"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1557,13 +1575,19 @@
     "resimulation requirement decision",
     "resimulation records"
    ],
-   "gap": "The document supplies neither a decision authority nor conditions for requiring re-simulation.",
+   "gap": "Who may require it is not said: UNKNOWN unless performed.",
    "hypotheses_needed": [
     "Declare who may require re-simulation, its trigger, and how affected interfaces are identified."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "interfaces_resimulation"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1597,19 +1621,27 @@
     "document revision comparison",
     "upgrade classification and date records"
    ],
-   "gap": "Normative equivalence, the referenced Upgrade definition, and the treatment of the date label require clarification. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how normative equivalence is determined and whether Last updated maps to the last_updated front matter field."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1634,11 +1666,17 @@
     "canonical source bytes and edition mappings",
     "canonical repository SHA256SUMS.txt"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

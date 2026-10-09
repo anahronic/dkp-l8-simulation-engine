@@ -1675,13 +1675,19 @@
     "audit compliance",
     "activation and rollback records"
    ],
-   "gap": "The simulation and audit protocols are absent, and the finality clause does not distinguish rollback capability from actual rollback execution. No lab check implemented yet.",
+   "gap": "Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Interpret rollback in the amendment procedure as required arrangements plus execution when section 9 conditions arise."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "upgrade_procedure"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1714,14 +1720,26 @@
     "simulation and audit completion records",
     "compatibility declaration"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Simulation results are declared. Audit is declared. No target named (F-041): FAIL without a declaration, UNKNOWN otherwise.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "modification_requirements"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-060"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "UPGRADE-12-03",
@@ -1750,16 +1768,30 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "upgrade_lifecycle",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "presentation_not_upgrade"
+    "check": "presentation_not_upgrade",
+    "also": [
+     {
+      "module": "upgrade_lifecycle",
+      "version": "1.0.0",
+      "check": "presentation_not_upgrade"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_upgrade_lifecycle_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "NONE_IDENTIFIED",
-   "open_questions": []
+   "decision_status": "UNRESOLVED",
+   "open_questions": [
+    "Q-062"
+   ],
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "UPGRADE-12-04",
@@ -1782,15 +1814,23 @@
     "edition history",
     "rendered document metadata"
    ],
-   "gap": "Checked on the pinned corpus files, not on the published site.",
+   "gap": "edition_finality: Pinned corpus and simulated releases, not the published site. upgrade_lifecycle: Checked on the pinned corpus files, not on the published site.",
    "hypotheses_needed": [],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "upgrade_lifecycle",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "edition_dated"
+    "check": "edition_dated",
+    "also": [
+     {
+      "module": "upgrade_lifecycle",
+      "version": "1.0.0",
+      "check": "edition_dated"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_upgrade_lifecycle_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1818,11 +1858,17 @@
     "compliance evidence provenance",
     "activation records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Checked on the module's own gate and activation records.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "date_identifies_edition_only"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1849,11 +1895,17 @@
     "document change status",
     "edition metadata history"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Simulated releases, not the site build.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "unchanged_keep_dates"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -1880,11 +1932,17 @@
     "canonical source bytes",
     "canonical repository SHA256SUMS.txt"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

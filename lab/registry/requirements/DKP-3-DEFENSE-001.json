@@ -1789,7 +1789,7 @@
     "acceptance and activation controls",
     "rollback provisions"
    ],
-   "gap": "Declared properties of the change.",
+   "gap": "defense_envelope: Declared properties of the change. edition_finality: Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Declare rollback semantics and resolve procedural details from the identified protocols."
    ],
@@ -1797,10 +1797,18 @@
    "implementation": {
     "module": "defense_envelope",
     "version": "1.0.0",
-    "check": "upgrade_only"
+    "check": "upgrade_only",
+    "also": [
+     {
+      "module": "edition_finality",
+      "version": "1.0.0",
+      "check": "upgrade_procedure"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_defense_envelope_module.py"
+    "tests/lab/test_defense_envelope_module.py",
+    "tests/lab/test_edition_finality_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -1845,10 +1853,18 @@
    "implementation": {
     "module": "defense_envelope",
     "version": "1.0.0",
-    "check": "change_requirements"
+    "check": "change_requirements",
+    "also": [
+     {
+      "module": "edition_finality",
+      "version": "1.0.0",
+      "check": "modification_requirements"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_defense_envelope_module.py"
+    "tests/lab/test_defense_envelope_module.py",
+    "tests/lab/test_edition_finality_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
@@ -1883,19 +1899,27 @@
     "edition comparison",
     "Upgrade classification rules"
    ],
-   "gap": "Normative equivalence criteria, the referenced Upgrade exception, and the date-field mapping are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a normative-equivalence test and the mapping of Last updated to document metadata."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1918,11 +1942,17 @@
     "canonical source for each published edition",
     "canonical repository SHA256SUMS.txt"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

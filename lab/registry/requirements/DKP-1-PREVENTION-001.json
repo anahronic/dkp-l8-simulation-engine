@@ -1546,13 +1546,19 @@
     "activation scheduling",
     "rollback provisions"
    ],
-   "gap": "The referenced procedures, acceptance conditions, activation-window rules and rollback requirements are absent. No lab check implemented yet.",
+   "gap": "Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "If simulating without the referenced documents, explicitly declare substitute workflow, acceptance, activation and rollback rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "upgrade_procedure"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1584,13 +1590,19 @@
     "compatibility audit artifact",
     "migration specification"
    ],
-   "gap": "The version-increment convention and adequacy requirements for compatibility audit and migration path are unspecified. No lab check implemented yet.",
+   "gap": "No version ordering is defined; presence is declared. No standard for the audit; presence is declared. No standard for the migration path; presence is declared.",
    "hypotheses_needed": [
     "Declare version ordering and acceptance criteria for compatibility audits and migration paths."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "modification_requirements"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1627,20 +1639,28 @@
     "document date metadata",
     "upgrade classification records"
    ],
-   "gap": "A method for determining normative equivalence and DKP-4-UPGRADE-001 §3 are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how presentation-only changes and normative equivalence are established.",
     "Declare whether the front-matter last_updated field implements the quoted Last updated date."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "external_dependency",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   }
  ]

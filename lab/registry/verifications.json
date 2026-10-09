@@ -1935,6 +1935,110 @@
      "PRIVACY §7, §8, §10 hold the aggregation, anonymity and prohibited-practice rules"
     ]
    }
+  },
+  {
+   "id": "F-041",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "missing_definition",
+   "effect": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§12",
+     "text": "- explicit compatibility declaration."
+    },
+    {
+     "doc": "DKP-4-UPGRADE-001",
+     "at": "§12",
+     "text": "- explicit compatibility declaration."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§11",
+     "text": "- explicit compatibility declaration."
+    },
+    {
+     "doc": "DKP-3-POLICE-001",
+     "at": "§11",
+     "text": "explicit compatibility declaration with DKP-1-AXIOMS-001 and DKP-7-SCOPE-001."
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§12",
+     "text": "- explicit compatibility declaration with DKP-7-SCOPE-001."
+    }
+   ],
+   "conclusion": "ERROR §12, UPGRADE §12 and CRISIS §11 require 'explicit compatibility declaration.' for any modification without saying with what; thirteen other finality clauses name the documents (twelve by identifier, SCOPE as 'all dependent protocols').  A gate can tell whether a declaration exists, not whether it is the one required.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "compatibility declaration",
+     "compatible with",
+     "Compatibility:"
+    ],
+    "reference_chain": [
+     "16 finality clauses require a compatibility declaration",
+     "13 name its object",
+     "ERROR, UPGRADE and CRISIS name none; UPGRADE §5 (proposal contents) does not mention compatibility",
+     "DEFENSE §0 and TRANSPORT Appendix A.4 list documents they are 'compatible with', a form the three clauses do not refer to"
+    ]
+   }
+  },
+  {
+   "id": "F-042",
+   "classification": "INTERPRETATION_GAP",
+   "kind": "reading_dependent",
+   "effect": "reading_dependent",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§12",
+     "text": "explicit compatibility declaration across all dependent protocols."
+    },
+    {
+     "doc": "DKP-6-RESILIENCE-001",
+     "at": "front matter",
+     "text": "Depends on: DKP-0-ORACLE-001, DKP-1-AXIOMS-001, DKP-1-PREVENTION-001, DKP-7-SCOPE-001, DKP-8-INTEROP-001"
+    },
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "header",
+     "text": "Depends on: - DKP-0-ORACLE-001 - DKP-1-AXIOMS-001 - DKP-7-SCOPE-001"
+    },
+    {
+     "doc": "DKP-8-AUDIT-001",
+     "at": "§2",
+     "text": "constrained by DKP-7-SCOPE-001."
+    }
+   ],
+   "conclusion": "SCOPE §12 requires a compatibility declaration 'across all dependent protocols' but no document lists them.  Two protocols name SCOPE under 'Depends on' (EPISTEMIC-BOUNDARIES in its body, RESILIENCE in its front matter); 17 protocols reference SCOPE in their text, many as 'constrained by' or 'under DKP-7-SCOPE-001'.  A declaration covering 2 protocols and one covering 17 both satisfy one reading.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "searched": {
+    "documents": [
+     "all 39 pinned documents"
+    ],
+    "terms": [
+     "Depends on",
+     "dependent protocols",
+     "DKP-7-SCOPE-001"
+    ],
+    "reference_chain": [
+     "'Depends on' lists: front matter of PREVENTION and RESILIENCE, body of EPISTEMIC-BOUNDARIES, EPISTEMIC-TRANSITIONS and TRANSPORT; SCOPE in two of them",
+     "protocols whose text references DKP-7-SCOPE-001: 17 (catalog references)",
+     "'dependent protocols' occurs in SCOPE §12 and SIMULATION §14, defined in neither"
+    ]
+   }
   }
  ],
  "reference_fails": [
@@ -3480,6 +3584,67 @@
     }
    ],
    "reason": "Which protection rules apply to these data is a normative question; reading PRIVACY in place of SCOPE is an assumption.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-060",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-041",
+   "quotes": [
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§12",
+     "text": "- explicit compatibility declaration."
+    }
+   ],
+   "reason": "With which documents a change of ERROR, UPGRADE or CRISIS must declare compatibility is a normative choice.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-061",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-042",
+   "quotes": [
+    {
+     "doc": "DKP-7-SCOPE-001",
+     "at": "§12",
+     "text": "explicit compatibility declaration across all dependent protocols."
+    }
+   ],
+   "reason": "Which protocols are 'dependent' on SCOPE (declared 'Depends on' lists or every protocol that refers to SCOPE) is not fixed.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-062",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-5-TRANSPORT-001-APPENDIX-A",
+     "at": "§A.5",
+     "text": "they are recorded only by the \"Last updated\" date of this document."
+    },
+    {
+     "doc": "DKP-5-INFO-001",
+     "at": "§14",
+     "text": "Edition integrity: the SHA-256 digest of the canonical source of each published edition is listed in"
+    }
+   ],
+   "reason": "'Recorded only by the \"Last updated\" date' may limit the document's own record or every record; under the second reading a corrected edition cannot be listed in SHA256SUMS.txt (H-EF-3).",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

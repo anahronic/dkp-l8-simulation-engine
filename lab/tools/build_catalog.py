@@ -29,6 +29,7 @@ LAB_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORPUS_DIR = os.path.join(LAB_ROOT, "corpus")
 SNAPSHOT_DIR = os.path.join(CORPUS_DIR, "world-aad3e86")
 CORPUS_JSON = os.path.join(CORPUS_DIR, "CORPUS.json")
+RELEASE_MANIFEST = "SHA256SUMS.txt"
 ALIASES_JSON = os.path.join(LAB_ROOT, "registry", "aliases.json")
 CATALOG_JSON = os.path.join(LAB_ROOT, "registry", "protocol_catalog.json")
 
@@ -67,6 +68,29 @@ def _files() -> List[str]:
     return sorted(out)
 
 
+def _release_manifest() -> Dict[str, Any]:
+    data = _read(os.path.join(SNAPSHOT_DIR, RELEASE_MANIFEST))
+    return {"path": RELEASE_MANIFEST, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data),
+            "note": "The canonical repository's digest list at the commit (edition integrity, e.g. DKP-4-UPGRADE-001 §12)."}
+
+
+def release_entries() -> Tuple[List[str], Dict[str, str]]:
+    """Header lines and {path: sha256} of the pinned SHA256SUMS.txt."""
+    header: List[str] = []
+    entries: Dict[str, str] = {}
+    for line in _read(os.path.join(SNAPSHOT_DIR, RELEASE_MANIFEST)).decode("utf-8").split("\n"):
+        if not line.strip():
+            continue
+        if line.startswith("#"):
+            header.append(line[1:].strip())
+            continue
+        m = re.fullmatch(r"([0-9a-f]{64})  (.+)", line)
+        if not m:
+            raise CorpusError(f"{RELEASE_MANIFEST}: unreadable line {line!r}")
+        entries[m.group(2)] = m.group(1)
+    return header, entries
+
+
 def freeze() -> Dict[str, Any]:
     files = {}
     for rel in _files():
@@ -74,8 +98,9 @@ def freeze() -> Dict[str, Any]:
         files[rel] = {"sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
     manifest = {"repository": WORLD_REPOSITORY, "commit": WORLD_COMMIT,
                 "snapshot_dir": "lab/corpus/world-aad3e86",
-                "note": "Byte copies (LF) of every Markdown document under Dikenocracy/ at the commit.",
-                "files": files}
+                "note": "Byte copies (LF) of every Markdown document under Dikenocracy/ at the commit, and of the "
+                        "repository's SHA256SUMS.txt.",
+                "files": files, "release_manifest": _release_manifest()}
     with open(CORPUS_JSON, "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
     return manifest
@@ -97,6 +122,11 @@ def verify() -> Dict[str, Any]:
         h = hashlib.sha256(_read(os.path.join(SNAPSHOT_DIR, rel))).hexdigest()
         if h != manifest["files"][rel]["sha256"]:
             problems.append(f"changed: {rel}")
+    pinned_rm = manifest.get("release_manifest")
+    if not pinned_rm or not os.path.isfile(os.path.join(SNAPSHOT_DIR, RELEASE_MANIFEST)):
+        problems.append(f"missing: {RELEASE_MANIFEST}")
+    elif _release_manifest()["sha256"] != pinned_rm["sha256"]:
+        problems.append(f"changed: {RELEASE_MANIFEST}")
     if problems:
         raise CorpusError("corpus snapshot does not match CORPUS.json: " + "; ".join(problems))
     return manifest
@@ -128,6 +158,25 @@ def _headings(body: str, offset_lines: int) -> List[Dict[str, Any]]:
         out.append({"level": len(m.group(1)) if m else 7, "number": n.group(1) if n else None,
                     "title": n.group(2) if n else title, "line": i})
     return out
+
+
+def _body_depends(body: str) -> List[str]:
+    """A 'Depends on:' list in the body (EPISTEMIC-BOUNDARIES, EPISTEMIC-TRANSITIONS, TRANSPORT)."""
+    lines = body.split("\n")
+    for i, line in enumerate(lines):
+        if re.fullmatch(r"\**Depends on:\**", line.strip()):
+            out = []
+            for nxt in lines[i + 1:]:
+                s = nxt.strip()
+                if not s:
+                    continue
+                if not s.startswith("- "):
+                    break
+                m = REF_RE.search(s)
+                if m:
+                    out.append(m.group(0))
+            return out
+    return []
 
 
 def _depends(meta: Optional[str]) -> List[str]:
@@ -188,7 +237,8 @@ def build() -> Dict[str, Any]:
             "bytes": manifest["files"][rel]["bytes"],
             "last_updated": str(fm["last_updated"]) if fm.get("last_updated") else None,
             "site_url": f"{SITE}{slug}.html" if slug else None,
-            "declared_dependencies": _depends(fm.get("meta")),
+            "declared_dependencies": list(dict.fromkeys(_depends(fm.get("meta")) + _body_depends(body))),
+            "dependencies_declared_in": ("front matter" if _depends(fm.get("meta")) else "body" if _body_depends(body) else None),
             "sections": heads,
         }
         texts[doc_id] = raw
@@ -224,11 +274,14 @@ def build() -> Dict[str, Any]:
     counts = {}
     for d in docs.values():
         counts[d["kind"]] = counts.get(d["kind"], 0) + 1
+    header, entries = release_entries()
     return {
         "schema": "dkp-lab-catalog/1",
         "corpus": {"repository": manifest["repository"], "commit": manifest["commit"],
                    "snapshot_dir": manifest["snapshot_dir"],
-                   "corpus_json_sha256": hashlib.sha256(_read(CORPUS_JSON)).hexdigest()},
+                   "corpus_json_sha256": hashlib.sha256(_read(CORPUS_JSON)).hexdigest(),
+                   "release_manifest": {"path": RELEASE_MANIFEST, "sha256": manifest["release_manifest"]["sha256"],
+                                        "header": header, "entries": entries}},
         "counts": {"documents": len(docs), "by_kind": dict(sorted(counts.items())),
                    "protocols": counts.get("protocol", 0),
                    "accompanying": len(docs) - counts.get("protocol", 0)},

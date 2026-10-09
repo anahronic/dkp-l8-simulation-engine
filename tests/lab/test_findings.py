@@ -284,3 +284,16 @@ def test_f039_defense_fallback():
 
 def test_f040_scope_data_protection():
     assert _code("F-040", ("HABITAT-12-02", "HABITAT-12-04")) == {"aggregated": ("PASS", "UNKNOWN")}
+
+
+def test_f041_unnamed_compatibility():
+    assert _code("F-041", ("ERROR-12-03", "UPGRADE-12-02", "CRISIS-11-01", "POLICE-11-04")) == {
+        "error_named_documents": ("UNKNOWN", "NOT_APPLICABLE", "NOT_APPLICABLE", "NOT_APPLICABLE"),
+        "upgrade_no_target": ("NOT_APPLICABLE", "UNKNOWN", "NOT_APPLICABLE", "NOT_APPLICABLE"),
+        "crisis_no_declaration": ("NOT_APPLICABLE", "NOT_APPLICABLE", "PASS", "NOT_APPLICABLE"),
+        "police_named_in_text": ("NOT_APPLICABLE", "NOT_APPLICABLE", "NOT_APPLICABLE", "PASS")}
+
+
+def test_f042_scope_dependents():
+    assert _code("F-042", ("SCOPE-12-03",)) == {"all_referencing_protocols": ("PASS",), "depends_on_lists_only": ("UNKNOWN",),
+                                                "resilience_only_forced": ("FAIL",)}

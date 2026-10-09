@@ -1,0 +1,65 @@
+{
+ "schema": "dkp-lab-input/1",
+ "module": "edition_finality",
+ "variants": [
+  {
+   "name": "all_referencing_protocols",
+   "input": {
+    "releases": [
+     {
+      "id": "r1",
+      "day": 10
+     }
+    ],
+    "changes": [
+     {
+      "id": "scope_v2",
+      "doc": "DKP-7-SCOPE-001"
+     }
+    ]
+   }
+  },
+  {
+   "name": "depends_on_lists_only",
+   "input": {
+    "dependents_reading": "depends_on",
+    "releases": [
+     {
+      "id": "r1",
+      "day": 10
+     }
+    ],
+    "changes": [
+     {
+      "id": "scope_v2",
+      "doc": "DKP-7-SCOPE-001"
+     }
+    ]
+   }
+  },
+  {
+   "name": "resilience_only_forced",
+   "input": {
+    "dependents_reading": "depends_on",
+    "releases": [
+     {
+      "id": "r1",
+      "day": 10
+     }
+    ],
+    "faults": [
+     "skip_finality"
+    ],
+    "changes": [
+     {
+      "id": "scope_v2",
+      "doc": "DKP-7-SCOPE-001",
+      "compatibility_with": [
+       "DKP-6-RESILIENCE-001"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

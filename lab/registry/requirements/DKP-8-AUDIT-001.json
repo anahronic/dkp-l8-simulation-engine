@@ -1624,7 +1624,7 @@
     "acceptance and activation records",
     "rollback arrangements"
    ],
-   "gap": "Declared properties of the change.",
+   "gap": "audit_trace: Declared properties of the change. edition_finality: Declared stages of the change; the procedure itself is upgrade_lifecycle.",
    "hypotheses_needed": [
     "Declare whether rollback denotes preparedness, a conditional action, or an action required for every change."
    ],
@@ -1632,10 +1632,18 @@
    "implementation": {
     "module": "audit_trace",
     "version": "1.0.0",
-    "check": "upgrade_only"
+    "check": "upgrade_only",
+    "also": [
+     {
+      "module": "edition_finality",
+      "version": "1.0.0",
+      "check": "upgrade_procedure"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_audit_trace_module.py"
+    "tests/lab/test_audit_trace_module.py",
+    "tests/lab/test_edition_finality_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1674,10 +1682,18 @@
    "implementation": {
     "module": "audit_trace",
     "version": "1.0.0",
-    "check": "new_identifier"
+    "check": "new_identifier",
+    "also": [
+     {
+      "module": "edition_finality",
+      "version": "1.0.0",
+      "check": "new_identifier"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_audit_trace_module.py"
+    "tests/lab/test_audit_trace_module.py",
+    "tests/lab/test_edition_finality_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1718,10 +1734,18 @@
    "implementation": {
     "module": "audit_trace",
     "version": "1.0.0",
-    "check": "simulated"
+    "check": "simulated",
+    "also": [
+     {
+      "module": "edition_finality",
+      "version": "1.0.0",
+      "check": "simulated"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_audit_trace_module.py"
+    "tests/lab/test_audit_trace_module.py",
+    "tests/lab/test_edition_finality_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -1761,12 +1785,20 @@
    "implementation": {
     "module": "audit_trace",
     "version": "1.0.0",
-    "check": "scope_compatibility"
+    "check": "scope_compatibility",
+    "also": [
+     {
+      "module": "edition_finality",
+      "version": "1.0.0",
+      "check": "compatibility_declared"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_audit_trace_module.py"
+    "tests/lab/test_audit_trace_module.py",
+    "tests/lab/test_edition_finality_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
@@ -1800,19 +1832,27 @@
     "normative change assessments",
     "correction metadata"
    ],
-   "gap": "Normative equivalence criteria, the referenced exception, and the scope of date-only recording are not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how unchanged normative content is established and whether date-only recording excludes mandatory edition digest maintenance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "presentation_not_upgrade"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -1837,11 +1877,17 @@
     "canonical edition source bytes",
     "canonical repository SHA256SUMS.txt"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []

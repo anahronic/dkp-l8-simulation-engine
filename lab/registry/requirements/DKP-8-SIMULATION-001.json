@@ -1805,17 +1805,25 @@
     "audit outcomes",
     "activation and rollback controls"
    ],
-   "gap": "Declared properties of the change.",
+   "gap": "edition_finality: Declared stages of the change; the procedure itself is upgrade_lifecycle. simulation_gate: Declared properties of the change.",
    "hypotheses_needed": [
     "Resolve procedural details and rollback semantics from the referenced procedures."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "simulation_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "upgrade_procedure"
+    "check": "upgrade_procedure",
+    "also": [
+     {
+      "module": "simulation_gate",
+      "version": "1.0.0",
+      "check": "upgrade_procedure"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_simulation_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1850,11 +1858,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "simulation_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "new_identifier"
+    "check": "new_identifier",
+    "also": [
+     {
+      "module": "simulation_gate",
+      "version": "1.0.0",
+      "check": "new_identifier"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_simulation_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1883,11 +1899,19 @@
    "hypotheses_needed": [],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "simulation_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "incompatibility_declared"
+    "check": "incompatibility_declared",
+    "also": [
+     {
+      "module": "simulation_gate",
+      "version": "1.0.0",
+      "check": "incompatibility_declared"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_simulation_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1922,11 +1946,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "simulation_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "dependents_resimulated"
+    "check": "dependents_resimulated",
+    "also": [
+     {
+      "module": "simulation_gate",
+      "version": "1.0.0",
+      "check": "dependents_resimulated"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_simulation_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1969,19 +2001,29 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "simulation_gate",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "presentation_not_upgrade"
+    "check": "presentation_not_upgrade",
+    "also": [
+     {
+      "module": "simulation_gate",
+      "version": "1.0.0",
+      "check": "presentation_not_upgrade"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_simulation_gate_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -2006,13 +2048,19 @@
     "canonical repository source files",
     "canonical repository SHA256SUMS.txt"
    ],
-   "gap": "Canonical source selection, byte representation, and edition-to-digest mapping are not specified or supplied. No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [
     "Declare the canonical source bytes and the mapping from each published edition to its checksum entry."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],

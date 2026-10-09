@@ -63,6 +63,8 @@ documented numbers as regressions.
 | [F-038](F-038.md) | AUDIT §4 names D2 'Consistency or Integrity Anomaly'; §7 names D2 'Constraint Violation' | CONFIRMED_FINDING (wording) | Q-057 |
 | [F-039](F-039.md) | DEFENSE §5: a state that may not be kept without refreshed confirmation, but no state to leave to | CONFIRMED_FINDING | Q-058 |
 | [F-040](F-040.md) | HABITAT, EDU and AUDIT protect individual data 'under DKP-7-SCOPE-001', which has no such rules | CONFIRMED_FINDING (reference) | Q-059 |
+| [F-041](F-041.md) | ERROR, UPGRADE and CRISIS require an 'explicit compatibility declaration' without saying with what | CONFIRMED_FINDING | Q-060 |
+| [F-042](F-042.md) | SCOPE §12 'all dependent protocols': 2 by Depends-on lists, 17 by references | INTERPRETATION_GAP | Q-061 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

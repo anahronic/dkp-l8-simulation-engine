@@ -11,6 +11,7 @@ from lab.modules.crisis_recovery import CrisisRecoveryModule
 from lab.modules.defense_envelope import DefenseEnvelopeModule
 from lab.modules.dispute_correction import DisputeCorrectionModule
 from lab.modules.economic_access import EconomicAccessModule
+from lab.modules.edition_finality import EditionFinalityModule
 from lab.modules.edu_culture import EduCultureModule
 from lab.modules.epistemic_gate import EpistemicGateModule
 from lab.modules.exit_integration import ExitIntegrationModule
@@ -46,4 +47,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              OracleIngestionModule(), ImpactAttributionModule(),
                              EpistemicGateModule(), AuditTraceModule(),
                              SimulationGateModule(), DefenseEnvelopeModule(),
-                             HabitatDignityModule(), ResilienceStructureModule())}
+                             HabitatDignityModule(), ResilienceStructureModule(),
+                             EditionFinalityModule())}

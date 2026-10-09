@@ -2057,17 +2057,25 @@
    "data_dependencies": [
     "Upgrade, simulation, audit, acceptance, activation, and rollback records"
    ],
-   "gap": "Declared properties of the change.",
+   "gap": "edition_finality: Declared stages of the change; the procedure itself is upgrade_lifecycle. habitat_dignity: Declared properties of the change.",
    "hypotheses_needed": [
     "Conformance predicates for the referenced procedures and a classification of presentation-only changes."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "habitat_dignity",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "upgrade_only"
+    "check": "upgrade_procedure",
+    "also": [
+     {
+      "module": "habitat_dignity",
+      "version": "1.0.0",
+      "check": "upgrade_only"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_habitat_dignity_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -2103,11 +2111,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "habitat_dignity",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "new_identifier"
+    "check": "new_identifier",
+    "also": [
+     {
+      "module": "habitat_dignity",
+      "version": "1.0.0",
+      "check": "new_identifier"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_habitat_dignity_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -2146,11 +2162,19 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "habitat_dignity",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "compatibility"
+    "check": "compatibility_declared",
+    "also": [
+     {
+      "module": "habitat_dignity",
+      "version": "1.0.0",
+      "check": "compatibility"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_habitat_dignity_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -2191,19 +2215,29 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "habitat_dignity",
+    "module": "edition_finality",
     "version": "1.0.0",
-    "check": "presentation_not_upgrade"
+    "check": "presentation_not_upgrade",
+    "also": [
+     {
+      "module": "habitat_dignity",
+      "version": "1.0.0",
+      "check": "presentation_not_upgrade"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_edition_finality_module.py",
     "tests/lab/test_habitat_dignity_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-062"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -2226,13 +2260,19 @@
    "data_dependencies": [
     "Canonical edition sources and SHA256SUMS.txt from github.com/anahronic/World"
    ],
-   "gap": "Canonical source identification and published-edition mapping are not supplied. No lab check implemented yet.",
+   "gap": "Checked on the pinned commit and on simulated releases, not on the published site.",
    "hypotheses_needed": [
     "An authoritative source-byte representation and edition-to-checksum mapping."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.0.0",
+    "check": "edition_integrity"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
