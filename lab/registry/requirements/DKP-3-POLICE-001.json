@@ -144,11 +144,17 @@
    "data_dependencies": [
     "scope constraints and applicability decisions"
    ],
-   "gap": "DKP-7-SCOPE-001 is required to determine the applicable constraints. No lab check implemented yet.",
+   "gap": "Police action kinds are mapped to SCOPE S0/S1 by a lab list (H-PA-5).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "police_within_scope"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1189,11 +1195,17 @@
    "data_dependencies": [
     "prohibited-function violation findings"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Requests for prohibited functions are declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "prohibited_critical"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1347,11 +1359,17 @@
     "scope constraints",
     "crisis policing records"
    ],
-   "gap": "DKP-7-SCOPE-001 is absent. No lab check implemented yet.",
+   "gap": "Police action kinds are mapped to SCOPE S0/S1 by a lab list (H-PA-5).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "crisis_policing_in_scope"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

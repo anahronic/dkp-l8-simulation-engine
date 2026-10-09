@@ -475,6 +475,11 @@
   },
   {
    "module": "interop_failure",
+   "example": "faulty_legal_economic",
+   "kind": "counterexample"
+  },
+  {
+   "module": "interop_failure",
    "example": "former_lab_premise",
    "kind": "counterexample"
   },
@@ -725,12 +730,22 @@
   },
   {
    "module": "police_antiterror",
+   "example": "attack_on_combatants",
+   "kind": "reference"
+  },
+  {
+   "module": "police_antiterror",
    "example": "crisis_extension",
    "kind": "reference"
   },
   {
    "module": "police_antiterror",
    "example": "faulty_policing",
+   "kind": "counterexample"
+  },
+  {
+   "module": "police_antiterror",
+   "example": "faulty_scope",
    "kind": "counterexample"
   },
   {
@@ -1354,17 +1369,17 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1179,
-  "covered_percent": 67.9,
+  "covered": 1188,
+  "covered_percent": 68.4,
   "statuses": {
-   "PASS": 1099,
+   "PASS": 1108,
    "FAIL": 4,
    "UNKNOWN": 61,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 558
+   "UNCOVERED": 549
   },
   "resolvable": 324,
-  "resolvable_uncovered": 33,
+  "resolvable_uncovered": 24,
   "unresolved_decisions": 1413,
   "covered_with_open_point": 888,
   "pass_with_open_point": 814
@@ -1417,17 +1432,17 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1179,
-    "covered_percent": 67.9,
+    "covered": 1188,
+    "covered_percent": 68.4,
     "statuses": {
-     "PASS": 1099,
+     "PASS": 1108,
      "FAIL": 4,
      "UNKNOWN": 61,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 558
+     "UNCOVERED": 549
     },
     "resolvable": 324,
-    "resolvable_uncovered": 33,
+    "resolvable_uncovered": 24,
     "unresolved_decisions": 1413,
     "covered_with_open_point": 888,
     "pass_with_open_point": 814
@@ -1601,17 +1616,17 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 343,
-    "covered_percent": 67.1,
+    "covered": 352,
+    "covered_percent": 68.9,
     "statuses": {
-     "PASS": 322,
+     "PASS": 331,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 168
+     "UNCOVERED": 159
     },
     "resolvable": 79,
-    "resolvable_uncovered": 17,
+    "resolvable_uncovered": 8,
     "unresolved_decisions": 432,
     "covered_with_open_point": 281,
     "pass_with_open_point": 260
@@ -25410,7 +25425,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -25419,7 +25435,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -25680,13 +25696,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25717,19 +25734,22 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -25840,24 +25860,32 @@
    "section": "3.3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "protected_domain_targets",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Targets are declared per stream.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -25879,19 +25907,22 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -25913,13 +25944,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -26046,19 +26078,22 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26073,24 +26108,32 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "police_antiterror",
+   "check": "t0_iff_no_stream",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26176,7 +26219,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26185,7 +26229,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -26213,19 +26257,22 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26250,7 +26297,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26259,7 +26307,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -26289,7 +26337,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26298,7 +26347,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -26328,7 +26377,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26337,7 +26387,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 4
+    "NOT_APPLICABLE": 5
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -26367,7 +26417,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26376,7 +26427,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -26404,13 +26455,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -26441,7 +26493,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26450,7 +26503,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -26478,19 +26531,22 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26547,7 +26603,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -26556,7 +26613,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 2
+    "NOT_APPLICABLE": 3
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -26615,19 +26672,22 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -26649,7 +26709,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -26658,7 +26719,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -30363,13 +30424,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -30694,24 +30756,32 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-7-SCOPE-001 is required to determine the applicable constraints. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "police_within_scope",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Police action kinds are mapped to SCOPE S0/S1 by a lab list (H-PA-5).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -30765,13 +30835,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -30802,7 +30873,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -30811,7 +30883,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -30903,13 +30975,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -31004,13 +31077,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -31038,13 +31112,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -31072,13 +31147,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31109,13 +31185,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31146,13 +31223,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31183,13 +31261,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31220,13 +31299,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31257,13 +31337,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -31294,13 +31375,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -31365,7 +31447,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -31373,7 +31456,7 @@
     "Q-042"
    ],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 2
@@ -31406,13 +31489,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31442,13 +31526,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31479,13 +31564,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -31604,24 +31690,32 @@
    "section": "7",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "prohibited_critical",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Requests for prohibited functions are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -31643,7 +31737,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31652,7 +31747,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -31680,7 +31775,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31689,7 +31785,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -31717,7 +31813,8 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -31726,7 +31823,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -31744,24 +31841,32 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "DKP-7-SCOPE-001 is absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "crisis_policing_in_scope",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Police action kinds are mapped to SCOPE S0/S1 by a lab list (H-PA-5).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -31783,13 +31888,14 @@
    "also_checked_by": [],
    "hypotheses": [
     "H-PA-1",
-    "H-PA-2"
+    "H-PA-2",
+    "H-PA-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -65638,7 +65744,9 @@
     "NOT_APPLICABLE": 1
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "interop_failure:faulty_legal_economic"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -65936,7 +66044,8 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [
-    "interop_failure:faulty_boundary"
+    "interop_failure:faulty_boundary",
+    "interop_failure:faulty_legal_economic"
    ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -66560,24 +66669,31 @@
    "section": "3",
    "kind": "definition",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "external_not_governed",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "'Governed' is observed as a directive addressed to the external system.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_legal_economic"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [
@@ -66815,24 +66931,31 @@
    "section": "5",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "interop_failure",
+   "check": "exports_as_evidence",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_legal_economic"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -66867,7 +66990,8 @@
    },
    "status": "PASS",
    "counterexample_detected_by": [
-    "interop_failure:faulty_boundary"
+    "interop_failure:faulty_boundary",
+    "interop_failure:faulty_legal_economic"
    ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -66880,24 +67004,31 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "compliance_by_subjects",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "The external ruling is a declared event.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_legal_economic"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -66941,24 +67072,31 @@
    "section": "6",
    "kind": "contract",
    "checkable": "yes",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "economic_channels",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Interactions are declared; 'MAY' read as the permitted channels.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_legal_economic"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -67380,6 +67518,7 @@
    "status": "PASS",
    "counterexample_detected_by": [
     "interop_failure:faulty_boundary",
+    "interop_failure:faulty_legal_economic",
     "interop_failure:former_lab_premise"
    ],
    "under_alternative_readings": {},

@@ -36,6 +36,10 @@ FAULT_CASES = {
     "mirror_feeds_ptl": ({}, ["INTEROP-8-01", "INTEROP-8-02"]),
     "crisis_from_interop": ({}, ["INTEROP-9-02", "INTEROP-9-04"]),
     "no_crisis_on_ptl_loss": (REG, ["CRISIS-4-01"]),
+    "govern_external": ({}, ["INTEROP-3-01"]),
+    "export_as_ruling": ({}, ["INTEROP-5-01"]),
+    "system_complies": ({}, ["INTEROP-5-03"]),
+    "direct_ledger_write": ({}, ["INTEROP-6-01"]),
 }
 
 

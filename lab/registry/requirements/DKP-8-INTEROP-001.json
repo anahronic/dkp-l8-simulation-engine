@@ -96,11 +96,17 @@
    "data_dependencies": [
     "system category and governance status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "'Governed' is observed as a directive addressed to the external system.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.2.0",
+    "check": "external_not_governed"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -376,11 +382,17 @@
    "data_dependencies": [
     "export records with object type, role, and context"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.2.0",
+    "check": "exports_as_evidence"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -409,7 +421,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "external_rulings_not_binding"
    },
    "tests": [
@@ -437,11 +449,17 @@
    "data_dependencies": [
     "external compliance responsibility records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The external ruling is a declared event.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.2.0",
+    "check": "compliance_by_subjects"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -499,11 +517,17 @@
    "data_dependencies": [
     "economic interface mechanism classifications"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Interactions are declared; 'MAY' read as the permitted channels.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.2.0",
+    "check": "economic_channels"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": []
@@ -536,7 +560,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "justice_weighted_translation"
    },
    "tests": [
@@ -608,7 +632,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "external_values_flagged"
    },
    "tests": [
@@ -787,7 +811,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "blackbox_not_authoritative"
    },
    "tests": [
@@ -831,7 +855,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "external_info_as_i1"
    },
    "tests": [
@@ -872,7 +896,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_external_validation_for_ptl"
    },
    "tests": [
@@ -949,7 +973,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "internal_execution_unaffected"
    },
    "tests": [
@@ -991,7 +1015,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_rollback"
    },
    "tests": [
@@ -1028,7 +1052,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_crisis_from_interop"
    },
    "tests": [
@@ -1098,7 +1122,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_external_decision_dependency"
    },
    "tests": [
@@ -1139,7 +1163,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_governance_by_api"
    },
    "tests": [
@@ -1180,7 +1204,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_silent_norm_import"
    },
    "tests": [
@@ -1325,7 +1349,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "boundary_events_recorded"
    },
    "tests": [

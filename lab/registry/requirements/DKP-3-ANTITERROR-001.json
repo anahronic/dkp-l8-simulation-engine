@@ -380,11 +380,17 @@
     "domain classifications",
     "civilian-service designations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Targets are declared per stream.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "protected_domain_targets"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -634,11 +640,17 @@
    "data_dependencies": [
     "PTL asymmetric harm stream status"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.0.0",
+    "check": "t0_iff_no_stream"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

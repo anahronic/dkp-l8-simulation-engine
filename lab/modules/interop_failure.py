@@ -38,6 +38,10 @@ FAULTS = {
     "keep_bad_entry_point": "an entry point that strips metadata stays valid",
     "rollback_on_failure": "DKP state is rolled back when the external system fails",
     "audit_masks": "audit does not report missing epistemic metadata",
+    "govern_external": "DKP issues a directive to an external legal system",
+    "export_as_ruling": "a DKP output is exported to an external court as a binding ruling",
+    "system_complies": "DKP itself acts to comply with an external ruling on a Subject's behalf",
+    "direct_ledger_write": "an external economic system writes into DKP outside the three named channels",
     "audit_modifies": "audit injects a corrective action into live execution",
     "mirror_feeds_ptl": "readings of an external oracle mirror are counted as PTL sources (the lab's former premise, F-013)",
     "crisis_from_interop": "the outage of an external oracle mirror enters Crisis",
@@ -112,14 +116,24 @@ def run(r: Dict[str, Any], failure: bool = True):
         # external events at the boundary
         if failure and k == r["external_ruling_step"]:
             ext["ruling"] = put("observation", "EXTERNAL/LEGAL", k, {"ruling": "suspend subject X", "binding_claimed": True})
-            put("notice", "INTEROP", k, {"boundary_event": "external ruling received", "internal_status": "not binding"},
-                [ext["ruling"].event_id])
+            put("notice", "INTEROP", k, {"boundary_event": "external ruling received", "internal_status": "not binding",
+                                         "compliance_responsibility": "Subject (INTEROP §5)"}, [ext["ruling"].event_id])
+            if "system_complies" in faults:
+                put("action", "INTEROP", k, {"comply_with": "external ruling", "on_behalf_of": "subject X"}, [ext["ruling"].event_id])
+            if "govern_external" in faults:
+                put("action", "DKP", k, {"directive": "adopt DKP allocation rules", "addressed_to": "EXTERNAL/LEGAL"},
+                    [ext["ruling"].event_id])
         if k == r["external_value_step"]:
             flag = "unflagged_external_value" not in faults
-            ext["value"] = put("observation", "EXTERNAL/FINANCE", k, {"asset_bridge": 1000.0, "externally_sourced": flag,
+            ext["value"] = put("observation", "EXTERNAL/FINANCE", k, {"asset_bridge": 1000.0, "channel": "asset_bridge",
+                                                                       "externally_sourced": flag,
                                                                        "justice_weighted": "not computed: no translation function"})
             put("notice", "INTEROP", k, {"boundary_event": "external value", "translation_rule": "flag + FINANCE constraints"},
                 [ext["value"].event_id])
+            for ch in ("reporting_gateway", "settlement_mirror") + (("direct_ledger_write",) if "direct_ledger_write" in faults else ()):
+                e = put("observation", "EXTERNAL/FINANCE", k, {"channel": ch, "externally_sourced": flag,
+                                                                "justice_weighted": "not computed: no translation function"})
+                put("notice", "INTEROP", k, {"boundary_event": f"external economic interaction via {ch}"}, [e.event_id])
         if failure and k == r["blackbox_step"]:
             ext["blackbox"] = put("observation", "EXTERNAL/BLACKBOX", k, {"control": "proprietary recommendation"})
             put("notice", "INTEROP", k, {"boundary_event": "black-box input", "authoritative": False}, [ext["blackbox"].event_id])
@@ -144,6 +158,11 @@ def run(r: Dict[str, Any], failure: bool = True):
         dec = None
         if not crisis:
             dec = put("decision", "DKP", k, value, prov, epistemic=md())
+        # export to an external legal system (INTEROP §5)
+        if dec is not None and k == r["export_step"]:
+            put("notice", "INTEROP", k, {"export": dec.event_id, "as": "binding ruling" if "export_as_ruling" in faults else "evidence",
+                                         "to": "external court", "digest": sha256_text(canonical_json(dec.value)),
+                                         "epistemic": dict(dec.epistemic)}, [dec.event_id])
         # mirroring for external human validation
         if dec is not None and k == r["human_validation_step"]:
             mirrored = dict(dec.value)
@@ -291,6 +310,35 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
     for rid, chk in (("INTEROP-10-02", "no_external_decision_dependency"), ("INTEROP-10-03", "no_governance_by_api")):
         out.append(v(rid, chk, api, "no internal decision depends on an external decision system or API",
                      "{n} internal decisions depend on an external API"))
+    # §3 External System: not governed by DKP; §5 exports and compliance; §6 economic channels
+    directives = [m.event_id for m in msgs if m.kind in ("action", "decision") and str(m.value.get("addressed_to", "")).startswith("EXTERNAL")]
+    roles = [m.event_id for m in msgs if m.source == "EXTERNAL/ORACLE" and r["mirror_role"] == "registered_ptl_source"]
+    out.append(v("INTEROP-3-01", "external_not_governed", directives + roles,
+                 "external systems only send inputs across the boundary; DKP addresses no directive to them, and registered PTL "
+                 "sources are not treated as external", "{n} directives to external systems or misclassified sources"))
+    exports = [m for m in msgs if m.source == "INTEROP" and m.value.get("export")]
+    if exports:
+        bad = [m.event_id for m in exports if m.value["as"] not in ("evidence", "signal", "reference_data")
+               or m.value["digest"] != sha256_text(canonical_json(log.get(m.value["export"]).value))
+               or m.value["epistemic"] != log.get(m.value["export"]).epistemic]
+        out.append(v("INTEROP-5-01", "exports_as_evidence", bad, f"{len(exports)} DKP outputs exported as evidence, unaltered and with "
+                     "their epistemic metadata", "{n} exports as something other than evidence, signals or reference data"))
+    else:
+        out.append(na("INTEROP-5-01", "exports_as_evidence", "exports", "no DKP output exported"))
+    if ext_ids("EXTERNAL/LEGAL"):
+        comply = [m.event_id for m in msgs if m.source == "INTEROP" and m.kind == "action" and m.value.get("comply_with")]
+        recv = [m for m in msgs if m.source == "INTEROP" and m.value.get("boundary_event") == "external ruling received"]
+        out.append(v("INTEROP-5-03", "compliance_by_subjects", comply + [m.event_id for m in recv if "Subject" not in m.value.get("compliance_responsibility", "")],
+                     "compliance with the external ruling was left to the Subject; DKP took no compliance action",
+                     "{n} compliance acts by the system"))
+    else:
+        out.append(na("INTEROP-5-03", "compliance_by_subjects", "external legal obligations", "no external ruling"))
+    econ = [m for m in msgs if m.source == "EXTERNAL/FINANCE"]
+    out.append(v("INTEROP-6-01", "economic_channels", [m.event_id for m in econ if m.value.get("channel") not in
+                                                       ("asset_bridge", "reporting_gateway", "settlement_mirror")],
+                 f"{len(econ)} external economic interactions, each through an asset bridge, reporting gateway or settlement mirror",
+                 "{n} interactions outside the named channels") if econ else
+               na("INTEROP-6-01", "economic_channels", "external economic interactions", "none"))
     boundary = [m for m in msgs if m.source == "INTEROP" and m.value.get("boundary_event")]
     out.append(v("INTEROP-11-03", "boundary_events_recorded",
                  [] if boundary or not (ext_ids("EXTERNAL/LEGAL") | ext_ids("EXTERNAL/FINANCE") | ext_ids("EXTERNAL/INFO")) else ["none"],
@@ -330,6 +378,10 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
 
 IMPLEMENTS = {
     "INTEROP-5-02": ("external_rulings_not_binding", "IMPLEMENTED", None),
+    "INTEROP-3-01": ("external_not_governed", "PARTIAL", "'Governed' is observed as a directive addressed to the external system."),
+    "INTEROP-5-01": ("exports_as_evidence", "IMPLEMENTED", None),
+    "INTEROP-5-03": ("compliance_by_subjects", "PARTIAL", "The external ruling is a declared event."),
+    "INTEROP-6-01": ("economic_channels", "PARTIAL", "Interactions are declared; 'MAY' read as the permitted channels."),
     "INTEROP-6-02": ("justice_weighted_translation", "PARTIAL", "No translation function is given: UNKNOWN."),
     "INTEROP-6-04": ("external_values_flagged", "IMPLEMENTED", None),
     "INTEROP-7-04": ("blackbox_not_authoritative", "IMPLEMENTED", None),
@@ -354,7 +406,7 @@ IMPLEMENTS = {
 
 class InteropFailureModule(LabModule):
     id = "interop_failure"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Failure of an external interface (S-LAB-10)", "ru": "Отказ внешнего интерфейса (S-LAB-10)"}
     summary = {"en": "An external court, market, data provider or API fails or pushes in: does the inside keep running "
                      "unchanged, with nothing external becoming binding?",
@@ -401,6 +453,9 @@ class InteropFailureModule(LabModule):
                           "label": {"en": "Black-box input at hour", "ru": "Вход 'чёрного ящика' в час"}},
         "external_info_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 12, "unit": "h", "source": "user",
                                "label": {"en": "External consensus claim at hour", "ru": "Внешний 'консенсус' в час"}},
+        "export_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 5, "unit": "h", "source": "user",
+                        "label": {"en": "A DKP output is exported to an external court at hour (INTEROP §5)",
+                                  "ru": "Выход DKP передаётся во внешний суд в час (INTEROP §5)"}},
         "human_validation_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 4, "unit": "h", "source": "user",
                                   "label": {"en": "Output mirrored for human validation at hour", "ru": "Выход отражён для проверки человеком в час"}},
         "stripping_entry_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 16, "unit": "h", "source": "user",
@@ -470,6 +525,7 @@ class InteropFailureModule(LabModule):
                                            "alter_mirror", "audit_masks"]},
             "former_lab_premise": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25,
                                    "faults": ["mirror_feeds_ptl", "crisis_from_interop"]},
+            "faulty_legal_economic": {"faults": ["govern_external", "export_as_ruling", "system_complies", "direct_ledger_write"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

@@ -27,7 +27,7 @@ from typing import Any, Dict, List, Optional
 from lab.core.bus import EventLog, Message
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
-from lab.core.schema import LabInputError
+from lab.core.schema import LabInputError, resolve
 from lab.modules.time import canonical, dy_doy
 
 KINDS = ("physical_harm", "terror_event", "sustained_terror", "mass_casualty", "protest_no_harm")
@@ -54,7 +54,15 @@ FAULTS = {
     "retrospective": "an action starts before PTL confirmation and is justified afterwards",
     "not_forwarded": "containment logs are not forwarded to IMPACT",
     "impose_sanction": "ANTITERROR imposes an economic sanction",
+    "terror_on_combatants": "a harm stream against combatants is treated as terror",
+    "run_prohibited": "a prohibited policing function (predictive policing) is carried out",
+    "crisis_overreach": "during the crisis police restrict public assembly city-wide",
 }
+PROTECTED = ("civilian_population", "public_space", "civilian_transport", "hospital", "school", "shelter",
+             "food_node", "water_node", "energy_node")                                              # ANTITERROR §3.3
+PROHIBITED = ("predictive_policing", "ideological_profiling", "morality_enforcement", "unanchored_surveillance",
+              "authority_expansion")                                                                # POLICE §7
+POLICE_ACTIONS = ("use_of_force", "non_forceful_intervention", "detention", "release", "execute_order")   # H-PA-5
 STREAM = {"type": "object", "fields": {
     "from_hour": {"type": "int", "min": 0, "max": 10 ** 6},
     "to_hour": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -63,6 +71,7 @@ STREAM = {"type": "object", "fields": {
     "ptl_confirmed": {"type": "bool", "default": True},
     "threat_level": {"type": "int", "min": 0, "max": 3, "default": 2},
     "alternatives_effective": {"type": "bool", "default": False},
+    "target": {"type": "enum", "values": list(PROTECTED) + ["combatants"], "default": "public_space"},
     "attackers": {"type": "list", "min_items": 0, "max_items": 10, "items": {"type": "str"}, "default": ["a1"]}}}
 ORDER = {"type": "object", "fields": {"hour": {"type": "int", "min": 0, "max": 10 ** 6},
                                       "issuer": {"type": "enum", "values": ["L2", "L4", "L3", "none"]},
@@ -108,6 +117,12 @@ def run(r: Dict[str, Any]):
                                   epistemic=epistemic, provenance=tuple(prov), order=order[kind]))
 
     t_state = "T0"
+    for q in r["prohibited_requests"]:
+        done = q == "predictive_policing" and "run_prohibited" in faults
+        put("notice", "POLICE", 0, {"prohibited_request": q, "refused": not done,
+                                    "classification": "critical integrity breach" + ("" if done else " (attempted)")})
+        if done:
+            put("action", "POLICE", 0, {"action": q, "officer": "officer-17", "logged": True})
     detained: Dict[str, Dict[str, Any]] = {}
     obs: Dict[int, Message] = {}
     lo, hi = r["crisis_window"]
@@ -133,8 +148,11 @@ def run(r: Dict[str, Any]):
         if extension_open and not crisis:
             put("notice", "POLICE", h, {"authority_extended": False, "reason": "Crisis ended"})
             extension_open = False
+        if crisis and h == lo and "crisis_overreach" in faults:
+            put("action", "POLICE", h, {"action": "restrict_public_assembly", "area": "city", "officer": "officer-17", "logged": True})
         # anti-terror state (T0–T3)
-        terror = [i for i in idx if r["streams"][i]["kind"] in T_OF or
+        terror = [i for i in idx if (r["streams"][i]["kind"] in T_OF and
+                                     (r["streams"][i]["target"] in PROTECTED or "terror_on_combatants" in faults)) or
                   (r["streams"][i]["kind"] == "protest_no_harm" and "suppress_dissent" in faults)]
         target = "T0"
         for i in terror:
@@ -233,6 +251,43 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                    and refreshed(r, h) for s in S)
 
     police = [m for m in msgs if m.source == "POLICE" and m.kind == "action"]
+    # POLICE §2, §7, §8: police acts stay inside SCOPE; prohibited functions are critical breaches
+    out.append(v("POLICE-2-02", "police_within_scope", [m.event_id for m in police if m.value["action"] not in POLICE_ACTIONS],
+                 f"all {len(police)} police actions are safety execution of the kinds POLICE defines (S0/S1 under SCOPE, H-PA-5)",
+                 "{n} police actions outside SCOPE"))
+    req = [m for m in msgs if m.source == "POLICE" and "prohibited_request" in m.value]
+    out.append(v("POLICE-7-04", "prohibited_critical", [m.event_id for m in req if not m.value["refused"]] +
+                 [m.event_id for m in police if m.value["action"] in PROHIBITED],
+                 f"{len(req)} requests for prohibited policing functions refused and recorded as attempted critical integrity breaches",
+                 "{n} prohibited functions carried out: a critical integrity breach") if req else
+               na("POLICE-7-04", "prohibited_critical", "prohibited policing functions", "none requested"))
+    clo, chi = r["crisis_window"]
+    if chi > clo:
+        cp = [m for m in police if clo <= m.arrived_at < chi]
+        out.append(v("POLICE-8-04", "crisis_policing_in_scope", [m.event_id for m in cp if m.value["action"] not in POLICE_ACTIONS],
+                     f"{len(cp)} police actions during the crisis, all within SCOPE", "{n} crisis police actions outside SCOPE"))
+    else:
+        out.append(na("POLICE-8-04", "crisis_policing_in_scope", "crisis policing", "no declared crisis"))
+    # ANTITERROR §3.3, §5: terror only against protected civilian domains; T0 exactly when no such stream is confirmed
+    timeline, cur = {}, "T0"
+    changes = {m.arrived_at: m.value["state"] for m in msgs if m.source == "ANTITERROR" and m.kind == "notice" and "state" in m.value}
+    for h in range(r["horizon_hours"]):
+        cur = changes.get(h, cur)
+        timeline[h] = cur
+
+    def stream_terror(h, protected_only=True):
+        return any(x["from_hour"] <= h < x["to_hour"] and x["kind"] in T_OF and x["ptl_confirmed"] and refreshed(r, h)
+                   and (x["target"] in PROTECTED or not protected_only) for x in S)
+    if any(x["kind"] in T_OF for x in S):
+        out.append(v("ANTITERROR-3.3-01", "protected_domain_targets",
+                     [h for h, t in timeline.items() if t != "T0" and not stream_terror(h)],
+                     "terror states rest only on streams targeting protected civilian domains",
+                     "{n} hours in a terror state without a stream against a protected civilian domain"))
+    else:
+        out.append(na("ANTITERROR-3.3-01", "protected_domain_targets", "terror streams", "none"))
+    out.append(v("ANTITERROR-5-01", "t0_iff_no_stream", [h for h, t in timeline.items() if (t == "T0") == stream_terror(h)],
+                 "T0 held exactly in the hours without a PTL-confirmed, refreshed asymmetric harm stream against civilians",
+                 "{n} hours with the wrong T0 status"))
     harm_acts = [m for m in police if m.value["action"] in ("use_of_force", "non_forceful_intervention", "detention")]
     bad = [m.event_id for m in harm_acts if not harm_ok(m.arrived_at)]
     for rid, chk in (("POLICE-4-01", "trigger_holds"), ("POLICE-3-06", "no_ptl_no_intervention"),
@@ -325,7 +380,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     def terror_level(h):
         best = "T0"
         for s in S:
-            if s["from_hour"] <= h < s["to_hour"] and s["ptl_confirmed"] and s["kind"] in T_OF and refreshed(r, h):
+            if s["from_hour"] <= h < s["to_hour"] and s["ptl_confirmed"] and s["kind"] in T_OF and refreshed(r, h)                     and s["target"] in PROTECTED:                                           # §3.1: targets civilians
                 if TRANK[T_OF[s["kind"]]] > TRANK[best]:
                     best = T_OF[s["kind"]]
         return best
@@ -453,6 +508,11 @@ IMPLEMENTS = {
     "ANTITERROR-2-02": ("no_collective_responsibility", "IMPLEMENTED", None),
     "ANTITERROR-7-01": ("no_collective_punishment", "PARTIAL", "Collective punishment observed as detention of associates."),
     "ANTITERROR-4.2-01": ("identity_not_a_risk_signal", "PARTIAL", "Observed as detention of associates."),
+    "POLICE-2-02": ("police_within_scope", "PARTIAL", "Police action kinds are mapped to SCOPE S0/S1 by a lab list (H-PA-5)."),
+    "POLICE-7-04": ("prohibited_critical", "PARTIAL", "Requests for prohibited functions are declared."),
+    "POLICE-8-04": ("crisis_policing_in_scope", "PARTIAL", "Police action kinds are mapped to SCOPE S0/S1 by a lab list (H-PA-5)."),
+    "ANTITERROR-3.3-01": ("protected_domain_targets", "PARTIAL", "Targets are declared per stream."),
+    "ANTITERROR-5-01": ("t0_iff_no_stream", "IMPLEMENTED", None),
     "ANTITERROR-7-02": ("no_suppression_of_dissent", "PARTIAL", "A protest without harm as the test case."),
 }
 
@@ -481,6 +541,13 @@ class PoliceAntiterrorModule(LabModule):
         {"id": "H-PA-2", "source": "missing", "text": {
             "en": "Detention limit: POLICE §5.1 requires 'time-limited' without a number; -1 = the detention ends with the harm.",
             "ru": "Предел задержания: POLICE §5.1 требует 'time-limited' без числа; -1 = задержание заканчивается с вредом."}},
+        {"id": "H-PA-5", "source": "hypothesis", "text": {
+            "en": "Police actions within SCOPE: use of force, non-forceful intervention, detention, release and execution of a "
+                  "valid order are safety execution (SCOPE §3 S0/S1); other police acts (e.g. restricting assembly, predictive "
+                  "patrols) fall outside.",
+            "ru": "Полицейские действия в пределах SCOPE: применение силы, несиловое вмешательство, задержание, освобождение и "
+                  "исполнение законного приказа — исполнение безопасности (SCOPE §3, S0/S1); прочее (ограничение собраний, "
+                  "предиктивные патрули) — вне пределов."}},
     ]
     inputs = {
         "start_dti_day": {"type": "int", "min": 0, "max": 10 ** 8, "default": 2461042, "source": "user",
@@ -496,6 +563,10 @@ class PoliceAntiterrorModule(LabModule):
                          "label": {"en": "PTL refresh gaps from/to hour", "ru": "Разрывы обновления PTL с/до часа"}},
         "orders": {"type": "list", "min_items": 0, "max_items": 20, "items": ORDER, "default": [], "source": "user",
                    "label": {"en": "Enforcement orders", "ru": "Приказы на исполнение"}},
+        "prohibited_requests": {"type": "list", "min_items": 0, "max_items": len(PROHIBITED), "items": {"type": "enum", "values": list(PROHIBITED)},
+                                "default": ["predictive_policing", "unanchored_surveillance"], "source": "user",
+                                "label": {"en": "Requests for prohibited policing functions (POLICE §7)",
+                                          "ru": "Запросы на запрещённые полицейские функции (POLICE §7)"}},
         "associates": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "str"}, "default": ["f1", "f2"],
                        "source": "user", "label": {"en": "Associates of the attackers (not involved)",
                                                     "ru": "Связанные с нападавшими (не участвуют)"}},
@@ -575,9 +646,18 @@ class PoliceAntiterrorModule(LabModule):
             "crisis_extension": {"crisis_window": [0, 12], "crisis_extension_scope": "z1", "horizon_hours": 20},
             "faulty_policing": {"faults": ["excess_force", "unattributed", "content_control", "not_forwarded", "impose_sanction"],
                                 "streams": [{"from_hour": 2, "to_hour": 8, "kind": "sustained_terror", "zone": "z1"}]},
+            "attack_on_combatants": {"streams": [{"from_hour": 2, "to_hour": 6, "kind": "terror_event", "zone": "z1", "target": "combatants"}]},
+            "faulty_scope": {"crisis_window": [0, 12], "crisis_extension_scope": "z1", "horizon_hours": 20,
+                             "faults": ["run_prohibited", "crisis_overreach", "terror_on_combatants"],
+                             "streams": [{"from_hour": 2, "to_hour": 6, "kind": "terror_event", "zone": "z1", "target": "combatants"}]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"empty_stream": {"streams": [{"from_hour": 3, "to_hour": 3, "kind": "terror_event"}]},
                 "bad_zone": {"streams": [{"from_hour": 1, "to_hour": 3, "kind": "terror_event", "zone": "Zone 1!"}]},
                 "unknown_kind": {"streams": [{"from_hour": 1, "to_hour": 3, "kind": "riot"}]}}
+
+
+for _spec in PoliceAntiterrorModule.inputs.values():
+    if _spec["type"] == "list" and _spec["items"]["type"] == "object":
+        _spec["default"] = [resolve(x, _spec["items"]["fields"]) for x in _spec["default"]]

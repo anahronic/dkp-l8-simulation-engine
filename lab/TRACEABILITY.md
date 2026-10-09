@@ -15,14 +15,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1179 (67.9 %) | 888 | 1099 | 814 | 4 | 61 | 15 | 558 | 33 | 1413 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1188 (68.4 %) | 888 | 1108 | 814 | 4 | 61 | 15 | 549 | 24 | 1413 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 0 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 340 (93.2 %) | 243 | 327 | 231 | 3 | 8 | 2 | 25 | 2 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 219 (51.7 %) | 138 | 200 | 121 | 1 | 16 | 2 | 205 | 6 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 183 (62.5 %) | 145 | 168 | 132 | 0 | 8 | 7 | 110 | 5 | 250 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 343 (67.1 %) | 281 | 322 | 260 | 0 | 18 | 3 | 168 | 17 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 352 (68.9 %) | 281 | 331 | 260 | 0 | 18 | 3 | 159 | 8 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1179 (67.9 %) | 888 | 1099 | 814 | 4 | 61 | 15 | 558 | 33 | 1413 |
+| **All registrable documents** | | 38/38 | 1737 | 1188 (68.4 %) | 888 | 1108 | 814 | 4 | 61 | 15 | 549 | 24 | 1413 |
 
 ### Stage criteria
 
@@ -261,10 +261,10 @@ Withdrawn after verification (not author decisions):
 | DKP-2-ASSETS-001 | 43 | 22 | 21 | 0 | 1 | 0 | 21 | 38 |
 | DKP-2-FINANCE-001 | 44 | 15 | 14 | 0 | 1 | 0 | 29 | 39 |
 | DKP-2-LABOR-001 | 40 | 24 | 21 | 0 | 3 | 0 | 16 | 28 |
-| DKP-3-ANTITERROR-001 | 41 | 22 | 22 | 0 | 0 | 0 | 19 | 35 |
+| DKP-3-ANTITERROR-001 | 41 | 24 | 24 | 0 | 0 | 0 | 17 | 35 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 33 | 33 | 0 | 0 | 0 | 16 | 47 |
-| DKP-3-POLICE-001 | 45 | 26 | 26 | 0 | 0 | 0 | 19 | 37 |
+| DKP-3-POLICE-001 | 45 | 29 | 29 | 0 | 0 | 0 | 16 | 37 |
 | DKP-4-CRISIS-001 | 53 | 26 | 22 | 1 | 3 | 0 | 27 | 43 |
 | DKP-4-CRISIS-001-PATCH | 31 | 24 | 23 | 0 | 1 | 0 | 7 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 19 | 19 | 0 | 0 | 0 | 10 | 23 |
@@ -285,7 +285,7 @@ Withdrawn after verification (not author decisions):
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 25 | 25 | 0 | 0 | 0 | 19 | 41 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
-| DKP-8-INTEROP-001 | 49 | 19 | 18 | 0 | 1 | 0 | 30 | 41 |
+| DKP-8-INTEROP-001 | 49 | 23 | 22 | 0 | 1 | 0 | 26 | 41 |
 | DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
 
 ## Covered provisions
@@ -696,21 +696,23 @@ Withdrawn after verification (not author decisions):
 | ANTITERROR-12-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ANTITERROR-12-04 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
 | ANTITERROR-2-02 | IMPLEMENTED | police_antiterror · no_collective_responsibility | PASS | — | — |
-| ANTITERROR-2-03 | IMPLEMENTED | police_antiterror · no_action_without_harm | PASS | — | — |
-| ANTITERROR-4.1-01 | IMPLEMENTED | police_antiterror · ptl_confirmed_terror | PASS | — | — |
+| ANTITERROR-2-03 | IMPLEMENTED | police_antiterror · no_action_without_harm | PASS | yes | — |
+| ANTITERROR-3.3-01 | PARTIAL | police_antiterror · protected_domain_targets | PASS | yes | — |
+| ANTITERROR-4.1-01 | IMPLEMENTED | police_antiterror · ptl_confirmed_terror | PASS | yes | — |
 | ANTITERROR-4.2-01 | PARTIAL | police_antiterror · identity_not_a_risk_signal | PASS | — | — |
-| ANTITERROR-4.4-02 | PARTIAL | police_antiterror · immediately_terminable | PASS | — | — |
+| ANTITERROR-4.4-02 | PARTIAL | police_antiterror · immediately_terminable | PASS | yes | — |
+| ANTITERROR-5-01 | IMPLEMENTED | police_antiterror · t0_iff_no_stream | PASS | yes | — |
 | ANTITERROR-5-04 | IMPLEMENTED | police_antiterror · t3_escalates | PASS | — | — |
-| ANTITERROR-5-05 | IMPLEMENTED | police_antiterror · refresh_to_persist | PASS | — | — |
+| ANTITERROR-5-05 | IMPLEMENTED | police_antiterror · refresh_to_persist | PASS | yes | — |
 | ANTITERROR-6-01 | IMPLEMENTED | police_antiterror · permitted_actions | PASS | yes | — |
 | ANTITERROR-6-02 | IMPLEMENTED | police_antiterror · event_scoped | PASS | yes | — |
 | ANTITERROR-6-03 | IMPLEMENTED | police_antiterror · technical_information_isolation | PASS | yes | — |
 | ANTITERROR-6-04 | PARTIAL | police_antiterror · lockdown_in_zone | PASS | — | — |
 | ANTITERROR-7-01 | PARTIAL | police_antiterror · no_collective_punishment | PASS | — | — |
 | ANTITERROR-7-02 | PARTIAL | police_antiterror · no_suppression_of_dissent | PASS | — | — |
-| ANTITERROR-7-03 | IMPLEMENTED | police_antiterror · no_retrospective_justification | PASS | — | — |
+| ANTITERROR-7-03 | IMPLEMENTED | police_antiterror · no_retrospective_justification | PASS | yes | — |
 | ANTITERROR-8-02 | IMPLEMENTED | police_antiterror · logs_to_impact | PASS | yes | — |
-| ANTITERROR-8-04 | IMPLEMENTED | police_antiterror · terminate_on_cessation | PASS | — | — |
+| ANTITERROR-8-04 | IMPLEMENTED | police_antiterror · terminate_on_cessation | PASS | yes | — |
 | ANTITERROR-9-01 | PARTIAL | police_antiterror · escalation_rules | PASS | — | — |
 | DEFENSE-0-01 | PARTIAL | defense_envelope · not_political_or_punitive | PASS | yes | — |
 | DEFENSE-0-02 | IMPLEMENTED | defense_envelope · voluntary_lethal_risk | PASS | yes | — |
@@ -793,6 +795,7 @@ Withdrawn after verification (not author decisions):
 | POLICE-11-03 | PARTIAL | edition_finality · simulated | PASS | — | — |
 | POLICE-11-04 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | POLICE-11-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
+| POLICE-2-02 | PARTIAL | police_antiterror · police_within_scope | PASS | yes | — |
 | POLICE-2-04 | IMPLEMENTED | police_antiterror · within_ptl_conditions | PASS | — | — |
 | POLICE-2-05 | IMPLEMENTED | police_antiterror · valid_orders_only | PASS | — | — |
 | POLICE-3-03 | IMPLEMENTED | police_antiterror · no_suspicion_or_prediction | PASS | — | — |
@@ -809,9 +812,11 @@ Withdrawn after verification (not author decisions):
 | POLICE-6-01 | IMPLEMENTED | police_antiterror · identity_attributed | PASS | yes | — |
 | POLICE-6-02 | IMPLEMENTED | police_antiterror · ptl_logged | PASS | — | — |
 | POLICE-6-03 | PARTIAL | police_antiterror · responsibility_traceable | PASS | yes | — |
+| POLICE-7-04 | PARTIAL | police_antiterror · prohibited_critical | PASS | yes | — |
 | POLICE-8-01 | IMPLEMENTED | police_antiterror · extension_only_in_crisis | PASS | — | — |
 | POLICE-8-02 | IMPLEMENTED | police_antiterror · extension_scoped | PASS | — | — |
 | POLICE-8-03 | PARTIAL | police_antiterror · no_precedent | PASS | — | — |
+| POLICE-8-04 | PARTIAL | police_antiterror · crisis_policing_in_scope | PASS | yes | — |
 | POLICE-9-01 | IMPLEMENTED | police_antiterror · aggregated_statistics | PASS | — | — |
 | CRISIS-1-04 | PARTIAL | crisis_recovery · envelope_in_s1 | PASS | yes | — |
 | CRISIS-10-01 | IMPLEMENTED | crisis_recovery · actions_anchored_committed | PASS | — | — |
@@ -1400,7 +1405,7 @@ Withdrawn after verification (not author decisions):
 | AUDIT-8-05 | IMPLEMENTED | audit_trace · procedural_not_punitive | PASS | yes | — |
 | AUDIT-9-01 | PARTIAL | audit_trace · accessible | PASS | — | — |
 | AUDIT-9-02 | PARTIAL | audit_trace · not_closed | PASS | — | — |
-| AUDIT-EpistemicMetadataVerification-01 | IMPLEMENTED | audit_trace · metadata_presence | PASS | — | — |
+| AUDIT-EpistemicMetadataVerification-01 | IMPLEMENTED | audit_trace · metadata_presence | PASS | yes | — |
 | AUDIT-EpistemicMetadataVerification-02 | PARTIAL | audit_trace · metadata_validity | PASS | yes | — |
 | AUDIT-EpistemicMetadataVerification-03 | PARTIAL | audit_trace · eb_classification | PASS | yes | — |
 | AUDIT-EpistemicMetadataVerification-04 | IMPLEMENTED | audit_trace · metadata_d2 | PASS | yes | Q-057 |
@@ -1414,7 +1419,11 @@ Withdrawn after verification (not author decisions):
 | INTEROP-13-04 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | INTEROP-13-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | INTEROP-13-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| INTEROP-3-01 | PARTIAL | interop_failure · external_not_governed | PASS | yes | — |
+| INTEROP-5-01 | IMPLEMENTED | interop_failure · exports_as_evidence | PASS | yes | — |
 | INTEROP-5-02 | IMPLEMENTED | interop_failure · external_rulings_not_binding | PASS | yes | — |
+| INTEROP-5-03 | PARTIAL | interop_failure · compliance_by_subjects | PASS | yes | — |
+| INTEROP-6-01 | PARTIAL | interop_failure · economic_channels | PASS | yes | — |
 | INTEROP-6-02 | PARTIAL | interop_failure · justice_weighted_translation | UNKNOWN | — | — |
 | INTEROP-6-04 | IMPLEMENTED | interop_failure · external_values_flagged | PASS | — | — |
 | INTEROP-7-04 | IMPLEMENTED | interop_failure · blackbox_not_authoritative | PASS | yes | — |

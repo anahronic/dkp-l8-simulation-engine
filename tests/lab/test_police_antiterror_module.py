@@ -42,6 +42,10 @@ FAULT_CASES = {
     "retrospective": ({}, ["ANTITERROR-7-03"]),
     "not_forwarded": ({}, ["ANTITERROR-8-02"]),
     "impose_sanction": ({}, ["ANTITERROR-11-01"]),
+    "terror_on_combatants": ({"streams": [{"from_hour": 2, "to_hour": 6, "kind": "terror_event", "zone": "z1", "target": "combatants"}]},
+                             ["ANTITERROR-3.3-01", "ANTITERROR-5-01"]),
+    "run_prohibited": ({}, ["POLICE-2-02", "POLICE-7-04"]),
+    "crisis_overreach": ({"crisis_window": [0, 12], "crisis_extension_scope": "z1", "horizon_hours": 20}, ["POLICE-8-04"]),
 }
 
 
