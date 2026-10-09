@@ -37,7 +37,10 @@ FAULT_CASES = {
     "enforce_no_attribution": ({"attribution_confidence": 0.6, "s0": 0.0, "s1_recorded": 1.0},
                                ["IDENTITY-4.1-02", "IDENTITY-4.1-03"]),
     "suppress_by_uncertainty": ({"s1_recorded": 0.905}, ["IMPACT-9-03", "IMPACT-5-03"]),
-    "override_flag": ({}, ["IMPACT-11-01"]),
+    "override_flag": ({}, ["IMPACT-11-01", "JUSTICE-13-02"]),
+    "partial_binding": ({}, ["JUSTICE-3.2-01"]),
+    "exclusion_erases_history": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-02"]),
+    "final_output": ({}, ["JUSTICE-DisputeExceptionClause-03"]),
 }
 
 

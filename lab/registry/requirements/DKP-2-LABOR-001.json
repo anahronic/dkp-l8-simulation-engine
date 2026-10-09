@@ -408,11 +408,17 @@
     "justice state history",
     "harm responsibility records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "UBR stands for the baseline; the justice balance is a declared number.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.0.0",
+    "check": "baseline_keeps_responsibility"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -682,11 +688,17 @@
    "data_dependencies": [
     "forced-labor findings"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Reports are declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.1.0",
+    "check": "forced_labor_critical"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -821,11 +833,17 @@
    "data_dependencies": [
     "compensation policies"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The forms offered are declared; a form outside the list gives UNKNOWN.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.0.0",
+    "check": "compensation_forms"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1108,11 +1126,17 @@
     "crisis end status",
     "obligation and penalty records with provenance"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The crisis is a declared window.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.1.0",
+    "check": "no_lasting_crisis_obligation"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1380,11 +1404,17 @@
    "data_dependencies": [
     "cross-layer violation findings"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.1.0",
+    "check": "isolation_breach_critical"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"

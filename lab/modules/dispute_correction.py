@@ -51,7 +51,12 @@ FAULTS = {
     "enforce_no_attribution": "enforcement proceeds on NO_ATTRIBUTION",
     "suppress_by_uncertainty": "a boundary crossing within the uncertainty envelope is not flagged",
     "override_flag": "JUSTICE inverts the reversibility flag it receives from IMPACT",
+    "partial_binding": "the IDENTITY binding omits temporal persistence and higher-order attribution flags",
+    "exclusion_erases_history": "exclusion erases the historical attribution of the excluded Subject",
+    "final_output": "a Justice decision is marked final (no dispute allowed)",
 }
+EXCLUSION_EFFECTS = ["removal from system participation", "loss of system-provided privileges",
+                     "persistence of historical attribution"]                                      # JUSTICE §9
 
 
 # shared definitions (declared readings) -------------------------------------------
@@ -178,6 +183,10 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         else:
             att = {"status": "BOUND", "weights": bind(r["subjects"], contrib, faults),
                    "confidence": r["attribution_confidence"]}
+            att["subjects"] = sorted(att["weights"])
+            if "partial_binding" not in faults:                                                     # JUSTICE §3.2
+                att["temporal_persistence"] = {"from_minute": 0, "to_minute": H, "repeated": bool(r["repeated_harm"])}
+                att["higher_order_flags"] = sorted(f"{x['id']} -> {x['originator']}" for x in r["subjects"] if x["originator"] != "none")
             emd = md("VALID", "SUFFICIENT_DATA", "CONSISTENT", scope)
         m_att = put("evaluation", "IDENTITY", at, att, (m_imp.event_id,), emd, record=True)
         if att["status"] != "BOUND":
@@ -197,8 +206,13 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
                "flag": {"emitted_by_impact": imp["R"], "received": got,
                         "read_as": "reversible" if justice_reversible(got, r["r_polarity"]) else "irreversible",
                         "contract": "JUSTICE §6/§8: Rᵢ = True reversible, Rᵢ = False irreversible; no conversion (IMPACT §11)"}}
-        m_dec = put("decision", "JUSTICE", at, dec, (m_imp.event_id, m_att.event_id),
-                    md("VALID", "SUFFICIENT_DATA", "CONSISTENT", scope, reval=True), decided=at, record=True)
+        if doms["exclusion"]:
+            dec["exclusion_effects"] = EXCLUSION_EFFECTS[:2] + (["historical attribution erased"] if "exclusion_erases_history" in faults
+                                                                else EXCLUSION_EFFECTS[2:])
+        dmd = md("VALID", "SUFFICIENT_DATA", "CONSISTENT", scope, reval=True)
+        if "final_output" in faults:
+            dmd["dispute_allowed"] = False
+        m_dec = put("decision", "JUSTICE", at, dec, (m_imp.event_id, m_att.event_id), dmd, decided=at, record=True)
         return m_imp, m_att, m_dec
 
     s0 = put("observation", "PTL", 0, r["s0"], measured=0, unit="model unit", unc=r["uncertainty"])
@@ -343,6 +357,12 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
     imps, atts, decs = by("evaluation", "IMPACT"), by("evaluation", "IDENTITY"), by("decision", "JUSTICE")
     actions = by("action", "ENFORCEMENT")
     err = [m for m in by("notice", "ERROR") if "state" in m.value]
+    # JUSTICE Dispute Exception Clause: Core Invariant #3, no output is final
+    outs = [m for m in msgs if m.epistemic is not None]
+    bad = [m.event_id for m in outs if m.epistemic.get("dispute_allowed") is not True]
+    res.append(verdict("JUSTICE-DisputeExceptionClause-03", "no_final_output", not bad,
+                       f"none of {len(outs)} IMPACT, IDENTITY and JUSTICE outputs is final: each allows dispute and re-evaluation",
+                       f"{len(bad)} outputs marked final"))
     states = [m.value["state"] for m in err]
 
     # IMPACT ---------------------------------------------------------------------------
@@ -488,6 +508,24 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
         bad = [m.event_id for m in decs if set(m.value["domains"]) != set(DOMAINS)]
         res.append(verdict("JUSTICE-5-02", "all_domains_evaluated", not bad, "all four domains evaluated in every decision",
                            "a domain was not evaluated"))
+        need = ("subjects", "weights", "temporal_persistence", "higher_order_flags")
+        bad = [m.event_id for m in decs if not all(k in get(m.provenance[1]).value for k in need)]
+        res.append(verdict("JUSTICE-3.2-01", "binding_contents", not bad,
+                           "every decision rests on a binding with Subjects, responsibility weights, temporal persistence and "
+                           "higher-order attribution flags", f"{len(bad)} decisions on an incomplete binding"))
+        exc = [m for m in decs if m.value["domains"].get("exclusion")]
+        if exc:
+            bad = [m.event_id for m in exc if m.value.get("exclusion_effects") != EXCLUSION_EFFECTS]
+            res.append(verdict("JUSTICE-9-02", "exclusion_consequences", not bad,
+                               "exclusion removes participation and system privileges and keeps historical attribution",
+                               f"{len(bad)} exclusions with other consequences"))
+        else:
+            res.append(na("JUSTICE-9-02", "exclusion_consequences", "exclusion", "no exclusion applies"))
+        bad = [m.event_id for m in decs if not {get(p).source for p in m.provenance} <= {"IMPACT", "IDENTITY"}
+               or (m.value.get("flag") and m.value["flag"]["received"] != get(m.provenance[0]).value["R"])]
+        res.append(verdict("JUSTICE-13-02", "isolation_breach_critical", not bad,
+                           "JUSTICE took IMPACT metrics and IDENTITY attribution as given: no cross-layer breach",
+                           f"{len(bad)} decisions reinterpreted impact or attribution: a critical architectural breach"))
         # JUSTICE §6/§8 are checked literally on the flag JUSTICE received: Rᵢ = True means reversible, whatever
         # reading the run declares (the reading is not allowed to change what the check calls compliant)
         expected = {}
@@ -553,7 +591,9 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
                           "one responsible Subject"))
     else:
         why = "no Justice decision (attribution blocked or NO_ATTRIBUTION)"
-        for rid, chk in (("JUSTICE-2-02", "justice_inputs"), ("JUSTICE-2-03", "justice_inputs"),
+        for rid, chk in (("JUSTICE-3.2-01", "binding_contents"), ("JUSTICE-9-02", "exclusion_consequences"),
+                         ("JUSTICE-13-02", "isolation_breach_critical"),
+                         ("JUSTICE-2-02", "justice_inputs"), ("JUSTICE-2-03", "justice_inputs"),
                          ("JUSTICE-5-02", "all_domains_evaluated"), ("JUSTICE-6-01", "restitution_trigger"),
                          ("JUSTICE-7-01", "restriction_trigger"), ("JUSTICE-8-01", "isolation_trigger"),
                          ("JUSTICE-9-01", "exclusion_trigger"), ("JUSTICE-6-02", "restitution_outputs"),
@@ -829,6 +869,10 @@ IMPLEMENTS = {
     "JUSTICE-10-01": ("proportional_distribution", "IMPLEMENTED", None),
     "JUSTICE-11-02": ("periodic_not_faster_than_ttl", "IMPLEMENTED", None),
     "JUSTICE-DisputeExceptionClause-01": ("dispute_not_blocked_by_ttl", "PARTIAL", "Two readings of the conditions a)-c) (open question Q-020)."),
+    "JUSTICE-DisputeExceptionClause-03": ("no_final_output", "IMPLEMENTED", None),
+    "JUSTICE-3.2-01": ("binding_contents", "PARTIAL", "Persistence and higher-order flags are built from the scenario (harm window, proxies)."),
+    "JUSTICE-9-02": ("exclusion_consequences", "IMPLEMENTED", None),
+    "JUSTICE-13-02": ("isolation_breach_critical", "PARTIAL", "A breach is a decision on other sources or an overridden IMPACT flag."),
     "JUSTICE-DisputeExceptionClause-02": ("dispute_exception_conditions", "PARTIAL", "Two readings of the conditions a)-c) (open question Q-020)."),
     "ERROR-2-05": ("request_not_override", "IMPLEMENTED", None),
     "ERROR-5-03": ("r2_validated", "PARTIAL", "Verification of E2, E4, E5 is declared on input; E1 and E3 are modelled."),
@@ -1121,6 +1165,9 @@ class DisputeCorrectionModule(LabModule):
             "dispute_within_ttl_either": {**base, "appeal_after_minutes": 1440 + 30, "appeal_allegation": "none",
                                           "verification_days": 0,
                                           "dispute_exception_reading": "data_or_allegation"},
+            "exclusion": {**base, "persistent_axiom_violation": True, "appeal_after_minutes": -1},
+            "faulty_justice_record": {**base, "persistent_axiom_violation": True, "appeal_after_minutes": -1,
+                                      "faults": ["partial_binding", "exclusion_erases_history", "final_output"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

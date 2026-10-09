@@ -63,6 +63,7 @@ FAULTS = {
     "allow_closed": "a closed-source algorithm allocates resources",
     "inherit_infrastructure": "infrastructure capital passes to heirs",
     "ubr_conditional": "UBR is withheld from passive persons",
+    "baseline_clears_debt": "receiving baseline access resets a negative justice balance",
 }
 
 
@@ -250,7 +251,9 @@ def run(r: Dict[str, Any]):
     for p in r["persons"]:
         passive = p["activity"] == "none"
         ubr = [] if passive and "ubr_conditional" in faults else list(UBR_SET)
-        put("action", "UBR", 0, {"person": p["person"], "ubr": ubr, "activity": p["activity"],
+        bal = p["justice_balance"]
+        put("action", "UBR", 0, {"person": p["person"], "ubr": ubr, "activity": p["activity"], "justice_balance_before": bal,
+                                 "justice_balance_after": 0.0 if bal < 0 and "baseline_clears_debt" in faults else bal,
                                  "additional_benefits_rating": "reduced" if passive else "standard",
                                  "open": "F-033" if passive else None})
     return log
@@ -531,6 +534,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         bad = [p for p, x in ub.items() if sorted(x["ubr"]) != sorted(UBR_SET)]
         out.append(v("CODEX-17.1-01", "ubr_by_birth", bad, "every person received food, shelter and connectivity", "{n} persons without the full UBR"))
         out.append(v("LABOR-4.1-02", "baseline_not_contingent", bad, "survival access did not depend on activity", "{n} persons lost baseline access"))
+        neg = [p for p, x in ub.items() if x["justice_balance_before"] < 0]
+        out.append(v("LABOR-4.2-01", "baseline_keeps_responsibility", [p for p in neg if ub[p]["justice_balance_after"] != ub[p]["justice_balance_before"]],
+                     f"{len(neg)} persons with a negative justice balance received baseline access and kept the balance",
+                     "{n} negative balances cleared by baseline access") if neg else
+                   na("LABOR-4.2-01", "baseline_keeps_responsibility", "negative justice balance", "no recipient has one"))
         passive = [p for p, x in ub.items() if x["activity"] == "none"]
         bad = [p for p, x in ub.items() if (x["additional_benefits_rating"] == "reduced") != (x["activity"] == "none")]
         out.append(v("CODEX-18.1-01", "contribution_obligation", [p for p, x in ub.items() if x["activity"] not in ACTIVITIES + ("none",)],
@@ -583,6 +591,7 @@ IMPLEMENTS = {
     "CODEX-16.1-03": ("ultra_large_return", "PARTIAL", "Threshold not given (source missing); whole fortune (H-CE-8)."),
     "CODEX-17.1-01": ("ubr_by_birth", "PARTIAL", "Quantities are not given."),
     "LABOR-4.1-02": ("baseline_not_contingent", "PARTIAL", "UBR stands for the baseline."),
+    "LABOR-4.2-01": ("baseline_keeps_responsibility", "PARTIAL", "UBR stands for the baseline; the justice balance is a declared number."),
     "CODEX-18.1-01": ("contribution_obligation", "PARTIAL", "Activities are declared."),
     "CODEX-18.1-02": ("passivity_rating", "PARTIAL", "The rating scale is not given; relation to PRIVACY and LABOR: F-033."),
     "PRIVACY-10-01": ("no_social_credit_scoring", "PARTIAL", "Only the Code's passivity rating is examined (F-033)."),
@@ -759,8 +768,9 @@ class CodeEconomyModule(LabModule):
                         [{"owner": "o1", "personal": 50.0, "infrastructure": 20.0, "death_month": 30},
                          {"owner": "o2", "personal": 900.0, "infrastructure": 400.0, "death_month": 40}],
                         {"en": "Estates", "ru": "Наследства"}),
-        "persons": _lst({"person": S, "activity": {"type": "enum", "values": list(ACTIVITIES) + ["none"]}},
-                        [{"person": "u1", "activity": "education"}, {"person": "u2", "activity": "socially_useful"},
+        "persons": _lst({"person": S, "activity": {"type": "enum", "values": list(ACTIVITIES) + ["none"]},
+                         "justice_balance": {"type": "number", "min": -10 ** 6, "max": 10 ** 6, "default": 0.0}},
+                        [{"person": "u1", "activity": "education"}, {"person": "u2", "activity": "socially_useful", "justice_balance": -5.0},
                          {"person": "u3", "activity": "none"}],
                         {"en": "UBR recipients and their activity", "ru": "Получатели БОР и их занятия"}),
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},

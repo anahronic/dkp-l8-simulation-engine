@@ -50,6 +50,7 @@ FAULT_CASES = {
     "allow_closed": ({}, ["CODEX-15.1-01"]),
     "inherit_infrastructure": ({}, ["CODEX-16.1-02"]),
     "ubr_conditional": ({}, ["CODEX-17.1-01", "LABOR-4.1-02"]),
+    "baseline_clears_debt": ({}, ["LABOR-4.2-01"]),
 }
 
 

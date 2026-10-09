@@ -78,7 +78,8 @@ from lab.modules.work_cycle import FAULTS  # noqa: E402
 
 @pytest.mark.parametrize("fault", sorted(FAULTS))
 def test_fault_is_detected(fault):
-    base = {"refusing_workers": 6} if fault in ("assign_refusers", "penalize_refusal") else {}
+    base = {"refusing_workers": 6} if fault in ("assign_refusers", "penalize_refusal") else \
+        {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty") else {}
     clean = {c.requirement_id: c.status for c in M.evaluate(M.validate(base)).checks}
     broken = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
     assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
@@ -93,3 +94,10 @@ def test_recovery_requests():
     d = {x["request"]: x for x in M.evaluate(M.validate({})).outputs["recovery_requests"]}
     assert not d["monetize"]["granted"] and not d["work_task"]["granted"]
     assert d["meal"]["granted"] and not d["meal"]["justification_required"]
+
+
+def test_crisis_draft_is_time_limited():
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate(M.examples()["crisis_draft"])).checks}
+    assert st["LABOR-9.1-01"] == st["LABOR-9.2-03"] == "PASS"
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate(M.examples()["crisis_draft_faulty"])).checks}
+    assert st["LABOR-9.2-03"] == "FAIL"

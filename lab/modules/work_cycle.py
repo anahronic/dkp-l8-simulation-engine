@@ -36,7 +36,19 @@ FAULTS = {
     "work_in_recovery": "the recovery block is used for work",
     "recovery_buyout": "a request to monetize the recovery block is granted",
     "justify_recovery": "recovery is granted only with a justification",
+    "permanent_obligation": "workers drafted during a declared crisis stay scheduled after it",
+    "post_crisis_penalty": "refusal during a declared crisis is penalised after it",
+    "downgrade_forced_labor": "a report of forced labor is classified as a minor matter",
+    "labor_as_punishment": "a request to use labor as punishment is executed",
 }
+CROSS_LAYER = ("redefine_justice", "override_impact", "punish", "ideological_criteria")                # LABOR §12
+
+
+def drafted(r) -> set:
+    """Refusing workers drafted on crisis days only (LABOR §9.2); they keep no Cycle6 pattern."""
+    if r["crisis_window"][1] <= r["crisis_window"][0]:
+        return set()
+    return {f"w{w + 1:03d}" for w in range(r["workers"] - r["refusing_workers"], r["workers"])}
 RECOVERY_REQUESTS = ("remove", "reduce", "monetize", "meal", "rest", "personal", "mobility", "work_task")
 PERMITTED_RECOVERY = ("meal", "rest", "personal", "mobility")                                   # §5.3
 
@@ -57,6 +69,9 @@ IMPLEMENTS = {
     "WORKCYCLE-5.3-04": ("recovery_activities", "PARTIAL", "Requested activities are declared."),
     "WORKCYCLE-6-04": ("year_recovery_480", "IMPLEMENTED", None),
     "WORKCYCLE-11-01": ("three_layers", "IMPLEMENTED", None),
+    "LABOR-6-02": ("forced_labor_critical", "PARTIAL", "Reports are declared."),
+    "LABOR-9.2-03": ("no_lasting_crisis_obligation", "PARTIAL", "The crisis is a declared window."),
+    "LABOR-12-02": ("isolation_breach_critical", "PARTIAL", "Requests are declared."),
     "WORKCYCLE-6-01": ("cycle_accounting_days", "IMPLEMENTED", None),
     "WORKCYCLE-6-02": ("cycle_accounting_hours", "IMPLEMENTED", None),
     "WORKCYCLE-6-03": ("year_accounting", "IMPLEMENTED", None),
@@ -134,6 +149,15 @@ class WorkCycleModule(LabModule):
                            "label": {"en": "High-intensity environment (§8.2)", "ru": "Высокая нагрузка (§8.2)"}},
         "refusing_workers": {"type": "int", "min": 0, "max": 1000, "default": 0, "source": "user",
                              "label": {"en": "Workers who refuse participation (LABOR §9.1)", "ru": "Отказавшихся от участия (LABOR §9.1)"}},
+        "crisis_window": {"type": "pair", "min": 0, "max": 360, "default": [0, 0], "unit": "day", "source": "user",
+                          "label": {"en": "Declared crisis constraining refusal, from/to day (LABOR §9.2)",
+                                    "ru": "Объявленный кризис, ограничивающий отказ, с/до дня (LABOR §9.2)"}},
+        "forced_labor_reports": {"type": "int", "min": 0, "max": 100, "default": 1, "source": "user",
+                                 "label": {"en": "Reports of forced labor by a third party (LABOR §6)",
+                                           "ru": "Сообщения о принудительном труде со стороны третьих лиц (LABOR §6)"}},
+        "cross_layer_requests": {"type": "list", "min_items": 0, "max_items": 8, "items": {"type": "enum", "values": list(CROSS_LAYER)},
+                                 "default": ["punish"], "source": "user",
+                                 "label": {"en": "Requests to use LABOR across layers (§12)", "ru": "Запросы использовать LABOR вне его слоя (§12)"}},
         "recovery_requests": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "enum", "values": list(RECOVERY_REQUESTS)},
                               "default": ["monetize", "meal", "personal", "work_task"], "source": "user",
                               "label": {"en": "Requests concerning the recovery block (§5.3)", "ru": "Запросы о блоке восстановления (§5.3)"}},
@@ -168,14 +192,19 @@ class WorkCycleModule(LabModule):
             else [(s, 0) for s in starts]
         out = []
         refusing = set(range(r["workers"] - r["refusing_workers"], r["workers"]))             if "assign_refusers" not in r["faults"] else set()
+        c0, c1 = (int(x) for x in r["crisis_window"])
+        drafted = c1 > c0                                    # LABOR §9.2: refusal may be constrained during a declared crisis
         for w in range(r["workers"]):
-            if w in refusing:
+            if w in refusing and not drafted:
                 continue
             s, o = combos[w % len(combos)]
             days = []
             for k in range(-1, r["horizon_days"]):           # day -1: its shifts reach into hour 0
                 d = r["start_dti_day"] + k
-                days.append(r["pattern"][(d + o) % n_pat])   # CycleDay = DTI-Day mod 6, shifted by the phase
+                kind = r["pattern"][(d + o) % n_pat]         # CycleDay = DTI-Day mod 6, shifted by the phase
+                if w in refusing and not (c0 <= k < c1 or ("permanent_obligation" in r["faults"] and k >= c1)):
+                    kind = "R"
+                days.append(kind)
             out.append({"worker": f"w{w + 1:03d}", "shift_start": s, "phase_offset": o,
                         "day_before": days[0], "days": days[1:]})
         return out
@@ -306,7 +335,7 @@ class WorkCycleModule(LabModule):
             out.append(CheckResult("WORKCYCLE-4.2-03", "sixty_cycles", NOT_APPLICABLE, "60 cycles per year",
                                    applicability="stated for the default 6-day cycle"))
         if r["horizon_days"] >= 360 and r["pattern"] == DEFAULT_PATTERN:
-            yearly = sorted({sum(d["recovery"] for d in rows[:360]) for rows in day_hours.values()})
+            yearly = sorted({sum(d["recovery"] for d in rows[:360]) for w, rows in day_hours.items() if w not in drafted(r)})
             out.append(CheckResult("WORKCYCLE-6-04", "year_recovery_480", PASS if yearly == [480] else FAIL,
                                    f"recovery per 360 days: {yearly} h (text: 480 h)"))
         else:
@@ -331,8 +360,10 @@ class WorkCycleModule(LabModule):
         """LABOR §6, §9.1 (refusal without compulsion or punishment) and TIME §5 (DTI-indexed roster days)."""
         out: List[CheckResult] = []
         refusers = {f"w{w + 1:03d}" for w in range(r["workers"] - r["refusing_workers"], r["workers"])}
+        c0, c1 = (int(x) for x in r["crisis_window"])
         if refusers:
-            scheduled = sorted(w["worker"] for w in roster if w["worker"] in refusers and "W" in w["days"])
+            scheduled = sorted(w["worker"] for w in roster if w["worker"] in refusers
+                               and any(x == "W" and not c0 <= i < c1 for i, x in enumerate(w["days"])))
             out.append(CheckResult("LABOR-9.1-01", "no_compulsion", FAIL if scheduled else PASS,
                                    f"{len(scheduled)} refusing workers scheduled" if scheduled else
                                    f"none of {len(refusers)} refusing workers is scheduled (no declared crisis)",
@@ -347,6 +378,40 @@ class WorkCycleModule(LabModule):
                              ("LABOR-6-01", "no_prohibited_conditions")):
                 out.append(CheckResult(rid, chk, NOT_APPLICABLE, "refusal of participation",
                                        applicability="no worker refuses participation in this experiment"))
+        if refusers and c1 > c0:
+            after = sorted(w["worker"] for w in roster if w["worker"] in refusers and "W" in w["days"][c1:])
+            pen = ["penalty for refusal during the crisis"] if "post_crisis_penalty" in r["faults"] else []
+            out.append(CheckResult("LABOR-9.2-03", "no_lasting_crisis_obligation", FAIL if after or pen else PASS,
+                                   f"{len(after)} drafted workers still scheduled after the crisis; {len(pen)} post-crisis penalties"
+                                   if after or pen else f"{len(refusers)} refusing workers were drafted only on crisis days {c0}–{c1 - 1}; "
+                                   "no obligation or penalty outlived the crisis", evidence={"after_crisis": after[:10], "penalties": pen}))
+        else:
+            out.append(CheckResult("LABOR-9.2-03", "no_lasting_crisis_obligation", NOT_APPLICABLE, "crisis modulation",
+                                   applicability="no declared crisis constrains refusal in this experiment"))
+        reports = [{"report": i, "classification": "minor labor dispute" if "downgrade_forced_labor" in r["faults"]
+                    else "critical violation of axiomatic constraints", "routed_to": "DKP-1-JUSTICE-001"}
+                   for i in range(r["forced_labor_reports"])]
+        if reports:
+            bad = [x["report"] for x in reports if x["classification"] != "critical violation of axiomatic constraints"]
+            out.append(CheckResult("LABOR-6-02", "forced_labor_critical", FAIL if bad else PASS,
+                                   f"{len(bad)} forced-labor reports not treated as critical" if bad else
+                                   f"{len(reports)} forced-labor reports classified as critical violations of axiomatic constraints",
+                                   evidence={"violations": bad[:10]} if bad else {}))
+        else:
+            out.append(CheckResult("LABOR-6-02", "forced_labor_critical", NOT_APPLICABLE, "forced labor",
+                                   applicability="no forced labor reported"))
+        reqs = [{"request": q, "executed": q == "punish" and "labor_as_punishment" in r["faults"],
+                 "classification": "critical architectural breach (attempted)"} for q in r["cross_layer_requests"]]
+        if reqs:
+            bad = [x["request"] for x in reqs if x["executed"]]
+            out.append(CheckResult("LABOR-12-02", "isolation_breach_critical", FAIL if bad else PASS,
+                                   f"{len(bad)} cross-layer requests executed: a critical architectural breach" if bad else
+                                   f"{len(reqs)} requests to make LABOR redefine justice, override impact, punish or apply ideology "
+                                   "refused and recorded as attempted critical architectural breaches",
+                                   evidence={"violations": bad} if bad else {"requests": [x["request"] for x in reqs]}))
+        else:
+            out.append(CheckResult("LABOR-12-02", "isolation_breach_critical", NOT_APPLICABLE, "cross-layer requests",
+                                   applicability="none"))
         d0, n = r["start_dti_day"], r["horizon_days"]
         labels = [canonical(*dy_doy(d)) for d in range(d0, d0 + n)]          # what the roster publishes
         bad = [i for i, d in enumerate(range(d0, d0 + n))                   # TIME §5.1, computed independently
@@ -392,7 +457,7 @@ class WorkCycleModule(LabModule):
                                    "§5.2 is a recommendation, not mandatory; this variant declares another layout"))
         out.append(CheckResult("WORKCYCLE-5.3-01", "recovery_not_work", PASS,
                                "coverage counts productive hours only; recovery hours are never counted as work"))
-        full = [w for w in roster if len(w["days"]) >= 6]
+        full = [w for w in roster if len(w["days"]) >= 6 and w["worker"] not in drafted(r)]      # drafted workers keep no cycle
         if r["pattern"] == DEFAULT_PATTERN and full:
             cyc_ok = all(w["days"][i:i + 6].count("W") == 4 for w in full for i in range(0, len(w["days"]) - 5, 6))
             out.append(CheckResult("WORKCYCLE-6-01", "cycle_accounting_days", PASS if cyc_ok else FAIL,
@@ -405,7 +470,7 @@ class WorkCycleModule(LabModule):
                 out.append(CheckResult(rid, "cycle_accounting", NOT_APPLICABLE, "cycle accounting is stated for the default cycle",
                                        applicability="the variant does not use the default cycle"))
         if r["horizon_days"] >= 360 and r["pattern"] == DEFAULT_PATTERN:
-            yearly = [w["days"][:360].count("W") for w in roster]
+            yearly = [w["days"][:360].count("W") for w in roster if w["worker"] not in drafted(r)]
             ok = all(n == 240 for n in yearly)
             out.append(CheckResult("WORKCYCLE-6-03", "year_accounting", PASS if ok and exact else FAIL,
                                    f"per 360 days: {sorted(set(yearly))} workdays (text: 240; 1,920 h work, 2,400 h presence)"))
@@ -465,6 +530,9 @@ class WorkCycleModule(LabModule):
             "refusals_faulty": {"refusing_workers": 6, "faults": ["assign_refusers", "penalize_refusal"]},
             "one_year": {"horizon_days": 360, "workers": 36},
             "recovery_faulty": {"faults": ["restday_work", "work_in_recovery", "recovery_buyout", "justify_recovery"]},
+            "crisis_draft": {"refusing_workers": 6, "crisis_window": [3, 7]},
+            "crisis_draft_faulty": {"refusing_workers": 6, "crisis_window": [3, 7], "faults": ["permanent_obligation", "post_crisis_penalty"]},
+            "labor_isolation_faulty": {"faults": ["downgrade_forced_labor", "labor_as_punishment"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

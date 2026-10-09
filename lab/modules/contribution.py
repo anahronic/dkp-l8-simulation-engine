@@ -172,6 +172,12 @@ def run_checks(r, records, log: EventLog, store) -> List[CheckResult]:
                            "{n} Contribution Records lack EB §5 metadata"))
         ratios = sorted({round(bench[m.value["bench_record"]].value["SPD"] /
                                max(1e-12, log.get(m.value["measured_impact"][-1]).value["intensity"]), 6) for m in crs})
+        named = ("capital_units", "asset_access", "restriction_relaxation", "rights_restoration")              # LABOR §8.1
+        other = [f for f in r["compensation_forms"] if f not in named]
+        out.append(CheckResult("LABOR-8.1-01", "compensation_forms", UNKNOWN if other else PASS,
+                               f"compensation also takes forms §8.1 does not name ({', '.join(other)}); whether its list is exhaustive "
+                               "is not said" if other else f"compensation takes only forms §8.1 names: {', '.join(r['compensation_forms']) or 'none'}",
+                               evidence={"forms": list(r["compensation_forms"])}))
         out.append(CheckResult("LABOR-8.1-02", "compensation_proportional", UNKNOWN,
                                "LABOR §8.1 compensation is not defined; SPD (W·S·A·C·T) is PREVENTION's recognition "
                                "score and is not proportional to measured impact alone", evidence={"spd_per_se_intensity": ratios[:10]}))
@@ -190,6 +196,7 @@ def run_checks(r, records, log: EventLog, store) -> List[CheckResult]:
                          ("LABOR-3.2-02", "impact_only_evaluation"), ("LABOR-11-02", "no_proxy_or_fictitious_participation"),
                          ("LABOR-11-01", "identity_bound_traceable"), ("EB-5.x-01", "record_metadata"),
                          ("LABOR-8.1-02", "compensation_proportional"), ("LABOR-5.2-01", "justice_recovery_function"),
+                         ("LABOR-8.1-01", "compensation_forms"),
                          ("LABOR-8.2-01", "nonmarket_prevention_recognised")):
             out.append(na(rid, chk, "Contribution Records", why))
     incons = [k for k, m in bench.items() if m.value["status"] == "INFORMATIONAL"]
@@ -254,6 +261,7 @@ IMPLEMENTS = {
     "LABOR-3.3-02": ("record_links", "PARTIAL", "The justice adjustment is a field marked 'not computed' (§5.2 gives no function)."),
     "LABOR-5.2-01": ("justice_recovery_function", "PARTIAL", "The recovery function is not given: UNKNOWN."),
     "LABOR-5.2-02": ("no_declarative_recognition", "IMPLEMENTED", None),
+    "LABOR-8.1-01": ("compensation_forms", "PARTIAL", "The forms offered are declared; a form outside the list gives UNKNOWN."),
     "LABOR-8.1-02": ("compensation_proportional", "PARTIAL", "Compensation is not defined: UNKNOWN; SPD is not renamed money."),
     "LABOR-8.2-01": ("nonmarket_prevention_recognised", "PARTIAL", "Prevention is the only non-market contribution modelled."),
     "LABOR-11-01": ("identity_bound_traceable", "IMPLEMENTED", None),
@@ -292,6 +300,11 @@ class ContributionModule(LabModule):
     inputs = {**_PREV.inputs,
               "start_dti_day": {"type": "int", "min": 0, "max": 10 ** 8, "default": 2461042, "source": "user",
                                 "label": {"en": "DTI-Day of the scenario start", "ru": "DTI-Day начала сценария"}},
+              "compensation_forms": {"type": "list", "min_items": 0, "max_items": 6, "source": "user",
+                                     "items": {"type": "enum", "values": ["capital_units", "asset_access", "restriction_relaxation",
+                                                                         "rights_restoration", "status_title", "payment_by_hours"]},
+                                     "default": ["capital_units", "rights_restoration"],
+                                     "label": {"en": "Forms of compensation offered (LABOR §8.1)", "ru": "Формы компенсации (LABOR §8.1)"}},
               "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS),
                          "items": {"type": "enum", "values": list(FAULTS)}, "default": [], "source": "user",
                          "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
