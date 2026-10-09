@@ -80,7 +80,7 @@
     "also": [
      {
       "module": "sensor_loss",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "check": "null_output_trigger"
      }
     ]
@@ -120,7 +120,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "state_no_enforcement"
    },
    "tests": [
@@ -151,7 +151,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_penaltys_in_null_output"
    },
    "tests": [
@@ -182,7 +182,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_rewards_in_null_output"
    },
    "tests": [
@@ -217,7 +217,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_attributions_in_null_output"
    },
    "tests": [
@@ -252,7 +252,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_enforcement_outputs"
    },
    "tests": [
@@ -289,7 +289,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "measurement_continues"
    },
    "tests": [
@@ -330,7 +330,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_fallback_authority"
    },
    "tests": [
@@ -361,11 +361,17 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No lab check implemented yet.",
+   "gap": "The override attempt is a declared event.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.1.0",
+    "check": "violator_external"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -394,7 +400,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_partial_enforcement"
    },
    "tests": [
@@ -435,7 +441,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_selective_restoration"
    },
    "tests": [
@@ -475,7 +481,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ptl_collection_continues"
    },
    "tests": [
@@ -515,7 +521,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_decisions_from_data"
    },
    "tests": [
@@ -560,7 +566,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "automatic_recovery"
    },
    "tests": [
@@ -599,7 +605,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_manual_preconditions"
    },
    "tests": [
@@ -636,7 +642,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_manual_restart"
    },
    "tests": [
@@ -667,11 +673,17 @@
    "data_dependencies": [
     "external certification records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The certification offer is a declared event.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.1.0",
+    "check": "no_external_certification"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -736,7 +748,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_authority_granted"
    },
    "tests": [
@@ -765,11 +777,17 @@
    "data_dependencies": [
     "crisis mechanism dependencies and execution records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "The crisis mechanism is a declared notice.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.1.0",
+    "check": "crisis_without_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -827,11 +845,17 @@
    "data_dependencies": [
     "external decision injection attempt records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "sensor_loss",
+    "version": "1.1.0",
+    "check": "dkp_stays_inactive"
+   },
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -901,7 +925,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "full_stop_at_breach"
    },
    "tests": [
@@ -939,7 +963,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_partial_outputs"
    },
    "tests": [
@@ -981,7 +1005,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "recovery_automatic_deterministic"
    },
    "tests": [
@@ -1022,7 +1046,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "sensor_loss",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_authority_emerges"
    },
    "tests": [

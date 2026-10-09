@@ -297,3 +297,7 @@ def test_f041_unnamed_compatibility():
 def test_f042_scope_dependents():
     assert _code("F-042", ("SCOPE-12-03",)) == {"all_referencing_protocols": ("PASS",), "depends_on_lists_only": ("UNKNOWN",),
                                                 "resilience_only_forced": ("FAIL",)}
+
+
+def test_f043_crisis_confidence():
+    assert _code("F-043", ("CRISIS-12.1-01", "CRISIS-12.3-01")) == {"propagated": ("PASS", "FAIL"), "not_sufficient": ("FAIL", "PASS")}

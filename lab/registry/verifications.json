@@ -2039,6 +2039,66 @@
      "'dependent protocols' occurs in SCOPE §12 and SIMULATION §14, defined in neither"
     ]
    }
+  },
+  {
+   "id": "F-043",
+   "classification": "CONFIRMED_FINDING",
+   "kind": "contradiction",
+   "effect": "changes_execution",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.1",
+     "text": "- confidence_state: as propagated from triggering PTL signals"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.3",
+     "text": "Crisis outputs SHALL NOT carry validity_state: VALID or confidence_state: SUFFICIENT_DATA for any determination that constitutes interpretation of axiom application."
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.2",
+     "text": "Outputs that interpret \"minimum required conditions\" under Axiom A1 SHALL additionally carry:"
+    },
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§5",
+     "text": "- SUFFICIENT_DATA"
+    },
+    {
+     "doc": "DKP-1-EPISTEMIC-BOUNDARIES-001",
+     "at": "§5",
+     "text": "- DEGRADED_SIGNAL"
+    }
+   ],
+   "conclusion": "CRISIS §12.1 makes every crisis output carry the confidence propagated from the triggering PTL signals; §12.3 forbids SUFFICIENT_DATA for any determination that interprets axiom application, which includes the §12.2 outputs interpreting A1 minimum conditions.  When the PTL signals are SUFFICIENT_DATA such an output can satisfy only one of the two; §12.3 names no replacement value and no text ranks the subsections.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   },
+   "analysis": {
+    "rule_a": {
+     "text": "CRISIS §12.1",
+     "subject": "every Crisis output",
+     "object": "confidence_state = the value propagated from the triggering PTL signals",
+     "scope": "all crisis outputs, including §12.2 outputs",
+     "conditions": "always",
+     "modality": "obligation"
+    },
+    "rule_b": {
+     "text": "CRISIS §12.3",
+     "subject": "Crisis outputs that interpret axiom application",
+     "object": "confidence_state SUFFICIENT_DATA (and validity_state VALID)",
+     "scope": "axiom-interpreting determinations, among them the §12.2 A1 minimum-conditions outputs",
+     "conditions": "always",
+     "modality": "prohibition"
+    },
+    "joint_compliance": "impossible for an axiom-interpreting output when the triggering PTL confidence is SUFFICIENT_DATA; possible when it is DEGRADED_SIGNAL or INSUFFICIENT_DATA.  The VALID part is jointly satisfiable (§12.1 fixes validity_state CONDITIONAL).",
+    "priority": "none stated; §12.3 is narrower, but the corpus states no specific-over-general rule and the lab does not apply one; §12.3 gives its purpose (non-precedent) but no replacement value; EB §5 offers only SUFFICIENT_DATA, INSUFFICIENT_DATA and DEGRADED_SIGNAL",
+    "result": "contradiction conditional on SUFFICIENT_DATA PTL signals behind an axiom-interpreting crisis output"
+   }
   }
  ],
  "reference_fails": [
@@ -2103,6 +2163,30 @@
     }
    ],
    "conclusion": "Applying Code A.1 literally, the Kill Switches activate on B(t) < 0.68 without a bundle; ORACLE §12 forbids exactly that.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "requirement": "CRISIS-12.3-01",
+   "module": "crisis_recovery",
+   "origin": "CONFIRMED_FINDING",
+   "finding": "F-043",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.1",
+     "text": "- confidence_state: as propagated from triggering PTL signals"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.3",
+     "text": "Crisis outputs SHALL NOT carry validity_state: VALID or confidence_state: SUFFICIENT_DATA for any determination that constitutes interpretation of axiom application."
+    }
+   ],
+   "conclusion": "Under the default reading ('propagated', H-CR-6) the rationing outputs carry SUFFICIENT_DATA from confirmed PTL signals as §12.1 requires, which §12.3 forbids for interpretations of axiom application.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",
@@ -3645,6 +3729,25 @@
     }
    ],
    "reason": "'Recorded only by the \"Last updated\" date' may limit the document's own record or every record; under the second reading a corrected edition cannot be listed in SHA256SUMS.txt (H-EF-3).",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
+  },
+  {
+   "id": "Q-063",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "finding": "F-043",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§12.3",
+     "text": "Crisis outputs SHALL NOT carry validity_state: VALID or confidence_state: SUFFICIENT_DATA for any determination that constitutes interpretation of axiom application."
+    }
+   ],
+   "reason": "Which confidence an A1-interpreting crisis output carries when the PTL signals are sufficient is a normative choice: keep the propagated value, name a non-propagated one, or emit no output.",
    "acceptance": {
     "agent_reading": true,
     "quote_check": "automatic",

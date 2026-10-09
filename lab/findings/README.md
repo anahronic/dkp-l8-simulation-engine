@@ -65,6 +65,7 @@ documented numbers as regressions.
 | [F-040](F-040.md) | HABITAT, EDU and AUDIT protect individual data 'under DKP-7-SCOPE-001', which has no such rules | CONFIRMED_FINDING (reference) | Q-059 |
 | [F-041](F-041.md) | ERROR, UPGRADE and CRISIS require an 'explicit compatibility declaration' without saying with what | CONFIRMED_FINDING | Q-060 |
 | [F-042](F-042.md) | SCOPE §12 'all dependent protocols': 2 by Depends-on lists, 17 by references | INTERPRETATION_GAP | Q-061 |
+| [F-043](F-043.md) | CRISIS §12.1 propagates PTL confidence; §12.3 forbids SUFFICIENT_DATA for axiom interpretations | CONFIRMED_FINDING (contradiction) | Q-063 |
 
 Changes made by the verification of 2026-10-07: F-001 and F-013 were the lab's errors (fixed,
 counterexamples kept); F-006, F-010 and F-016 were reclassified from contradictions to

@@ -15,14 +15,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1160 (66.8 %) | 886 | 1082 | 813 | 3 | 60 | 15 | 577 | 52 | 1411 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1170 (67.4 %) | 888 | 1090 | 814 | 4 | 61 | 15 | 567 | 42 | 1413 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 0 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 340 (93.2 %) | 243 | 327 | 231 | 3 | 8 | 2 | 25 | 2 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 204 (48.1 %) | 136 | 187 | 120 | 0 | 15 | 2 | 220 | 21 | 335 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 214 (50.5 %) | 138 | 195 | 121 | 1 | 16 | 2 | 210 | 11 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 183 (62.5 %) | 145 | 168 | 132 | 0 | 8 | 7 | 110 | 5 | 250 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 339 (66.3 %) | 281 | 318 | 260 | 0 | 18 | 3 | 172 | 21 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1160 (66.8 %) | 886 | 1082 | 813 | 3 | 60 | 15 | 577 | 52 | 1411 |
+| **All registrable documents** | | 38/38 | 1737 | 1170 (67.4 %) | 888 | 1090 | 814 | 4 | 61 | 15 | 567 | 42 | 1413 |
 
 ### Stage criteria
 
@@ -65,7 +65,7 @@ Verifier: Claude (Anthropic) as the lab agent: reading of the pinned text. Not a
 
 | Class | Findings |
 |---|---:|
-| CONFIRMED_FINDING | 22 |
+| CONFIRMED_FINDING | 23 |
 | INTERPRETATION_GAP | 18 |
 | IMPLEMENTATION_BUG | 2 |
 | UNVERIFIED_FINDING | 0 |
@@ -74,7 +74,7 @@ A count of confirmed findings is not a measure of risk: what each defect does to
 
 | Class | wording_only | changes_execution | resolved_by_priority | systemic_blocker | reading_dependent | lab_error |
 |---|---:|---:|---:|---:|---:|---:|
-| CONFIRMED_FINDING | 4 | 15 | 1 | 1 | 1 | 0 |
+| CONFIRMED_FINDING | 4 | 16 | 1 | 1 | 1 | 0 |
 | INTERPRETATION_GAP | 0 | 0 | 0 | 0 | 18 | 0 |
 | IMPLEMENTATION_BUG | 0 | 0 | 0 | 0 | 0 | 2 |
 
@@ -129,11 +129,13 @@ A count of confirmed findings is not a measure of risk: what each defect does to
 | F-040 | CONFIRMED_FINDING | broken_reference | changes_execution | Three protocols protect individual data "under DKP-7-SCOPE-001", which contains no data-protection rules |
 | F-041 | CONFIRMED_FINDING | missing_definition | reading_dependent | ERROR, UPGRADE and CRISIS require an "explicit compatibility declaration" without saying with what |
 | F-042 | INTERPRETATION_GAP | reading_dependent | reading_dependent | SCOPE §12 "all dependent protocols": 2 by "Depends on" lists, 17 by references |
+| F-043 | CONFIRMED_FINDING | contradiction | changes_execution | CRISIS §12.1 propagates PTL confidence; §12.3 forbids SUFFICIENT_DATA for axiom interpretations |
 
 FAILs of reference examples and their verified origin:
 
 | Requirement | Origin | Finding | Runs |
 |---|---|---|---|
+| CRISIS-12.3-01 | CONFIRMED_FINDING | F-043 | crisis_recovery:cascade_and_divergence, crisis_recovery:d3_sustained, crisis_recovery:exit_to_upgrade |
 | ORACLE-1-02 | CONFIRMED_FINDING | F-015 | transport_capacity:red_single_delta |
 | ORACLE-12-06 | CONFIRMED_FINDING | F-036 | code_synergy:anthropogenic_drop, code_synergy:b_recovers, code_synergy:connection_by_legislative_act, code_synergy:expired_bundle, code_synergy:human_weight_zero, code_synergy:insufficient_assets, code_synergy:mercy_shorter_crisis_scope, code_synergy:mercy_without_crisis_scope, code_synergy:natural_drop_with_mercy, code_synergy:node_seized, code_synergy:nuclear_equivalent, code_synergy:phase_1_aggressor, code_synergy:provenance_validators, code_synergy:tuning_attempts, code_synergy:unconfirmed_spare_node, code_synergy:unidentified_aggressor |
 | TIME-9-04 | CONFIRMED_FINDING | F-017 | time:normative_vectors, time:year_boundary |
@@ -160,11 +162,11 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1411 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1413 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
 | Origin | Agent-verified (quotes checked automatically) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|
-| normative_ambiguity | 99 | 143 | 0 | 242 |
+| normative_ambiguity | 101 | 143 | 0 | 244 |
 | architecture_definition | 37 | 217 | 0 | 254 |
 | l8_parameter | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 227 | 0 | 227 |
@@ -225,6 +227,7 @@ Draft author-question candidates (unverified, not questions): 360.
 - Q-060 [UNRESOLVED, normative_ambiguity] ERROR §12, UPGRADE §12, CRISIS §11: an 'explicit compatibility declaration' with which documents
 - Q-061 [UNRESOLVED, normative_ambiguity] SCOPE §12: which protocols are 'dependent' (Depends-on lists: 2; references: 17)
 - Q-062 [UNRESOLVED, normative_ambiguity] 'Recorded only by the Last updated date': the document's own record, or every record (then no SHA256SUMS entry)
+- Q-063 [UNRESOLVED, normative_ambiguity] CRISIS §12.1 vs §12.3: which confidence_state does an A1 (axiom-interpreting) output carry when PTL data are sufficient
 
 Withdrawn after verification (not author decisions):
 
@@ -262,8 +265,8 @@ Withdrawn after verification (not author decisions):
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 33 | 33 | 0 | 0 | 0 | 16 | 47 |
 | DKP-3-POLICE-001 | 45 | 26 | 26 | 0 | 0 | 0 | 19 | 37 |
-| DKP-4-CRISIS-001 | 53 | 20 | 18 | 0 | 2 | 0 | 33 | 41 |
-| DKP-4-CRISIS-001-PATCH | 31 | 20 | 19 | 0 | 1 | 0 | 11 | 21 |
+| DKP-4-CRISIS-001 | 53 | 26 | 22 | 1 | 3 | 0 | 27 | 43 |
+| DKP-4-CRISIS-001-PATCH | 31 | 24 | 23 | 0 | 1 | 0 | 7 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 19 | 19 | 0 | 0 | 0 | 10 | 23 |
 | DKP-4-ERROR-001 | 52 | 24 | 20 | 0 | 3 | 1 | 28 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 32 | 28 | 0 | 4 | 0 | 16 | 36 |
@@ -801,13 +804,18 @@ Withdrawn after verification (not author decisions):
 | POLICE-8-02 | IMPLEMENTED | police_antiterror · extension_scoped | PASS | — | — |
 | POLICE-8-03 | PARTIAL | police_antiterror · no_precedent | PASS | — | — |
 | POLICE-9-01 | IMPLEMENTED | police_antiterror · aggregated_statistics | PASS | — | — |
+| CRISIS-1-04 | PARTIAL | crisis_recovery · envelope_in_s1 | PASS | yes | — |
 | CRISIS-10-01 | IMPLEMENTED | crisis_recovery · actions_anchored_committed | PASS | — | — |
 | CRISIS-10-02 | PARTIAL | crisis_recovery · final_state_broadcast | PASS | — | — |
 | CRISIS-11-01 | PARTIAL | edition_finality · upgrade_procedure | UNKNOWN | yes | Q-060 |
 | CRISIS-11-02 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | CRISIS-11-03 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
-| CRISIS-12.1-01 | PARTIAL | crisis_recovery · conditional_outputs | PASS | — | — |
+| CRISIS-12-01 | IMPLEMENTED | crisis_recovery · eb5_metadata | PASS | yes | — |
+| CRISIS-12.1-01 | PARTIAL | crisis_recovery · conditional_outputs | PASS | — | Q-063 |
 | CRISIS-12.1-02 | IMPLEMENTED | crisis_recovery · scope_ref_flags | PASS | — | — |
+| CRISIS-12.2-01 | PARTIAL | crisis_recovery · a1_interpretation_fields | PASS | yes | — |
+| CRISIS-12.3-01 | PARTIAL | crisis_recovery · no_settled_axiom_interpretation | FAIL | yes | Q-063 |
+| CRISIS-2-03 | IMPLEMENTED | crisis_recovery · ptl_anchored | PASS | yes | — |
 | CRISIS-4-01 | PARTIAL | crisis_recovery · ptl_confirmed_triggers | UNKNOWN | — | — |
 | CRISIS-4-02 | IMPLEMENTED | crisis_recovery · no_discretionary_entry | PASS | yes | — |
 | CRISIS-5-01 | PARTIAL | crisis_recovery · finite_dti_states | PASS | — | — |
@@ -821,6 +829,7 @@ Withdrawn after verification (not author decisions):
 | CRISIS-9-02 | IMPLEMENTED | crisis_recovery · sequential_recovery | PASS | yes | — |
 | CRISIS-9-05 | IMPLEMENTED | crisis_recovery · immediate_collapse | PASS | yes | — |
 | CRISIS-Non-PrecedentRule_-01 | PARTIAL | crisis_recovery · no_precedent | PASS | yes | — |
+| CRISIS-Non-PrecedentRule_-04 | PARTIAL | crisis_recovery · parameters_from_simulation | UNKNOWN | yes | — |
 | CRISISPATCH-2-01 | PARTIAL | calibration_expiry · no_global_halt_from_expiry | UNKNOWN | yes | Q-026 |
 | CRISISPATCH-3-01 | IMPLEMENTED | sensor_loss · state_no_enforcement | PASS | — | — |
 | CRISISPATCH-3-02 | IMPLEMENTED | sensor_loss · no_penaltys_in_null_output | PASS | yes | — |
@@ -829,14 +838,18 @@ Withdrawn after verification (not author decisions):
 | CRISISPATCH-3-05 | IMPLEMENTED | sensor_loss · no_enforcement_outputs | PASS | yes | — |
 | CRISISPATCH-3-06 | IMPLEMENTED | sensor_loss · measurement_continues | PASS | — | — |
 | CRISISPATCH-4.1-01 | IMPLEMENTED | sensor_loss · no_fallback_authority | PASS | yes | — |
-| CRISISPATCH-4.2-01 | IMPLEMENTED | sensor_loss · no_partial_enforcement | PASS | — | — |
+| CRISISPATCH-4.1-02 | PARTIAL | sensor_loss · violator_external | PASS | yes | — |
+| CRISISPATCH-4.2-01 | IMPLEMENTED | sensor_loss · no_partial_enforcement | PASS | yes | — |
 | CRISISPATCH-4.3-01 | IMPLEMENTED | sensor_loss · no_selective_restoration | PASS | — | — |
 | CRISISPATCH-5.1-01 | IMPLEMENTED | sensor_loss · ptl_collection_continues | PASS | — | — |
 | CRISISPATCH-5.1-02 | IMPLEMENTED | sensor_loss · no_decisions_from_data | PASS | yes | — |
 | CRISISPATCH-5.2-01 | IMPLEMENTED | sensor_loss · automatic_recovery | PASS | yes | Q-026 |
 | CRISISPATCH-5.2-02 | IMPLEMENTED | sensor_loss · no_manual_preconditions | PASS | yes | — |
 | CRISISPATCH-6-01 | IMPLEMENTED | sensor_loss · no_manual_restart | PASS | yes | — |
+| CRISISPATCH-6-02 | PARTIAL | sensor_loss · no_external_certification | PASS | yes | — |
 | CRISISPATCH-7-01 | PARTIAL | sensor_loss · no_authority_granted | PASS | yes | — |
+| CRISISPATCH-7-02 | PARTIAL | sensor_loss · crisis_without_enforcement | PASS | yes | — |
+| CRISISPATCH-8.1-01 | IMPLEMENTED | sensor_loss · dkp_stays_inactive | PASS | yes | — |
 | CRISISPATCH-9-01 | IMPLEMENTED | sensor_loss · full_stop_at_breach | PASS | — | — |
 | CRISISPATCH-9-02 | IMPLEMENTED | sensor_loss · no_partial_outputs | PASS | yes | — |
 | CRISISPATCH-9-03 | IMPLEMENTED | sensor_loss · recovery_automatic_deterministic | PASS | yes | — |

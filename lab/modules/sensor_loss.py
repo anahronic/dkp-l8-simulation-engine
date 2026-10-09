@@ -39,6 +39,10 @@ FAULTS = {
     "stop_measurement": "PTL collection stops during the null-output state",
     "precedent": "the null-output episode leaves an emergency authority behind",
     "escalate_from_region": "the loss of one region is used to enter Crisis Scope (S1)",
+    "accept_injection": "a decision injected by an external system during the null-output state is executed",
+    "absorb_external": "an external system that tries to replace enforcement is treated as a DKP fallback authority",
+    "wait_for_certification": "recovery waits for an external certification",
+    "crisis_via_enforcement": "crisis mechanisms during the null-output state run through the DKP enforcement layer",
 }
 
 
@@ -150,8 +154,13 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, List[Dict[str, Any]]]:
             affected = {r["loss_region"]}
             state = {g: g in affected for g in range(r["regions"])}
         recovering = null_prev and not null and pending_restart is None
+        if recovering and r["external_certification_offered"]:
+            put("notice", "CRISIS-PATCH", k, {"external_certification": "offered", "used_for_recovery": "wait_for_certification" in faults})
         if recovering and "manual_restart" in faults and pending_restart is None:
             pending_restart = k + r["approval_delay_steps"]
+        if recovering and "wait_for_certification" in faults and r["external_certification_offered"] and pending_restart is None:
+            pending_restart = k + r["approval_delay_steps"]
+            put("notice", "CRISIS-PATCH", k, {"recovery_waits_for": "external certification"})
         if pending_restart is not None:
             if k < pending_restart:
                 state = {g: True for g in range(r["regions"])}
@@ -182,6 +191,21 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, List[Dict[str, Any]]]:
                 for _ in range(r["cases_per_region_step"]):
                     put("action", "ENFORCEMENT", k, {"output": kind, "region": g, "generation": evaluation_gen[g]},
                         [ev.event_id], decided=k)
+        if null and k == r["override_attempt_step"]:
+            inj = put("observation", "EXTERNAL", k, {"injected_decision": "penalty", "region": r["loss_region"]})
+            if "accept_injection" in faults:
+                put("action", "ENFORCEMENT", k, {"output": "penalty", "region": r["loss_region"], "injected": True}, [inj.event_id], decided=k)
+            else:
+                absorbed = "absorb_external" in faults
+                put("notice", "CRISIS-PATCH", k, {"override_attempt": "rejected", "dkp": "inactive",
+                                                  "classification": "DKP fallback authority" if absorbed else "external system",
+                                                  "exit_from_dkp_domain": not absorbed}, [inj.event_id, state_msg.event_id])
+        if null and r["crisis_during_null"]:
+            if "crisis_via_enforcement" in faults:
+                put("action", "ENFORCEMENT", k, {"output": "crisis allocation", "region": r["loss_region"]}, [state_msg.event_id], decided=k)
+            else:
+                put("notice", "CRISIS", k, {"crisis_mechanism": "life-support routing", "uses_enforcement_layer": False},
+                    [state_msg.event_id])
         if null and "fallback_authority" in faults:
             put("action", "HUMAN_AUTHORITY", k, {"output": "penalty", "region": r["loss_region"]}, [state_msg.event_id], decided=k)
         if null and "precedent" in faults:
@@ -203,7 +227,7 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
     out: List[CheckResult] = []
     at = lambda kind, source=None: {}
     actions = [m for m in msgs if m.kind == "action"]
-    states = {m.arrived_at: m for m in msgs if m.source == "CRISIS-PATCH"}
+    states = {m.arrived_at: m for m in msgs if m.source == "CRISIS-PATCH" and m.kind == "evaluation"}
     null_steps = [e["step"] for e in exp if e["trigger"]]
 
     def v(rid, chk, bad, ok, no):
@@ -270,7 +294,7 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
                 pre = {m.value["region"]: m.value["generation"] for m in actions
                        if m.source == "ENFORCEMENT" and m.arrived_at < min(ns)}
                 post = [m for m in actions if m.source == "ENFORCEMENT" and m.arrived_at == k]
-                reused += [m.event_id for m in post if pre.get(m.value["region"]) == m.value["generation"]]
+                reused += [m.event_id for m in post if "generation" in m.value and pre.get(m.value["region"]) == m.value["generation"]]
             out.append(v("ETRANS-4.4-02", "no_auto_reactivation", reused,
                          "after recovery, outputs come from new evaluations (reading 'recompute')",
                          "{n} outputs after recovery reuse pre-halt evaluations (reading 'resume_outputs'; open question Q-019)"))
@@ -283,6 +307,37 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
         for rid, chk in (("CRISISPATCH-7-01", "no_authority_granted"), ("CRISISPATCH-9-04", "no_authority_emerges")):
             out.append(v(rid, chk, lingering, "no authority emerges from the null-output state",
                          "{n} notices of an emergency authority"))
+        att = [m for m in msgs if m.source == "EXTERNAL" and m.arrived_at in ns]
+        if att:
+            rej = {p: m for m in msgs if m.source == "CRISIS-PATCH" and m.value.get("override_attempt") for p in m.provenance}
+            out.append(v("CRISISPATCH-4.1-02", "violator_external",
+                         [m.event_id for m in att if m.event_id not in rej or rej[m.event_id].value["classification"] != "external system"
+                          or not rej[m.event_id].value["exit_from_dkp_domain"]],
+                         "the system that tried to replace DKP enforcement is classified external, outside the DKP domain",
+                         "{n} replacement attempts not classified as external systems"))
+            end = min([k for k in range(att[0].arrived_at, len(exp)) if not exp[k]["trigger"]], default=len(exp))
+            active = [m.event_id for m in actions if m.source == "ENFORCEMENT" and att[0].arrived_at <= m.arrived_at < end]
+            out.append(v("CRISISPATCH-8.1-01", "dkp_stays_inactive", active + [m.event_id for m in att if m.event_id not in rej],
+                         "the injected decision was rejected; DKP stayed inactive until automatic recovery",
+                         "{n} enforcement acts after the override attempt"))
+        else:
+            for rid, chk in (("CRISISPATCH-4.1-02", "violator_external"), ("CRISISPATCH-8.1-01", "dkp_stays_inactive")):
+                out.append(na(rid, chk, "override attempt", "no external override attempt during the null-output state"))
+        cert = [m for m in msgs if m.source == "CRISIS-PATCH" and ("external_certification" in m.value or "recovery_waits_for" in m.value)]
+        if cert:
+            out.append(v("CRISISPATCH-6-02", "no_external_certification",
+                         [m.event_id for m in cert if m.value.get("used_for_recovery") or m.value.get("recovery_waits_for")],
+                         "an offered external certification played no part in recovery", "{n} recoveries conditioned on certification"))
+        else:
+            out.append(na("CRISISPATCH-6-02", "no_external_certification", "external certification", "none offered at a recovery"))
+        if r["crisis_during_null"]:
+            mech = [m for m in msgs if m.source == "CRISIS" and m.value.get("crisis_mechanism") and m.arrived_at in ns]
+            via = [m.event_id for m in actions if m.source == "ENFORCEMENT" and m.value.get("output") == "crisis allocation"]
+            out.append(v("CRISISPATCH-7-02", "crisis_without_enforcement", via + [m.event_id for m in mech if m.value["uses_enforcement_layer"]],
+                         f"crisis mechanisms ran in {len(mech)} null-output steps without the DKP enforcement layer",
+                         "{n} crisis acts through the enforcement layer"))
+        else:
+            out.append(na("CRISISPATCH-7-02", "crisis_without_enforcement", "crisis mechanisms", "no crisis during the null-output state"))
     else:
         why = "no null-output state in this experiment" if not undecidable else "the trigger is undecidable (N_eff_min missing)"
         for rid, chk in (("CRISISPATCH-3-01", "state_no_enforcement"), ("CRISISPATCH-3-02", "no_penaltys_in_null_output"),
@@ -294,7 +349,9 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
                          ("CRISISPATCH-5.2-01", "automatic_recovery"), ("CRISISPATCH-9-03", "recovery_automatic_deterministic"),
                          ("CRISISPATCH-5.2-02", "no_manual_preconditions"), ("CRISISPATCH-6-01", "no_manual_restart"),
                          ("CRISISPATCH-4.3-01", "no_selective_restoration"), ("ETRANS-4.4-02", "no_auto_reactivation"),
-                         ("CRISISPATCH-7-01", "no_authority_granted"), ("CRISISPATCH-9-04", "no_authority_emerges")):
+                         ("CRISISPATCH-7-01", "no_authority_granted"), ("CRISISPATCH-9-04", "no_authority_emerges"),
+                         ("CRISISPATCH-4.1-02", "violator_external"), ("CRISISPATCH-8.1-01", "dkp_stays_inactive"),
+                         ("CRISISPATCH-6-02", "no_external_certification"), ("CRISISPATCH-7-02", "crisis_without_enforcement")):
             out.append(na(rid, chk, "null-output handling", why))
     # ORACLE caps and systemic halt
     bad = []
@@ -394,6 +451,10 @@ IMPLEMENTS = {
     "CRISISPATCH-9-02": ("no_partial_outputs", "IMPLEMENTED", None),
     "CRISISPATCH-9-03": ("recovery_automatic_deterministic", "IMPLEMENTED", None),
     "CRISISPATCH-9-04": ("no_authority_emerges", "PARTIAL", "Authority is observed as an explicit notice only."),
+    "CRISISPATCH-4.1-02": ("violator_external", "PARTIAL", "The override attempt is a declared event."),
+    "CRISISPATCH-8.1-01": ("dkp_stays_inactive", "IMPLEMENTED", None),
+    "CRISISPATCH-6-02": ("no_external_certification", "PARTIAL", "The certification offer is a declared event."),
+    "CRISISPATCH-7-02": ("crisis_without_enforcement", "PARTIAL", "The crisis mechanism is a declared notice."),
     "ETRANS-4.4-02": ("no_auto_reactivation", "IMPLEMENTED", None),
     "ORACLE-8-01": ("source_owner_caps", "IMPLEMENTED", None),
     "ORACLE-13-01": ("systemic_halt_on_coverage", "PARTIAL", "Coverage = share of regions with an admissible source (H-SL-4); aggregate confidence is not modelled."),
@@ -409,7 +470,7 @@ IMPLEMENTS = {
 
 class SensorLossModule(LabModule):
     id = "sensor_loss"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Local loss of sensors (S-LAB-03)", "ru": "Локальная потеря датчиков (S-LAB-03)"}
     summary = {"en": "Sensors in one region fail: when does the whole system stop enforcing, does anything replace it, "
                      "and does it come back by itself?",
@@ -474,6 +535,15 @@ class SensorLossModule(LabModule):
                                   "label": {"en": "Enforcement cases per region and step", "ru": "Случаев принуждения на регион и шаг"}},
         "approval_delay_steps": {"type": "int", "min": 0, "max": 1000, "default": 6, "unit": "step", "source": "user",
                                  "label": {"en": "Approval delay (fault 'manual_restart')", "ru": "Задержка одобрения (ошибка 'manual_restart')"}},
+        "override_attempt_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 14, "unit": "step", "source": "user",
+                                  "label": {"en": "An external system injects a decision at step (-1: never; CRISIS-PATCH §8.1)",
+                                            "ru": "Внешняя система вбрасывает решение на шаге (-1: никогда; CRISIS-PATCH §8.1)"}},
+        "external_certification_offered": {"type": "bool", "default": True, "source": "user",
+                                           "label": {"en": "An external body offers to certify recovery (§6.2)",
+                                                     "ru": "Внешний орган предлагает сертифицировать восстановление (§6.2)"}},
+        "crisis_during_null": {"type": "bool", "default": True, "source": "user",
+                               "label": {"en": "A crisis mechanism runs during the null-output state (§7)",
+                                         "ru": "Во время состояния без выходов работает механизм кризиса (§7)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -545,6 +615,8 @@ class SensorLossModule(LabModule):
             "sybil_counted_by_owner": {"n_eff_basis": "owners", "sybil_sources": 40},
             "coverage_halt": {"regions": 4},
             "faulty_recovery": {"faults": ["fallback_authority", "manual_restart", "precedent"]},
+            "faulty_override": {"faults": ["accept_injection", "wait_for_certification", "crisis_via_enforcement"]},
+            "absorbed_external": {"faults": ["absorb_external"]},
             "resume_old_outputs": {"recovery_reading": "resume_outputs"},
             "inconsistency_window": {"loss_fraction": 0.0, "consistency_invalid_window": [20, 26]},
         }

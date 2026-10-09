@@ -41,7 +41,17 @@ FAULTS = {
     "no_broadcast": "no Final State Vector Broadcast in C3",
     "stale_confirmation": "crisis actions continue without refreshed PTL confirmation",
     "upgrade_during_crisis": "a protocol upgrade is activated while the crisis lasts",
+    "elevate_scope": "the crisis restricts public expression, an S2 domain",
+    "missing_metadata": "crisis suspensions are issued without epistemic metadata",
+    "transfer_interpretation": "the A1 interpretation of rationing is attributed to an emergency council",
+    "parameter_by_decree": "the crisis authority duration is set by a governance decision",
 }
+# CRISIS §1: the Crisis Scope Envelope lies inside S1; SCOPE §3 lists what S1 includes.  Lab table (H-CR-5).
+ACTION_DOMAIN = {"suspend_non_essential": "S1: temporary suspension of non-essential functions",
+                 "ration": "S1: emergency prioritization bounded by Axiom A1",
+                 "restrict_public_expression": "S2: cultural expression and symbolic systems"}
+A1_FIELDS = {"interpretation_type": "CRISIS_BOUNDED", "interpretation_authority": "DKP-4-CRISIS-001",
+             "authority_transferable": False, "post_crisis_audit": "MANDATORY"}                     # CRISIS §12.2
 
 
 def in_window(w, k):
@@ -80,6 +90,7 @@ def run(r: Dict[str, Any]):
         return m
 
     d3_run = 0
+    entry_step = [None]
     in_crisis = False
     state = "C0"
     exit_step = None
@@ -135,14 +146,27 @@ def run(r: Dict[str, Any]):
         cmsg = put("evaluation", "CRISIS", k, {"state": state, "active_triggers": active, **dti(k)},
                    [ptl.event_id] if ptl else [], epistemic=md if state != "C0" else None)
         if in_crisis:
+            if entry_step[0] is None:
+                entry_step[0] = k
+                if "parameter_by_decree" in faults:
+                    put("notice", "GOVERNANCE", k, {"parameter": "crisis authority duration", "value_hours": 720,
+                                                    "set_by": "governance decision"}, [cmsg.event_id])
             if confirmed or "stale_confirmation" in faults:
                 a = put("action", "CRISIS", k, {"action": "suspend_non_essential", "state": state, "time_limited": True,
                                                 "reversible": True, "ends_at_exit": True, **dti(k)},
-                        [cmsg.event_id], epistemic=md)
+                        [cmsg.event_id], epistemic=None if "missing_metadata" in faults else md)
                 crisis_actions.append(a.event_id)
                 rule = "status" if "status_priority" in faults else r["allocation_rule"]
+                a1 = {**md, **A1_FIELDS, "interprets": "Axiom A1 minimum required conditions"}
+                if "transfer_interpretation" in faults:
+                    a1.update(interpretation_authority="emergency council", authority_transferable=True)
+                if r["a1_confidence_reading"] == "not_sufficient" and a1["confidence_state"] == "SUFFICIENT_DATA":
+                    a1["confidence_state"] = "DEGRADED_SIGNAL"                       # §12.3 reading: no value is named (F-043)
                 put("action", "CRISIS", k, {"action": "ration", "rule": rule, "purpose": "life and core execution", **dti(k)},
-                    [cmsg.event_id], epistemic=md)
+                    [cmsg.event_id], epistemic=a1)
+                if "elevate_scope" in faults and k == entry_step[0]:
+                    put("action", "CRISIS", k, {"action": "restrict_public_expression", "state": state, **dti(k)},
+                        [cmsg.event_id], epistemic=md)
             if state in ("C3", "C4") and not broadcast_done and "no_broadcast" not in faults:
                 put("notice", "CRISIS", k, {"final_state_vector_broadcast": "external isolated archives"}, [cmsg.event_id])
                 broadcast_done = True
@@ -229,7 +253,10 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                          ("CRISIS-12.1-01", "conditional_outputs"), ("CRISIS-12.1-02", "scope_ref_flags"),
                          ("CRISIS-10-02", "final_state_broadcast"), ("CRISIS-9-01", "automatic_exit"),
                          ("CRISIS-9-05", "immediate_collapse"), ("CRISIS-9-02", "sequential_recovery"),
-                         ("CRISIS-Non-PrecedentRule_-01", "no_precedent"), ("CRISIS-8-02", "human_logged")):
+                         ("CRISIS-Non-PrecedentRule_-01", "no_precedent"), ("CRISIS-8-02", "human_logged"),
+                         ("CRISIS-1-04", "envelope_in_s1"), ("CRISIS-2-03", "ptl_anchored"), ("CRISIS-12-01", "eb5_metadata"),
+                         ("CRISIS-12.2-01", "a1_interpretation_fields"), ("CRISIS-12.3-01", "no_settled_axiom_interpretation"),
+                         ("CRISIS-Non-PrecedentRule_-04", "parameters_from_simulation")):
             out.append(na(rid, chk, "crisis execution", "no crisis in this experiment"))
         return out + defense_checks(r, log, rows, msgs, v, na)
     cs = set(crisis_steps)
@@ -258,8 +285,70 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                  "every crisis action is PTL-anchored (provenance), DTI-indexed and committed (digest)",
                  "{n} crisis actions not anchored, indexed or committed"))
     outs = [m for m in msgs if m.source == "CRISIS" and m.epistemic is not None]
-    out.append(v("CRISIS-12.1-01", "conditional_outputs", [m.event_id for m in outs if m.epistemic["validity_state"] != "CONDITIONAL"],
-                 "every crisis output is CONDITIONAL", "{n} crisis outputs not CONDITIONAL"))
+    propagated = {k: ("SUFFICIENT_DATA" if x["confirmed"] else "DEGRADED_SIGNAL") for k, x in enumerate(rows)}
+    a1 = [m for m in actions if m.value.get("action") == "ration"]
+    not_cond = [m.event_id for m in outs if m.epistemic["validity_state"] != "CONDITIONAL"]
+    not_prop = [m.event_id for m in outs if m.epistemic["confidence_state"] != propagated[m.arrived_at]]
+    a1_ids = {m.event_id for m in a1}
+    if not_prop and not not_cond and set(not_prop) <= a1_ids:
+        out.append(CheckResult("CRISIS-12.1-01", "conditional_outputs", FAIL,
+                               f"{len(not_prop)} A1 outputs do not carry the propagated confidence ({propagated[log.get(not_prop[0]).arrived_at]}): "
+                               "§12.3 forbids SUFFICIENT_DATA for them and names no other value (F-043, reading 'not_sufficient')",
+                               evidence={"tag": "rule_conflict", "finding": "F-043", "violations": not_prop[:10]}))
+    else:
+        out.append(v("CRISIS-12.1-01", "conditional_outputs", not_cond + not_prop,
+                     "every crisis output is CONDITIONAL and carries the confidence propagated from the PTL signals of its hour",
+                     "{n} crisis outputs not CONDITIONAL or not carrying the propagated confidence"))
+    # §1 envelope in S1, §2 PTL anchoring, §12 metadata (EB §5), §12.2 A1 fields, §12.3 no settled interpretation
+    out.append(v("CRISIS-1-04", "envelope_in_s1", [m.event_id for m in actions if not ACTION_DOMAIN.get(m.value.get("action"), "").startswith("S1")],
+                 "every crisis action falls in an S1 category of SCOPE §3 (H-CR-5)", "{n} crisis actions outside S1"))
+
+    def anchored(m):
+        seen, todo = set(), list(m.provenance)
+        while todo:
+            p = todo.pop()
+            if p in seen:
+                continue
+            seen.add(p)
+            q = log.get(p)
+            if q.source == "PTL":
+                return True
+            todo += list(q.provenance)
+        return False
+    ev_c = [m for m in msgs if m.source == "CRISIS" and m.kind == "evaluation" and m.value["state"] != "C0"]
+    out.append(v("CRISIS-2-03", "ptl_anchored", [m.event_id for m in ev_c + actions if not anchored(m)],
+                 f"{len(ev_c)} crisis determinations and {len(actions)} actions trace back to a PTL observation",
+                 "{n} crisis determinations or actions without PTL anchoring"))
+    out.append(v("CRISIS-12-01", "eb5_metadata", [m.event_id for m in ev_c + actions if epistemic_problems(m.epistemic)],
+                 "every crisis determination and output carries complete EPISTEMIC-BOUNDARIES §5 metadata",
+                 "{n} crisis determinations or outputs without complete metadata"))
+    out.append(v("CRISIS-12.2-01", "a1_interpretation_fields",
+                 [m.event_id for m in a1 if any((m.epistemic or {}).get(f) != x for f, x in A1_FIELDS.items())],
+                 f"{len(a1)} rationing outputs (A1 minimum conditions, H-CR-4) carry CRISIS_BOUNDED, authority DKP-4-CRISIS-001 "
+                 "(not transferable) and a mandatory post-crisis audit", "{n} A1 outputs with wrong or transferred interpretation fields")
+               if a1 else na("CRISIS-12.2-01", "a1_interpretation_fields", "A1 interpretations", "no rationing output"))
+    valid = [m.event_id for m in a1 if (m.epistemic or {}).get("validity_state") == "VALID"]
+    suff = [m.event_id for m in a1 if (m.epistemic or {}).get("confidence_state") == "SUFFICIENT_DATA" and m.event_id not in valid]
+    if not a1:
+        out.append(na("CRISIS-12.3-01", "no_settled_axiom_interpretation", "axiom interpretations", "no rationing output"))
+    elif valid:
+        out.append(v("CRISIS-12.3-01", "no_settled_axiom_interpretation", valid + suff, "", "{n} A1 outputs labelled VALID"))
+    elif suff:
+        out.append(CheckResult("CRISIS-12.3-01", "no_settled_axiom_interpretation", FAIL,
+                               f"{len(suff)} A1 outputs carry SUFFICIENT_DATA, propagated from confirmed PTL signals as §12.1 requires; "
+                               "§12.3 forbids it and names no other value (F-043, reading 'propagated')",
+                               evidence={"tag": "rule_conflict", "finding": "F-043", "violations": suff[:10]}))
+    else:
+        out.append(CheckResult("CRISIS-12.3-01", "no_settled_axiom_interpretation", PASS,
+                               f"none of {len(a1)} A1 outputs carries VALID or SUFFICIENT_DATA"))
+    decree = [m.event_id for m in msgs if m.source == "GOVERNANCE" and m.value.get("parameter")]
+    out.append(v("CRISIS-Non-PrecedentRule_-04", "parameters_from_simulation", decree, "", "{n} crisis parameters set outside SIMULATION")
+               if decree else CheckResult("CRISIS-Non-PrecedentRule_-04", "parameters_from_simulation", UNKNOWN,
+                                          f"no parameter is set outside SIMULATION, but none is validated under it either: the lab's "
+                                          f"'sustained' D3 = {r['sustained_d3_steps']} h, revalidation every hour and exit on the first "
+                                          "hour without triggers are declared values; no SIMULATION calibration exists (F-014)",
+                                          evidence={"declared": {"sustained_d3_steps": r["sustained_d3_steps"], "revalidation": "every step",
+                                                                 "exit_sensitivity": "first step without an active trigger"}}))
     out.append(v("CRISIS-12.1-02", "scope_ref_flags", [m.event_id for m in outs if epistemic_problems(m.epistemic)
                  or not m.epistemic["scope_ref"].startswith("DKP-4-CRISIS-001:C") or m.epistemic["revalidation_required"] is not True
                  or m.epistemic["dispute_allowed"] is not True],
@@ -397,20 +486,27 @@ IMPLEMENTS = {
     "SCOPE-6-04": ("stabilization_restores_baseline", "PARTIAL", "Baseline = absence of crisis authority notices after exit."),
     "SCOPE-3-08": ("s1_no_precedent", "PARTIAL", "Precedent detected as citation of a crisis action."),
     "SCOPE-3-04": ("s1_time_limited", "PARTIAL", "Crisis actions end at exit; no numeric time limit exists (Q-029)."),
+    "CRISIS-1-04": ("envelope_in_s1", "PARTIAL", "Actions are classified into SCOPE §3 categories by a lab table (H-CR-5)."),
+    "CRISIS-2-03": ("ptl_anchored", "IMPLEMENTED", None),
+    "CRISIS-12-01": ("eb5_metadata", "IMPLEMENTED", None),
+    "CRISIS-12.2-01": ("a1_interpretation_fields", "PARTIAL", "Rationing is read as the A1 minimum-conditions interpretation (H-CR-4)."),
+    "CRISIS-12.3-01": ("no_settled_axiom_interpretation", "PARTIAL", "Conflicts with §12.1 when PTL confidence is SUFFICIENT_DATA (F-043)."),
+    "CRISIS-Non-PrecedentRule_-04": ("parameters_from_simulation", "PARTIAL", "No SIMULATION calibration exists (F-014): UNKNOWN unless a parameter is set elsewhere."),
 }
 
 
 class CrisisRecoveryModule(LabModule):
     id = "crisis_recovery"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Crisis and recovery (S-LAB-06)", "ru": "Кризис и восстановление (S-LAB-06)"}
     summary = {"en": "An existential threat or a cascading failure: does the system enter crisis only on PTL evidence, "
                      "keep logging, grant no one power, leave by itself and recover layer by layer?",
                "ru": "Угроза существованию или каскадный отказ: входит ли система в кризис только по данным PTL, "
                      "продолжает ли журнал, не даёт ли кому-то власти, выходит ли сама и восстанавливается по слоям?"}
     protocols = ["DKP-4-CRISIS-001", "DKP-3-DEFENSE-001", "DKP-4-ERROR-001", "DKP-4-UPGRADE-001", "DKP-7-SCOPE-001"]
-    example_order = ["d3_sustained", "d3_immediate", "cascade_and_divergence", "faulty_crisis", "no_crisis"]
-    alternative_examples = ["d3_immediate"]
+    example_order = ["d3_sustained", "d3_immediate", "a1_confidence_not_sufficient", "cascade_and_divergence", "faulty_crisis",
+                     "faulty_crisis_outputs", "no_crisis"]
+    alternative_examples = ["d3_immediate", "a1_confidence_not_sufficient"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_crisis_recovery_module.py"]
     causal_note = None
@@ -430,6 +526,21 @@ class CrisisRecoveryModule(LabModule):
                   "would require; 'sustained' is the CRISIS §4 wording.",
             "ru": "Прочтение 'immediate': кризис наступает на первом шаге D3, как требовал бы DEFENSE §5 "
                   "('обязательная эскалация'); 'sustained' — формулировка CRISIS §4."}},
+        {"id": "H-CR-4", "source": "hypothesis", "text": {
+            "en": "Rationing to the baseline survival minimum (§7) is an output that interprets 'minimum required conditions' "
+                  "under Axiom A1 (§12.2).",
+            "ru": "Распределение до базового минимума выживания (§7) — выход, толкующий 'minimum required conditions' "
+                  "аксиомы A1 (§12.2)."}},
+        {"id": "H-CR-5", "source": "hypothesis", "text": {
+            "en": "A crisis action stays in S1 when it falls in an S1 category of SCOPE §3 (temporary suspension of non-essential "
+                  "functions; emergency prioritization bounded by A1); the classification is a lab table.",
+            "ru": "Действие кризиса остаётся в S1, если относится к категории S1 из SCOPE §3 (временная приостановка "
+                  "несущественных функций; экстренная приоритизация в рамках A1); классификация — таблица лаборатории."}},
+        {"id": "H-CR-6", "source": "alternative", "text": {
+            "en": "Confidence of A1 outputs (F-043): 'propagated' carries the PTL confidence as §12.1 says and breaks §12.3 when "
+                  "it is SUFFICIENT_DATA; 'not_sufficient' carries DEGRADED_SIGNAL (no value is named) and breaks §12.1.",
+            "ru": "Уверенность выходов A1 (F-043): 'propagated' переносит уверенность PTL, как велит §12.1, и нарушает §12.3 при "
+                  "SUFFICIENT_DATA; 'not_sufficient' ставит DEGRADED_SIGNAL (значение не названо) и нарушает §12.1."}},
     ]
     inputs = {
         "start_dti_day": {"type": "int", "min": 0, "max": 10 ** 8, "default": 2461042, "source": "user",
@@ -468,6 +579,9 @@ class CrisisRecoveryModule(LabModule):
                                     "label": {"en": "Upgrade activation at hour (pathway 'upgrade')", "ru": "Активация обновления в час (путь 'upgrade')"}},
         "exit_pathway": {"type": "enum", "values": ["soft_reset", "upgrade", "partition"], "default": "soft_reset", "source": "user",
                          "label": {"en": "Exit pathway (CRISIS §9)", "ru": "Путь выхода (CRISIS §9)"}},
+        "a1_confidence_reading": {"type": "enum", "values": ["propagated", "not_sufficient"], "default": "propagated",
+                                  "source": "alternative", "label": {"en": "Confidence of A1 outputs (H-CR-6, F-043)",
+                                                                     "ru": "Уверенность выходов A1 (H-CR-6, F-043)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -524,6 +638,9 @@ class CrisisRecoveryModule(LabModule):
                                          "finance_early", "cite_precedent", "unlogged_human"]},
             "no_crisis": {"d3_window": [0, 0], "human_intervention_step": -1},
             "exit_to_upgrade": {"exit_pathway": "upgrade"},
+            "a1_confidence_not_sufficient": {"a1_confidence_reading": "not_sufficient"},
+            "faulty_crisis_outputs": {"faults": ["elevate_scope", "missing_metadata", "transfer_interpretation", "parameter_by_decree",
+                                                 "suspend_ptl_logging"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

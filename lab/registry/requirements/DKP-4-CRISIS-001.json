@@ -255,11 +255,17 @@
     "S1 applicability classification",
     "system applicability records"
    ],
-   "gap": "The definition of S1 and the applicability ordering are absent. No lab check implemented yet.",
+   "gap": "Actions are classified into SCOPE §3 categories by a lab table (H-CR-5).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.1.0",
+    "check": "envelope_in_s1"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -366,11 +372,17 @@
    "data_dependencies": [
     "PTL evidence and anchor validation"
    ],
-   "gap": "The PTL anchoring contract and validity checks are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.1.0",
+    "check": "ptl_anchored"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -568,7 +580,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ptl_confirmed_triggers",
     "also": [
      {
@@ -613,7 +625,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_discretionary_entry"
    },
    "tests": [
@@ -649,7 +661,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "finite_dti_states"
    },
    "tests": [
@@ -873,7 +885,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "persistence_needs_confirmation"
    },
    "tests": [
@@ -1035,7 +1047,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "action_qualities"
    },
    "tests": [
@@ -1076,7 +1088,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_precedent"
    },
    "tests": [
@@ -1179,11 +1191,17 @@
     "simulation parameter definitions",
     "simulation test and validation records"
    ],
-   "gap": "The simulation procedure, accepted parameter values, and validation requirements are not supplied. No lab check implemented yet.",
+   "gap": "No SIMULATION calibration exists (F-014): UNKNOWN unless a parameter is set elsewhere.",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.1.0",
+    "check": "parameters_from_simulation"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1219,7 +1237,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "logging_no_authority"
    },
    "tests": [
@@ -1301,7 +1319,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_status_priority"
    },
    "tests": [
@@ -1346,7 +1364,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "allocation_basis"
    },
    "tests": [
@@ -1463,7 +1481,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "human_logged"
    },
    "tests": [
@@ -1511,7 +1529,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "automatic_exit"
    },
    "tests": [
@@ -1554,7 +1572,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "sequential_recovery"
    },
    "tests": [
@@ -1674,7 +1692,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "immediate_collapse"
    },
    "tests": [
@@ -1720,7 +1738,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "actions_anchored_committed"
    },
    "tests": [
@@ -1767,7 +1785,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "final_state_broadcast"
    },
    "tests": [
@@ -1939,11 +1957,17 @@
    "data_dependencies": [
     "mandatory epistemic metadata schema"
    ],
-   "gap": "Section 5 of the referenced epistemic-boundaries protocol is not supplied. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.1.0",
+    "check": "eb5_metadata"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -1977,15 +2001,21 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "conditional_outputs"
    },
    "tests": [
     "tests/lab/test_crisis_recovery_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-063"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   },
   {
    "id": "CRISIS-12.1-02",
@@ -2011,7 +2041,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "scope_ref_flags"
    },
    "tests": [
@@ -2041,11 +2071,17 @@
     "classification of minimum-required-conditions interpretations",
     "interpretation authority transfer records"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Rationing is read as the A1 minimum-conditions interpretation (H-CR-4).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.1.0",
+    "check": "a1_interpretation_fields"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "NONE_IDENTIFIED"
@@ -2068,14 +2104,26 @@
    "data_dependencies": [
     "classification of axiom-application interpretations"
    ],
-   "gap": "No lab check implemented yet.",
+   "gap": "Conflicts with §12.1 when PTL confidence is SUFFICIENT_DATA (F-043).",
    "hypotheses_needed": [],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
-   "decision_status": "NONE_IDENTIFIED"
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.1.0",
+    "check": "no_settled_axiom_interpretation"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-063"
+   ],
+   "decision_status": "UNRESOLVED",
+   "open_point": {
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
+   }
   }
  ]
 }
