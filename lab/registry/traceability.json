@@ -27,6 +27,7 @@
   "police_antiterror",
   "prevention",
   "privacy_transparency",
+  "resilience_structure",
   "scope_gate",
   "sensor_loss",
   "simulation_gate",
@@ -1210,6 +1211,26 @@
    "module": "habitat_dignity",
    "example": "no_bundle",
    "kind": "reference"
+  },
+  {
+   "module": "resilience_structure",
+   "example": "collapse_below_neff",
+   "kind": "reference"
+  },
+  {
+   "module": "resilience_structure",
+   "example": "concentrated_owner",
+   "kind": "noncompliant"
+  },
+  {
+   "module": "resilience_structure",
+   "example": "faulty_structure",
+   "kind": "counterexample"
+  },
+  {
+   "module": "resilience_structure",
+   "example": "pressure_campaign",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1217,20 +1238,20 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 975,
-  "covered_percent": 56.1,
+  "covered": 1002,
+  "covered_percent": 57.7,
   "statuses": {
-   "PASS": 898,
+   "PASS": 925,
    "FAIL": 3,
    "UNKNOWN": 57,
    "NOT_APPLICABLE": 17,
-   "UNCOVERED": 762
+   "UNCOVERED": 735
   },
   "resolvable": 330,
   "resolvable_uncovered": 126,
   "unresolved_decisions": 1407,
-  "covered_with_open_point": 771,
-  "pass_with_open_point": 701
+  "covered_with_open_point": 798,
+  "pass_with_open_point": 728
  },
  "stages": [
   {
@@ -1280,20 +1301,20 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 975,
-    "covered_percent": 56.1,
+    "covered": 1002,
+    "covered_percent": 57.7,
     "statuses": {
-     "PASS": 898,
+     "PASS": 925,
      "FAIL": 3,
      "UNKNOWN": 57,
      "NOT_APPLICABLE": 17,
-     "UNCOVERED": 762
+     "UNCOVERED": 735
     },
     "resolvable": 330,
     "resolvable_uncovered": 126,
     "unresolved_decisions": 1407,
-    "covered_with_open_point": 771,
-    "pass_with_open_point": 701
+    "covered_with_open_point": 798,
+    "pass_with_open_point": 728
    }
   },
   {
@@ -1464,20 +1485,20 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 271,
-    "covered_percent": 53.0,
+    "covered": 298,
+    "covered_percent": 58.3,
     "statuses": {
-     "PASS": 250,
+     "PASS": 277,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 240
+     "UNCOVERED": 213
     },
     "resolvable": 79,
     "resolvable_uncovered": 33,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 225,
-    "pass_with_open_point": 204
+    "covered_with_open_point": 252,
+    "pass_with_open_point": 231
    }
   },
   {
@@ -2395,6 +2416,13 @@
     "requirement": "ORACLE-3-01",
     "runs": [
      "code_synergy:human_testimony_as_ptl"
+    ],
+    "verified": true
+   },
+   {
+    "requirement": "RESILIENCE-5.8-01",
+    "runs": [
+     "resilience_structure:concentrated_owner"
     ],
     "verified": true
    },
@@ -9444,7 +9472,7 @@
     "H-SL-3",
     "H-SL-4"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
@@ -9459,7 +9487,9 @@
     "PASS": 3
    },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "noncompliant_cases:RESILIENCE-5.8-01"
+   ],
    "open_point": null
   },
   {
@@ -53107,24 +53137,32 @@
    "section": "1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document supplies no model of pressure, protected actors, or functional continuity. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "continuity_under_pressure",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Pressure is modelled as removal of declared providers.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53139,23 +53177,29 @@
    "section": "10.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced requirements and conflict-resolution semantics are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "crisis_not_overridden",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Recorded property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53171,23 +53215,29 @@
    "section": "10.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Precedent, centralization, and the period over which their absence must hold are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "crisis_no_centralization",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53203,24 +53253,32 @@
    "section": "10.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Direct handling and successful mitigation through nondependence are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "undefined_zone",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Threats remove declared actors.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53235,15 +53293,21 @@
    "section": "11",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "actor_removal_no_impact",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "removal_test",
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "Only the N_eff and removal conditions of §11 are checked.",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "sensor_loss · actor_removal_no_impact"
+   ],
    "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -53253,13 +53317,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
    },
    "status": "UNKNOWN",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {
     "PASS": 2,
     "FAIL": 1
@@ -53277,23 +53343,29 @@
    "section": "12",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Structure, protection, and the causal attribution of resilience are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "structure_not_protection",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Declared property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53341,24 +53413,32 @@
    "section": "3",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational criteria, dependency semantics, and the scope of removal scenarios are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "no_dependency",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53373,24 +53453,32 @@
    "section": "4.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Physical suppression scenarios and the classification of invariant-based handling are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "suppression_via_structure",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Suppression removes declared actors.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53405,15 +53493,21 @@
    "section": "5.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "no_single_point_of_failure",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "no_single_point",
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "Single point of failure tested as loss of the largest owner (N_eff, H-SL-1).",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "sensor_loss · no_single_point_of_failure"
+   ],
    "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -53423,13 +53517,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
    },
    "status": "UNKNOWN",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {
     "PASS": 2,
     "FAIL": 1
@@ -53448,14 +53544,20 @@
    "kind": "state_transition",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "statistical_validity_gate",
+   "module": "resilience_structure",
+   "check": "neff_validity",
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
-   "also_checked_by": [],
+   "gap": "resilience_structure: N_eff and N_eff_min are undefined (F-007): UNKNOWN unless enforcement continues below the declared minimum. sensor_loss: N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
+   "also_checked_by": [
+    "sensor_loss · statistical_validity_gate"
+   ],
    "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -53467,7 +53569,7 @@
    "observed": {
     "PASS": 3,
     "FAIL": 0,
-    "UNKNOWN": 1,
+    "UNKNOWN": 3,
     "NOT_APPLICABLE": 1
    },
    "status": "UNKNOWN",
@@ -53495,24 +53597,32 @@
    "section": "5.2",
    "kind": "constraint",
    "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Representability and leadership structure have no operational definitions or bounded decision domain.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "non_personalization",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Representation is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53527,24 +53637,32 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The binding relation and criteria for acceptable physical measurements are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "measurement_supremacy",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Override requests are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53559,24 +53677,32 @@
    "section": "5.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundaries of the three override categories are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "no_override",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -53630,23 +53756,29 @@
    "section": "5.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational sufficiency, displacement, and governance replacement are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "no_displacement",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Deployment requirement is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53662,23 +53794,29 @@
    "section": "5.5",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A dependency measure and a model attributing dependency to constraint enforcement are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "emergent_dependency",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "The removal test result is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53694,23 +53832,29 @@
    "section": "5.5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The distinction between emergent and imposed irreplaceability is undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "irreplaceability_emergent",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Displacement requirement is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53726,23 +53870,29 @@
    "section": "5.5",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A counterfactual comparison method and a definition of measurable change are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "removal_without_change",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53758,23 +53908,29 @@
    "section": "5.6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The protected scope and a complete account of semantic alterations require definitions absent from this text. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "scope_isolation",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53790,23 +53946,29 @@
    "section": "5.7",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced minimum metadata requirements are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "metadata_completeness",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Minimum metadata = EB §5 set; the referenced DKP-PTL-REG-DATA-001 is absent (H-RS-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53822,23 +53984,29 @@
    "section": "5.7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "State completeness, semantic filtering, and preservation of variance lack operational definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "no_filtering",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Filtering and aggregation are declared properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -53858,19 +54026,25 @@
    "module": "interop_failure",
    "check": "entry_point_invalidated",
    "tests": [
-    "tests/lab/test_interop_failure_module.py"
+    "tests/lab/test_interop_failure_module.py",
+    "tests/lab/test_resilience_structure_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "resilience_structure · local_invalidation"
+   ],
    "hypotheses": [
     "H-IO-1",
-    "H-IO-2"
+    "H-IO-2",
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53892,24 +54066,30 @@
    "kind": "constraint",
    "checkable": "partial",
    "coverage": "IMPLEMENTED",
-   "module": "sensor_loss",
+   "module": "resilience_structure",
    "check": "node_concentration",
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "gap": null,
-   "also_checked_by": [],
+   "also_checked_by": [
+    "sensor_loss · node_concentration"
+   ],
    "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
     "H-SL-4"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -53919,8 +54099,12 @@
    "under_alternative_readings": {
     "PASS": 3
    },
-   "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "violated_by_noncompliant_case": [
+    "resilience_structure:concentrated_owner"
+   ],
+   "text_verification": [
+    "noncompliant_cases:RESILIENCE-5.8-01"
+   ],
    "open_point": {
     "origin": "external_dependency",
     "source": "codex_draft"
@@ -53932,15 +54116,21 @@
    "section": "5.8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "no_influence_from_scaling",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "anti_sybil",
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "Influence measured as N_eff; depends on the counting basis (H-SL-1).",
-   "also_checked_by": [],
+   "gap": null,
+   "also_checked_by": [
+    "sensor_loss · no_influence_from_scaling"
+   ],
    "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -53950,13 +54140,15 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 4
    },
    "status": "PASS",
-   "counterexample_detected_by": [],
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {
     "NOT_APPLICABLE": 2,
     "FAIL": 1
@@ -53974,23 +54166,29 @@
    "section": "6.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Implementation independence and the referenced internal completeness checks require additional definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "distributed_entry_points",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Implementation count is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54006,23 +54204,29 @@
    "section": "6.2",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of microlevel deployment and the functionality test are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "local_first",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Declared property.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54038,24 +54242,32 @@
    "section": "6.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Utility, mandate, and the causal test for adoption are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "passive_adoption",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -54070,23 +54282,29 @@
    "section": "6.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A causal model of behavioral influence and a definition of measurable limits are missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "constraint_driven",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54102,23 +54320,29 @@
    "section": "7.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Central authority is not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "forbidden_central_authority_node",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Patterns are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54134,23 +54358,29 @@
    "section": "7.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Identity-bound trust is undefined, including its relationship to authentication. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "forbidden_identity_bound_trust",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Patterns are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54166,23 +54396,29 @@
    "section": "7.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Narrative and narrative dependence lack operational definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "forbidden_narrative_dependence",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Patterns are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54198,23 +54434,29 @@
    "section": "7.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited meaning of interpretation is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "forbidden_enforcement_via_interpretation",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Patterns are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54231,14 +54473,20 @@
    "kind": "state_transition",
    "checkable": "partial",
    "coverage": "PARTIAL",
-   "module": "sensor_loss",
-   "check": "statistical_collapse_null_output",
+   "module": "resilience_structure",
+   "check": "statistical_collapse",
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "gap": "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
-   "also_checked_by": [],
+   "gap": "resilience_structure: F-007. sensor_loss: N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
+   "also_checked_by": [
+    "sensor_loss · statistical_collapse_null_output"
+   ],
    "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3",
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
@@ -54250,7 +54498,7 @@
    "observed": {
     "PASS": 3,
     "FAIL": 0,
-    "UNKNOWN": 1,
+    "UNKNOWN": 3,
     "NOT_APPLICABLE": 1
    },
    "status": "UNKNOWN",
@@ -54272,23 +54520,29 @@
    "section": "8.5",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Local distortion, soft capture, cascade dynamics, and their timing are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "resilience_structure",
+   "check": "interface_degradation",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -54304,24 +54558,32 @@
    "section": "9",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A suppression model and operational definitions connecting the listed mechanisms to resistance are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "resilience_structure",
+   "check": "resilience_mechanism",
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
+   "gap": "Summary of the structural properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-RS-1",
+    "H-RS-2",
+    "H-RS-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "resilience_structure:faulty_structure"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],

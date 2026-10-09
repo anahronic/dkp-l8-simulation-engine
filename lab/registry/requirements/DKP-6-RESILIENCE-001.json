@@ -65,13 +65,19 @@
     "functional status",
     "actor dependencies and protection status"
    ],
-   "gap": "The document supplies no model of pressure, protected actors, or functional continuity. No lab check implemented yet.",
+   "gap": "Pressure is modelled as removal of declared providers.",
    "hypotheses_needed": [
     "Define pressure scenarios, protected actors, functional continuity, and dependency."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "continuity_under_pressure"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -100,13 +106,19 @@
     "system dependency topology",
     "operational status"
    ],
-   "gap": "Operational criteria, dependency semantics, and the scope of removal scenarios are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define operational success and whether removals are individual or simultaneous."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "no_dependency"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -134,13 +146,19 @@
    "data_dependencies": [
     "mitigation mechanism specifications"
    ],
-   "gap": "Physical suppression scenarios and the classification of invariant-based handling are undefined. No lab check implemented yet.",
+   "gap": "Suppression removes declared actors.",
    "hypotheses_needed": [
     "Define physical suppression scenarios and how mechanisms are classified as structural-invariant handling."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "suppression_via_structure"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -169,17 +187,25 @@
     "function inventory",
     "actor, node, and interface dependencies"
    ],
-   "gap": "Single point of failure tested as loss of the largest owner (N_eff, H-SL-1).",
+   "gap": null,
    "hypotheses_needed": [
     "Define dependency and function preservation under removal."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "resilience_structure",
     "version": "1.0.0",
-    "check": "no_single_point_of_failure"
+    "check": "no_single_point",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "no_single_point_of_failure"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -214,17 +240,25 @@
     "oracle minimum effective node count",
     "enforcement status"
    ],
-   "gap": "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
+   "gap": "resilience_structure: N_eff and N_eff_min are undefined (F-007): UNKNOWN unless enforcement continues below the declared minimum. sensor_loss: N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
    "hypotheses_needed": [
     "Supply the referenced statistical definitions and specify transition evaluation timing."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "resilience_structure",
     "version": "1.0.0",
-    "check": "statistical_validity_gate"
+    "check": "neff_validity",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "statistical_validity_gate"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "TEXT_VERIFIED",
@@ -253,13 +287,19 @@
    "data_dependencies": [
     "organizational and public representation records"
    ],
-   "gap": "Representability and leadership structure have no operational definitions or bounded decision domain.",
+   "gap": "Representation is declared.",
    "hypotheses_needed": [
     "Restrict representability to a declared class of organizational or public representations."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "non_personalization"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -288,13 +328,19 @@
     "PTL physical state measurements",
     "enforcement provenance"
    ],
-   "gap": "The binding relation and criteria for acceptable physical measurements are unspecified. No lab check implemented yet.",
+   "gap": "Override requests are declared.",
    "hypotheses_needed": [
     "Define a verifiable binding between enforcement actions and physical state measurements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "measurement_supremacy"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -323,13 +369,19 @@
     "override configuration",
     "override event provenance"
    ],
-   "gap": "The boundaries of the three override categories are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define how override rules and events are classified as narrative, expert, or institutional."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "no_override"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -402,13 +454,19 @@
     "integration architecture",
     "existing system roles"
    ],
-   "gap": "Operational sufficiency, displacement, and governance replacement are not operationally defined. No lab check implemented yet.",
+   "gap": "Deployment requirement is declared.",
    "hypotheses_needed": [
     "Define operation, displacement, and constraint-layer versus governance-replacement roles."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "no_displacement"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -437,13 +495,19 @@
     "component enforcement records",
     "system constraint measurements"
    ],
-   "gap": "A dependency measure and a model attributing dependency to constraint enforcement are missing. No lab check implemented yet.",
+   "gap": "The removal test result is declared.",
    "hypotheses_needed": [
     "Define measurable dependency and how constraint enforcement causes it."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "emergent_dependency"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -471,13 +535,19 @@
     "integration history",
     "dependency formation mechanisms"
    ],
-   "gap": "The distinction between emergent and imposed irreplaceability is undefined. No lab check implemented yet.",
+   "gap": "Displacement requirement is declared.",
    "hypotheses_needed": [
     "Define observable criteria distinguishing emergent from imposed dependency."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "irreplaceability_emergent"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -506,13 +576,19 @@
    "data_dependencies": [
     "system constraint measurements before and after removal"
    ],
-   "gap": "A counterfactual comparison method and a definition of measurable change are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the removal experiment and measurement resolution for constraint changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "removal_without_change"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -545,13 +621,19 @@
     "enforcement logic baseline",
     "scope classification"
    ],
-   "gap": "The protected scope and a complete account of semantic alterations require definitions absent from this text. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply scope rules and define how changes to axioms and enforcement logic are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "scope_isolation"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -581,13 +663,19 @@
     "PTL metadata schema and completeness requirements",
     "entry-point outputs"
    ],
-   "gap": "The referenced minimum metadata requirements are not supplied. No lab check implemented yet.",
+   "gap": "Minimum metadata = EB §5 set; the referenced DKP-PTL-REG-DATA-001 is absent (H-RS-2).",
    "hypotheses_needed": [
     "Supply the required metadata fields and completeness rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "metadata_completeness"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -620,13 +708,19 @@
     "entry-point transformations",
     "variance information"
    ],
-   "gap": "State completeness, semantic filtering, and preservation of variance lack operational definitions. No lab check implemented yet.",
+   "gap": "Filtering and aggregation are declared properties.",
    "hypotheses_needed": [
     "Define complete exposure, semantic filtering, and when aggregation hides variance."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "no_filtering"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -664,10 +758,18 @@
    "implementation": {
     "module": "interop_failure",
     "version": "1.1.0",
-    "check": "entry_point_invalidated"
+    "check": "entry_point_invalidated",
+    "also": [
+     {
+      "module": "resilience_structure",
+      "version": "1.0.0",
+      "check": "local_invalidation"
+     }
+    ]
    },
    "tests": [
-    "tests/lab/test_interop_failure_module.py"
+    "tests/lab/test_interop_failure_module.py",
+    "tests/lab/test_resilience_structure_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -705,14 +807,22 @@
    ],
    "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "resilience_structure",
     "version": "1.0.0",
-    "check": "node_concentration"
+    "check": "node_concentration",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "node_concentration"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
@@ -744,18 +854,26 @@
     "scaling provenance",
     "oracle influence assignments"
    ],
-   "gap": "Influence measured as N_eff; depends on the counting basis (H-SL-1).",
+   "gap": null,
    "hypotheses_needed": [
     "Specify pairwise or joint independence and its test method.",
     "Define artificial scaling and the influence measure."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "resilience_structure",
     "version": "1.0.0",
-    "check": "no_influence_from_scaling"
+    "check": "anti_sybil",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "no_influence_from_scaling"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -787,14 +905,20 @@
     "implementation inventory and dependencies",
     "section 5.7 validation results"
    ],
-   "gap": "Implementation independence and the referenced internal completeness checks require additional definitions. No lab check implemented yet.",
+   "gap": "Implementation count is declared.",
    "hypotheses_needed": [
     "Treat these conditions as conditional on using the allowed pattern.",
     "Define implementation independence and supply section 5.7 validation rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "distributed_entry_points"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -823,14 +947,20 @@
     "deployment validation results",
     "scaling event history"
    ],
-   "gap": "The scope of microlevel deployment and the functionality test are unspecified. No lab check implemented yet.",
+   "gap": "Declared property.",
    "hypotheses_needed": [
     "Define microlevel and functional success.",
     "Treat the timing rule as conditional on local-first deployment."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "local_first"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -860,14 +990,20 @@
     "adoption records",
     "mandates and incentive records"
    ],
-   "gap": "Utility, mandate, and the causal test for adoption are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define utility-driven and mandate-driven adoption.",
     "Treat the condition as applying to the passive adoption pattern."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "passive_adoption"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -898,14 +1034,20 @@
     "limit measurements",
     "behavior observations"
    ],
-   "gap": "A causal model of behavioral influence and a definition of measurable limits are missing. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define behavioral scope, measurable limits, and causal attribution.",
     "Treat the condition as applying to constraint-driven interaction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "constraint_driven"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -933,13 +1075,19 @@
     "node roles",
     "decision and authority topology"
    ],
-   "gap": "Central authority is not operationally defined. No lab check implemented yet.",
+   "gap": "Patterns are declared.",
    "hypotheses_needed": [
     "Define which node powers constitute central authority."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "forbidden_central_authority_node"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -967,13 +1115,19 @@
     "trust assignment rules",
     "identity usage records"
    ],
-   "gap": "Identity-bound trust is undefined, including its relationship to authentication. No lab check implemented yet.",
+   "gap": "Patterns are declared.",
    "hypotheses_needed": [
     "Define identity-bound trust and distinguish it from other identity uses."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "forbidden_identity_bound_trust"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1001,13 +1155,19 @@
     "operational dependency records",
     "decision inputs"
    ],
-   "gap": "Narrative and narrative dependence lack operational definitions. No lab check implemented yet.",
+   "gap": "Patterns are declared.",
    "hypotheses_needed": [
     "Define narrative inputs and when system operation depends on them."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "forbidden_narrative_dependence"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1034,13 +1194,19 @@
    "data_dependencies": [
     "enforcement decision rules and provenance"
    ],
-   "gap": "The prohibited meaning of interpretation is unspecified. No lab check implemented yet.",
+   "gap": "Patterns are declared.",
    "hypotheses_needed": [
     "Define interpretation and whether the prohibition covers human discretion, semantic processing, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "forbidden_enforcement_via_interpretation"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1074,18 +1240,26 @@
     "oracle consistency status",
     "enforcement and output states"
    ],
-   "gap": "N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
+   "gap": "resilience_structure: F-007. sensor_loss: N_eff by hypothesis H-SL-1; N_eff_min declared (F-007).",
    "hypotheses_needed": [
     "Supply N_eff and N_eff_min definitions.",
     "Define null-output and whether the arrows represent simultaneous implications or sequential transitions."
    ],
    "coverage": "PARTIAL",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "resilience_structure",
     "version": "1.0.0",
-    "check": "statistical_collapse_null_output"
+    "check": "statistical_collapse",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "statistical_collapse_null_output"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1117,14 +1291,20 @@
     "PTL source and exposed states",
     "system behavior over time"
    ],
-   "gap": "Local distortion, soft capture, cascade dynamics, and their timing are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define distortion and soft capture.",
     "Specify whether the cascade is deterministic or a possible failure trajectory and provide its dynamics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "interface_degradation"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1158,14 +1338,20 @@
     "enforcement distribution",
     "statistical validity results"
    ],
-   "gap": "A suppression model and operational definitions connecting the listed mechanisms to resistance are missing. No lab check implemented yet.",
+   "gap": "Summary of the structural properties.",
    "hypotheses_needed": [
     "Define suppression, target absence, distributed enforcement, and successful resistance.",
     "Specify whether the mechanism list is necessary, sufficient, or descriptive of an asserted causal model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "resilience_mechanism"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1199,13 +1385,19 @@
     "scope requirements",
     "rule precedence and action records"
    ],
-   "gap": "The referenced requirements and conflict-resolution semantics are absent. No lab check implemented yet.",
+   "gap": "Recorded property.",
    "hypotheses_needed": [
     "Supply the referenced requirements and define what constitutes overriding them."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "crisis_not_overridden"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1238,14 +1430,20 @@
     "later decision provenance",
     "authority distribution history"
    ],
-   "gap": "Precedent, centralization, and the period over which their absence must hold are undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define precedent and centralization.",
     "Specify how later decisions are evaluated for reliance on crisis actions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "crisis_no_centralization"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1275,13 +1473,19 @@
     "mitigation specifications",
     "functional dependency model"
    ],
-   "gap": "Direct handling and successful mitigation through nondependence are not operationally defined. No lab check implemented yet.",
+   "gap": "Threats remove declared actors.",
    "hypotheses_needed": [
     "Define direct threat handling and evaluate mitigation using a section 5.1 dependency model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "undefined_zone"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1317,19 +1521,27 @@
     "enforcement records",
     "restricted-access operation results"
    ],
-   "gap": "Only the N_eff and removal conditions of §11 are checked.",
+   "gap": null,
    "hypotheses_needed": [
     "Resolve strict versus inclusive threshold comparison.",
     "Define zero functional impact, PTL distortion, automatic measurable enforcement, and continued operation.",
     "Specify actor removal and access restriction scenarios and whether the conditions are also necessary."
    ],
-   "coverage": "PARTIAL",
+   "coverage": "IMPLEMENTED",
    "implementation": {
-    "module": "sensor_loss",
+    "module": "resilience_structure",
     "version": "1.0.0",
-    "check": "actor_removal_no_impact"
+    "check": "removal_test",
+    "also": [
+     {
+      "module": "sensor_loss",
+      "version": "1.0.0",
+      "check": "actor_removal_no_impact"
+     }
+    ]
    },
    "tests": [
+    "tests/lab/test_resilience_structure_module.py",
     "tests/lab/test_sensor_loss_module.py"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
@@ -1361,13 +1573,19 @@
     "protection measures",
     "resilience observations"
    ],
-   "gap": "Structure, protection, and the causal attribution of resilience are undefined. No lab check implemented yet.",
+   "gap": "Declared property.",
    "hypotheses_needed": [
     "Define structural and protective mechanisms and a causal test distinguishing their contributions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "resilience_structure",
+    "version": "1.0.0",
+    "check": "structure_not_protection"
+   },
+   "tests": [
+    "tests/lab/test_resilience_structure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
