@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1305,
-  "covered_percent": 75.1,
+  "covered": 1313,
+  "covered_percent": 75.6,
   "statuses": {
-   "PASS": 1223,
+   "PASS": 1231,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 432
+   "UNCOVERED": 424
   },
   "resolvable": 670,
-  "resolvable_uncovered": 54,
-  "resolvable_uncovered_implementation_only": 54,
+  "resolvable_uncovered": 46,
+  "resolvable_uncovered_implementation_only": 46,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 982,
-  "pass_with_open_point": 907
+  "covered_with_open_point": 990,
+  "pass_with_open_point": 915
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1305,
-    "covered_percent": 75.1,
+    "covered": 1313,
+    "covered_percent": 75.6,
     "statuses": {
-     "PASS": 1223,
+     "PASS": 1231,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 432
+     "UNCOVERED": 424
     },
     "resolvable": 670,
-    "resolvable_uncovered": 54,
-    "resolvable_uncovered_implementation_only": 54,
+    "resolvable_uncovered": 46,
+    "resolvable_uncovered_implementation_only": 46,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 982,
-    "pass_with_open_point": 907
+    "covered_with_open_point": 990,
+    "pass_with_open_point": 915
    }
   },
   {
@@ -1598,21 +1598,21 @@
     "registered": 1,
     "not_registered": [],
     "provisions": 43,
-    "covered": 22,
-    "covered_percent": 51.2,
+    "covered": 23,
+    "covered_percent": 53.5,
     "statuses": {
-     "PASS": 21,
+     "PASS": 22,
      "FAIL": 0,
      "UNKNOWN": 1,
      "NOT_APPLICABLE": 0,
-     "UNCOVERED": 21
+     "UNCOVERED": 20
     },
     "resolvable": 12,
-    "resolvable_uncovered": 3,
-    "resolvable_uncovered_implementation_only": 3,
+    "resolvable_uncovered": 2,
+    "resolvable_uncovered_implementation_only": 2,
     "unresolved_decisions": 36,
-    "covered_with_open_point": 15,
-    "pass_with_open_point": 14
+    "covered_with_open_point": 16,
+    "pass_with_open_point": 15
    }
   },
   {
@@ -1632,21 +1632,21 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 342,
-    "covered_percent": 93.7,
+    "covered": 348,
+    "covered_percent": 95.3,
     "statuses": {
-     "PASS": 329,
+     "PASS": 335,
      "FAIL": 3,
      "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 23
+     "UNCOVERED": 17
     },
     "resolvable": 164,
-    "resolvable_uncovered": 9,
-    "resolvable_uncovered_implementation_only": 9,
+    "resolvable_uncovered": 3,
+    "resolvable_uncovered_implementation_only": 3,
     "unresolved_decisions": 266,
-    "covered_with_open_point": 243,
-    "pass_with_open_point": 231
+    "covered_with_open_point": 249,
+    "pass_with_open_point": 237
    }
   },
   {
@@ -1734,21 +1734,21 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 386,
-    "covered_percent": 75.5,
+    "covered": 387,
+    "covered_percent": 75.7,
     "statuses": {
-     "PASS": 365,
+     "PASS": 366,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 125
+     "UNCOVERED": 124
     },
     "resolvable": 182,
-    "resolvable_uncovered": 17,
-    "resolvable_uncovered_implementation_only": 17,
+    "resolvable_uncovered": 16,
+    "resolvable_uncovered_implementation_only": 16,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 307,
-    "pass_with_open_point": 286
+    "covered_with_open_point": 308,
+    "pass_with_open_point": 287
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 87,
-    "codex_draft": 264,
+    "lab_reconciled": 95,
+    "codex_draft": 256,
     "human_accepted": 0,
     "total": 351
    },
@@ -19511,30 +19511,40 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of override is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edition_finality",
+   "check": "override_not_permitted",
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
+   "gap": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EF-1",
+    "H-EF-2",
+    "H-EF-3",
+    "H-EF-4",
+    "H-EF-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -36230,30 +36240,44 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of persistent authority and its provenance is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "failure_chain",
+   "check": "no_persistent_authority",
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
+   "gap": "The §3 invariant read through §4.2: no action on an evaluation made before a later degradation, dispute or loss of consistency.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FC-1",
+    "H-FC-2",
+    "H-FC-3",
+    "H-FC-4",
+    "H-FC-5",
+    "H-FC-5-ALT",
+    "H-FC-6",
+    "H-FC-7"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "failure_chain:all_faults",
+    "failure_chain:divergence_faulty_adapter"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -36862,30 +36886,41 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A criterion for adequate propagation-correctness testing is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "failure_chain",
+   "check": "downgrade_propagation_tested",
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
+   "gap": "The lab stands in for L8: the tests run and catch a counterexample.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FC-1",
+    "H-FC-2",
+    "H-FC-3",
+    "H-FC-4",
+    "H-FC-5",
+    "H-FC-5-ALT",
+    "H-FC-6",
+    "H-FC-7"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -36894,30 +36929,41 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A criterion for adequate suspension-behavior testing is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "failure_chain",
+   "check": "enforcement_suspension_tested",
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
+   "gap": "The lab stands in for L8: the tests run and catch a counterexample.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FC-1",
+    "H-FC-2",
+    "H-FC-3",
+    "H-FC-4",
+    "H-FC-5",
+    "H-FC-5-ALT",
+    "H-FC-6",
+    "H-FC-7"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -36926,30 +36972,41 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A criterion for adequate revalidation-trigger testing is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "failure_chain",
+   "check": "revalidation_triggers_tested",
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
+   "gap": "The lab stands in for L8: the tests run and catch a counterexample.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FC-1",
+    "H-FC-2",
+    "H-FC-3",
+    "H-FC-4",
+    "H-FC-5",
+    "H-FC-5-ALT",
+    "H-FC-6",
+    "H-FC-7"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -36958,30 +37015,41 @@
    "section": "6",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The targeted persistence behavior and adequate test coverage are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "failure_chain",
+   "check": "state_persistence_tested",
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
+   "gap": "The lab stands in for L8: the tests run and catch a counterexample.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FC-1",
+    "H-FC-2",
+    "H-FC-3",
+    "H-FC-4",
+    "H-FC-5",
+    "H-FC-5-ALT",
+    "H-FC-6",
+    "H-FC-7"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -37274,30 +37342,40 @@
    "section": "Epistemic State Transition Protocol",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A rule distinguishing overrides from authorized changes is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edition_finality",
+   "check": "override_not_permitted",
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
+   "gap": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EF-1",
+    "H-EF-2",
+    "H-EF-3",
+    "H-EF-4",
+    "H-EF-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -56458,32 +56536,42 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of an override and its interaction with crisis actions is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edition_finality",
+   "check": "override_not_permitted",
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
+   "gap": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EF-1",
+    "H-EF-2",
+    "H-EF-3",
+    "H-EF-4",
+    "H-EF-5"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-042"
    ],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

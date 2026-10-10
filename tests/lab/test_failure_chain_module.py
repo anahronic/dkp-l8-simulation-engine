@@ -48,6 +48,7 @@ FAULT_CASES = {
     "final_evaluation": ("divergence_resolved", ["ETRANS-4.5-02"]),
     "arbitration_overrun": ("long_divergence", ["ORACLE-11-03"]),
     "deadline_rounded_up": ("coarse_grid_divergence", ["ORACLE-11-03"]),
+    "skip_transition_tests": ("divergence_resolved", ["ETRANS-6-01", "ETRANS-6-02", "ETRANS-6-03", "ETRANS-6-04"]),
 }
 
 
@@ -136,3 +137,15 @@ def test_run_is_deterministic_and_records_are_exported():
     assert a["result_id"] == b["result_id"] and a["input_id"] == b["input_id"]
     assert a["variants"]["divergence_resolved"]["summary"]["counts"]["FAIL"] == 0
     assert a["variants"]["divergence_faulty_adapter"]["summary"]["counts"]["FAIL"] > 0
+
+
+def test_kt5_l8_tests_catch_their_counterexamples():
+    """ETRANS §6 (review КТ5 reading): each 'L8 MUST test' item passes only because its transition tests ran in this run
+    and each of them fails on its own counterexample; ETRANS-3-03 is the §3 invariant read through §4.2."""
+    from lab.modules.failure_chain import L8_TESTS, detection
+    for rid, (_, tests) in L8_TESTS.items():
+        for target, example, fault in tests:
+            assert detection(M, example, fault)[target] == ("PASS", "FAIL"), (rid, target)
+    _, res = run(**M.examples()["stale_ground"])
+    st = statuses(res)
+    assert st["ETRANS-3-03"] == st["ETRANS-4.2-01"] == "PASS"

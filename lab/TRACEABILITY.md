@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1305 (75.1 %) | 982 | 1223 | 907 | 4 | 63 | 15 | 432 | 54 | 1414 |
-| B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1313 (75.6 %) | 990 | 1231 | 915 | 4 | 63 | 15 | 424 | 46 | 1414 |
+| B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 348 (95.3 %) | 249 | 335 | 237 | 3 | 8 | 2 | 17 | 3 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 257 (60.6 %) | 170 | 237 | 153 | 1 | 17 | 2 | 167 | 13 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 386 (75.5 %) | 307 | 365 | 286 | 0 | 18 | 3 | 125 | 17 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 387 (75.7 %) | 308 | 366 | 287 | 0 | 18 | 3 | 124 | 16 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1305 (75.1 %) | 982 | 1223 | 907 | 4 | 63 | 15 | 432 | 54 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1313 (75.6 %) | 990 | 1231 | 915 | 4 | 63 | 15 | 424 | 46 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 87 | 264 | 0 | 351 |
+| implementation_only | 0 | 95 | 256 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -260,7 +260,7 @@ Withdrawn after verification (not author decisions):
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 27 | 24 | 0 | 3 | 0 | 14 | 33 |
-| DKP-1-PREVENTION-001 | 43 | 22 | 21 | 0 | 1 | 0 | 21 | 36 |
+| DKP-1-PREVENTION-001 | 43 | 23 | 22 | 0 | 1 | 0 | 20 | 36 |
 | DKP-2-ASSETS-001 | 43 | 29 | 28 | 0 | 1 | 0 | 14 | 38 |
 | DKP-2-FINANCE-001 | 44 | 25 | 23 | 0 | 2 | 0 | 19 | 39 |
 | DKP-2-LABOR-001 | 40 | 24 | 21 | 0 | 3 | 0 | 16 | 28 |
@@ -270,7 +270,7 @@ Withdrawn after verification (not author decisions):
 | DKP-3-POLICE-001 | 45 | 36 | 36 | 0 | 0 | 0 | 9 | 37 |
 | DKP-4-CRISIS-001 | 53 | 34 | 30 | 1 | 3 | 0 | 19 | 43 |
 | DKP-4-CRISIS-001-PATCH | 31 | 26 | 25 | 0 | 1 | 0 | 5 | 21 |
-| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 20 | 20 | 0 | 0 | 0 | 9 | 23 |
+| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 26 | 26 | 0 | 0 | 0 | 3 | 23 |
 | DKP-4-ERROR-001 | 52 | 33 | 29 | 0 | 3 | 1 | 19 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
 | DKP-5-CULTURE-001 | 43 | 27 | 27 | 0 | 0 | 0 | 16 | 37 |
@@ -282,7 +282,7 @@ Withdrawn after verification (not author decisions):
 | DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
 | DKP-6-EXIT-001 | 62 | 30 | 29 | 0 | 0 | 1 | 32 | 49 |
 | DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
-| DKP-6-RESILIENCE-001 | 37 | 35 | 31 | 0 | 4 | 0 | 2 | 37 |
+| DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 31 | 28 | 0 | 3 | 0 | 8 | 31 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
@@ -632,6 +632,7 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-DisputeExceptionClause-01 | PARTIAL | dispute_correction · dispute_not_blocked_by_ttl | PASS | — | Q-020 |
 | JUSTICE-DisputeExceptionClause-02 | PARTIAL | dispute_correction · dispute_exception_conditions | UNKNOWN | — | Q-020 |
 | JUSTICE-DisputeExceptionClause-03 | IMPLEMENTED | dispute_correction · no_final_output | PASS | yes | — |
+| PREV-0-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
 | PREV-11-01 | IMPLEMENTED | prevention · output_fields | PASS | — | — |
 | PREV-11-02 | IMPLEMENTED | prevention · output_flags | PASS | — | — |
 | PREV-12-01 | PARTIAL | prevention · ambiguity_zero | PASS | — | — |
@@ -929,6 +930,7 @@ Withdrawn after verification (not author decisions):
 | CRISISPATCH-9-04 | PARTIAL | sensor_loss · no_authority_emerges | PASS | yes | — |
 | ETRANS-3-01 | PARTIAL | failure_chain · operational_within_validity | PASS | yes | Q-003 |
 | ETRANS-3-02 | PARTIAL | failure_chain · downgrade_propagates | PASS | yes | — |
+| ETRANS-3-03 | PARTIAL | failure_chain · no_persistent_authority | PASS | yes | — |
 | ETRANS-4.1-01 | IMPLEMENTED | calibration_expiry · expiry_downgrade_flags | PASS | yes | Q-003, Q-007 |
 | ETRANS-4.1-02 | IMPLEMENTED | failure_chain · suspension_on_downgrade | PASS | yes | Q-003, Q-007 |
 | ETRANS-4.1-03 | IMPLEMENTED | failure_chain · no_escalation_after_downgrade | PASS | yes | Q-007 |
@@ -940,6 +942,10 @@ Withdrawn after verification (not author decisions):
 | ETRANS-4.4-01 | IMPLEMENTED | failure_chain · reentry_new_output | PASS | yes | — |
 | ETRANS-4.4-02 | IMPLEMENTED | calibration_expiry · no_reactivation_after_recalibration | PASS | yes | — |
 | ETRANS-4.5-02 | PARTIAL | failure_chain · open_to_reclassification | PASS | yes | — |
+| ETRANS-6-01 | PARTIAL | failure_chain · downgrade_propagation_tested | PASS | — | — |
+| ETRANS-6-02 | PARTIAL | failure_chain · enforcement_suspension_tested | PASS | — | — |
+| ETRANS-6-03 | PARTIAL | failure_chain · revalidation_triggers_tested | PASS | — | — |
+| ETRANS-6-04 | PARTIAL | failure_chain · state_persistence_tested | PASS | — | — |
 | ETRANS-7-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | ETRANS-7-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | ETRANS-7-03 | IMPLEMENTED | edition_finality · incompatibility_declared | PASS | — | — |
@@ -947,6 +953,7 @@ Withdrawn after verification (not author decisions):
 | ETRANS-7-05 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | ETRANS-7-06 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ETRANS-7-07 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| ETRANS-EpistemicStateTransitionProtocol-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
 | ERROR-0-01 | PARTIAL | dispute_correction · errors_as_states | PASS | yes | — |
 | ERROR-1-01 | PARTIAL | dispute_correction · procedural_non_punitive | PASS | yes | — |
 | ERROR-10-01 | IMPLEMENTED | dispute_correction · case_logged | PASS | — | — |
@@ -1282,6 +1289,7 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-7-01 | PARTIAL | exit_integration · shock_halts_and_suspends | PASS | — | — |
 | INTEGRATION-7-03 | IMPLEMENTED | exit_integration · rollback_logged | PASS | — | — |
 | INTEGRATION-9-03 | PARTIAL | exit_integration · divergence_not_failure | PASS | yes | — |
+| RESILIENCE-0-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
 | RESILIENCE-1-01 | PARTIAL | resilience_structure · continuity_under_pressure | PASS | yes | — |
 | RESILIENCE-10.1-01 | PARTIAL | resilience_structure · crisis_not_overridden | PASS | — | — |
 | RESILIENCE-10.1-02 | IMPLEMENTED | resilience_structure · crisis_no_centralization | PASS | — | — |

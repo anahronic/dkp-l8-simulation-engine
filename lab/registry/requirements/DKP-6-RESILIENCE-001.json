@@ -29,19 +29,25 @@
    "data_dependencies": [
     "override configuration and event records"
    ],
-   "gap": "An operational definition of an override and its interaction with crisis actions is missing. No lab check implemented yet.",
+   "gap": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
    "hypotheses_needed": [
     "Define which configuration changes and actions count as overriding the protocol."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.1.0",
+    "check": "override_not_permitted"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

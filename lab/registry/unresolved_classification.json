@@ -3822,7 +3822,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“No historical VALID state creates persistent authority” is operationally clarified by §4.2’s prohibition on reliance “solely” on past validity and §4.4’s requirement for a “new valid output,” leaving provenance recording to implementation."
+   "rationale": "“No historical VALID state creates persistent authority” is operationally clarified by §4.2’s prohibition on reliance “solely” on past validity and §4.4’s requirement for a “new valid output,” leaving provenance recording to implementation.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The §3 invariant is concretized by §4.2 (no persistence without revalidation): no action relies on an evaluation made before a later degradation, dispute or loss of consistency. Checked through the same observation as ETRANS-4.2-01."
   },
   "ETRANS-3-04": {
    "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
@@ -3906,28 +3908,36 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“L8 MUST test” “downgrade propagation correctness” requires tests against the stated transition rules but does not impose the additional adequacy threshold invented by the draft."
+   "rationale": "“L8 MUST test” “downgrade propagation correctness” requires tests against the stated transition rules but does not impose the additional adequacy threshold invented by the draft.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'L8 MUST test downgrade propagation correctness': the lab stands in for L8. Checked as: the propagation tests (ETRANS-3-02, 4.1-01) are carried out in the run, and each fails on its counterexample and passes without it."
   },
   "ETRANS-6-02": {
    "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“L8 MUST test” “enforcement suspension behavior” establishes a test obligation without specifying a separate coverage threshold whose absence would require an author decision."
+   "rationale": "“L8 MUST test” “enforcement suspension behavior” establishes a test obligation without specifying a separate coverage threshold whose absence would require an author decision.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Enforcement suspension behavior': the suspension tests (ETRANS-4.1-02, 4.3-01) are carried out and each catches its counterexample."
   },
   "ETRANS-6-03": {
    "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“L8 MUST test” “revalidation triggers” can be implemented using the triggers in §4, and the text does not require an independently prescribed complete scenario set."
+   "rationale": "“L8 MUST test” “revalidation triggers” can be implemented using the triggers in §4, and the text does not require an independently prescribed complete scenario set.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Revalidation triggers': the revalidation tests (ETRANS-4.1-01, 4.4-01) are carried out and each catches its counterexample."
   },
   "ETRANS-6-04": {
    "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Prevention of state persistence” refers in context to §4.2’s “No Persistence Without Revalidation” and §4.4’s prohibition on automatic reactivation, so the draft’s all-state-persistence reading is unnecessary."
+   "rationale": "“Prevention of state persistence” refers in context to §4.2’s “No Persistence Without Revalidation” and §4.4’s prohibition on automatic reactivation, so the draft’s all-state-persistence reading is unnecessary.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Prevention of state persistence': the persistence tests (ETRANS-4.2-01, 4.4-02) are carried out and each catches its counterexample."
   },
   "ETRANS-7-01": {
    "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
@@ -3955,7 +3965,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Override: Not permitted” is distinguished from authorized changes by §7’s “changed only through the controlled procedure,” so the drafted distinction does not require another author decision."
+   "rationale": "“Override: Not permitted” is distinguished from authorized changes by §7’s “changed only through the controlled procedure,” so the drafted distinction does not require another author decision.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "Header line 'Override: Not permitted'. With §7 (changes only through UPGRADE) it reads: no other protocol may override this one at run time. Observable as override attempts refused, as EB-0-01 already is; the header text itself is checked on the pinned document."
   },
   "EXIT-0-01": {
    "document": "DKP-6-EXIT-001",
@@ -7557,7 +7569,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Override: Not permitted” prohibits bypassing the protocol, while §15 expressly provides its permitted change procedure, so the draft does not establish an unresolved distinction."
+   "rationale": "“Override: Not permitted” prohibits bypassing the protocol, while §15 expressly provides its permitted change procedure, so the draft does not establish an unresolved distinction.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "Header line 'Override: Not permitted'; §15 gives the only change route. Observable as override attempts by other protocols refused and the header present in the pinned text."
   },
   "PREV-1-01": {
    "document": "DKP-1-PREVENTION-001",
@@ -8028,7 +8042,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "'Override: Not permitted' is categorical, and §10.1 gives crisis protocols precedence without authorizing an override of resilience, so the draft establishes no unresolved exception."
+   "rationale": "'Override: Not permitted' is categorical, and §10.1 gives crisis protocols precedence without authorizing an override of resilience, so the draft establishes no unresolved exception.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The meta line names the layer, the dependencies and 'Override: Not permitted'. Checkable: override attempts refused, and the 'Depends on' list equals the catalog's declared dependencies. The layer label (L6–L7 vs the L6 folder) is presentation."
   },
   "RESILIENCE-1-01": {
    "document": "DKP-6-RESILIENCE-001",

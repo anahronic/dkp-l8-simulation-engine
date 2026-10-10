@@ -29,19 +29,25 @@
    "data_dependencies": [
     "protocol change and override records"
    ],
-   "gap": "An operational definition of override is missing. No lab check implemented yet.",
+   "gap": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
    "hypotheses_needed": [
     "Define how overrides differ from amendments under §15."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edition_finality",
+    "version": "1.1.0",
+    "check": "override_not_permitted"
+   },
+   "tests": [
+    "tests/lab/test_edition_finality_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1558,7 +1564,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "upgrade_procedure"
    },
    "tests": [
@@ -1602,7 +1608,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "modification_requirements"
    },
    "tests": [
@@ -1652,7 +1658,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "presentation_not_upgrade"
    },
    "tests": [

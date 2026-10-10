@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 87,
+  "confirmed": 95,
   "reclassified": 7
  },
  "items": [
@@ -655,6 +655,84 @@
    "check": "dispute_correction:reversibility_preferred"
   },
   {
+   "id": "ETRANS-3-03",
+   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+   "quote": "No historical VALID state creates persistent authority.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The §3 invariant is concretized by §4.2 (no persistence without revalidation): no action relies on an evaluation made before a later degradation, dispute or loss of consistency. Checked through the same observation as ETRANS-4.2-01.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "failure_chain:no_persistent_authority"
+  },
+  {
+   "id": "ETRANS-6-01",
+   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+   "quote": "L8 MUST test:\n\n- downgrade propagation correctness",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'L8 MUST test downgrade propagation correctness': the lab stands in for L8. Checked as: the propagation tests (ETRANS-3-02, 4.1-01) are carried out in the run, and each fails on its counterexample and passes without it.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "failure_chain:downgrade_propagation_tested"
+  },
+  {
+   "id": "ETRANS-6-02",
+   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+   "quote": "- enforcement suspension behavior",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Enforcement suspension behavior': the suspension tests (ETRANS-4.1-02, 4.3-01) are carried out and each catches its counterexample.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "failure_chain:enforcement_suspension_tested"
+  },
+  {
+   "id": "ETRANS-6-03",
+   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+   "quote": "- revalidation triggers",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Revalidation triggers': the revalidation tests (ETRANS-4.1-01, 4.4-01) are carried out and each catches its counterexample.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "failure_chain:revalidation_triggers_tested"
+  },
+  {
+   "id": "ETRANS-6-04",
+   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+   "quote": "- prevention of state persistence",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Prevention of state persistence': the persistence tests (ETRANS-4.2-01, 4.4-02) are carried out and each catches its counterexample.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "failure_chain:state_persistence_tested"
+  },
+  {
+   "id": "ETRANS-EpistemicStateTransitionProtocol-01",
+   "document": "DKP-4-EPISTEMIC-TRANSITIONS-001",
+   "quote": "Override: Not permitted",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Header line 'Override: Not permitted'. With §7 (changes only through UPGRADE) it reads: no other protocol may override this one at run time. Observable as override attempts refused, as EB-0-01 already is; the header text itself is checked on the pinned document.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edition_finality:override_not_permitted"
+  },
+  {
    "id": "FINANCE-1-01",
    "document": "DKP-2-FINANCE-001",
    "quote": "- create or manage fiat monetary regimes,\n- override justice outcomes,\n- perform subjective valuation or preference aggregation,",
@@ -1144,6 +1222,19 @@
    "check": "police_antiterror:no_authority_expansion"
   },
   {
+   "id": "PREV-0-01",
+   "document": "DKP-1-PREVENTION-001",
+   "quote": "Override: Not permitted",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Header line 'Override: Not permitted'; §15 gives the only change route. Observable as override attempts by other protocols refused and the header present in the pinned text.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edition_finality:override_not_permitted"
+  },
+  {
    "id": "PREV-13-02",
    "document": "DKP-1-PREVENTION-001",
    "quote": "6.  Anti-gaming enforced",
@@ -1159,6 +1250,19 @@
     "from": "no",
     "to": "partial"
    }
+  },
+  {
+   "id": "RESILIENCE-0-01",
+   "document": "DKP-6-RESILIENCE-001",
+   "quote": "meta: \"Layer: L6–L7 · Depends on: DKP-0-ORACLE-001, DKP-1-AXIOMS-001, DKP-1-PREVENTION-001, DKP-7-SCOPE-001, DKP-8-INTEROP-001 · Override: Not permitted\"",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The meta line names the layer, the dependencies and 'Override: Not permitted'. Checkable: override attempts refused, and the 'Depends on' list equals the catalog's declared dependencies. The layer label (L6–L7 vs the L6 folder) is presentation.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edition_finality:override_not_permitted"
   },
   {
    "id": "TRANSPORT-1-01",

@@ -76,6 +76,7 @@ FAULTS = {
     "repair_metadata": "the consumer fills in missing metadata and executes",
     "final_evaluation": "evaluations are published as final (dispute_allowed FALSE)",
     "arbitration_overrun": "the arbitration stays open after its 14-day maximum",
+    "skip_transition_tests": "the module omits its ETRANS transition tests from the run (an L8 that does not test, ETRANS §6)",
     "deadline_rounded_up": "the 14-day deadline is rounded up to the next grid step (the lab's error before review КТ4-GPT-01)",
 }
 
@@ -430,6 +431,60 @@ def exp_runs_longer_than(steps: List[int], n: int) -> List[Tuple[int, int]]:
     return [(a, b) for a, b in runs(steps) if b - a + 1 > n]
 
 
+# ETRANS §6 "L8 MUST test": item -> transition checks that are the test, each with a counterexample it must catch
+L8_TESTS = {
+    "ETRANS-6-01": ("downgrade_propagation_tested", (("ETRANS-3-02", "divergence_resolved", "no_propagation"),
+                                                     ("ETRANS-4.1-01", "divergence_resolved", "no_propagation"))),
+    "ETRANS-6-02": ("enforcement_suspension_tested", (("ETRANS-4.1-02", "divergence_resolved", "no_propagation"),
+                                                      ("ETRANS-4.3-01", "divergence_resolved", "escalate_during_suspension"))),
+    "ETRANS-6-03": ("revalidation_triggers_tested", (("ETRANS-4.1-01", "divergence_resolved", "no_propagation"),
+                                                     ("ETRANS-4.4-01", "stale_ground", "auto_reactivate"))),
+    "ETRANS-6-04": ("state_persistence_tested", (("ETRANS-4.2-01", "stale_ground", "auto_reactivate"),
+                                                 ("ETRANS-4.4-02", "stale_ground", "auto_reactivate"))),
+}
+_DETECTION: Dict[Tuple[str, str], Dict[str, str]] = {}
+
+
+def detection(module, example: str, fault: str) -> Dict[str, Tuple[str, str]]:
+    """Statuses of the transition checks on a fixed example, clean and with the fault (cached: the same for every run)."""
+    key = (example, fault)
+    if key not in _DETECTION:
+        base = module.validate(module.examples()[example])
+        saved, module.progress = module.progress, None           # nested runs report no progress
+        try:
+            clean = {c.requirement_id: c.status for c in module.evaluate(dict(base, faults=[]), self_tests=False).checks}
+            broken = {c.requirement_id: c.status for c in module.evaluate(dict(base, faults=[fault]), self_tests=False).checks}
+        finally:
+            module.progress = saved
+        _DETECTION[key] = {rid: (clean.get(rid), broken.get(rid)) for rid in set(clean) | set(broken)}
+    return _DETECTION[key]
+
+
+def l8_checks(module, r, checks) -> List[CheckResult]:
+    """ETRANS §6: this run carried out the transition tests, and each test catches its counterexample."""
+    got = {c.requirement_id: c.status for c in checks}
+    out = []
+    for rid, (chk, tests) in L8_TESTS.items():
+        targets = [t for t, _, _ in tests]
+        missing = [t for t in targets if t not in got]
+        blind = [f"{t} ({fault} on {example})" for t, example, fault in tests
+                 if detection(module, example, fault).get(t) != ("PASS", "FAIL")]
+        if missing or blind:
+            out.append(CheckResult(rid, chk, FAIL, f"transition tests not carried out ({', '.join(missing)})" if missing else
+                                   f"the tests do not catch their counterexamples: {', '.join(blind)}",
+                                   evidence={"missing": missing, "blind": blind}))
+        elif all(got[t] == NOT_APPLICABLE for t in targets):
+            out.append(CheckResult(rid, chk, NOT_APPLICABLE, "transition tests",
+                                   applicability="this run does not exercise the transition; the tests ran and are not applicable"))
+        else:
+            out.append(CheckResult(rid, chk, PASS, f"tested in this run ({', '.join(f'{t} {got[t]}' for t in targets)}); each test "
+                                   "fails on its counterexample and passes without it (" +
+                                   "; ".join(f"{t}: {fault} on {example}" for t, example, fault in tests) + ")",
+                                   evidence={"tests": {t: got[t] for t in targets},
+                                             "counterexamples": [list(x) for x in tests]}))
+    return out
+
+
 def runs(steps: List[int]) -> List[Tuple[int, int]]:
     """Maximal runs [a, b] of consecutive step numbers."""
     out: List[Tuple[int, int]] = []
@@ -744,12 +799,14 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
             hit = [t for t in triggers if c < t <= a["step"]]
             if hit:
                 bad.append({"step": a["step"], "evaluation": a["evaluation"], "created": c, "trigger": hit[-1]})
-        out.append(verdict("ETRANS-4.2-01", "no_persistence_on_past_valid", bad,
-                           "no action relied on an evaluation older than the latest degradation, dispute or "
-                           "loss of consistency", "{n} actions relied on an evaluation made before a later trigger"))
+        for rid, chk in (("ETRANS-4.2-01", "no_persistence_on_past_valid"), ("ETRANS-3-03", "no_persistent_authority")):
+            out.append(verdict(rid, chk, bad,
+                               "no action relied on an evaluation older than the latest degradation, dispute or "
+                               "loss of consistency: a past VALID state gave no persisting authority",
+                               "{n} actions relied on an evaluation made before a later trigger"))
     else:
-        out.append(na("ETRANS-4.2-01", "no_persistence_on_past_valid", "persistence on past VALID state",
-                      "no degradation, dispute or loss of consistency occurred"))
+        for rid, chk in (("ETRANS-4.2-01", "no_persistence_on_past_valid"), ("ETRANS-3-03", "no_persistent_authority")):
+            out.append(na(rid, chk, "persistence on past VALID state", "no degradation, dispute or loss of consistency occurred"))
     if emissions:
         bad = [{"step": e["step"], "type": e["type"]} for e in emissions if e["emitted"].get("dispute_allowed") is not True]
         out.append(verdict("ETRANS-4.5-02", "open_to_reclassification", bad,
@@ -844,6 +901,12 @@ IMPLEMENTS = {
     "ETRANS-4.1-02": ("suspension_on_downgrade", "IMPLEMENTED", None),
     "ETRANS-4.1-03": ("no_escalation_after_downgrade", "IMPLEMENTED", None),
     "ETRANS-4.5-02": ("open_to_reclassification", "PARTIAL", "Observed as the dispute_allowed flag of every emitted output."),
+    "ETRANS-3-03": ("no_persistent_authority", "PARTIAL", "The §3 invariant read through §4.2: no action on an evaluation made "
+                    "before a later degradation, dispute or loss of consistency."),
+    "ETRANS-6-01": ("downgrade_propagation_tested", "PARTIAL", "The lab stands in for L8: the tests run and catch a counterexample."),
+    "ETRANS-6-02": ("enforcement_suspension_tested", "PARTIAL", "The lab stands in for L8: the tests run and catch a counterexample."),
+    "ETRANS-6-03": ("revalidation_triggers_tested", "PARTIAL", "The lab stands in for L8: the tests run and catch a counterexample."),
+    "ETRANS-6-04": ("state_persistence_tested", "PARTIAL", "The lab stands in for L8: the tests run and catch a counterexample."),
     "ETRANS-4.2-01": ("no_persistence_on_past_valid", "PARTIAL", "New admissible data = a reading that arrives and changes S(t), or a declared dispute (H-FC-5)."),
     "ETRANS-4.3-01": ("status_quo_preserved", "IMPLEMENTED", None),
     "ETRANS-4.3-02": ("no_escalation_in_uncertainty", "IMPLEMENTED", None),
@@ -866,7 +929,7 @@ def _window(default=None):
 
 class FailureChainModule(LabModule):
     id = "failure_chain"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Stale and contradictory data (failure chain)",
              "ru": "Устаревшие и противоречивые данные (цепочка отказа)"}
     summary = {"en": "Sensors go silent or disagree: do dependent asset restrictions and penalties stop, wait "
@@ -1017,13 +1080,17 @@ class FailureChainModule(LabModule):
             raise LabInputError(p)
         return r
 
-    def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
+    def evaluate(self, r: Dict[str, Any], self_tests: bool = True) -> ModuleResult:
         ttl = TTL_TEXT[r["data_type"]] if r["ttl_minutes"] < 0 else r["ttl_minutes"]
         readings = generate(r)
         self.report_progress(0.2, "adapter")
         rows, events, store = run_adapter(r, readings, ttl)
         self.report_progress(0.6, "checks")
         checks = run_checks(r, ttl, readings, rows, events, store)
+        if "skip_transition_tests" in r["faults"]:
+            checks = [c for c in checks if not c.requirement_id.startswith("ETRANS-")]
+        if self_tests:
+            checks = checks + l8_checks(self, r, checks)
         modes = [row["mode"] for row in rows]
         last = rows[-1]
         # diagnostic, not a check: enforcement while the current S(t) is on the other side of the
@@ -1123,7 +1190,7 @@ class FailureChainModule(LabModule):
             "fire_ttl": {"data_type": "active_fire", "step_minutes": 5, "horizon_steps": 288,
                          "ground_interval_minutes": 5, "orbital_interval_minutes": 90, "autonomous_interval_minutes": 10},
             "all_faults": {**div, "dispute_at_step": 120, "incomplete_order_at_step": 100, "silent_class": "ground",
-                           "silent_window": [150, 200], "faults": list(FAULTS)},
+                           "silent_window": [150, 200], "faults": [f for f in FAULTS if f != "skip_transition_tests"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

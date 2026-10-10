@@ -117,6 +117,7 @@ FAULTS = {
     "digest_not_listed": "a new edition is published without its digest in SHA256SUMS.txt",
     "presentation_as_upgrade": "a presentation-only correction is run through the upgrade gate and given a new identifier",
     "presentation_undated": "a presentation-only correction leaves the old 'Last updated' date",
+    "accept_override": "another protocol's override of a document whose header says 'Override: Not permitted' is accepted",
 }
 
 CHANGE = {"type": "object", "fields": {
@@ -138,6 +139,27 @@ RELEASE = {"type": "object", "fields": {
     "id": {"type": "str"},
     "day": {"type": "int", "min": 0, "max": 3650},
     "kind": {"type": "enum", "values": list(RELEASE_KINDS), "default": "edition"}}}
+
+
+# header line "Override: Not permitted" -> the provision that registers it (EB-0-01 is module epistemic_gate)
+OVERRIDE_HEADERS = {"DKP-4-EPISTEMIC-TRANSITIONS-001": "ETRANS-EpistemicStateTransitionProtocol-01",
+                    "DKP-1-PREVENTION-001": "PREV-0-01", "DKP-6-RESILIENCE-001": "RESILIENCE-0-01"}
+OVERRIDE = {"type": "object", "fields": {"doc": {"type": "enum", "values": list(OVERRIDE_HEADERS)},
+                                         "by": {"type": "enum", "values": DOC_IDS}}}
+OVERRIDES = [{"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "by": "DKP-2-FINANCE-001"},
+             {"doc": "DKP-1-PREVENTION-001", "by": "DKP-4-CRISIS-001"},
+             {"doc": "DKP-6-RESILIENCE-001", "by": "DKP-4-CRISIS-001"}]
+
+
+def header(doc: str) -> Dict[str, Any]:
+    """The header block of a pinned document (before section 1): override line and the 'Depends on' list."""
+    from lab.tools.check_registry import doc_text, normalize
+    text = doc_text(next(d for d in _CAT["documents"] if d["id"] == doc))
+    head = normalize(re.split(r"\n#+\s*(?:0|1)\.", text, maxsplit=1)[0])
+    m = re.search(r"Override:?\s*([A-Za-z ]+?)(?:\s*[·\"-]|$)", head)
+    dep = re.search(r"Depends on:?(.*?)(?:Override|$)", head)
+    return {"override": m.group(1).strip() if m else None,
+            "depends_on": sorted(set(re.findall(r"DKP-[0-9A-Z-]+-\d{3}", dep.group(1)))) if dep else []}
 
 
 def short(doc: str) -> str:
@@ -245,6 +267,12 @@ def run(r: Dict[str, Any]) -> EventLog:
     # published editions: identifier -> line (original document), digest, date
     pub = {i: {"line": i, "digest": d["sha256"], "date": d["last_updated"]} for i, d in docs.items()}
     listed = {i: d["sha256"] for i, d in docs.items()}
+    for o in r["override_attempts"]:
+        h = header(o["doc"])
+        refused = h["override"] == "Not permitted" and "accept_override" not in faults
+        put("decision", "OVERRIDE", 0, {"override_attempt": o["doc"], "by": o["by"], "accepted": not refused,
+                                       "reason": "header: 'Override: Not permitted'; the document changes only through "
+                                                 "DKP-4-UPGRADE-001" if refused else "accepted"})
     for rel in sorted(r["releases"], key=lambda x: (x["day"], x["id"])):
         k = rel["day"]
         when = (base + timedelta(days=k)).isoformat()
@@ -293,9 +321,29 @@ def run(r: Dict[str, Any]) -> EventLog:
     return log
 
 
+def override_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    out = []
+    att = [m.value for m in msgs if m.source == "OVERRIDE"]
+    for doc, rid in OVERRIDE_HEADERS.items():
+        h = header(doc)
+        mine = [a for a in att if a["override_attempt"] == doc]
+        bad = [] if h["override"] == "Not permitted" else [f"header reads {h['override']!r}"]
+        bad += [f"override by {a['by']} accepted" for a in mine if a["accepted"]]
+        if doc == "DKP-6-RESILIENCE-001":
+            declared = sorted(next(d for d in _CAT["documents"] if d["id"] == doc)["declared_dependencies"])
+            if h["depends_on"] != declared:
+                bad.append(f"meta 'Depends on' {h['depends_on']} differs from the catalog {declared}")
+        ok = (f"the pinned header says 'Override: Not permitted'; {len(mine)} override attempt(s) by other protocols refused"
+              + ("; the meta 'Depends on' list matches the catalog" if doc == "DKP-6-RESILIENCE-001" else ""))
+        out.append(CheckResult(rid, "override_not_permitted", FAIL if bad else PASS,
+                               f"{len(bad)} breaches of the header" if bad else ok,
+                               evidence={"violations": bad[:10]} if bad else {"header": h}))
+    return out
+
+
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     msgs = log.messages()
-    out: List[CheckResult] = []
+    out: List[CheckResult] = override_checks(r, msgs)
     cs = {c["id"]: c for c in r["changes"]}
     dec = [m.value for m in msgs if m.kind == "decision" and m.source == "EDITION"]
     rels = [m for m in msgs if m.source == "RELEASE"]
@@ -451,6 +499,9 @@ def _implements() -> Dict[str, Any]:
         if integ:
             out[integ] = ("edition_integrity", "PARTIAL", "Checked on the pinned commit and on simulated releases, not on the published site.")
     out["UPGRADE-12-04"] = ("edition_dated", "PARTIAL", "Pinned corpus and simulated releases, not the published site.")
+    for rid in OVERRIDE_HEADERS.values():
+        out[rid] = ("override_not_permitted", "PARTIAL", "An override is a declared attempt by another protocol; changes through "
+                                                         "UPGRADE are checked under the finality clause.")
     out["UPGRADE-12-05"] = ("date_identifies_edition_only", "PARTIAL", "Checked on the module's own gate and activation records.")
     out["UPGRADE-12-06"] = ("unchanged_keep_dates", "PARTIAL", "Simulated releases, not the site build.")
     return out
@@ -474,7 +525,7 @@ CHANGES = [
 
 class EditionFinalityModule(LabModule):
     id = "edition_finality"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Editions and finality clauses (all documents)", "ru": "Редакции и заключительные положения (все документы)"}
     summary = {"en": "Changes to thirty documents go through a gate that applies each document's own finality clause; editions are "
                      "published in releases, dated and listed in SHA256SUMS.txt.  Is a quiet edit refused, a typo fix kept out of "
@@ -532,6 +583,9 @@ class EditionFinalityModule(LabModule):
                      "label": {"en": "Releases (day after the pinned edition date)", "ru": "Выпуски (день после даты закреплённой редакции)"}},
         "changes": {"type": "list", "min_items": 0, "max_items": 64, "items": CHANGE, "default": CHANGES, "source": "user",
                     "label": {"en": "Changes (declared)", "ru": "Изменения (объявленные)"}},
+        "override_attempts": {"type": "list", "min_items": 0, "max_items": 12, "items": OVERRIDE, "default": OVERRIDES,
+                              "source": "user", "label": {"en": "Attempts by other protocols to override a document",
+                                                          "ru": "Попытки других протоколов переопределить документ"}},
         "dependents_reading": {"type": "enum", "values": ["references", "depends_on"], "default": "references",
                                "source": "hypothesis", "label": {"en": "SCOPE 'dependent protocols' read by the gate (H-EF-2)",
                                                                   "ru": "Прочтение 'зависимых протоколов' SCOPE в шлюзе (H-EF-2)"}},
@@ -574,7 +628,7 @@ class EditionFinalityModule(LabModule):
         log = run(r)
         res = checks(r, log)
         msgs = log.messages()
-        dec = [m.value for m in msgs if m.kind == "decision"]
+        dec = [m.value for m in msgs if m.kind == "decision" and m.source == "EDITION"]
         rels = [m.value for m in msgs if m.source == "RELEASE"]
         base = {d["id"]: d["sha256"] for d in _CAT["documents"]}
         summary = []
