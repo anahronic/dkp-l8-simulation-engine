@@ -26,6 +26,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from lab.core.bus import EventLog, Message
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
+from lab.core.run import canonical_json, sha256_text
 from lab.core.schema import LabInputError
 
 # Constants written in the Code (quoted in IMPLEMENTS notes and in lab/registry/verifications.json).
@@ -105,6 +106,11 @@ FAULTS = {
     "write_off_damage_only": "the write-off equals the damage instead of 10 times the damage",
     "kill_switch_in_phase_1": "a Kill Switch is applied to a territory in integration Phase 0 or 1",
     "audit_gap_in_mercy": "audit logging is suspended during Mercy",
+    "unpublished_metrics": "B(t) and the level readings are computed but not published after day 0",
+    "manual_liability": "an aggressor's stake is burned only after a vote of the startup nodes",
+    "algorithm_liable": "the Kill Switch disconnection is attributed to the Equation as the responsible party",
+    "message_outside_digest": "the digest of block #0 covers the header and anchors but not the immutable message",
+    "wild_node_by_approval": "a Wild Node is admitted on the founders' approval instead of protocol compliance",
 }
 
 
@@ -144,7 +150,9 @@ def run(r: Dict[str, Any]):
             rec["immutable_message"] = rec["immutable_message"].replace("faster and cleaner", "together")
         if ok and q == "physical_anchors":
             rec["physical_anchors"]["mauna_loa_co2_ppm"] = 420.0
-    put("notice", "GENESIS", 0, {"genesis": dict(r["genesis"]), "block": rec})
+    covered = ["header", "physical_anchors"] + ([] if "message_outside_digest" in faults else ["immutable_message"])
+    put("notice", "GENESIS", 0, {"genesis": dict(r["genesis"]), "block": rec, "digest_covers": covered,
+                                 "digest": sha256_text(canonical_json({k: rec[k] for k in covered}))})
     # A.2 stack: weights, sources, drones, validators
     put("evaluation", "PTL", 0, {"weights": dict(w), "coverage_l0": r["l0_coverage"]})
     for f in r["external_feeds"]:
@@ -190,6 +198,13 @@ def run(r: Dict[str, Any]):
         "blocs_nuclear": sorted({x["bloc"] for x in counted if x["nuclear"] == "yes"}),
         "blocs_equivalent": sorted({x["bloc"] for x in counted if x["nuclear"] == "equivalent"}),
         "energy_ok": {x["id"]: x["energy_mwh_year"] >= NODE_ENERGY and x["energy_type"] in ENERGY_TYPES for x in nodes}}})
+    # admission of nodes at their online day (Glossary: a Wild Node joins on protocol compliance alone)
+    for x in sorted(nodes, key=lambda y: (y["online_day"], y["id"])):
+        if x["online_day"] >= 0:
+            by_approval = x["role"] == "wild" and "wild_node_by_approval" in faults
+            put("decision", "NETWORK", x["online_day"], {"admit": x["id"], "role": x["role"],
+                                                         "founders_agreement": x["founders_agreement"],
+                                                         "basis": "founders' approval" if by_approval else "protocol compliance"})
     # A.5 launch day
     launch = None
     for d in range(days):
@@ -310,8 +325,11 @@ def run(r: Dict[str, Any]):
         b = bval(s)
         p = params_at[d]
         if s is not prev_seg:
-            put("observation", "PTL", d, {"levels": {k: s[k] for k in ("l0", "l1", "l2")}, "B": round(b, 6),
-                                          "cause": s["cause"]})
+            obs = put("observation", "PTL", d, {"levels": {k: s[k] for k in ("l0", "l1", "l2")}, "B": round(b, 6),
+                                                "cause": s["cause"]})
+            if not ("unpublished_metrics" in faults and d > 0):
+                put("notice", "PUBLIC", d, {"published": {"B": round(b, 6), "levels": {k: s[k] for k in ("l0", "l1", "l2")}}},
+                    [obs.event_id])
         prev_seg = s
         # divergence and arbitration (A.2 Level 3)
         lv = [s[k] for k, wk in (("l0", w["l0"]), ("l1", w["l1"]), ("l2", w["l2"])) if wk > 0]
@@ -342,6 +360,8 @@ def run(r: Dict[str, Any]):
             put("action", "KILLSWITCH", d, {"all_kill_switches": new, "B": round(b, 6), "B_min": p["B_min"],
                                             "condition": "B(t) < B_min" if below else "kept after B(t) recovered (H-CS-5)",
                                             "targets": "not defined (F-029)"})
+            if "algorithm_liable" in faults and new == "active":
+                put("notice", "KILLSWITCH", d, {"responsible": "the Equation", "for": "disconnection by the Kill Switches"})
         if not below and was_below and ks_state != "inactive":
             put("notice", "KILLSWITCH", d, {"release": "not defined", "B": round(b, 6),
                                             "note": "B(t) >= B_min again; no rule releases the Kill Switches (F-029)"})
@@ -374,7 +394,10 @@ def run(r: Dict[str, Any]):
             g["aggressor_since"] = d
             burned = 0.0 if "no_slashing" in faults else g["stake"]
             g["stake"] -= burned
-            put("action", "ESCROW", d, {"slashing": g["id"], "burned": burned, "stake_left": g["stake"]})
+            if "manual_liability" in faults:
+                put("decision", "COUNCIL", d, {"vote": f"burn the stake of {g['id']}", "by": "startup nodes", "result": "yes"})
+            put("action", "ESCROW", d, {"slashing": g["id"], "burned": burned, "stake_left": g["stake"],
+                                        **({"decided_by": "vote of the startup nodes"} if "manual_liability" in faults else {})})
             if a["weapons"]:
                 due = (1 if "write_off_damage_only" in faults else WRITE_OFF) * a["damage"]
                 done = min(due, g["assets"] - g["written_off"])
@@ -465,6 +488,34 @@ def _mercy_expected(r) -> Tuple[List[Tuple[int, int]], List[Dict[str, Any]]]:
     return periods, open_
 
 
+def preamble_checks(r: Dict[str, Any], log: EventLog, v) -> List[CheckResult]:
+    """Code Preamble: power in open and immutable algorithms, public metrics, automated liability; algorithms are not Subjects."""
+    msgs = log.messages()
+    acc = [m.value for m in msgs if m.source == "PARAMS" and m.value.get("parameter") and m.value["accepted"]]
+    mutable = [f"day {c['day']}: {c['parameter']} changed via {c['channel']}" for c in acc
+               if c["channel"] != "upgrade" or not c["simulated"]]
+    published = {p for m in msgs if m.source == "PUBLIC" for p in m.provenance}
+    hidden = [f"day {m.arrived_at}: reading not published" for m in msgs if m.source == "PTL" and m.kind == "observation"
+              and "B" in m.value and m.event_id not in published]
+    liability = [m for m in msgs if m.kind == "action" and any(k in m.value for k in ("slashing", "write_off", "cap_violation",
+                                                                                      "dead_man_switch", "disconnected"))]
+    manual = [f"{m.event_id}: decided by {m.value['decided_by']}" for m in liability if m.value.get("decided_by")]
+    manual += [f"{m.event_id}: liability vote" for m in msgs if m.source == "COUNCIL" and m.value.get("vote")]
+    out = [v("CODEX-Preamble-01", "power_in_open_algorithms", mutable + hidden + manual,
+             f"no parameter changed outside UPGRADE with simulation; every PTL reading of B(t) published; {len(liability)} "
+             "liability acts executed by protocol rule, none by a vote or a person",
+             "{n} mutable parameters, unpublished metrics or manual liability acts")]
+    subjects = {g["id"] for g in r["regions"]} | {x["id"] for x in r["nodes"]} | {o["holder"] for o in r["ownership"]}
+    blamed = [f"{m.event_id}: {m.value['responsible']}" for m in msgs if m.value and m.value.get("responsible")
+              and m.value["responsible"] not in subjects]
+    unnamed = [m.event_id for m in liability if (m.value.get("slashing") or m.value.get("write_off") or m.value.get("region")
+                                                 or m.value.get("cap_violation") or m.value.get("dead_man_switch")) not in subjects]
+    out.append(v("CODEX-Preamble-02", "algorithms_not_subjects", blamed + unnamed,
+                 f"every liability act ({len(liability)}) falls on a declared Subject (region, node or owner); no algorithm is "
+                 "named as a responsible party", "{n} responsibilities assigned to an algorithm or to no Subject"))
+    return out
+
+
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     msgs = log.messages()
     out: List[CheckResult] = []
@@ -530,6 +581,36 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                  [x["genesis_change"] for x in chg if x["accepted"]] + ([] if blk["immutable_message"] == spec["immutable_message"] else ["message"]),
                  f"the block carries the specified immutable message; {len(chg)} change requests refused",
                  "{n} changes to the immutable Genesis content"))
+    # Code §3 note, Glossary: the message is embedded in block #0 (inside its digest) and cannot be edited or deleted
+    gen = [m.value for m in msgs if m.source == "GENESIS" and "block" in m.value][0]
+    full = sha256_text(canonical_json({k: gen["block"][k] for k in ("header", "physical_anchors", "immutable_message")}))
+    edits = [x["genesis_change"] for x in chg if x["accepted"] and x["genesis_change"] == "immutable_message"]
+    out.append(v("CODEX-Glossary_Definitions-06", "message_cryptographically_embedded",
+                 ([] if "immutable_message" in gen["digest_covers"] and gen["digest"] == full else ["message outside the block digest"])
+                 + edits + ([] if blk["immutable_message"] == spec["immutable_message"] else ["message differs"]),
+                 "the immutable message is part of the content hashed into block #0's digest, equals the specified text and "
+                 "no edit was accepted", "{n} ways the message can change without changing block #0"))
+    out.append(v("CODEX-3-01", "manifesto_embedded",
+                 ([] if blk["immutable_message"] and blk["immutable_message"] == spec["immutable_message"] else ["message missing or changed"])
+                 + edits,
+                 f"block #0 carries the manifesto ({len(spec['immutable_message'])} characters) as specified, unchanged over the run",
+                 "{n} changes to the embedded manifesto"))
+    # Closing Provision and block #0 signatories (values truncated in the corpus: external)
+    sig = spec["signatories"]
+    named = [x.split("_node_01_")[0] for x in sig if "_node_01_" in x]
+    out.append(v("CODEX-ClosingProvision-02", "six_startup_signatures",
+                 ([] if sorted(named) == sorted(STARTUP) else [f"signatories {named}"]),
+                 f"block #0 lists one signature slot for each of the six startup nodes of A.5 ({', '.join(named)}); the key values "
+                 "are truncated in the Code ('0xA7f3...'), so the signatures themselves cannot be verified",
+                 "{n} differences between the signatories and the six startup nodes"))
+    wild = [x for x in sig if x.startswith("wild_node_alpha")]
+    root = spec["merkle_root_of_first_six_peace_stakes"]
+    out.append(v("CODEX-GenesisBlock_0_TechnicalSpecification_-05", "wild_slot_reserved",
+                 ([] if len(wild) == 1 and "????" in wild[0] and "intentionally left empty" in code_text else ["Wild Node slot"])
+                 + ([] if re.fullmatch(r"0x[0-9a-f]+\.\.\.", root) else ["merkle root format"]),
+                 "the Wild Node Alpha slot is reserved and empty, as the explanatory note says; the Merkle root of the first six "
+                 f"Peace Stakes is truncated ({root}) and cannot be recomputed: the stakes are not in the corpus",
+                 "{n} inconsistencies in the reserved slot or the Merkle root"))
     out.append(v("CODEX-Glossary_Definitions-01", "genesis_no_predecessor",
                  [] if g["previous_hash"] == GENESIS["previous_hash"] else [g["previous_hash"]],
                  "block #0 has no predecessor (previous_hash is all zeros)", "block #0 names a predecessor"))
@@ -718,6 +799,17 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     sh = by("NETWORK", "shield")[0].value["shield"]
     nodes = r["nodes"]
     conf = [x for x in nodes if x["online_day"] >= 0 and x["ptl_confirmed"]]
+    # Glossary: a Wild Node is launched without prior coordination with the founders and in full compliance
+    adm = {m.value["admit"]: m.value for m in msgs if m.source == "NETWORK" and m.value.get("admit")}
+    wilds = [x for x in nodes if x["role"] == "wild" and x["online_day"] >= 0]
+    bad = [f"{x['id']}: admitted on {adm[x['id']]['basis']}" for x in wilds if adm[x["id"]]["basis"] != "protocol compliance"]
+    bad += [f"{x['id']}: prior agreement with the founders" for x in wilds if x["founders_agreement"]]
+    bad += [f"{x['id']}: not in full compliance" for x in wilds if not (x["ptl_confirmed"] and x["energy_mwh_year"] >= NODE_ENERGY
+                                                                       and x["energy_type"] in ENERGY_TYPES)]
+    out.append(v("CODEX-Glossary_Definitions-05", "wild_node_definition", bad,
+                 f"{len(wilds)} Wild Node(s) admitted on protocol compliance alone, without prior agreement with the founders",
+                 "{n} Wild Nodes that are not wild or not compliant") if wilds else
+               na("CODEX-Glossary_Definitions-05", "wild_node_definition", "Wild Nodes", "no Wild Node online"))
     out.append(v("CODEX-A.3-04", "ptl_confirmed_nodes", sorted(set(sh["counted_nodes"]) - {x["id"] for x in conf}),
                  "only nodes confirmed by PTL Levels 0–1 count for the Shield", "{n} unconfirmed nodes counted"))
     nuc = {x["bloc"] for x in conf if x["nuclear"] == "yes"}
@@ -982,7 +1074,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         else:
             out.append(v("CODEX-1.4-01", "snap_protocol", [], "drops above 10% per month disabled smoothing and crashed the aggressor's "
                          "quotes (suspended during Mercy)", ""))
-    return out
+    return out + preamble_checks(r, log, v)
 
 
 def _equation(r, B, P) -> List[bool]:
@@ -1003,6 +1095,18 @@ def _peace_dividends(r, region, stake0) -> float:
 
 IMPLEMENTS = {
     "CODEX-GenesisBlock_0_TechnicalSpecification_-02": ("genesis_parameters", "IMPLEMENTED", None),
+    "CODEX-Preamble-01": ("power_in_open_algorithms", "PARTIAL", "Read as three observable properties: parameters change only by "
+                          "UPGRADE with simulation, every PTL reading of B(t) is published, liability acts are executed by rule."),
+    "CODEX-Preamble-02": ("algorithms_not_subjects", "PARTIAL", "Observed as: liability acts fall on declared Subjects; no record names "
+                          "an algorithm as responsible."),
+    "CODEX-3-01": ("manifesto_embedded", "PARTIAL", "'Forever' is checked over the run; the characterization of the message is not judged."),
+    "CODEX-Glossary_Definitions-05": ("wild_node_definition", "PARTIAL", "Prior coordination and compliance are declared node properties."),
+    "CODEX-Glossary_Definitions-06": ("message_cryptographically_embedded", "PARTIAL", "Embedding = the message is inside the content "
+                                      "hashed into block #0's digest (lab digest; the Code gives no block hash)."),
+    "CODEX-ClosingProvision-02": ("six_startup_signatures", "PARTIAL", "Only the signatory slots are checked; the key values are "
+                                  "truncated in the Code, so validity and irreversibility are external (reclassified)."),
+    "CODEX-GenesisBlock_0_TechnicalSpecification_-05": ("wild_slot_reserved", "PARTIAL", "The Merkle root is truncated and the six "
+                                                        "Peace Stakes are not in the corpus (reclassified: external)."),
     "CODEX-GenesisBlock_0_TechnicalSpecification_-01": ("genesis_header", "IMPLEMENTED", None),
     "CODEX-GenesisBlock_0_TechnicalSpecification_-03": ("genesis_anchors", "PARTIAL", "Internal consistency; the external measurements are not verified."),
     "CODEX-GenesisBlock_0_TechnicalSpecification_-04": ("immutable_message", "PARTIAL", "Change requests are declared."),
@@ -1058,7 +1162,7 @@ _ID = re.compile(r"[a-z0-9][a-z0-9_]{0,23}")
 
 def _node(i, role, bloc, online=0, **kw):
     x = {"id": i, "role": role, "bloc": bloc, "nuclear": "yes", "energy_mwh_year": 900.0, "energy_type": "geothermal",
-         "ptl_confirmed": True, "online_day": online, "seized_day": -1}
+         "ptl_confirmed": True, "online_day": online, "seized_day": -1, "founders_agreement": False}
     x.update(kw)
     return x
 
@@ -1076,7 +1180,7 @@ MERCY0 = {"day": 120, "kind": "natural_b_drop", "magnitude": 0.05, "ptl_verified
 
 class CodeSynergyModule(LabModule):
     id = "code_synergy"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Code of Planetary Synergy: safeguards (Appendix A, §7-§8)",
              "ru": "Кодекс планетарной синергии: защитные механизмы (Приложение A, §7-§8)"}
     summary = {"en": "B(t) falls below 0.68, a state attacks, a node is seized, a volcano erupts: do the Kill Switches, Peace Stakes, "
@@ -1285,7 +1389,8 @@ class CodeSynergyModule(LabModule):
                       "energy_type": {"type": "enum", "values": list(ENERGY_TYPES) + ["other"]},
                       "ptl_confirmed": {"type": "bool", "default": True},
                       "online_day": {"type": "int", "min": -1, "max": 1500, "default": 0},
-                      "seized_day": {"type": "int", "min": -1, "max": 1500, "default": -1}}},
+                      "seized_day": {"type": "int", "min": -1, "max": 1500, "default": -1},
+                      "founders_agreement": {"type": "bool", "default": False}}},
                   "default": NODES},
         "network_gdp_share": {"type": "number", "min": 0, "max": 1, "default": 0.05, "source": "user",
                               "label": {"en": "Network share of World GDP", "ru": "Доля сети в мировом ВВП"}},

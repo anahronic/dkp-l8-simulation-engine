@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1272 (73.2 %) | 949 | 1190 | 874 | 4 | 63 | 15 | 465 | 87 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1279 (73.6 %) | 956 | 1197 | 881 | 4 | 63 | 15 | 458 | 80 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 251 (59.2 %) | 164 | 231 | 147 | 1 | 17 | 2 | 173 | 19 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 209 (71.3 %) | 167 | 193 | 153 | 0 | 9 | 7 | 84 | 19 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 373 (73.0 %) | 294 | 352 | 273 | 0 | 18 | 3 | 138 | 30 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1272 (73.2 %) | 949 | 1190 | 874 | 4 | 63 | 15 | 465 | 87 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1279 (73.6 %) | 956 | 1197 | 881 | 4 | 63 | 15 | 458 | 80 | 1414 |
 
 ### Stage criteria
 
@@ -172,8 +172,8 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | architecture_definition | 37 | 1 | 217 | 0 | 255 |
 | l8_parameter | 0 | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 0 | 227 | 0 | 227 |
-| external_dependency | 0 | 0 | 201 | 0 | 201 |
-| implementation_only | 0 | 58 | 297 | 0 | 355 |
+| external_dependency | 0 | 2 | 201 | 0 | 203 |
+| implementation_only | 0 | 63 | 290 | 0 | 353 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -252,7 +252,7 @@ Withdrawn after verification (not author decisions):
 
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CODE-OF-PLANETARY-SYNERGY | 101 | 75 | 64 | 0 | 10 | 1 | 26 | 92 |
+| CODE-OF-PLANETARY-SYNERGY | 101 | 82 | 71 | 0 | 10 | 1 | 19 | 92 |
 | DKP-0-ORACLE-001 | 58 | 55 | 50 | 2 | 2 | 1 | 3 | 49 |
 | DKP-0-TIME-001 | 35 | 30 | 29 | 1 | 0 | 0 | 5 | 6 |
 | DKP-1-AXIOMS-001 | 44 | 35 | 29 | 0 | 4 | 2 | 9 | 26 |
@@ -317,6 +317,7 @@ Withdrawn after verification (not author decisions):
 | CODEX-18.1-02 | PARTIAL | code_economy · passivity_rating | PASS | — | Q-052 |
 | CODEX-2.1-01 | PARTIAL | code_economy · targeted_smart_contracts | PASS | — | — |
 | CODEX-2.2-01 | PARTIAL | code_economy · tranche_on_verified_kpi | PASS | yes | — |
+| CODEX-3-01 | PARTIAL | code_synergy · manifesto_embedded | PASS | — | — |
 | CODEX-3.1-01 | PARTIAL | code_economy · export_requires_participation | PASS | — | — |
 | CODEX-3.2-01 | PARTIAL | code_economy · equity_tokens | PASS | — | — |
 | CODEX-4.1-01 | IMPLEMENTED | code_economy · public_domain_after_5_years | PASS | — | — |
@@ -365,11 +366,17 @@ Withdrawn after verification (not author decisions):
 | CODEX-A.5-03 | PARTIAL | code_synergy · connection_by_referendum | PASS | — | Q-050 |
 | CODEX-A.6-01 | PARTIAL | code_synergy · ownership_caps | PASS | — | — |
 | CODEX-A.6-02 | IMPLEMENTED | code_synergy · cap_violation_sanction | NOT_APPLICABLE | — | — |
+| CODEX-ClosingProvision-02 | PARTIAL | code_synergy · six_startup_signatures | PASS | — | — |
 | CODEX-GenesisBlock_0_TechnicalSpecification_-01 | IMPLEMENTED | code_synergy · genesis_header | PASS | — | — |
 | CODEX-GenesisBlock_0_TechnicalSpecification_-02 | IMPLEMENTED | code_synergy · genesis_parameters | PASS | — | — |
 | CODEX-GenesisBlock_0_TechnicalSpecification_-03 | PARTIAL | code_synergy · genesis_anchors | PASS | — | — |
 | CODEX-GenesisBlock_0_TechnicalSpecification_-04 | PARTIAL | code_synergy · immutable_message | PASS | — | — |
+| CODEX-GenesisBlock_0_TechnicalSpecification_-05 | PARTIAL | code_synergy · wild_slot_reserved | PASS | — | — |
 | CODEX-Glossary_Definitions-01 | PARTIAL | code_synergy · genesis_no_predecessor | PASS | — | — |
+| CODEX-Glossary_Definitions-05 | PARTIAL | code_synergy · wild_node_definition | PASS | — | — |
+| CODEX-Glossary_Definitions-06 | PARTIAL | code_synergy · message_cryptographically_embedded | PASS | — | — |
+| CODEX-Preamble-01 | PARTIAL | code_synergy · power_in_open_algorithms | PASS | — | — |
+| CODEX-Preamble-02 | PARTIAL | code_synergy · algorithms_not_subjects | PASS | — | — |
 | ORACLE-1-01 | PARTIAL | oracle_ingestion · sole_interface | PASS | yes | — |
 | ORACLE-1-02 | PARTIAL | transport_capacity · ptl_physical_state_only | FAIL | yes | — |
 | ORACLE-10-01 | PARTIAL | oracle_ingestion · likelihood_updates | PASS | yes | — |

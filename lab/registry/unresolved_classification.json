@@ -1407,7 +1407,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Embedded in the Genesis Block forever” states a clear preservation invariant whose implementation and formal verification are engineering work."
+   "rationale": "“Embedded in the Genesis Block forever” states a clear preservation invariant whose implementation and formal verification are engineering work.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The explanatory note restates that the message is embedded in block #0 and unchangeable; checkable as presence and immutability of the specified message over the run. 'Forever' is beyond any run, and the characterization of the message is not judged (partial)."
   },
   "CODEX-3.1-01": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
@@ -1761,17 +1763,21 @@
   },
   "CODEX-ClosingProvision-02": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
-   "primary": "implementation_only",
+   "primary": "external_dependency",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Digital signatures of the six startup nodes” requires complete signing artifacts rather than the abbreviated Genesis entries, and the annotation expressly explains the additional Wild Node slot."
+   "rationale": "“Digital signatures of the six startup nodes” requires complete signing artifacts rather than the abbreviated Genesis entries, and the annotation expressly explains the additional Wild Node slot.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The signatures are external artifacts: block #0 lists the six signatory slots, but every key is truncated ('0xA7f3...'), so neither validity nor irreversibility can be verified from the corpus. Only the slots are checked (one per startup node of A.5)."
   },
   "CODEX-GenesisBlock_0_TechnicalSpecification_-05": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
-   "primary": "implementation_only",
+   "primary": "external_dependency",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Reserved for the first decentralized sovereign node” explains “0x????...,” while the named signatory and Merkle-root fields already suffice for the stated inclusion check."
+   "rationale": "“Reserved for the first decentralized sovereign node” explains “0x????...,” while the named signatory and Merkle-root fields already suffice for the stated inclusion check.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The Wild Node slot is checkable (reserved, empty, as the note says), but the Merkle root of the first six Peace Stakes is truncated ('0x7e9f4a1b...') and the stakes are not in the corpus: it cannot be recomputed. Only the slot and the format are checked."
   },
   "CODEX-Glossary_Definitions-01": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
@@ -1806,28 +1812,36 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Without prior coordination with the founders” and “in full compliance with the protocol” require launch-history and compliance evidence, while A.5 separately states the startup deadline."
+   "rationale": "“Without prior coordination with the founders” and “in full compliance with the protocol” require launch-history and compliance evidence, while A.5 separately states the startup deadline.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The definition fixes three properties of a Wild Node: independent party, no prior coordination with the founders, full protocol compliance. With coordination and compliance as declared node properties, admission on compliance alone is observable."
   },
   "CODEX-Glossary_Definitions-06": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Impossible to delete or edit as long as the network exists” supplies a clear invariant requiring a cryptographic implementation and preservation proof, not an author-selected alternative meaning."
+   "rationale": "“Impossible to delete or edit as long as the network exists” supplies a clear invariant requiring a cryptographic implementation and preservation proof, not an author-selected alternative meaning.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Cryptographically embedded ... impossible to delete or edit': the message is part of the content hashed into block #0, so any edit changes the digest; edit and delete requests are refused. The Code gives no block hash, so the digest is the lab's (partial)."
   },
   "CODEX-Preamble-01": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Open and immutable algorithms” is operationalized by the source-publication requirement in 15.1 and the controlled parameter-modification rules in A.1a, so the draft does not establish an unresolved contradiction."
+   "rationale": "“Open and immutable algorithms” is operationalized by the source-publication requirement in 15.1 and the controlled parameter-modification rules in A.1a, so the draft does not establish an unresolved contradiction.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The three forms in which power is held are concretized elsewhere in the Code: algorithms are immutable except by UPGRADE with simulation (A.1a), metrics are public (PTL readings of B(t)), liability is automated (A.3, A.6, §7.3, §8). Each is an observable property of execution; the fourth item (incentives) is a separate provision."
   },
   "CODEX-Preamble-02": {
    "document": "CODE-OF-PLANETARY-SYNERGY",
    "primary": "implementation_only",
    "secondary": "external_dependency",
    "author_question_candidate": false,
-   "rationale": "“Do not constitute Subjects and do not bear causal or legal responsibility” supplies a clear exclusion to implement, while the document assigns Subject definitions to DKP-1-IDENTITY-001."
+   "rationale": "“Do not constitute Subjects and do not bear causal or legal responsibility” supplies a clear exclusion to implement, while the document assigns Subject definitions to DKP-1-IDENTITY-001.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "Algorithms 'do not constitute Subjects and do not bear causal or legal responsibility'; the next sentence assigns responsibility to originating Subjects (IDENTITY). Observable: every liability act falls on a declared Subject and no record names an algorithm as responsible."
   },
   "CODEX-Preamble-03": {
    "document": "CODE-OF-PLANETARY-SYNERGY",

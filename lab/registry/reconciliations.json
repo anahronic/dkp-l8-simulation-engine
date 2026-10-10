@@ -2,10 +2,103 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 58,
-  "reclassified": 3
+  "confirmed": 63,
+  "reclassified": 5
  },
  "items": [
+  {
+   "id": "CODEX-3-01",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "- The text of the manifesto is embedded in the Genesis Block forever, declaring the refusal to attempt to \"fix\" the old system in favor of building a new parallel reality based on physical laws (TIU).",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The explanatory note restates that the message is embedded in block #0 and unchangeable; checkable as presence and immutability of the specified message over the run. 'Forever' is beyond any run, and the characterization of the message is not judged (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "code_synergy:manifesto_embedded"
+  },
+  {
+   "id": "CODEX-ClosingProvision-02",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "Signed with irreversible digital signatures of the six startup nodes",
+   "draft_origin": "implementation_only",
+   "verdict": "reclassified",
+   "reason": "The signatures are external artifacts: block #0 lists the six signatory slots, but every key is truncated ('0xA7f3...'), so neither validity nor irreversibility can be verified from the corpus. Only the slots are checked (one per startup node of A.5).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "origin_after": "external_dependency",
+   "check": "code_synergy:six_startup_signatures"
+  },
+  {
+   "id": "CODEX-GenesisBlock_0_TechnicalSpecification_-05",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "    \"wild_node_alpha_ed25519:0x????...\"          // Reserved for the first decentralized sovereign node\n  ],\n  \"merkle_root_of_first_six_peace_stakes\": \"0x7e9f4a1b...\"",
+   "draft_origin": "implementation_only",
+   "verdict": "reclassified",
+   "reason": "The Wild Node slot is checkable (reserved, empty, as the note says), but the Merkle root of the first six Peace Stakes is truncated ('0x7e9f4a1b...') and the stakes are not in the corpus: it cannot be recomputed. Only the slot and the format are checked.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "origin_after": "external_dependency",
+   "check": "code_synergy:wild_slot_reserved"
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-05",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "- Wild Node: A network node launched by an independent party (city, corporation, or community) without prior coordination with the founders, but in full compliance with the protocol.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes three properties of a Wild Node: independent party, no prior coordination with the founders, full protocol compliance. With coordination and compliance as declared node properties, admission on compliance alone is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "code_synergy:wild_node_definition"
+  },
+  {
+   "id": "CODEX-Glossary_Definitions-06",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "- Immutable Message: A text message cryptographically embedded in the Genesis Block code. It is the philosophical manifesto and \"constitution\" of the system, which is technically impossible to delete or edit as long as the network exists.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Cryptographically embedded ... impossible to delete or edit': the message is part of the content hashed into block #0, so any edit changes the digest; edit and delete requests are refused. The Code gives no block hash, so the digest is the lab's (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "code_synergy:message_cryptographically_embedded"
+  },
+  {
+   "id": "CODEX-Preamble-01",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "- Open and immutable algorithms,\n- Public metrics and transparent data,\n- Automated liability procedures,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The three forms in which power is held are concretized elsewhere in the Code: algorithms are immutable except by UPGRADE with simulation (A.1a), metrics are public (PTL readings of B(t)), liability is automated (A.3, A.6, §7.3, §8). Each is an observable property of execution; the fourth item (incentives) is a separate provision.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "code_synergy:power_in_open_algorithms"
+  },
+  {
+   "id": "CODEX-Preamble-02",
+   "document": "CODE-OF-PLANETARY-SYNERGY",
+   "quote": "Algorithms define binding decision rules and execution constraints, but do not constitute Subjects and do not bear causal or legal responsibility.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Algorithms 'do not constitute Subjects and do not bear causal or legal responsibility'; the next sentence assigns responsibility to originating Subjects (IDENTITY). Observable: every liability act falls on a declared Subject and no record names an algorithm as responsible.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "code_synergy:algorithms_not_subjects"
+  },
   {
    "id": "CRISIS-0-03",
    "document": "DKP-4-CRISIS-001",

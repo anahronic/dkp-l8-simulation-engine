@@ -1445,21 +1445,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1272,
-  "covered_percent": 73.2,
+  "covered": 1279,
+  "covered_percent": 73.6,
   "statuses": {
-   "PASS": 1190,
+   "PASS": 1197,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 465
+   "UNCOVERED": 458
   },
-  "resolvable": 674,
-  "resolvable_uncovered": 87,
-  "resolvable_uncovered_implementation_only": 87,
+  "resolvable": 672,
+  "resolvable_uncovered": 80,
+  "resolvable_uncovered_implementation_only": 80,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 949,
-  "pass_with_open_point": 874
+  "covered_with_open_point": 956,
+  "pass_with_open_point": 881
  },
  "stages": [
   {
@@ -1509,21 +1509,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1272,
-    "covered_percent": 73.2,
+    "covered": 1279,
+    "covered_percent": 73.6,
     "statuses": {
-     "PASS": 1190,
+     "PASS": 1197,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 465
+     "UNCOVERED": 458
     },
-    "resolvable": 674,
-    "resolvable_uncovered": 87,
-    "resolvable_uncovered_implementation_only": 87,
+    "resolvable": 672,
+    "resolvable_uncovered": 80,
+    "resolvable_uncovered_implementation_only": 80,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 949,
-    "pass_with_open_point": 874
+    "covered_with_open_point": 956,
+    "pass_with_open_point": 881
    }
   },
   {
@@ -2818,18 +2818,18 @@
    {
     "origin": "external_dependency",
     "agent_verified": 0,
-    "lab_reconciled": 0,
+    "lab_reconciled": 2,
     "codex_draft": 201,
     "human_accepted": 0,
-    "total": 201
+    "total": 203
    },
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 58,
-    "codex_draft": 297,
+    "lab_reconciled": 63,
+    "codex_draft": 290,
     "human_accepted": 0,
-    "total": 355
+    "total": 353
    },
    {
     "origin": "pending",
@@ -2908,8 +2908,8 @@
     "architecture_definition": 24,
     "l8_parameter": 11,
     "empirical_model_data": 10,
-    "external_dependency": 8,
-    "implementation_only": 18,
+    "external_dependency": 10,
+    "implementation_only": 16,
     "pending": 0
    },
    "DKP-0-ORACLE-001": {
@@ -4300,30 +4300,47 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A complete transition model establishing permanent immutability is absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "manifesto_embedded",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "'Forever' is checked over the run; the characterization of the message is not judged.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -6940,30 +6957,47 @@
    "section": "Closing Provision",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Complete cryptographic artifacts and the meaning of signature irreversibility are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "six_startup_signatures",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "Only the signatory slots are checked; the key values are truncated in the Code, so validity and irreversibility are external (reclassified).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "external_dependency",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -7156,30 +7190,47 @@
    "section": "Genesis Block #0 (Technical Specification)",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The provided signatures and Merkle root are abbreviated placeholders, with no complete verification specification. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "wild_slot_reserved",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "The Merkle root is truncated and the six Peace Stakes are not in the corpus (reclassified: external).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "external_dependency",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -7333,30 +7384,47 @@
    "section": "Glossary & Definitions",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Independence, prior coordination, and full protocol compliance are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "wild_node_definition",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "Prior coordination and compliance are declared node properties.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -7365,30 +7433,47 @@
    "section": "Glossary & Definitions",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Cryptographic construction and the complete model needed to establish impossibility are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "message_cryptographically_embedded",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "Embedding = the message is inside the content hashed into block #0's digest (lab digest; the Code gives no block hash).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -7397,30 +7482,47 @@
    "section": "Preamble",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of openness, transparency, and immutability are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "power_in_open_algorithms",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "Read as three observable properties: parameters change only by UPGRADE with simulation, every PTL reading of B(t) is published, liability acts are executed by rule.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -7429,30 +7531,47 @@
    "section": "Preamble",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not provide operational entity classifications or a test of binding force. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "code_synergy",
+   "check": "algorithms_not_subjects",
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
+   "gap": "Observed as: liability acts fall on declared Subjects; no record names an algorithm as responsible.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CS-1",
+    "H-CS-10",
+    "H-CS-11",
+    "H-CS-12",
+    "H-CS-2",
+    "H-CS-3",
+    "H-CS-4",
+    "H-CS-5",
+    "H-CS-6",
+    "H-CS-7",
+    "H-CS-8",
+    "H-CS-9"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 23,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

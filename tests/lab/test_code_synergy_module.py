@@ -37,9 +37,15 @@ def test_noncompliant_cases_fail_only_the_broken_provision():
 
 FAULT_CASES = {
     "ignore_b_min": ({}, ["CODEX-A.1-04"]),
+    "unpublished_metrics": (EX["anthropogenic_drop"], ["CODEX-Preamble-01"]),
+    "manual_liability": (EX["anthropogenic_drop"], ["CODEX-Preamble-01"]),
+    "algorithm_liable": ({}, ["CODEX-Preamble-02"]),
+    "message_outside_digest": ({}, ["CODEX-Glossary_Definitions-06"]),
+    "wild_node_by_approval": ({}, ["CODEX-Glossary_Definitions-05"]),
     "altered_genesis_header": ({}, ["CODEX-GenesisBlock_0_TechnicalSpecification_-01"]),
     "edit_genesis_message": ({"genesis_change_requests": ["immutable_message", "physical_anchors"]},
-                             ["CODEX-GenesisBlock_0_TechnicalSpecification_-03", "CODEX-GenesisBlock_0_TechnicalSpecification_-04"]),
+                             ["CODEX-GenesisBlock_0_TechnicalSpecification_-03", "CODEX-GenesisBlock_0_TechnicalSpecification_-04",
+                              "CODEX-3-01", "CODEX-Glossary_Definitions-06"]),
     "kill_switch_during_mercy": ({}, ["CODEX-A.4-01", "CODEX-A.1-04"]),
     "accept_on_chain_tuning": (EX["tuning_attempts"], ["CODEX-A.1a-01", "CODEX-A.1-03"]),
     "accept_protocol_tuning": (EX["tuning_attempts"], ["CODEX-A.1a-03"]),
@@ -166,3 +172,12 @@ def test_sortition_is_reproducible():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_signatories_and_wild_node():
+    """Code Closing Provision and block #0: six startup signature slots and a reserved Wild Node slot (values truncated:
+    reclassified external); a node declared wild with a prior agreement with the founders is not a Wild Node (Glossary)."""
+    st = statuses(run())
+    assert st["CODEX-ClosingProvision-02"] == "PASS" and st["CODEX-GenesisBlock_0_TechnicalSpecification_-05"] == "PASS"
+    nodes = [dict(x, founders_agreement=True) if x["role"] == "wild" else x for x in M.validate({})["nodes"]]
+    assert statuses(run(nodes=nodes))["CODEX-Glossary_Definitions-05"] == "FAIL"

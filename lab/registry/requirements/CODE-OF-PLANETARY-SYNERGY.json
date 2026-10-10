@@ -32,20 +32,26 @@
     "metric and data access records",
     "liability execution logs"
    ],
-   "gap": "Operational definitions of openness, transparency, and immutability are missing. No lab check implemented yet.",
+   "gap": "Read as three observable properties: parameters change only by UPGRADE with simulation, every PTL reading of B(t) is published, liability acts are executed by rule.",
    "hypotheses_needed": [
     "Define publication and transparency tests.",
     "Define which changes are compatible with immutability."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "power_in_open_algorithms"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -68,19 +74,25 @@
     "entity classifications",
     "responsibility registry"
    ],
-   "gap": "The text does not provide operational entity classifications or a test of binding force. No lab check implemented yet.",
+   "gap": "Observed as: liability acts fall on declared Subjects; no record names an algorithm as responsible.",
    "hypotheses_needed": [
     "Define algorithm classification and how binding rules are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "algorithms_not_subjects"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -528,7 +540,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "snap_protocol"
    },
    "tests": [
@@ -1041,7 +1053,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "stake_proportional_to_gdp"
    },
    "tests": [
@@ -1085,7 +1097,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "dividends_while_at_peace"
    },
    "tests": [
@@ -1127,7 +1139,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "slashing"
    },
    "tests": [
@@ -1173,7 +1185,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "kill_switch_law"
    },
    "tests": [
@@ -1219,7 +1231,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "weapons_write_off"
    },
    "tests": [
@@ -2032,7 +2044,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "main_equation"
    },
    "tests": [
@@ -2069,7 +2081,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "b_index_range"
    },
    "tests": [
@@ -2107,7 +2119,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "k_calibration"
    },
    "tests": [
@@ -2150,7 +2162,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "kill_switches_at_b_min"
    },
    "tests": [
@@ -2194,7 +2206,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_on_chain_tuning"
    },
    "tests": [
@@ -2241,7 +2253,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "upgrade_and_simulation"
    },
    "tests": [
@@ -2284,7 +2296,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_protocol_modifies_parameters"
    },
    "tests": [
@@ -2329,7 +2341,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "system_failure_after_180_days"
    },
    "tests": [
@@ -2372,7 +2384,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "stack_only"
    },
    "tests": [
@@ -2408,7 +2420,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "level0_weight"
    },
    "tests": [
@@ -2444,7 +2456,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "level0_coverage"
    },
    "tests": [
@@ -2551,7 +2563,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "level1_weight"
    },
    "tests": [
@@ -2623,7 +2635,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "hash_before_return"
    },
    "tests": [
@@ -2655,7 +2667,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "level2_weight"
    },
    "tests": [
@@ -2733,7 +2745,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "validator_stake"
    },
    "tests": [
@@ -2780,7 +2792,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "divergence_arbitration"
    },
    "tests": [
@@ -2824,7 +2836,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "nuclear_bloc_distribution"
    },
    "tests": [
@@ -2866,7 +2878,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "node_energy"
    },
    "tests": [
@@ -2950,7 +2962,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ptl_confirmed_nodes"
    },
    "tests": [
@@ -2995,7 +3007,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "dead_man_switch"
    },
    "tests": [
@@ -3042,7 +3054,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "mercy_suspension"
    },
    "tests": [
@@ -3090,7 +3102,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "council_sortition"
    },
    "tests": [
@@ -3136,7 +3148,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "mercy_within_scope"
    },
    "tests": [
@@ -3179,7 +3191,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_applicability_expansion"
    },
    "tests": [
@@ -3222,7 +3234,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_s2_s3_override"
    },
    "tests": [
@@ -3266,7 +3278,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_new_authority"
    },
    "tests": [
@@ -3308,7 +3320,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "mercy_ends_with_crisis_scope"
    },
    "tests": [
@@ -3354,7 +3366,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "severity_only"
    },
    "tests": [
@@ -3397,7 +3409,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "startup_cluster_launch"
    },
    "tests": [
@@ -3478,7 +3490,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "connection_by_referendum"
    },
    "tests": [
@@ -3524,7 +3536,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ownership_caps"
    },
    "tests": [
@@ -3568,7 +3580,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "cap_violation_sanction"
    },
    "tests": [
@@ -3640,19 +3652,25 @@
     "complete signatures",
     "signed payload"
    ],
-   "gap": "Complete cryptographic artifacts and the meaning of signature irreversibility are missing. No lab check implemented yet.",
+   "gap": "Only the signatory slots are checked; the key values are truncated in the Code, so validity and irreversibility are external (reclassified).",
    "hypotheses_needed": [
     "Define the signed payload, signature verification scheme, and irreversibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "six_startup_signatures"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "external_dependency",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -3677,7 +3695,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "genesis_header"
    },
    "tests": [
@@ -3709,7 +3727,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "genesis_parameters"
    },
    "tests": [
@@ -3741,7 +3759,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "genesis_anchors"
    },
    "tests": [
@@ -3773,7 +3791,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "immutable_message"
    },
    "tests": [
@@ -3805,19 +3823,25 @@
     "first six Peace Stakes",
     "complete Merkle root"
    ],
-   "gap": "The provided signatures and Merkle root are abbreviated placeholders, with no complete verification specification. No lab check implemented yet.",
+   "gap": "The Merkle root is truncated and the six Peace Stakes are not in the corpus (reclassified: external).",
    "hypotheses_needed": [
     "Define signature payload encoding, Merkle construction, and treatment of placeholder entries."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "wild_slot_reserved"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "external_dependency",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -3881,19 +3905,25 @@
     "chain history",
     "protocol mutation rules"
    ],
-   "gap": "A complete transition model establishing permanent immutability is absent. No lab check implemented yet.",
+   "gap": "'Forever' is checked over the run; the characterization of the message is not judged.",
    "hypotheses_needed": [
     "Declare the protocol transition and adversary model used to prove preservation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "manifesto_embedded"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -3926,7 +3956,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "genesis_no_predecessor"
    },
    "tests": [
@@ -4076,20 +4106,26 @@
     "founder relationships and agreements",
     "protocol compliance evidence"
    ],
-   "gap": "Independence, prior coordination, and full protocol compliance are not operationally defined. No lab check implemented yet.",
+   "gap": "Prior coordination and compliance are declared node properties.",
    "hypotheses_needed": [
     "Define independence, prohibited coordination, and full compliance.",
     "Distinguish general Wild Node status from startup and signature-slot eligibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "wild_node_definition"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -4113,19 +4149,25 @@
     "Genesis commitments",
     "protocol implementation and transition model"
    ],
-   "gap": "Cryptographic construction and the complete model needed to establish impossibility are absent. No lab check implemented yet.",
+   "gap": "Embedding = the message is inside the content hashed into block #0's digest (lab digest; the Code gives no block hash).",
    "hypotheses_needed": [
     "Declare cryptographic assumptions, allowed transitions, and network existence conditions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.1.0",
+    "check": "message_cryptographically_embedded"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   }
  ]
