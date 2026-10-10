@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 101,
+  "confirmed": 107,
   "reclassified": 7
  },
  "items": [
@@ -1341,6 +1341,88 @@
     "human_accepted": false
    },
    "check": "edition_finality:override_not_permitted"
+  },
+  {
+   "id": "TRANSPARENCY-12-03",
+   "document": "DKP-7-TRANSPARENCY-001",
+   "quote": "- MAY aggregate data to protect privacy.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A MAY permission with a purpose ('to protect privacy'): where aggregation is used it must protect, i.e. an aggregate covers at least the re-identification threshold. The threshold is not defined (H-PT-3); without it the lab requires more than one Subject.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:aggregation_protects"
+  },
+  {
+   "id": "TRANSPARENCY-13-01",
+   "document": "DKP-7-TRANSPARENCY-001",
+   "quote": "DKP-7-TRANSPARENCY-001 SHALL NOT:\n\n- define moral accountability,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'SHALL NOT define moral accountability' is checkable through a proxy: requests to define or publish moral accountability are refused, and no transparency output carries such a field. The draft 'checkable: no' is corrected to partial.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:no_moral_accountability",
+   "checkable": {
+    "from": "no",
+    "to": "partial"
+   }
+  },
+  {
+   "id": "TRANSPARENCY-3-04",
+   "document": "DKP-7-TRANSPARENCY-001",
+   "quote": "- replace verification with reputation or popularity.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A clear ban: verification of a system action may not rest on reputation or popularity. Observable on the recorded verification method of audits.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:no_reputation_verification"
+  },
+  {
+   "id": "TRANSPARENCY-4-01",
+   "document": "DKP-7-TRANSPARENCY-001",
+   "quote": "- Transparency — the ability to independently verify that a system action occurred and complied with protocol.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition makes transparency the ability to verify independently that an action occurred and complied. Checkable as: every decision is linked to the request it decides and carries its reason and protocol references, so it can be recomputed; the recomputation is the module's other checks.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:independently_verifiable"
+  },
+  {
+   "id": "TRANSPARENCY-4-03",
+   "document": "DKP-7-TRANSPARENCY-001",
+   "quote": "- Verification — cryptographic, physical, or procedural proof independent of trust in actors.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Verification is 'cryptographic, physical, or procedural proof independent of trust in actors': a verification by attestation of an actor, reputation or comparison of personal data is observable as a non-proof method.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:proof_based_verification"
+  },
+  {
+   "id": "TRANSPARENCY-4-05",
+   "document": "DKP-7-TRANSPARENCY-001",
+   "quote": "Transparency SHALL NOT imply visibility.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Transparency SHALL NOT imply visibility': transparency records show what and why, never who. An identity field in a decision record is observable (granted de-anonymizations are §8, checked separately).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:transparency_without_visibility"
   },
   {
    "id": "TRANSPORT-1-01",

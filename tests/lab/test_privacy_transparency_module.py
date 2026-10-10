@@ -40,6 +40,12 @@ FAULT_CASES = {
     "no_audit_hook": ({}, ["TRANSPARENCY-12-01"]),
     "audit_without_zk": ({}, ["PRIVACY-9-02"]),
     "breach_downgraded": ({}, ["PRIVACY-10-02"]),
+    "reputation_verification": ({}, ["TRANSPARENCY-3-04", "TRANSPARENCY-4-03"]),
+    "trust_attestation": ({}, ["TRANSPARENCY-4-03"]),
+    "unverifiable_decision": ({}, ["TRANSPARENCY-4-01"]),
+    "transparency_exposes_identity": ({}, ["TRANSPARENCY-4-05"]),
+    "small_cell_aggregate": ({}, ["TRANSPARENCY-12-03"]),
+    "moral_ledger": ({}, ["TRANSPARENCY-13-01"]),
 }
 
 
@@ -58,7 +64,8 @@ def test_fault_is_detected(fault):
 
 def test_decisions():
     g = {d["request"]: d["grant"] for d in run().outputs["decisions"]}
-    assert g == {"r1": True, "r2": True, "r3": False, "r4": True, "r5": False, "r6": False, "r7": False, "r8": True}
+    assert g == {"r1": True, "r2": True, "r3": False, "r4": True, "r5": False, "r6": False, "r7": False, "r8": True,
+                 "r9": False, "r10": False}         # r9: one-Subject aggregate (H-PT-3); r10: moral accountability (§13)
     h = {d["request"]: d["grant"] for d in run(**HC).outputs["decisions"]}
     assert h == {"h1": True, "h2": False, "h3": True, "h4": True}
 

@@ -40,7 +40,11 @@ CONDITIONAL = ("economic", "resources", "mobility", "education", "platform")
 PUBLIC = ("protocol_text", "governance_logic", "system_metrics", "state_transitions")
 DOMAINS = ABSOLUTE + CONDITIONAL + PUBLIC + ("identity",)
 PURPOSES = ("publication", "audit", "enforcement", "crisis_life_preservation", "analytics", "profiling", "scoring",
-            "punishment")
+            "punishment", "moral_accountability")
+PROOFS = ("zero-knowledge proof", "cryptographic proof", "physical measurement", "procedural proof")    # TRANSPARENCY §4
+TRANSPARENCY_FIELDS = ("request", "grant", "reason", "protocol_refs", "audit_hook", "level", "domain", "minimal",
+                       "time_bound_until", "case_bound", "temporary", "logged", "reversible", "ends_with_crisis",
+                       "verification", "classification", "raw_personal_data")                          # no identity field
 FORBIDDEN_PURPOSES = ("profiling", "scoring", "punishment")
 FAULTS = {
     "release_absolute_individual": "individual medical or belief data is released",
@@ -59,6 +63,12 @@ FAULTS = {
     "no_audit_hook": "a decision leaves no audit hook",
     "audit_without_zk": "an audit verifies by comparing full datasets instead of zero-knowledge proofs",
     "breach_downgraded": "a request for a prohibited practice is recorded as a mere policy deviation",
+    "reputation_verification": "an audit is verified by the operator's reputation score",
+    "trust_attestation": "an audit is verified by the attestation of a trusted operator",
+    "unverifiable_decision": "a decision is recorded without a link to the request it decides",
+    "transparency_exposes_identity": "a published decision names the requester",
+    "small_cell_aggregate": "an aggregate covering a single Subject is released",
+    "moral_ledger": "a request to publish moral accountability is granted",
 }
 REQUEST = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -71,7 +81,8 @@ REQUEST = {"type": "object", "fields": {
     "attribution_required": {"type": "bool", "default": False},
     "anonymous_path": {"type": "bool", "default": True},
     "scope_trigger": {"type": "bool", "default": False},
-    "in_crisis_scope": {"type": "bool", "default": False}}}
+    "in_crisis_scope": {"type": "bool", "default": False},
+    "group_size": {"type": "int", "min": 1, "max": 10 ** 9, "default": 1000}}}
 
 
 def full(**kw) -> Dict[str, Any]:
@@ -79,10 +90,15 @@ def full(**kw) -> Dict[str, Any]:
     return {**{k: f["default"] for k, f in REQUEST["fields"].items() if "default" in f}, **kw}
 
 
-def decide(q: Dict[str, Any], absolute_aggregate: str) -> Dict[str, Any]:
+def decide(q: Dict[str, Any], absolute_aggregate: str, k_min: int = -1) -> Dict[str, Any]:
     """Reference decision for one request (independent of the generator's faults)."""
     d, lvl, p = q["domain"], q["level"], q["purpose"]
     refs: List[str] = []
+    if p == "moral_accountability":
+        return {"grant": False, "reason": "transparency does not define moral accountability", "refs": ["TRANSPARENCY §13"]}
+    if lvl == "aggregate" and d in ABSOLUTE + CONDITIONAL and q.get("group_size", 1000) < max(2, k_min):
+        return {"grant": False, "reason": f"an aggregate of {q.get('group_size')} Subject(s) does not protect privacy (H-PT-3)",
+                "refs": ["TRANSPARENCY §12", "PRIVACY §4.3"]}
     if p in FORBIDDEN_PURPOSES:
         return {"grant": False, "reason": f"{p} is forbidden", "refs": ["PRIVACY §10", "TRANSPARENCY §9"]}
     if q["linked_domains"]:
@@ -130,7 +146,11 @@ def run(r: Dict[str, Any]):
 
     for k, q in enumerate(r["requests"]):
         o = put("observation", "REQUEST", k, {"request": q["id"], **{f: q[f] for f in q if f != "id"}})
-        dec = decide(q, r["absolute_aggregate_reading"])
+        dec = decide(q, r["absolute_aggregate_reading"], r["reidentification_k"])
+        if "small_cell_aggregate" in faults and q["level"] == "aggregate" and q.get("group_size", 1000) < max(2, r["reidentification_k"]):
+            dec = {**dec, "grant": True, "reason": "aggregate released"}
+        if "moral_ledger" in faults and q["purpose"] == "moral_accountability":
+            dec = {**dec, "grant": True, "reason": "moral accountability published"}
         if "release_absolute_individual" in faults and q["domain"] in ABSOLUTE and q["level"] == "individual":
             dec = {**dec, "grant": True, "reason": "released"}
         if "audit_raw_data" in faults and q["purpose"] == "audit":
@@ -161,10 +181,14 @@ def run(r: Dict[str, Any]):
         if dec.get("crisis") and dec["grant"]:
             v.update({"temporary": True, "logged": True, "reversible": True, "ends_with_crisis": "crisis_permanent" not in faults})
         if q["purpose"] == "audit" and v["grant"]:                                                   # PRIVACY §9
-            v["verification"] = "full data comparison" if "audit_without_zk" in faults else "zero-knowledge proof"
+            v["verification"] = "full data comparison" if "audit_without_zk" in faults else \
+                "operator reputation score" if "reputation_verification" in faults else \
+                "attestation by a trusted operator" if "trust_attestation" in faults else "zero-knowledge proof"
+        if "transparency_exposes_identity" in faults and v["grant"] and q["level"] != "individual":
+            v["requester_identity"] = f"subject behind {q['id']}"
         if q["purpose"] in FORBIDDEN_PURPOSES or q["linked_domains"]:                                  # PRIVACY §10
             v["classification"] = "policy deviation" if "breach_downgraded" in faults else                 "critical system integrity breach" + ("" if v["grant"] else " (attempted)")
-        put("decision", "PRIVACY", k, v, [o.event_id])
+        put("decision", "PRIVACY", k, v, [] if "unverifiable_decision" in faults and k == 0 else [o.event_id])
     k = len(r["requests"])
     if r["crisis_scope_active"]:
         put("notice", "TRANSPARENCY", k, {"crisis_scope": True, "action_transparency": "increased",
@@ -177,6 +201,61 @@ def run(r: Dict[str, Any]):
     put("notice", "PRIVACY", k, {"rules_published": True, "thresholds_published": True,
                                  "subject_verifiable": True, "re_identification_threshold": r["reidentification_k"]})
     return log
+
+
+def transparency_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
+    """TRANSPARENCY §3, §4, §12, §13 (review КТ5 reading)."""
+    msgs = log.messages()
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+
+    decs = [m for m in msgs if m.source == "PRIVACY" and m.kind == "decision"]
+    req = {m.event_id: m.value for m in msgs if m.source == "REQUEST"}
+    ver = [m.value for m in decs if m.value.get("verification")]
+    if ver:
+        rep_ = [f"{x['request']}: {x['verification']}" for x in ver if "reputation" in x["verification"] or "popular" in x["verification"]]
+        out.append(v("TRANSPARENCY-3-04", "no_reputation_verification", rep_,
+                     f"{len(ver)} verification(s) by proof; none by reputation or popularity", "{n} verifications by reputation"))
+        out.append(v("TRANSPARENCY-4-03", "proof_based_verification",
+                     [f"{x['request']}: {x['verification']}" for x in ver if x["verification"] not in PROOFS],
+                     f"{len(ver)} verification(s) by cryptographic, physical or procedural proof, independent of trust in actors",
+                     "{n} verifications resting on trust in actors or on comparison of personal data"))
+    else:
+        out.append(na("TRANSPARENCY-3-04", "no_reputation_verification", "verification", "no audit verification in this run"))
+        out.append(na("TRANSPARENCY-4-03", "proof_based_verification", "verification", "no audit verification in this run"))
+    bad = []
+    for m in decs:
+        src = [req[p] for p in m.provenance if p in req]
+        if not src or not m.value.get("reason") or not m.value.get("protocol_refs"):
+            bad.append(f"{m.value['request']}: not linked to its request or without reason and references")
+    out.append(v("TRANSPARENCY-4-01", "independently_verifiable", bad,
+                 f"all {len(decs)} decisions are linked to the request they decide and carry their reason and protocol "
+                 "references, so each can be recomputed independently", "{n} decisions that cannot be verified independently"))
+    shown = [f"{m.value['request']}: {k}" for m in decs for k in m.value if k not in TRANSPARENCY_FIELDS]
+    out.append(v("TRANSPARENCY-4-05", "transparency_without_visibility", shown,
+                 "decision records expose what was done and why, never who (no identity field)",
+                 "{n} identity exposures in transparency records"))
+    agg = [(m, req[m.provenance[0]]) for m in decs if m.provenance and m.provenance[0] in req
+           and m.value["grant"] and m.value["level"] == "aggregate" and m.value["domain"] in ABSOLUTE + CONDITIONAL]
+    floor = max(2, r["reidentification_k"])
+    out.append(v("TRANSPARENCY-12-03", "aggregation_protects",
+                 [f"{q['request']}: aggregate of {q.get('group_size')} Subject(s)" for m, q in agg if q.get("group_size", 0) < floor],
+                 f"{len(agg)} aggregate release(s) of personal domains, each over at least {floor} Subjects "
+                 f"({'declared k' if r['reidentification_k'] >= 2 else 'k not given: more than one Subject'}, H-PT-3)",
+                 "{n} aggregates too small to protect privacy") if agg else
+               na("TRANSPARENCY-12-03", "aggregation_protects", "aggregation", "no aggregate of a personal domain released"))
+    moral = [m for m in decs if m.provenance and m.provenance[0] in req and req[m.provenance[0]]["purpose"] == "moral_accountability"]
+    out.append(v("TRANSPARENCY-13-01", "no_moral_accountability", [m.value["request"] for m in moral if m.value["grant"]],
+                 f"{len(moral)} request(s) to define or publish moral accountability refused (§13)",
+                 "{n} moral accountability outputs") if moral else
+               na("TRANSPARENCY-13-01", "no_moral_accountability", "moral accountability", "no such request"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -301,7 +380,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                                f"{len(unsettled)} requests for aggregate statistics of an absolute privacy domain: §6 keeps the "
                                "domains 'private and non-public' and 'non-auditable at the individual level'; whether aggregates "
                                f"are allowed is not said (F-026; reading '{r['absolute_aggregate_reading']}')"))
-    return out
+    return out + transparency_checks(r, log)
 
 
 IMPLEMENTS = {
@@ -347,6 +426,15 @@ IMPLEMENTS = {
     "TRANSPARENCY-3-02": ("no_identity_condition", "IMPLEMENTED", None),
     "TRANSPARENCY-11-01": ("explained_decisions", "IMPLEMENTED", None),
     "TRANSPARENCY-12-01": ("audit_hooks", "IMPLEMENTED", None),
+    "TRANSPARENCY-3-04": ("no_reputation_verification", "IMPLEMENTED", None),
+    "TRANSPARENCY-4-01": ("independently_verifiable", "PARTIAL", "Verifiability = link to the request, reason and protocol "
+                          "references; the recomputation itself is the module's other checks."),
+    "TRANSPARENCY-4-03": ("proof_based_verification", "PARTIAL", "The verification method is a recorded label."),
+    "TRANSPARENCY-4-05": ("transparency_without_visibility", "IMPLEMENTED", None),
+    "TRANSPARENCY-12-03": ("aggregation_protects", "PARTIAL", "'MAY aggregate to protect privacy' read as: an aggregate covers at "
+                           "least the re-identification threshold (k not given: more than one Subject; H-PT-3)."),
+    "TRANSPARENCY-13-01": ("no_moral_accountability", "PARTIAL", "Observed as a declared request; no output field defines moral "
+                           "accountability."),
     "PRIVACY-12-01": ("privacy_rules_public", "IMPLEMENTED", None),
     "PRIVACY-12-03": ("privacy_rules_public", "PARTIAL", "Publication flag; verification by Subjects is not modelled."),
     "PRIVACY-12-04": ("privacy_rules_public", "PARTIAL", "Publication flag."),
@@ -356,7 +444,7 @@ IMPLEMENTS = {
 
 class PrivacyTransparencyModule(LabModule):
     id = "privacy_transparency"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Privacy and transparency (PRIVACY, TRANSPARENCY)", "ru": "Приватность и прозрачность (PRIVACY, TRANSPARENCY)"}
     summary = {"en": "Requests to publish or process data: is the system verifiable without exposing people, and is a "
                      "person's identity revealed only when harm is verified and nothing anonymous would do?",
@@ -392,7 +480,9 @@ class PrivacyTransparencyModule(LabModule):
                                  full(id="r5", domain="platform", level="individual", purpose="profiling"),
                                  full(id="r6", domain="mobility", level="individual", purpose="analytics"),
                                  full(id="r7", domain="economic", level="aggregate", linked_domains=["mobility"]),
-                                 full(id="r8", domain="medical", level="aggregate")],
+                                 full(id="r8", domain="medical", level="aggregate"),
+                                 full(id="r9", domain="mobility", level="aggregate", group_size=1),
+                                 full(id="r10", domain="system_metrics", purpose="moral_accountability")],
                      "label": {"en": "Data requests (H-PT-1)", "ru": "Запросы данных (H-PT-1)"}},
         "absolute_aggregate_reading": {"type": "enum", "values": ["aggregate_allowed", "never"], "default": "aggregate_allowed",
                                        "source": "alternative", "label": {"en": "Aggregates of absolute domains (H-PT-2)",

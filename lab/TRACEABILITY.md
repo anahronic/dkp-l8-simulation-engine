@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1319 (75.9 %) | 996 | 1237 | 921 | 4 | 63 | 15 | 418 | 40 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1325 (76.3 %) | 1002 | 1243 | 927 | 4 | 63 | 15 | 412 | 35 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 348 (95.3 %) | 249 | 335 | 237 | 3 | 8 | 2 | 17 | 3 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 387 (75.7 %) | 308 | 366 | 287 | 0 | 18 | 3 | 124 | 16 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 393 (76.9 %) | 314 | 372 | 293 | 0 | 18 | 3 | 118 | 11 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1319 (75.9 %) | 996 | 1237 | 921 | 4 | 63 | 15 | 418 | 40 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1325 (76.3 %) | 1002 | 1243 | 927 | 4 | 63 | 15 | 412 | 35 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 101 | 250 | 0 | 351 |
+| implementation_only | 0 | 107 | 244 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -286,7 +286,7 @@ Withdrawn after verification (not author decisions):
 | DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 31 | 28 | 0 | 3 | 0 | 8 | 31 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
-| DKP-7-TRANSPARENCY-001 | 44 | 25 | 25 | 0 | 0 | 0 | 19 | 41 |
+| DKP-7-TRANSPARENCY-001 | 44 | 31 | 31 | 0 | 0 | 0 | 13 | 41 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
 | DKP-8-INTEROP-001 | 49 | 36 | 35 | 0 | 1 | 0 | 13 | 41 |
 | DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
@@ -1469,7 +1469,9 @@ Withdrawn after verification (not author decisions):
 | TRANSPARENCY-10-04 | IMPLEMENTED | privacy_transparency · crisis_reduction_bounded | PASS | — | — |
 | TRANSPARENCY-11-01 | IMPLEMENTED | privacy_transparency · explained_decisions | PASS | — | — |
 | TRANSPARENCY-12-01 | IMPLEMENTED | privacy_transparency · audit_hooks | PASS | — | — |
+| TRANSPARENCY-12-03 | PARTIAL | privacy_transparency · aggregation_protects | PASS | — | — |
 | TRANSPARENCY-12-04 | IMPLEMENTED | privacy_transparency · audit_without_personal_data | PASS | — | — |
+| TRANSPARENCY-13-01 | PARTIAL | privacy_transparency · no_moral_accountability | PASS | — | — |
 | TRANSPARENCY-14-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | TRANSPARENCY-14-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | TRANSPARENCY-14-03 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
@@ -1477,6 +1479,10 @@ Withdrawn after verification (not author decisions):
 | TRANSPARENCY-14-05 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
 | TRANSPARENCY-3-02 | IMPLEMENTED | privacy_transparency · no_identity_condition | PASS | yes | — |
 | TRANSPARENCY-3-03 | PARTIAL | privacy_transparency · absolute_domains | PASS | yes | — |
+| TRANSPARENCY-3-04 | IMPLEMENTED | privacy_transparency · no_reputation_verification | PASS | — | — |
+| TRANSPARENCY-4-01 | PARTIAL | privacy_transparency · independently_verifiable | PASS | — | — |
+| TRANSPARENCY-4-03 | PARTIAL | privacy_transparency · proof_based_verification | PASS | — | — |
+| TRANSPARENCY-4-05 | IMPLEMENTED | privacy_transparency · transparency_without_visibility | PASS | — | — |
 | TRANSPARENCY-5-01 | IMPLEMENTED | privacy_transparency · public_by_default | PASS | — | — |
 | TRANSPARENCY-5-02 | IMPLEMENTED | privacy_transparency · public_by_default | PASS | — | — |
 | TRANSPARENCY-6-02 | PARTIAL | privacy_transparency · deanonymization_conditions | PASS | — | — |

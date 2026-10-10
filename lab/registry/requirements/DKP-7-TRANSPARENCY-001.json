@@ -68,7 +68,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_identity_condition"
    },
    "tests": [
@@ -104,7 +104,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "absolute_domains"
    },
    "tests": [
@@ -137,19 +137,25 @@
    "data_dependencies": [
     "validation rules and evidence supporting decisions"
    ],
-   "gap": "The document does not specify an operational test for replacement of verification. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how a decision trace establishes that reputation or popularity replaced proof."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.1.0",
+    "check": "no_reputation_verification"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -172,19 +178,25 @@
    "data_dependencies": [
     "action evidence and applicable protocol rules"
    ],
-   "gap": "Verifier independence and the applicable compliance checks are not specified here. No lab check implemented yet.",
+   "gap": "Verifiability = link to the request, reason and protocol references; the recomputation itself is the module's other checks.",
    "hypotheses_needed": [
     "Declare the verifier's access, trust assumptions, and applicable protocol rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.1.0",
+    "check": "independently_verifiable"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -241,19 +253,25 @@
    "data_dependencies": [
     "proof artifacts and validation procedures"
    ],
-   "gap": "No proof-validation procedure or actor-independence model is supplied. No lab check implemented yet.",
+   "gap": "The verification method is a recorded label.",
    "hypotheses_needed": [
     "Declare proof-validity rules and which actors may be untrusted."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.1.0",
+    "check": "proof_based_verification"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -310,19 +328,25 @@
    "data_dependencies": [
     "transparency rules and resulting disclosures"
    ],
-   "gap": "The operational meaning of 'imply' and the treatment of indirect exposure are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the check concerns actual exposure, authorization for exposure, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.1.0",
+    "check": "transparency_without_visibility"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -356,7 +380,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "public_by_default"
    },
    "tests": [
@@ -395,7 +419,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "public_by_default"
    },
    "tests": [
@@ -474,7 +498,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "deanonymization_conditions"
    },
    "tests": [
@@ -559,7 +583,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "deanonymization_conditions"
    },
    "tests": [
@@ -604,7 +628,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "deanonymization_conditions"
    },
    "tests": [
@@ -644,7 +668,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "deanonymization_bounded"
    },
    "tests": [
@@ -685,7 +709,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "deanonymization_bounded"
    },
    "tests": [
@@ -761,7 +785,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "deanonymization_bounded"
    },
    "tests": [
@@ -836,7 +860,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "prohibited_purposes"
    },
    "tests": [
@@ -876,7 +900,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "prohibited_purposes"
    },
    "tests": [
@@ -917,7 +941,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_cross_domain_linkage"
    },
    "tests": [
@@ -994,7 +1018,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -1038,7 +1062,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -1079,7 +1103,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -1120,7 +1144,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1163,7 +1187,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "explained_decisions"
    },
    "tests": [
@@ -1239,7 +1263,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "audit_hooks"
    },
    "tests": [
@@ -1306,19 +1330,25 @@
    "data_dependencies": [
     "aggregation methods, declared purposes, and privacy assessments"
    ],
-   "gap": "The text does not specify whether qualifying privacy protection is determined by purpose, effect, or both. No lab check implemented yet.",
+   "gap": "'MAY aggregate to protect privacy' read as: an aggregate covers at least the re-identification threshold (k not given: more than one Subject; H-PT-3).",
    "hypotheses_needed": [
     "Declare whether the permission is tested against privacy intent, demonstrated privacy effect, or both."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.1.0",
+    "check": "aggregation_protects"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1348,7 +1378,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "audit_without_personal_data"
    },
    "tests": [
@@ -1369,7 +1399,7 @@
    "quote": "DKP-7-TRANSPARENCY-001 SHALL NOT:\n\n- define moral accountability,",
    "interpretation": "Review rules attributed to this protocol for definitions of moral accountability. Deciding whether a rule constitutes such a definition requires semantic judgment absent from the document.",
    "kind": "constraint",
-   "checkable": "no",
+   "checkable": "partial",
    "inputs": [
     "protocol_rules",
     "rule_authority"
@@ -1380,19 +1410,30 @@
    "data_dependencies": [
     "rules and decisions attributed to this protocol"
    ],
-   "gap": "Moral accountability and what counts as defining it are not operationally specified.",
+   "gap": "Observed as a declared request; no output field defines moral accountability.",
    "hypotheses_needed": [
     "Declare a semantic review rubric for definitions of moral accountability."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.1.0",
+    "check": "no_moral_accountability"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
+   "checkable_reconciled": {
+    "from": "no",
+    "by": "lab reading",
+    "record": "lab/registry/reconciliations.json"
+   },
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

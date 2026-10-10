@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1319,
-  "covered_percent": 75.9,
+  "covered": 1325,
+  "covered_percent": 76.3,
   "statuses": {
-   "PASS": 1237,
+   "PASS": 1243,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 418
+   "UNCOVERED": 412
   },
-  "resolvable": 670,
-  "resolvable_uncovered": 40,
-  "resolvable_uncovered_implementation_only": 40,
+  "resolvable": 671,
+  "resolvable_uncovered": 35,
+  "resolvable_uncovered_implementation_only": 35,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 996,
-  "pass_with_open_point": 921
+  "covered_with_open_point": 1002,
+  "pass_with_open_point": 927
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1319,
-    "covered_percent": 75.9,
+    "covered": 1325,
+    "covered_percent": 76.3,
     "statuses": {
-     "PASS": 1237,
+     "PASS": 1243,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 418
+     "UNCOVERED": 412
     },
-    "resolvable": 670,
-    "resolvable_uncovered": 40,
-    "resolvable_uncovered_implementation_only": 40,
+    "resolvable": 671,
+    "resolvable_uncovered": 35,
+    "resolvable_uncovered_implementation_only": 35,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 996,
-    "pass_with_open_point": 921
+    "covered_with_open_point": 1002,
+    "pass_with_open_point": 927
    }
   },
   {
@@ -1734,21 +1734,21 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 387,
-    "covered_percent": 75.7,
+    "covered": 393,
+    "covered_percent": 76.9,
     "statuses": {
-     "PASS": 366,
+     "PASS": 372,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 124
+     "UNCOVERED": 118
     },
-    "resolvable": 182,
-    "resolvable_uncovered": 16,
-    "resolvable_uncovered_implementation_only": 16,
+    "resolvable": 183,
+    "resolvable_uncovered": 11,
+    "resolvable_uncovered_implementation_only": 11,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 308,
-    "pass_with_open_point": 287
+    "covered_with_open_point": 314,
+    "pass_with_open_point": 293
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 101,
-    "codex_draft": 250,
+    "lab_reconciled": 107,
+    "codex_draft": 244,
     "human_accepted": 0,
     "total": 351
    },
@@ -64341,30 +64341,38 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not specify whether qualifying privacy protection is determined by purpose, effect, or both. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "aggregation_protects",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "'MAY aggregate to protect privacy' read as: an aggregate covers at least the re-identification threshold (k not given: more than one Subject; H-PT-3).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -64412,31 +64420,39 @@
    "document": "DKP-7-TRANSPARENCY-001",
    "section": "13",
    "kind": "constraint",
-   "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Moral accountability and what counts as defining it are not operationally specified.",
+   "checkable": "partial",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "no_moral_accountability",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Observed as a declared request; no output field defines moral accountability.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -64860,30 +64876,38 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not specify an operational test for replacement of verification. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "no_reputation_verification",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -64892,30 +64916,38 @@
    "section": "4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Verifier independence and the applicable compliance checks are not specified here. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "independently_verifiable",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "Verifiability = link to the request, reason and protocol references; the recomputation itself is the module's other checks.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -64956,30 +64988,38 @@
    "section": "4",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No proof-validation procedure or actor-independence model is supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "privacy_transparency",
+   "check": "proof_based_verification",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": "The verification method is a recorded label.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -65020,30 +65060,38 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational meaning of 'imply' and the treatment of indirect exposure are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "privacy_transparency",
+   "check": "transparency_without_visibility",
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PT-1",
+    "H-PT-2",
+    "H-PT-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
