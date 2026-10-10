@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1293 (74.4 %) | 970 | 1211 | 895 | 4 | 63 | 15 | 444 | 66 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1299 (74.8 %) | 976 | 1217 | 901 | 4 | 63 | 15 | 438 | 60 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 251 (59.2 %) | 164 | 231 | 147 | 1 | 17 | 2 | 173 | 19 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 380 (74.4 %) | 301 | 359 | 280 | 0 | 18 | 3 | 131 | 23 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 386 (75.5 %) | 307 | 365 | 286 | 0 | 18 | 3 | 125 | 17 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1293 (74.4 %) | 970 | 1211 | 895 | 4 | 63 | 15 | 444 | 66 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1299 (74.8 %) | 976 | 1217 | 901 | 4 | 63 | 15 | 438 | 60 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 76 | 276 | 0 | 352 |
+| implementation_only | 0 | 82 | 270 | 0 | 352 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -259,7 +259,7 @@ Withdrawn after verification (not author decisions):
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
-| DKP-1-JUSTICE-001 | 41 | 21 | 18 | 0 | 3 | 0 | 20 | 33 |
+| DKP-1-JUSTICE-001 | 41 | 27 | 24 | 0 | 3 | 0 | 14 | 33 |
 | DKP-1-PREVENTION-001 | 43 | 22 | 21 | 0 | 1 | 0 | 21 | 36 |
 | DKP-2-ASSETS-001 | 43 | 23 | 22 | 0 | 1 | 0 | 20 | 38 |
 | DKP-2-FINANCE-001 | 44 | 25 | 23 | 0 | 2 | 0 | 19 | 39 |
@@ -606,8 +606,12 @@ Withdrawn after verification (not author decisions):
 | IMPACT-ReversibilityFlagR_-01 | PARTIAL | dispute_correction · r_is_irreversibility | PASS | — | Q-022 |
 | IMPACT-UncertaintyEnvelopeU_-01 | PARTIAL | impact_attribution · uncertainty_envelope | PASS | — | — |
 | JUSTICE-10-01 | IMPLEMENTED | dispute_correction · proportional_distribution | PASS | — | — |
+| JUSTICE-10-02 | PARTIAL | dispute_correction · individual_accountability_kept | PASS | — | — |
 | JUSTICE-11-02 | IMPLEMENTED | dispute_correction · periodic_not_faster_than_ttl | PASS | — | — |
+| JUSTICE-12-01 | IMPLEMENTED | dispute_correction · no_exemption | PASS | yes | — |
+| JUSTICE-13-01 | PARTIAL | dispute_correction · cross_layer_isolation | PASS | yes | — |
 | JUSTICE-13-02 | PARTIAL | dispute_correction · isolation_breach_critical | PASS | — | — |
+| JUSTICE-14-01 | IMPLEMENTED | dispute_correction · reproducible | PASS | yes | — |
 | JUSTICE-15-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | JUSTICE-15-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | JUSTICE-15-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | yes | Q-062 |
@@ -616,10 +620,12 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-2-03 | IMPLEMENTED | dispute_correction · justice_inputs | PASS | — | — |
 | JUSTICE-3.1-01 | PARTIAL | dispute_correction · flag_contract | PASS | — | — |
 | JUSTICE-3.2-01 | PARTIAL | dispute_correction · binding_contents | PASS | yes | — |
+| JUSTICE-4-02 | PARTIAL | dispute_correction · output_vector_clean | PASS | yes | — |
+| JUSTICE-5-01 | IMPLEMENTED | dispute_correction · domains_independent | PASS | yes | — |
 | JUSTICE-5-02 | IMPLEMENTED | dispute_correction · all_domains_evaluated | PASS | — | — |
 | JUSTICE-6-01 | PARTIAL | dispute_correction · restitution_trigger | PASS | — | Q-022 |
 | JUSTICE-6-02 | PARTIAL | dispute_correction · restitution_outputs | UNKNOWN | — | — |
-| JUSTICE-7-01 | PARTIAL | dispute_correction · restriction_trigger | UNKNOWN | — | — |
+| JUSTICE-7-01 | PARTIAL | dispute_correction · restriction_trigger | UNKNOWN | yes | — |
 | JUSTICE-8-01 | PARTIAL | dispute_correction · isolation_trigger | PASS | — | Q-022 |
 | JUSTICE-9-01 | PARTIAL | dispute_correction · exclusion_trigger | PASS | — | — |
 | JUSTICE-9-02 | IMPLEMENTED | dispute_correction · exclusion_consequences | PASS | yes | — |

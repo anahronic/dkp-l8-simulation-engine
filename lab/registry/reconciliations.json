@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 76,
+  "confirmed": 82,
   "reclassified": 6
  },
  "items": [
@@ -894,6 +894,84 @@
     "human_accepted": false
    },
    "check": "interop_failure:no_regime_adjudication"
+  },
+  {
+   "id": "JUSTICE-10-02",
+   "document": "DKP-1-JUSTICE-001",
+   "quote": "Collective responsibility SHALL NOT nullify individual accountability.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "With a collective among the responsible Subjects, every individual Subject with an attributable contribution keeps its own share; a share absorbed by the collective is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:individual_accountability_kept"
+  },
+  {
+   "id": "JUSTICE-12-01",
+   "document": "DKP-1-JUSTICE-001",
+   "quote": "No Subject SHALL be exempt from justice outcomes based on:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "No exemption by status, authority, jurisdiction, ideology or culture: a declared status must not change the outcome. Checked metamorphically (the same run without the status gives the same shares and domains).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:no_exemption"
+  },
+  {
+   "id": "JUSTICE-13-01",
+   "document": "DKP-1-JUSTICE-001",
+   "quote": "This protocol SHALL NOT:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Four isolation bans: impact metrics and identity attribution used as given (flag and weights unchanged), no policy, governance or moral field in the output. Axiom-defined bounds are modelled only as the declared safe margin (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:cross_layer_isolation"
+  },
+  {
+   "id": "JUSTICE-14-01",
+   "document": "DKP-1-JUSTICE-001",
+   "quote": "Opaque, discretionary, or non-reproducible justice mechanisms are forbidden.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Opaque, discretionary or non-reproducible' is checkable: every decision is recomputed from its IMPACT and IDENTITY inputs by the §6-§9 rules, and re-execution gives the same log.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:reproducible"
+  },
+  {
+   "id": "JUSTICE-4-02",
+   "document": "DKP-1-JUSTICE-001",
+   "quote": "The output vector C SHALL contain no:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Four exclusions from the output vector C; a field carrying a moral assessment, an intent reading, a discretionary adjustment or a subjective weight is observable on the recorded vector.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:output_vector_clean"
+  },
+  {
+   "id": "JUSTICE-5-01",
+   "document": "DKP-1-JUSTICE-001",
+   "quote": "Justice SHALL be evaluated independently across the following domains:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Evaluated independently' is checkable as: each domain's result equals what its own §6-§9 conditions give, so no domain's result depends on another's. The conditions themselves are checked under §6-§9 (restriction margins are declared).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:domains_independent"
   },
   {
    "id": "POLICE-0-01",

@@ -62,6 +62,12 @@ FAULTS = {
     "compensate_instead": "a reversible measure no longer supported is kept and compensated instead of lifted",
     "suppress_appeal": "a valid appeal is ignored (no error case opened)",
     "discretionary_override": "a reviewer lifts a measure by an override outside the recomputation",
+    "moral_output": "the Justice output vector carries a moral assessment of the Subject",
+    "coupled_domains": "restriction is suppressed whenever restitution applies",
+    "collective_absorbs": "a collective's share absorbs its members' individual shares",
+    "exempt_by_status": "Subjects with an official, jurisdictional, ideological or cultural status are left out of the outcome",
+    "justice_policy": "the Justice output carries a policy directive",
+    "opaque_adjustment": "a review panel adds a restriction the inputs do not trigger",
 }
 EXCLUSION_EFFECTS = ["removal from system participation", "loss of system-provided privileges",
                      "persistence of historical attribution"]                                      # JUSTICE §9
@@ -111,6 +117,10 @@ def bind(subjects: List[Dict[str, Any]], contributions: List[float], faults=()) 
 def received_flag(imp: Dict[str, Any], r: Dict[str, Any]) -> bool:
     """The Rᵢ JUSTICE works with: IMPACT's flag unchanged (IMPACT §11), unless a fault overrides it."""
     return (not imp["R"]) if "override_flag" in r["faults"] else bool(imp["R"])
+
+
+OUTPUT_FIELDS = ("label", "domains", "shares", "amounts", "flag", "exclusion_effects")      # what the vector C carries
+MORAL_FIELDS = ("assessment", "blame", "intent", "motive", "adjusted_by", "discretion", "subjective_weight")
 
 
 def justice_domains(imp: Dict[str, Any], r: Dict[str, Any]) -> Dict[str, Optional[bool]]:
@@ -174,6 +184,7 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
 
     contributions = [s["contribution"] for s in r["subjects"]]
     recorded_contrib = r["recorded_contributions"] or contributions
+    status = {x["id"]: x.get("status", "none") for x in r["subjects"]}          # JUSTICE §12 input
 
     def evaluate_chain(at, s1_msg, s0_msg, contrib, label):
         imp = impact(s0_msg.value, s1_msg.value, r["bound"], r["uncertainty"], r["irreversible"], faults,
@@ -208,12 +219,30 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
                 return m_imp, m_att, None
         doms = justice_domains(imp, r)
         weights = att["weights"] or bind(r["subjects"], contrib, faults)
+        shares = dict(weights)
+        if "coupled_domains" in faults and doms["restitution"]:
+            doms = dict(doms, restriction=False)
+        if "opaque_adjustment" in faults and not doms["restriction"]:
+            doms = dict(doms, restriction=True)
+        coll = [x["id"] for x in r["subjects"] if x["kind"] == "collective" and x["id"] in shares]
+        if "collective_absorbs" in faults and coll:
+            shares = {coll[0]: 1.0}
+        if "exempt_by_status" in faults:
+            keep = {k: w for k, w in shares.items() if status.get(k, "none") == "none"}
+            total = sum(keep.values())
+            shares = {k: round(w / total, 12) for k, w in keep.items()} if total else {}
         got = received_flag(imp, r)
-        dec = {"label": label, "domains": doms, "shares": weights,
+        dec = {"label": label, "domains": doms, "shares": shares,
                "amounts": "not computed: no amount function in JUSTICE §6-§9",
                "flag": {"emitted_by_impact": imp["R"], "received": got,
                         "read_as": "reversible" if justice_reversible(got, r["r_polarity"]) else "irreversible",
                         "contract": "JUSTICE §6/§8: Rᵢ = True reversible, Rᵢ = False irreversible; no conversion (IMPACT §11)"}}
+        if "moral_output" in faults:
+            dec["assessment"] = "reckless and irresponsible conduct"
+        if "justice_policy" in faults:
+            dec["policy"] = "prioritize economic recovery of the region"
+        if "opaque_adjustment" in faults:
+            dec["adjusted_by"] = "review panel"
         if doms["exclusion"]:
             dec["exclusion_effects"] = EXCLUSION_EFFECTS[:2] + (["historical attribution erased"] if "exclusion_erases_history" in faults
                                                                 else EXCLUSION_EFFECTS[2:])
@@ -667,7 +696,7 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
                          ("JUSTICE-DisputeExceptionClause-02", "dispute_exception_conditions")):
             res.append(na(rid, chk, "dispute exception", why))
         res += dispute_checks(r, log, store, out, None)
-        return res + error_conduct(r, log, out)
+        return res + error_conduct(r, log, out) + justice_conduct(r, log)
     days = (appeal.arrived_at - out["t_dec"]) / DAY
     formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
     rejected = "REJECTED_PROCEDURAL" in states
@@ -836,7 +865,7 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
                          ("JUSTICE-DisputeExceptionClause-02", "dispute_exception_conditions")):
             res.append(na(rid, chk, "dispute exception", "the appeal was not validated"))
     res += dispute_checks(r, log, store, out, appeal)
-    return res + error_conduct(r, log, out)
+    return res + error_conduct(r, log, out) + justice_conduct(r, log)
 
 
 def contributions_for(r: Dict[str, Any], index: int) -> List[float]:
@@ -860,6 +889,83 @@ ERROR_CHECKS = [("ERROR-7-01", "appeal_fields"), ("ERROR-7-02", "appeal_window")
                 ("ERROR-8-03", "irreversible_logged"), ("ERROR-8-05", "no_new_penalties"),
                 ("ERROR-2-05", "request_not_override"), ("ERROR-5-04", "r3_requires_correction"),
                 ("ERROR-5-05", "r4_after_r3"), ("ERROR-10-01", "case_logged")]
+
+
+def justice_conduct(r, log: EventLog) -> List[CheckResult]:
+    """JUSTICE §4, §5, §10, §12, §13, §14 (review КТ5 reading), on every Justice decision of the run."""
+    msgs = log.messages()
+    get = log.get
+    decs = [m for m in msgs if m.source == "JUSTICE" and m.kind == "decision"]
+    res: List[CheckResult] = []
+    if not decs:
+        for rid, chk in (("JUSTICE-4-02", "output_vector_clean"), ("JUSTICE-5-01", "domains_independent"),
+                         ("JUSTICE-10-02", "individual_accountability_kept"), ("JUSTICE-12-01", "no_exemption"),
+                         ("JUSTICE-13-01", "cross_layer_isolation"), ("JUSTICE-14-01", "reproducible")):
+            res.append(na(rid, chk, "Justice evaluation", "no Justice decision (attribution blocked or NO_ATTRIBUTION)"))
+        return res
+    bad = [f"{m.event_id}: {k}" for m in decs for k in m.value if k in MORAL_FIELDS]
+    res.append(verdict("JUSTICE-4-02", "output_vector_clean", not bad,
+                       f"{len(decs)} output vectors carry domains, shares and the received flag only: no moral language, intent "
+                       "interpretation, discretionary adjustment or subjective weighting", f"{len(bad)} such fields in C",
+                       {"violations": bad[:10]}))
+    clean = dict(r, faults=[])
+    bad = []
+    for m in decs:
+        imp = get(m.provenance[0]).value
+        want = justice_domains(imp, dict(clean, faults=[f for f in r["faults"] if f == "override_flag"]))
+        bad += [f"{m.event_id}: {d} {m.value['domains'][d]} != {want[d]}" for d in DOMAINS if m.value["domains"][d] != want[d]]
+    res.append(verdict("JUSTICE-5-01", "domains_independent", not bad,
+                       "each of the four domains is decided by its own §6-§9 conditions; no domain's result depends on another's",
+                       f"{len(bad)} domains decided otherwise than by their own conditions", {"violations": bad[:10]}))
+    contrib = {}
+    for x in r["subjects"]:
+        if x["kind"] not in PROXY_KINDS:
+            contrib[x["id"]] = contrib.get(x["id"], 0) + x["contribution"]
+    colls = [x["id"] for x in r["subjects"] if x["kind"] == "collective"]
+    if colls:
+        bad = [f"{m.event_id}: {k} (contribution {c}) has no share" for m in decs for k, c in contrib.items()
+               if c > 0 and k not in colls and m.value["shares"].get(k, 0) <= 0]
+        res.append(verdict("JUSTICE-10-02", "individual_accountability_kept", not bad,
+                           f"with collective {colls} responsible, every individual Subject with a contribution keeps its own share",
+                           f"{len(bad)} individual shares nullified by collective responsibility", {"violations": bad[:10]}))
+    else:
+        res.append(na("JUSTICE-10-02", "individual_accountability_kept", "collective responsibility", "no collective Subject"))
+    marked = [x["id"] for x in r["subjects"] if x.get("status", "none") != "none"]
+    if marked:
+        plain = dict(r, subjects=[dict(x, status="none") for x in r["subjects"]])
+        base, _, _ = run_chain(plain)
+        other = [m.value for m in base.messages() if m.source == "JUSTICE" and m.kind == "decision"]
+        mine = [m.value for m in decs]
+        bad = [f"decision {i}: shares or domains change with the declared status" for i, (a, b) in enumerate(zip(mine, other))
+               if a["shares"] != b["shares"] or a["domains"] != b["domains"]] + ([] if len(mine) == len(other) else ["decision count"])
+        res.append(verdict("JUSTICE-12-01", "no_exemption", not bad,
+                           f"Subjects with a declared status ({', '.join(marked)}) receive exactly the outcome they would without it",
+                           f"{len(bad)} outcomes changed by status, authority, jurisdiction, ideology or culture", {"violations": bad[:10]}))
+    else:
+        res.append(na("JUSTICE-12-01", "no_exemption", "exemption by status", "no Subject has a declared status"))
+    bad = []
+    for m in decs:
+        att = get(m.provenance[1]).value
+        if m.value["shares"] != att["weights"]:
+            bad.append(f"{m.event_id}: shares differ from the IDENTITY weights")
+        if m.value.get("flag") and m.value["flag"]["received"] != get(m.provenance[0]).value["R"]:
+            bad.append(f"{m.event_id}: IMPACT flag reinterpreted")
+        bad += [f"{m.event_id}: {k}" for k in m.value if k not in OUTPUT_FIELDS]
+    res.append(verdict("JUSTICE-13-01", "cross_layer_isolation", not bad,
+                       "impact metrics and identity attribution used as given; no policy, governance or moral field in the output",
+                       f"{len(bad)} cross-layer breaches", {"violations": bad[:10]}))
+    bad = []
+    for m in decs:
+        want = justice_domains(get(m.provenance[0]).value, clean)
+        if m.value["domains"] != want:
+            bad.append(f"{m.event_id}: domains not reproducible from the IMPACT input")
+    again, _, _ = run_chain(r)
+    if again.digest() != log.digest():
+        bad.append("re-execution differs")
+    res.append(verdict("JUSTICE-14-01", "reproducible", not bad,
+                       f"{len(decs)} decisions recomputed from their IMPACT and IDENTITY inputs by the §6-§9 rules; re-execution identical",
+                       f"{len(bad)} opaque, discretionary or non-reproducible results", {"violations": bad[:10]}))
+    return res
 
 
 ERROR_STATES = ("R0", "R1", "R2", "R3", "R4", "NOT_APPEALABLE", "REJECTED_PROCEDURAL", "REJECTED_UNFOUNDED")
@@ -1030,6 +1136,12 @@ IMPLEMENTS = {
     "ERROR-8-05": ("no_new_penalties", "PARTIAL", "A harsher recomputed outcome gives UNKNOWN (open question Q-021)."),
     "ERROR-10-01": ("case_logged", "IMPLEMENTED", None),
     "ERROR-11-02": ("no_retaliation", "IMPLEMENTED", None),
+    "JUSTICE-4-02": ("output_vector_clean", "PARTIAL", "Observed as fields of the output vector."),
+    "JUSTICE-5-01": ("domains_independent", "IMPLEMENTED", None),
+    "JUSTICE-10-02": ("individual_accountability_kept", "PARTIAL", "A collective is a declared Subject of kind 'collective'."),
+    "JUSTICE-12-01": ("no_exemption", "IMPLEMENTED", None),
+    "JUSTICE-13-01": ("cross_layer_isolation", "PARTIAL", "Axiom-defined bounds are not modelled beyond the declared safe margin."),
+    "JUSTICE-14-01": ("reproducible", "IMPLEMENTED", None),
     "ERROR-0-01": ("errors_as_states", "PARTIAL", "Observed as error records carrying states only, no blame or misconduct labels."),
     "ERROR-1-01": ("procedural_non_punitive", "PARTIAL", "Procedural: §5 states in order; non-punitive: no measure sourced from the "
                    "error case itself (a harsher recomputed Justice outcome is Q-021)."),
@@ -1051,12 +1163,14 @@ SUBJECT = {"type": "object", "fields": {
     "kind": {"type": "enum", "values": list(SUBJECT_KINDS)},
     "contribution": {"type": "number", "min": 0, "max": 10 ** 9},
     "originator": {"type": "str", "default": "none"},
+    "status": {"type": "enum", "values": ["none", "official", "authority", "foreign_jurisdiction", "ideological", "cultural"],
+               "default": "none"},
 }}
 
 
 class DisputeCorrectionModule(LabModule):
     id = "dispute_correction"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Dispute and correction (S-LAB-04)", "ru": "Спор и исправление (S-LAB-04)"}
     summary = {"en": "A measurement or an attribution was wrong: is the appeal accepted in time, is the decision "
                      "recomputed without new penalties, is the original kept and the difference shown?",
@@ -1130,8 +1244,9 @@ class DisputeCorrectionModule(LabModule):
                        "default": "true_means_reversible", "source": "text",
                        "label": {"en": "Polarity of Rᵢ (H-DC-5)", "ru": "Полярность Rᵢ (H-DC-5)"}},
         "subjects": {"type": "list", "min_items": 1, "max_items": 12, "items": SUBJECT, "source": "user",
-                     "default": [{"id": "plant", "kind": "legal_entity", "contribution": 3, "originator": "none"},
-                                 {"id": "logistics", "kind": "legal_entity", "contribution": 1, "originator": "none"}],
+                     "default": [{"id": "plant", "kind": "legal_entity", "contribution": 3, "originator": "none", "status": "none"},
+                                 {"id": "logistics", "kind": "legal_entity", "contribution": 1, "originator": "none",
+                                  "status": "none"}],
                      "label": {"en": "Subjects and declared causal contributions", "ru": "Субъекты и заявленный причинный вклад"}},
         "recorded_contributions": {"type": "list", "min_items": 0, "max_items": 12,
                                    "items": {"type": "number", "min": 0, "max": 10 ** 9}, "default": [], "source": "user",
@@ -1320,6 +1435,18 @@ class DisputeCorrectionModule(LabModule):
             "higher_layer_irreversible": {**base, "higher_layer_irreversible": True},
             "faulty_justice_record": {**base, "persistent_axiom_violation": True, "appeal_after_minutes": -1,
                                       "faults": ["partial_binding", "exclusion_erases_history", "final_output"]},
+            "collective_with_members": {**base, "appeal_after_minutes": -1, "appellant": "m1",
+                                        "subjects": [{"id": "union", "kind": "collective", "contribution": 2},
+                                                     {"id": "m1", "kind": "human", "contribution": 1},
+                                                     {"id": "m2", "kind": "human", "contribution": 1}]},
+            "official_subject": {**base, "appeal_after_minutes": -1, "appellant": "logistics",
+                                 "subjects": [{"id": "ministry", "kind": "legal_entity", "contribution": 3, "status": "authority"},
+                                              {"id": "logistics", "kind": "legal_entity", "contribution": 1}]},
+            "faulty_justice_output": {**base, "appeal_after_minutes": -1, "appellant": "logistics", "repeated_harm": False,
+                                      "safe_margin": 100,
+                                      "subjects": [{"id": "ministry", "kind": "legal_entity", "contribution": 3, "status": "authority"},
+                                                   {"id": "logistics", "kind": "legal_entity", "contribution": 1}],
+                                      "faults": ["moral_output", "exempt_by_status", "justice_policy", "opaque_adjustment"]},
             "faulty_error_conduct": {**base, "faults": ["moralize_error", "coercive_verification", "infer_intent",
                                                         "error_rewrites_ptl", "discretionary_override"]},
         }

@@ -37,7 +37,7 @@ FAULT_CASES = {
     "enforce_no_attribution": ({"attribution_confidence": 0.6, "s0": 0.0, "s1_recorded": 1.0},
                                ["IDENTITY-4.1-02", "IDENTITY-4.1-03"]),
     "suppress_by_uncertainty": ({"s1_recorded": 0.905}, ["IMPACT-9-03", "IMPACT-5-03"]),
-    "override_flag": ({}, ["IMPACT-11-01", "JUSTICE-13-02"]),
+    "override_flag": ({}, ["IMPACT-11-01", "JUSTICE-13-02", "JUSTICE-13-01"]),
     "partial_binding": ({}, ["JUSTICE-3.2-01"]),
     "exclusion_erases_history": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-02"]),
     "final_output": ({}, ["JUSTICE-DisputeExceptionClause-03"]),
@@ -49,6 +49,17 @@ FAULT_CASES = {
     "compensate_instead": ({}, ["ERROR-9-03"]),
     "suppress_appeal": ({}, ["ERROR-11-01"]),
     "discretionary_override": ({}, ["ERROR-11-04"]),
+    "moral_output": ({}, ["JUSTICE-4-02"]),
+    "coupled_domains": ({}, ["JUSTICE-5-01"]),
+    "collective_absorbs": ({"appeal_after_minutes": -1, "appellant": "m1",
+                            "subjects": [{"id": "union", "kind": "collective", "contribution": 2},
+                                         {"id": "m1", "kind": "human", "contribution": 1},
+                                         {"id": "m2", "kind": "human", "contribution": 1}]}, ["JUSTICE-10-02"]),
+    "exempt_by_status": ({"appeal_after_minutes": -1, "appellant": "logistics",
+                          "subjects": [{"id": "ministry", "kind": "legal_entity", "contribution": 3, "status": "authority"},
+                                       {"id": "logistics", "kind": "legal_entity", "contribution": 1}]}, ["JUSTICE-12-01"]),
+    "justice_policy": ({}, ["JUSTICE-13-01"]),
+    "opaque_adjustment": ({"repeated_harm": False, "safe_margin": 100}, ["JUSTICE-14-01", "JUSTICE-5-01", "JUSTICE-4-02"]),
 }
 
 
