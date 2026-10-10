@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1313,
-  "covered_percent": 75.6,
+  "covered": 1319,
+  "covered_percent": 75.9,
   "statuses": {
-   "PASS": 1231,
+   "PASS": 1237,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 424
+   "UNCOVERED": 418
   },
   "resolvable": 670,
-  "resolvable_uncovered": 46,
-  "resolvable_uncovered_implementation_only": 46,
+  "resolvable_uncovered": 40,
+  "resolvable_uncovered_implementation_only": 40,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 990,
-  "pass_with_open_point": 915
+  "covered_with_open_point": 996,
+  "pass_with_open_point": 921
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1313,
-    "covered_percent": 75.6,
+    "covered": 1319,
+    "covered_percent": 75.9,
     "statuses": {
-     "PASS": 1231,
+     "PASS": 1237,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 424
+     "UNCOVERED": 418
     },
     "resolvable": 670,
-    "resolvable_uncovered": 46,
-    "resolvable_uncovered_implementation_only": 46,
+    "resolvable_uncovered": 40,
+    "resolvable_uncovered_implementation_only": 40,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 990,
-    "pass_with_open_point": 915
+    "covered_with_open_point": 996,
+    "pass_with_open_point": 921
    }
   },
   {
@@ -1666,21 +1666,21 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 257,
-    "covered_percent": 60.6,
+    "covered": 263,
+    "covered_percent": 62.0,
     "statuses": {
-     "PASS": 237,
+     "PASS": 243,
      "FAIL": 1,
      "UNKNOWN": 17,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 167
+     "UNCOVERED": 161
     },
     "resolvable": 163,
-    "resolvable_uncovered": 13,
-    "resolvable_uncovered_implementation_only": 13,
+    "resolvable_uncovered": 7,
+    "resolvable_uncovered_implementation_only": 7,
     "unresolved_decisions": 337,
-    "covered_with_open_point": 170,
-    "pass_with_open_point": 153
+    "covered_with_open_point": 176,
+    "pass_with_open_point": 159
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 95,
-    "codex_draft": 256,
+    "lab_reconciled": 101,
+    "codex_draft": 250,
     "human_accepted": 0,
     "total": 351
    },
@@ -52821,30 +52821,40 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of creating exit precedent is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_crisis_precedent",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Precedent is observed as an exit rule recorded from crisis handling.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -53756,30 +53766,39 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The representation and conformance semantics of a declared procedure are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "exit_event_procedure",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -54228,30 +54247,39 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An obligation-escalation comparison and attribution rule are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "cooling_no_escalation",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Observed as obligation and eligibility records during cooling.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -54292,30 +54320,39 @@
    "section": "7",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The minimum structure and timing that distinguish phased disengagement from abrupt severance are undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "exit_integration",
+   "check": "phased_disengagement",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -54394,30 +54431,39 @@
    "section": "8",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The temporal classification of future obligations versus retained historical obligations is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "future_obligations_and_benefits_cease",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Benefits and obligations are recorded events.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -54467,30 +54513,39 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Historical responsibility has no operational definition in this document. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "historical_responsibility_kept",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Observed on the archive record.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

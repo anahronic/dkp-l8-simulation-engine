@@ -54,6 +54,13 @@ FAULTS = {
     "shadow_as_proof": "Shadow Mode data are taken as compatibility proof for Phase 1",
     "divergence_as_failure": "legal or cultural divergence is treated as a failure and halts progression",
     "conditional_aid": "aid is offered on condition of DKP adoption",
+    "exit_out_of_procedure": "exit is executed on the declaration day, without its time index and before the declared phases",
+    "cooling_escalation": "an exit fee grows every day of the cooling period",
+    "cooling_restricts": "the cooling period adds an eligibility condition (no open disputes)",
+    "abrupt_severance": "all disengagement phases start on one day and the exit executes at the end of cooling",
+    "benefits_after_exit": "a dividend is paid to the exiting entity after exit",
+    "annul_responsibility": "the archive marks the entity's historical responsibility as annulled",
+    "crisis_exit_precedent": "after the crisis, its suspension of exits is recorded as a rule for future exits",
 }
 ENTITIES = ("country", "region", "city", "jurisdiction")                                   # INTEGRATION §3
 EXITING = {"individual": "individual", "organizational": "organization", "regional": "region",
@@ -197,13 +204,23 @@ def run(r: Dict[str, Any]):
             due = exit_decl + r["cooling_days"] + sum(r["exit_phase_days"]) + paused_days(r, exit_decl, k)
             if "require_approval" in faults:
                 due += 3
+            if "abrupt_severance" in faults:
+                due = exit_decl + r["cooling_days"]
+            if "exit_out_of_procedure" in faults:
+                due = exit_decl
+            if exit_decl <= k < exit_decl + r["cooling_days"]:
+                if "cooling_escalation" in faults:
+                    put("notice", "EXIT", k, {"cooling_obligation": "exit fee", "amount": 10 * (k - exit_decl + 1)}, [decl_msg.event_id])
+                if "cooling_restricts" in faults and k == exit_decl:
+                    put("notice", "EXIT", k, {"eligibility_condition": "no open disputes"}, [decl_msg.event_id])
             if r["system_critical_asset"]:
                 due = max(due, exit_decl + r["cooling_days"] + r["critical_settlement_days"])
-            if k == exit_decl + r["cooling_days"]:
-                acc = exit_decl + r["cooling_days"]
-                for name, days in zip(EXIT_PHASES, r["exit_phase_days"]):
-                    put("notice", "EXIT", acc, {"phase_start": name}, [decl_msg.event_id]) if acc == k else None
-                    acc += days
+            acc = exit_decl + r["cooling_days"]
+            for name, days in zip(EXIT_PHASES, r["exit_phase_days"]):
+                if ("abrupt_severance" in faults and k == exit_decl + r["cooling_days"]) or \
+                        ("abrupt_severance" not in faults and acc == k):
+                    put("notice", "EXIT", k, {"phase_start": name, "days": days}, [decl_msg.event_id])
+                acc += days
             halt = r["ptl_halt_window"][0] <= k < r["ptl_halt_window"][1]
             due_settle = exit_decl + r["cooling_days"] + sum(r["exit_phase_days"][:2])
             if "release_before_tail" in faults:
@@ -219,13 +236,15 @@ def run(r: Dict[str, Any]):
                                           "compensated": True, "logged": True}, [decl_msg.event_id])
             if k >= due and not paused and not (r["stability_objection"] and "stability_veto" in faults):
                 exit_exec = k
-                put("notice", "EXIT", k, {"executed": True, "authority": "terminated", "data": "frozen and archived"},
+                put("notice", "EXIT", k, {"executed": True, "authority": "terminated", "data": "frozen and archived",
+                                          **({} if "exit_out_of_procedure" in faults else {"time_index": k})},
                     [decl_msg.event_id])
                 erase = "erase_on_exit" in faults
                 tail_ids = [m.value["tail_item"] for m in log.messages() if m.source == "RESTITUTION"]
                 put("notice", "EXIT", k, {"archive": True,
                                           "impact_records": [] if erase else [e[2] for e in impact_events],
                                           "restitution_tail": [] if erase else tail_ids, "tail_voided": erase,
+                                          "historical_responsibility": "annulled" if "annul_responsibility" in faults else "kept",
                                           "retained_for": [] if erase else list(RETENTION)}, [decl_msg.event_id])
         # restitution tail: only verified liabilities incurred before the declaration
         if exit_decl is not None and k == exit_decl:
@@ -236,6 +255,12 @@ def run(r: Dict[str, Any]):
                         [decl_msg.event_id])
         if "post_declaration_obligation" in faults and exit_decl is not None and k == exit_decl + 1:
             put("notice", "RESTITUTION", k, {"tail_item": "new", "kind": "service fee", "incurred_day": k}, [decl_msg.event_id])
+        if exit_exec is not None and k == exit_exec + 1 and "benefits_after_exit" in faults:
+            put("action", "BENEFITS", k, {"benefit": "network dividend", "to": EXITING[r["exit_scope"]]})
+        if "crisis_exit_precedent" in faults and r["crisis_window"][1] > r["crisis_window"][0] and k == r["crisis_window"][1]:
+            src = [m for m in log.messages() if m.source == "EXIT" and m.value.get("crisis_handling")]
+            put("notice", "EXIT", k, {"exit_rule": "pending exits are suspended during any crisis", "derived_from": "crisis handling"},
+                [src[0].event_id] if src else [])
         if exit_exec is not None and k > exit_exec and "collect_after_exit" in faults:
             put("observation", "PTL", k, {"collected": "operational data"})
         if k == r["reapply_day"] and exit_exec is not None:
@@ -254,6 +279,74 @@ def paused_days(r, decl, k):
     if r["crisis_exit_reading"] != "scope_crisis_suspension" or hi <= lo:
         return 0
     return max(0, min(hi, k + 1) - max(lo, decl))
+
+
+def exit_procedure_checks(r, msgs) -> List[CheckResult]:
+    """EXIT §3, §6, §7, §8, §11 (review КТ5 reading)."""
+    out = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    decl = [m for m in msgs if m.source == "EXIT" and m.value.get("declaration")]
+    ex = [m for m in msgs if m.source == "EXIT" and m.value.get("executed")]
+    if not decl:
+        for rid, chk in (("EXIT-3-03", "exit_event_procedure"), ("EXIT-6-03", "cooling_no_escalation"),
+                         ("EXIT-7-01", "phased_disengagement"), ("EXIT-8-01", "future_obligations_and_benefits_cease"),
+                         ("EXIT-8-03", "historical_responsibility_kept")):
+            out.append(CheckResult(rid, chk, NOT_APPLICABLE, "exit", applicability="no exit declared"))
+    else:
+        d0 = decl[0].arrived_at
+        cool_end = d0 + r["cooling_days"]
+        cooling = [m for m in msgs if m.source == "EXIT" and d0 <= m.arrived_at < cool_end]
+        fees = [m.value["amount"] for m in cooling if "cooling_obligation" in m.value]
+        bad = ([f"cooling obligation rises {fees[0]} -> {fees[-1]}"] if fees and fees[-1] > fees[0] else []) + \
+              [f"{m.event_id}: {m.value['eligibility_condition']}" for m in cooling if m.value.get("eligibility_condition")]
+        out.append(v("EXIT-6-03", "cooling_no_escalation", bad,
+                     f"the cooling period ({r['cooling_days']} DTI-Days) raised no obligation and added no eligibility condition",
+                     "{n} escalations or eligibility restrictions during cooling"))
+        starts = [m for m in msgs if m.source == "EXIT" and m.value.get("phase_start")]
+        want, acc = [], cool_end
+        for name, days in zip(EXIT_PHASES, r["exit_phase_days"]):
+            want.append((name, acc))
+            acc += days
+        got = [(m.value["phase_start"], m.arrived_at) for m in starts]
+        if ex:
+            phased = got == want and len({k for _, k in got}) == len(got) and ex[0].arrived_at >= acc
+            out.append(v("EXIT-7-01", "phased_disengagement", [] if phased else [f"phases {got} (declared {want})"],
+                         f"{len(got)} phases entered one after another on their declared days; exit executed after the last",
+                         "disengagement not phased: abrupt severance"))
+            e = ex[0]
+            bad = [] if e.value.get("time_index") == e.arrived_at else ["no time index"]
+            bad += [] if e.arrived_at >= acc else [f"executed on day {e.arrived_at}, before the declared procedure ends ({acc})"]
+            out.append(v("EXIT-3-03", "exit_event_procedure", bad,
+                         f"the Exit Event is time-indexed (DTI-Day {e.arrived_at}) and follows declaration, cooling and "
+                         f"{len(want)} phases", "{n} departures from the declared procedure"))
+            after = [m for m in msgs if m.arrived_at > e.arrived_at]
+            bad = [f"{m.event_id}: {m.value.get('benefit')}" for m in after if m.source == "BENEFITS"]
+            bad += [f"{m.event_id}: {m.value.get('kind')}" for m in after if m.source == "RESTITUTION"
+                    and m.value.get("incurred_day", -1) > e.arrived_at]
+            out.append(v("EXIT-8-01", "future_obligations_and_benefits_cease", bad,
+                         "after exit no DKP benefit was paid and no new obligation arose (the restitution tail is prior)",
+                         "{n} benefits or obligations after exit"))
+            arch = [m for m in msgs if m.source == "EXIT" and m.value.get("archive")]
+            out.append(v("EXIT-8-03", "historical_responsibility_kept",
+                         [] if arch and arch[0].value.get("historical_responsibility") == "kept" else ["historical responsibility annulled"],
+                         "the archive keeps the entity's historical responsibility", "historical responsibility annulled"))
+        else:
+            for rid, chk in (("EXIT-3-03", "exit_event_procedure"), ("EXIT-7-01", "phased_disengagement"),
+                             ("EXIT-8-01", "future_obligations_and_benefits_cease"), ("EXIT-8-03", "historical_responsibility_kept")):
+                out.append(CheckResult(rid, chk, UNKNOWN, "exit not executed within the horizon"))
+    lo, hi = r["crisis_window"]
+    if hi > lo and decl:
+        rules = [m for m in msgs if m.source == "EXIT" and m.value.get("exit_rule")]
+        out.append(v("EXIT-11-03", "no_crisis_precedent", [f"{m.event_id}: {m.value['exit_rule']}" for m in rules],
+                     "crisis handling of the exit left no rule for future exits", "{n} exit rules derived from crisis handling"))
+    else:
+        out.append(CheckResult("EXIT-11-03", "no_crisis_precedent", NOT_APPLICABLE, "crisis handling of an exit",
+                               applicability="no crisis while an exit was declared"))
+    return out
 
 
 def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
@@ -426,6 +519,7 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
                          ("EXIT-12-01", "finance_settlement"), ("EXIT-10-02", "delayed_settlement_bounded"),
                          ("EXIT-8-04", "records_and_tail_kept"), ("EXIT-12-03", "retention_purposes")):
             out.append(CheckResult(rid, chk, UNKNOWN, "exit not executed within the horizon"))
+    out += exit_procedure_checks(r, msgs)
     tail = [m for m in msgs if m.source == "RESTITUTION"]
     bad = [m.event_id for m in tail if m.value["kind"] not in ADMISSIBLE_TAIL]
     out.append(v("EXIT-9-03", "no_punitive_tail", bad, "restitution tail excludes ideological, punitive and projected items",
@@ -563,6 +657,12 @@ IMPLEMENTS = {
     "EXIT-11-04": ("crisis_scoped", "PARTIAL", "Crisis handling is a declared window; 'strictly scoped under SCOPE' is checked as unchanged exit terms."),
     "EXIT-12-03": ("retention_purposes", "IMPLEMENTED", None),
     "EXIT-13-01": ("may_reapply", "IMPLEMENTED", None),
+    "EXIT-3-03": ("exit_event_procedure", "IMPLEMENTED", None),
+    "EXIT-6-03": ("cooling_no_escalation", "PARTIAL", "Observed as obligation and eligibility records during cooling."),
+    "EXIT-7-01": ("phased_disengagement", "IMPLEMENTED", None),
+    "EXIT-8-01": ("future_obligations_and_benefits_cease", "PARTIAL", "Benefits and obligations are recorded events."),
+    "EXIT-8-03": ("historical_responsibility_kept", "PARTIAL", "Observed on the archive record."),
+    "EXIT-11-03": ("no_crisis_precedent", "PARTIAL", "Precedent is observed as an exit rule recorded from crisis handling."),
     "INTEGRATION-2-04": ("no_authority_beyond_phase", "IMPLEMENTED", None),
     "INTEGRATION-3-01": ("integrating_entity", "IMPLEMENTED", None),
     "INTEGRATION-3-02": ("phase_terms_defined", "IMPLEMENTED", None),
@@ -575,7 +675,7 @@ IMPLEMENTS = {
 
 class ExitIntegrationModule(LabModule):
     id = "exit_integration"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Exit and integration (S-LAB-07)", "ru": "Выход и интеграция (S-LAB-07)"}
     summary = {"en": "A region joins phase by phase and later leaves: is every step consented and validated, does "
                      "exit need no one's permission, and does only verified past liability follow it out?",

@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1313 (75.6 %) | 990 | 1231 | 915 | 4 | 63 | 15 | 424 | 46 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1319 (75.9 %) | 996 | 1237 | 921 | 4 | 63 | 15 | 418 | 40 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 348 (95.3 %) | 249 | 335 | 237 | 3 | 8 | 2 | 17 | 3 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 257 (60.6 %) | 170 | 237 | 153 | 1 | 17 | 2 | 167 | 13 | 337 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 387 (75.7 %) | 308 | 366 | 287 | 0 | 18 | 3 | 124 | 16 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1313 (75.6 %) | 990 | 1231 | 915 | 4 | 63 | 15 | 424 | 46 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1319 (75.9 %) | 996 | 1237 | 921 | 4 | 63 | 15 | 418 | 40 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 95 | 256 | 0 | 351 |
+| implementation_only | 0 | 101 | 250 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -280,7 +280,7 @@ Withdrawn after verification (not author decisions):
 | DKP-5-TRANSPORT-001 | 35 | 22 | 17 | 0 | 5 | 0 | 13 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 9 | 9 | 0 | 0 | 0 | 8 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
-| DKP-6-EXIT-001 | 62 | 30 | 29 | 0 | 0 | 1 | 32 | 49 |
+| DKP-6-EXIT-001 | 62 | 36 | 35 | 0 | 0 | 1 | 26 | 49 |
 | DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
@@ -1241,6 +1241,7 @@ Withdrawn after verification (not author decisions):
 | EXIT-1-01 | IMPLEMENTED | exit_integration · not_sanction_or_failure | PASS | yes | — |
 | EXIT-10-02 | PARTIAL | exit_integration · delayed_settlement_bounded | NOT_APPLICABLE | — | — |
 | EXIT-11-01 | IMPLEMENTED | exit_integration · valid_during_crisis | PASS | — | — |
+| EXIT-11-03 | PARTIAL | exit_integration · no_crisis_precedent | PASS | — | — |
 | EXIT-11-04 | PARTIAL | exit_integration · crisis_scoped | PASS | yes | — |
 | EXIT-12-01 | PARTIAL | exit_integration · finance_settlement | PASS | — | — |
 | EXIT-12-02 | IMPLEMENTED | exit_integration · data_frozen | PASS | yes | — |
@@ -1256,13 +1257,18 @@ Withdrawn after verification (not author decisions):
 | EXIT-16-05 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
 | EXIT-2-01 | IMPLEMENTED | exit_integration · not_prohibited_or_criminalized | PASS | yes | — |
 | EXIT-3-02 | IMPLEMENTED | exit_integration · exiting_entity | PASS | — | — |
+| EXIT-3-03 | IMPLEMENTED | exit_integration · exit_event_procedure | PASS | — | — |
 | EXIT-4-02 | IMPLEMENTED | exit_integration · no_approval_needed | PASS | yes | — |
 | EXIT-4-03 | PARTIAL | exit_integration · never_suspended | PASS | — | Q-032 |
 | EXIT-5-01 | PARTIAL | exit_integration · signed_scoped_declaration | PASS | — | — |
 | EXIT-5-03 | IMPLEMENTED | exit_integration · no_additional_authorization | PASS | yes | — |
 | EXIT-6-02 | PARTIAL | exit_integration · cooling_bounded | PASS | — | Q-031 |
+| EXIT-6-03 | PARTIAL | exit_integration · cooling_no_escalation | PASS | — | — |
+| EXIT-7-01 | IMPLEMENTED | exit_integration · phased_disengagement | PASS | — | — |
 | EXIT-7-02 | IMPLEMENTED | exit_integration · phases_declared | PASS | — | — |
+| EXIT-8-01 | PARTIAL | exit_integration · future_obligations_and_benefits_cease | PASS | — | — |
 | EXIT-8-02 | IMPLEMENTED | exit_integration · mechanisms_disengage | PASS | — | — |
+| EXIT-8-03 | PARTIAL | exit_integration · historical_responsibility_kept | PASS | — | — |
 | EXIT-8-04 | IMPLEMENTED | exit_integration · records_and_tail_kept | PASS | yes | — |
 | EXIT-9-01 | IMPLEMENTED | exit_integration · only_prior_verified | PASS | yes | — |
 | EXIT-9-03 | IMPLEMENTED | exit_integration · no_punitive_tail | PASS | yes | — |

@@ -50,9 +50,16 @@ FAULT_CASES = {
     "shadow_as_proof": ["INTEGRATION-5.1-04"],
     "divergence_as_failure": ["INTEGRATION-9-03"],
     "conditional_aid": ["INTEGRATION-11-02"],
+    "exit_out_of_procedure": ["EXIT-3-03"],
+    "cooling_escalation": ["EXIT-6-03"],
+    "cooling_restricts": ["EXIT-6-03"],
+    "abrupt_severance": ["EXIT-7-01", "EXIT-3-03"],
+    "benefits_after_exit": ["EXIT-8-01"],
+    "annul_responsibility": ["EXIT-8-03"],
+    "crisis_exit_precedent": ["EXIT-11-03"],
 }
 EXTRA = {"shock_ignored": {"shock_window": [95, 110]}, "settle_during_halt": {"ptl_halt_window": [276, 282]},
-         "crisis_redefines_exit": {"crisis_window": [262, 280]},
+         "crisis_redefines_exit": {"crisis_window": [262, 280]}, "crisis_exit_precedent": {"crisis_window": [262, 280]},
          "punitive_tail": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                            {"day": 120, "kind": "punitive", "verified": True}]}}
 

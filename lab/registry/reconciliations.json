@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 95,
+  "confirmed": 101,
   "reclassified": 7
  },
  "items": [
@@ -731,6 +731,84 @@
     "human_accepted": false
    },
    "check": "edition_finality:override_not_permitted"
+  },
+  {
+   "id": "EXIT-11-03",
+   "document": "DKP-6-EXIT-001",
+   "quote": "Crisis handling:\n\nSHALL NOT create exit precedent,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Crisis handling 'SHALL NOT create exit precedent': no exit rule recorded from crisis handling for future exits. Observable after the crisis with the crisis handling declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:no_crisis_precedent"
+  },
+  {
+   "id": "EXIT-3-03",
+   "document": "DKP-6-EXIT-001",
+   "quote": "Exit Event The time-indexed execution of exit following the declared procedure.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes two properties of the Exit Event: it is time-indexed, and it executes the declared procedure (declaration, cooling, declared phases). Both are observable on the execution record and its predecessors.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:exit_event_procedure"
+  },
+  {
+   "id": "EXIT-6-03",
+   "document": "DKP-6-EXIT-001",
+   "quote": "SHALL NOT escalate obligations,\n\nSHALL NOT restrict exit eligibility.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two bans on the cooling period: no escalation of obligations and no restriction of eligibility. An obligation that grows during cooling, or an eligibility condition added in it, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:cooling_no_escalation"
+  },
+  {
+   "id": "EXIT-7-01",
+   "document": "DKP-6-EXIT-001",
+   "quote": "Exit SHALL proceed through phased disengagement, not abrupt severance.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Phased disengagement, not abrupt severance': the declared phases are entered one after another on their declared days and the exit executes after the last. Their content (§7 MAY list) is declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:phased_disengagement"
+  },
+  {
+   "id": "EXIT-8-01",
+   "document": "DKP-6-EXIT-001",
+   "quote": "all future DKP obligations cease,\n\nall future DKP benefits cease,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Upon completion future obligations and benefits cease: no DKP benefit and no obligation incurred after execution; the restitution tail (§9) is prior by definition. Observable as records after execution.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:future_obligations_and_benefits_cease"
+  },
+  {
+   "id": "EXIT-8-03",
+   "document": "DKP-6-EXIT-001",
+   "quote": "Exit SHALL NOT:\n\nannul historical responsibility,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Exit SHALL NOT annul historical responsibility': the archive keeps the entity's historical responsibility (impact records and the tail are EXIT-8-04). Observable on the archive record.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:historical_responsibility_kept"
   },
   {
    "id": "FINANCE-1-01",
