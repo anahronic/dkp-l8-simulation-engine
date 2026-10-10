@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 50,
+  "confirmed": 58,
   "reclassified": 3
  },
  "items": [
@@ -377,6 +377,110 @@
     "human_accepted": false
    },
    "check": "edu_culture:failure_is_signal"
+  },
+  {
+   "id": "ERROR-0-01",
+   "document": "DKP-4-ERROR-001",
+   "quote": "Errors in DKP are treated as system states, not as moral failures or intent-based misconduct.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'System states, not moral failures or intent-based misconduct' fixes what an error record may carry: a state of the §5 model or a procedural outcome, no blame or misconduct label. Observable on ERROR records.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:errors_as_states"
+  },
+  {
+   "id": "ERROR-1-01",
+   "document": "DKP-4-ERROR-001",
+   "quote": "ERROR handling is strictly procedural and non-punitive.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Procedural' is concretized by §5 (states in order) and §7-§8 (the steps); 'non-punitive' by §2 (no new coercive measures) and §11 (no retaliation): no measure is sourced from the error case itself. Whether a harsher recomputed Justice outcome counts is the separate open question Q-021, not decided here.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:procedural_non_punitive"
+  },
+  {
+   "id": "ERROR-11-01",
+   "document": "DKP-4-ERROR-001",
+   "quote": "This protocol SHALL NOT:\n\n- suppress valid appeals,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A valid appeal is defined by §3.2 (appealable decision) and §7 (formal fields, window or E1); such an appeal must open an error case (R1). Recomputable from the inputs.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:valid_appeal_not_suppressed"
+  },
+  {
+   "id": "ERROR-11-04",
+   "document": "DKP-4-ERROR-001",
+   "quote": "- introduce discretionary overrides.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "No discretionary override: every change to a measure derives from a Justice decision or the appeal procedure (suspension, resumption); an override record or a measure with another source is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:no_discretionary_override"
+  },
+  {
+   "id": "ERROR-2-04",
+   "document": "DKP-4-ERROR-001",
+   "quote": "- DKP-4-ERROR-001 SHALL NOT reinterpret axioms or Physical Truth.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "ERROR may not reinterpret Physical Truth: every measurement used in a correction is a PTL observation (an E1 correction arrives as a new PTL observation, §8); a measurement written by ERROR itself is observable. Axiom reinterpretation is not modelled beyond that (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:no_ptl_reinterpretation"
+  },
+  {
+   "id": "ERROR-5-02",
+   "document": "DKP-4-ERROR-001",
+   "quote": "- R1 – Error Suspected\n\n  * Error signal detected; non-coercive verification initiated.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "R1 'non-coercive verification' is observable: between R1 and R2 (or rejection) no compulsion or new measure on anyone on account of the verification. The status quo suspension (§7) is relief, not coercion.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:r1_non_coercive"
+  },
+  {
+   "id": "ERROR-6-04",
+   "document": "DKP-4-ERROR-001",
+   "quote": "No prediction or intent inference is permitted.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A clear ban; a prediction or an intent inference in the error case is observable as a record. Unrecorded inference is not observable (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:no_prediction_or_intent"
+  },
+  {
+   "id": "ERROR-9-03",
+   "document": "DKP-4-ERROR-001",
+   "quote": "- prefer reversibility over compensation,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Prefer reversibility over compensation': a measure the correction no longer supports is reversed (lifted) where reversible; compensation is only for elapsed effects (§8). Observable from the correction records.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "dispute_correction:reversibility_preferred"
   },
   {
    "id": "FINANCE-1-01",

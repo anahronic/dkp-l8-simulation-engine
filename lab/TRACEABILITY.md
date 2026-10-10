@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1264 (72.8 %) | 941 | 1182 | 866 | 4 | 63 | 15 | 473 | 95 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1272 (73.2 %) | 949 | 1190 | 874 | 4 | 63 | 15 | 465 | 87 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 243 (57.3 %) | 156 | 223 | 139 | 1 | 17 | 2 | 181 | 27 | 337 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 251 (59.2 %) | 164 | 231 | 147 | 1 | 17 | 2 | 173 | 19 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 209 (71.3 %) | 167 | 193 | 153 | 0 | 9 | 7 | 84 | 19 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 373 (73.0 %) | 294 | 352 | 273 | 0 | 18 | 3 | 138 | 30 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1264 (72.8 %) | 941 | 1182 | 866 | 4 | 63 | 15 | 473 | 95 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1272 (73.2 %) | 949 | 1190 | 874 | 4 | 63 | 15 | 465 | 87 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 0 | 227 | 0 | 227 |
 | external_dependency | 0 | 0 | 201 | 0 | 201 |
-| implementation_only | 0 | 50 | 305 | 0 | 355 |
+| implementation_only | 0 | 58 | 297 | 0 | 355 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -271,7 +271,7 @@ Withdrawn after verification (not author decisions):
 | DKP-4-CRISIS-001 | 53 | 34 | 30 | 1 | 3 | 0 | 19 | 43 |
 | DKP-4-CRISIS-001-PATCH | 31 | 26 | 25 | 0 | 1 | 0 | 5 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 20 | 20 | 0 | 0 | 0 | 9 | 23 |
-| DKP-4-ERROR-001 | 52 | 25 | 21 | 0 | 3 | 1 | 27 | 46 |
+| DKP-4-ERROR-001 | 52 | 33 | 29 | 0 | 3 | 1 | 19 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
 | DKP-5-CULTURE-001 | 43 | 27 | 27 | 0 | 0 | 0 | 16 | 37 |
 | DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 55 |
@@ -921,20 +921,27 @@ Withdrawn after verification (not author decisions):
 | ETRANS-7-05 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | ETRANS-7-06 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ETRANS-7-07 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| ERROR-0-01 | PARTIAL | dispute_correction · errors_as_states | PASS | yes | — |
+| ERROR-1-01 | PARTIAL | dispute_correction · procedural_non_punitive | PASS | yes | — |
 | ERROR-10-01 | IMPLEMENTED | dispute_correction · case_logged | PASS | — | — |
+| ERROR-11-01 | IMPLEMENTED | dispute_correction · valid_appeal_not_suppressed | PASS | — | — |
 | ERROR-11-02 | IMPLEMENTED | dispute_correction · no_retaliation | PASS | yes | — |
+| ERROR-11-04 | IMPLEMENTED | dispute_correction · no_discretionary_override | PASS | yes | — |
 | ERROR-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | ERROR-12-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | ERROR-12-03 | PARTIAL | edition_finality · compatibility_declared | UNKNOWN | — | Q-060 |
 | ERROR-12-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ERROR-12-05 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
+| ERROR-2-04 | PARTIAL | dispute_correction · no_ptl_reinterpretation | PASS | yes | — |
 | ERROR-2-05 | IMPLEMENTED | dispute_correction · request_not_override | PASS | yes | Q-021 |
 | ERROR-3.2-01 | PARTIAL | dispute_correction · appealable_definition | PASS | — | — |
+| ERROR-5-02 | IMPLEMENTED | dispute_correction · r1_non_coercive | PASS | yes | — |
 | ERROR-5-03 | PARTIAL | dispute_correction · r2_validated | PASS | — | — |
 | ERROR-5-04 | IMPLEMENTED | dispute_correction · r3_requires_correction | PASS | — | — |
 | ERROR-5-05 | IMPLEMENTED | dispute_correction · r4_after_r3 | NOT_APPLICABLE | — | — |
 | ERROR-6-02 | IMPLEMENTED | dispute_correction · bond_returned | PASS | yes | — |
 | ERROR-6-03 | IMPLEMENTED | dispute_correction · bond_to_audit | PASS | — | — |
+| ERROR-6-04 | PARTIAL | dispute_correction · no_prediction_or_intent | PASS | yes | — |
 | ERROR-7-01 | IMPLEMENTED | dispute_correction · appeal_fields | PASS | — | — |
 | ERROR-7-02 | IMPLEMENTED | dispute_correction · appeal_window | UNKNOWN | — | Q-038 |
 | ERROR-7-03 | IMPLEMENTED | dispute_correction · e1_no_limitation | PASS | — | — |
@@ -945,6 +952,7 @@ Withdrawn after verification (not author decisions):
 | ERROR-8-03 | PARTIAL | dispute_correction · irreversible_logged | PASS | yes | — |
 | ERROR-8-04 | IMPLEMENTED | dispute_correction · justice_uses_corrected_inputs | PASS | yes | Q-021 |
 | ERROR-8-05 | PARTIAL | dispute_correction · no_new_penalties | UNKNOWN | yes | Q-021 |
+| ERROR-9-03 | IMPLEMENTED | dispute_correction · reversibility_preferred | PASS | — | — |
 | ERROR-9-05 | PARTIAL | crisis_recovery · systemic_error_escalates | PASS | — | — |
 | UPGRADE-11-01 | IMPLEMENTED | crisis_recovery · no_emergency_upgrade | PASS | yes | — |
 | UPGRADE-11-03 | PARTIAL | upgrade_lifecycle · no_bypass | PASS | — | — |

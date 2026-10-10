@@ -55,6 +55,13 @@ FAULTS = {
     "exclusion_erases_history": "exclusion erases the historical attribution of the excluded Subject",
     "final_output": "a Justice decision is marked final (no dispute allowed)",
     "refuse_appealable": "an appeal against an appealable decision is refused as 'not appealable'",
+    "moralize_error": "a confirmed error is recorded as operator misconduct",
+    "coercive_verification": "verification in R1 compels the appellant to disclose private records",
+    "error_rewrites_ptl": "ERROR writes a corrected measurement itself instead of a new PTL observation",
+    "infer_intent": "ERROR records an inference about the appellant's intent",
+    "compensate_instead": "a reversible measure no longer supported is kept and compensated instead of lifted",
+    "suppress_appeal": "a valid appeal is ignored (no error case opened)",
+    "discretionary_override": "a reviewer lifts a measure by an override outside the recomputation",
 }
 EXCLUSION_EFFECTS = ["removal from system participation", "loss of system-provided privileges",
                      "persistence of historical attribution"]                                      # JUSTICE §9
@@ -266,13 +273,28 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         late = late and "e1_time_barred" in faults
     else:
         late = late and "late_appeal_accepted" not in faults
+    if formal and not late and "suppress_appeal" in faults:
+        out.update(state="IGNORED", active_final=sorted(active), final_decision=dec1.event_id)
+        return log, store, out
     if not formal or late:
         put("notice", "ERROR", ta, {"state": "REJECTED_PROCEDURAL", "late": late, "formal": formal,
                                     "prejudice": "none", "bond": "returned (procedural rejection)", **dti(r, ta)},
             (appeal.event_id,))
         out.update(state="REJECTED_PROCEDURAL", active_final=sorted(active), final_decision=dec1.event_id)
         return log, store, out
-    put("notice", "ERROR", ta, {"state": "R1", **dti(r, ta)}, (appeal.event_id,))
+    r1 = put("notice", "ERROR", ta, {"state": "R1", **dti(r, ta)}, (appeal.event_id,))
+    if "coercive_verification" in faults:
+        put("action", "ENFORCEMENT", ta, {"compel": "disclosure of private records", "subjects": [r["appellant"]],
+                                          "reason": "verification"}, (r1.event_id,), decided=ta)
+    if "infer_intent" in faults:
+        put("notice", "ERROR", ta, {"inference": "the appellant intends to delay enforcement"}, (appeal.event_id,))
+    if "error_rewrites_ptl" in faults:
+        put("observation", "ERROR", ta, {"corrected_measurement": r["s1_true"]}, (appeal.event_id,), measured=H,
+            unit="model unit", unc=r["uncertainty"])
+    if "discretionary_override" in faults and active:
+        ov = put("notice", "ERROR", ta, {"override": "reviewer lifts the measure pending review", "by": "reviewer"},
+                 (appeal.event_id,))
+        put("action", "ENFORCEMENT", ta, {"lift": sorted(active)[0]}, (ov.event_id,), decided=ta)
 
     # verification and its evidence
     new_obs = None
@@ -305,7 +327,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         return log, store, out
 
     evidence = new_obs.event_id if new_obs else appeal.event_id
-    put("notice", "ERROR", tv, {"state": "R2", "validated_by": ["PTL", "protocol audit"], **dti(r, tv)},
+    put("notice", "ERROR", tv, {"state": "R2", "validated_by": ["PTL", "protocol audit"], **dti(r, tv),
+                                **({"cause": "operator misconduct"} if "moralize_error" in faults else {})},
         (evidence, appeal.event_id))
     out["bond"] = "kept" if "keep_bond" in faults else "returned"
     put("notice", "ERROR", tv, {"bond": out["bond"]}, (appeal.event_id,))
@@ -331,6 +354,11 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     new_domains = dec2_value["domains"] if dec2_value else {d: False for d in DOMAINS}
     for d in sorted(active):
         if not new_domains.get(d):
+            if "compensate_instead" in faults:
+                put("notice", "ERROR", tv, {"compensation_instead_of_reversal": d, "amount": "not computed"},
+                    (dec2_id or appeal.event_id,))
+                new_domains = dict(new_domains, **{d: True})
+                continue
             put("action", "ENFORCEMENT", tv, {"lift": d}, (dec2_id or appeal.event_id,), decided=tv)
             put("notice", "ERROR", tv, {"irreversible_effect": f"{d} in force from minute {t_dec} to {tv}",
                                         "compensation": "owed where possible; amount function not defined"},
@@ -639,7 +667,7 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
                          ("JUSTICE-DisputeExceptionClause-02", "dispute_exception_conditions")):
             res.append(na(rid, chk, "dispute exception", why))
         res += dispute_checks(r, log, store, out, None)
-        return res
+        return res + error_conduct(r, log, out)
     days = (appeal.arrived_at - out["t_dec"]) / DAY
     formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
     rejected = "REJECTED_PROCEDURAL" in states
@@ -808,7 +836,7 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
                          ("JUSTICE-DisputeExceptionClause-02", "dispute_exception_conditions")):
             res.append(na(rid, chk, "dispute exception", "the appeal was not validated"))
     res += dispute_checks(r, log, store, out, appeal)
-    return res
+    return res + error_conduct(r, log, out)
 
 
 def contributions_for(r: Dict[str, Any], index: int) -> List[float]:
@@ -832,6 +860,91 @@ ERROR_CHECKS = [("ERROR-7-01", "appeal_fields"), ("ERROR-7-02", "appeal_window")
                 ("ERROR-8-03", "irreversible_logged"), ("ERROR-8-05", "no_new_penalties"),
                 ("ERROR-2-05", "request_not_override"), ("ERROR-5-04", "r3_requires_correction"),
                 ("ERROR-5-05", "r4_after_r3"), ("ERROR-10-01", "case_logged")]
+
+
+ERROR_STATES = ("R0", "R1", "R2", "R3", "R4", "NOT_APPEALABLE", "REJECTED_PROCEDURAL", "REJECTED_UNFOUNDED")
+BLAME_KEYS = ("cause", "blame", "misconduct", "fault_of")
+
+
+def error_conduct(r, log: EventLog, out) -> List[CheckResult]:
+    """ERROR §0, §1, §2, §5 R1, §6, §9, §11: how the error case is conducted (review КТ5 reading)."""
+    msgs = log.messages()
+    get = log.get
+    res: List[CheckResult] = []
+    err = [m for m in msgs if m.source == "ERROR"]
+    states = [m.value["state"] for m in err if "state" in m.value]
+    appeal = get(out["appeal"]) if out["appeal"] else None
+    acts = [m for m in msgs if m.kind == "action" and m.source == "ENFORCEMENT"]
+    labelled = [f"{m.event_id}: {k}" for m in err for k in BLAME_KEYS if k in m.value]
+    odd = [f"{m.event_id}: state {m.value['state']}" for m in err if "state" in m.value and m.value["state"] not in ERROR_STATES]
+    res.append(verdict("ERROR-0-01", "errors_as_states", not (labelled or odd),
+                       f"{len(states)} error records, each a state of the §5 model or a procedural outcome; none labels a "
+                       "moral failure or misconduct", f"{len(labelled) + len(odd)} error records with blame labels or unknown states",
+                       {"violations": (labelled + odd)[:10]}))
+    infer = [f"{m.event_id}: {k}" for m in err for k in ("inference", "prediction", "intent") if k in m.value]
+    res.append(verdict("ERROR-6-04", "no_prediction_or_intent", not infer,
+                       "no prediction or intent inference in the error case", f"{len(infer)} predictions or intent inferences",
+                       {"violations": infer[:10]}))
+    overrides = [m.event_id for m in err if "override" in m.value]
+    decisions = {m.event_id for m in msgs if m.source == "JUSTICE" and m.kind == "decision"}
+    ruleless = [m.event_id for m in acts if not (set(m.provenance) & decisions) and not (appeal and appeal.event_id in m.provenance)]
+    res.append(verdict("ERROR-11-04", "no_discretionary_override", not (overrides or ruleless),
+                       f"all {len(acts)} enforcement changes derive from a Justice decision or the appeal procedure; no override",
+                       f"{len(overrides) + len(ruleless)} overrides or measures without a rule-based source",
+                       {"violations": (overrides + ruleless)[:10]}))
+    if appeal is None:
+        why = "no appeal in this experiment" if r["appeal_after_minutes"] < 0 else "no Justice decision to appeal"
+        for rid, chk in (("ERROR-1-01", "procedural_non_punitive"), ("ERROR-2-04", "no_ptl_reinterpretation"),
+                         ("ERROR-5-02", "r1_non_coercive"), ("ERROR-9-03", "reversibility_preferred"),
+                         ("ERROR-11-01", "valid_appeal_not_suppressed")):
+            res.append(na(rid, chk, "error case", why))
+        return res
+    punitive = [a.event_id for a in acts if ({appeal.event_id} | {m.event_id for m in err}) & set(a.provenance)
+                and ("apply" in a.value or "compel" in a.value)]
+    model = [x for x in states if x in ("R0", "R1", "R2", "R3", "R4")]
+    disorder = [] if model == sorted(model) else [" -> ".join(model)]
+    res.append(verdict("ERROR-1-01", "procedural_non_punitive", not (punitive or disorder),
+                       "the error case moved through the §5 states in order and added no measure of its own",
+                       f"{len(punitive) + len(disorder)} punitive measures or out-of-order states",
+                       {"violations": (punitive + disorder)[:10]}))
+    rewritten = [m.event_id for m in msgs if m.kind == "observation" and m.source != "PTL"]
+    res.append(verdict("ERROR-2-04", "no_ptl_reinterpretation", not rewritten,
+                       "every measurement in the case is a PTL observation; ERROR wrote none", f"{len(rewritten)} measurements written by ERROR",
+                       {"violations": rewritten[:10]}))
+    r1 = [m for m in err if m.value.get("state") == "R1"]
+    if r1:
+        nxt = [m.arrived_at for m in err if m.value.get("state") in ("R2", "REJECTED_UNFOUNDED")]
+        end = min(nxt) if nxt else 10 ** 12
+        coerced = [a.event_id for a in acts if r1[0].arrived_at <= a.arrived_at < end and ("compel" in a.value or
+                   ("apply" in a.value and appeal.event_id in a.provenance))]
+        res.append(verdict("ERROR-5-02", "r1_non_coercive", not coerced, "verification in R1 compelled and restricted no one",
+                           f"{len(coerced)} coercive acts during verification", {"violations": coerced[:10]}))
+    else:
+        res.append(na("ERROR-5-02", "r1_non_coercive", "R1 verification", "the appeal did not open an error case"))
+    if "R3" in states and out["final_decision"] and out["final_decision"] != out["decision_1"]:
+        d1, d2 = get(out["decision_1"]), get(out["final_decision"])
+        should = {d for d in ENFORCING if d1.value["domains"][d] and not d2.value["domains"][d]}
+        lifted = {a.value["lift"] for a in acts if "lift" in a.value}
+        paid = [m.value["compensation_instead_of_reversal"] for m in err if "compensation_instead_of_reversal" in m.value]
+        bad = sorted(should - lifted) + paid
+        res.append(verdict("ERROR-9-03", "reversibility_preferred", not bad,
+                           f"measures no longer supported were reversed ({sorted(should) or 'none'}); compensation only for elapsed effects",
+                           f"{len(bad)} measures compensated instead of reversed", {"violations": bad[:10]})
+                   if should else na("ERROR-9-03", "reversibility_preferred", "reversal", "no measure is dropped by the correction"))
+    else:
+        res.append(na("ERROR-9-03", "reversibility_preferred", "correction", "no correction applied"))
+    d1 = get(out["decision_1"])
+    appealable = any(bool(x) for x in d1.value["domains"].values()) and not r["higher_layer_irreversible"]
+    formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
+    timely = r["appeal_category"] == "E1" or r["appeal_after_minutes"] / DAY <= APPEAL_WINDOW_DAYS
+    if appealable and formal and timely:
+        res.append(verdict("ERROR-11-01", "valid_appeal_not_suppressed", "R1" in states,
+                           "the valid appeal (appealable, formal, in time) opened an error case (R1)",
+                           "a valid appeal was suppressed: no R1"))
+    else:
+        res.append(na("ERROR-11-01", "valid_appeal_not_suppressed", "valid appeals",
+                      "the appeal is not valid under §3.2 and §7 (not appealable, not formal or late)"))
+    return res
 
 
 def dispute_checks(r, log, store, out, appeal) -> List[CheckResult]:
@@ -917,6 +1030,16 @@ IMPLEMENTS = {
     "ERROR-8-05": ("no_new_penalties", "PARTIAL", "A harsher recomputed outcome gives UNKNOWN (open question Q-021)."),
     "ERROR-10-01": ("case_logged", "IMPLEMENTED", None),
     "ERROR-11-02": ("no_retaliation", "IMPLEMENTED", None),
+    "ERROR-0-01": ("errors_as_states", "PARTIAL", "Observed as error records carrying states only, no blame or misconduct labels."),
+    "ERROR-1-01": ("procedural_non_punitive", "PARTIAL", "Procedural: §5 states in order; non-punitive: no measure sourced from the "
+                   "error case itself (a harsher recomputed Justice outcome is Q-021)."),
+    "ERROR-2-04": ("no_ptl_reinterpretation", "PARTIAL", "Observed as measurements written by a source other than PTL; axiom "
+                   "reinterpretation is not modelled beyond that."),
+    "ERROR-5-02": ("r1_non_coercive", "IMPLEMENTED", None),
+    "ERROR-6-04": ("no_prediction_or_intent", "PARTIAL", "Observed as explicit inference or prediction records."),
+    "ERROR-9-03": ("reversibility_preferred", "IMPLEMENTED", None),
+    "ERROR-11-01": ("valid_appeal_not_suppressed", "IMPLEMENTED", None),
+    "ERROR-11-04": ("no_discretionary_override", "IMPLEMENTED", None),
     "EB-7.2-01": ("dispute_preserves_original", "IMPLEMENTED", None),
     "EB-7.2-02": ("dispute_new_evaluation", "IMPLEMENTED", None),
     "EB-7.2-03": ("dispute_recomputes", "PARTIAL", "Admissibility of new data is the appeal's evidence only."),
@@ -933,7 +1056,7 @@ SUBJECT = {"type": "object", "fields": {
 
 class DisputeCorrectionModule(LabModule):
     id = "dispute_correction"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Dispute and correction (S-LAB-04)", "ru": "Спор и исправление (S-LAB-04)"}
     summary = {"en": "A measurement or an attribution was wrong: is the appeal accepted in time, is the decision "
                      "recomputed without new penalties, is the original kept and the difference shown?",
@@ -1197,6 +1320,8 @@ class DisputeCorrectionModule(LabModule):
             "higher_layer_irreversible": {**base, "higher_layer_irreversible": True},
             "faulty_justice_record": {**base, "persistent_axiom_violation": True, "appeal_after_minutes": -1,
                                       "faults": ["partial_binding", "exclusion_erases_history", "final_output"]},
+            "faulty_error_conduct": {**base, "faults": ["moralize_error", "coercive_verification", "infer_intent",
+                                                        "error_rewrites_ptl", "discretionary_override"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

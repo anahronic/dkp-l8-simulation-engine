@@ -221,6 +221,11 @@
   },
   {
    "module": "dispute_correction",
+   "example": "faulty_error_conduct",
+   "kind": "counterexample"
+  },
+  {
+   "module": "dispute_correction",
    "example": "faulty_justice_record",
    "kind": "counterexample"
   },
@@ -1440,21 +1445,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1264,
-  "covered_percent": 72.8,
+  "covered": 1272,
+  "covered_percent": 73.2,
   "statuses": {
-   "PASS": 1182,
+   "PASS": 1190,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 473
+   "UNCOVERED": 465
   },
   "resolvable": 674,
-  "resolvable_uncovered": 95,
-  "resolvable_uncovered_implementation_only": 95,
+  "resolvable_uncovered": 87,
+  "resolvable_uncovered_implementation_only": 87,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 941,
-  "pass_with_open_point": 866
+  "covered_with_open_point": 949,
+  "pass_with_open_point": 874
  },
  "stages": [
   {
@@ -1504,21 +1509,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1264,
-    "covered_percent": 72.8,
+    "covered": 1272,
+    "covered_percent": 73.2,
     "statuses": {
-     "PASS": 1182,
+     "PASS": 1190,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 473
+     "UNCOVERED": 465
     },
     "resolvable": 674,
-    "resolvable_uncovered": 95,
-    "resolvable_uncovered_implementation_only": 95,
+    "resolvable_uncovered": 87,
+    "resolvable_uncovered_implementation_only": 87,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 941,
-    "pass_with_open_point": 866
+    "covered_with_open_point": 949,
+    "pass_with_open_point": 874
    }
   },
   {
@@ -1625,21 +1630,21 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 243,
-    "covered_percent": 57.3,
+    "covered": 251,
+    "covered_percent": 59.2,
     "statuses": {
-     "PASS": 223,
+     "PASS": 231,
      "FAIL": 1,
      "UNKNOWN": 17,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 181
+     "UNCOVERED": 173
     },
     "resolvable": 164,
-    "resolvable_uncovered": 27,
-    "resolvable_uncovered_implementation_only": 27,
+    "resolvable_uncovered": 19,
+    "resolvable_uncovered_implementation_only": 19,
     "unresolved_decisions": 337,
-    "covered_with_open_point": 156,
-    "pass_with_open_point": 139
+    "covered_with_open_point": 164,
+    "pass_with_open_point": 147
    }
   },
   {
@@ -2821,8 +2826,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 50,
-    "codex_draft": 305,
+    "lab_reconciled": 58,
+    "codex_draft": 297,
     "human_accepted": 0,
     "total": 355
    },
@@ -36971,30 +36976,43 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define a machine-readable boundary for moral or intent-based treatment. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "dispute_correction",
+   "check": "errors_as_states",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": "Observed as error records carrying states only, no blame or misconduct labels.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 12,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "dispute_correction:faulty_error_conduct"
+   ],
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -37003,30 +37021,44 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Complete procedural rules and an operational definition of punitive handling are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "dispute_correction",
+   "check": "procedural_non_punitive",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": "Procedural: §5 states in order; non-punitive: no measure sourced from the error case itself (a harsher recomputed Justice outcome is Q-021).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "dispute_correction:faulty_error_conduct",
+    "dispute_correction:same_with_faulty_chain"
+   ],
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -37139,30 +37171,41 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Valid appeal and suppression lack precise operational definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "dispute_correction",
+   "check": "valid_appeal_not_suppressed",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -37248,30 +37291,43 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Discretionary override is not operationally defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "dispute_correction",
+   "check": "no_discretionary_override",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 12,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "dispute_correction:faulty_error_conduct"
+   ],
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -37595,30 +37651,43 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Reinterpretation is undefined, including its boundary with permitted E1 correction. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "dispute_correction",
+   "check": "no_ptl_reinterpretation",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": "Observed as measurements written by a source other than PTL; axiom reinterpretation is not modelled beyond that.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "dispute_correction:faulty_error_conduct"
+   ],
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -37970,30 +38039,44 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not operationally define non-coercive verification. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "dispute_correction",
+   "check": "r1_non_coercive",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 7
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "dispute_correction:faulty_error_conduct",
+    "dispute_correction:same_with_faulty_chain"
+   ],
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -38274,30 +38357,43 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited operation classes and the scope of the prohibition are not precisely defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "dispute_correction",
+   "check": "no_prediction_or_intent",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": "Observed as explicit inference or prediction records.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 12,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "dispute_correction:faulty_error_conduct"
+   ],
+   "under_alternative_readings": {
+    "PASS": 3
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -38848,30 +38944,42 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The strength of the preference and its interaction with other correction principles are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "dispute_correction",
+   "check": "reversibility_preferred",
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-DC-1",
+    "H-DC-2",
+    "H-DC-3",
+    "H-DC-4",
+    "H-DC-5",
+    "H-DC-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 9
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2,
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

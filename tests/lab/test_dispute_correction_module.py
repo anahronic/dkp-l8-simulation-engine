@@ -42,6 +42,13 @@ FAULT_CASES = {
     "exclusion_erases_history": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-02"]),
     "final_output": ({}, ["JUSTICE-DisputeExceptionClause-03"]),
     "refuse_appealable": ({}, ["ERROR-3.2-01"]),
+    "moralize_error": ({}, ["ERROR-0-01"]),
+    "coercive_verification": ({}, ["ERROR-5-02", "ERROR-1-01"]),
+    "error_rewrites_ptl": ({}, ["ERROR-2-04"]),
+    "infer_intent": ({}, ["ERROR-6-04"]),
+    "compensate_instead": ({}, ["ERROR-9-03"]),
+    "suppress_appeal": ({}, ["ERROR-11-01"]),
+    "discretionary_override": ({}, ["ERROR-11-04"]),
 }
 
 
@@ -108,3 +115,13 @@ def test_decisions_carry_provenance_to_ptl():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_error_conduct_applicability():
+    """Review КТ5 reading of ERROR §1, §5, §9, §11: a late non-E1 appeal is not a valid appeal (§7), so suppression
+    cannot be judged; a harsher recomputed Justice outcome is not a measure of the error case itself (Q-021)."""
+    late = statuses(run(repeated_harm=True, appeal_category="E3", recorded_contributions=[4, 0], appeal_after_minutes=40 * 1440))
+    assert late["ERROR-11-01"] == "NOT_APPLICABLE"
+    harsh = statuses(run(repeated_harm=True, s1_recorded=0.55, s1_true=0.95))
+    assert harsh["ERROR-1-01"] == "PASS" and harsh["ERROR-8-05"] == "UNKNOWN"
+    assert statuses(run(repeated_harm=True, appeal_after_minutes=-1))["ERROR-0-01"] == "PASS"
