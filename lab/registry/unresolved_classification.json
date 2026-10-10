@@ -9008,14 +9008,18 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "The definition 'DTI-Day = JDN' and the canonical conversion code fix the time anchor, so 'MUST NOT be anchored' does not require the general event-classification system invented by the draft."
+   "rationale": "The definition 'DTI-Day = JDN' and the canonical conversion code fix the time anchor, so 'MUST NOT be anchored' does not require the general event-classification system invented by the draft.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "Neutrality is fixed arithmetically by §3 (DTI-Day = JDN) and §5 (DY 0 begins at DTI-Day 0, as the §10 code computes): the index has an arithmetic origin. Re-anchoring it at an event (a launch, a holiday) is observable. JDN's own origin is fixed by §3 and not judged. One of the five КТ5-GPT-03 provisions: the draft 'checkable: no' is corrected to partial."
   },
   "TIME-2-03": {
    "document": "DKP-0-TIME-001",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "Sections 7–8 expressly permit 'DTI-Day' as the authoritative stored value and Section 6 reconstructs it from canonical '(DY, DOY)', providing the basis for 'independent recomputation' without requiring the source-date evidence proposed by the draft."
+   "rationale": "Sections 7–8 expressly permit 'DTI-Day' as the authoritative stored value and Section 6 reconstructs it from canonical '(DY, DOY)', providing the basis for 'independent recomputation' without requiring the source-date evidence proposed by the draft.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Any record MUST allow independent recomputation of its time index': each stored record's DTI-Day recomputes from its stored DY/DOY and from its Gregorian display. Observable on the store."
   },
   "TIME-2-04": {
    "document": "DKP-0-TIME-001",
@@ -9029,14 +9033,18 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "Section 1 specifies conversion 'to and from the Gregorian calendar' and Section 6 supplies both directions, so 'civil calendars' does not establish the additional calendar obligations proposed by the draft."
+   "rationale": "Section 1 specifies conversion 'to and from the Gregorian calendar' and Section 6 supplies both directions, so 'civil calendars' does not establish the additional calendar obligations proposed by the draft.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Explicit conversion rules to and from civil calendars MUST be provided': §6 gives both directions and the pinned §10 reference implements them; both round-trip. Civil calendars = the Gregorian calendar the text names (partial)."
   },
   "TIME-3-01": {
    "document": "DKP-0-TIME-001",
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "Section 6 takes a 'Gregorian civil date (year, month, day)' and Section 4 says sub-day units 'MUST NOT be required', so 'midnight-to-midnight' does not introduce the timestamp-to-timezone mapping assumed by the draft."
+   "rationale": "Section 6 takes a 'Gregorian civil date (year, month, day)' and Section 4 says sub-day units 'MUST NOT be required', so 'midnight-to-midnight' does not introduce the timestamp-to-timezone mapping assumed by the draft.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "JDN is 'an integer count of civil days in the proleptic Gregorian calendar': checkable against an independent proleptic day count, including dates before 1582 where Julian and proleptic Gregorian differ."
   },
   "TIME-9-04": {
    "document": "DKP-0-TIME-001",

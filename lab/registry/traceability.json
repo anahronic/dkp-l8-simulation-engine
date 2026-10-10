@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1325,
-  "covered_percent": 76.3,
+  "covered": 1329,
+  "covered_percent": 76.5,
   "statuses": {
-   "PASS": 1243,
+   "PASS": 1247,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 412
+   "UNCOVERED": 408
   },
-  "resolvable": 671,
-  "resolvable_uncovered": 35,
-  "resolvable_uncovered_implementation_only": 35,
+  "resolvable": 672,
+  "resolvable_uncovered": 32,
+  "resolvable_uncovered_implementation_only": 32,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 1002,
-  "pass_with_open_point": 927
+  "covered_with_open_point": 1006,
+  "pass_with_open_point": 931
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1325,
-    "covered_percent": 76.3,
+    "covered": 1329,
+    "covered_percent": 76.5,
     "statuses": {
-     "PASS": 1243,
+     "PASS": 1247,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 412
+     "UNCOVERED": 408
     },
-    "resolvable": 671,
-    "resolvable_uncovered": 35,
-    "resolvable_uncovered_implementation_only": 35,
+    "resolvable": 672,
+    "resolvable_uncovered": 32,
+    "resolvable_uncovered_implementation_only": 32,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 1002,
-    "pass_with_open_point": 927
+    "covered_with_open_point": 1006,
+    "pass_with_open_point": 931
    }
   },
   {
@@ -1618,13 +1618,13 @@
   {
    "id": "C",
    "title": "Common checks",
-   "status": "PARTIAL",
+   "status": "DONE",
    "criteria": [
     {
      "id": "C1",
      "text": "boundary cases, unconfirmed models and cascading degradation visible and checked",
      "check": "stage_coverage",
-     "met": false
+     "met": true
     }
    ],
    "stats": {
@@ -1632,21 +1632,21 @@
     "registered": 8,
     "not_registered": [],
     "provisions": 365,
-    "covered": 348,
-    "covered_percent": 95.3,
+    "covered": 352,
+    "covered_percent": 96.4,
     "statuses": {
-     "PASS": 335,
+     "PASS": 339,
      "FAIL": 3,
      "UNKNOWN": 8,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 17
+     "UNCOVERED": 13
     },
-    "resolvable": 164,
-    "resolvable_uncovered": 3,
-    "resolvable_uncovered_implementation_only": 3,
+    "resolvable": 165,
+    "resolvable_uncovered": 0,
+    "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 266,
-    "covered_with_open_point": 249,
-    "pass_with_open_point": 237
+    "covered_with_open_point": 253,
+    "pass_with_open_point": 241
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 107,
-    "codex_draft": 244,
+    "lab_reconciled": 111,
+    "codex_draft": 240,
     "human_accepted": 0,
     "total": 351
    },
@@ -10458,31 +10458,33 @@
    "document": "DKP-0-TIME-001",
    "section": "2",
    "kind": "constraint",
-   "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Event classification and the meaning of anchoring require an interpretation not supplied by the text.",
+   "checkable": "partial",
+   "coverage": "PARTIAL",
+   "module": "time",
+   "check": "neutral_anchor",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": "Neutrality read as an arithmetic origin (DTI-Day = JDN by §3); whether JDN's own origin is neutral is fixed by §3, not judged.",
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -10522,30 +10524,32 @@
    "section": "2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required evidence and meaning of independent recomputation are unspecified. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "recomputable_index",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -10586,30 +10590,32 @@
    "section": "2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required set of civil calendars is not defined beyond the Gregorian rules. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "time",
+   "check": "conversion_rules_provided",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": "Civil calendars = the Gregorian calendar the text names.",
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -10618,30 +10624,32 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No timezone convention is supplied for assigning timestamps to civil days. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "time",
+   "check": "jdn_proleptic_count",
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
    "hypotheses": [],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

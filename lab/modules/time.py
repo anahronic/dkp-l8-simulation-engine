@@ -124,6 +124,8 @@ def store(records: List[Dict[str, Any]], faults=()) -> List[Dict[str, Any]]:
         dy, doy = dy_doy(day)
         row.update(accepted=True, dti_day=day, dy=dy, doy=doy, derived=["dy", "doy"],
                    gregorian_display="%04d-%02d-%02d" % jdn_to_gregorian(day))
+        if "unrecomputable_index" in faults and len(out) == 0:
+            row.update(dy=None, doy=None, gregorian_display=None, derived=[])
         if rec["purpose"] != "record":
             row["reference"] = canonical(dy, doy) if "audit_by_canonical" in faults else f"DTI-Day {day}"
         out.append(row)
@@ -166,7 +168,24 @@ FAULTS = {
     "audit_by_canonical": "an audit or dispute references the DY/DOY string instead of DTI-Day",
     "leap_day": "a DTI-Year containing 29 February gets 361 days",
     "gregorian_new_year": "DTI-Year boundaries are placed on 1 January",
+    "event_epoch": "DTI-Day is counted from the Genesis launch (2025-12-10) instead of JDN 0",
+    "julian_before_1582": "dates before 1582-10-15 are converted with the Julian calendar",
+    "unrecomputable_index": "a stored record keeps DTI-Day but drops its derived DY/DOY and Gregorian display",
+    "no_inverse_rule": "the conversion offered has no rule back to the civil calendar",
 }
+EVENT_EPOCH = (2025, 12, 10)                       # the Code's launch date: an event (fault event_epoch)
+PROBES = [(1000, 3, 1), (1582, 10, 4), (1582, 10, 15), (1970, 1, 1), (2026, 1, 1)]   # proleptic Gregorian probes (§3)
+
+
+def to_dti(y: int, m: int, d: int, faults=()) -> int:
+    """The lab's conversion Gregorian -> DTI-Day, with the faults that change it."""
+    if "julian_before_1582" in faults and (y, m, d) < (1582, 10, 15):
+        a = (14 - m) // 12
+        yy, mm = y + 4800 - a, m + 12 * a - 3
+        jdn = d + (153 * mm + 2) // 5 + 365 * yy + yy // 4 - 32083          # Julian calendar day number
+    else:
+        jdn = gregorian_to_jdn(y, m, d)
+    return jdn - gregorian_to_jdn(*EVENT_EPOCH) if "event_epoch" in faults else jdn
 RECORD = {"type": "object", "fields": {
     "id": {"type": "str"},
     "given": {"type": "list", "min_items": 1, "max_items": 3, "items": {"type": "enum", "values": ["dti_day", "dy_doy", "gregorian"]}},
@@ -189,6 +208,11 @@ NO_SUB_DAY = {"hour", "hours", "minute", "minutes", "second", "seconds", "time",
 
 IMPLEMENTS = {
     "TIME-2-02": ("unique_from_canonical", "IMPLEMENTED", None),
+    "TIME-2-01": ("neutral_anchor", "PARTIAL", "Neutrality read as an arithmetic origin (DTI-Day = JDN by §3); whether JDN's own "
+                  "origin is neutral is fixed by §3, not judged."),
+    "TIME-2-03": ("recomputable_index", "IMPLEMENTED", None),
+    "TIME-2-05": ("conversion_rules_provided", "PARTIAL", "Civil calendars = the Gregorian calendar the text names."),
+    "TIME-3-01": ("jdn_proleptic_count", "IMPLEMENTED", None),
     "TIME-3-03": ("year_360_days", "IMPLEMENTED", None),
     "TIME-3-04": ("doy_1_to_360", "IMPLEMENTED", None),
     "TIME-4.1-01": ("civil_day_unit", "IMPLEMENTED", None),
@@ -224,7 +248,7 @@ IMPLEMENTS = {
 
 class TimeModule(LabModule):
     id = "time"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Date index (TIME)", "ru": "Индекс дат (TIME)"}
     summary = {"en": "Gregorian dates to DTI-Day, DY/DOY and back; checks the normative vectors and the "
                      "canonical reference implementation.",
@@ -277,7 +301,7 @@ class TimeModule(LabModule):
         rows = []
         for s in resolved["dates"]:
             y, m, d = parse_gregorian(s)
-            jdn = gregorian_to_jdn(y, m, d)
+            jdn = to_dti(y, m, d, resolved["faults"])
             dy, doy = dy_doy(jdn)
             back = jdn_to_gregorian(from_dy_doy(dy, doy))
             r_dd = ref["gregorian_to_dikenocratic"](y, m, d)
@@ -342,6 +366,7 @@ class TimeModule(LabModule):
         checks += self.structure_checks(resolved, rows, ref)
         stored = store(resolved["records"], resolved["faults"])
         checks += record_checks(resolved, stored)
+        checks += principle_checks(resolved, rows, stored, ref)
         explain = [{"en": f"{r['gregorian']} → DTI-Day {r['dti_day']} → {r['canonical']}",
                     "ru": f"{r['gregorian']} → DTI-Day {r['dti_day']} → {r['canonical']}"} for r in rows[:20]]
         if any(not v["matches"] for v in vec):
@@ -473,6 +498,64 @@ class TimeModule(LabModule):
                 "invalid_record_date": {"records": [{"id": "a", "given": ["gregorian"], "gregorian": "2026-13-01"}]},
                 "repeated_record": {"records": [{"id": "a", "given": ["dti_day"]}, {"id": "a", "given": ["dti_day"]}]},
                 "doy_out_of_range": {"records": [{"id": "a", "given": ["dy_doy"], "dy": 1, "doy": 361}]}}
+
+
+def principle_checks(r: Dict[str, Any], rows, stored, ref) -> List[CheckResult]:
+    """TIME §2 design principles 1, 3, 5 and the §3 JDN definition (review КТ5 reading)."""
+    faults = r["faults"]
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    # §2.1 neutrality: the origin is arithmetic (DTI-Day = JDN, DY 0 starts at DTI-Day 0), no event re-anchors it
+    origin = [f"{x['gregorian']}: DTI-Day {x['dti_day']} != JDN {gregorian_to_jdn(*parse_gregorian(x['gregorian']))}"
+              for x in rows if x["dti_day"] != gregorian_to_jdn(*parse_gregorian(x["gregorian"]))]
+    if year_bounds(0, faults)[0] != 0:
+        origin.append(f"DY 0 starts at DTI-Day {year_bounds(0, faults)[0]}")
+    out.append(v("TIME-2-01", "neutral_anchor", origin[:5],
+                 "the index has an arithmetic origin: DTI-Day = JDN (§3) and DY 0 begins at DTI-Day 0; no religious, "
+                 "cultural, political or personal event anchors it", "{n} dates indexed from another origin"))
+    # §3 JDN: an integer count of civil days in the proleptic Gregorian calendar (independent: datetime's proleptic ordinal)
+    bad = []
+    for y, m, d in PROBES:
+        got = to_dti(y, m, d, faults) + (gregorian_to_jdn(*EVENT_EPOCH) if "event_epoch" in faults else 0)
+        want = _date(y, m, d).toordinal() + 1721425
+        if got != want:
+            bad.append(f"{y:04d}-{m:02d}-{d:02d}: {got} != {want}")
+    a, b = (to_dti(1582, 10, 4, faults), to_dti(1582, 10, 15, faults))
+    if b - a != 11:
+        bad.append(f"1582-10-04 -> 1582-10-15 is {b - a} days in the proleptic Gregorian count, not 11")
+    out.append(v("TIME-3-01", "jdn_proleptic_count", bad,
+                 f"JDN counts civil days in the proleptic Gregorian calendar ({len(PROBES)} probes, including dates before "
+                 "1582, agree with an independent proleptic day count)", "{n} days counted otherwise"))
+    # §2.3 auditability: every stored record allows independent recomputation of its time index
+    acc = [x for x in stored if x["accepted"]]
+    bad = []
+    for x in acc:
+        if x["dy"] is None or x["gregorian_display"] is None:
+            bad.append(f"{x['id']}: derived fields missing")
+        elif from_dy_doy(x["dy"], x["doy"]) != x["dti_day"] or \
+                gregorian_to_jdn(*parse_gregorian(x["gregorian_display"])) != x["dti_day"]:
+            bad.append(f"{x['id']}: stored forms do not recompute to DTI-Day {x['dti_day']}")
+    out.append(v("TIME-2-03", "recomputable_index", bad,
+                 f"{len(acc)} stored records: DTI-Day recomputes from the stored DY/DOY and from the Gregorian display",
+                 "{n} records whose time index cannot be recomputed") if acc else
+               CheckResult("TIME-2-03", "recomputable_index", NOT_APPLICABLE, "stored records", applicability="no record stored"))
+    # §2.5 interoperability: explicit rules both ways, provided by the pinned §10 reference, and they round-trip
+    ns = {k: f for k, f in ref.items() if not ("no_inverse_rule" in faults and k == "dikenocratic_to_gregorian")}
+    have = [k for k in ("gregorian_to_dikenocratic", "dikenocratic_to_gregorian") if callable(ns.get(k))]
+    bad = [f"no {k}" for k in ("gregorian_to_dikenocratic", "dikenocratic_to_gregorian") if k not in have]
+    if not bad:
+        for x in rows:
+            dd = ns["gregorian_to_dikenocratic"](*parse_gregorian(x["gregorian"]))
+            if "%04d-%02d-%02d" % tuple(ns["dikenocratic_to_gregorian"](dd.dy, dd.doy)) != x["gregorian"]:
+                bad.append(f"{x['gregorian']}: no round trip")
+    out.append(v("TIME-2-05", "conversion_rules_provided", bad,
+                 "explicit conversion rules to and from the Gregorian calendar are given (§6) and implemented in the pinned "
+                 f"§10 reference; both directions round-trip on {len(rows)} dates", "{n} missing or failing conversion rules"))
+    return out
 
 
 def record_checks(r: Dict[str, Any], stored: List[Dict[str, Any]]) -> List[CheckResult]:

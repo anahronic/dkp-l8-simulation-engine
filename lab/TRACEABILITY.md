@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1325 (76.3 %) | 1002 | 1243 | 927 | 4 | 63 | 15 | 412 | 35 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1329 (76.5 %) | 1006 | 1247 | 931 | 4 | 63 | 15 | 408 | 32 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 348 (95.3 %) | 249 | 335 | 237 | 3 | 8 | 2 | 17 | 3 | 266 |
+| C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 253 | 339 | 241 | 3 | 8 | 2 | 13 | 0 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 393 (76.9 %) | 314 | 372 | 293 | 0 | 18 | 3 | 118 | 11 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1325 (76.3 %) | 1002 | 1243 | 927 | 4 | 63 | 15 | 412 | 35 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1329 (76.5 %) | 1006 | 1247 | 931 | 4 | 63 | 15 | 408 | 32 | 1414 |
 
 ### Stage criteria
 
@@ -38,7 +38,7 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
+- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
 - D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
 - E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
 - F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 107 | 244 | 0 | 351 |
+| implementation_only | 0 | 111 | 240 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -254,7 +254,7 @@ Withdrawn after verification (not author decisions):
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | CODE-OF-PLANETARY-SYNERGY | 101 | 82 | 71 | 0 | 10 | 1 | 19 | 92 |
 | DKP-0-ORACLE-001 | 58 | 55 | 50 | 2 | 2 | 1 | 3 | 49 |
-| DKP-0-TIME-001 | 35 | 30 | 29 | 1 | 0 | 0 | 5 | 6 |
+| DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 6 |
 | DKP-1-AXIOMS-001 | 44 | 35 | 29 | 0 | 4 | 2 | 9 | 26 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
@@ -436,7 +436,11 @@ Withdrawn after verification (not author decisions):
 | TIME-10-02 | IMPLEMENTED | time · reference_inverse | PASS | — | — |
 | TIME-10-03 | IMPLEMENTED | time · reference_frozen | PASS | — | — |
 | TIME-10-04 | IMPLEMENTED | time · reference_rejects_doy | PASS | — | — |
+| TIME-2-01 | PARTIAL | time · neutral_anchor | PASS | — | — |
 | TIME-2-02 | IMPLEMENTED | time · unique_from_canonical | PASS | — | — |
+| TIME-2-03 | IMPLEMENTED | time · recomputable_index | PASS | — | — |
+| TIME-2-05 | PARTIAL | time · conversion_rules_provided | PASS | — | — |
+| TIME-3-01 | IMPLEMENTED | time · jdn_proleptic_count | PASS | — | — |
 | TIME-3-02 | IMPLEMENTED | time · dti_day_is_jdn | PASS | — | — |
 | TIME-3-03 | IMPLEMENTED | time · year_360_days | PASS | yes | — |
 | TIME-3-04 | IMPLEMENTED | time · doy_1_to_360 | PASS | yes | — |

@@ -89,3 +89,15 @@ def test_store_without_records():
     assert store([]) == []
     st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"records": []})).checks}
     assert st["TIME-7-02"] == "NOT_APPLICABLE" and st["TIME-8-02"] == "NOT_APPLICABLE"
+
+
+def test_kt5_design_principles():
+    """Review КТ5 reading of TIME §2 (principles 1, 3, 5) and §3 (JDN): each fault breaks exactly its principle."""
+    cases = {"event_epoch": "TIME-2-01", "julian_before_1582": "TIME-3-01", "unrecomputable_index": "TIME-2-03",
+             "no_inverse_rule": "TIME-2-05"}
+    clean = {c.requirement_id: c.status for c in M.evaluate(M.validate({})).checks}
+    for fault, rid in cases.items():
+        broken = {c.requirement_id: c.status for c in M.evaluate(M.validate({"faults": [fault]})).checks}
+        assert clean[rid] == "PASS" and broken[rid] == "FAIL", fault
+        others = {x for x in cases.values() if x != rid}
+        assert all(broken[x] == "PASS" for x in others), fault

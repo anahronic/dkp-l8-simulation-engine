@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 107,
+  "confirmed": 111,
   "reclassified": 7
  },
  "items": [
@@ -1341,6 +1341,62 @@
     "human_accepted": false
    },
    "check": "edition_finality:override_not_permitted"
+  },
+  {
+   "id": "TIME-2-01",
+   "document": "DKP-0-TIME-001",
+   "quote": "Time MUST NOT be anchored to religious, cultural, political, or personal events.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Neutrality is fixed arithmetically by §3 (DTI-Day = JDN) and §5 (DY 0 begins at DTI-Day 0, as the §10 code computes): the index has an arithmetic origin. Re-anchoring it at an event (a launch, a holiday) is observable. JDN's own origin is fixed by §3 and not judged. One of the five КТ5-GPT-03 provisions: the draft 'checkable: no' is corrected to partial.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "time:neutral_anchor",
+   "checkable": {
+    "from": "no",
+    "to": "partial"
+   }
+  },
+  {
+   "id": "TIME-2-03",
+   "document": "DKP-0-TIME-001",
+   "quote": "Any record MUST allow independent recomputation of its time index.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Any record MUST allow independent recomputation of its time index': each stored record's DTI-Day recomputes from its stored DY/DOY and from its Gregorian display. Observable on the store.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "time:recomputable_index"
+  },
+  {
+   "id": "TIME-2-05",
+   "document": "DKP-0-TIME-001",
+   "quote": "Explicit conversion rules to and from civil calendars MUST be provided.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Explicit conversion rules to and from civil calendars MUST be provided': §6 gives both directions and the pinned §10 reference implements them; both round-trip. Civil calendars = the Gregorian calendar the text names (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "time:conversion_rules_provided"
+  },
+  {
+   "id": "TIME-3-01",
+   "document": "DKP-0-TIME-001",
+   "quote": "An integer count of civil days (midnight-to-midnight) in the proleptic Gregorian calendar.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "JDN is 'an integer count of civil days in the proleptic Gregorian calendar': checkable against an independent proleptic day count, including dates before 1582 where Julian and proleptic Gregorian differ.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "time:jdn_proleptic_count"
   },
   {
    "id": "TRANSPARENCY-12-03",

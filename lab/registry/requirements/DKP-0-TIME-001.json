@@ -18,7 +18,7 @@
    "quote": "Time MUST NOT be anchored to religious, cultural, political, or personal events.",
    "interpretation": "A review must determine whether the time system's anchor belongs to any prohibited event category. The document provides no executable classification of events or definition of anchoring.",
    "kind": "constraint",
-   "checkable": "no",
+   "checkable": "partial",
    "inputs": [
     "time_anchor",
     "anchor_provenance"
@@ -29,19 +29,30 @@
    "data_dependencies": [
     "anchor provenance"
    ],
-   "gap": "Event classification and the meaning of anchoring require an interpretation not supplied by the text.",
+   "gap": "Neutrality read as an arithmetic origin (DTI-Day = JDN by §3); whether JDN's own origin is neutral is fixed by §3, not judged.",
    "hypotheses_needed": [
     "Declare how anchors and prohibited event categories are identified."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "time",
+    "version": "1.3.0",
+    "check": "neutral_anchor"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
+   "checkable_reconciled": {
+    "from": "no",
+    "by": "lab reading",
+    "record": "lab/registry/reconciliations.json"
+   },
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -65,7 +76,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "unique_from_canonical"
    },
    "tests": [
@@ -94,19 +105,25 @@
    "data_dependencies": [
     "record contents and supporting date evidence"
    ],
-   "gap": "The required evidence and meaning of independent recomputation are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether arithmetic reconstruction from canonical fields is sufficient."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.3.0",
+    "check": "recomputable_index"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -158,19 +175,25 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The required set of civil calendars is not defined beyond the Gregorian rules. No lab check implemented yet.",
+   "gap": "Civil calendars = the Gregorian calendar the text names.",
    "hypotheses_needed": [
     "Declare whether Gregorian interoperability alone satisfies this provision."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "time",
+    "version": "1.3.0",
+    "check": "conversion_rules_provided"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -193,19 +216,25 @@
    "data_dependencies": [
     "civil-date or timestamp assignment"
    ],
-   "gap": "No timezone convention is supplied for assigning timestamps to civil days. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare the timezone when checking timestamp-to-day boundaries."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "time",
+    "version": "1.3.0",
+    "check": "jdn_proleptic_count"
+   },
+   "tests": [
+    "tests/lab/test_time_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -229,7 +258,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "dti_day_is_jdn"
    },
    "tests": [
@@ -260,7 +289,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "year_360_days"
    },
    "tests": [
@@ -291,7 +320,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "doy_1_to_360"
    },
    "tests": [
@@ -321,7 +350,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "civil_day_unit"
    },
    "tests": [
@@ -352,7 +381,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_sub_day_units"
    },
    "tests": [
@@ -382,7 +411,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_leap_rule"
    },
    "tests": [
@@ -413,7 +442,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "arithmetic_boundaries"
    },
    "tests": [
@@ -444,7 +473,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "dy_formula",
     "also": [
      {
@@ -483,7 +512,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "doy_formula"
    },
    "tests": [
@@ -520,7 +549,7 @@
     "also": [
      {
       "module": "time",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "check": "string_form"
      }
     ]
@@ -554,7 +583,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "string_fields"
    },
    "tests": [
@@ -589,7 +618,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "standard_jdn"
    },
    "tests": [
@@ -624,7 +653,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "roundtrip"
    },
    "tests": [
@@ -655,7 +684,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "invalid_doy_rejected"
    },
    "tests": [
@@ -687,7 +716,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "negative_dy"
    },
    "tests": [
@@ -719,7 +748,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "derived_never_override"
    },
    "tests": [
@@ -749,7 +778,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "gregorian_for_reading"
    },
    "tests": [
@@ -782,7 +811,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "authoritative_has_index"
    },
    "tests": [
@@ -814,7 +843,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "dti_day_wins"
    },
    "tests": [
@@ -848,7 +877,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "signed_store_dti_day"
    },
    "tests": [
@@ -881,7 +910,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "audits_reference_dti_day"
    },
    "tests": [
@@ -914,7 +943,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "normative_vector"
    },
    "tests": [
@@ -947,7 +976,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "normative_vector"
    },
    "tests": [
@@ -980,7 +1009,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "normative_vector"
    },
    "tests": [
@@ -1013,7 +1042,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "normative_vector"
    },
    "tests": [
@@ -1052,7 +1081,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "reference_forward"
    },
    "tests": [
@@ -1085,7 +1114,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "reference_inverse"
    },
    "tests": [
@@ -1117,7 +1146,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "reference_frozen"
    },
    "tests": [
@@ -1149,7 +1178,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "time",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "reference_rejects_doy"
    },
    "tests": [
