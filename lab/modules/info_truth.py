@@ -41,7 +41,11 @@ FAULTS = {
     "manual_truth": "an operator sets the truth status by hand",
     "missing_annotation_fields": "an I4 annotation lacks mandatory fields",
     "no_audit_escalation": "systemic abuse is not escalated to AUDIT",
+    "suspend_account": "an I3/I4 author's account is suspended",
+    "info_overreach": "INFO adjudicates a question of moral truth",
 }
+OUT_OF_SCOPE = ("optimize_narrative", "enforce_social_harmony", "resolve_philosophical_dispute", "adjudicate_moral_truth")   # §13
+PERMITTED = ("annotation", "reduce_amplification", "remediation_channel", "systemic_risk_pattern")                         # §8
 CLAIM = {"type": "object", "fields": {
     "id": {"type": "str"},
     "kind": {"type": "enum", "values": ["opinion", "factual"], "default": "factual"},
@@ -152,12 +156,31 @@ def run(r: Dict[str, Any]):
                         put("action", "INFO", k, {"claim": cid, "deleted": True}, prov)
                     if new == "I3" and "penalize_isolated_i3" in faults and not systemic(c, b):
                         put("action", "JUSTICE", k, {"claim": cid, "penalty": c["author"]}, prov)
+                    if "suspend_account" in faults:
+                        put("action", "INFO", k, {"claim": cid, "suspend_account": c["author"]}, prov)
             if c["abuse"] and c["day"] == k and "no_audit_escalation" not in faults:
                 put("notice", "AUDIT", k, {"claim": cid, "systemic_abuse": True, "escalated_by": "DKP-5-INFO-001 §11"},
                     [posts[cid].event_id])
         if "i1_blocks" in faults and any(v == "I1" for v in cls.values()):
             put("action", "OPS", k, {"operation": "unrelated payroll run", "blocked_by": "pending I1 claim"})
+    for q in r["out_of_scope_requests"]:
+        done = q == "adjudicate_moral_truth" and "info_overreach" in faults
+        put("decision", "INFO", 0, {"out_of_scope": q, "executed": done,
+                                    "reason": None if done else "jurisdiction ends at factual correspondence with physical reality (§13)"})
     return log, cls, sorted(records)
+
+
+def response_kind(v: Dict[str, Any]) -> str:
+    """Kind of an action INFO took on a classified claim (§8)."""
+    if v.get("annotation"):
+        return "coercive" if v.get("legal_effect", "none") != "none" else "annotation"
+    if v.get("reduce_amplification"):
+        return "reduce_amplification"
+    if v.get("deleted"):
+        return "deletion"
+    if v.get("suspend_account"):
+        return "account suspension"
+    return "other"
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -257,6 +280,25 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         for rid, chk in (("INFO-InformationalArbitration_Non-RemovalPrinciple_-03", "annotation_not_enforcement"),
                          ("INFO-10-01", "no_coercive_annotation")):
             out.append(na(rid, chk, "annotations", "none attached"))
+    # §8 permitted responses; §0 descriptive, non-coercive; §13 jurisdiction
+    acts = [m for m in msgs if m.source == "INFO" and m.kind == "action"]
+    kinds = [(m.event_id, response_kind(m.value)) for m in acts]
+    if acts:
+        out.append(v("INFO-8-01", "permitted_responses", [e for e, kd in kinds if kd not in PERMITTED],
+                     f"{len(acts)} responses to I3/I4 claims, all of the kinds §8 permits (correction markers, reduced amplification, "
+                     "remediation channels)", "{n} responses of kinds §8 does not list"))
+    else:
+        out.append(na("INFO-8-01", "permitted_responses", "responses", "no I3 or I4 claim"))
+    coercive = [e for e, kd in kinds if kd in ("coercive", "deletion", "account suspension")] + \
+        [m.event_id for m in msgs if m.source in ("JUSTICE", "OPS") and m.kind == "action"]
+    out.append(v("INFO-0-02", "descriptive_non_coercive", coercive,
+                 "information governance stayed descriptive: annotations and amplification changes only; no deletion, penalty, "
+                 "legal effect, suspension or blocked operation", "{n} coercive acts"))
+    oos = [m.value for m in msgs if m.source == "INFO" and "out_of_scope" in m.value]
+    out.append(v("INFO-13-01", "factual_jurisdiction", [x["out_of_scope"] for x in oos if x["executed"]],
+                 f"{len(oos)} requests beyond factual correspondence (narratives, harmony, philosophy, moral truth) refused",
+                 "{n} requests executed beyond INFO's jurisdiction") if oos else
+               na("INFO-13-01", "factual_jurisdiction", "requests beyond factual correspondence", "none"))
     isolated = [c["id"] for c in by.values() if c["kind"] == "factual" and c["ptl_verdict"] == "inconsistent" and not systemic(c, b)]
     if isolated:
         out.append(v("INFO-InformationalArbitration_Non-RemovalPrinciple_-04", "no_penalty_isolated_i3",
@@ -304,6 +346,9 @@ IMPLEMENTS = {
     "INFO-InformationalArbitration_Non-RemovalPrinciple_-03": ("annotation_not_enforcement", "IMPLEMENTED", None),
     "INFO-InformationalArbitration_Non-RemovalPrinciple_-04": ("no_penalty_isolated_i3", "IMPLEMENTED", None),
     "INFO-10-01": ("no_coercive_annotation", "IMPLEMENTED", None),
+    "INFO-8-01": ("permitted_responses", "IMPLEMENTED", None),
+    "INFO-0-02": ("descriptive_non_coercive", "PARTIAL", "Coercion observed as deletion, penalty, legal effect, suspension or blocking (§§8-10)."),
+    "INFO-13-01": ("factual_jurisdiction", "PARTIAL", "Requests beyond factual correspondence are declared."),
     "INFO-11-01": ("abuse_to_audit", "PARTIAL", "Abuse is declared, not detected."),
     "INFO-12-01": ("verification_paths", "IMPLEMENTED", None),
     "INFO-12-02": ("reproducible", "IMPLEMENTED", None),
@@ -357,6 +402,9 @@ class InfoTruthModule(LabModule):
                    "label": {"en": "Claims and opinions", "ru": "Утверждения и мнения"}},
         "bundle": {"type": "object", "fields": BUNDLE, "default": {k: f["default"] for k, f in BUNDLE.items()}, "source": "missing",
                    "label": {"en": "L8 bundle (none exists; H-IN-3)", "ru": "Пакет L8 (не существует; H-IN-3)"}},
+        "out_of_scope_requests": {"type": "list", "min_items": 0, "max_items": len(OUT_OF_SCOPE), "items": {"type": "enum", "values": list(OUT_OF_SCOPE)},
+                                  "default": ["adjudicate_moral_truth"], "source": "user",
+                                  "label": {"en": "Requests beyond factual correspondence (§13)", "ru": "Запросы за пределами фактического соответствия (§13)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -416,6 +464,7 @@ class InfoTruthModule(LabModule):
             "hypothetical_bundle": {"claims": sysd + [{**base, "id": "c5", "day": 1, "ptl_verdict": "inconclusive", "verdict_day": 2}],
                                     "bundle": {"present": True, "t1_days": 7, "t2_days": 14, "propagation_threshold": 1000}},
             "faulty_information": {"faults": ["evaluate_opinion", "popularity_truth", "annotation_penalty", "penalize_isolated_i3"]},
+            "faulty_responses": {"claims": sysd, "faults": ["suspend_account", "info_overreach"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

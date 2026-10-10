@@ -130,7 +130,7 @@ def check_file(path: str, catalog: Dict[str, Any], seen_ids: Dict[str, str]) -> 
         if op is not None:
             if r["decision_status"] != "UNRESOLVED":
                 problems.append(f"{where}: open_point on a provision without an open decision")
-            if op.get("origin") not in ORIGINS or op.get("source") not in ("codex_draft", "agent_verified"):
+            if op.get("origin") not in ORIGINS or op.get("source") not in ("codex_draft", "agent_verified", "lab_reconciled"):
                 problems.append(f"{where}: open_point {op!r}")
     return problems
 

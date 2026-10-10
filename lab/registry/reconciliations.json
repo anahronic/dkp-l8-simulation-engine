@@ -1,0 +1,304 @@
+{
+ "schema": "dkp-lab-reconciliation/1",
+ "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
+ "counts": {
+  "confirmed": 21,
+  "reclassified": 1
+ },
+ "items": [
+  {
+   "id": "EDU-0-01",
+   "document": "DKP-5-EDU-001",
+   "quote": "Education is treated as a stability requirement, not a value judgment and not a mechanism of social ranking.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Education may not rank Subjects or judge their value (§0); a ranking output or a worth label on outcomes is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:not_a_ranking"
+  },
+  {
+   "id": "EDU-1-01",
+   "document": "DKP-5-EDU-001",
+   "quote": "This protocol does not define culture, worldview, morality, intelligence, or personal values.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The exclusion names the concepts EDU may not define; whether a deployed module defines one of them is a module property.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_defined_values"
+  },
+  {
+   "id": "EDU-10-01",
+   "document": "DKP-5-EDU-001",
+   "quote": "- MUST be open-source or publicly inspectable,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two compliance routes (open source or publicly inspectable); access is a module property.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:open_or_inspectable"
+  },
+  {
+   "id": "EDU-11-01",
+   "document": "DKP-5-EDU-001",
+   "quote": "DKP-5-EDU-001 SHALL NOT:\n\n- define personal success or intelligence,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "EDU may not define personal success or intelligence; a module doing so is a module property.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_success_definition"
+  },
+  {
+   "id": "EDU-11-03",
+   "document": "DKP-5-EDU-001",
+   "quote": "- enforce uniform educational paths,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A uniform mandatory path differs from §5's shared capability outcome; the path of a module is declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_uniform_path"
+  },
+  {
+   "id": "EDU-2-02",
+   "document": "DKP-5-EDU-001",
+   "quote": "- impose ideological narratives,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Impose ideological narratives' is a clear prohibition; a module that presents an ideological narrative as required content is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_ideological_narrative"
+  },
+  {
+   "id": "EDU-2-03",
+   "document": "DKP-5-EDU-001",
+   "quote": "- define moral or political correctness,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "EDU may not define moral or political correctness; a module defining either is a module property.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_correctness_definition"
+  },
+  {
+   "id": "EDU-3-03",
+   "document": "DKP-5-EDU-001",
+   "quote": "Educational Module A bounded, verifiable unit of instruction targeting a specific competence domain.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes three properties (bounded, verifiable, one competence domain); each is a property of a declared module.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:bounded_verifiable_module"
+  },
+  {
+   "id": "EDU-3-04",
+   "document": "DKP-5-EDU-001",
+   "quote": "Assessment Event An auditable, reproducible process confirming competence through observable performance.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "An assessment event is auditable and reproducible from observable performance; the outcome can be recomputed from the record.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:assessment_event"
+  },
+  {
+   "id": "EDU-4-03",
+   "document": "DKP-5-EDU-001",
+   "quote": "Educational content MUST remain free of ideological enforcement.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Ideological enforcement is concretized by §6 (mandated belief, worldview alignment, conformity) and §2; deployed content is checked against those properties.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:free_of_ideological_enforcement"
+  },
+  {
+   "id": "EDU-4-05",
+   "document": "DKP-5-EDU-001",
+   "quote": "Educational outcomes MUST be auditable and reproducible.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Outcomes are verified competence (§3, §7); reproducibility is the recomputation of the outcome from the recorded performance.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:outcomes_reproducible"
+  },
+  {
+   "id": "EDU-6-01",
+   "document": "DKP-5-EDU-001",
+   "quote": "No domain SHALL:\n\n- mandate belief acceptance,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Mandated belief acceptance is required assent; §§3 and 7 ask for observable knowledge, so a module requiring assent is distinguishable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_mandated_belief"
+  },
+  {
+   "id": "EDU-6-02",
+   "document": "DKP-5-EDU-001",
+   "quote": "- require worldview alignment,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Worldview alignment as a condition of a module is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_worldview_alignment"
+  },
+  {
+   "id": "EDU-6-03",
+   "document": "DKP-5-EDU-001",
+   "quote": "- enforce cultural or moral conformity.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Enforced conformity (a sanction for non-conformity) is observable as a module property.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_conformity_enforcement"
+  },
+  {
+   "id": "EDU-7-06",
+   "document": "DKP-5-EDU-001",
+   "quote": "Assessment outcomes are competence signals, not judgments of worth or intelligence.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Outcomes are competence signals; a label of worth or intelligence on an outcome is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:competence_signals"
+  },
+  {
+   "id": "EDU-9-01",
+   "document": "DKP-5-EDU-001",
+   "quote": "The following practices are explicitly forbidden:\n\n- ideological indoctrination,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Indoctrination is read through §6 and §2: an ideological narrative or required assent in deployed content.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_indoctrination"
+  },
+  {
+   "id": "EDU-9-02",
+   "document": "DKP-5-EDU-001",
+   "quote": "- political conditioning,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Political conditioning: a political alignment condition or a definition of political correctness in deployed content.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_political_conditioning"
+  },
+  {
+   "id": "EDU-Safeguards-06",
+   "document": "DKP-5-EDU-001",
+   "quote": "Education failures are corrective signals, not fault markers.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Failures are corrective signals (remediation), not fault markers; a fault marker on a failed assessment is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:failure_is_signal"
+  },
+  {
+   "id": "INFO-0-02",
+   "document": "DKP-5-INFO-001",
+   "quote": "Information governance under DKP is descriptive and non-coercive.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Descriptive and non-coercive' is concretized by §§8-10: annotations only; no deletion, penalty, legal effect or change of rights. Checkable as the absence of coercive acts.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "info_truth:descriptive_non_coercive",
+   "checkable": {
+    "from": "no",
+    "to": "partial"
+   }
+  },
+  {
+   "id": "INFO-13-01",
+   "document": "DKP-5-INFO-001",
+   "quote": "Its jurisdiction ends at factual correspondence with physical reality.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The boundary is fixed by the four exclusions of §13; requests beyond factual correspondence are refused.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "info_truth:factual_jurisdiction"
+  },
+  {
+   "id": "INFO-8-01",
+   "document": "DKP-5-INFO-001",
+   "quote": "Upon identification of I3 or I4 events, the system MAY:\n\nattach PTL-anchored correction markers,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A MAY list of permitted responses; responses of other kinds are observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "info_truth:permitted_responses"
+  },
+  {
+   "id": "PREV-13-02",
+   "document": "DKP-1-PREVENTION-001",
+   "quote": "6.  Anti-gaming enforced",
+   "draft_origin": "implementation_only",
+   "verdict": "reclassified",
+   "reason": "'Anti-gaming enforced' restates §§9-10, but four of those rules are themselves open (§9.3 pattern recurrence: normative ambiguity; §9.4 'low coverage': L8 parameter; §10 peer signals and global floors: undefined). The invariant cannot be decided as a whole until they are; its decidable parts are checked under §9.1, §9.4 and §9.5.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "origin_after": "architecture_definition",
+   "checkable": {
+    "from": "no",
+    "to": "partial"
+   }
+  }
+ ]
+}

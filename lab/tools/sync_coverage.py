@@ -98,7 +98,8 @@ def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
                 r["open_point"] = {"origin": g["question_origin"][r["id"]], "source": "agent_verified"}
             elif r["id"] in g["draft"]:
                 d = g["draft"][r["id"]]
-                r["open_point"] = {"origin": d["primary"], "source": "codex_draft"}
+                # an origin corrected by the lab's reading (lab/registry/reconciliations.json) is no longer a machine draft
+                r["open_point"] = {"origin": d["primary"], "source": "lab_reconciled" if d.get("reconciled") else "codex_draft"}
         d = decl.get(r["id"])
         base_gap = (r.get("gap") or "").replace(NOT_IMPLEMENTED_GAP, "").strip() or None
         if d:

@@ -25,7 +25,7 @@ from typing import Any, Dict, List
 from lab.core.bus import EventLog, Message
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
-from lab.core.schema import LabInputError
+from lab.core.schema import LabInputError, resolve
 
 FAULTS = {
     "punish_literacy_failure": "a failed assessment leads to a penalty",
@@ -47,6 +47,11 @@ FAULTS = {
     "culture_resolves_conflict": "a local council resolves the conflict instead of the SCOPE rules",
     "undeclared_mechanism": "a Cultural Exception declares neither duration nor reversibility",
     "audit_refused": "an audit of educational content is refused",
+    "admit_any_module": "an educational module is deployed whatever its properties",
+    "rank_by_assessment": "Subjects are ranked by their assessment results",
+    "label_as_intelligence": "assessment outcomes are published as intelligence scores",
+    "failure_as_fault": "a failed assessment is recorded as a fault marker",
+    "nonreproducible_assessment": "the assessment outcome is not reproducible from its recorded performance",
 }
 SUBJECT = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -57,6 +62,56 @@ SUBJECT = {"type": "object", "fields": {
     "minority": {"type": "bool", "default": False}}}
 TRANSLATION = {"type": "object", "fields": {"source": {"type": "str"}, "target": {"type": "str"},
                                             "meaning_preserved": {"type": "bool", "default": True}}}
+DEFINES = ("culture", "worldview", "morality", "intelligence", "personal_values", "moral_correctness", "political_correctness",
+           "personal_success")                                                          # EDU §1, §2, §11: never defined by EDU
+MODULE = {"type": "object", "fields": {
+    "id": {"type": "str"},
+    "domain": {"type": "str", "default": "system_literacy"},                            # §3: a specific competence domain
+    "bounded": {"type": "bool", "default": True},
+    "verification": {"type": "enum", "values": ["observable_performance", "attendance", "statement_of_belief"],
+                     "default": "observable_performance"},
+    "access": {"type": "enum", "values": ["open_source", "publicly_inspectable", "closed"], "default": "open_source"},
+    "path": {"type": "enum", "values": ["chosen", "uniform_mandatory"], "default": "chosen"},
+    "required_assent": {"type": "list", "min_items": 0, "max_items": 5, "items": {"type": "str"}, "default": []},
+    "alignment_condition": {"type": "enum", "values": ["none", "worldview", "political"], "default": "none"},
+    "conformity_sanction": {"type": "bool", "default": False},
+    "ideological_narrative": {"type": "bool", "default": False},
+    "defines": {"type": "list", "min_items": 0, "max_items": len(DEFINES), "items": {"type": "enum", "values": list(DEFINES)},
+                "default": []}}}
+MODULES_DEFAULT = [
+    {"id": "system_literacy", "domain": "system_literacy"},
+    {"id": "grid_safety", "domain": "energy_safety"},
+    {"id": "history_sources", "domain": "source_criticism", "access": "publicly_inspectable"},
+    {"id": "loyalty_course", "domain": "civic_values", "verification": "statement_of_belief", "required_assent": ["the system is just"],
+     "alignment_condition": "worldview", "conformity_sanction": True, "ideological_narrative": True, "defines": ["moral_correctness"],
+     "path": "uniform_mandatory", "access": "closed"},
+    {"id": "civic_success", "domain": "civic_participation", "alignment_condition": "political",
+     "defines": ["personal_success", "intelligence", "worldview", "political_correctness"]},
+]
+
+
+def module_problems(m: Dict[str, Any]) -> List[str]:
+    """Why a declared educational module may not be deployed (EDU §2, §3, §4, §6, §9, §10, §11)."""
+    out = []
+    if not m["bounded"] or not m["domain"] or m["verification"] != "observable_performance":
+        out.append("not a bounded, verifiable module of one competence domain (§3)")
+    if m["required_assent"]:
+        out.append("mandates belief acceptance (§6)")
+    if m["alignment_condition"] != "none":
+        out.append(f"requires {m['alignment_condition']} alignment (§6, §9)")
+    if m["conformity_sanction"]:
+        out.append("enforces conformity (§6)")
+    if m["ideological_narrative"]:
+        out.append("imposes an ideological narrative (§2, §9)")
+    if m["defines"]:
+        out.append("defines " + ", ".join(m["defines"]) + " (§1, §2, §11)")
+    if m["path"] != "chosen":
+        out.append("enforces a uniform educational path (§11)")
+    if m["access"] == "closed":
+        out.append("neither open-source nor publicly inspectable (§10)")
+    return out
+
+
 EXCEPTION = {"declared": {"type": "bool", "default": False},
              "days": {"type": "int", "min": 0, "max": 3650, "default": 10},
              "scope": {"type": "str", "default": "festival_zone"},
@@ -93,10 +148,14 @@ def run(r: Dict[str, Any]):
         passed = s["literacy_passed"] and (lang == s["language"])
         a = put("evaluation", "EDU", 1, {"subject": s["id"], "assessment_language": lang, "items": items,
                                          "criteria_declared": True, "open": True, "passed": passed,
-                                         "signal": "competence signal"})
+                                         "method": "observable performance", "performance_record": s["literacy_passed"],
+                                         "outcome_reproduced": passed if "nonreproducible_assessment" not in faults else not passed,
+                                         "signal": "intelligence score" if "label_as_intelligence" in faults else "competence signal"})
         if s["credential"] and "credential_privilege" in faults:
             put("action", "EDU", 1, {"subject": s["id"], "advanced_access": "granted by diploma"}, [a.event_id])
         if not passed:
+            if "failure_as_fault" in faults:
+                put("notice", "EDU", 1, {"subject": s["id"], "fault_marker": "failed system literacy"}, [a.event_id])
             if "no_remediation" not in faults:
                 put("action", "EDU", 1, {"subject": s["id"], "remediation": "free, automatic",
                                          "support": "enhanced" if s["failures"] >= 1 else "targeted modules"}, [a.event_id])
@@ -117,6 +176,13 @@ def run(r: Dict[str, Any]):
                     [a.event_id])
         put("action", "EDU", 2, {"subject": s["id"], "learning_data": "minimized",
                                  "use": "profiling" if "profile_learning_data" in faults else "education only"})
+    if "rank_by_assessment" in faults:
+        put("notice", "EDU", 2, {"ranking": sorted(s["id"] for s in r["subjects"])})
+    for md in r["edu_modules"]:
+        why = module_problems(md)
+        ok = not why or "admit_any_module" in faults
+        put("decision", "EDU", 0, {"edu_module": md["id"], "deployed": ok, "refused_for": [] if ok else why,
+                                   "properties": {k: md[k] for k in md if k != "id"}})
     for t in r["translations"]:
         use = t["meaning_preserved"] or "lossy_translation" in faults
         put("action" if use else "notice", "CULTURE", 3, {"translation": f"{t['source']}->{t['target']}",
@@ -278,6 +344,61 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         out.append(CheckResult("EDU-10-05", "learning_data_protected", UNKNOWN,
                                "learning data are minimized and not profiled; EDU §10 protects them 'under DKP-7-SCOPE-001', "
                                "which contains no data-protection rules (F-040, Q-059)"))
+    # EDU content: declared modules through the deployment gate
+    mods = [m.value for m in msgs if m.source == "EDU" and "edu_module" in m.value]
+    dep = [x for x in mods if x["deployed"]]
+
+    def props(pred):
+        return [x["edu_module"] for x in dep if pred(x["properties"])]
+    if mods:
+        refused = len(mods) - len(dep)
+        for rid, chk, pred, ok in (
+                ("EDU-6-01", "no_mandated_belief", lambda p: p["required_assent"], "no deployed module mandates belief acceptance"),
+                ("EDU-6-02", "no_worldview_alignment", lambda p: p["alignment_condition"] == "worldview", "no deployed module requires worldview alignment"),
+                ("EDU-9-02", "no_political_conditioning", lambda p: p["alignment_condition"] == "political" or
+                 "political_correctness" in p["defines"], "no deployed module conditions on politics or defines political correctness"),
+                ("EDU-6-03", "no_conformity_enforcement", lambda p: p["conformity_sanction"], "no deployed module enforces cultural or moral conformity"),
+                ("EDU-2-02", "no_ideological_narrative", lambda p: p["ideological_narrative"], "no deployed module imposes an ideological narrative"),
+                ("EDU-9-01", "no_indoctrination", lambda p: p["ideological_narrative"] or p["required_assent"],
+                 "no deployed module indoctrinates (ideological narrative or required assent)"),
+                ("EDU-4-03", "free_of_ideological_enforcement", lambda p: p["required_assent"] or p["alignment_condition"] != "none"
+                 or p["conformity_sanction"] or p["ideological_narrative"], "deployed content is free of ideological enforcement"),
+                ("EDU-2-03", "no_correctness_definition", lambda p: {"moral_correctness", "political_correctness"} & set(p["defines"]),
+                 "no deployed module defines moral or political correctness"),
+                ("EDU-1-01", "no_defined_values", lambda p: {"culture", "worldview", "morality", "intelligence", "personal_values"} & set(p["defines"]),
+                 "no deployed module defines culture, worldview, morality, intelligence or personal values"),
+                ("EDU-11-01", "no_success_definition", lambda p: {"personal_success", "intelligence"} & set(p["defines"]),
+                 "no deployed module defines personal success or intelligence"),
+                ("EDU-11-03", "no_uniform_path", lambda p: p["path"] != "chosen", "no deployed module enforces a uniform educational path"),
+                ("EDU-10-01", "open_or_inspectable", lambda p: p["access"] == "closed", "every deployed module is open-source or publicly inspectable"),
+                ("EDU-3-03", "bounded_verifiable_module", lambda p: not (p["bounded"] and p["domain"] and p["verification"] == "observable_performance"),
+                 "every deployed module is bounded, verifiable and aimed at one competence domain")):
+            out.append(v(rid, chk, props(pred), f"{ok} ({len(dep)} deployed, {refused} refused)", "{n} deployed modules against the rule"))
+    else:
+        for rid, chk in (("EDU-6-01", "no_mandated_belief"), ("EDU-6-02", "no_worldview_alignment"), ("EDU-9-02", "no_political_conditioning"),
+                         ("EDU-6-03", "no_conformity_enforcement"), ("EDU-2-02", "no_ideological_narrative"), ("EDU-9-01", "no_indoctrination"),
+                         ("EDU-4-03", "free_of_ideological_enforcement"), ("EDU-2-03", "no_correctness_definition"),
+                         ("EDU-1-01", "no_defined_values"), ("EDU-11-01", "no_success_definition"), ("EDU-11-03", "no_uniform_path"),
+                         ("EDU-10-01", "open_or_inspectable"), ("EDU-3-03", "bounded_verifiable_module")):
+            out.append(na(rid, chk, "educational modules", "none declared"))
+    # assessments: reproducible, signals of competence, no ranking, no fault marker
+    ev = [m for m in msgs if m.source == "EDU" and m.kind == "evaluation" and "assessment_language" in m.value]
+    bad = [m.value["subject"] for m in ev if m.value["method"] != "observable performance" or not m.value["criteria_declared"]
+           or m.value["outcome_reproduced"] != m.value["passed"]]
+    out.append(v("EDU-3-04", "assessment_event", bad, f"{len(ev)} assessments are open, observable-performance events whose outcome "
+                 "is reproduced from the record", "{n} assessments not reproducible or not observable"))
+    out.append(v("EDU-4-05", "outcomes_reproducible", [m.value["subject"] for m in ev if m.value["outcome_reproduced"] != m.value["passed"]],
+                 "every educational outcome is reproduced from its recorded performance and auditable", "{n} outcomes not reproducible"))
+    out.append(v("EDU-7-06", "competence_signals", [m.value["subject"] for m in ev if m.value["signal"] != "competence signal"],
+                 "outcomes are published as competence signals only", "{n} outcomes labelled as worth or intelligence"))
+    rank = [m.event_id for m in msgs if m.source == "EDU" and "ranking" in m.value]
+    out.append(v("EDU-0-01", "not_a_ranking", rank + [m.value["subject"] for m in ev if m.value["signal"] != "competence signal"],
+                 "education produced no social ranking and no value judgment of Subjects", "{n} rankings or value labels"))
+    marks = [m.value["subject"] for m in msgs if m.source == "EDU" and "fault_marker" in m.value]
+    failed = [m for m in ev if not m.value["passed"]]
+    out.append(v("EDU-Safeguards-06", "failure_is_signal", marks, f"{len(failed)} failed assessments became corrective signals (remediation), "
+                 "none a fault marker", "{n} failures recorded as faults") if failed else
+               na("EDU-Safeguards-06", "failure_is_signal", "failed assessments", "none"))
     binding = [m.event_id for m in msgs if m.source == "CULTURE" and m.value.get("enforceable")]
     out.append(v("CULTURE-11-05", "informational_without_l8", binding if not r["l8_bundle_present"] else [],
                  "cultural interactions informational and non-binding (no L8 calibration)", "{n} binding cultural interactions"))
@@ -330,6 +451,24 @@ IMPLEMENTS = {
     "CULTURE-11-03": ("mechanism_declared", "PARTIAL", "The Cultural Exception is the mechanism modelled."),
     "EDU-10-03": ("content_auditable", "PARTIAL", "Audit requests are declared."),
     "EDU-10-05": ("learning_data_protected", "PARTIAL", "Referenced rules are absent from SCOPE (F-040)."),
+    "EDU-6-01": ("no_mandated_belief", "PARTIAL", "Module properties are declared."),
+    "EDU-6-02": ("no_worldview_alignment", "PARTIAL", "Module properties are declared."),
+    "EDU-9-02": ("no_political_conditioning", "PARTIAL", "Module properties are declared."),
+    "EDU-6-03": ("no_conformity_enforcement", "PARTIAL", "Module properties are declared."),
+    "EDU-2-02": ("no_ideological_narrative", "PARTIAL", "Module properties are declared."),
+    "EDU-9-01": ("no_indoctrination", "PARTIAL", "Indoctrination observed as an ideological narrative or required assent."),
+    "EDU-4-03": ("free_of_ideological_enforcement", "PARTIAL", "Module properties are declared."),
+    "EDU-2-03": ("no_correctness_definition", "PARTIAL", "Module properties are declared."),
+    "EDU-1-01": ("no_defined_values", "PARTIAL", "Module properties are declared."),
+    "EDU-11-01": ("no_success_definition", "PARTIAL", "Module properties are declared."),
+    "EDU-11-03": ("no_uniform_path", "PARTIAL", "Module properties are declared."),
+    "EDU-10-01": ("open_or_inspectable", "PARTIAL", "Access is declared."),
+    "EDU-3-03": ("bounded_verifiable_module", "PARTIAL", "Boundaries and verification method are declared."),
+    "EDU-3-04": ("assessment_event", "PARTIAL", "Performance is a declared outcome; the outcome is recomputed from it."),
+    "EDU-4-05": ("outcomes_reproducible", "PARTIAL", "Performance is a declared outcome; the outcome is recomputed from it."),
+    "EDU-7-06": ("competence_signals", "IMPLEMENTED", None),
+    "EDU-0-01": ("not_a_ranking", "IMPLEMENTED", None),
+    "EDU-Safeguards-06": ("failure_is_signal", "IMPLEMENTED", None),
     "CULTURE-3-02": ("exception_non_enforceable", "IMPLEMENTED", None),
     "CULTURE-9-04": ("no_verification_exemption", "IMPLEMENTED", None),
     "CULTURE-9-01": ("no_override_of_ptl", "PARTIAL", "Observed as exemption of a factual claim."),
@@ -377,6 +516,9 @@ class EduCultureModule(LabModule):
         "l8_bundle_present": {"type": "bool", "default": False, "source": "missing",
                               "label": {"en": "L8 calibration for competence restrictions (none exists; H-EC-2)",
                                         "ru": "Калибровка L8 для ограничений (не существует; H-EC-2)"}},
+        "edu_modules": {"type": "list", "min_items": 0, "max_items": 20, "items": MODULE, "default": MODULES_DEFAULT, "source": "user",
+                        "label": {"en": "Educational modules proposed for deployment (properties declared)",
+                                  "ru": "Учебные модули к развёртыванию (свойства объявлены)"}},
         "content_audits": {"type": "int", "min": 0, "max": 20, "default": 1, "source": "user",
                            "label": {"en": "Audits of educational content requested (EDU §10)", "ru": "Запрошено аудитов учебного содержания (EDU §10)"}},
         "cultural_exception": {"type": "object", "fields": EXCEPTION, "default": {k: f["default"] for k, f in EXCEPTION.items()},
@@ -434,9 +576,16 @@ class EduCultureModule(LabModule):
                                                           "touches_factual_claim": True}},
             "faulty_education": {"faults": ["punish_literacy_failure", "belief_screening", "language_as_competence",
                                              "cultural_ranking", "default_dominant_language"]},
+            "faulty_content": {"faults": ["admit_any_module", "rank_by_assessment", "label_as_intelligence", "failure_as_fault",
+                                          "nonreproducible_assessment"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"repeated_id": {"subjects": [{"id": "a"}, {"id": "a"}]},
                 "bad_language": {"subjects": [{"id": "a", "language": "English!"}]},
                 "negative_failures": {"subjects": [{"id": "a", "failures": -1}]}}
+
+
+for _spec in EduCultureModule.inputs.values():
+    if _spec["type"] == "list" and _spec["items"]["type"] == "object":
+        _spec["default"] = [resolve(x, _spec["items"]["fields"]) for x in _spec["default"]]

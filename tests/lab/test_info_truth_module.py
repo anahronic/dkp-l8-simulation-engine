@@ -34,6 +34,8 @@ FAULT_CASES = {
     "manual_truth": ({}, ["INFO-9-03"]),
     "missing_annotation_fields": (SYS, ["INFO-InformationalArbitration_Non-RemovalPrinciple_-02"]),
     "no_audit_escalation": (SYS, ["INFO-11-01"]),
+    "suspend_account": (SYS, ["INFO-8-01", "INFO-0-02"]),
+    "info_overreach": ({}, ["INFO-13-01"]),
 }
 
 

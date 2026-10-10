@@ -287,9 +287,10 @@ def decomposition(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
     origins = list(verification.ORIGINS) + ["pending"]
     return {
         "unresolved": len(unres),
-        "by_origin": [{"origin": o, "agent_verified": by.get((o, "agent_verified"), 0), "codex_draft": by.get((o, "codex_draft"), 0),
-                       "human_accepted": 0,
-                       "total": by.get((o, "agent_verified"), 0) + by.get((o, "codex_draft"), 0) + by.get((o, "none"), 0)}
+        "by_origin": [{"origin": o, "agent_verified": by.get((o, "agent_verified"), 0), "lab_reconciled": by.get((o, "lab_reconciled"), 0),
+                       "codex_draft": by.get((o, "codex_draft"), 0), "human_accepted": 0,
+                       "total": by.get((o, "agent_verified"), 0) + by.get((o, "lab_reconciled"), 0) + by.get((o, "codex_draft"), 0)
+                       + by.get((o, "none"), 0)}
                       for o in origins],
         "draft_author_question_candidates": len(candidates),
         "draft_provenance": cls.get("provenance", {}),
@@ -371,9 +372,10 @@ def markdown(t: Dict[str, Any]) -> str:
           f"({pv.get('model', '—')}, {pv.get('date', '—')}; DRAFT_UNREVIEWED; not in the draft (opened later): "
           f"{', '.join(pv.get('unclassified_open_points', [])) or 'none'}).  Only normative_ambiguity and "
           "architecture_definition can become author questions, and only after verification.", "",
-          "| Origin | Agent-verified (quotes checked automatically) | Codex draft | Accepted by a human | Total |",
-          "|---|---:|---:|---:|---:|"]
-    L += [f"| {x['origin']} | {x['agent_verified']} | {x['codex_draft']} | {x['human_accepted']} | {x['total']} |" for x in d["by_origin"]]
+          "| Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |",
+          "|---|---:|---:|---:|---:|---:|"]
+    L += [f"| {x['origin']} | {x['agent_verified']} | {x['lab_reconciled']} | {x['codex_draft']} | {x['human_accepted']} | {x['total']} |"
+          for x in d["by_origin"]]
     L += ["", f"Draft author-question candidates (unverified, not questions): {d['draft_author_question_candidates']}."]
     L += ["", "## Open questions (author decisions)", ""]
     L += [f"- {q['id']} [{q['status']}, {q['category']}] {q['title']}" for q in t["open_questions"] if q["status"] != "WITHDRAWN"]

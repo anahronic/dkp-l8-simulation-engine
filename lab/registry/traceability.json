@@ -840,6 +840,11 @@
   },
   {
    "module": "info_truth",
+   "example": "faulty_responses",
+   "kind": "counterexample"
+  },
+  {
+   "module": "info_truth",
    "example": "hypothetical_bundle",
    "kind": "alternative"
   },
@@ -872,6 +877,11 @@
    "module": "edu_culture",
    "example": "cultural_exception",
    "kind": "reference"
+  },
+  {
+   "module": "edu_culture",
+   "example": "faulty_content",
+   "kind": "counterexample"
   },
   {
    "module": "edu_culture",
@@ -1399,21 +1409,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1212,
-  "covered_percent": 69.8,
+  "covered": 1233,
+  "covered_percent": 71.0,
   "statuses": {
-   "PASS": 1130,
+   "PASS": 1151,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 525
+   "UNCOVERED": 504
   },
-  "resolvable": 674,
-  "resolvable_uncovered": 145,
-  "resolvable_uncovered_implementation_only": 145,
+  "resolvable": 675,
+  "resolvable_uncovered": 125,
+  "resolvable_uncovered_implementation_only": 125,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 889,
-  "pass_with_open_point": 814
+  "covered_with_open_point": 910,
+  "pass_with_open_point": 835
  },
  "stages": [
   {
@@ -1463,21 +1473,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1212,
-    "covered_percent": 69.8,
+    "covered": 1233,
+    "covered_percent": 71.0,
     "statuses": {
-     "PASS": 1130,
+     "PASS": 1151,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 525
+     "UNCOVERED": 504
     },
-    "resolvable": 674,
-    "resolvable_uncovered": 145,
-    "resolvable_uncovered_implementation_only": 145,
+    "resolvable": 675,
+    "resolvable_uncovered": 125,
+    "resolvable_uncovered_implementation_only": 125,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 889,
-    "pass_with_open_point": 814
+    "covered_with_open_point": 910,
+    "pass_with_open_point": 835
    }
   },
   {
@@ -1618,21 +1628,21 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 188,
-    "covered_percent": 64.2,
+    "covered": 209,
+    "covered_percent": 71.3,
     "statuses": {
-     "PASS": 172,
+     "PASS": 193,
      "FAIL": 0,
      "UNKNOWN": 9,
      "NOT_APPLICABLE": 7,
-     "UNCOVERED": 105
+     "UNCOVERED": 84
     },
-    "resolvable": 124,
-    "resolvable_uncovered": 39,
-    "resolvable_uncovered_implementation_only": 39,
+    "resolvable": 125,
+    "resolvable_uncovered": 19,
+    "resolvable_uncovered_implementation_only": 19,
     "unresolved_decisions": 251,
-    "covered_with_open_point": 146,
-    "pass_with_open_point": 132
+    "covered_with_open_point": 167,
+    "pass_with_open_point": 153
    }
   },
   {
@@ -2734,6 +2744,7 @@
    {
     "origin": "normative_ambiguity",
     "agent_verified": 103,
+    "lab_reconciled": 0,
     "codex_draft": 143,
     "human_accepted": 0,
     "total": 246
@@ -2741,13 +2752,15 @@
    {
     "origin": "architecture_definition",
     "agent_verified": 37,
+    "lab_reconciled": 1,
     "codex_draft": 217,
     "human_accepted": 0,
-    "total": 254
+    "total": 255
    },
    {
     "origin": "l8_parameter",
     "agent_verified": 0,
+    "lab_reconciled": 0,
     "codex_draft": 128,
     "human_accepted": 0,
     "total": 128
@@ -2755,6 +2768,7 @@
    {
     "origin": "empirical_model_data",
     "agent_verified": 0,
+    "lab_reconciled": 0,
     "codex_draft": 227,
     "human_accepted": 0,
     "total": 227
@@ -2762,6 +2776,7 @@
    {
     "origin": "external_dependency",
     "agent_verified": 0,
+    "lab_reconciled": 0,
     "codex_draft": 201,
     "human_accepted": 0,
     "total": 201
@@ -2769,13 +2784,15 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "codex_draft": 358,
+    "lab_reconciled": 21,
+    "codex_draft": 336,
     "human_accepted": 0,
-    "total": 358
+    "total": 357
    },
    {
     "origin": "pending",
     "agent_verified": 0,
+    "lab_reconciled": 0,
     "codex_draft": 0,
     "human_accepted": 0,
     "total": 0
@@ -2918,11 +2935,11 @@
    },
    "DKP-1-PREVENTION-001": {
     "normative_ambiguity": 10,
-    "architecture_definition": 9,
+    "architecture_definition": 10,
     "l8_parameter": 3,
     "empirical_model_data": 5,
     "external_dependency": 3,
-    "implementation_only": 6,
+    "implementation_only": 5,
     "pending": 0
    },
    "DKP-2-ASSETS-001": {
@@ -19541,7 +19558,7 @@
    "document": "DKP-1-PREVENTION-001",
    "section": "13",
    "kind": "constraint",
-   "checkable": "no",
+   "checkable": "partial",
    "coverage": "NOT_COMPUTABLE",
    "module": null,
    "check": null,
@@ -19564,8 +19581,8 @@
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "architecture_definition",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42050,30 +42067,39 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification of value judgments and social ranking is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "edu_culture",
+   "check": "not_a_ranking",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42082,30 +42108,39 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational boundary for what constitutes defining an excluded concept is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_defined_values",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42114,30 +42149,39 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Acceptance criteria for open-source status and public inspectability are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "open_or_inspectable",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Access is declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42339,30 +42383,39 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational test for explicit and implicit definitions of the excluded concepts is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_success_definition",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42403,30 +42456,39 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between uniform paths and common competence requirements is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_uniform_path",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42936,30 +42998,39 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Ideological narratives and imposition lack operational definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_ideological_narrative",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42968,30 +43039,39 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A semantic test for definitions of moral or political correctness is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_correctness_definition",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43137,30 +43217,39 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Acceptance criteria for boundedness and verifiability are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "bounded_verifiable_module",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Boundaries and verification method are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43169,30 +43258,39 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Standards for auditability, reproducibility, and competence confirmation are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "assessment_event",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Performance is a declared outcome; the outcome is recomputed from it.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43272,30 +43370,39 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Ideological enforcement has no operational definition. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "free_of_ideological_enforcement",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43336,30 +43443,39 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Auditability criteria and the intended meaning of outcome reproducibility are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "outcomes_reproducible",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Performance is a declared outcome; the outcome is recomputed from it.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43400,30 +43516,39 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational distinction between belief acceptance and demonstrated knowledge is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_mandated_belief",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43432,30 +43557,39 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Worldview alignment has no operational definition. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_worldview_alignment",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43464,30 +43598,39 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Cultural conformity, moral conformity, and their enforcement are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_conformity_enforcement",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43685,30 +43828,39 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational distinction between competence signals and judgments of worth or intelligence is missing. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "edu_culture",
+   "check": "competence_signals",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43900,30 +44052,39 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of ideological indoctrination is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_indoctrination",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Indoctrination observed as an ideological narrative or required assent.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -43932,30 +44093,39 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Political conditioning has no operational definition. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_political_conditioning",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Module properties are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -44317,30 +44487,39 @@
    "section": "Safeguards",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Corrective signals and fault markers lack operational definitions. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "edu_culture",
+   "check": "failure_is_signal",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_content"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -46531,31 +46710,42 @@
    "document": "DKP-5-INFO-001",
    "section": "0",
    "kind": "constraint",
-   "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Descriptive governance and coercion lack complete decision criteria.",
+   "checkable": "partial",
+   "coverage": "PARTIAL",
+   "module": "info_truth",
+   "check": "descriptive_non_coercive",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": "Coercion observed as deletion, penalty, legal effect, suspension or blocking (§§8-10).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information",
+    "info_truth:faulty_responses"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -46726,30 +46916,40 @@
    "section": "13",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document supplies no operational method for distinguishing prohibited purposes from factual correspondence work. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "info_truth",
+   "check": "factual_jurisdiction",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": "Requests beyond factual correspondence are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_responses"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -47668,30 +47868,41 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define response implementations or precisely distinguish informational annotations from remediation subject to the activation gate. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "info_truth",
+   "check": "permitted_responses",
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IN-1",
+    "H-IN-2",
+    "H-IN-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "info_truth:faulty_information",
+    "info_truth:faulty_responses"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

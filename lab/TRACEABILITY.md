@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 145 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1233 (71.0 %) | 910 | 1151 | 835 | 4 | 63 | 15 | 504 | 125 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 225 (53.1 %) | 138 | 205 | 121 | 1 | 17 | 2 | 199 | 45 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 188 (64.2 %) | 146 | 172 | 132 | 0 | 9 | 7 | 105 | 39 | 251 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 209 (71.3 %) | 167 | 193 | 153 | 0 | 9 | 7 | 84 | 19 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 360 (70.5 %) | 281 | 339 | 260 | 0 | 18 | 3 | 151 | 42 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1212 (69.8 %) | 889 | 1130 | 814 | 4 | 63 | 15 | 525 | 145 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1233 (71.0 %) | 910 | 1151 | 835 | 4 | 63 | 15 | 504 | 125 | 1414 |
 
 ### Stage criteria
 
@@ -166,15 +166,15 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 1414 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
-| Origin | Agent-verified (quotes checked automatically) | Codex draft | Accepted by a human | Total |
-|---|---:|---:|---:|---:|
-| normative_ambiguity | 103 | 143 | 0 | 246 |
-| architecture_definition | 37 | 217 | 0 | 254 |
-| l8_parameter | 0 | 128 | 0 | 128 |
-| empirical_model_data | 0 | 227 | 0 | 227 |
-| external_dependency | 0 | 201 | 0 | 201 |
-| implementation_only | 0 | 358 | 0 | 358 |
-| pending | 0 | 0 | 0 | 0 |
+| Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
+|---|---:|---:|---:|---:|---:|
+| normative_ambiguity | 103 | 0 | 143 | 0 | 246 |
+| architecture_definition | 37 | 1 | 217 | 0 | 255 |
+| l8_parameter | 0 | 0 | 128 | 0 | 128 |
+| empirical_model_data | 0 | 0 | 227 | 0 | 227 |
+| external_dependency | 0 | 0 | 201 | 0 | 201 |
+| implementation_only | 0 | 21 | 336 | 0 | 357 |
+| pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
 
@@ -273,9 +273,9 @@ Withdrawn after verification (not author decisions):
 | DKP-4-ERROR-001 | 52 | 25 | 21 | 0 | 3 | 1 | 27 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
 | DKP-5-CULTURE-001 | 43 | 27 | 27 | 0 | 0 | 0 | 16 | 37 |
-| DKP-5-EDU-001 | 64 | 34 | 30 | 0 | 1 | 3 | 30 | 55 |
+| DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 55 |
 | DKP-5-HABITAT-001 | 56 | 52 | 48 | 0 | 1 | 3 | 4 | 50 |
-| DKP-5-INFO-001 | 39 | 27 | 25 | 0 | 2 | 0 | 12 | 37 |
+| DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 37 |
 | DKP-5-TRANSPORT-001 | 35 | 15 | 10 | 0 | 5 | 0 | 20 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 9 | 9 | 0 | 0 | 0 | 8 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
@@ -988,11 +988,16 @@ Withdrawn after verification (not author decisions):
 | CULTURE-9-02 | IMPLEMENTED | edu_culture · exception_bounded | PASS | — | — |
 | CULTURE-9-03 | PARTIAL | edu_culture · conflicts_by_scope | PASS | — | — |
 | CULTURE-9-04 | IMPLEMENTED | edu_culture · no_verification_exemption | PASS | — | — |
+| EDU-0-01 | IMPLEMENTED | edu_culture · not_a_ranking | PASS | yes | — |
+| EDU-1-01 | PARTIAL | edu_culture · no_defined_values | PASS | yes | — |
+| EDU-10-01 | PARTIAL | edu_culture · open_or_inspectable | PASS | yes | — |
 | EDU-10-02 | PARTIAL | edu_culture · open_declared_assessment | PASS | — | — |
 | EDU-10-03 | PARTIAL | edu_culture · content_auditable | PASS | — | — |
 | EDU-10-04 | PARTIAL | edu_culture · learning_data_minimized | PASS | — | — |
 | EDU-10-05 | PARTIAL | edu_culture · learning_data_protected | UNKNOWN | — | Q-059 |
 | EDU-10-06 | IMPLEMENTED | edu_culture · learning_data_not_profiled | PASS | — | — |
+| EDU-11-01 | PARTIAL | edu_culture · no_success_definition | PASS | yes | — |
+| EDU-11-03 | PARTIAL | edu_culture · no_uniform_path | PASS | yes | — |
 | EDU-11-05 | IMPLEMENTED | edu_culture · not_a_rights_gate | PASS | — | — |
 | EDU-12-01 | IMPLEMENTED | edu_culture · restriction_reversible | NOT_APPLICABLE | — | — |
 | EDU-12-02 | IMPLEMENTED | edu_culture · restriction_calibrated | PASS | — | — |
@@ -1004,15 +1009,27 @@ Withdrawn after verification (not author decisions):
 | EDU-13-04 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | EDU-13-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | EDU-13-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| EDU-2-02 | PARTIAL | edu_culture · no_ideological_narrative | PASS | yes | — |
+| EDU-2-03 | PARTIAL | edu_culture · no_correctness_definition | PASS | yes | — |
 | EDU-2-04 | IMPLEMENTED | edu_culture · no_belief_evaluation | PASS | yes | — |
+| EDU-3-03 | PARTIAL | edu_culture · bounded_verifiable_module | PASS | yes | — |
+| EDU-3-04 | PARTIAL | edu_culture · assessment_event | PASS | yes | — |
 | EDU-4-02 | IMPLEMENTED | edu_culture · competence_over_credential | PASS | — | — |
+| EDU-4-03 | PARTIAL | edu_culture · free_of_ideological_enforcement | PASS | yes | — |
+| EDU-4-05 | PARTIAL | edu_culture · outcomes_reproducible | PASS | yes | — |
+| EDU-6-01 | PARTIAL | edu_culture · no_mandated_belief | PASS | yes | — |
+| EDU-6-02 | PARTIAL | edu_culture · no_worldview_alignment | PASS | yes | — |
+| EDU-6-03 | PARTIAL | edu_culture · no_conformity_enforcement | PASS | yes | — |
 | EDU-7-02 | PARTIAL | edu_culture · open_declared_assessment | PASS | — | — |
 | EDU-7-03 | PARTIAL | edu_culture · open_declared_assessment | PASS | — | — |
 | EDU-7-04 | PARTIAL | edu_culture · minimal_language_bias | PASS | yes | — |
 | EDU-7-05 | IMPLEMENTED | edu_culture · no_ideology_items | PASS | yes | — |
+| EDU-7-06 | IMPLEMENTED | edu_culture · competence_signals | PASS | yes | — |
 | EDU-8-01 | IMPLEMENTED | edu_culture · targeted_modules | PASS | — | — |
 | EDU-8-03 | IMPLEMENTED | edu_culture · support_not_penalty | PASS | yes | — |
 | EDU-8-05 | IMPLEMENTED | edu_culture · no_permanent_denial | PASS | — | — |
+| EDU-9-01 | PARTIAL | edu_culture · no_indoctrination | PASS | yes | — |
+| EDU-9-02 | PARTIAL | edu_culture · no_political_conditioning | PASS | yes | — |
 | EDU-9-03 | IMPLEMENTED | edu_culture · no_belief_screening | PASS | yes | — |
 | EDU-9-04 | IMPLEMENTED | edu_culture · no_punitive_education | PASS | yes | — |
 | EDU-9-05 | IMPLEMENTED | edu_culture · no_credential_privilege | PASS | — | — |
@@ -1022,6 +1039,7 @@ Withdrawn after verification (not author decisions):
 | EDU-Safeguards-03 | PARTIAL | edu_culture · legal_status_unchanged | PASS | — | — |
 | EDU-Safeguards-04 | IMPLEMENTED | edu_culture · only_temporary_restriction | NOT_APPLICABLE | — | — |
 | EDU-Safeguards-05 | IMPLEMENTED | edu_culture · free_remediation | PASS | — | — |
+| EDU-Safeguards-06 | IMPLEMENTED | edu_culture · failure_is_signal | PASS | yes | — |
 | HABITAT-10-01 | PARTIAL | calibration_expiry · remediation_initiated | PASS | — | — |
 | HABITAT-10-02 | IMPLEMENTED | habitat_dignity · relocation_assistance_optional | PASS | — | — |
 | HABITAT-10-03 | PARTIAL | habitat_dignity · incentives_via_l2 | PASS | — | — |
@@ -1075,10 +1093,12 @@ Withdrawn after verification (not author decisions):
 | HABITAT-9-03 | IMPLEMENTED | habitat_dignity · routed_to_oracle_audit | PASS | — | — |
 | HABITAT-9-04 | IMPLEMENTED | habitat_dignity · no_own_investigation | PASS | yes | — |
 | INFO-0-01 | IMPLEMENTED | info_truth · opinions_not_regulated | PASS | yes | — |
+| INFO-0-02 | PARTIAL | info_truth · descriptive_non_coercive | PASS | yes | — |
 | INFO-10-01 | IMPLEMENTED | info_truth · no_coercive_annotation | PASS | yes | — |
 | INFO-11-01 | PARTIAL | info_truth · abuse_to_audit | PASS | — | — |
 | INFO-12-01 | IMPLEMENTED | info_truth · verification_paths | PASS | — | — |
 | INFO-12-02 | IMPLEMENTED | info_truth · reproducible | PASS | — | — |
+| INFO-13-01 | PARTIAL | info_truth · factual_jurisdiction | PASS | yes | — |
 | INFO-14-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | INFO-14-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | INFO-14-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | yes | Q-062 |
@@ -1094,6 +1114,7 @@ Withdrawn after verification (not author decisions):
 | INFO-6.1-04 | PARTIAL | info_truth · t_values_calibrated | UNKNOWN | — | — |
 | INFO-6.2-01 | IMPLEMENTED | info_truth · i1_non_blocking | PASS | — | — |
 | INFO-6.2-02 | IMPLEMENTED | info_truth · i1_informational | PASS | — | — |
+| INFO-8-01 | IMPLEMENTED | info_truth · permitted_responses | PASS | yes | — |
 | INFO-9-01 | IMPLEMENTED | info_truth · activation_gate | PASS | — | — |
 | INFO-9-02 | IMPLEMENTED | info_truth · informational_without_bundle | PASS | — | — |
 | INFO-9-03 | IMPLEMENTED | info_truth · no_manual_truth | PASS | yes | — |

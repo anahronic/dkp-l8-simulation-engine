@@ -59,7 +59,7 @@
    "quote": "Information governance under DKP is descriptive and non-coercive.",
    "interpretation": "Assess every information-governance action against the descriptive and noncoercive requirements. Later prohibitions provide examples, but the general terms do not have complete operational definitions.",
    "kind": "constraint",
-   "checkable": "no",
+   "checkable": "partial",
    "inputs": [
     "governance_actions",
     "action_effects"
@@ -71,19 +71,30 @@
     "governance action records",
     "effects on affected parties"
    ],
-   "gap": "Descriptive governance and coercion lack complete decision criteria.",
+   "gap": "Coercion observed as deletion, penalty, legal effect, suspension or blocking (§§8-10).",
    "hypotheses_needed": [
     "Operational definitions of descriptive governance and coercive effects."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "descriptive_non_coercive"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
+   "checkable_reconciled": {
+    "from": "no",
+    "by": "lab reading",
+    "record": "lab/registry/reconciliations.json"
+   },
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -927,19 +938,25 @@
     "response logs",
     "L8 calibration validity"
    ],
-   "gap": "The text does not define response implementations or precisely distinguish informational annotations from remediation subject to the activation gate. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A declared response taxonomy separating annotation, amplification changes, remediation, and escalation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "permitted_responses"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1467,19 +1484,25 @@
    "data_dependencies": [
     "action purpose and jurisdiction records"
    ],
-   "gap": "The document supplies no operational method for distinguishing prohibited purposes from factual correspondence work. No lab check implemented yet.",
+   "gap": "Requests beyond factual correspondence are declared.",
    "hypotheses_needed": [
     "A declared jurisdiction and action-purpose classification method."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.0.0",
+    "check": "factual_jurisdiction"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

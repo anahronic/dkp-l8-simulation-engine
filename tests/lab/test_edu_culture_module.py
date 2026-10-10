@@ -44,6 +44,12 @@ FAULT_CASES = {
     "culture_resolves_conflict": (EXC, ["CULTURE-9-03"]),
     "undeclared_mechanism": (EXC, ["CULTURE-11-03"]),
     "audit_refused": ({}, ["EDU-10-03"]),
+    "admit_any_module": ({}, ["EDU-6-01", "EDU-6-02", "EDU-9-02", "EDU-6-03", "EDU-2-02", "EDU-9-01", "EDU-4-03", "EDU-2-03",
+                             "EDU-1-01", "EDU-11-01", "EDU-11-03", "EDU-10-01", "EDU-3-03"]),
+    "rank_by_assessment": ({}, ["EDU-0-01"]),
+    "label_as_intelligence": ({}, ["EDU-7-06"]),
+    "failure_as_fault": ({}, ["EDU-Safeguards-06"]),
+    "nonreproducible_assessment": ({}, ["EDU-3-04", "EDU-4-05"]),
 }
 
 
