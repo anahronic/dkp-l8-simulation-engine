@@ -53,6 +53,9 @@ FAULTS = {
     "missing_due_process": "a restrictive trigger lacks reversal and appeal conditions",
     "permanent_exclusion": "a permanent exclusion is imposed without a Justice outcome",
     "ideological_justification": "an action is justified by a narrative",
+    "consider_motivation": "a declared ideological motivation raises the security state by one level",
+    "extra_trigger": "an anonymous tip outside the four §6 triggers opens a security state",
+    "cap_breach_downgraded": "a node concentration above 4 % is recorded as a policy deviation",
 }
 EPISODE = {"type": "object", "fields": {
     "from_day": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -125,11 +128,18 @@ def run(r: Dict[str, Any]):
             continue
         if blocked_level:
             target = "S0"
+        considered = []
+        if "consider_motivation" in faults and target in ("S1", "S2"):
+            target, considered = {"S1": "S2", "S2": "S3"}[target], ["declared motivation"]
+        if "extra_trigger" in faults and k == 0 and target == "S0":
+            tip = put("observation", "TIP", k, {"source": "anonymous tip", "subjects": ["s9"]})
+            prov, target = [tip.event_id], "S1"
         if target != state:
             if stays and stays[-1].get("end") is None:
                 stays[-1]["end"] = k
                 stays[-1]["ended_by"] = "escalation" if RANK[target] > RANK[state] else "evidence"
-            put("notice", "INTSEC", k, {"state": target, "from": state, "evidence": idx}, prov)
+            put("notice", "INTSEC", k, {"state": target, "from": state, "evidence": idx,
+                                        **({"considered": considered} if considered else {})}, prov)
             state, since = target, k
             if state != "S0":
                 stays.append({"state": state, "start": k, "end": None, "ended_by": None})
@@ -151,6 +161,14 @@ def run(r: Dict[str, Any]):
     if stays and stays[-1].get("end") is None:
         stays[-1]["end"] = r["horizon_days"]
         stays[-1]["ended_by"] = "horizon"
+    shares: Dict[str, float] = {}
+    for x in r["node_shares"]:
+        key = x["group"] if x["group"] != "none" else "holder:" + x["holder"]
+        shares[key] = shares.get(key, 0.0) + x["share"]
+    for key in sorted(k for k, s in shares.items() if s > NODE_CAP + 1e-9):
+        put("notice", "INTSEC", 0, {"node_concentration": key, "share": shares[key],
+                                    "classification": "policy deviation" if "cap_breach_downgraded" in faults
+                                    else "critical architectural breach"})
     return log, stays
 
 
@@ -208,6 +226,49 @@ def emit(put, r, faults, state, k, subjects, prov, idx):
             act("crisis_escalation", "system", executed_by="trigger to DKP-4-CRISIS-001")
         act("ptl_halt_request", "PTL", executed_by="request to DKP-0-ORACLE-001")
         act("non_essential_suspension", "non-essential execution paths")
+
+
+MOTIVES = ("intent", "ideology", "affiliation", "declared motivation")
+
+
+def trigger_checks(r: Dict[str, Any], log: EventLog, v) -> List[CheckResult]:
+    """INTERNAL-SEC §3.2, §6, §8 (review КТ5 reading)."""
+    msgs = log.messages()
+    get = log.get
+    out = []
+    trans = [m for m in msgs if m.source == "INTSEC" and "state" in m.value and m.value["state"] != "S0"]
+    bad = [f"{m.event_id}: considered {', '.join(m.value['considered'])}" for m in trans if set(m.value.get("considered", [])) & set(MOTIVES)]
+    for m in trans:
+        lv = [e["level"] for e in r["evidence"] if e["from_day"] <= m.arrived_at < e["to_day"]]
+        top = max((RANK[STATE_OF[x]] for x in lv), default=0)
+        if RANK[m.value["state"]] > top and m.value["state"] != "S4":
+            bad.append(f"{m.event_id}: {m.value['state']} above the evidence level")
+    out.append(v("INTSEC-3.2-02", "motivation_not_considered", bad,
+                 f"{len(trans)} security states set by evidence alone; no intent, ideology, affiliation or motivation considered",
+                 "{n} states influenced by motivation"))
+    bad = []
+    for m in trans:
+        srcs = [get(p) for p in m.provenance]
+        if not srcs or any(s.source != "PTL" or s.value.get("trigger") not in TRIGGERS for s in srcs):
+            bad.append(f"{m.event_id}: opened by " + ", ".join(sorted({s.source for s in srcs}) or ["nothing"]))
+    out.append(v("INTSEC-6-01", "four_triggers_only", bad,
+                 f"{len(trans)} security states opened only by PTL-confirmed identity, impact, justice-execution or audit triggers",
+                 "{n} states opened by another trigger") if trans else
+               CheckResult("INTSEC-6-01", "four_triggers_only", NOT_APPLICABLE, "integrity triggers",
+                           applicability="no security state opened in this run"))
+    shares: Dict[str, float] = {}
+    for x in r["node_shares"]:
+        key = x["group"] if x["group"] != "none" else "holder:" + x["holder"]
+        shares[key] = shares.get(key, 0.0) + x["share"]
+    over = sorted(k for k, s in shares.items() if s > NODE_CAP + 1e-9)
+    cls = {m.value["node_concentration"]: m.value["classification"] for m in msgs if m.source == "INTSEC" and "node_concentration" in m.value}
+    out.append(v("INTSEC-8-07", "cap_breach_critical", [f"{k}: {cls.get(k, 'not classified')}" for k in over
+                                                       if cls.get(k) != "critical architectural breach"],
+                 f"{len(over)} concentration(s) above {NODE_CAP:g} % recorded as critical architectural breaches",
+                 "{n} concentrations not recorded as critical breaches") if over else
+               CheckResult("INTSEC-8-07", "cap_breach_critical", NOT_APPLICABLE, "node concentration breach",
+                           applicability=f"no holder or group above {NODE_CAP:g} %"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog, stays: List[Dict[str, Any]]) -> List[CheckResult]:
@@ -340,6 +401,7 @@ def checks(r: Dict[str, Any], log: EventLog, stays: List[Dict[str, Any]]) -> Lis
                      f"(largest {max(shares.values()):.2f} %)", "{n} holders or groups above the cap"))
     else:
         out.append(na("INTSEC-8-06", "node_cap", "node concentration", "no node distribution declared"))
+    out += trigger_checks(r, log, v)
     again, _ = run(r)
     out.append(v("INTSEC-11-03", "complete_audit_trail", [] if again.digest() == log.digest() else ["digest"],
                  "complete, reproducible audit trail (re-execution gives a byte-identical log)", "re-execution differs"))
@@ -371,6 +433,9 @@ IMPLEMENTS = {
     "INTSEC-8-04": ("no_secret_rules", "IMPLEMENTED", None),
     "INTSEC-8-05": ("no_ideology", "IMPLEMENTED", None),
     "INTSEC-8-06": ("node_cap", "PARTIAL", "Node shares are declared inputs."),
+    "INTSEC-3.2-02": ("motivation_not_considered", "IMPLEMENTED", None),
+    "INTSEC-6-01": ("four_triggers_only", "IMPLEMENTED", None),
+    "INTSEC-8-07": ("cap_breach_critical", "PARTIAL", "Node shares are declared inputs."),
     "INTSEC-9-01": ("due_process", "IMPLEMENTED", None),
     "INTSEC-4.4-01": ("logged_traceable", "PARTIAL", "Logging and traceability; physical reversibility is declared."),
     "INTSEC-11-03": ("complete_audit_trail", "IMPLEMENTED", None),
@@ -379,7 +444,7 @@ IMPLEMENTS = {
 
 class InternalSecurityModule(LabModule):
     id = "internal_security"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Internal security states (INTERNAL-SEC)", "ru": "Состояния внутренней безопасности (INTERNAL-SEC)"}
     summary = {"en": "Integrity evidence arrives: does the system step through S1–S4 within the time limits, act only on "
                      "PTL evidence, route every effect on a person through Justice or Identity, and never punish by association?",

@@ -181,7 +181,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ta_two_classes"
    },
    "tests": [
@@ -287,7 +287,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "informational_no_reward"
    },
    "tests": [
@@ -403,7 +403,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "temporal_alignment"
    },
    "tests": [
@@ -446,7 +446,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "suppression_formula"
    },
    "tests": [
@@ -488,7 +488,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_reduction_zero"
    },
    "tests": [
@@ -526,7 +526,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "weights_nonnegative"
    },
    "tests": [
@@ -558,7 +558,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "attribution_unit_interval"
    },
    "tests": [
@@ -665,7 +665,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "cbf_audit_only"
    },
    "tests": [
@@ -707,7 +707,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "recognition_rule"
    },
    "tests": [
@@ -748,7 +748,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "spd_product"
    },
    "tests": [
@@ -785,7 +785,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "subject_aggregate"
    },
    "tests": [
@@ -826,7 +826,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "causal_linkage_formalized"
    },
    "tests": [
@@ -868,7 +868,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "attribution_budget"
    },
    "tests": [
@@ -952,7 +952,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "zkp_proof"
    },
    "tests": [
@@ -1037,7 +1037,7 @@
     "also": [
      {
       "module": "prevention",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "check": "self_induced_zero"
      }
     ]
@@ -1151,7 +1151,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_data_zero"
    },
    "tests": [
@@ -1259,7 +1259,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "output_fields"
    },
    "tests": [
@@ -1292,7 +1292,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "output_flags"
    },
    "tests": [
@@ -1323,19 +1323,25 @@
     "evaluation and configuration records",
     "audit evidence"
    ],
-   "gap": "The deterministic input boundary and auditability acceptance criteria are unspecified. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare all state treated as evaluation input and the evidence required for an audit."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.1.0",
+    "check": "deterministic_auditable"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1364,7 +1370,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ambiguity_zero"
    },
    "tests": [
@@ -1434,19 +1440,25 @@
     "state provenance",
     "state usage in attribution and simulation"
    ],
-   "gap": "The scope of the prohibition and classification of hypothetical states are undefined. No lab check implemented yet.",
+   "gap": "Checked on the S factor (from measured TA and SE) and the factor set; the bench is the verified v2.1.1, not modified.",
    "hypotheses_needed": [
     "Declare whether the invariant applies only to operational attribution or also to simulation states."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.1.0",
+    "check": "no_hypothetical_states"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

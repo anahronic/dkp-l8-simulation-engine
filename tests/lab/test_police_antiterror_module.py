@@ -51,6 +51,8 @@ FAULT_CASES = {
     "profile_by_belief": ({}, ["POLICE-7-01", "POLICE-7-04", "POLICE-0-01"]),
     "expand_authority": ({}, ["POLICE-7-03", "POLICE-7-04"]),
     "police_overreach": ({}, ["POLICE-10-01", "POLICE-0-02", "POLICE-2-03", "POLICE-3-04", "POLICE-0-01"]),
+    "retaliatory_strike": ({}, ["ANTITERROR-0-02"]),
+    "override_justice_decision": ({}, ["ANTITERROR-11-02", "ANTITERROR-0-02"]),
 }
 
 
@@ -109,3 +111,12 @@ def test_kt5_scope_requests_are_refused_where_excluded():
         assert all(clean[x] == "PASS" for x in rids), q
         broken = statuses(run(scope_requests=[q], faults=["police_overreach"]))
         assert all(broken[x] == "FAIL" for x in rids), q
+
+
+def test_kt5_antiterror_principles():
+    """Review КТ5 reading of ANTITERROR §0, §5 T1, §11 on the scenarios that exercise them."""
+    assert statuses(run(**EX["mass_casualty"], faults=["content_control"]))["ANTITERROR-11-02"] == "FAIL"
+    assert statuses(run(**EX["mass_casualty"]))["ANTITERROR-11-02"] == "PASS"
+    assert statuses(run(faults=["lockdown_beyond_zone"]))["ANTITERROR-5-02"] == "FAIL"
+    assert statuses(run(**EX["attack_on_combatants"], faults=["terror_on_combatants"]))["ANTITERROR-5-02"] == "FAIL"
+    assert statuses(run(**EX["attack_on_combatants"]))["ANTITERROR-5-02"] == "NOT_APPLICABLE"

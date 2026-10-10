@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1341 (77.2 %) | 1018 | 1259 | 943 | 4 | 63 | 15 | 396 | 20 | 1414 |
-| B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1349 (77.7 %) | 1026 | 1266 | 950 | 4 | 63 | 16 | 388 | 12 | 1414 |
+| B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 18 | 24 | 17 | 0 | 1 | 0 | 18 | 0 | 36 |
 | C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 253 | 339 | 241 | 3 | 8 | 2 | 13 | 0 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 224 (76.5 %) | 182 | 208 | 168 | 0 | 9 | 7 | 69 | 4 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 397 (77.7 %) | 318 | 376 | 297 | 0 | 18 | 3 | 114 | 7 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 403 (78.9 %) | 324 | 381 | 302 | 0 | 18 | 4 | 108 | 1 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1341 (77.2 %) | 1018 | 1259 | 943 | 4 | 63 | 15 | 396 | 20 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1349 (77.7 %) | 1026 | 1266 | 950 | 4 | 63 | 16 | 388 | 12 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 123 | 228 | 0 | 351 |
+| implementation_only | 0 | 131 | 220 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -260,13 +260,13 @@ Withdrawn after verification (not author decisions):
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 27 | 24 | 0 | 3 | 0 | 14 | 33 |
-| DKP-1-PREVENTION-001 | 43 | 23 | 22 | 0 | 1 | 0 | 20 | 36 |
+| DKP-1-PREVENTION-001 | 43 | 25 | 24 | 0 | 1 | 0 | 18 | 36 |
 | DKP-2-ASSETS-001 | 43 | 29 | 28 | 0 | 1 | 0 | 14 | 38 |
 | DKP-2-FINANCE-001 | 44 | 25 | 23 | 0 | 2 | 0 | 19 | 39 |
 | DKP-2-LABOR-001 | 40 | 24 | 21 | 0 | 3 | 0 | 16 | 28 |
-| DKP-3-ANTITERROR-001 | 41 | 24 | 24 | 0 | 0 | 0 | 17 | 35 |
+| DKP-3-ANTITERROR-001 | 41 | 27 | 27 | 0 | 0 | 0 | 14 | 35 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
-| DKP-3-INTERNAL-SEC-001 | 49 | 33 | 33 | 0 | 0 | 0 | 16 | 47 |
+| DKP-3-INTERNAL-SEC-001 | 49 | 36 | 35 | 0 | 0 | 1 | 13 | 47 |
 | DKP-3-POLICE-001 | 45 | 36 | 36 | 0 | 0 | 0 | 9 | 37 |
 | DKP-4-CRISIS-001 | 53 | 34 | 30 | 1 | 3 | 0 | 19 | 43 |
 | DKP-4-CRISIS-001-PATCH | 31 | 26 | 25 | 0 | 1 | 0 | 5 | 21 |
@@ -643,7 +643,9 @@ Withdrawn after verification (not author decisions):
 | PREV-0-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
 | PREV-11-01 | IMPLEMENTED | prevention · output_fields | PASS | — | — |
 | PREV-11-02 | IMPLEMENTED | prevention · output_flags | PASS | — | — |
+| PREV-11-03 | IMPLEMENTED | prevention · deterministic_auditable | PASS | — | — |
 | PREV-12-01 | PARTIAL | prevention · ambiguity_zero | PASS | — | — |
+| PREV-13-01 | PARTIAL | prevention · no_hypothetical_states | PASS | — | — |
 | PREV-15-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | PREV-15-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | PREV-15-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
@@ -741,7 +743,9 @@ Withdrawn after verification (not author decisions):
 | LABOR-9.1-01 | PARTIAL | work_cycle · no_compulsion | PASS | yes | — |
 | LABOR-9.1-02 | IMPLEMENTED | code_economy · refusal_not_punished | UNKNOWN | yes | Q-052 |
 | LABOR-9.2-03 | PARTIAL | work_cycle · no_lasting_crisis_obligation | PASS | yes | — |
+| ANTITERROR-0-02 | IMPLEMENTED | police_antiterror · defensive_containment | PASS | yes | — |
 | ANTITERROR-11-01 | IMPLEMENTED | police_antiterror · no_sanctions | PASS | yes | — |
+| ANTITERROR-11-02 | PARTIAL | police_antiterror · no_speech_or_override | PASS | yes | — |
 | ANTITERROR-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | ANTITERROR-12-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | ANTITERROR-12-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
@@ -753,6 +757,7 @@ Withdrawn after verification (not author decisions):
 | ANTITERROR-4.2-01 | PARTIAL | police_antiterror · identity_not_a_risk_signal | PASS | — | — |
 | ANTITERROR-4.4-02 | PARTIAL | police_antiterror · immediately_terminable | PASS | yes | — |
 | ANTITERROR-5-01 | IMPLEMENTED | police_antiterror · t0_iff_no_stream | PASS | yes | — |
+| ANTITERROR-5-02 | PARTIAL | police_antiterror · t1_definition | PASS | yes | — |
 | ANTITERROR-5-04 | IMPLEMENTED | police_antiterror · t3_escalates | PASS | — | — |
 | ANTITERROR-5-05 | IMPLEMENTED | police_antiterror · refresh_to_persist | PASS | yes | — |
 | ANTITERROR-6-01 | IMPLEMENTED | police_antiterror · permitted_actions | PASS | yes | — |
@@ -818,6 +823,7 @@ Withdrawn after verification (not author decisions):
 | INTSEC-12-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
 | INTSEC-2-02 | IMPLEMENTED | internal_security · no_autonomous_revocation | PASS | — | — |
 | INTSEC-2-03 | IMPLEMENTED | internal_security · effects_via_triggers | PASS | — | — |
+| INTSEC-3.2-02 | IMPLEMENTED | internal_security · motivation_not_considered | PASS | — | — |
 | INTSEC-4.1-01 | IMPLEMENTED | internal_security · responds_to_ptl | PASS | — | — |
 | INTSEC-4.2-01 | IMPLEMENTED | internal_security · non_preemptive | PASS | — | — |
 | INTSEC-4.4-01 | PARTIAL | internal_security · logged_traceable | PASS | — | — |
@@ -827,6 +833,7 @@ Withdrawn after verification (not author decisions):
 | INTSEC-5-04 | IMPLEMENTED | internal_security · max_duration_S3 | PASS | — | Q-040 |
 | INTSEC-5-05 | IMPLEMENTED | internal_security · s4_escalates | PASS | — | — |
 | INTSEC-5-06 | PARTIAL | internal_security · auto_revert | PASS | — | Q-040 |
+| INTSEC-6-01 | IMPLEMENTED | internal_security · four_triggers_only | PASS | — | — |
 | INTSEC-6-03 | IMPLEMENTED | internal_security · halt_suspends_l3 | PASS | — | — |
 | INTSEC-7.1-01 | IMPLEMENTED | internal_security · allowed_actions_S1 | PASS | — | — |
 | INTSEC-7.1-02 | IMPLEMENTED | internal_security · no_throttle_s1 | PASS | — | — |
@@ -839,6 +846,7 @@ Withdrawn after verification (not author decisions):
 | INTSEC-8-04 | IMPLEMENTED | internal_security · no_secret_rules | PASS | yes | — |
 | INTSEC-8-05 | IMPLEMENTED | internal_security · no_ideology | PASS | yes | — |
 | INTSEC-8-06 | PARTIAL | internal_security · node_cap | PASS | — | — |
+| INTSEC-8-07 | PARTIAL | internal_security · cap_breach_critical | NOT_APPLICABLE | — | — |
 | INTSEC-9-01 | IMPLEMENTED | internal_security · due_process | PASS | yes | — |
 | POLICE-0-01 | PARTIAL | police_antiterror · sole_function | PASS | yes | — |
 | POLICE-0-02 | PARTIAL | police_antiterror · no_law_guilt_truth | PASS | — | — |

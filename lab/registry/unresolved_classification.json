@@ -343,7 +343,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "Section 4.3 operationally bounds 'strictly defensive and containment-oriented' through 'aim solely to' and three permitted objectives, so the draft's mixed-purpose uncertainty does not require another normative rule."
+   "rationale": "Section 4.3 operationally bounds 'strictly defensive and containment-oriented' through 'aim solely to' and three permitted objectives, so the draft's mixed-purpose uncertainty does not require another normative rule.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Strictly defensive and containment-oriented' is concretized by §6 (permitted containment actions) and §8 (termination on cessation): every anti-terror action is a §6 containment measure taken while a confirmed stream lasts; offensive, punitive or retaliatory actions are observable."
   },
   "ANTITERROR-1-01": {
    "document": "DKP-3-ANTITERROR-001",
@@ -371,7 +373,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "'Regulate speech or ideology' and 'override Defense or Justice decisions' are explicit bans, and §6 already limits information isolation to measures that are 'not ideological or content-based'."
+   "rationale": "'Regulate speech or ideology' and 'override Defense or Justice decisions' are explicit bans, and §6 already limits information isolation to measures that are 'not ideological or content-based'.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "Two isolation bans: no regulation of speech or ideology (observable as content filtering), no override of Defense or Justice decisions (observable as a recorded override)."
   },
   "ANTITERROR-12-01": {
    "document": "DKP-3-ANTITERROR-001",
@@ -476,7 +480,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "'Immediate localized containment actions permitted' grants permission upon the stated PTL confirmation rather than imposing a response deadline, and §4.4 supplies the localization constraint 'to the threat vector'."
+   "rationale": "'Immediate localized containment actions permitted' grants permission upon the stated PTL confirmation rather than imposing a response deadline, and §4.4 supplies the localization constraint 'to the threat vector'.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "The T1 definition fixes its entry (PTL-confirmed ongoing asymmetric harm stream targeting civilians) and its permission (immediate localized containment). Both are observable: T1 without such a stream, or T1 containment beyond the stream zone."
   },
   "ANTITERROR-5-03": {
    "document": "DKP-3-ANTITERROR-001",
@@ -6339,7 +6345,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Intent, ideology, affiliation, or declared motivation SHALL NOT be considered” fixes the exclusion, while detecting direct or indirect decision dependencies is a verification implementation task."
+   "rationale": "“Intent, ideology, affiliation, or declared motivation SHALL NOT be considered” fixes the exclusion, while detecting direct or indirect decision dependencies is a verification implementation task.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Intent, ideology, affiliation, or declared motivation SHALL NOT be considered': security states are set by evidence alone. Observable as a state above the evidence level or a recorded motivation factor."
   },
   "INTSEC-3.3-01": {
    "document": "DKP-3-INTERNAL-SEC-001",
@@ -6437,7 +6445,9 @@
    "primary": "implementation_only",
    "secondary": "external_dependency",
    "author_question_candidate": false,
-   "rationale": "“Triggers (PTL-Anchored)” and §4.1’s “only respond to PTL-confirmed states” settle the Justice trigger’s evidence requirement, leaving classifiers and external authorization rules to implement."
+   "rationale": "“Triggers (PTL-Anchored)” and §4.1’s “only respond to PTL-confirmed states” settle the Justice trigger’s evidence requirement, leaving classifiers and external authorization rules to implement.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'MAY be triggered only by' four PTL-anchored triggers: every security state is opened by PTL-confirmed evidence of one of them. Observable on the provenance of each state transition."
   },
   "INTSEC-6-02": {
    "document": "DKP-3-INTERNAL-SEC-001",
@@ -6535,7 +6545,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Violation constitutes a critical architectural breach” immediately follows the standalone 4% control prohibition, providing its antecedent without the draft’s unsupported extension to every section 8 ban."
+   "rationale": "“Violation constitutes a critical architectural breach” immediately follows the standalone 4% control prohibition, providing its antecedent without the draft’s unsupported extension to every section 8 ban.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Violation constitutes a critical architectural breach' (after the 4 % node cap): a concentration above the cap is recorded as a critical architectural breach, not as a lesser deviation. Observable with node shares declared."
   },
   "INTSEC-9-01": {
    "document": "DKP-3-INTERNAL-SEC-001",
@@ -7627,7 +7639,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“Deterministic and auditable” requires reproducible outputs and traceable calculations, and the draft's demand for an enumerated implementation input boundary does not establish a competing normative reading."
+   "rationale": "“Deterministic and auditable” requires reproducible outputs and traceable calculations, and the draft's demand for an enumerated implementation input boundary does not establish a competing normative reading.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "'Deterministic and auditable' (output specification): re-executing the same input gives the same result, and every output record carries its measured inputs (TA, SE) and factors from which its SPD recomputes. Checked on the verified bench v2.1.1 without modifying it."
   },
   "PREV-12-01": {
    "document": "DKP-1-PREVENTION-001",
@@ -7648,7 +7662,9 @@
    "primary": "implementation_only",
    "secondary": null,
    "author_question_candidate": false,
-   "rationale": "“No hypothetical states” summarizes §1's exclusion of “hypothetical projections” from recognized contribution, while §§14–15 expressly permit simulation, resolving the draft's proposed simulation prohibition."
+   "rationale": "“No hypothetical states” summarizes §1's exclusion of “hypothetical projections” from recognized contribution, while §§14–15 expressly permit simulation, resolving the draft's proposed simulation prohibition.",
+   "reconciled": "lab/registry/reconciliations.json",
+   "rationale_reconciled": "Invariant 3 'No hypothetical states': prevention value derives only from measured states. Checkable as: the suppression factor S comes from the measured TA and SE intensities (§3.6), never from a counterfactual, a baseline (§3.11 CBF is audit-only) or the simulator's hidden truth, and no factor outside W, S, A, C, T enters SPD."
   },
   "PREV-13-02": {
    "document": "DKP-1-PREVENTION-001",

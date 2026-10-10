@@ -2,10 +2,49 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 123,
+  "confirmed": 131,
   "reclassified": 7
  },
  "items": [
+  {
+   "id": "ANTITERROR-0-02",
+   "document": "DKP-3-ANTITERROR-001",
+   "quote": "This protocol is strictly defensive and containment-oriented.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Strictly defensive and containment-oriented' is concretized by §6 (permitted containment actions) and §8 (termination on cessation): every anti-terror action is a §6 containment measure taken while a confirmed stream lasts; offensive, punitive or retaliatory actions are observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:defensive_containment"
+  },
+  {
+   "id": "ANTITERROR-11-02",
+   "document": "DKP-3-ANTITERROR-001",
+   "quote": "- regulate speech or ideology,\n- override Defense or Justice decisions.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two isolation bans: no regulation of speech or ideology (observable as content filtering), no override of Defense or Justice decisions (observable as a recorded override).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:no_speech_or_override"
+  },
+  {
+   "id": "ANTITERROR-5-02",
+   "document": "DKP-3-ANTITERROR-001",
+   "quote": "  *PTL confirms an ongoing asymmetric harm stream targeting civilians.* Immediate localized containment actions permitted.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The T1 definition fixes its entry (PTL-confirmed ongoing asymmetric harm stream targeting civilians) and its permission (immediate localized containment). Both are observable: T1 without such a stream, or T1 containment beyond the stream zone.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:t1_definition"
+  },
   {
    "id": "ASSETS-11-03",
    "document": "DKP-2-ASSETS-001",
@@ -1235,6 +1274,45 @@
    "check": "interop_failure:no_regime_adjudication"
   },
   {
+   "id": "INTSEC-3.2-02",
+   "document": "DKP-3-INTERNAL-SEC-001",
+   "quote": "Intent, ideology, affiliation, or declared motivation SHALL NOT be considered.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Intent, ideology, affiliation, or declared motivation SHALL NOT be considered': security states are set by evidence alone. Observable as a state above the evidence level or a recorded motivation factor.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "internal_security:motivation_not_considered"
+  },
+  {
+   "id": "INTSEC-6-01",
+   "document": "DKP-3-INTERNAL-SEC-001",
+   "quote": "Integrity response MAY be triggered only by:\n\n- Identity Integrity Trigger: PTL-confirmed mismatch in attribution or credential binding,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'MAY be triggered only by' four PTL-anchored triggers: every security state is opened by PTL-confirmed evidence of one of them. Observable on the provenance of each state transition.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "internal_security:four_triggers_only"
+  },
+  {
+   "id": "INTSEC-8-07",
+   "document": "DKP-3-INTERNAL-SEC-001",
+   "quote": "Violation constitutes a critical architectural breach.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Violation constitutes a critical architectural breach' (after the 4 % node cap): a concentration above the cap is recorded as a critical architectural breach, not as a lesser deviation. Observable with node shares declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "internal_security:cap_breach_critical"
+  },
+  {
    "id": "JUSTICE-10-02",
    "document": "DKP-1-JUSTICE-001",
    "quote": "Collective responsibility SHALL NOT nullify individual accountability.",
@@ -1415,6 +1493,32 @@
     "human_accepted": false
    },
    "check": "edition_finality:override_not_permitted"
+  },
+  {
+   "id": "PREV-11-03",
+   "document": "DKP-1-PREVENTION-001",
+   "quote": "Deterministic and auditable.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Deterministic and auditable' (output specification): re-executing the same input gives the same result, and every output record carries its measured inputs (TA, SE) and factors from which its SPD recomputes. Checked on the verified bench v2.1.1 without modifying it.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "prevention:deterministic_auditable"
+  },
+  {
+   "id": "PREV-13-01",
+   "document": "DKP-1-PREVENTION-001",
+   "quote": "3.  No hypothetical states",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Invariant 3 'No hypothetical states': prevention value derives only from measured states. Checkable as: the suppression factor S comes from the measured TA and SE intensities (§3.6), never from a counterfactual, a baseline (§3.11 CBF is audit-only) or the simulator's hidden truth, and no factor outside W, S, A, C, T enters SPD.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "prevention:no_hypothetical_states"
   },
   {
    "id": "PREV-13-02",

@@ -69,3 +69,24 @@ def test_failure_examples_are_refused():
     for inp in M.failure_examples().values():
         with pytest.raises(LabInputError):
             M.validate(inp)
+
+
+def test_kt5_deterministic_auditable_and_no_hypothetical_states():
+    """PREV §11 and §13.3 on mutated bench records (the bench itself is never modified)."""
+    import copy
+    from lab.modules.prevention import determinism, recheck
+    m = PreventionModule()
+    r = m.validate({})
+    res = m.evaluate(r)
+    st = {c.requirement_id: c.status for c in res.checks}
+    assert st["PREV-11-03"] == "PASS" and st["PREV-13-01"] == "PASS"
+    recs = copy.deepcopy(res.records)
+    assert determinism(recs, "a", "b").status == "FAIL"                         # re-execution differs
+    pos = next(x for x in recs if x["status"] == "POSITIVE")
+    pos["factors"]["S"] = pos["truth"]["effectiveness"]                          # S from the hidden truth, not from TA/SE
+    cfg = m.build_config(r)
+    st2 = {c.requirement_id: c.status for c in recheck(recs, cfg, res.outputs["summary"])}
+    assert st2["PREV-13-01"] == "FAIL"
+    recs2 = copy.deepcopy(res.records)
+    recs2[0]["factors"]["counterfactual_baseline"] = 1.0                       # a hypothetical factor
+    assert {c.requirement_id: c.status for c in recheck(recs2, cfg, res.outputs["summary"])}["PREV-13-01"] == "FAIL"

@@ -23,6 +23,9 @@ def test_reference_breaks_no_rule(name):
 
 
 FAULT_CASES = {
+    "consider_motivation": ({}, ["INTSEC-3.2-02"]),
+    "extra_trigger": ({}, ["INTSEC-6-01"]),
+    "cap_breach_downgraded": ({"node_shares": EX["concentrated_nodes"]["node_shares"]}, ["INTSEC-8-07"]),
     "predictive_trigger": (EX["unconfirmed_prediction"], ["INTSEC-4.2-01", "INTSEC-11-01", "INTSEC-4.1-01"]),
     "throttle_in_s1": ({}, ["INTSEC-7.1-02", "INTSEC-7.1-01"]),
     "overstay": (EX["persisting_compromise"], ["INTSEC-5-04", "INTSEC-5-06"]),
@@ -79,3 +82,12 @@ def test_node_cap_is_a_noncompliant_case():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_node_cap_breach_is_critical():
+    """INTERNAL-SEC §8: a concentration above 4 % is a critical architectural breach (8-07), not a policy deviation."""
+    shares = {"node_shares": EX["concentrated_nodes"]["node_shares"]}
+    assert statuses(run(**shares))["INTSEC-8-07"] == "PASS"
+    assert statuses(run(**shares, faults=["cap_breach_downgraded"]))["INTSEC-8-07"] == "FAIL"
+    assert statuses(run())["INTSEC-8-07"] == "NOT_APPLICABLE"
+    assert statuses(run(**EX["unconfirmed_prediction"], faults=["predictive_trigger"]))["INTSEC-6-01"] == "FAIL"

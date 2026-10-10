@@ -62,6 +62,8 @@ FAULTS = {
     "profile_by_belief": "the ideological-profiling request is carried out",
     "expand_authority": "the authority-expansion request is carried out",
     "police_overreach": "police carry out requests §2, §3 and §10 exclude (speech, sanctions, verdicts, norms)",
+    "retaliatory_strike": "after the harm stream ceased, ANTITERROR strikes at the attackers' origin",
+    "override_justice_decision": "ANTITERROR extends a detention beyond the Justice decision",
 }
 PROTECTED = ("civilian_population", "public_space", "civilian_transport", "hospital", "school", "shelter",
              "food_node", "water_node", "energy_node")                                              # ANTITERROR §3.3
@@ -181,6 +183,8 @@ def run(r: Dict[str, Any]):
                 target = t
         if "no_termination" in faults and t_state != "T0" and target == "T0":
             target = t_state
+        if target == "T0" and t_state != "T0" and "retaliatory_strike" in faults:
+            put("action", "ANTITERROR", h, {"action": "strike_on_origin", "state": t_state, "officer": "unit-at", "logged": True})
         if target != t_state:
             put("notice", "ANTITERROR", h, {"state": target, "from": t_state}, prov)
             if target == "T3" and "no_t3_escalation" not in faults:
@@ -199,6 +203,9 @@ def run(r: Dict[str, Any]):
                     v.update({"mode": "content filter" if "content_control" in faults else "signal amplitude",
                               "until_hour": h + 1})
                 put("action", "ANTITERROR", h, v, prov, epistemic=md(prov[0]) if prov else None)
+            if "override_justice_decision" in faults and t_state == "T1":
+                put("action", "ANTITERROR", h, {"action": "detention_extension", "overrides": "DKP-1-JUSTICE-001 decision",
+                                                "state": t_state, "officer": "unit-at", "logged": True}, prov)
             if "impose_sanction" in faults:
                 put("action", "ANTITERROR", h, {"action": "economic_sanction", "state": t_state, "officer": "unit-at",
                                                 "logged": True}, prov)
@@ -293,6 +300,49 @@ def role_checks(r, msgs, police, v) -> List[CheckResult]:
     return out
 
 
+def antiterror_principle_checks(r, msgs, v) -> List[CheckResult]:
+    """ANTITERROR §0, §5 (T1), §11 (review КТ5 reading)."""
+    out = []
+    at = [m for m in msgs if m.source == "ANTITERROR" and m.kind == "action"]
+    states = sorted(((m.arrived_at, m.value["state"]) for m in msgs if m.source == "ANTITERROR" and m.kind == "notice"
+                     and "state" in m.value))
+
+    def state_at(h):
+        cur = "T0"
+        for k, s in states:
+            if k <= h:
+                cur = s
+        return cur
+    bad = [f"{m.event_id}: {m.value['action']}" for m in at if m.value["action"] not in AT_ACTIONS]
+    bad += [f"{m.event_id}: action in T0" for m in at if state_at(m.arrived_at) == "T0"]
+    out.append(v("ANTITERROR-0-02", "defensive_containment", bad,
+                 f"all {len(at)} anti-terror actions are containment measures taken while a confirmed harm stream lasted",
+                 "{n} offensive, punitive or out-of-stream actions"))
+    t1 = [k for k, s in states if s == "T1"]
+    if t1:
+        S = r["streams"]
+        bad = []
+        for k in t1:
+            ok = [s for s in S if s["kind"] in T_OF and s["from_hour"] <= k < s["to_hour"] and s["ptl_confirmed"]
+                  and s["target"] in PROTECTED]
+            if not ok:
+                bad.append(f"hour {k}: T1 without a PTL-confirmed stream against civilians or protected domains")
+        zones = {s["zone"] for s in S if s["kind"] in T_OF}
+        bad += [f"{m.event_id}: {m.value['action']} beyond the stream zone" for m in at if state_at(m.arrived_at) == "T1"
+                and set(m.value.get("area", m.value.get("zone", []))) - zones]
+        out.append(v("ANTITERROR-5-02", "t1_definition", bad,
+                     f"T1 entered {len(t1)} time(s), each on a PTL-confirmed stream against civilians; containment localized "
+                     "to the stream zone", "{n} T1 states or actions beyond the definition"))
+    else:
+        out.append(CheckResult("ANTITERROR-5-02", "t1_definition", NOT_APPLICABLE, "T1", applicability="no T1 state in this run"))
+    bad = [f"{m.event_id}: content filtering" for m in at if m.value.get("mode") == "content filter"]
+    bad += [f"{m.event_id}: overrides {m.value['overrides']}" for m in at if m.value.get("overrides")]
+    out.append(v("ANTITERROR-11-02", "no_speech_or_override", bad,
+                 "ANTITERROR regulated no speech or ideology and overrode no Defense or Justice decision",
+                 "{n} cross-layer breaches"))
+    return out
+
+
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     msgs = log.messages()
     out: List[CheckResult] = []
@@ -315,6 +365,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
     police = [m for m in msgs if m.source == "POLICE" and m.kind == "action"]
     out += role_checks(r, msgs, police, v)
+    out += antiterror_principle_checks(r, msgs, v)
     # POLICE §2, §7, §8: police acts stay inside SCOPE; prohibited functions are critical breaches
     out.append(v("POLICE-2-02", "police_within_scope", [m.event_id for m in police if m.value["action"] not in POLICE_ACTIONS],
                  f"all {len(police)} police actions are safety execution of the kinds POLICE defines (S0/S1 under SCOPE, H-PA-5)",
@@ -555,6 +606,9 @@ IMPLEMENTS = {
     "POLICE-8-02": ("extension_scoped", "IMPLEMENTED", None),
     "POLICE-8-03": ("no_precedent", "PARTIAL", "Observed as the extension ending with the Crisis."),
     "POLICE-9-01": ("aggregated_statistics", "IMPLEMENTED", None),
+    "ANTITERROR-0-02": ("defensive_containment", "IMPLEMENTED", None),
+    "ANTITERROR-5-02": ("t1_definition", "PARTIAL", "Targets and zones are declared per stream."),
+    "ANTITERROR-11-02": ("no_speech_or_override", "PARTIAL", "Observed as content filtering and recorded overrides."),
     "POLICE-0-01": ("sole_function", "PARTIAL", "The four functions mapped to the police action kinds (H-PA-5); a PTL basis is "
                     "required for harm prevention."),
     "POLICE-0-02": ("no_law_guilt_truth", "PARTIAL", "Observed as fields of police records and refused requests."),
@@ -592,7 +646,7 @@ IMPLEMENTS = {
 
 class PoliceAntiterrorModule(LabModule):
     id = "police_antiterror"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Policing and anti-terror containment (POLICE, ANTITERROR)", "ru": "Полиция и антитеррор (POLICE, ANTITERROR)"}
     summary = {"en": "An attack in a public place: do police and anti-terror units act only on PTL-confirmed harm, stay in "
                      "the threat zone, detain only attackers for a limited time, and stop when the harm stops?",

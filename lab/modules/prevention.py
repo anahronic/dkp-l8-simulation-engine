@@ -55,7 +55,10 @@ REQ = {
     "cbf_audit_only": "PREV-3.11-01",
     "output_fields": "PREV-11-01",
     "output_flags": "PREV-11-02",
+    "deterministic_auditable": "PREV-11-03",
+    "no_hypothetical_states": "PREV-13-01",
 }
+FACTORS = {"W", "S", "A", "C", "T"}                       # §5: SPD = W · S · A · C · T
 
 #: coverage this module provides (synced into the registry by lab.tools.sync_coverage)
 IMPLEMENTS = {
@@ -79,6 +82,9 @@ IMPLEMENTS = {
                     "Checks T = 0 for observed linkage > θ; how linkage is measured is a scenario hypothesis (H-L)."),
     "PREV-9.4-02": ("no_data_zero", "IMPLEMENTED", None),
     "PREV-11-01": ("output_fields", "IMPLEMENTED", None),
+    "PREV-11-03": ("deterministic_auditable", "IMPLEMENTED", None),
+    "PREV-13-01": ("no_hypothetical_states", "PARTIAL", "Checked on the S factor (from measured TA and SE) and the factor set; "
+                   "the bench is the verified v2.1.1, not modified."),
     "PREV-11-02": ("output_flags", "IMPLEMENTED", None),
     "PREV-12-01": ("ambiguity_zero", "PARTIAL",
                    "Checks the bench reading H-A-2 (ambiguity := claims of eligible subjects sum above 1)."),
@@ -94,7 +100,7 @@ def _close(a: float, b: float) -> bool:
 
 class PreventionModule(LabModule):
     id = "prevention"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Preventive contribution (PREVENTION)", "ru": "Вклад в предотвращение (PREVENTION)"}
     summary = {
         "en": "Synthetic childcare perimeter: threats, sensors, responders. How sensor delays, data "
@@ -178,6 +184,8 @@ class PreventionModule(LabModule):
         res = run_simulation(cfg, write=False)
         self.report_progress(0.85, "re-checking provisions")
         checks = recheck(res.records, cfg, res.summary)
+        again = run_simulation(copy.deepcopy(cfg), write=False)
+        checks.append(determinism(res.records, res.manifest["result_id"], again.manifest["result_id"]))
         s = res.summary
         outputs = {
             "bench_manifest": {"input_id": res.manifest["input_id"], "result_id": res.manifest["result_id"],
@@ -241,6 +249,21 @@ def _result(key: str, ok: bool, n: int, bad: List[Any], what: Dict[str, str]) ->
     return CheckResult(REQ[key], key, PASS if ok else FAIL,
                        f"{what['en']}: {n - len(bad)} of {n} records comply",
                        evidence={"checked": n, "violations": len(bad), "examples": bad[:5]})
+
+
+def determinism(records: List[Dict[str, Any]], result_id: str, again_id: str) -> CheckResult:
+    """PREV §11 'Deterministic and auditable': the same input gives the same result; every record carries its measured
+    inputs and its SPD recomputes from its factors."""
+    bad = [] if result_id == again_id else [f"re-execution gives result {again_id[:12]}, not {result_id[:12]}"]
+    for r in records:
+        if any(k not in r for k in ("event_id", "actor_id", "ta", "se", "factors", "SPD")):
+            bad.append(f"{r.get('event_id')}: inputs not recorded")
+        elif all(r["factors"].get(k) is not None for k in FACTORS) and \
+                not _close(math.prod(r["factors"][k] for k in sorted(FACTORS)), r["SPD"]):
+            bad.append(f"{r['event_id']}: SPD does not recompute from its factors")
+    return _result("deterministic_auditable", not bad, len(records), bad,
+                   {"en": "re-execution gives the same result_id; each record carries its measured TA/SE and factors and its "
+                          "SPD recomputes"})
 
 
 def recheck(records: List[Dict[str, Any]], cfg: Dict[str, Any], summary: Dict[str, Any]) -> List[CheckResult]:
@@ -355,6 +378,16 @@ def recheck(records: List[Dict[str, Any]], cfg: Dict[str, Any], summary: Dict[st
                and r["status"] not in ("INVALID", "INFORMATIONAL"))]
     out.append(_result("output_flags", not bad, len(records), bad,
                        {"en": "outputs carry confidence C and tamper factor T with a reason when T = 0"}))
+
+    # §13 invariant 3: no hypothetical states — S from the measured TA and SE, never from a counterfactual or the hidden truth
+    measured = [r for r in records if r["factors"].get("S") is not None and r["ta"] and r["se"]
+                and r["ta"].get("intensity") and r["se"].get("intensity") is not None]
+    bad = [r["event_id"] for r in records if set(r["factors"]) - FACTORS]
+    bad += [r["event_id"] for r in measured
+            if not _close(r["factors"]["S"], max(0.0, (r["ta"]["intensity"] - r["se"]["intensity"]) / r["ta"]["intensity"]))]
+    out.append(_result("no_hypothetical_states", not bad, len(measured), bad,
+                       {"en": "S comes from the measured TA and SE intensities; no factor from a counterfactual, a baseline or "
+                              "the simulator's hidden truth"}))
 
     need = ("validity_state", "confidence_state", "consistency_state", "scope_ref",
             "revalidation_required", "dispute_allowed")
