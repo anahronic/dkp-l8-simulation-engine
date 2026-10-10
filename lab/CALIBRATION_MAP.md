@@ -134,6 +134,7 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | Systemic Reserve Pool sizing function | l8_model | DKP-2-FINANCE-001 | §6.2 | "Reserve sizing is impact-based, not percentage-based." | — | finance_mechanics.stand_in (basis only, H-FM-3) |
 | leverage limit function | l8_model | DKP-2-FINANCE-001 | §9 | "Leverage limits are impact-based, not volatility-based." | — | finance_mechanics.stand_in (basis only, H-FM-3) |
 | systemic safety margins for aggregate credit exposure | l8_number | DKP-2-FINANCE-001 | §5.1 | "aggregate exposure remains within systemic safety margins" | — | finance_mechanics.safety_margin |
+| transport-related impact on B(t) per unit of private transport | empirical_model | DKP-5-TRANSPORT-001 | §9 | "these impacts SHALL be measured via DKP-0-ORACLE-001," | — | transport_capacity.b_impact_per_km |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -170,7 +171,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-5-EDU-001 | listed downstream | signals informational without L8 calibration (§12) | 0 | EDU competence-based restrictions (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-HABITAT-001 | listed downstream | non-enforceable without a bundle covering SPDI (§6) | 0 | SPDI model, SPDI_min and component survivability thresholds (l8_model); duration after which a habitat violation is 'persistent' (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-INFO-001 | listed downstream | non-enforceable without a bundle; classifications above I1 informational (§9) | 0 | INFO transition times T₁, T₂ (l8_number); INFO propagation thresholds for a Systemic Lie (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-5-TRANSPORT-001 | not listed | — | 0 | minimum PPDI threshold, 'regular' standing, forced-contact density (l8_number); RED coefficient (external_document) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-5-TRANSPORT-001 | not listed | — | 0 | minimum PPDI threshold, 'regular' standing, forced-contact density (l8_number); RED coefficient (external_document); transport-related impact on B(t) per unit of private transport (empirical_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-TRANSPORT-001-APPENDIX-A | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-5-WORK-CYCLE-001 | not listed | — | 9 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-6-EXIT-001 | listed downstream | — | 0 | exit cooling period (l8_number); EXIT phased disengagement (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |

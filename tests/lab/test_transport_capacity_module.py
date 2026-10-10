@@ -33,6 +33,12 @@ FAULT_CASES = {
     "moral_weighting": (RED, ["TRANSPORT-7.3-03"]),
     "undeclared_proxy": (RED, ["ORACLE-5.2-02"]),
     "ownership_discount": ({"red_per_km": 0.02}, ["TRANSPORTA-A.3-03"]),
+    "regulate_driving": ({}, ["TRANSPORT-1-01"]),
+    "dignity_tradeoff": (THIN, ["TRANSPORT-3-02"]),
+    "standing_in_capacity": ({}, ["TRANSPORT-5-01"]),
+    "ppdi_as_score": ({}, ["TRANSPORT-4.2-02"]),
+    "behavioral_enforcement": (RED, ["TRANSPORT-7.3-04", "TRANSPORT-1-01"]),
+    "ignore_biosphere": (RED, ["TRANSPORT-9-03"]),
 }
 
 
@@ -75,3 +81,10 @@ def test_red_insurance_exposure_conflicts_with_oracle():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_prohibition_is_not_a_success():
+    """TRANSPORT §10 (reclassified empirical_model_data): a decrease of private kilometres by a ban does not meet the
+    criterion; without a ban the check passes on 'without legal prohibition' only, the decrease is the model's."""
+    assert statuses(run())["TRANSPORT-10-01"] == "PASS"
+    assert statuses(run(faults=["ban_private"]))["TRANSPORT-10-01"] == "FAIL"

@@ -556,6 +556,11 @@
   },
   {
    "module": "transport_capacity",
+   "example": "faulty_design",
+   "kind": "counterexample"
+  },
+  {
+   "module": "transport_capacity",
    "example": "faulty_transport",
    "kind": "counterexample"
   },
@@ -1445,21 +1450,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1286,
-  "covered_percent": 74.0,
+  "covered": 1293,
+  "covered_percent": 74.4,
   "statuses": {
-   "PASS": 1204,
+   "PASS": 1211,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 451
+   "UNCOVERED": 444
   },
-  "resolvable": 672,
-  "resolvable_uncovered": 73,
-  "resolvable_uncovered_implementation_only": 73,
+  "resolvable": 671,
+  "resolvable_uncovered": 66,
+  "resolvable_uncovered_implementation_only": 66,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 963,
-  "pass_with_open_point": 888
+  "covered_with_open_point": 970,
+  "pass_with_open_point": 895
  },
  "stages": [
   {
@@ -1509,21 +1514,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1286,
-    "covered_percent": 74.0,
+    "covered": 1293,
+    "covered_percent": 74.4,
     "statuses": {
-     "PASS": 1204,
+     "PASS": 1211,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 451
+     "UNCOVERED": 444
     },
-    "resolvable": 672,
-    "resolvable_uncovered": 73,
-    "resolvable_uncovered_implementation_only": 73,
+    "resolvable": 671,
+    "resolvable_uncovered": 66,
+    "resolvable_uncovered_implementation_only": 66,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 963,
-    "pass_with_open_point": 888
+    "covered_with_open_point": 970,
+    "pass_with_open_point": 895
    }
   },
   {
@@ -1664,21 +1669,21 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 209,
-    "covered_percent": 71.3,
+    "covered": 216,
+    "covered_percent": 73.7,
     "statuses": {
-     "PASS": 193,
+     "PASS": 200,
      "FAIL": 0,
      "UNKNOWN": 9,
      "NOT_APPLICABLE": 7,
-     "UNCOVERED": 84
+     "UNCOVERED": 77
     },
-    "resolvable": 125,
-    "resolvable_uncovered": 19,
-    "resolvable_uncovered_implementation_only": 19,
+    "resolvable": 124,
+    "resolvable_uncovered": 12,
+    "resolvable_uncovered_implementation_only": 12,
     "unresolved_decisions": 251,
-    "covered_with_open_point": 167,
-    "pass_with_open_point": 153
+    "covered_with_open_point": 174,
+    "pass_with_open_point": 160
    }
   },
   {
@@ -2810,10 +2815,10 @@
    {
     "origin": "empirical_model_data",
     "agent_verified": 0,
-    "lab_reconciled": 0,
+    "lab_reconciled": 1,
     "codex_draft": 227,
     "human_accepted": 0,
-    "total": 227
+    "total": 228
    },
    {
     "origin": "external_dependency",
@@ -2826,10 +2831,10 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 70,
-    "codex_draft": 283,
+    "lab_reconciled": 76,
+    "codex_draft": 276,
     "human_accepted": 0,
-    "total": 353
+    "total": 352
    },
    {
     "origin": "pending",
@@ -3132,9 +3137,9 @@
     "normative_ambiguity": 7,
     "architecture_definition": 4,
     "l8_parameter": 6,
-    "empirical_model_data": 4,
+    "empirical_model_data": 5,
     "external_dependency": 3,
-    "implementation_only": 11,
+    "implementation_only": 10,
     "pending": 0
    },
    "DKP-5-TRANSPORT-001-APPENDIX-A": {
@@ -7902,6 +7907,7 @@
    },
    "status": "FAIL",
    "counterexample_detected_by": [
+    "transport_capacity:faulty_design",
     "transport_capacity:faulty_transport"
    ],
    "under_alternative_readings": {
@@ -48739,30 +48745,42 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between direct driving regulation and environmental intervention is undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "environment_not_behaviour",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Observed as TRANSPORT acts addressed to driving behaviour.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_design",
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -48771,30 +48789,41 @@
    "section": "10",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The comparison period, geographic scope, and relationship between prohibition and the decrease are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "decrease_without_prohibition",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "Only 'without legal prohibition'; the decrease is empirical (reclassified: empirical_model_data).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "empirical_model_data",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -49102,30 +49131,39 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Bodily dignity sacrifice and equilibrium viability are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "no_dignity_tradeoff_equilibrium",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "The normative half only; 'is not adopted at scale' is an empirical claim the behaviour model H-TR-1 assumes.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -49303,30 +49341,41 @@
    "section": "4.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between informing another process and functioning as a justice or liability score is undefined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "transport_capacity",
+   "check": "ppdi_quality_only",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_design"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -49335,30 +49384,41 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Standard operating mode is not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "standing_not_standard",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "'Standard operating mode' read as the nominal capacity of the service plan.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_design"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -49807,30 +49867,42 @@
    "section": "7.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between an economic incentive and behavioral enforcement is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "incentive_without_enforcement",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "'Without behavioural enforcement' only; the per-Subject incentive is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_design",
+    "transport_capacity:faulty_transport"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -49987,30 +50059,41 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The minimum evidence of influence and the decision tradeoff rules are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "transport_capacity",
+   "check": "biosphere_informs_decisions",
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
+   "gap": "'Influence' read as: the day's transport impact on B(t) is an input of each funding or redesign decision (declared coefficient).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-TR-1",
+    "H-TR-2",
+    "H-TR-3",
+    "H-TR-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "transport_capacity:faulty_design"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

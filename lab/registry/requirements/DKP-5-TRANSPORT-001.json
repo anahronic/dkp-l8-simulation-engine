@@ -29,19 +29,25 @@
    "data_dependencies": [
     "transport policy measures and their effects"
    ],
-   "gap": "The boundary between direct driving regulation and environmental intervention is undefined. No lab check implemented yet.",
+   "gap": "Observed as TRANSPORT acts addressed to driving behaviour.",
    "hypotheses_needed": [
     "A rule distinguishing direct driving regulation from environmental intervention."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "environment_not_behaviour"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -99,19 +105,25 @@
    "data_dependencies": [
     "transport planning and adoption models"
    ],
-   "gap": "Bodily dignity sacrifice and equilibrium viability are undefined. No lab check implemented yet.",
+   "gap": "The normative half only; 'is not adopted at scale' is an empirical claim the behaviour model H-TR-1 assumes.",
    "hypotheses_needed": [
     "Operational definitions of bodily dignity sacrifice and viable equilibrium."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "no_dignity_tradeoff_equilibrium"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -143,7 +155,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ppdi_published"
    },
    "tests": [
@@ -192,7 +204,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ppdi_components"
    },
    "tests": [
@@ -235,7 +247,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_forced_contact"
    },
    "tests": [
@@ -275,7 +287,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "degrading_mode_classification"
    },
    "tests": [
@@ -307,19 +319,25 @@
    "data_dependencies": [
     "downstream metric use and decision records"
    ],
-   "gap": "The boundary between informing another process and functioning as a justice or liability score is undefined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "A classification of metric uses as system quality, justice scoring, or liability scoring."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "ppdi_quality_only"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -341,19 +359,25 @@
    "data_dependencies": [
     "service plans and capacity planning assumptions"
    ],
-   "gap": "Standard operating mode is not defined. No lab check implemented yet.",
+   "gap": "'Standard operating mode' read as the nominal capacity of the service plan.",
    "hypotheses_needed": [
     "A rule distinguishing standard operation from exceptional operation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "standing_not_standard"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -383,7 +407,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "standing_only_exceptional"
    },
    "tests": [
@@ -422,7 +446,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "regular_standing_classified"
    },
    "tests": [
@@ -462,7 +486,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "capacity_expansion"
    },
    "tests": [
@@ -505,7 +529,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "individual_seating"
    },
    "tests": [
@@ -593,7 +617,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "red_quantified"
    },
    "tests": [
@@ -643,7 +667,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "red_redirected"
    },
    "tests": [
@@ -687,7 +711,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "red_not_a_tax"
    },
    "tests": [
@@ -808,7 +832,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_moral_weighting"
    },
    "tests": [
@@ -842,19 +866,25 @@
    "data_dependencies": [
     "incentive and enforcement policy records"
    ],
-   "gap": "The boundary between an economic incentive and behavioral enforcement is unspecified. No lab check implemented yet.",
+   "gap": "'Without behavioural enforcement' only; the per-Subject incentive is not modelled.",
    "hypotheses_needed": [
     "A definition distinguishing incentives from behavioral enforcement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "incentive_without_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -883,7 +913,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_bans_or_punishment"
    },
    "tests": [
@@ -927,7 +957,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "comfort_driven_shift"
    },
    "tests": [
@@ -1034,19 +1064,25 @@
     "biosphere impact measurements",
     "decision rules and decision records"
    ],
-   "gap": "The minimum evidence of influence and the decision tradeoff rules are unspecified. No lab check implemented yet.",
+   "gap": "'Influence' read as: the day's transport impact on B(t) is an input of each funding or redesign decision (declared coefficient).",
    "hypotheses_needed": [
     "A test of operative influence in each decision process."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "biosphere_informs_decisions"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1068,20 +1104,26 @@
     "private vehicle distance histories",
     "applicable prohibition records"
    ],
-   "gap": "The comparison period, geographic scope, and relationship between prohibition and the decrease are unspecified. No lab check implemented yet.",
+   "gap": "Only 'without legal prohibition'; the decrease is empirical (reclassified: empirical_model_data).",
    "hypotheses_needed": [
     "A comparison baseline, period, and geographic scope.",
     "A declared interpretation of 'without legal prohibition'."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.2.0",
+    "check": "decrease_without_prohibition"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "empirical_model_data",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1289,7 +1331,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_justice_outcomes"
    },
    "tests": [

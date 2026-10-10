@@ -43,6 +43,12 @@ FAULTS = {
     "moral_weighting": "RED modulation uses a reputation score",
     "undeclared_proxy": "RED is emitted without its proxy model, uncertainty and non-subjectivity statement",
     "ownership_discount": "publicly owned or autonomous vehicles get a lower RED for the same kilometres",
+    "regulate_driving": "TRANSPORT issues a driving rule for private drivers",
+    "dignity_tradeoff": "regular standing is accepted as the equilibrium price of safety instead of being classified",
+    "standing_in_capacity": "the service plan counts standing places as nominal capacity",
+    "ppdi_as_score": "PPDI is used to score an operator's liability",
+    "behavioral_enforcement": "high-RED drivers are ordered to retrain",
+    "ignore_biosphere": "funding and redesign decisions do not take the transport impact on B(t) into account",
 }
 OWNERSHIP = ("private", "shared", "public", "cooperative")
 AUTONOMY = ("manual", "assisted", "autonomous")
@@ -109,8 +115,18 @@ def run(r: Dict[str, Any]):
                                   decided_at=k if kind in ("decision", "action") else None, value=value,
                                   provenance=tuple(prov), order=order[kind]))
 
+    # service plan: nominal capacity counts seats only (§5: standing is no standard operating mode)
+    with_standing = "standing_in_capacity" in faults
+    put("evaluation", "TRANSPORT/PLAN", 0, {"nominal_capacity_per_hour": [v * (seats + (r["standing_per_vehicle"] if with_standing else 0))
+                                                                         for v in r["vehicles_per_hour"]],
+                                            "basis": "seated and standing places" if with_standing else "seated places"})
+    if "regulate_driving" in faults:
+        put("action", "TRANSPORT", 0, {"driving_rule": "speed limit 30 km/h for private drivers", "target": "drivers"})
     for d in days:
         k = d["day"] * 24 + 23
+        bio = put("observation", "ORACLE/B", k, {"day": d["day"], "transport_impact_on_B": round(d["private_km"] * r["b_impact_per_km"], 9),
+                                                  "unit": "B(t) units (declared coefficient)"})
+        uses_b = [] if "ignore_biosphere" in faults else [bio.event_id]
         ppdi = put("evaluation", "TRANSPORT/PPDI", k, {
             "day": d["day"], "seated_trip_share": d["seated_share"],
             "seat_width_mm": r["seat_width_mm"] - (50 if r["interior"] == "bench" else 0),
@@ -120,10 +136,15 @@ def run(r: Dict[str, Any]):
             "max_crowd_density_m2": max(x["standing_density_m2"] for x in hours if x["hour"] // 24 == d["day"]),
             "composite": "not computed: no PPDI formula or minimum in the corpus", "published": True})
         regular = d["standing_hours"] / 24 > r["regular_standing_share"] if r["regular_standing_share"] >= 0 else None
-        if regular and "standing_as_standard" not in faults:
+        if regular and "dignity_tradeoff" in faults:
+            put("decision", "TRANSPORT", k, {"equilibrium": "accepted", "trade_off": "safety with regular standing", "day": d["day"]},
+                [ppdi.event_id])
+        elif regular and "standing_as_standard" not in faults:
             c = put("notice", "TRANSPORT", k, {"classification": "Structurally under-provisioned", "day": d["day"]}, [ppdi.event_id])
             remedy = "ask passengers to adapt" if "passenger_adaptation" in faults else "capacity expansion"
-            put("action", "TRANSPORT", k, {"response": remedy}, [c.event_id])
+            put("action", "TRANSPORT", k, {"response": remedy}, [c.event_id] + uses_b)
+        if "ppdi_as_score" in faults:
+            put("decision", "LIABILITY", k, {"operator_liability_score": d["seated_share"], "day": d["day"]}, [ppdi.event_id])
         if r["red_per_km"] >= 0:
             per = {ch: d["private_km"] * r["red_per_km"] / len(RED_CHANNELS) for ch in RED_CHANNELS}
             ptl_channels = [ch for ch in RED_CHANNELS if r["red_insurance"] == "ptl_quantified" or ch not in NON_PHYSICAL]
@@ -150,7 +171,9 @@ def run(r: Dict[str, Any]):
                 cost += sum(outside.values())
                 prov.append(ins.event_id)
             dest = "general budget levy" if "red_as_tax" in faults else "high-PPDI transport infrastructure fund"
-            put("action", "LEDGER", k, {"externality_cost": round(cost, 6), "destination": dest}, prov)
+            put("action", "LEDGER", k, {"externality_cost": round(cost, 6), "destination": dest}, prov + uses_b)
+            if "behavioral_enforcement" in faults:
+                put("action", "TRANSPORT", k, {"mandate": "retraining for high-RED drivers", "target": "drivers"}, [rm.event_id])
             if "justice_from_red" in faults:
                 put("decision", "JUSTICE", k, {"outcome": "restriction", "basis": "high RED"}, [rm.event_id])
         if "ban_private" in faults and d["day"] == 0:
@@ -163,6 +186,61 @@ def run(r: Dict[str, Any]):
                                                      "km": v_["km"], "red": round(v_["km"] * r["red_per_km"] * f, 9),
                                                      "criterion": "physical impact (kilometres)"})
     return log, days, hours, seats
+
+
+def design_checks(r, msgs, days) -> List[CheckResult]:
+    """TRANSPORT §1, §3, §4.2, §5, §7.3, §9, §10 (review КТ5 reading)."""
+    out = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    behaviour = [f"{m.event_id}: {k}" for m in msgs if m.kind in ("action", "decision") and m.source == "TRANSPORT"
+                 for k in ("driving_rule", "ban", "mandate") if k in m.value]
+    out.append(v("TRANSPORT-1-01", "environment_not_behaviour", behaviour,
+                 "TRANSPORT acted on capacity, funding and interiors only; no rule addressed driving behaviour",
+                 "{n} TRANSPORT acts regulating driving behaviour"))
+    accepted = [f"day {m.value['day']}: {m.value['trade_off']}" for m in msgs if m.value and m.value.get("equilibrium") == "accepted"]
+    out.append(v("TRANSPORT-3-02", "no_dignity_tradeoff_equilibrium", accepted,
+                 "no configuration relying on standing was accepted as an equilibrium; regular standing is classified (§5)",
+                 "{n} acceptances of safety at the cost of bodily dignity"))
+    plan = [m.value for m in msgs if m.source == "TRANSPORT/PLAN"]
+    out.append(v("TRANSPORT-5-01", "standing_not_standard", [p["basis"] for p in plan if p["basis"] != "seated places"],
+                 "the service plan counts seated places only; standing places are not nominal capacity",
+                 "the service plan counts standing places as capacity"))
+    ppdi_ids = {m.event_id for m in msgs if m.source == "TRANSPORT/PPDI"}
+    scored = [m.event_id for m in msgs if set(m.provenance) & ppdi_ids and (m.source in ("JUSTICE", "LIABILITY")
+                                                                            or any("liability" in k for k in m.value))]
+    scored += [m.event_id for m in msgs if m.source == "TRANSPORT/PPDI" and "subject" in m.value]
+    out.append(v("TRANSPORT-4.2-02", "ppdi_quality_only", scored,
+                 f"PPDI ({len(ppdi_ids)} days) used as a system quality metric only: no Subject, no Justice or liability score",
+                 "{n} uses of PPDI as a justice or liability score"))
+    red_ids = {m.event_id for m in msgs if m.source == "TRANSPORT/RED"}
+    if red_ids:
+        enforced = [m.event_id for m in msgs if set(m.provenance) & red_ids and m.kind in ("action", "decision") and m.source != "LEDGER"]
+        out.append(v("TRANSPORT-7.3-04", "incentive_without_enforcement", enforced,
+                     "RED acted only as a cost (ledger entries); no behavioural order or outcome followed from it",
+                     "{n} behavioural enforcements derived from RED"))
+    else:
+        out.append(CheckResult("TRANSPORT-7.3-04", "incentive_without_enforcement", NOT_APPLICABLE, "RED as an incentive",
+                               applicability="RED not computed (no coefficient declared)"))
+    bio = {m.event_id: m.arrived_at for m in msgs if m.source == "ORACLE/B"}
+    funding = [m for m in msgs if m.kind == "action" and (m.source == "LEDGER" or (m.source == "TRANSPORT" and "response" in m.value))]
+    if funding:
+        out.append(v("TRANSPORT-9-03", "biosphere_informs_decisions",
+                     [m.event_id for m in funding if not any(bio.get(p) == m.arrived_at for p in m.provenance)],
+                     f"{len(funding)} funding and redesign decisions take that day's transport impact on B(t) as an input",
+                     "{n} funding or redesign decisions without the transport impact on B(t)"))
+    else:
+        out.append(CheckResult("TRANSPORT-9-03", "biosphere_informs_decisions", NOT_APPLICABLE, "funding and redesign decisions",
+                               applicability="no funding or redesign decision in this experiment"))
+    bans = [m.event_id for m in msgs if m.value and m.value.get("ban")]
+    first, last = days[0]["private_km"], days[-1]["private_km"]
+    out.append(v("TRANSPORT-10-01", "decrease_without_prohibition", bans,
+                 f"no legal prohibition used; private kilometres {first} -> {last} per day under the behaviour model H-TR-1 "
+                 "(the decrease itself is an empirical question: reclassified)", "{n} prohibitions: a decrease would not count"))
+    return out
 
 
 def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
@@ -275,6 +353,7 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
                  f"{len({x['autonomy'] for x in fleet})} autonomy levels evaluated by kilometres alone",
                  "{n} vehicles evaluated by ownership or autonomy") if fleet else
                na("TRANSPORTA-A.3-03", "ownership_irrelevant", "fleet evaluation", "no RED coefficient declared (H-TR-2)"))
+    out += design_checks(r, msgs, days)
     just = [m.event_id for m in msgs if m.source == "JUSTICE"]
     for rid, chk in (("TRANSPORTA-A.1-01", "no_justice_trigger"), ("TRANSPORTA-A.1-02", "degradation_signal_only"),
                      ("TRANSPORT-11-02", "no_justice_outcomes")):
@@ -298,6 +377,17 @@ IMPLEMENTS = {
     "TRANSPORT-8-01": ("no_bans_or_punishment", "IMPLEMENTED", None),
     "TRANSPORT-8-02": ("comfort_driven_shift", "PARTIAL", "An empirical claim the behaviour model assumes: UNKNOWN."),
     "TRANSPORT-11-02": ("no_justice_outcomes", "IMPLEMENTED", None),
+    "TRANSPORT-1-01": ("environment_not_behaviour", "PARTIAL", "Observed as TRANSPORT acts addressed to driving behaviour."),
+    "TRANSPORT-3-02": ("no_dignity_tradeoff_equilibrium", "PARTIAL", "The normative half only; 'is not adopted at scale' is an empirical "
+                       "claim the behaviour model H-TR-1 assumes."),
+    "TRANSPORT-4.2-02": ("ppdi_quality_only", "IMPLEMENTED", None),
+    "TRANSPORT-5-01": ("standing_not_standard", "PARTIAL", "'Standard operating mode' read as the nominal capacity of the service plan."),
+    "TRANSPORT-7.3-04": ("incentive_without_enforcement", "PARTIAL", "'Without behavioural enforcement' only; the per-Subject incentive "
+                         "is not modelled."),
+    "TRANSPORT-9-03": ("biosphere_informs_decisions", "PARTIAL", "'Influence' read as: the day's transport impact on B(t) is an input "
+                       "of each funding or redesign decision (declared coefficient)."),
+    "TRANSPORT-10-01": ("decrease_without_prohibition", "PARTIAL", "Only 'without legal prohibition'; the decrease is empirical "
+                        "(reclassified: empirical_model_data)."),
     "TRANSPORTA-A.1-01": ("no_justice_trigger", "IMPLEMENTED", None),
     "TRANSPORTA-A.3-03": ("ownership_irrelevant", "PARTIAL", "RED per kilometre with a declared coefficient (H-TR-2)."),
     "TRANSPORTA-A.1-02": ("degradation_signal_only", "IMPLEMENTED", None),
@@ -310,7 +400,7 @@ IMPLEMENTS = {
 
 class TransportCapacityModule(LabModule):
     id = "transport_capacity"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Transport capacity (S-LAB-09)", "ru": "Транспортная вместимость (S-LAB-09)"}
     summary = {"en": "A corridor at rush hour: queues, seats and external harm side by side — is standing an exception, "
                      "is under-provisioning met by more capacity, and does RED fund better transport without punishing anyone?",
@@ -392,6 +482,9 @@ class TransportCapacityModule(LabModule):
                               {"id": "car_public_assist", "ownership": "public", "autonomy": "assisted", "km": 100},
                               {"id": "car_coop", "ownership": "cooperative", "autonomy": "manual", "km": 60}],
                   "label": {"en": "Vehicles evaluated by Appendix A.3", "ru": "Транспортные средства по Приложению A.3"}},
+        "b_impact_per_km": {"type": "number", "min": 0, "max": 1, "default": 1e-7, "source": "missing",
+                            "label": {"en": "Transport impact on B(t) per private km (declared; ORACLE measures it, §9)",
+                                      "ru": "Влияние транспорта на B(t) на км личных авто (объявлено; измеряет ORACLE, §9)"}},
         "red_per_km": {"type": "number", "min": -1, "max": 10 ** 6, "default": -1, "source": "missing",
                        "label": {"en": "RED per private km (-1: undefined; H-TR-2)", "ru": "RED на км (-1: не определено; H-TR-2)"}},
         "red_uncertainty": {"type": "number", "min": 0, "max": 10, "default": 0.25, "source": "hypothesis",
@@ -450,6 +543,9 @@ class TransportCapacityModule(LabModule):
             "faulty_transport": {"policy": "standing_allowed", "red_per_km": 0.02,
                                  "faults": ["passenger_adaptation", "red_as_tax", "justice_from_red", "ban_private"]},
             "bench_interior": {"interior": "bench", "core_route": False},
+            "faulty_design": {"policy": "standing_allowed", "red_per_km": 0.02,
+                              "faults": ["regulate_driving", "dignity_tradeoff", "standing_in_capacity", "ppdi_as_score",
+                                         "behavioral_enforcement", "ignore_biosphere"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

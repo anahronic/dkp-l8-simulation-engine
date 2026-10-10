@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1286 (74.0 %) | 963 | 1204 | 888 | 4 | 63 | 15 | 451 | 73 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1293 (74.4 %) | 970 | 1211 | 895 | 4 | 63 | 15 | 444 | 66 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 251 (59.2 %) | 164 | 231 | 147 | 1 | 17 | 2 | 173 | 19 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 209 (71.3 %) | 167 | 193 | 153 | 0 | 9 | 7 | 84 | 19 | 251 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 380 (74.4 %) | 301 | 359 | 280 | 0 | 18 | 3 | 131 | 23 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1286 (74.0 %) | 963 | 1204 | 888 | 4 | 63 | 15 | 451 | 73 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1293 (74.4 %) | 970 | 1211 | 895 | 4 | 63 | 15 | 444 | 66 | 1414 |
 
 ### Stage criteria
 
@@ -171,9 +171,9 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | normative_ambiguity | 105 | 0 | 143 | 0 | 248 |
 | architecture_definition | 37 | 1 | 217 | 0 | 255 |
 | l8_parameter | 0 | 0 | 128 | 0 | 128 |
-| empirical_model_data | 0 | 0 | 227 | 0 | 227 |
+| empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 70 | 283 | 0 | 353 |
+| implementation_only | 0 | 76 | 276 | 0 | 352 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -277,7 +277,7 @@ Withdrawn after verification (not author decisions):
 | DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 55 |
 | DKP-5-HABITAT-001 | 56 | 52 | 48 | 0 | 1 | 3 | 4 | 50 |
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 37 |
-| DKP-5-TRANSPORT-001 | 35 | 15 | 10 | 0 | 5 | 0 | 20 | 35 |
+| DKP-5-TRANSPORT-001 | 35 | 22 | 17 | 0 | 5 | 0 | 13 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 9 | 9 | 0 | 0 | 0 | 8 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
 | DKP-6-EXIT-001 | 62 | 30 | 29 | 0 | 0 | 1 | 32 | 49 |
@@ -1163,11 +1163,16 @@ Withdrawn after verification (not author decisions):
 | INFO-InformationalArbitration_Non-RemovalPrinciple_-02 | IMPLEMENTED | info_truth · annotation_fields | PASS | — | — |
 | INFO-InformationalArbitration_Non-RemovalPrinciple_-03 | IMPLEMENTED | info_truth · annotation_not_enforcement | PASS | yes | — |
 | INFO-InformationalArbitration_Non-RemovalPrinciple_-04 | IMPLEMENTED | info_truth · no_penalty_isolated_i3 | PASS | yes | — |
+| TRANSPORT-1-01 | PARTIAL | transport_capacity · environment_not_behaviour | PASS | yes | — |
+| TRANSPORT-10-01 | PARTIAL | transport_capacity · decrease_without_prohibition | PASS | yes | — |
 | TRANSPORT-11-02 | IMPLEMENTED | transport_capacity · no_justice_outcomes | PASS | yes | — |
+| TRANSPORT-3-02 | PARTIAL | transport_capacity · no_dignity_tradeoff_equilibrium | PASS | — | — |
 | TRANSPORT-4-01 | PARTIAL | transport_capacity · ppdi_published | UNKNOWN | — | — |
 | TRANSPORT-4.1-01 | PARTIAL | transport_capacity · ppdi_components | PASS | — | — |
 | TRANSPORT-4.1-02 | PARTIAL | transport_capacity · no_forced_contact | PASS | — | — |
 | TRANSPORT-4.2-01 | PARTIAL | transport_capacity · degrading_mode_classification | UNKNOWN | — | — |
+| TRANSPORT-4.2-02 | IMPLEMENTED | transport_capacity · ppdi_quality_only | PASS | yes | — |
+| TRANSPORT-5-01 | PARTIAL | transport_capacity · standing_not_standard | PASS | yes | — |
 | TRANSPORT-5-02 | IMPLEMENTED | transport_capacity · standing_only_exceptional | PASS | — | — |
 | TRANSPORT-5-03 | PARTIAL | transport_capacity · regular_standing_classified | PASS | — | — |
 | TRANSPORT-5-04 | IMPLEMENTED | transport_capacity · capacity_expansion | PASS | yes | — |
@@ -1176,8 +1181,10 @@ Withdrawn after verification (not author decisions):
 | TRANSPORT-7.2-01 | IMPLEMENTED | transport_capacity · red_redirected | UNKNOWN | yes | Q-036 |
 | TRANSPORT-7.2-02 | IMPLEMENTED | transport_capacity · red_not_a_tax | PASS | yes | — |
 | TRANSPORT-7.3-03 | IMPLEMENTED | transport_capacity · no_moral_weighting | PASS | — | — |
+| TRANSPORT-7.3-04 | PARTIAL | transport_capacity · incentive_without_enforcement | PASS | yes | — |
 | TRANSPORT-8-01 | IMPLEMENTED | transport_capacity · no_bans_or_punishment | PASS | yes | — |
 | TRANSPORT-8-02 | PARTIAL | transport_capacity · comfort_driven_shift | UNKNOWN | — | — |
+| TRANSPORT-9-03 | PARTIAL | transport_capacity · biosphere_informs_decisions | PASS | yes | — |
 | TRANSPORTA-A.1-01 | IMPLEMENTED | transport_capacity · no_justice_trigger | PASS | yes | — |
 | TRANSPORTA-A.1-02 | IMPLEMENTED | transport_capacity · degradation_signal_only | PASS | yes | — |
 | TRANSPORTA-A.3-03 | PARTIAL | transport_capacity · ownership_irrelevant | PASS | — | — |
