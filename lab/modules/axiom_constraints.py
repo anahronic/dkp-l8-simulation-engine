@@ -32,6 +32,12 @@ from lab.core.module import LabModule, ModuleResult
 from lab.core.schema import LabInputError
 
 PRIORITY = {"A1": 1, "A2": 2, "A3": 3, "A4": 4, "A5": 5, "A6": 6, "A7": 7}
+# §3: each axiom is a forbidden state or a hard priority ordering (lab reading of each axiom's wording, H-AX-4)
+FORM = {"A1": "forbidden_state", "A2": "forbidden_state", "A3": "priority_ordering", "A4": "priority_ordering",
+        "A5": "forbidden_state", "A6": "forbidden_state", "A7": "priority_ordering"}
+FORMS = ("forbidden_state", "priority_ordering")
+AXIOM_EVAL_FIELDS = {"step", "violations"}
+AXIOM_DECISION_FIELDS = {"chosen", "basis", "decided_by", "passed_axioms", "propagated_violations", "irreversible", "necessity"}
 RATIFICATION = 67.0
 FAULTS = {
     "utility_override": "the action with the highest utility is chosen despite a violated axiom",
@@ -49,6 +55,10 @@ FAULTS = {
     "classify_axioms": "the axiom definitions are given output metadata and made disputable",
     "axiom_shield": "a dispute of the decision is rejected because it cites axiom compliance",
     "unmodelled_necessity": "an irreversible choice cites necessity without an IMPACT irreversibility model",
+    "axiom_computes_metric": "the axiom stage computes a score from the candidates' data",
+    "axiom_as_weight": "A7 is recorded as a weighted objective instead of a constraint",
+    "narrative_override": "a candidate whose declared goal contradicts the PTL measurement is not counted as violating A3",
+    "axioms_as_truth": "the axiom definitions are published as absolute truth",
 }
 IMPACT_MODEL = "DKP-1-IMPACT irreversible impact model"
 CANDIDATE = {"type": "object", "fields": {
@@ -64,6 +74,8 @@ CANDIDATE = {"type": "object", "fields": {
     "necessity_model": {"type": "enum", "values": [IMPACT_MODEL, "none", "expert judgement"], "default": IMPACT_MODEL},
     "unmeasured_externality": {"type": "bool", "default": False},
     "withholds_truth": {"type": "bool", "default": False},
+    "basis": {"type": "enum", "values": ["ptl", "declared_goal", "narrative", "belief"], "default": "ptl"},
+    "contradicts_ptl": {"type": "bool", "default": False},
     "suffering": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0}}}
 MODIFICATION = {"axiom": {"type": "enum", "values": ["none"] + list(PRIORITY), "default": "none"},
                 "new_identifier": {"type": "bool", "default": True},
@@ -82,8 +94,8 @@ def violations(c: Dict[str, Any], a4_reading: str) -> List[str]:
         v.append("A1")                         # the minimum required conditions are undefined (F-023)
     if c["degrades_long_term"]:
         v.append("A2")
-    if not c["grounded_in_ptl"]:
-        v.append("A3")
+    if not c["grounded_in_ptl"] or (c.get("contradicts_ptl") and c.get("basis", "ptl") != "ptl"):
+        v.append("A3")                         # §A3: a declared goal or narrative SHALL NOT override measured reality
     if a4_reading == "constraint" and c["irreversible"] and c["reversible_alternative"] and not c["necessity_verified"]:
         v.append("A4")
     if c["unmeasured_externality"]:
@@ -136,11 +148,17 @@ def run(r: Dict[str, Any]):
     cands = r["candidates"]
     a4, dil = r["a4_reading"], r["dilemma_reading"]
     # Epistemic Clarification a): the axioms are constraints, not outputs
-    put("notice", "AXIOM-DEFINITIONS", 0, {"axioms": sorted(PRIORITY, key=lambda a: PRIORITY[a]), "kind": "structural constraints"},
+    forms = dict(FORM, A7="weighted_objective") if "axiom_as_weight" in faults else dict(FORM)
+    put("notice", "AXIOM-DEFINITIONS", 0, {"axioms": sorted(PRIORITY, key=lambda a: PRIORITY[a]), "kind": "structural constraints",
+                                           "forms": forms,
+                                           "status": "absolute truth" if "axioms_as_truth" in faults else "bounded evaluation constraints"},
         epistemic=md("DKP-1-AXIOMS-001") if "classify_axioms" in faults else None)
     obs = [put("observation", "CANDIDATES", 0, {"candidate": c["id"], "declared": {k: v for k, v in c.items() if k != "id"}})
            for c in cands]
     V = {c["id"]: violations(c, a4) for c in cands}
+    if "narrative_override" in faults:
+        V = {k: ([a for a in v if a != "A3"] if next(c for c in cands if c["id"] == k)["grounded_in_ptl"] else v)
+             for k, v in V.items()}
     if "context_reinterpretation" in faults:
         V = {k: [a for a in v if a not in ("A5", "A6")] for k, v in V.items()}
     if "infer_minimum_required" in faults:
@@ -148,7 +166,9 @@ def run(r: Dict[str, Any]):
                  and not next(c for c in cands if c["id"] == k)["increases_life_loss"] else v) for k, v in V.items()}
     steps = []
     if "suspend_for_efficiency" not in faults:
-        ev = put("evaluation", "AXIOMS", 1, {"step": "axiom_evaluation", "violations": V}, [o.event_id for o in obs])
+        ev = put("evaluation", "AXIOMS", 1, {"step": "axiom_evaluation", "violations": V,
+                                             **({"sustainability_index": round(sum(c["utility"] for c in cands) / len(cands), 6)}
+                                                if "axiom_computes_metric" in faults else {})}, [o.event_id for o in obs])
         steps.append(ev.event_id)
     rank = put("evaluation", "OPTIMIZER", 2, {"step": "utility_ranking",
                                                "ranking": [c["id"] for c in sorted(cands, key=lambda c: (-c["utility"], c["id"]))]},
@@ -204,6 +224,50 @@ def run(r: Dict[str, Any]):
     if mod["axiom"] != "none":
         put("notice", "AXIOMS", 5, {"modification": mod["axiom"], **{k: v for k, v in mod.items() if k != "axiom"}})
     return log, chosen, basis, V
+
+
+def structure_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
+    """AXIOMS §2, §3, A3, Epistemic Clarification d) (review КТ5 reading)."""
+    msgs = log.messages()
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    ax = [m for m in msgs if m.source == "AXIOMS" and m.kind in ("evaluation", "decision")]
+    extra = [f"{m.event_id}: {k}" for m in ax for k in m.value
+             if k not in (AXIOM_EVAL_FIELDS if m.kind == "evaluation" else AXIOM_DECISION_FIELDS)]
+    out.append(v("AXIOMS-2-03", "axioms_constrain_only", extra,
+                 "the axiom stage records only which axioms each candidate violates and the constrained choice; it computes "
+                 "no metric from the data", "{n} metrics computed by the axiom stage"))
+    defs = [m.value for m in msgs if m.source == "AXIOM-DEFINITIONS"]
+    forms = defs[0].get("forms", {}) if defs else {}
+    bad = [f"{a}: {f}" for a, f in sorted(forms.items()) if f not in FORMS] + [a for a in PRIORITY if a not in forms]
+    dec = [m.value for m in msgs if m.source == "AXIOMS" and m.kind == "decision"]
+    bad += [f"decision basis: {d['basis']}" for d in dec if d["basis"].startswith("weighted")]
+    out.append(v("AXIOMS-3-01", "axiom_forms", bad,
+                 "each axiom is a forbidden state (A1, A2, A5, A6) or a hard priority ordering (A3, A4, A7) (H-AX-4); none is "
+                 "a weighted term", "{n} axioms in another form"))
+    cand = {m.value["candidate"]: m.value["declared"] for m in msgs if m.source == "CANDIDATES"}
+    ev = [m.value["violations"] for m in msgs if m.source == "AXIOMS" and m.kind == "evaluation"]
+    narr = [k for k, c in cand.items() if c.get("contradicts_ptl") and c.get("basis", "ptl") != "ptl"]
+    if narr:
+        bad = [f"{k}: declared goal against PTL not counted as an A3 violation" for k in narr if ev and "A3" not in ev[0].get(k, [])]
+        chosen = dec[0]["chosen"] if dec else None
+        if chosen in narr and any(not violations(dict(c, id=k), r["a4_reading"]) for k, c in cand.items()):
+            bad.append(f"{chosen}: chosen on its declared goal while an axiom-clean candidate existed")
+        out.append(v("AXIOMS-AxiomA3-PhysicalRealitySupremacy-02", "no_narrative_override", bad,
+                     f"{len(narr)} candidate(s) resting on a declared goal or narrative against the PTL measurement counted as "
+                     "violating A3", "{n} narratives overriding measured reality"))
+    else:
+        out.append(CheckResult("AXIOMS-AxiomA3-PhysicalRealitySupremacy-02", "no_narrative_override", NOT_APPLICABLE,
+                               "narratives against PTL", applicability="no candidate rests on a declared goal against PTL"))
+    bad = [f"definitions: {d.get('status')}" for d in defs if d.get("status") != "bounded evaluation constraints"]
+    out.append(v("AXIOMS-EpistemicClarification-04", "bounded_not_truth", bad,
+                 "the axioms are published as bounded evaluation constraints, with no claim of absolute truth",
+                 "{n} claims of absolute truth"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog, V_gen: Dict[str, List[str]]) -> List[CheckResult]:
@@ -416,13 +480,18 @@ IMPLEMENTS = {
     "AXIOMS-EpistemicClarification-03": ("error_correction_preserved", "PARTIAL", "The dispute is a declared event."),
     "AXIOMS-AxiomA4-IrreversibilityAversion-02": ("necessity_by_impact_model", "PARTIAL", "Necessity and its model are declared per candidate."),
     "AXIOMS-8-01": ("modification_requirements", "PARTIAL", "Formal requirements only."),
+    "AXIOMS-2-03": ("axioms_constrain_only", "PARTIAL", "Observed as the fields of the axiom stage's records."),
+    "AXIOMS-3-01": ("axiom_forms", "PARTIAL", "The form of each axiom is a lab reading of its wording (H-AX-4)."),
+    "AXIOMS-AxiomA3-PhysicalRealitySupremacy-02": ("no_narrative_override", "PARTIAL", "The basis of a candidate and its "
+                                                   "contradiction with PTL are declared."),
+    "AXIOMS-EpistemicClarification-04": ("bounded_not_truth", "PARTIAL", "Observed as the published status of the definitions."),
     "AXIOMS-8-02": ("ratification_67", "PARTIAL", "'Active validating nodes' are not defined where cited (F-022): UNKNOWN."),
 }
 
 
 class AxiomConstraintsModule(LabModule):
     id = "axiom_constraints"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Axioms as constraints (AXIOMS)", "ru": "Аксиомы как ограничения (AXIOMS)"}
     summary = {"en": "Several possible actions with different benefits and side effects: which may be chosen, and does any "
                      "benefit ever buy a violated axiom?",
@@ -464,7 +533,9 @@ class AxiomConstraintsModule(LabModule):
                        "default": [{**{k: f["default"] for k, f in CANDIDATE["fields"].items() if "default" in f}, "id": "a",
                                     "utility": 5},
                                    {**{k: f["default"] for k, f in CANDIDATE["fields"].items() if "default" in f}, "id": "b",
-                                    "utility": 9, "unmeasured_externality": True}],
+                                    "utility": 9, "unmeasured_externality": True},
+                                   {**{k: f["default"] for k, f in CANDIDATE["fields"].items() if "default" in f}, "id": "c",
+                                    "utility": 12, "basis": "declared_goal", "contradicts_ptl": True}],
                        "label": {"en": "Candidate actions (H-AX-1)", "ru": "Возможные действия (H-AX-1)"}},
         "dilemma_reading": {"type": "enum", "values": ["lexicographic", "no_admissible_action"], "default": "lexicographic",
                             "source": "alternative", "label": {"en": "No axiom-clean action (H-AX-2)", "ru": "Нет чистого действия (H-AX-2)"}},
@@ -500,7 +571,7 @@ class AxiomConstraintsModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, chosen, basis, V = run(r)
-        res = checks(r, log, V)
+        res = checks(r, log, V) + structure_checks(r, log)
         outputs = {"chosen": chosen, "basis": basis,
                    "violations": {c["id"]: violations(c, r["a4_reading"]) for c in r["candidates"]},
                    "messages": [m.as_dict() for m in log.messages()],

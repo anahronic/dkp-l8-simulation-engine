@@ -24,6 +24,10 @@ def test_reference_breaks_no_rule(name):
 
 LIFE = EX["benefit_against_life"]
 FAULT_CASES = {
+    "axiom_computes_metric": ({}, ["AXIOMS-2-03"]),
+    "axiom_as_weight": ({}, ["AXIOMS-3-01"]),
+    "narrative_override": ({}, ["AXIOMS-AxiomA3-PhysicalRealitySupremacy-02"]),
+    "axioms_as_truth": ({}, ["AXIOMS-EpistemicClarification-04"]),
     "utility_override": (LIFE, ["AXIOMS-5-02", "AXIOMS-1-01", "AXIOMS-AxiomA1-PreservationofLife-03",
                                 "AXIOMS-AxiomA1-PreservationofLife-01"]),
     "weighted_axioms": (LIFE, ["AXIOMS-5-03", "AXIOMS-7-02"]),

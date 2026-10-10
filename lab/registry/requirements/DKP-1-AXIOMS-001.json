@@ -38,7 +38,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_violation_for_benefit"
    },
    "tests": [
@@ -143,19 +143,25 @@
    "data_dependencies": [
     "architecture and decision-rule specifications"
    ],
-   "gap": "The boundary between axiom logic and operational data processing is not formally defined. No lab check implemented yet.",
+   "gap": "Observed as the fields of the axiom stage's records.",
    "hypotheses_needed": [
     "Declare which components represent axiom definitions and which implement axiom application."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.1.0",
+    "check": "axioms_constrain_only"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -173,19 +179,25 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "No formal representation or classification rule for the two permitted forms is provided. No lab check implemented yet.",
+   "gap": "The form of each axiom is a lab reading of its wording (H-AX-4).",
    "hypotheses_needed": [
     "Declare a representation for forbidden states and hard priority orderings."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.1.0",
+    "check": "axiom_forms"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -212,7 +224,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "constraints_not_terms"
    },
    "tests": [
@@ -253,7 +265,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "a1_enforced"
    },
    "tests": [
@@ -298,7 +310,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "minimum_defined_by_crisis"
    },
    "tests": [
@@ -337,7 +349,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "life_first"
    },
    "tests": [
@@ -374,7 +386,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "minimum_not_inferred"
    },
    "tests": [
@@ -412,7 +424,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_compulsion"
    },
    "tests": [
@@ -451,7 +463,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "right_to_refuse"
    },
    "tests": [
@@ -490,7 +502,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "risk_symmetry"
    },
    "tests": [
@@ -532,7 +544,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "symmetry_without_punishment"
    },
    "tests": [
@@ -570,7 +582,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "refusal_not_a_fault"
    },
    "tests": [
@@ -608,7 +620,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "a2_enforced"
    },
    "tests": [
@@ -685,7 +697,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "a3_enforced"
    },
    "tests": [
@@ -720,19 +732,25 @@
     "physical measurements",
     "decision reasons and evidence conflicts"
    ],
-   "gap": "The text does not define when an assertion conflicts with or overrides a measurement. No lab check implemented yet.",
+   "gap": "The basis of a candidate and its contradiction with PTL are declared.",
    "hypotheses_needed": [
     "Declare a representation of evidence conflicts and override decisions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.1.0",
+    "check": "no_narrative_override"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -762,7 +780,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "a4_irreversibility"
    },
    "tests": [
@@ -806,7 +824,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "necessity_by_impact_model"
    },
    "tests": [
@@ -882,7 +900,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "a5_enforced"
    },
    "tests": [
@@ -962,7 +980,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "a6_enforced"
    },
    "tests": [
@@ -1004,7 +1022,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "non_amplification"
    },
    "tests": [
@@ -1079,7 +1097,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "suffering_not_primary"
    },
    "tests": [
@@ -1114,7 +1132,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "axioms_before_optimization"
    },
    "tests": [
@@ -1151,7 +1169,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "violation_invalidates"
    },
    "tests": [
@@ -1191,7 +1209,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "not_additive"
    },
    "tests": [
@@ -1227,7 +1245,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "conflict_by_priority"
    },
    "tests": [
@@ -1267,7 +1285,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "fixed_priority"
    },
    "tests": [
@@ -1300,7 +1318,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "not_optimization_goals"
    },
    "tests": [
@@ -1333,7 +1351,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_weighted_terms"
    },
    "tests": [
@@ -1366,7 +1384,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_suspension"
    },
    "tests": [
@@ -1400,7 +1418,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_human_override"
    },
    "tests": [
@@ -1436,7 +1454,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_contextual_reinterpretation"
    },
    "tests": [
@@ -1476,7 +1494,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "modification_requirements"
    },
    "tests": [
@@ -1524,7 +1542,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ratification_67"
    },
    "tests": [
@@ -1565,7 +1583,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "definitions_not_outputs"
    },
    "tests": [
@@ -1606,7 +1624,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "application_output_metadata"
    },
    "tests": [
@@ -1642,7 +1660,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "axiom_constraints",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "error_correction_preserved"
    },
    "tests": [
@@ -1671,19 +1689,25 @@
    "data_dependencies": [
     "system descriptions and claims about axioms"
    ],
-   "gap": "The text provides no formal method for identifying absolute-truth or metaphysical claims. No lab check implemented yet.",
+   "gap": "Observed as the published status of the definitions.",
    "hypotheses_needed": [
     "Declare a semantic classification of bounded evaluation, absolute-truth, and metaphysical claims."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "axiom_constraints",
+    "version": "1.1.0",
+    "check": "bounded_not_truth"
+   },
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   }
  ]

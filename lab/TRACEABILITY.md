@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1329 (76.5 %) | 1006 | 1247 | 931 | 4 | 63 | 15 | 408 | 32 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1333 (76.7 %) | 1010 | 1251 | 935 | 4 | 63 | 15 | 404 | 28 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
 | C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 253 | 339 | 241 | 3 | 8 | 2 | 13 | 0 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 393 (76.9 %) | 314 | 372 | 293 | 0 | 18 | 3 | 118 | 11 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 397 (77.7 %) | 318 | 376 | 297 | 0 | 18 | 3 | 114 | 7 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1329 (76.5 %) | 1006 | 1247 | 931 | 4 | 63 | 15 | 408 | 32 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1333 (76.7 %) | 1010 | 1251 | 935 | 4 | 63 | 15 | 404 | 28 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 111 | 240 | 0 | 351 |
+| implementation_only | 0 | 115 | 236 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -255,7 +255,7 @@ Withdrawn after verification (not author decisions):
 | CODE-OF-PLANETARY-SYNERGY | 101 | 82 | 71 | 0 | 10 | 1 | 19 | 92 |
 | DKP-0-ORACLE-001 | 58 | 55 | 50 | 2 | 2 | 1 | 3 | 49 |
 | DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 6 |
-| DKP-1-AXIOMS-001 | 44 | 35 | 29 | 0 | 4 | 2 | 9 | 26 |
+| DKP-1-AXIOMS-001 | 44 | 39 | 33 | 0 | 4 | 2 | 5 | 26 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
@@ -467,6 +467,8 @@ Withdrawn after verification (not author decisions):
 | TIME-9-03 | IMPLEMENTED | time · normative_vector | PASS | — | — |
 | TIME-9-04 | IMPLEMENTED | time · normative_vector | FAIL | yes | Q-002 |
 | AXIOMS-1-01 | PARTIAL | axiom_constraints · no_violation_for_benefit | UNKNOWN | yes | — |
+| AXIOMS-2-03 | PARTIAL | axiom_constraints · axioms_constrain_only | PASS | — | — |
+| AXIOMS-3-01 | PARTIAL | axiom_constraints · axiom_forms | PASS | — | — |
 | AXIOMS-3-02 | IMPLEMENTED | axiom_constraints · constraints_not_terms | PASS | yes | — |
 | AXIOMS-5-01 | IMPLEMENTED | axiom_constraints · axioms_before_optimization | PASS | — | — |
 | AXIOMS-5-02 | PARTIAL | axiom_constraints · violation_invalidates | UNKNOWN | yes | Q-043 |
@@ -491,6 +493,7 @@ Withdrawn after verification (not author decisions):
 | AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-05 | IMPLEMENTED | axiom_constraints · refusal_not_a_fault | PASS | yes | — |
 | AXIOMS-AxiomA2-SystemicSustainability-01 | PARTIAL | axiom_constraints · a2_enforced | NOT_APPLICABLE | — | — |
 | AXIOMS-AxiomA3-PhysicalRealitySupremacy-01 | PARTIAL | axiom_constraints · a3_enforced | NOT_APPLICABLE | — | — |
+| AXIOMS-AxiomA3-PhysicalRealitySupremacy-02 | PARTIAL | axiom_constraints · no_narrative_override | PASS | — | — |
 | AXIOMS-AxiomA4-IrreversibilityAversion-01 | PARTIAL | axiom_constraints · a4_irreversibility | PASS | — | Q-044 |
 | AXIOMS-AxiomA4-IrreversibilityAversion-02 | PARTIAL | axiom_constraints · necessity_by_impact_model | PASS | — | — |
 | AXIOMS-AxiomA5-ExternalityAccountability-02 | IMPLEMENTED | axiom_constraints · a5_enforced | PASS | — | — |
@@ -501,6 +504,7 @@ Withdrawn after verification (not author decisions):
 | AXIOMS-EpistemicClarification-01 | IMPLEMENTED | axiom_constraints · definitions_not_outputs | PASS | — | — |
 | AXIOMS-EpistemicClarification-02 | IMPLEMENTED | axiom_constraints · application_output_metadata | PASS | yes | — |
 | AXIOMS-EpistemicClarification-03 | PARTIAL | axiom_constraints · error_correction_preserved | PASS | — | — |
+| AXIOMS-EpistemicClarification-04 | PARTIAL | axiom_constraints · bounded_not_truth | PASS | — | — |
 | EB-0-01 | IMPLEMENTED | epistemic_gate · no_override | PASS | — | — |
 | EB-0-02 | PARTIAL | epistemic_gate · bounded_evaluations | PASS | yes | — |
 | EB-10-01 | IMPLEMENTED | epistemic_gate · no_output_priority | PASS | — | — |

@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1329,
-  "covered_percent": 76.5,
+  "covered": 1333,
+  "covered_percent": 76.7,
   "statuses": {
-   "PASS": 1247,
+   "PASS": 1251,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 408
+   "UNCOVERED": 404
   },
   "resolvable": 672,
-  "resolvable_uncovered": 32,
-  "resolvable_uncovered_implementation_only": 32,
+  "resolvable_uncovered": 28,
+  "resolvable_uncovered_implementation_only": 28,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 1006,
-  "pass_with_open_point": 931
+  "covered_with_open_point": 1010,
+  "pass_with_open_point": 935
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1329,
-    "covered_percent": 76.5,
+    "covered": 1333,
+    "covered_percent": 76.7,
     "statuses": {
-     "PASS": 1247,
+     "PASS": 1251,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 408
+     "UNCOVERED": 404
     },
     "resolvable": 672,
-    "resolvable_uncovered": 32,
-    "resolvable_uncovered_implementation_only": 32,
+    "resolvable_uncovered": 28,
+    "resolvable_uncovered_implementation_only": 28,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 1006,
-    "pass_with_open_point": 931
+    "covered_with_open_point": 1010,
+    "pass_with_open_point": 935
    }
   },
   {
@@ -1734,21 +1734,21 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 393,
-    "covered_percent": 76.9,
+    "covered": 397,
+    "covered_percent": 77.7,
     "statuses": {
-     "PASS": 372,
+     "PASS": 376,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 118
+     "UNCOVERED": 114
     },
     "resolvable": 183,
-    "resolvable_uncovered": 11,
-    "resolvable_uncovered_implementation_only": 11,
+    "resolvable_uncovered": 7,
+    "resolvable_uncovered_implementation_only": 7,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 314,
-    "pass_with_open_point": 293
+    "covered_with_open_point": 318,
+    "pass_with_open_point": 297
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 111,
-    "codex_draft": 240,
+    "lab_reconciled": 115,
+    "codex_draft": 236,
     "human_accepted": 0,
     "total": 351
    },
@@ -11590,30 +11590,39 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between axiom logic and operational data processing is not formally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "axioms_constrain_only",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Observed as the fields of the axiom stage's records.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -11622,32 +11631,41 @@
    "section": "3",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No formal representation or classification rule for the two permitted forms is provided. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "axiom_forms",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "The form of each axiom is a lab reading of its wording (H-AX-4).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "findings:F-025"
    ],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -12684,30 +12702,39 @@
    "section": "Axiom A3 — Physical Reality Supremacy",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define when an assertion conflicts with or overrides a measurement. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "no_narrative_override",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "The basis of a candidate and its contradiction with PTL are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -13192,30 +13219,39 @@
    "section": "Epistemic Clarification",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text provides no formal method for identifying absolute-truth or metaphysical claims. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "bounded_not_truth",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Observed as the published status of the definitions.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

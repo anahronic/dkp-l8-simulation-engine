@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 111,
+  "confirmed": 115,
   "reclassified": 7
  },
  "items": [
@@ -84,6 +84,58 @@
     "human_accepted": false
    },
    "check": "economic_access:algorithmic_stewardship"
+  },
+  {
+   "id": "AXIOMS-2-03",
+   "document": "DKP-1-AXIOMS-001",
+   "quote": "Axioms do not process data. They constrain how data-derived metrics may be interpreted and acted upon.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Axioms do not process data; they constrain how data-derived metrics may be interpreted and acted upon': the axiom stage records which axioms a candidate violates and the constrained choice, and computes no metric of its own. Observable on the axiom stage's records.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "axiom_constraints:axioms_constrain_only"
+  },
+  {
+   "id": "AXIOMS-3-01",
+   "document": "DKP-1-AXIOMS-001",
+   "quote": "Each axiom is defined as:\n\n- a forbidden state, or",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Each axiom is either a forbidden state or a hard priority ordering; the wording of A1-A7 places each in one form (A1, A2, A5, A6 forbid; A3, A4, A7 order; lab reading H-AX-4), and none may be encoded as a weighted term (§3, §7). Observable on the recorded forms and the decision basis.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "axiom_constraints:axiom_forms"
+  },
+  {
+   "id": "AXIOMS-AxiomA3-PhysicalRealitySupremacy-02",
+   "document": "DKP-1-AXIOMS-001",
+   "quote": "Narratives, beliefs, intentions, or declared goals SHALL NOT override measured physical reality.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A candidate resting on a declared goal, narrative or belief that contradicts the PTL measurement violates A3 and cannot prevail over an axiom-clean candidate. Observable with the basis and the contradiction declared per candidate.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "axiom_constraints:no_narrative_override"
+  },
+  {
+   "id": "AXIOMS-EpistemicClarification-04",
+   "document": "DKP-1-AXIOMS-001",
+   "quote": "The invariance of axiom constraint logic does not constitute a claim that axioms represent absolute truth. Axioms are bounded evaluation constraints, not metaphysical assertions.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Bounded evaluation constraints, not metaphysical assertions': the axioms are published as constraints with no claim of absolute truth (their application outputs are disputable: EpistemicClarification-02/03). Observable on the published definitions.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "axiom_constraints:bounded_not_truth"
   },
   {
    "id": "CODEX-3-01",
