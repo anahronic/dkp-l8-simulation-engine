@@ -57,12 +57,24 @@ FAULTS = {
     "terror_on_combatants": "a harm stream against combatants is treated as terror",
     "run_prohibited": "a prohibited policing function (predictive policing) is carried out",
     "crisis_overreach": "during the crisis police restrict public assembly city-wide",
+    "police_verdict": "a detention record states the detainee's guilt",
+    "interpret_intent": "a detention record assesses the detainee's motivation",
+    "profile_by_belief": "the ideological-profiling request is carried out",
+    "expand_authority": "the authority-expansion request is carried out",
+    "police_overreach": "police carry out requests §2, §3 and §10 exclude (speech, sanctions, verdicts, norms)",
 }
 PROTECTED = ("civilian_population", "public_space", "civilian_transport", "hospital", "school", "shelter",
              "food_node", "water_node", "energy_node")                                              # ANTITERROR §3.3
 PROHIBITED = ("predictive_policing", "ideological_profiling", "morality_enforcement", "unanchored_surveillance",
               "authority_expansion")                                                                # POLICE §7
 POLICE_ACTIONS = ("use_of_force", "non_forceful_intervention", "detention", "release", "execute_order")   # H-PA-5
+SCOPE_REQUESTS = {                                                       # what POLICE §0, §2, §3, §10 exclude, and where
+    "regulate_speech": ("POLICE-10-01",), "regulate_belief": ("POLICE-10-01",), "regulate_culture": ("POLICE-10-01",),
+    "impose_sanction": ("POLICE-10-01", "POLICE-0-02"), "define_guilt": ("POLICE-2-03", "POLICE-0-02"),
+    "issue_binding_judgment": ("POLICE-3-04",), "assess_motivation": ("POLICE-3-04",), "create_norm": ("POLICE-0-02",)}
+DEFINES = {"POLICE-0-02": ("guilt", "verdict", "norm", "policy", "truth", "law"),                       # record fields police may not set
+           "POLICE-2-03": ("guilt", "liability", "axiom_reading"),
+           "POLICE-3-04": ("motivation", "intent", "belief", "loyalty", "binding_judgment")}
 STREAM = {"type": "object", "fields": {
     "from_hour": {"type": "int", "min": 0, "max": 10 ** 6},
     "to_hour": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -118,11 +130,19 @@ def run(r: Dict[str, Any]):
 
     t_state = "T0"
     for q in r["prohibited_requests"]:
-        done = q == "predictive_policing" and "run_prohibited" in faults
+        done = (q == "predictive_policing" and "run_prohibited" in faults) or \
+               (q == "ideological_profiling" and "profile_by_belief" in faults) or \
+               (q == "authority_expansion" and "expand_authority" in faults)
         put("notice", "POLICE", 0, {"prohibited_request": q, "refused": not done,
                                     "classification": "critical integrity breach" + ("" if done else " (attempted)")})
         if done:
             put("action", "POLICE", 0, {"action": q, "officer": "officer-17", "logged": True})
+    for q in r["scope_requests"]:
+        rq = put("observation", "REQUEST", 0, {"request": q})
+        if "police_overreach" in faults:
+            put("action", "POLICE", 0, {"action": q, "officer": "officer-17", "logged": True}, [rq.event_id])
+        else:
+            put("notice", "POLICE", 0, {"scope_request": q, "refused": True, "basis": list(SCOPE_REQUESTS[q])}, [rq.event_id])
     detained: Dict[str, Dict[str, Any]] = {}
     obs: Dict[int, Message] = {}
     lo, hi = r["crisis_window"]
@@ -207,10 +227,12 @@ def run(r: Dict[str, Any]):
                         end = None if "indefinite_detention" in faults else min(s["to_hour"], h + r["detention_limit_hours"]) \
                             if r["detention_limit_hours"] > 0 else s["to_hour"]
                         detained[p] = {"from": h, "until": end, "stream": i}
+                        extra = {**({"guilt": "guilty of assault"} if "police_verdict" in faults else {}),
+                                 **({"motivation": "ideological"} if "interpret_intent" in faults else {})}
                         put("action", "POLICE", h, {"action": "detention", "subject": p, "purpose": "stop active harm",
                                                     "until_hour": end, "officer": "officer-17", "logged": True,
-                                                    "review": None if "no_review" in faults else "automatic: DKP-1-JUSTICE-001"},
-                            prov)
+                                                    "review": None if "no_review" in faults else "automatic: DKP-1-JUSTICE-001",
+                                                    **extra}, prov)
         for p, d in list(detained.items()):
             if d["until"] is not None and h == d["until"]:
                 put("action", "POLICE", h, {"action": "release", "subject": p, "officer": "officer-17", "logged": True})
@@ -228,6 +250,47 @@ def run(r: Dict[str, Any]):
              "detentions": len(detained)}
     put("notice", "POLICE", r["horizon_hours"] - 1, {"public_statistics": stats, "aggregated": True})
     return log, detained, t_state
+
+
+def role_checks(r, msgs, police, v) -> List[CheckResult]:
+    """POLICE §0, §2, §3, §7, §10 (review КТ5 reading): what police are, and what they may not become."""
+    out = []
+    harm_streams = {m.event_id for m in msgs if m.kind == "observation"}
+    unbased = [m.event_id for m in police if m.value["action"] in ("use_of_force", "non_forceful_intervention", "detention")
+               and not set(m.provenance) & harm_streams]
+    other = [f"{m.event_id}: {m.value['action']}" for m in police if m.value["action"] not in POLICE_ACTIONS]
+    out.append(v("POLICE-0-01", "sole_function", other + unbased,
+                 f"all {len(police)} police actions are harm prevention on PTL observations, execution of orders, detention "
+                 "or release", "{n} police actions outside the four functions or without a PTL basis"))
+    done = {m.value["action"] for m in police}
+    for rid, chk, ok in (("POLICE-0-02", "no_law_guilt_truth", "police defined no law, policy, justice, guilt or truth"),
+                         ("POLICE-2-03", "no_guilt_or_axiom", "no police act defined guilt or liability or reread an axiom"),
+                         ("POLICE-3-04", "no_intent_or_judgment", "police interpreted no intent, belief, loyalty or motivation "
+                                                                  "and issued no binding judgment")):
+        bad = [f"{m.event_id}: {k}" for m in police for k in DEFINES[rid] if k in m.value]
+        bad += [f"{q} carried out" for q in done if rid in SCOPE_REQUESTS.get(q, ())]
+        out.append(v(rid, chk, bad, ok, "{n} police acts beyond execution"))
+    req = {m.value["prohibited_request"]: m.value["refused"] for m in msgs if m.source == "POLICE" and "prohibited_request" in m.value}
+    asked = [q for q in ("predictive_policing", "ideological_profiling") if q in req]
+    bad = [f"{q} not refused" for q in asked if not req[q]] + [f"{q} carried out" for q in done & {"predictive_policing",
+                                                                                                  "ideological_profiling"}]
+    out.append(v("POLICE-7-01", "no_prediction_or_profiling", bad,
+                 f"{len(asked)} request(s) for predictive policing or belief-based profiling refused; none carried out",
+                 "{n} predictions or profiles used by police"))
+    clo, chi = r["crisis_window"]
+    ext = [m for m in msgs if m.source == "POLICE" and m.value.get("authority_extended")]
+    bad = [f"{m.event_id}: extended outside a declared crisis" for m in ext if not clo <= m.arrived_at < chi]
+    bad += [f"{m.event_id}: extension without scope" for m in ext if not m.value.get("scope")]
+    bad += ["authority_expansion carried out"] if "authority_expansion" in done or req.get("authority_expansion") is False else []
+    out.append(v("POLICE-7-03", "no_authority_expansion", bad,
+                 "police authority was extended only inside a declared crisis with an explicit scope; no self-expansion",
+                 "{n} discretionary expansions of police authority"))
+    scope = [m for m in msgs if m.source == "POLICE" and "scope_request" in m.value]
+    bad = [f"{q} carried out" for q in done if "POLICE-10-01" in SCOPE_REQUESTS.get(q, ())]
+    out.append(v("POLICE-10-01", "scope_limits", bad,
+                 f"{len(scope)} requests to regulate belief, speech or culture, or to sanction or judge, refused",
+                 "{n} regulations of belief, speech or culture, or substitutions for Justice"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -251,6 +314,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                    and refreshed(r, h) for s in S)
 
     police = [m for m in msgs if m.source == "POLICE" and m.kind == "action"]
+    out += role_checks(r, msgs, police, v)
     # POLICE §2, §7, §8: police acts stay inside SCOPE; prohibited functions are critical breaches
     out.append(v("POLICE-2-02", "police_within_scope", [m.event_id for m in police if m.value["action"] not in POLICE_ACTIONS],
                  f"all {len(police)} police actions are safety execution of the kinds POLICE defines (S0/S1 under SCOPE, H-PA-5)",
@@ -491,6 +555,15 @@ IMPLEMENTS = {
     "POLICE-8-02": ("extension_scoped", "IMPLEMENTED", None),
     "POLICE-8-03": ("no_precedent", "PARTIAL", "Observed as the extension ending with the Crisis."),
     "POLICE-9-01": ("aggregated_statistics", "IMPLEMENTED", None),
+    "POLICE-0-01": ("sole_function", "PARTIAL", "The four functions mapped to the police action kinds (H-PA-5); a PTL basis is "
+                    "required for harm prevention."),
+    "POLICE-0-02": ("no_law_guilt_truth", "PARTIAL", "Observed as fields of police records and refused requests."),
+    "POLICE-2-03": ("no_guilt_or_axiom", "PARTIAL", "Observed as fields of police records and refused requests."),
+    "POLICE-3-04": ("no_intent_or_judgment", "PARTIAL", "Observed as fields of police records and refused requests."),
+    "POLICE-7-01": ("no_prediction_or_profiling", "PARTIAL", "Requests for the two functions are declared."),
+    "POLICE-7-03": ("no_authority_expansion", "IMPLEMENTED", None),
+    "POLICE-10-01": ("scope_limits", "PARTIAL", "Observed through declared requests; long-term punishment and exit rights are "
+                     "separate provisions."),
     "ANTITERROR-4.1-01": ("ptl_confirmed_terror", "IMPLEMENTED", None),
     "ANTITERROR-2-03": ("no_action_without_harm", "IMPLEMENTED", None),
     "ANTITERROR-7-03": ("no_retrospective_justification", "IMPLEMENTED", None),
@@ -519,7 +592,7 @@ IMPLEMENTS = {
 
 class PoliceAntiterrorModule(LabModule):
     id = "police_antiterror"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Policing and anti-terror containment (POLICE, ANTITERROR)", "ru": "Полиция и антитеррор (POLICE, ANTITERROR)"}
     summary = {"en": "An attack in a public place: do police and anti-terror units act only on PTL-confirmed harm, stay in "
                      "the threat zone, detain only attackers for a limited time, and stop when the harm stops?",
@@ -564,9 +637,13 @@ class PoliceAntiterrorModule(LabModule):
         "orders": {"type": "list", "min_items": 0, "max_items": 20, "items": ORDER, "default": [], "source": "user",
                    "label": {"en": "Enforcement orders", "ru": "Приказы на исполнение"}},
         "prohibited_requests": {"type": "list", "min_items": 0, "max_items": len(PROHIBITED), "items": {"type": "enum", "values": list(PROHIBITED)},
-                                "default": ["predictive_policing", "unanchored_surveillance"], "source": "user",
+                                "default": list(PROHIBITED), "source": "user",
                                 "label": {"en": "Requests for prohibited policing functions (POLICE §7)",
                                           "ru": "Запросы на запрещённые полицейские функции (POLICE §7)"}},
+        "scope_requests": {"type": "list", "min_items": 0, "max_items": len(SCOPE_REQUESTS),
+                           "items": {"type": "enum", "values": list(SCOPE_REQUESTS)}, "default": list(SCOPE_REQUESTS), "source": "user",
+                           "label": {"en": "Requests POLICE §2, §3, §10 exclude (speech, sanctions, verdicts, norms)",
+                                     "ru": "Запросы, исключённые POLICE §2, §3, §10 (речь, санкции, вердикты, нормы)"}},
         "associates": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "str"}, "default": ["f1", "f2"],
                        "source": "user", "label": {"en": "Associates of the attackers (not involved)",
                                                     "ru": "Связанные с нападавшими (не участвуют)"}},

@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 63,
+  "confirmed": 70,
   "reclassified": 5
  },
  "items": [
@@ -894,6 +894,97 @@
     "human_accepted": false
    },
    "check": "interop_failure:no_regime_adjudication"
+  },
+  {
+   "id": "POLICE-0-01",
+   "document": "DKP-3-POLICE-001",
+   "quote": "The sole function of police within DKP is to:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'The sole function' lists four functions; §3 (MAY list) and §4 (triggers) concretize them as action kinds with a PTL basis or a valid order. A police action of another kind, or harm prevention without a PTL observation, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:sole_function"
+  },
+  {
+   "id": "POLICE-0-02",
+   "document": "DKP-3-POLICE-001",
+   "quote": "Police do not define law, policy, justice, guilt, or truth.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Police do not define law, policy, justice, guilt or truth: observable as police records setting such a value (a verdict, a norm, a sanction) or police carrying out a request to do so.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:no_law_guilt_truth"
+  },
+  {
+   "id": "POLICE-10-01",
+   "document": "DKP-3-POLICE-001",
+   "quote": "regulate belief, speech, or culture,\n\nsubstitute judicial or justice protocols,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two scope limitations (§10); police regulating belief, speech or culture, or imposing a sanction or judgment in place of JUSTICE, is observable through declared requests and police actions.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:scope_limits"
+  },
+  {
+   "id": "POLICE-2-03",
+   "document": "DKP-3-POLICE-001",
+   "quote": "reinterpret axioms,\n\ndefine guilt or liability,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two items of the §2 'SHALL NOT' list; a police record defining guilt or liability, or rereading an axiom, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:no_guilt_or_axiom"
+  },
+  {
+   "id": "POLICE-3-04",
+   "document": "DKP-3-POLICE-001",
+   "quote": "interpret intent, belief, loyalty, or motivation,\n\nissue binding judgments.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two items of the §3 'SHALL NOT' list; a police record assessing intent, belief, loyalty or motivation, or a binding judgment issued by police, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:no_intent_or_judgment"
+  },
+  {
+   "id": "POLICE-7-01",
+   "document": "DKP-3-POLICE-001",
+   "quote": "predictive policing,\n\nprofiling based on ideology, religion, culture, or belief,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two forbidden functions (§7); a request for either is refused and neither is carried out. Observable with the requests declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:no_prediction_or_profiling"
+  },
+  {
+   "id": "POLICE-7-03",
+   "document": "DKP-3-POLICE-001",
+   "quote": "discretionary expansion of authority.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Discretionary expansion of authority' is distinguished by §8: the only extension is inside a declared crisis with an explicit scope. Any other extension, or an authority-expansion request carried out, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "police_antiterror:no_authority_expansion"
   },
   {
    "id": "PREV-13-02",

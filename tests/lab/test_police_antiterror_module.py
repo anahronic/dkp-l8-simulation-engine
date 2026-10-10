@@ -46,6 +46,11 @@ FAULT_CASES = {
                              ["ANTITERROR-3.3-01", "ANTITERROR-5-01"]),
     "run_prohibited": ({}, ["POLICE-2-02", "POLICE-7-04"]),
     "crisis_overreach": ({"crisis_window": [0, 12], "crisis_extension_scope": "z1", "horizon_hours": 20}, ["POLICE-8-04"]),
+    "police_verdict": ({}, ["POLICE-0-02", "POLICE-2-03"]),
+    "interpret_intent": ({}, ["POLICE-3-04"]),
+    "profile_by_belief": ({}, ["POLICE-7-01", "POLICE-7-04", "POLICE-0-01"]),
+    "expand_authority": ({}, ["POLICE-7-03", "POLICE-7-04"]),
+    "police_overreach": ({}, ["POLICE-10-01", "POLICE-0-02", "POLICE-2-03", "POLICE-3-04", "POLICE-0-01"]),
 }
 
 
@@ -93,3 +98,14 @@ def test_positive_lethal_admission_stays_unknown():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_scope_requests_are_refused_where_excluded():
+    """Review КТ5 reading of POLICE §0, §2, §3, §10: each excluded request is refused; carried out, it fails exactly
+    the provisions that exclude it."""
+    from lab.modules.police_antiterror import SCOPE_REQUESTS
+    for q, rids in SCOPE_REQUESTS.items():
+        clean = statuses(run(scope_requests=[q]))
+        assert all(clean[x] == "PASS" for x in rids), q
+        broken = statuses(run(scope_requests=[q], faults=["police_overreach"]))
+        assert all(broken[x] == "FAIL" for x in rids), q

@@ -34,19 +34,25 @@
     "higher-layer decisions",
     "police activity records"
    ],
-   "gap": "A classification model for police functions, immediacy and interpretation is missing. No lab check implemented yet.",
+   "gap": "The four functions mapped to the police action kinds (H-PA-5); a PTL basis is required for harm prevention.",
    "hypotheses_needed": [
     "Define how actions and mixed purposes map to the four permitted functions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "sole_function"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -69,19 +75,25 @@
     "authority registry",
     "existing system determinations"
    ],
-   "gap": "The boundary between defining and executing a determination is unspecified. No lab check implemented yet.",
+   "gap": "Observed as fields of police records and refused requests.",
    "hypotheses_needed": [
     "Define which institutional acts count as defining each listed category."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "no_law_guilt_truth"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -149,7 +161,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "police_within_scope"
    },
    "tests": [
@@ -181,19 +193,25 @@
     "axiom interpretations",
     "guilt and liability determinations"
    ],
-   "gap": "The text supplies no method for classifying normative creation, reinterpretation or determination. No lab check implemented yet.",
+   "gap": "Observed as fields of police records and refused requests.",
    "hypotheses_needed": [
     "Define how action effects are classified into the prohibited categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "no_guilt_or_axiom"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -221,7 +239,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "within_ptl_conditions"
    },
    "tests": [
@@ -337,7 +355,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_suspicion_or_prediction"
    },
    "tests": [
@@ -371,19 +389,25 @@
     "decision records",
     "authority and legal-effect records"
    ],
-   "gap": "A classification of interpretation and binding judgments is missing. No lab check implemented yet.",
+   "gap": "Observed as fields of police records and refused requests.",
    "hypotheses_needed": [
     "Define which recorded reasoning and outputs constitute the prohibited acts."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "no_intent_or_judgment"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -410,7 +434,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "trigger_holds"
    },
    "tests": [
@@ -446,7 +470,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ptl_verified_harm"
    },
    "tests": [
@@ -488,7 +512,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "valid_orders_only"
    },
    "tests": [
@@ -562,7 +586,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_ptl_no_intervention"
    },
    "tests": [
@@ -603,7 +627,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "detention_purpose"
    },
    "tests": [
@@ -645,7 +669,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "detention_time_limited"
    },
    "tests": [
@@ -687,7 +711,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "detention_logged"
    },
    "tests": [
@@ -730,7 +754,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "detention_review"
    },
    "tests": [
@@ -771,7 +795,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_indefinite_detention"
    },
    "tests": [
@@ -813,7 +837,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "force_last_resort"
    },
    "tests": [
@@ -855,7 +879,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "force_proportional"
    },
    "tests": [
@@ -933,7 +957,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "lethal_force"
    },
    "tests": [
@@ -976,7 +1000,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "identity_attributed"
    },
    "tests": [
@@ -1013,7 +1037,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ptl_logged"
    },
    "tests": [
@@ -1057,7 +1081,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "responsibility_traceable"
    },
    "tests": [
@@ -1091,19 +1115,25 @@
     "policing decision provenance",
     "model and feature usage records"
    ],
-   "gap": "The document does not define predictive policing or profiling. No lab check implemented yet.",
+   "gap": "Requests for the two functions are declared.",
    "hypotheses_needed": [
     "Define the prohibited function classes and how use of a listed profiling basis is detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "no_prediction_or_profiling"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1162,19 +1192,25 @@
     "authority change records",
     "authorization provenance"
    ],
-   "gap": "The text does not define discretionary expansion. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define discretion and distinguish it from authorized crisis extension."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "no_authority_expansion"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1200,7 +1236,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "prohibited_critical"
    },
    "tests": [
@@ -1240,7 +1276,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "extension_only_in_crisis"
    },
    "tests": [
@@ -1281,7 +1317,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "extension_scoped"
    },
    "tests": [
@@ -1324,7 +1360,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_precedent"
    },
    "tests": [
@@ -1364,7 +1400,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "crisis_policing_in_scope"
    },
    "tests": [
@@ -1403,7 +1439,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "police_antiterror",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "aggregated_statistics"
    },
    "tests": [
@@ -1508,19 +1544,25 @@
     "protocol effects",
     "judicial and justice role assignments"
    ],
-   "gap": "The tests for regulating a protected domain and substituting another protocol are unspecified. No lab check implemented yet.",
+   "gap": "Observed through declared requests; long-term punishment and exit rights are separate provisions.",
    "hypotheses_needed": [
     "Define regulation and substitution using observable institutional effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "police_antiterror",
+    "version": "1.1.0",
+    "check": "scope_limits"
+   },
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

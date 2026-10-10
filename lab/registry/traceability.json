@@ -1445,21 +1445,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1279,
-  "covered_percent": 73.6,
+  "covered": 1286,
+  "covered_percent": 74.0,
   "statuses": {
-   "PASS": 1197,
+   "PASS": 1204,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 458
+   "UNCOVERED": 451
   },
   "resolvable": 672,
-  "resolvable_uncovered": 80,
-  "resolvable_uncovered_implementation_only": 80,
+  "resolvable_uncovered": 73,
+  "resolvable_uncovered_implementation_only": 73,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 956,
-  "pass_with_open_point": 881
+  "covered_with_open_point": 963,
+  "pass_with_open_point": 888
  },
  "stages": [
   {
@@ -1509,21 +1509,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1279,
-    "covered_percent": 73.6,
+    "covered": 1286,
+    "covered_percent": 74.0,
     "statuses": {
-     "PASS": 1197,
+     "PASS": 1204,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 458
+     "UNCOVERED": 451
     },
     "resolvable": 672,
-    "resolvable_uncovered": 80,
-    "resolvable_uncovered_implementation_only": 80,
+    "resolvable_uncovered": 73,
+    "resolvable_uncovered_implementation_only": 73,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 956,
-    "pass_with_open_point": 881
+    "covered_with_open_point": 963,
+    "pass_with_open_point": 888
    }
   },
   {
@@ -1698,21 +1698,21 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 373,
-    "covered_percent": 73.0,
+    "covered": 380,
+    "covered_percent": 74.4,
     "statuses": {
-     "PASS": 352,
+     "PASS": 359,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 138
+     "UNCOVERED": 131
     },
     "resolvable": 182,
-    "resolvable_uncovered": 30,
-    "resolvable_uncovered_implementation_only": 30,
+    "resolvable_uncovered": 23,
+    "resolvable_uncovered_implementation_only": 23,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 294,
-    "pass_with_open_point": 273
+    "covered_with_open_point": 301,
+    "pass_with_open_point": 280
    }
   },
   {
@@ -2826,8 +2826,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 63,
-    "codex_draft": 290,
+    "lab_reconciled": 70,
+    "codex_draft": 283,
     "human_accepted": 0,
     "total": 353
    },
@@ -30810,30 +30810,38 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification model for police functions, immediacy and interpretation is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "sole_function",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "The four functions mapped to the police action kinds (H-PA-5); a PTL basis is required for harm prevention.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -30842,30 +30850,36 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between defining and executing a determination is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "no_law_guilt_truth",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Observed as fields of police records and refused requests.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -30912,30 +30926,36 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The tests for regulating a protected domain and substituting another protocol are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "scope_limits",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Observed through declared requests; long-term punishment and exit rights are separate provisions.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -31253,30 +31273,36 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text supplies no method for classifying normative creation, reinterpretation or determination. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "no_guilt_or_axiom",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Observed as fields of police records and refused requests.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -31463,30 +31489,36 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A classification of interpretation and binding judgments is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "no_intent_or_judgment",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Observed as fields of police records and refused requests.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -32054,30 +32086,38 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not define predictive policing or profiling. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "no_prediction_or_profiling",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Requests for the two functions are declared.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -32118,30 +32158,36 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define discretionary expansion. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "police_antiterror",
+   "check": "no_authority_expansion",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
