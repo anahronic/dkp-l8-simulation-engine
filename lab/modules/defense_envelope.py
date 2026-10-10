@@ -23,7 +23,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from lab.core.bus import EventLog, Message
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
@@ -35,6 +35,7 @@ LEVEL = {"none": "D0", "vpi": "D1.5", "imminent": "D1.5", "active": "D1", "susta
 RANK = {"D0": 0, "D1.5": 1, "D1": 2, "D2": 3, "D3": 4}
 REFRESH = ("D1.5", "D2", "D3")                       # §5: may not remain without refreshed confirmation
 PROTECTED = ("life", "infrastructure", "biosphere_node", "registered_public")          # §3.3
+ABSENCE = ("under_activity", "under_stability", "integrity_lost", "conflicting_signals")   # EB §9: why no new data
 ALLOWED = ("shielding", "interception", "disconnection", "isolation", "evacuation", "redundancy", "neutralization")  # §6
 BANNED = {"preemptive_strike": "speculative preemptive strike", "collective_punishment": "collective responsibility or punishment",
           "occupation": "territorial capture or permanent occupation", "economic_sanction": "economic punishment or sanctions",
@@ -50,6 +51,7 @@ FAULTS = {
     "keep_escalated_unconfirmed": "D2 or D3 is kept after confirmation lapses",
     "vpi_unmarked": "a VPI authorization lacks its epistemic marking",
     "vpi_not_terminated": "VPI authorization continues after trajectory confirmation stops",
+    "vpi_skip_revalidation": "a VPI authorization runs on without revalidation",
     "retaliation_objective": "an action with a retaliation objective is executed",
     "unbounded_scope": "an action beyond minimal scope is executed",
     "neutralize_with_alternative": "neutralization proceeds although another method is feasible",
@@ -76,6 +78,15 @@ def _seg(segs, k):
     return cur
 
 
+def usable_evidence(prev: Optional[int], k: int, s: Dict[str, Any]) -> Optional[int]:
+    """§4.1 needs PTL-confirmed evidence of a harm stream.  A fresh confirmation of a harm stream is evidence; a fresh
+    confirmation of no harm ends it.  Without a fresh confirmation the earlier evidence stays usable only while the absence of
+    new data is an absence under stability (EB §9); under activity, lost integrity or conflicting signals it is not (H-DE-4)."""
+    if s["confirmed"]:
+        return None if s["harm"] == "none" else k
+    return prev if s["absence"] == "under_stability" else None
+
+
 def run(r: Dict[str, Any]):
     faults = set(r["faults"])
     log = EventLog("step", tie_rule="observation < evaluation < decision < action < notice; then event_id")
@@ -99,12 +110,15 @@ def run(r: Dict[str, Any]):
     for a in r["actions"]:
         act_req.setdefault(a["step"], []).append(a)
     ever_active = False
+    evidence = None                     # step of the last PTL-confirmed harm observation that is still usable (§4.1, EB §9)
     for k in range(r["horizon_steps"]):
         s = _seg(segs, k)
         fresh = s["confirmed"]
         o = put("observation", "PTL", k, {"harm": s["harm"], "confirmed": fresh, "source_identified": s["source_identified"],
-                                          "trajectory_ttl_steps": s["trajectory_ttl_steps"], "domain": s["protected_domain"]})
+                                          "trajectory_ttl_steps": s["trajectory_ttl_steps"], "domain": s["protected_domain"],
+                                          **({} if fresh else {"absence": s["absence"]})})
         obs_ids[k] = o.event_id
+        evidence = usable_evidence(evidence, k, s)
         if fresh:
             last_conf[s["harm"]] = k
         prev = level
@@ -138,7 +152,8 @@ def run(r: Dict[str, Any]):
             vpi_auth = k
             put("decision", "DEFENSE", k, {"vpi_authorization": "granted", "epistemic": meta}, [o.event_id])
         elif vpi_auth is not None:
-            if s["harm"] == "vpi" and fresh and (k - vpi_auth) % max(1, s["trajectory_ttl_steps"]) == 0 and k != vpi_auth:
+            if s["harm"] == "vpi" and fresh and (k - vpi_auth) % max(1, s["trajectory_ttl_steps"]) == 0 and k != vpi_auth \
+                    and "vpi_skip_revalidation" not in faults:
                 put("evaluation", "DEFENSE", k, {"vpi_revalidated": True, "age_steps": 0}, [o.event_id])
             if not (s["harm"] == "vpi" and fresh) and "vpi_not_terminated" not in faults:
                 put("decision", "DEFENSE", k, {"vpi_authorization": "terminated",
@@ -151,10 +166,8 @@ def run(r: Dict[str, Any]):
         # actions
         for a in act_req.get(k, []):
             reasons = []
-            if not fresh and level != "D1" or not fresh and level == "D1" and a["kind"] != "evacuation":
-                reasons.append("no fresh PTL confirmation (§4.1)")
-            if s["harm"] == "none" and fresh:
-                reasons.append("no harm stream (§4.1)")
+            if evidence is None:
+                reasons.append("no usable PTL confirmation of a harm stream (§4.1, EB §9)")
             if a["basis"] != "ptl":
                 reasons.append(f"basis '{a['basis']}' (§4.2)")
             if a["objective"] != "stop_harm":
@@ -176,15 +189,15 @@ def run(r: Dict[str, Any]):
                 if not (ex and ex["consent"] and ex["qualified"] and ex["registered"] and not (0 <= ex["revoked_at"] <= k)):
                     if "assign_risk_without_consent" not in faults:
                         reasons.append("Verified Collective Security Risk without a consenting Voluntary Defense Participant (§4.6, §6.1)")
-            drop = {"act_without_confirmation": "PTL confirmation", "preemptive_forecast": "§4.2", "retaliation_objective": "§4.3",
+            drop = {"act_without_confirmation": "usable PTL confirmation", "preemptive_forecast": "§4.2", "retaliation_objective": "§4.3",
                     "unbounded_scope": "§4.4", "neutralize_with_alternative": "feasible method", "banned_use": "§7"}
             for f, frag in drop.items():
                 if f in faults:
-                    reasons = [x for x in reasons if frag not in x and not (f == "act_without_confirmation" and "harm stream" in x)]
+                    reasons = [x for x in reasons if frag not in x]
             ok = not reasons
             rec = {"action": a["id"], "kind": a["kind"], "executed": ok, "reasons": reasons, "risky": risky, "executor": a["executor"]}
             if ok and "unlogged_action" not in faults:
-                body = {"action": a["id"], "step": k, **dti(k), "ptl_evidence": obs_ids[k]}
+                body = {"action": a["id"], "step": k, **dti(k), "ptl_evidence": obs_ids[evidence if evidence is not None else k]}
                 h = hashlib.sha256((chain + json.dumps(body, sort_keys=True)).encode()).hexdigest()[:16]
                 rec.update(body)
                 rec["log_hash"], rec["log_prev"] = h, chain
@@ -267,19 +280,29 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                       or "revalidation_interval" not in m.value["epistemic"]],
                      "VPI authorizations marked CONDITIONAL, scoped DEFENSE:VPI, revalidation required, disputable post-factum",
                      "{n} unmarked VPI authorizations"))
-        term = {m.arrived_at for m in auth if m.value["vpi_authorization"] == "terminated"}
-        g0 = grants[0].arrived_at
-        stop = next((k for k in range(g0, H) if not (seg[k]["harm"] == "vpi" and seg[k]["confirmed"])), None)
-        out.append(v("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03", "vpi_termination",
-                     [] if stop is None or stop in term else [stop], "VPI authorization ended at once when trajectory confirmation stopped",
-                     "{n} VPI authorizations outlived their confirmation"))
-        ttl = grants[0].value["epistemic"].get("revalidation_interval", 0) or 1
+        # each authorization is its own episode: from its grant to its termination (or the end of the horizon); the time
+        # between a terminated and the next authorization is not authorized time (review КТ5-GPT-01)
+        terms = sorted(m.arrived_at for m in auth if m.value["vpi_authorization"] == "terminated")
         reval = sorted(m.arrived_at for m in D("vpi_revalidated"))
-        end = stop if stop is not None else H
-        pts = [g0] + reval + [end]
-        gaps = [b - a for a, b in zip(pts, pts[1:])]
-        out.append(v("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-02", "vpi_revalidation",
-                     [g for g in gaps if g > ttl], f"revalidated at intervals ≤ the trajectory TTL ({ttl} steps)", "{n} revalidation gaps beyond the TTL"))
+        late_stop, gaps_bad = [], []
+        for i, g in enumerate(grants):
+            g0 = g.arrived_at
+            nxt = grants[i + 1].arrived_at if i + 1 < len(grants) else H
+            end = next((t for t in terms if g0 <= t < nxt), None)
+            stop = next((k for k in range(g0, H) if not (seg[k]["harm"] == "vpi" and seg[k]["confirmed"])), None)
+            if stop is not None and end != stop:
+                late_stop.append(stop)
+            close = end if end is not None else H
+            ttl = g.value["epistemic"].get("revalidation_interval", 0) or 1
+            pts = [g0] + [k for k in reval if g0 < k < close] + [close]
+            gaps_bad += [f"authorization at step {g0}: {b - a} steps from {a} to {b} (TTL {ttl})"
+                         for a, b in zip(pts, pts[1:]) if b - a > ttl]
+        out.append(v("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03", "vpi_termination", late_stop,
+                     f"each of {len(grants)} VPI authorizations ended at once when its trajectory confirmation stopped",
+                     "{n} VPI authorizations outlived their confirmation"))
+        out.append(v("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-02", "vpi_revalidation", gaps_bad,
+                     f"each of {len(grants)} VPI authorizations revalidated at intervals ≤ its own trajectory TTL",
+                     "{n} revalidation gaps beyond the TTL"))
         out.append(v("DEFENSE-3.6-02", "vpi_is_defense", [], "actions against a confirmed VPI classified as Defense, not preemption", ""))
     else:
         for rid, chk in (("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-01", "vpi_marking"),
@@ -294,10 +317,21 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
     def executed(pred):
         return [i for i, a in req.items() if pred(a) and acts.get(i, {}).get("executed")]
-    nofresh = executed(lambda a: not seg[a["step"]]["confirmed"] and not (levels[a["step"]] == "D1" and a["kind"] == "evacuation")
-                       or seg[a["step"]]["harm"] == "none")
-    out.append(v("DEFENSE-4.1-01", "ptl_supremacy", nofresh, "no action without fresh PTL-confirmed evidence of a harm stream",
-                 "{n} actions without it"))
+    # §4.1 (review КТ5-GPT-02): every executed action rests on usable PTL-confirmed evidence of a harm stream, recomputed here
+    # from the observations: the current confirmation, or an earlier one kept valid by an absence of new data under stability
+    # (EB §9); the action must cite exactly that observation.  No exception for any action kind.
+    ev, usable = None, []
+    for k in range(H):
+        ev = usable_evidence(ev, k, seg[k])
+        usable.append(ev)
+    obs_at = {m.event_id: m.arrived_at for m in msgs if m.source == "PTL" and m.kind == "observation"}
+    nofresh = [i for i, a in req.items() if acts.get(i, {}).get("executed") and
+               (usable[a["step"]] is None or obs_at.get(acts[i].get("ptl_evidence")) != usable[a["step"]])]
+    old = [i for i, a in req.items() if acts.get(i, {}).get("executed") and usable[a["step"]] is not None and usable[a["step"]] != a["step"]]
+    out.append(v("DEFENSE-4.1-01", "ptl_supremacy", nofresh,
+                 "every executed action cites usable PTL-confirmed evidence of a harm stream"
+                 + (f" ({len(old)} on an earlier confirmation kept valid by an absence of data under stability, EB §9)" if old else ""),
+                 "{n} actions without usable evidence or citing another observation"))
     nonptl = executed(lambda a: a["basis"] != "ptl")
     out.append(v("DEFENSE-4.2-01", "non_preemption", nonptl, "no action on forecasts, intelligence, claims, statistics or narratives", "{n} such actions"))
     out.append(v("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-04", "vpi_not_projection", nonptl,
@@ -468,7 +502,7 @@ ACTIONS = [_act("shield_grid", 6, "shielding"), _act("forecast_strike", 4, "pree
 
 class DefenseEnvelopeModule(LabModule):
     id = "defense_envelope"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Defense envelope (DEFENSE)", "ru": "Контур обороны (DEFENSE)"}
     summary = {"en": "A trajectory, an attack, a sustained and an existential phase, a lapse of confirmation: do states, actions, "
                      "volunteers, neutralization and wind-down stay inside DEFENSE — and where does the text stop?",
@@ -487,11 +521,22 @@ class DefenseEnvelopeModule(LabModule):
                   "источник, защищаемая область, внешний ли источник."}},
         {"id": "H-DE-2", "source": "hypothesis", "text": {
             "en": "When confirmation lapses, D2 and D3 fall back to D1 (an active stream not yet confirmed ceased) and D1.5 falls back "
-                  "to D0; D1 itself stays until PTL confirms cessation (§8), but no action runs on stale evidence except evacuation "
-                  "(§4.1). DEFENSE §5 names no target state and leaves D1 out of the refresh rule (F-039).",
+                  "to D0; D1 itself stays until PTL confirms cessation (§8). The state is a hypothesis of state choice only: it "
+                  "permits no action (§4.1 still needs usable evidence, H-DE-4). DEFENSE §5 names no target state and leaves D1 out "
+                  "of the refresh rule (F-039).",
             "ru": "При потере подтверждения D2 и D3 возвращаются в D1 (активный поток, прекращение которого не подтверждено), D1.5 — в "
-                  "D0; сам D1 держится до подтверждения прекращения (§8), но действия на устаревших данных, кроме эвакуации, не "
-                  "выполняются (§4.1). DEFENSE §5 не называет целевое состояние и не включает D1 в правило обновления (F-039)."}},
+                  "D0; сам D1 держится до подтверждения прекращения (§8). Это гипотеза только о выборе состояния: она не разрешает "
+                  "никаких действий (§4.1 по-прежнему требует пригодного доказательства, H-DE-4). DEFENSE §5 не называет целевое "
+                  "состояние и не включает D1 в правило обновления (F-039)."}},
+        {"id": "H-DE-4", "source": "hypothesis", "text": {
+            "en": "Usable evidence (§4.1): a fresh PTL confirmation of a harm stream, or an earlier one while the absence of new data "
+                  "is declared an absence under stability (EB §9: no environmental change, no conflicting signals). Under activity, "
+                  "lost measurement integrity or conflicting signals the earlier confirmation is not usable. Age alone does not end "
+                  "validity. Every executed action cites the observation it rests on.",
+            "ru": "Пригодное доказательство (§4.1): свежее подтверждение PTL потока вреда или прежнее, пока отсутствие новых данных "
+                  "объявлено отсутствием при стабильной среде (EB §9: нет изменения среды и противоречивых сигналов). При активности, "
+                  "утрате целостности измерений или противоречивых сигналах прежнее подтверждение непригодно. Возраст сам по себе не "
+                  "прекращает действительность. Каждое исполненное действие ссылается на наблюдение, на котором основано."}},
         {"id": "H-DE-3", "source": "hypothesis", "text": {
             "en": "Verified Collective Security Risk = PTL probability of injury above a declared floor ('non-trivial' is not defined).",
             "ru": "Подтверждённый коллективный риск = вероятность травмы по PTL выше объявленного порога ('нетривиальная' не определена)."}},
@@ -508,6 +553,7 @@ class DefenseEnvelopeModule(LabModule):
                              "harm": {"type": "enum", "values": list(LEVEL)},
                              "confirmed": {"type": "bool", "default": True},
                              "trajectory_ttl_steps": {"type": "int", "min": 1, "max": 1000, "default": 6},
+                             "absence": {"type": "enum", "values": list(ABSENCE), "default": "under_activity"},
                              "source_identified": {"type": "bool", "default": False},
                              "protected_domain": {"type": "enum", "values": list(PROTECTED) + ["other"], "default": "infrastructure"},
                              "external": {"type": "bool", "default": True}}},
@@ -599,7 +645,23 @@ class DefenseEnvelopeModule(LabModule):
                 "single_attack": {"ptl_timeline": [_seg_(0, "none"), _seg_(4, "active", source=True), _seg_(10, "none")],
                                   "actions": [_act("intercept", 5, "interception")], "participants": [], "refusals": [],
                                   "outside_requests": [], "changes": []},
-                "faulty_defense": {"faults": ["preemptive_forecast", "assign_risk_without_consent", "banned_use", "sanction_refusal", "no_recovery_claim"]}}
+                "faulty_defense": {"faults": ["preemptive_forecast", "assign_risk_without_consent", "banned_use", "sanction_refusal", "no_recovery_claim"]},
+                # review КТ5-GPT-01: two separate VPI authorizations, each revalidated within its own TTL
+                "vpi_two_episodes": {"horizon_steps": 20, "ptl_timeline": [_seg_(0, "vpi", ttl=3), _seg_(2, "none"), _seg_(10, "vpi", ttl=3),
+                                                                           _seg_(15, "none")],
+                                     "actions": [], "refusals": [], "participants": [], "outside_requests": [], "changes": []},
+                # review КТ5-GPT-02: evacuation after confirmation lapsed under activity (refused) and under stability (allowed)
+                "evacuation_after_lapse": {"horizon_steps": 5, "ptl_timeline": [_seg_(0, "active"), _seg_(1, "active", confirmed=False)],
+                                           "actions": [_act("evacuate", 2, "evacuation", domain="life")], "refusals": [], "participants": [],
+                                           "outside_requests": [], "changes": []},
+                "evacuation_stable_absence": {"horizon_steps": 5, "ptl_timeline": [_seg_(0, "active"),
+                                                                                  dict(_seg_(1, "active", confirmed=False), absence="under_stability")],
+                                              "actions": [_act("evacuate", 2, "evacuation", domain="life")], "refusals": [],
+                                              "participants": [], "outside_requests": [], "changes": []},
+                "evacuation_integrity_lost": {"horizon_steps": 5, "ptl_timeline": [_seg_(0, "active"),
+                                                                                  dict(_seg_(1, "active", confirmed=False), absence="integrity_lost")],
+                                              "actions": [_act("evacuate", 2, "evacuation", domain="life")], "refusals": [],
+                                              "participants": [], "outside_requests": [], "changes": []}}
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"timeline_not_from_zero": {"ptl_timeline": [_seg_(3, "none")]},

@@ -22,7 +22,7 @@ def test_reference_breaks_no_rule(name):
     assert "FAIL" not in statuses(run(**EX[name])).values()
 
 
-BASE = {"no_wind_down": EX["single_attack"], "vpi_not_terminated": EX["vpi_lapse"]}
+BASE = {"no_wind_down": EX["single_attack"], "vpi_not_terminated": EX["vpi_lapse"], "vpi_skip_revalidation": EX["vpi_two_episodes"]}
 
 
 @pytest.mark.parametrize("fault", sorted(FAULTS))
@@ -51,3 +51,42 @@ def test_lapse_falls_back_to_d1_and_wind_down_stays_unknown():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+VPI2 = "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-02"
+PROBE_KT5_01 = {"horizon_steps": 20, "ptl_timeline": [{"from_step": 0, "harm": "vpi", "trajectory_ttl_steps": 3},
+                                                      {"from_step": 2, "harm": "none"},
+                                                      {"from_step": 10, "harm": "vpi", "trajectory_ttl_steps": 3},
+                                                      {"from_step": 15, "harm": "none"}], "actions": [], "refusals": []}
+PROBE_KT5_02 = {"horizon_steps": 5, "ptl_timeline": [{"from_step": 0, "harm": "active", "confirmed": True},
+                                                     {"from_step": 1, "harm": "active", "confirmed": False}],
+                "actions": [{"id": "evacuate", "step": 2, "kind": "evacuation", "domain": "life"}], "refusals": []}
+
+
+def test_kt5_01_each_vpi_authorization_is_its_own_episode():
+    """Review КТ5-GPT-01: grant 0, terminate 2; grant 10, revalidate 13, terminate 15 — all within TTL 3."""
+    res = run(**PROBE_KT5_01)
+    assert statuses(res)[VPI2] == "PASS"
+    assert statuses(res)["DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03"] == "PASS"
+    broken = run(**PROBE_KT5_01, faults=["vpi_skip_revalidation"])               # a real missed refresh in the second episode
+    c = {x.requirement_id: x for x in broken.checks}[VPI2]
+    assert c.status == "FAIL" and c.evidence["violations"] == ["authorization at step 10: 5 steps from 10 to 15 (TTL 3)"]
+
+
+def test_kt5_02_no_evacuation_exception():
+    """Review КТ5-GPT-02: confirmation lapsed under activity — the evacuation is refused; forcing it fails §4.1."""
+    acts = {a["action"]: a for a in run(**PROBE_KT5_02).outputs["actions"]}
+    assert not acts["evacuate"]["executed"] and any("§4.1" in x for x in acts["evacuate"]["reasons"])
+    assert statuses(run(**PROBE_KT5_02))["DEFENSE-4.1-01"] == "PASS"
+    assert statuses(run(**PROBE_KT5_02, faults=["act_without_confirmation"]))["DEFENSE-4.1-01"] == "FAIL"
+
+
+def test_kt5_02_evidence_validity_under_stability_and_lost_integrity():
+    """EB §9: absence of data under stability keeps the earlier confirmation usable; lost integrity does not."""
+    res = run(**EX["evacuation_stable_absence"])
+    acts = {a["action"]: a for a in res.outputs["actions"]}
+    assert acts["evacuate"]["executed"] and acts["evacuate"]["ptl_evidence"].startswith("ptl-0000-")   # the step-0 observation
+    assert statuses(res)["DEFENSE-4.1-01"] == "PASS"
+    acts = {a["action"]: a for a in run(**EX["evacuation_integrity_lost"]).outputs["actions"]}
+    assert not acts["evacuate"]["executed"]
+    assert statuses(run(**EX["evacuation_integrity_lost"], faults=["act_without_confirmation"]))["DEFENSE-4.1-01"] == "FAIL"
