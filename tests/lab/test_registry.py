@@ -100,3 +100,16 @@ def test_every_requirement_is_marked_as_draft_and_decisions_are_explicit():
             assert r["interpretation_status"] in ("DRAFT_UNREVIEWED", "TEXT_VERIFIED")
             if r["hypotheses_needed"] or r["open_questions"]:
                 assert r["decision_status"] == "UNRESOLVED"
+
+
+def test_hypothesis_references_are_declared():
+    """Every hypothesis id a module's source names (H-XX-n) is declared in that module, and ids are unique (CP6-HYP)."""
+    import re
+    from lab.modules import MODULES
+    root = os.path.join(os.path.dirname(__file__), "..", "..", "lab", "modules")
+    for mid, m in MODULES.items():
+        with open(os.path.join(root, mid + ".py"), encoding="utf-8") as f:
+            src = f.read()
+        ids = [h["id"] for h in m.hypotheses]
+        assert len(ids) == len(set(ids)), (mid, ids)
+        assert set(re.findall(r"\bH-[A-Z]{2}-\d+\b", src)) <= set(ids), (mid, sorted(set(re.findall(r"\bH-[A-Z]{2}-\d+\b", src)) - set(ids)))

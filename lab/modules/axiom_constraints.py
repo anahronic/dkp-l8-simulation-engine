@@ -32,7 +32,7 @@ from lab.core.module import LabModule, ModuleResult
 from lab.core.schema import LabInputError
 
 PRIORITY = {"A1": 1, "A2": 2, "A3": 3, "A4": 4, "A5": 5, "A6": 6, "A7": 7}
-# §3: each axiom is a forbidden state or a hard priority ordering (lab reading of each axiom's wording, H-AX-4)
+# §3: each axiom is a forbidden state or a hard priority ordering (lab reading of each axiom's wording, H-AX-5)
 FORM = {"A1": "forbidden_state", "A2": "forbidden_state", "A3": "priority_ordering", "A4": "priority_ordering",
         "A5": "forbidden_state", "A6": "forbidden_state", "A7": "priority_ordering"}
 FORMS = ("forbidden_state", "priority_ordering")
@@ -247,7 +247,7 @@ def structure_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     dec = [m.value for m in msgs if m.source == "AXIOMS" and m.kind == "decision"]
     bad += [f"decision basis: {d['basis']}" for d in dec if d["basis"].startswith("weighted")]
     out.append(v("AXIOMS-3-01", "axiom_forms", bad,
-                 "each axiom is a forbidden state (A1, A2, A5, A6) or a hard priority ordering (A3, A4, A7) (H-AX-4); none is "
+                 "each axiom is a forbidden state (A1, A2, A5, A6) or a hard priority ordering (A3, A4, A7) (H-AX-5); none is "
                  "a weighted term", "{n} axioms in another form"))
     cand = {m.value["candidate"]: m.value["declared"] for m in msgs if m.source == "CANDIDATES"}
     ev = [m.value["violations"] for m in msgs if m.source == "AXIOMS" and m.kind == "evaluation"]
@@ -481,7 +481,7 @@ IMPLEMENTS = {
     "AXIOMS-AxiomA4-IrreversibilityAversion-02": ("necessity_by_impact_model", "PARTIAL", "Necessity and its model are declared per candidate."),
     "AXIOMS-8-01": ("modification_requirements", "PARTIAL", "Formal requirements only."),
     "AXIOMS-2-03": ("axioms_constrain_only", "PARTIAL", "Observed as the fields of the axiom stage's records."),
-    "AXIOMS-3-01": ("axiom_forms", "PARTIAL", "The form of each axiom is a lab reading of its wording (H-AX-4)."),
+    "AXIOMS-3-01": ("axiom_forms", "PARTIAL", "The form of each axiom is a lab reading of its wording (H-AX-5)."),
     "AXIOMS-AxiomA3-PhysicalRealitySupremacy-02": ("no_narrative_override", "PARTIAL", "The basis of a candidate and its "
                                                    "contradiction with PTL are declared."),
     "AXIOMS-EpistemicClarification-04": ("bounded_not_truth", "PARTIAL", "Observed as the published status of the definitions."),
@@ -527,6 +527,13 @@ class AxiomConstraintsModule(LabModule):
                   "utility then ranks them.",
             "ru": "Неусиление страдания A7: из равнозначных допустимых действий остаются наименее тяжёлые; затем их "
                   "ранжирует польза."}},
+        {"id": "H-AX-5", "source": "hypothesis", "text": {
+            "en": "§3 form of each axiom, read from its wording: A1, A2, A5, A6 name forbidden states ('MUST NOT', 'forbidden'); "
+                  "A3, A4, A7 order objectives (physical reality over narratives, reversible over irreversible, less suffering "
+                  "among equivalents).",
+            "ru": "Форма каждой аксиомы по §3, прочитанная из её формулировки: A1, A2, A5, A6 называют запрещённые состояния "
+                  "('MUST NOT', 'forbidden'); A3, A4, A7 упорядочивают цели (физическая реальность выше нарративов, обратимое "
+                  "выше необратимого, меньшее страдание среди равнозначных)."}},
     ]
     inputs = {
         "candidates": {"type": "list", "min_items": 1, "max_items": 12, "items": CANDIDATE, "source": "user",
