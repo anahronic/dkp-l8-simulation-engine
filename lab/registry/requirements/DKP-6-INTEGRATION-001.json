@@ -176,7 +176,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_authority_beyond_phase"
    },
    "tests": [
@@ -209,7 +209,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "integrating_entity"
    },
    "tests": [
@@ -245,7 +245,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "phase_terms_defined"
    },
    "tests": [
@@ -383,19 +383,25 @@
     "phase history",
     "rollback plans and cost declarations"
    ],
-   "gap": "The text does not define the controls needed for a reversion to qualify as controlled. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Define the required rollback controls."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.4.0",
+    "check": "rollback_definition"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -428,7 +434,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "explicit_consent"
    },
    "tests": [
@@ -468,7 +474,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "sequential_phases"
    },
    "tests": [
@@ -504,7 +510,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "explicit_validation"
    },
    "tests": [
@@ -580,7 +586,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "scope_containment"
    },
    "tests": [
@@ -621,7 +627,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "shadow_mode_no_effects"
    },
    "tests": [
@@ -734,7 +740,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "shadow_not_proof"
    },
    "tests": [
@@ -897,7 +903,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "phase2_domains_only"
    },
    "tests": [
@@ -1185,7 +1191,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "shock_halts_and_suspends"
    },
    "tests": [
@@ -1262,7 +1268,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "rollback_logged"
    },
    "tests": [
@@ -1294,19 +1300,25 @@
     "data lineage and continuity records",
     "audit trails before and after rollback"
    ],
-   "gap": "The required data continuity invariant and preservation scope are not defined. No lab check implemented yet.",
+   "gap": "Continuity is a recorded property of the rollback.",
    "hypotheses_needed": [
     "Define the continuity invariant and which data and audit records must be preserved."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.4.0",
+    "check": "rollback_preserves_records"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1482,7 +1494,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "divergence_not_failure"
    },
    "tests": [
@@ -1521,7 +1533,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "steps_documented"
    },
    "tests": [
@@ -1630,7 +1642,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_conditional_aid"
    },
    "tests": [
@@ -1670,7 +1682,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_retroactive_enforcement"
    },
    "tests": [
@@ -1743,19 +1755,25 @@
     "dependency inventories",
     "dependency creation and disclosure records"
    ],
-   "gap": "The early-phase boundary and the disclosure standard for hidden dependencies are not explicitly defined. No lab check implemented yet.",
+   "gap": "Dependencies are declared events (fault scope_creep creates one).",
    "hypotheses_needed": [
     "Define early phases and the disclosure needed for a dependency to count as visible."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.4.0",
+    "check": "no_hidden_dependency"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

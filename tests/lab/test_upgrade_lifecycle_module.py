@@ -26,6 +26,8 @@ FIX = {"proposals": [{"id": "u1", "deviation_day": 50},
                      {"id": "fix", "submitted_day": 51, "results_published_day": 52, "announced_day": 53,
                       "activation_day": 90, "fixes": "u1"}]}
 FAULT_CASES = {
+    "direct_patch_accepted": ({}, ["UPGRADE-0-01"]),
+    "discretionary_tuning": ({}, ["UPGRADE-11-02", "UPGRADE-0-01"]),
     "upgrade_in_crisis": ({"crisis_window": [0, 10]}, ["UPGRADE-4.3-01", "UPGRADE-11-01"]),
     "skip_completeness": ({"proposals": [{"id": "a", "missing_items": ["before_after"]}]}, ["UPGRADE-5-02"]),
     "weaken_axiom_accepted": ({"proposals": [{"id": "a", "weakens_axioms": True}]}, ["UPGRADE-4.1-01", "UPGRADE-2-03"]),

@@ -49,6 +49,9 @@ FAULTS = {
     "ppdi_as_score": "PPDI is used to score an operator's liability",
     "behavioral_enforcement": "high-RED drivers are ordered to retrain",
     "ignore_biosphere": "funding and redesign decisions do not take the transport impact on B(t) into account",
+    "transport_contains_attack": "TRANSPORT itself contains an attack on a line instead of leaving it to DEFENSE",
+    "autonomy_discount": "autonomous vehicles get a lower RED for the same kilometres",
+    "axiom_trigger": "a transport line is suspended directly on 'Axiom A1' as the trigger",
 }
 OWNERSHIP = ("private", "shared", "public", "cooperative")
 AUTONOMY = ("manual", "assisted", "autonomous")
@@ -122,6 +125,16 @@ def run(r: Dict[str, Any]):
                                             "basis": "seated and standing places" if with_standing else "seated places"})
     if "regulate_driving" in faults:
         put("action", "TRANSPORT", 0, {"driving_rule": "speed limit 30 km/h for private drivers", "target": "drivers"})
+    if r["hostile_event_hour"] >= 0:
+        k = r["hostile_event_hour"]
+        ev = put("observation", "PTL", k, {"hostile_event": "attack on a line", "hour": k})
+        if "transport_contains_attack" in faults:
+            put("action", "TRANSPORT", k, {"containment": "close the line and detain suspects"}, [ev.event_id])
+        else:
+            put("notice", "TRANSPORT", k, {"handed_to": "DKP-3-DEFENSE-001", "reason": "real-time containment is Defense's (A.2)"},
+                [ev.event_id])
+    if "axiom_trigger" in faults:
+        put("action", "TRANSPORT", 0, {"enforcement": "suspend line 4", "trigger": "Axiom A1"})
     for d in days:
         k = d["day"] * 24 + 23
         bio = put("observation", "ORACLE/B", k, {"day": d["day"], "transport_impact_on_B": round(d["private_km"] * r["b_impact_per_km"], 9),
@@ -182,6 +195,7 @@ def run(r: Dict[str, Any]):
     if r["red_per_km"] >= 0:
         for v_ in r["fleet"]:
             f = 0.5 if "ownership_discount" in faults and (v_["ownership"] == "public" or v_["autonomy"] == "autonomous") else 1.0
+            f = 0.5 if "autonomy_discount" in faults and v_["autonomy"] == "autonomous" else f
             put("evaluation", "TRANSPORT/FLEET", 0, {"vehicle": v_["id"], "ownership": v_["ownership"], "autonomy": v_["autonomy"],
                                                      "km": v_["km"], "red": round(v_["km"] * r["red_per_km"] * f, 9),
                                                      "criterion": "physical impact (kilometres)"})
@@ -354,6 +368,28 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
                  "{n} vehicles evaluated by ownership or autonomy") if fleet else
                na("TRANSPORTA-A.3-03", "ownership_irrelevant", "fleet evaluation", "no RED coefficient declared (H-TR-2)"))
     out += design_checks(r, msgs, days)
+    hostile = [m for m in msgs if m.source == "PTL" and m.value.get("hostile_event")]
+    if hostile:
+        out.append(v("TRANSPORTA-A.2-02", "defense_contains_threats",
+                     [m.event_id for m in msgs if m.source == "TRANSPORT" and m.value.get("containment")] +
+                     [h.event_id for h in hostile if not any(m.value.get("handed_to") == "DKP-3-DEFENSE-001" and h.event_id in m.provenance
+                                                             for m in msgs)],
+                     "the attack on a line was handed to DEFENSE; TRANSPORT took no containment action",
+                     "{n} containment actions by TRANSPORT or attacks not handed to DEFENSE"))
+    else:
+        out.append(na("TRANSPORTA-A.2-02", "defense_contains_threats", "hostile events", "no attack in this experiment"))
+    fl = [m.value for m in msgs if m.source == "TRANSPORT/FLEET"]
+    if fl:
+        rate = {(x["autonomy"]): x["red"] / x["km"] for x in fl if x["km"] > 0}
+        out.append(v("TRANSPORTA-A.3-01", "autonomy_evaluated_identically",
+                     [f"{a}: {rr:.6g} per km" for a, rr in sorted(rate.items()) if abs(rr - r["red_per_km"]) > 1e-9],
+                     f"manual, assisted and autonomous vehicles evaluated by one rule ({r['red_per_km']} per km)",
+                     "{n} autonomy levels evaluated differently"))
+    else:
+        out.append(na("TRANSPORTA-A.3-01", "autonomy_evaluated_identically", "fleet evaluation", "no RED coefficient declared (H-TR-2)"))
+    out.append(v("TRANSPORTA-A.4-01", "no_axiom_trigger",
+                 [m.event_id for m in msgs if m.source == "TRANSPORT" and str(m.value.get("trigger", "")).startswith("Axiom")],
+                 "no transport action is triggered directly by an axiom", "{n} enforcement acts with an axiom as trigger"))
     just = [m.event_id for m in msgs if m.source == "JUSTICE"]
     for rid, chk in (("TRANSPORTA-A.1-01", "no_justice_trigger"), ("TRANSPORTA-A.1-02", "degradation_signal_only"),
                      ("TRANSPORT-11-02", "no_justice_outcomes")):
@@ -377,6 +413,9 @@ IMPLEMENTS = {
     "TRANSPORT-8-01": ("no_bans_or_punishment", "IMPLEMENTED", None),
     "TRANSPORT-8-02": ("comfort_driven_shift", "PARTIAL", "An empirical claim the behaviour model assumes: UNKNOWN."),
     "TRANSPORT-11-02": ("no_justice_outcomes", "IMPLEMENTED", None),
+    "TRANSPORTA-A.2-02": ("defense_contains_threats", "PARTIAL", "The attack is a declared event."),
+    "TRANSPORTA-A.3-01": ("autonomy_evaluated_identically", "PARTIAL", "RED per kilometre with a declared coefficient (H-TR-2)."),
+    "TRANSPORTA-A.4-01": ("no_axiom_trigger", "PARTIAL", "Observed as recorded triggers of transport enforcement."),
     "TRANSPORT-1-01": ("environment_not_behaviour", "PARTIAL", "Observed as TRANSPORT acts addressed to driving behaviour."),
     "TRANSPORT-3-02": ("no_dignity_tradeoff_equilibrium", "PARTIAL", "The normative half only; 'is not adopted at scale' is an empirical "
                        "claim the behaviour model H-TR-1 assumes."),
@@ -400,7 +439,7 @@ IMPLEMENTS = {
 
 class TransportCapacityModule(LabModule):
     id = "transport_capacity"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Transport capacity (S-LAB-09)", "ru": "Транспортная вместимость (S-LAB-09)"}
     summary = {"en": "A corridor at rush hour: queues, seats and external harm side by side — is standing an exception, "
                      "is under-provisioning met by more capacity, and does RED fund better transport without punishing anyone?",
@@ -482,6 +521,8 @@ class TransportCapacityModule(LabModule):
                               {"id": "car_public_assist", "ownership": "public", "autonomy": "assisted", "km": 100},
                               {"id": "car_coop", "ownership": "cooperative", "autonomy": "manual", "km": 60}],
                   "label": {"en": "Vehicles evaluated by Appendix A.3", "ru": "Транспортные средства по Приложению A.3"}},
+        "hostile_event_hour": {"type": "int", "min": -1, "max": 10 ** 6, "default": -1, "unit": "h", "source": "user",
+                               "label": {"en": "An attack on a line at hour (-1: none)", "ru": "Нападение на линию в час (-1: нет)"}},
         "b_impact_per_km": {"type": "number", "min": 0, "max": 1, "default": 1e-7, "source": "missing",
                             "label": {"en": "Transport impact on B(t) per private km (declared; ORACLE measures it, §9)",
                                       "ru": "Влияние транспорта на B(t) на км личных авто (объявлено; измеряет ORACLE, §9)"}},
@@ -543,6 +584,7 @@ class TransportCapacityModule(LabModule):
             "faulty_transport": {"policy": "standing_allowed", "red_per_km": 0.02,
                                  "faults": ["passenger_adaptation", "red_as_tax", "justice_from_red", "ban_private"]},
             "bench_interior": {"interior": "bench", "core_route": False},
+            "attack_on_line": {"hostile_event_hour": 30, "red_per_km": 0.02},
             "faulty_design": {"policy": "standing_allowed", "red_per_km": 0.02,
                               "faults": ["regulate_driving", "dignity_tradeoff", "standing_in_capacity", "ppdi_as_score",
                                          "behavioral_enforcement", "ignore_biosphere"]},

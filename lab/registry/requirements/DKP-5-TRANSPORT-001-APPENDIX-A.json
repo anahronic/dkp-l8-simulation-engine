@@ -36,7 +36,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_justice_trigger"
    },
    "tests": [
@@ -71,7 +71,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "degradation_signal_only"
    },
    "tests": [
@@ -175,19 +175,25 @@
     "Defense responsibility assignments",
     "physical-threat and containment records"
    ],
-   "gap": "Physical-threat classification and the timing criterion for real-time containment are unspecified. No lab check implemented yet.",
+   "gap": "The attack is a declared event.",
    "hypotheses_needed": [
     "Declare physical-threat classification rules and an operational meaning of real-time containment."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.3.0",
+    "check": "defense_contains_threats"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -244,19 +250,25 @@
     "transport evaluation procedures",
     "system type classifications"
    ],
-   "gap": "The comparison baseline and the intended extent of identical evaluation are unspecified. No lab check implemented yet.",
+   "gap": "RED per kilometre with a declared coefficient (H-TR-2).",
    "hypotheses_needed": [
     "Declare the comparison scope and which evaluation procedure elements must be identical."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.3.0",
+    "check": "autonomy_evaluated_identically"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -321,7 +333,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "ownership_irrelevant"
    },
    "tests": [
@@ -386,19 +398,25 @@
     "enforcement rule dependencies",
     "mappings between rules and axioms"
    ],
-   "gap": "The text does not define what makes an enforcement trigger directly encode an axiom. No lab check implemented yet.",
+   "gap": "Observed as recorded triggers of transport enforcement.",
    "hypotheses_needed": [
     "Declare a rule for distinguishing direct axiom triggers from axiom-compatible enforcement rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.3.0",
+    "check": "no_axiom_trigger"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

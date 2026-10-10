@@ -22,7 +22,8 @@ def test_reference_breaks_no_rule(name):
     assert "FAIL" not in statuses(run(**EX[name])).values()
 
 
-BASE = {"remediate_without_bundle": EX["no_bundle"], "manual_interpretation": EX["no_bundle"]}
+BASE = {"remediate_without_bundle": EX["no_bundle"], "manual_interpretation": EX["no_bundle"],
+        "count_non_living_space": EX["container_home"]}
 
 
 @pytest.mark.parametrize("fault", sorted(FAULTS))
@@ -47,3 +48,10 @@ def test_gate_and_remediation():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_living_space_definition():
+    """HABITAT §3 Living Space (review КТ5 reading): a storage container contributes no living space to SPDI."""
+    ex = M.examples()["container_home"]
+    assert statuses(run(**ex))["HABITAT-3-02"] == "PASS"
+    assert statuses(run(**ex, faults=["count_non_living_space"]))["HABITAT-3-02"] == "FAIL"

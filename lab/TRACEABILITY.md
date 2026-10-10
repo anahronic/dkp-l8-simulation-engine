@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1349 (77.7 %) | 1026 | 1266 | 950 | 4 | 63 | 16 | 388 | 12 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1361 (78.4 %) | 1038 | 1278 | 962 | 4 | 63 | 16 | 376 | 0 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 18 | 24 | 17 | 0 | 1 | 0 | 18 | 0 | 36 |
 | C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 253 | 339 | 241 | 3 | 8 | 2 | 13 | 0 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 224 (76.5 %) | 182 | 208 | 168 | 0 | 9 | 7 | 69 | 4 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 403 (78.9 %) | 324 | 381 | 302 | 0 | 18 | 4 | 108 | 1 | 432 |
-| G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1349 (77.7 %) | 1026 | 1266 | 950 | 4 | 63 | 16 | 388 | 12 | 1414 |
+| D. Transitions and rights | DONE | 9/9 | 424 | 270 (63.7 %) | 183 | 250 | 166 | 1 | 17 | 2 | 154 | 0 | 337 |
+| E. Applied modules | DONE | 7/7 | 293 | 228 (77.8 %) | 186 | 212 | 172 | 0 | 9 | 7 | 65 | 0 | 251 |
+| F. Remaining constraints and stress | DONE | 12/12 | 511 | 404 (79.1 %) | 325 | 382 | 303 | 0 | 18 | 4 | 107 | 0 | 432 |
+| G. General release | PARTIAL | — | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1361 (78.4 %) | 1038 | 1278 | 962 | 4 | 63 | 16 | 376 | 0 | 1414 |
 
 ### Stage criteria
 
@@ -39,10 +39,10 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
 - C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
-- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 **not met**: all parts implementable without unresolved decisions are checked
+- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- E / E1 met: real checks, declared models and their limits; gaps exact by section
+- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 met: all parts implementable without unresolved decisions are checked
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 
@@ -138,7 +138,7 @@ FAILs of reference examples and their verified origin:
 | Requirement | Origin | Finding | Runs |
 |---|---|---|---|
 | CRISIS-12.3-01 | CONFIRMED_FINDING | F-043 | crisis_recovery:cascade_and_divergence, crisis_recovery:d3_sustained, crisis_recovery:exit_to_upgrade |
-| ORACLE-1-02 | CONFIRMED_FINDING | F-015 | transport_capacity:red_single_delta |
+| ORACLE-1-02 | CONFIRMED_FINDING | F-015 | transport_capacity:attack_on_line, transport_capacity:red_single_delta |
 | ORACLE-12-06 | CONFIRMED_FINDING | F-036 | code_synergy:anthropogenic_drop, code_synergy:b_recovers, code_synergy:connection_by_legislative_act, code_synergy:expired_bundle, code_synergy:human_weight_zero, code_synergy:insufficient_assets, code_synergy:mercy_shorter_crisis_scope, code_synergy:mercy_without_crisis_scope, code_synergy:natural_drop_with_mercy, code_synergy:node_seized, code_synergy:nuclear_equivalent, code_synergy:phase_1_aggressor, code_synergy:provenance_validators, code_synergy:tuning_attempts, code_synergy:unconfirmed_spare_node, code_synergy:unidentified_aggressor |
 | TIME-9-04 | CONFIRMED_FINDING | F-017 | time:normative_vectors, time:year_boundary |
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 131 | 220 | 0 | 351 |
+| implementation_only | 0 | 143 | 208 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -263,7 +263,7 @@ Withdrawn after verification (not author decisions):
 | DKP-1-PREVENTION-001 | 43 | 25 | 24 | 0 | 1 | 0 | 18 | 36 |
 | DKP-2-ASSETS-001 | 43 | 29 | 28 | 0 | 1 | 0 | 14 | 38 |
 | DKP-2-FINANCE-001 | 44 | 25 | 23 | 0 | 2 | 0 | 19 | 39 |
-| DKP-2-LABOR-001 | 40 | 24 | 21 | 0 | 3 | 0 | 16 | 28 |
+| DKP-2-LABOR-001 | 40 | 25 | 22 | 0 | 3 | 0 | 15 | 28 |
 | DKP-3-ANTITERROR-001 | 41 | 27 | 27 | 0 | 0 | 0 | 14 | 35 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 36 | 35 | 0 | 0 | 1 | 13 | 47 |
@@ -272,19 +272,19 @@ Withdrawn after verification (not author decisions):
 | DKP-4-CRISIS-001-PATCH | 31 | 26 | 25 | 0 | 1 | 0 | 5 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 26 | 26 | 0 | 0 | 0 | 3 | 23 |
 | DKP-4-ERROR-001 | 52 | 33 | 29 | 0 | 3 | 1 | 19 | 46 |
-| DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
+| DKP-4-UPGRADE-001 | 48 | 37 | 33 | 0 | 4 | 0 | 11 | 36 |
 | DKP-5-CULTURE-001 | 43 | 31 | 31 | 0 | 0 | 0 | 12 | 37 |
 | DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 55 |
-| DKP-5-HABITAT-001 | 56 | 52 | 48 | 0 | 1 | 3 | 4 | 50 |
+| DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 50 |
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 37 |
 | DKP-5-TRANSPORT-001 | 35 | 22 | 17 | 0 | 5 | 0 | 13 | 35 |
-| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 9 | 9 | 0 | 0 | 0 | 8 | 14 |
+| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 12 | 12 | 0 | 0 | 0 | 5 | 14 |
 | DKP-5-WORK-CYCLE-001 | 39 | 28 | 27 | 0 | 0 | 1 | 11 | 23 |
 | DKP-6-EXIT-001 | 62 | 36 | 35 | 0 | 0 | 1 | 26 | 49 |
-| DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
+| DKP-6-INTEGRATION-001 | 51 | 25 | 25 | 0 | 0 | 0 | 26 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 37 |
 | DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
-| DKP-7-PRIVACY-001 | 39 | 31 | 28 | 0 | 3 | 0 | 8 | 31 |
+| DKP-7-PRIVACY-001 | 39 | 32 | 29 | 0 | 3 | 0 | 7 | 31 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 31 | 31 | 0 | 0 | 0 | 13 | 41 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
@@ -719,6 +719,7 @@ Withdrawn after verification (not author decisions):
 | FINANCE-6.2-01 | PARTIAL | finance_mechanics · reserve_impact_based | PASS | yes | — |
 | FINANCE-9-02 | PARTIAL | finance_mechanics · leverage_impact_based | PASS | yes | — |
 | FINANCE-ExplicitTimePreferenceProhibition-01 | PARTIAL | economic_access · no_time_preference | PASS | yes | — |
+| LABOR-10-03 | PARTIAL | work_cycle · restricted_not_coerced | PASS | — | — |
 | LABOR-11-01 | IMPLEMENTED | contribution · identity_bound_traceable | PASS | — | — |
 | LABOR-11-02 | IMPLEMENTED | contribution · no_proxy_or_fictitious_participation | PASS | — | — |
 | LABOR-12-02 | PARTIAL | work_cycle · isolation_breach_critical | PASS | yes | — |
@@ -1003,7 +1004,9 @@ Withdrawn after verification (not author decisions):
 | ERROR-8-05 | PARTIAL | dispute_correction · no_new_penalties | UNKNOWN | yes | Q-021 |
 | ERROR-9-03 | IMPLEMENTED | dispute_correction · reversibility_preferred | PASS | — | — |
 | ERROR-9-05 | PARTIAL | crisis_recovery · systemic_error_escalates | PASS | — | — |
+| UPGRADE-0-01 | PARTIAL | upgrade_lifecycle · only_lawful_mechanism | PASS | — | — |
 | UPGRADE-11-01 | IMPLEMENTED | crisis_recovery · no_emergency_upgrade | PASS | yes | — |
+| UPGRADE-11-02 | PARTIAL | upgrade_lifecycle · no_opaque_tuning | PASS | — | — |
 | UPGRADE-11-03 | PARTIAL | upgrade_lifecycle · no_bypass | PASS | — | — |
 | UPGRADE-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | UPGRADE-12-02 | PARTIAL | edition_finality · modification_requirements | UNKNOWN | — | Q-060 |
@@ -1021,6 +1024,7 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-4.3-01 | PARTIAL | upgrade_lifecycle · no_crisis_upgrade | PASS | yes | — |
 | UPGRADE-4.5-01 | PARTIAL | upgrade_lifecycle · no_degradation | PASS | — | — |
 | UPGRADE-4.6-02 | PARTIAL | upgrade_lifecycle · no_degradation | PASS | — | — |
+| UPGRADE-5-01 | PARTIAL | upgrade_lifecycle · proposal_contents | PASS | — | — |
 | UPGRADE-5-02 | IMPLEMENTED | upgrade_lifecycle · incomplete_rejected | PASS | — | — |
 | UPGRADE-6-01 | PARTIAL | upgrade_lifecycle · simulation_before_approval | PASS | — | — |
 | UPGRADE-6-03 | PARTIAL | upgrade_lifecycle · public_results_methodology | PASS | — | — |
@@ -1142,6 +1146,7 @@ Withdrawn after verification (not author decisions):
 | HABITAT-2-02 | PARTIAL | habitat_dignity · scope_aesthetic_norm | PASS | — | — |
 | HABITAT-2-03 | PARTIAL | habitat_dignity · scope_override_climate_adaptation | PASS | — | — |
 | HABITAT-2-04 | IMPLEMENTED | habitat_dignity · no_enforcement_without_l8 | PASS | — | — |
+| HABITAT-3-02 | PARTIAL | habitat_dignity · living_space_definition | PASS | — | — |
 | HABITAT-4-01 | PARTIAL | calibration_expiry · spdi_range | PASS | — | — |
 | HABITAT-4-02 | PARTIAL | habitat_dignity · ptl_components_only | PASS | yes | — |
 | HABITAT-4-03 | IMPLEMENTED | habitat_dignity · no_preference | PASS | — | — |
@@ -1226,7 +1231,10 @@ Withdrawn after verification (not author decisions):
 | TRANSPORT-9-03 | PARTIAL | transport_capacity · biosphere_informs_decisions | PASS | yes | — |
 | TRANSPORTA-A.1-01 | IMPLEMENTED | transport_capacity · no_justice_trigger | PASS | yes | — |
 | TRANSPORTA-A.1-02 | IMPLEMENTED | transport_capacity · degradation_signal_only | PASS | yes | — |
+| TRANSPORTA-A.2-02 | PARTIAL | transport_capacity · defense_contains_threats | PASS | — | — |
+| TRANSPORTA-A.3-01 | PARTIAL | transport_capacity · autonomy_evaluated_identically | PASS | — | — |
 | TRANSPORTA-A.3-03 | PARTIAL | transport_capacity · ownership_irrelevant | PASS | — | — |
+| TRANSPORTA-A.4-01 | PARTIAL | transport_capacity · no_axiom_trigger | PASS | — | — |
 | TRANSPORTA-A.5-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | TRANSPORTA-A.5-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | TRANSPORTA-A.5-03 | IMPLEMENTED | edition_finality · incompatibility_declared | PASS | — | — |
@@ -1300,6 +1308,7 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-10-01 | IMPLEMENTED | exit_integration · steps_documented | PASS | — | — |
 | INTEGRATION-11-02 | PARTIAL | exit_integration · no_conditional_aid | PASS | yes | — |
 | INTEGRATION-11-03 | IMPLEMENTED | exit_integration · no_retroactive_enforcement | PASS | yes | — |
+| INTEGRATION-11-05 | PARTIAL | exit_integration · no_hidden_dependency | PASS | yes | — |
 | INTEGRATION-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | INTEGRATION-12-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | INTEGRATION-12-03 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
@@ -1308,6 +1317,7 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-2-04 | IMPLEMENTED | exit_integration · no_authority_beyond_phase | PASS | yes | — |
 | INTEGRATION-3-01 | IMPLEMENTED | exit_integration · integrating_entity | PASS | — | — |
 | INTEGRATION-3-02 | IMPLEMENTED | exit_integration · phase_terms_defined | PASS | yes | — |
+| INTEGRATION-3-06 | IMPLEMENTED | exit_integration · rollback_definition | PASS | — | — |
 | INTEGRATION-4.1-01 | PARTIAL | exit_integration · explicit_consent | PASS | — | — |
 | INTEGRATION-4.2-01 | IMPLEMENTED | exit_integration · sequential_phases | PASS | yes | — |
 | INTEGRATION-4.2-02 | IMPLEMENTED | exit_integration · explicit_validation | PASS | yes | — |
@@ -1318,6 +1328,7 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-5.3-01 | IMPLEMENTED | exit_integration · phase2_domains_only | PASS | yes | — |
 | INTEGRATION-7-01 | PARTIAL | exit_integration · shock_halts_and_suspends | PASS | — | — |
 | INTEGRATION-7-03 | IMPLEMENTED | exit_integration · rollback_logged | PASS | — | — |
+| INTEGRATION-7-04 | PARTIAL | exit_integration · rollback_preserves_records | PASS | — | — |
 | INTEGRATION-9-03 | PARTIAL | exit_integration · divergence_not_failure | PASS | yes | — |
 | RESILIENCE-0-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
 | RESILIENCE-1-01 | PARTIAL | resilience_structure · continuity_under_pressure | PASS | yes | — |
@@ -1400,6 +1411,7 @@ Withdrawn after verification (not author decisions):
 | PRIVACY-14-03 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | yes | — |
 | PRIVACY-14-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | PRIVACY-14-05 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
+| PRIVACY-3-01 | IMPLEMENTED | privacy_transparency · no_override_of_privacy | PASS | yes | — |
 | PRIVACY-4-05 | PARTIAL | privacy_transparency · breach_threshold | UNKNOWN | — | — |
 | PRIVACY-4.1-02 | PARTIAL | privacy_transparency · no_cross_domain_linkage | PASS | yes | — |
 | PRIVACY-4.2-01 | PARTIAL | privacy_transparency · no_convenience_erosion | PASS | yes | — |

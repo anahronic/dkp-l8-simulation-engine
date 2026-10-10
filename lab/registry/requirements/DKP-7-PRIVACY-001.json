@@ -31,19 +31,25 @@
     "other protocols' rules and effects",
     "enforcement and crisis exception records"
    ],
-   "gap": "The document does not specify a formal conflict test or fully delimit the effects of its exceptions. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how protocol effects conflict with privacy constraints and how each exception applies."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.2.0",
+    "check": "no_override_of_privacy"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -208,7 +214,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "breach_threshold"
    },
    "tests": [
@@ -283,7 +289,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_cross_domain_linkage"
    },
    "tests": [
@@ -324,7 +330,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_convenience_erosion"
    },
    "tests": [
@@ -365,7 +371,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_cross_domain_linkage"
    },
    "tests": [
@@ -404,7 +410,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_convenience_erosion"
    },
    "tests": [
@@ -447,7 +453,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "absolute_domains"
    },
    "tests": [
@@ -489,7 +495,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "absolute_domains"
    },
    "tests": [
@@ -536,7 +542,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "conditional_domains"
    },
    "tests": [
@@ -578,7 +584,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "conditional_domains"
    },
    "tests": [
@@ -620,7 +626,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "right_to_anonymity"
    },
    "tests": [
@@ -663,7 +669,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "anonymous_full_rights"
    },
    "tests": [
@@ -706,7 +712,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "audit_without_personal_data"
    },
    "tests": [
@@ -743,7 +749,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "zero_knowledge_audit"
    },
    "tests": [
@@ -778,7 +784,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "audit_without_personal_data"
    },
    "tests": [
@@ -814,7 +820,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "audit_without_personal_data"
    },
    "tests": [
@@ -858,7 +864,7 @@
     "also": [
      {
       "module": "privacy_transparency",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "check": "prohibited_purposes"
      }
     ]
@@ -901,7 +907,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "prohibited_practice_critical"
    },
    "tests": [
@@ -938,7 +944,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -979,7 +985,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1018,7 +1024,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1056,7 +1062,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1093,7 +1099,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1134,7 +1140,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1174,7 +1180,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "privacy_rules_public"
    },
    "tests": [
@@ -1246,7 +1252,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "privacy_rules_public"
    },
    "tests": [
@@ -1288,7 +1294,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "privacy_rules_public"
    },
    "tests": [

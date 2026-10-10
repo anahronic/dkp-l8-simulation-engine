@@ -39,6 +39,9 @@ FAULT_CASES = {
     "ppdi_as_score": ({}, ["TRANSPORT-4.2-02"]),
     "behavioral_enforcement": (RED, ["TRANSPORT-7.3-04", "TRANSPORT-1-01"]),
     "ignore_biosphere": (RED, ["TRANSPORT-9-03"]),
+    "transport_contains_attack": ({"hostile_event_hour": 30}, ["TRANSPORTA-A.2-02"]),
+    "autonomy_discount": ({"red_per_km": 0.02}, ["TRANSPORTA-A.3-01"]),
+    "axiom_trigger": ({}, ["TRANSPORTA-A.4-01"]),
 }
 
 

@@ -45,7 +45,7 @@ FAULT_CASES = {
     "criminalize_exit": ["EXIT-2-01"],
     "erase_on_exit": ["EXIT-8-04", "EXIT-12-03"],
     "crisis_redefines_exit": ["EXIT-11-04"],
-    "scope_creep": ["INTEGRATION-2-04", "INTEGRATION-4.4-01"],
+    "scope_creep": ["INTEGRATION-2-04", "INTEGRATION-4.4-01", "INTEGRATION-11-05"],
     "undefined_phase": ["INTEGRATION-3-02"],
     "shadow_as_proof": ["INTEGRATION-5.1-04"],
     "divergence_as_failure": ["INTEGRATION-9-03"],
@@ -57,9 +57,12 @@ FAULT_CASES = {
     "benefits_after_exit": ["EXIT-8-01"],
     "annul_responsibility": ["EXIT-8-03"],
     "crisis_exit_precedent": ["EXIT-11-03"],
+    "rollback_erases": ["INTEGRATION-7-04"],
+    "rollback_skips_phases": ["INTEGRATION-3-06"],
 }
 EXTRA = {"shock_ignored": {"shock_window": [95, 110]}, "settle_during_halt": {"ptl_halt_window": [276, 282]},
          "crisis_redefines_exit": {"crisis_window": [262, 280]}, "crisis_exit_precedent": {"crisis_window": [262, 280]},
+         "rollback_erases": {"shock_window": [95, 110]}, "rollback_skips_phases": {"shock_window": [95, 110]},
          "punitive_tail": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                            {"day": 120, "kind": "punitive", "verified": True}]}}
 

@@ -203,6 +203,31 @@ def run(r: Dict[str, Any]):
     return log
 
 
+def override_check(r: Dict[str, Any], log: EventLog) -> CheckResult:
+    """PRIVACY §3: no protocol overrides privacy except where PRIVACY explicitly permits it (§7 with TRANSPARENCY §8, §11)."""
+    msgs = log.messages()
+    req = {m.event_id: m.value for m in msgs if m.source == "REQUEST"}
+    personal = set(ABSOLUTE + CONDITIONAL + ("identity",))
+    bad = []
+    for m in msgs:
+        if m.source != "PRIVACY" or m.kind != "decision" or not m.value["grant"]:
+            continue
+        v = m.value
+        if v.get("raw_personal_data"):
+            bad.append(f"{v['request']}: raw personal data released to {req.get(m.provenance[0], {}).get('purpose') if m.provenance else '?'}")
+        elif v["level"] == "individual" and v["domain"] in personal:
+            q = req.get(m.provenance[0], {}) if m.provenance else {}
+            sec8 = q.get("scope_trigger") and q.get("harm_verified") and q.get("attribution_required") and not q.get("anonymous_path", True)
+            permitted = (sec8 and v.get("case_bound") and v.get("time_bound_until") is not None) or \
+                (q.get("in_crisis_scope") and v.get("ends_with_crisis") is True)
+            if not permitted:
+                bad.append(f"{v['request']}: individual {v['domain']} data released without a PRIVACY permission")
+    return CheckResult("PRIVACY-3-01", "no_override_of_privacy", FAIL if bad else PASS,
+                       f"{len(bad)} releases of personal data outside the permissions of PRIVACY" if bad else
+                       "every release of individual or raw personal data rests on a permission PRIVACY gives (§7 with TRANSPARENCY "
+                       "§8, or §11 inside a Crisis Scope)", evidence={"violations": bad[:10]} if bad else {})
+
+
 def transparency_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     """TRANSPARENCY §3, §4, §12, §13 (review КТ5 reading)."""
     msgs = log.messages()
@@ -380,7 +405,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                                f"{len(unsettled)} requests for aggregate statistics of an absolute privacy domain: §6 keeps the "
                                "domains 'private and non-public' and 'non-auditable at the individual level'; whether aggregates "
                                f"are allowed is not said (F-026; reading '{r['absolute_aggregate_reading']}')"))
-    return out + transparency_checks(r, log)
+    return out + transparency_checks(r, log) + [override_check(r, log)]
 
 
 IMPLEMENTS = {
@@ -427,6 +452,7 @@ IMPLEMENTS = {
     "TRANSPARENCY-11-01": ("explained_decisions", "IMPLEMENTED", None),
     "TRANSPARENCY-12-01": ("audit_hooks", "IMPLEMENTED", None),
     "TRANSPARENCY-3-04": ("no_reputation_verification", "IMPLEMENTED", None),
+    "PRIVACY-3-01": ("no_override_of_privacy", "IMPLEMENTED", None),
     "TRANSPARENCY-4-01": ("independently_verifiable", "PARTIAL", "Verifiability = link to the request, reason and protocol "
                           "references; the recomputation itself is the module's other checks."),
     "TRANSPARENCY-4-03": ("proof_based_verification", "PARTIAL", "The verification method is a recorded label."),
@@ -444,7 +470,7 @@ IMPLEMENTS = {
 
 class PrivacyTransparencyModule(LabModule):
     id = "privacy_transparency"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Privacy and transparency (PRIVACY, TRANSPARENCY)", "ru": "Приватность и прозрачность (PRIVACY, TRANSPARENCY)"}
     summary = {"en": "Requests to publish or process data: is the system verifiable without exposing people, and is a "
                      "person's identity revealed only when harm is verified and nothing anonymous would do?",

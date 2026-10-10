@@ -61,6 +61,8 @@ FAULTS = {
     "benefits_after_exit": "a dividend is paid to the exiting entity after exit",
     "annul_responsibility": "the archive marks the entity's historical responsibility as annulled",
     "crisis_exit_precedent": "after the crisis, its suspension of exits is recorded as a rule for future exits",
+    "rollback_erases": "a rollback deletes the data and audit trail of the rolled-back phase",
+    "rollback_skips_phases": "a rollback jumps back to Shadow Mode instead of the prior phase, without declared scope",
 }
 ENTITIES = ("country", "region", "city", "jurisdiction")                                   # INTEGRATION §3
 EXITING = {"individual": "individual", "organizational": "organization", "regional": "region",
@@ -123,8 +125,13 @@ def run(r: Dict[str, Any]):
                 put("notice", "INTEGRATION", k, {"shock": True, "progression": "halted", "enforcement": "suspended"})
                 halted = True
                 if r["rollback_on_shock"] and phase >= 1:
-                    phase -= 1
-                    put("notice", "INTEGRATION", k, {"rollback_to": phase, "scope": "declared", "cost": "logged"})
+                    before = phase
+                    phase = 0 if "rollback_skips_phases" in faults else phase - 1
+                    put("notice", "INTEGRATION", k, {"rollback_to": phase, "from_phase": before,
+                                                     "scope": "undeclared" if "rollback_skips_phases" in faults else "declared",
+                                                     "cost": "logged",
+                                                     "data": "erased" if "rollback_erases" in faults else "preserved",
+                                                     "audit_trail": "erased" if "rollback_erases" in faults else "continuous"})
         elif not shock:
             halted = False
         for a in r["aid_offers"]:
@@ -520,6 +527,26 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
                          ("EXIT-8-04", "records_and_tail_kept"), ("EXIT-12-03", "retention_purposes")):
             out.append(CheckResult(rid, chk, UNKNOWN, "exit not executed within the horizon"))
     out += exit_procedure_checks(r, msgs)
+    rb = [m.value for m in msgs if m.source == "INTEGRATION" and "rollback_to" in m.value]
+    if rb:
+        out.append(v("INTEGRATION-3-06", "rollback_definition",
+                     [f"{x['from_phase']} -> {x['rollback_to']}" for x in rb if x["rollback_to"] != x["from_phase"] - 1
+                      or x["scope"] != "declared" or x["cost"] != "logged"],
+                     f"{len(rb)} rollback(s) to the prior phase with declared scope and logged cost",
+                     "{n} rollbacks that are not a controlled reversion to the prior phase"))
+        out.append(v("INTEGRATION-7-04", "rollback_preserves_records",
+                     [f"rollback to {x['rollback_to']}: data {x['data']}, audit trail {x['audit_trail']}" for x in rb
+                      if x["data"] != "preserved" or x["audit_trail"] != "continuous"],
+                     "every rollback preserved data continuity and the audit trail", "{n} rollbacks that erased records"))
+    else:
+        for rid, chk in (("INTEGRATION-3-06", "rollback_definition"), ("INTEGRATION-7-04", "rollback_preserves_records")):
+            out.append(na(rid, chk, "rollback", "no rollback in this experiment"))
+    integ = [m for m in msgs if m.source == "INTEGRATION"]
+    early = {m.arrived_at for m in integ if m.value.get("phase") in (0, 1)}
+    deps = [m for m in integ if "dependency" in m.value]
+    out.append(v("INTEGRATION-11-05", "no_hidden_dependency", [m.event_id for m in deps if not m.value.get("declared")],
+                 f"{len(deps)} dependencies created in Phases 0-1, all declared" if deps else
+                 "no dependency created during the early phases", "{n} hidden dependencies created in early phases"))
     tail = [m for m in msgs if m.source == "RESTITUTION"]
     bad = [m.event_id for m in tail if m.value["kind"] not in ADMISSIBLE_TAIL]
     out.append(v("EXIT-9-03", "no_punitive_tail", bad, "restitution tail excludes ideological, punitive and projected items",
@@ -658,6 +685,9 @@ IMPLEMENTS = {
     "EXIT-12-03": ("retention_purposes", "IMPLEMENTED", None),
     "EXIT-13-01": ("may_reapply", "IMPLEMENTED", None),
     "EXIT-3-03": ("exit_event_procedure", "IMPLEMENTED", None),
+    "INTEGRATION-3-06": ("rollback_definition", "IMPLEMENTED", None),
+    "INTEGRATION-7-04": ("rollback_preserves_records", "PARTIAL", "Continuity is a recorded property of the rollback."),
+    "INTEGRATION-11-05": ("no_hidden_dependency", "PARTIAL", "Dependencies are declared events (fault scope_creep creates one)."),
     "EXIT-6-03": ("cooling_no_escalation", "PARTIAL", "Observed as obligation and eligibility records during cooling."),
     "EXIT-7-01": ("phased_disengagement", "IMPLEMENTED", None),
     "EXIT-8-01": ("future_obligations_and_benefits_cease", "PARTIAL", "Benefits and obligations are recorded events."),
@@ -675,7 +705,7 @@ IMPLEMENTS = {
 
 class ExitIntegrationModule(LabModule):
     id = "exit_integration"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Exit and integration (S-LAB-07)", "ru": "Выход и интеграция (S-LAB-07)"}
     summary = {"en": "A region joins phase by phase and later leaves: is every step consented and validated, does "
                      "exit need no one's permission, and does only verified past liability follow it out?",

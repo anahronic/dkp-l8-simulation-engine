@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 131,
+  "confirmed": 143,
   "reclassified": 7
  },
  "items": [
@@ -1058,6 +1058,19 @@
    "check": "finance_mechanics:leverage_impact_based"
   },
   {
+   "id": "HABITAT-3-02",
+   "document": "DKP-5-HABITAT-001",
+   "quote": "Living Space An enclosed or semi-enclosed area intended for rest, shelter, and daily life.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes what counts as living space: an enclosed or semi-enclosed area intended for rest, shelter and daily life. A storage container or open lot contributes no living space to SPDI. Observable with the kind of space declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "habitat_dignity:living_space_definition"
+  },
+  {
    "id": "INFO-0-02",
    "document": "DKP-5-INFO-001",
    "quote": "Information governance under DKP is descriptive and non-coercive.",
@@ -1099,6 +1112,45 @@
     "human_accepted": false
    },
    "check": "info_truth:permitted_responses"
+  },
+  {
+   "id": "INTEGRATION-11-05",
+   "document": "DKP-6-INTEGRATION-001",
+   "quote": "hidden dependency creation during early phases.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A prohibited practice: hidden dependency creation during the early phases. Observable as a dependency created in Phase 0-1 without being declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:no_hidden_dependency"
+  },
+  {
+   "id": "INTEGRATION-3-06",
+   "document": "DKP-6-INTEGRATION-001",
+   "quote": "Rollback A controlled reversion to a prior integration phase with declared scope and cost.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes a rollback as a controlled reversion to the prior phase with declared scope and cost; a jump over phases or an undeclared scope is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:rollback_definition"
+  },
+  {
+   "id": "INTEGRATION-7-04",
+   "document": "DKP-6-INTEGRATION-001",
+   "quote": "rollback SHALL preserve data continuity and audit trails.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Rollback SHALL preserve data continuity and audit trails': a rollback that erases data or the trail is observable on the rollback record.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "exit_integration:rollback_preserves_records"
   },
   {
    "id": "INTEROP-1-01",
@@ -1391,6 +1443,19 @@
    "check": "dispute_correction:domains_independent"
   },
   {
+   "id": "LABOR-10-03",
+   "document": "DKP-2-LABOR-001",
+   "quote": "- SHALL NOT be exploited or coerced.\n\nParticipation remains voluntary outside crisis conditions.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Subjects under Restriction or Isolation 'SHALL NOT be exploited or coerced; participation remains voluntary outside crisis conditions': those who decline are not scheduled outside a crisis, those who take part are paid at the standard rate. Observable with participation declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "work_cycle:restricted_not_coerced"
+  },
+  {
    "id": "POLICE-0-01",
    "document": "DKP-3-POLICE-001",
    "quote": "The sole function of police within DKP is to:",
@@ -1536,6 +1601,19 @@
     "from": "no",
     "to": "partial"
    }
+  },
+  {
+   "id": "PRIVACY-3-01",
+   "document": "DKP-7-PRIVACY-001",
+   "quote": "No protocol may override privacy constraints except where explicitly permitted herein.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'No protocol may override privacy constraints except where explicitly permitted herein': every release of individual or raw personal data must rest on a PRIVACY permission (§7 with TRANSPARENCY §8 conditions, or §11 inside a Crisis Scope). Observable on every granted release and the request behind it.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "privacy_transparency:no_override_of_privacy"
   },
   {
    "id": "RESILIENCE-0-01",
@@ -1779,6 +1857,84 @@
     "human_accepted": false
    },
    "check": "transport_capacity:biosphere_informs_decisions"
+  },
+  {
+   "id": "TRANSPORTA-A.2-02",
+   "document": "DKP-5-TRANSPORT-001-APPENDIX-A",
+   "quote": "Defense remains responsible for real-time containment of physical threats.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Non-overlap with Defense: an attack on transport is handed to DEFENSE and TRANSPORT takes no containment action itself. Observable with the attack declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "transport_capacity:defense_contains_threats"
+  },
+  {
+   "id": "TRANSPORTA-A.3-01",
+   "document": "DKP-5-TRANSPORT-001-APPENDIX-A",
+   "quote": "Autonomous or assisted transport systems are evaluated identically:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Evaluated identically': manual, assisted and autonomous vehicles fall under one evaluation rule (RED per kilometre, physical impact as the sole criterion; ownership is A.3-03). Observable on the fleet evaluation.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "transport_capacity:autonomy_evaluated_identically"
+  },
+  {
+   "id": "TRANSPORTA-A.4-01",
+   "document": "DKP-5-TRANSPORT-001-APPENDIX-A",
+   "quote": "without encoding axioms as direct enforcement triggers.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Without encoding axioms as direct enforcement triggers': no transport enforcement act names an axiom as its trigger. Observable on transport records.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "transport_capacity:no_axiom_trigger"
+  },
+  {
+   "id": "UPGRADE-0-01",
+   "document": "DKP-4-UPGRADE-001",
+   "quote": "DKP-4-UPGRADE-001 defines the only lawful mechanism by which the Dikenocracy system may be modified after deployment.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'The only lawful mechanism by which the system may be modified': a change submitted by any other route (a direct patch, an operator's tuning) is not admitted. Observable with the route of each change declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "upgrade_lifecycle:only_lawful_mechanism"
+  },
+  {
+   "id": "UPGRADE-11-02",
+   "document": "DKP-4-UPGRADE-001",
+   "quote": "- permit opaque or discretionary parameter tuning,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Opaque or discretionary parameter tuning' is concretized by §5: a change without formal specification and before/after comparison is opaque; one made at an operator's discretion is discretionary. Both observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "upgrade_lifecycle:no_opaque_tuning"
+  },
+  {
+   "id": "UPGRADE-5-01",
+   "document": "DKP-4-UPGRADE-001",
+   "quote": "Any Upgrade Proposal MUST include:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Five required contents of a proposal; an admitted proposal lacking any of them is observable (the rejection of incomplete proposals is UPGRADE-5-02).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "upgrade_lifecycle:proposal_contents"
   },
   {
    "id": "WORKCYCLE-10-02",

@@ -112,3 +112,13 @@ def test_kt5_recovery_week_and_exceptions():
         st = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
         assert st[rid] == "FAIL", fault
         assert all(st[x] in ("PASS", "NOT_APPLICABLE") for _, x in cases.values() if x != rid), fault
+
+
+def test_kt5_restricted_participation():
+    """LABOR §10: under Restriction or Isolation, those who decline are not scheduled; those who take part are not exploited."""
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate({})).checks}
+    assert st["LABOR-10-03"] == "PASS"
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"faults": ["coerce_restricted"]})).checks}
+    assert st["LABOR-10-03"] == "FAIL"
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"restricted_participants": 0})).checks}
+    assert st["LABOR-10-03"] == "NOT_APPLICABLE"

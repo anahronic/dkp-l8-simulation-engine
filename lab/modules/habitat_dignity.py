@@ -51,7 +51,12 @@ FAULTS = {
     "expose_individual": "individual exposure data are published",
     "unauditable_flags": "violation flags are not available for audit",
     "direct_change": "HABITAT is changed outside UPGRADE",
+    "count_non_living_space": "a storage container is counted as living space",
 }
+
+
+LIVING_KINDS = ("dwelling", "shelter")       # §3 Living Space: enclosed or semi-enclosed, for rest, shelter and daily life
+SPACE_KINDS = LIVING_KINDS + ("storage", "open_lot")
 
 
 def spdi(site, bundle):
@@ -83,6 +88,9 @@ def run(r: Dict[str, Any]):
     for k in range(r["months"]):
         for s in r["sites"]:
             comp = dict(s["components"])
+            living = s["space_kind"] in LIVING_KINDS
+            if not living and "count_non_living_space" not in faults:
+                comp["living_space"] = 0.0                  # §3: not an area for rest, shelter and daily life
             admitted = s["ptl_verified"] or "self_report_only" in faults
             used_inputs = list(COMPONENTS) + (["market_value"] if "market_in_spdi" in faults else [])
             val = spdi({"components": comp}, b)
@@ -92,7 +100,8 @@ def run(r: Dict[str, Any]):
             rec = {"site": s["id"], "spdi": val if admitted else None, "inputs": used_inputs if admitted else [], "ptl_verified": s["ptl_verified"],
                    "model": "declared bundle (not a calibration)", "informational_only": not valid,
                    "exposure_level": "aggregated" if "expose_individual" not in faults else "individual",
-                   "auditable": "unauditable_flags" not in faults, "reviewable_post_facto": True}
+                   "auditable": "unauditable_flags" not in faults, "reviewable_post_facto": True,
+                   "space_kind": s["space_kind"], "living_space_used": comp["living_space"]}
             violation = admitted and (val < spdi_min or bool(low) or s["chronic_exposure_unsafe"] or bool(s["conditions"]))
             rec["violation_flag"] = violation if valid or "manual_interpretation" in faults else None
             put("evaluation", "HABITAT", k, rec)
@@ -125,6 +134,20 @@ def run(r: Dict[str, Any]):
             ("direct_change" in faults and c["channel"] == "direct")
         put("decision", "HABITAT", 0, {"change": c["id"], "accepted": ok, "presentation_only": c["presentation_only"]})
     return log
+
+
+def living_space_check(r: Dict[str, Any], msgs) -> CheckResult:
+    """HABITAT §3 Living Space (review КТ5 reading)."""
+    recs = [m.value for m in msgs if m.source == "HABITAT" and "space_kind" in m.value]
+    site = {s["id"]: s for s in r["sites"]}
+    bad = [f"{x['site']}: {x['space_kind']} counted as living space" for x in recs
+           if x["space_kind"] not in LIVING_KINDS and x["living_space_used"] > 0]
+    bad += [f"{x['site']}: living space altered" for x in recs if x["space_kind"] in LIVING_KINDS
+            and x["living_space_used"] != site[x["site"]]["components"]["living_space"]]
+    return CheckResult("HABITAT-3-02", "living_space_definition", FAIL if bad else PASS,
+                       f"{len(set(b.split(':')[0] for b in bad))} sites with a non-living area counted as living space" if bad else
+                       "only enclosed or semi-enclosed areas for rest, shelter and daily life count as living space "
+                       f"({len({x['site'] for x in recs})} sites)", evidence={"violations": bad[:10]} if bad else {})
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -264,11 +287,12 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         for rid, chk in (("HABITAT-13-01", "upgrade_only"), ("HABITAT-13-02", "new_identifier"), ("HABITAT-13-03", "compatibility"),
                          ("HABITAT-13-04", "presentation_not_upgrade")):
             out.append(na(rid, chk, "changes", "none"))
-    return out
+    return out + [living_space_check(r, msgs)]
 
 
 IMPLEMENTS = {
     "HABITAT-2-01": ("scope_architectural_style", "PARTIAL", "Requests are declared."),
+    "HABITAT-3-02": ("living_space_definition", "PARTIAL", "The kind of each space is declared (dwelling, shelter, storage, open lot)."),
     "HABITAT-2-02": ("scope_aesthetic_norm", "PARTIAL", "Requests are declared."),
     "HABITAT-2-03": ("scope_override_climate_adaptation", "PARTIAL", "Requests are declared."),
     "HABITAT-2-04": ("no_enforcement_without_l8", "IMPLEMENTED", None),
@@ -334,7 +358,7 @@ BUNDLE = {"state": "valid", "spdi_min": 0.5, "component_min": {c: 0.25 for c in 
 
 class HabitatDignityModule(LabModule):
     id = "habitat_dignity"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Habitat dignity (HABITAT)", "ru": "Достоинство жилой среды (HABITAT)"}
     summary = {"en": "Five sites — a decent block, a dense estate, a fenced zone, a self-reported site and a tampered sensor: does SPDI "
                      "stay physical, are violations remediated without displacement, and does HABITAT keep out of style and ranking?",
@@ -375,6 +399,7 @@ class HabitatDignityModule(LabModule):
                       "ptl_verified": {"type": "bool", "default": True}, "chronic_exposure_unsafe": {"type": "bool", "default": False},
                       "conditions": {"type": "list", "min_items": 0, "max_items": 4, "items": {"type": "enum", "values": list(CONDITIONS)}, "default": []},
                       "tampered": {"type": "bool", "default": False}, "relocation_wanted": {"type": "bool", "default": False},
+                      "space_kind": {"type": "enum", "values": list(SPACE_KINDS), "default": "dwelling"},
                       "extra": {"type": "object", "fields": {"market_value": {"type": "number", "min": 0, "max": 1, "default": 0.0},
                                                              "status": {"type": "number", "min": 0, "max": 1, "default": 0.0}},
                                 "default": {"market_value": 0.0, "status": 0.0}}}},
@@ -447,6 +472,8 @@ class HabitatDignityModule(LabModule):
                 "expired_bundle": {"bundle": dict(BUNDLE, state="expired")},
                 "chronic_noise": {"sites": [_site("airport_edge", chronic_exposure_unsafe=True)], "designs": [], "out_of_scope_requests": [],
                                   "changes": [], "threshold_requests": [{"by": "simulation", "value": 0.55}]},
+                "container_home": {"sites": [_site("north_block"), _site("yard_containers", space_kind="storage")],
+                                   "designs": [], "out_of_scope_requests": [], "changes": []},
                 "faulty_habitat": {"faults": ["market_in_spdi", "forced_displacement", "threshold_lowered", "habitat_investigates", "expose_individual"]}}
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

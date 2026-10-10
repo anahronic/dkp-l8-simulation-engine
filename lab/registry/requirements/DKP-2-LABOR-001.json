@@ -656,7 +656,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_prohibited_conditions"
    },
    "tests": [
@@ -693,7 +693,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "forced_labor_critical"
    },
    "tests": [
@@ -961,7 +961,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_compulsion"
    },
    "tests": [
@@ -1008,7 +1008,7 @@
     "also": [
      {
       "module": "work_cycle",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "check": "refusal_not_punished"
      }
     ]
@@ -1131,7 +1131,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_lasting_crisis_obligation"
    },
    "tests": [
@@ -1242,20 +1242,26 @@
     "consent and participation assessments",
     "crisis status"
    ],
-   "gap": "Exploitation and coercion are undefined, and the crisis scope of the coercion prohibition is ambiguous. No lab check implemented yet.",
+   "gap": "Participation, refusal and rate are declared; 'exploited' read as a rate below the standard one.",
    "hypotheses_needed": [
     "Definitions of exploitation, coercion, and voluntary participation.",
     "A declared interpretation of the crisis exception for restricted or isolated Subjects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.3.0",
+    "check": "restricted_not_coerced"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1409,7 +1415,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "isolation_breach_critical"
    },
    "tests": [

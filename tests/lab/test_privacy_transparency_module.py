@@ -83,3 +83,11 @@ def test_absolute_aggregates_unsettled():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_no_override_of_privacy():
+    """PRIVACY §3: every release of individual or raw personal data rests on a PRIVACY permission."""
+    assert statuses(run())["PRIVACY-3-01"] == "PASS" and statuses(run(**HC))["PRIVACY-3-01"] == "PASS"
+    for fault, base in (("release_absolute_individual", {}), ("audit_raw_data", {}), ("deanonymize_without_harm", HC),
+                        ("convenience_override", {})):
+        assert statuses(run(**base, faults=[fault]))["PRIVACY-3-01"] == "FAIL", fault

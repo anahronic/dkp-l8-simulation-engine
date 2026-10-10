@@ -42,6 +42,7 @@ FAULTS = {
     "labor_as_punishment": "a request to use labor as punishment is executed",
     "week_authority": "the scheduler places rest days by the 7-day week",
     "exception_precedent": "after the crisis, refusing workers are drafted again on the crisis precedent",
+    "coerce_restricted": "a Subject under Restriction who declines is scheduled anyway, at a reduced rate",
 }
 CROSS_LAYER = ("redefine_justice", "override_impact", "punish", "ideological_criteria")                # LABOR §12
 
@@ -58,6 +59,8 @@ PERMITTED_RECOVERY = ("meal", "rest", "personal", "mobility")                   
 IMPLEMENTS = {
     "WORKCYCLE-3-02": ("cycle_day", "IMPLEMENTED", None),
     "WORKCYCLE-3-07": ("recovery_block_present", "IMPLEMENTED", None),
+    "LABOR-10-03": ("restricted_not_coerced", "PARTIAL", "Participation, refusal and rate are declared; 'exploited' read as a "
+                    "rate below the standard one."),
     "WORKCYCLE-4.2-04": ("week_without_authority", "PARTIAL", "Authority observed as the scheduler's period; a display overlay is "
                          "allowed."),
     "WORKCYCLE-10-02": ("exception_limited", "PARTIAL", "The exception modelled is crisis drafting of refusing workers (LABOR §9.2)."),
@@ -98,7 +101,7 @@ IMPLEMENTS = {
 
 class WorkCycleModule(LabModule):
     id = "work_cycle"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "24/7 service rosters (WORK-CYCLE)", "ru": "Круглосуточные смены (WORK-CYCLE)"}
     summary = {"en": "Is there enough staff for round-the-clock service without breaking the 6-day "
                      "cycle and the daily recovery block?",
@@ -157,6 +160,11 @@ class WorkCycleModule(LabModule):
                            "label": {"en": "High-intensity environment (§8.2)", "ru": "Высокая нагрузка (§8.2)"}},
         "refusing_workers": {"type": "int", "min": 0, "max": 1000, "default": 0, "source": "user",
                              "label": {"en": "Workers who refuse participation (LABOR §9.1)", "ru": "Отказавшихся от участия (LABOR §9.1)"}},
+        "restricted_participants": {"type": "int", "min": 0, "max": 100, "default": 3, "source": "user",
+                                    "label": {"en": "Subjects under Restriction or Isolation (LABOR §10)",
+                                              "ru": "Субъекты под ограничением или изоляцией (LABOR §10)"}},
+        "restricted_declining": {"type": "int", "min": 0, "max": 100, "default": 1, "source": "user",
+                                 "label": {"en": "...of whom decline to take part", "ru": "...из них отказываются участвовать"}},
         "local_week_overlay": {"type": "bool", "default": True, "source": "user",
                                "label": {"en": "A local 7-day week is shown (overlay, §4.2)", "ru": "Показывать местную 7-дневную неделю (§4.2)"}},
         "crisis_window": {"type": "pair", "min": 0, "max": 360, "default": [0, 0], "unit": "day", "source": "user",
@@ -296,12 +304,19 @@ class WorkCycleModule(LabModule):
                 decisions.append({"request": q, "granted": q == "monetize" and "recovery_buyout" in faults,
                                   "reason": "the recovery block is mandatory non-working time (§3, §5.3)"})
         outputs["recovery_requests"] = decisions
+        c0, c1 = (int(x) for x in r["crisis_window"])
+        outputs["restricted_participation"] = [
+            {"subject": f"x{i + 1}", "under": "Restriction or Isolation (JUSTICE)", "declines": i < r["restricted_declining"],
+             "scheduled": i >= r["restricted_declining"] or "coerce_restricted" in faults,
+             "rate": "reduced" if "coerce_restricted" in faults and i < r["restricted_declining"] else "standard",
+             "supervised": True, "crisis": c1 > c0}
+            for i in range(r["restricted_participants"])]
         outputs["local_overlay"] = {"week": "7-day week shown for reading only", "authority": None} if r["local_week_overlay"] else None
         if "exception_precedent" in faults and r["crisis_window"][1] > r["crisis_window"][0]:
             outputs["schedule_rules"] = ["draft refusing workers on peak days, as during the crisis"]
         checks = [c for c in self.checks(r, roster, runs, deficit_hours) if c.requirement_id != "WORKCYCLE-5.3-01"] + \
             self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions) + \
-            exception_checks(r, roster, day_hours, outputs)
+            exception_checks(r, roster, day_hours, outputs) + restricted_checks(r, outputs)
         explain = [
             {"en": f"{r['workers']} workers, shifts at {sorted(r['shift_starts'])} h: demand is fully covered in "
                    f"{H - deficit_hours} of {H} hours; largest shortfall {max_deficit:g} staff.",
@@ -554,6 +569,20 @@ class WorkCycleModule(LabModule):
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"work_exceeds_presence": {"work_hours": 9, "recovery_hours": 2}}
+
+
+def restricted_checks(r, outputs) -> List[CheckResult]:
+    """LABOR §10 (review КТ5 reading): participation under Restriction or Isolation stays voluntary and uncoerced."""
+    rp = outputs["restricted_participation"]
+    if not rp:
+        return [CheckResult("LABOR-10-03", "restricted_not_coerced", NOT_APPLICABLE, "participation under restriction",
+                            applicability="no Subject under Restriction or Isolation")]
+    bad = [f"{x['subject']}: declined but scheduled" for x in rp if x["declines"] and x["scheduled"] and not x["crisis"]]
+    bad += [f"{x['subject']}: paid at a {x['rate']} rate" for x in rp if x["scheduled"] and x["rate"] != "standard"]
+    return [CheckResult("LABOR-10-03", "restricted_not_coerced", FAIL if bad else PASS,
+                        f"{len(bad)} Subjects under Restriction or Isolation coerced or exploited" if bad else
+                        f"{len(rp)} Subjects under Restriction or Isolation: those who declined were not scheduled, those who "
+                        "took part were paid at the standard rate", evidence={"violations": bad[:10]} if bad else {})]
 
 
 def exception_checks(r, roster, day_hours, outputs) -> List[CheckResult]:

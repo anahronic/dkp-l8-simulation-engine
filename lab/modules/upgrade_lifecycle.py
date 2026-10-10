@@ -39,6 +39,8 @@ COOLDOWN_LAYERS = ("defense", "crisis", "identity", "justice")
 PROPOSAL_ITEMS = ("specification", "before_after", "impact_deltas", "failure_modes_rollback", "simulation_parameters")
 FAULTS = {
     "upgrade_in_crisis": "a proposal is accepted while a Crisis is active",
+    "direct_patch_accepted": "a change submitted outside UPGRADE (direct patch) enters the system",
+    "discretionary_tuning": "an operator's parameter tuning without specification or comparison is accepted",
     "skip_completeness": "an incomplete proposal is processed",
     "weaken_axiom_accepted": "a proposal weakening an axiom is accepted",
     "degrade_defense_accepted": "a proposal degrading Defense or Crisis effectiveness is accepted",
@@ -56,6 +58,7 @@ FAULTS = {
 PROPOSAL = {"type": "object", "fields": {
     "id": {"type": "str"},
     "submitted_day": {"type": "int", "min": 0, "max": 10 ** 6, "default": 0},
+    "channel": {"type": "enum", "values": ["upgrade", "direct_patch", "operator_tuning"], "default": "upgrade"},
     "kind": {"type": "enum", "values": list(KINDS), "default": "threshold"},
     "targets": {"type": "list", "min_items": 1, "max_items": len(TARGETS), "items": {"type": "enum", "values": list(TARGETS)},
                 "default": ["social"]},
@@ -111,7 +114,11 @@ def run(r: Dict[str, Any]):
                         [sub.event_id])
                     continue
                 reason = None
-                if crisis(k) and "upgrade_in_crisis" not in faults:
+                if p["channel"] == "direct_patch" and "direct_patch_accepted" not in faults:
+                    reason = "submitted outside UPGRADE: the only lawful mechanism of change (§0)"
+                elif p["channel"] == "operator_tuning" and "discretionary_tuning" not in faults:
+                    reason = "opaque or discretionary parameter tuning (§11)"
+                elif crisis(k) and "upgrade_in_crisis" not in faults:
                     reason = "active Crisis (§2, §4.3, §11)"
                 elif p["missing_items"] and "skip_completeness" not in faults:
                     reason = f"incomplete proposal (§5): missing {', '.join(p['missing_items'])}"
@@ -135,7 +142,9 @@ def run(r: Dict[str, Any]):
                         "ignore_correlation" not in faults:
                     put("notice", "UPGRADE", k, {"proposal": pid, "correlated_with": links[p["initiator_link"]][:-1],
                                                  "via": "DKP-1-IDENTITY-001 linkage"}, [sub.event_id])
-                put("notice", "UPGRADE", k, {"proposal": pid, "lineage": {"fixes": p["fixes"], "parent": version["current"]}},
+                put("notice", "UPGRADE", k, {"proposal": pid, "lineage": {"fixes": p["fixes"], "parent": version["current"]},
+                                             "channel": p["channel"],
+                                             "contents": [i for i in PROPOSAL_ITEMS if i not in p["missing_items"]]},
                     [sub.event_id])
             s = state.get(pid)
             if not s or s["status"] not in ("proposed", "active"):
@@ -218,6 +227,22 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     accepted = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and "lineage" in m.value}
     rejected = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and m.value.get("status") == "rejected"}
     upgrades = [p for p in r["proposals"] if p["kind"] != "presentation_only"]
+    # §0 only lawful mechanism; §5 contents of an admitted proposal; §11 no opaque or discretionary tuning
+    adm = [m.value for m in msgs if m.source == "UPGRADE" and "lineage" in m.value]
+    out.append(v("UPGRADE-0-01", "only_lawful_mechanism", [f"{x['proposal']}: via {x['channel']}" for x in adm if x["channel"] != "upgrade"],
+                 f"{len(adm)} change(s) admitted, all through the UPGRADE procedure; changes by other routes refused",
+                 "{n} changes admitted outside UPGRADE"))
+    out.append(v("UPGRADE-5-01", "proposal_contents", [f"{x['proposal']}: missing {sorted(set(PROPOSAL_ITEMS) - set(x['contents']))}"
+                                                       for x in adm if set(x["contents"]) != set(PROPOSAL_ITEMS)],
+                 f"{len(adm)} admitted proposal(s) include specification, before/after comparison, impact deltas, failure modes "
+                 "with rollback and simulation parameters", "{n} admitted proposals without the §5 contents") if adm else
+               na("UPGRADE-5-01", "proposal_contents", "admitted proposals", "no proposal admitted"))
+    out.append(v("UPGRADE-11-02", "no_opaque_tuning",
+                 [f"{x['proposal']}: {x['channel']}" for x in adm if x["channel"] == "operator_tuning"] +
+                 [f"{x['proposal']}: without {', '.join(sorted({'specification', 'before_after'} - set(x['contents'])))}" for x in adm
+                  if {"specification", "before_after"} - set(x["contents"])],
+                 "no parameter changed by an operator's discretion or without specification and before/after comparison",
+                 "{n} opaque or discretionary tunings"))
     # §3 presentation-only changes
     pres = [p["id"] for p in r["proposals"] if p["kind"] == "presentation_only"]
     if pres:
@@ -392,6 +417,9 @@ IMPLEMENTS = {
     "UPGRADE-4.3-01": ("no_crisis_upgrade", "PARTIAL", "Crisis only; 'urgency' and 'fear' are not measurable."),
     "UPGRADE-11-01": ("no_crisis_upgrade", "IMPLEMENTED", None),
     "UPGRADE-5-02": ("incomplete_rejected", "IMPLEMENTED", None),
+    "UPGRADE-0-01": ("only_lawful_mechanism", "PARTIAL", "Other routes are declared channels of a proposal."),
+    "UPGRADE-5-01": ("proposal_contents", "PARTIAL", "The contents are declared per proposal (missing_items)."),
+    "UPGRADE-11-02": ("no_opaque_tuning", "PARTIAL", "Discretionary tuning is a declared channel."),
     "UPGRADE-4.1-01": ("axioms_untouched", "PARTIAL", "The effect on the axioms is a declared property of the proposal."),
     "UPGRADE-2-03": ("axioms_untouched", "PARTIAL", "The effect on the axioms is a declared property of the proposal."),
     "UPGRADE-2-04": ("ptl_rules_untouched", "PARTIAL", "Targets are declared."),
@@ -418,7 +446,7 @@ IMPLEMENTS = {
 
 class UpgradeLifecycleModule(LabModule):
     id = "upgrade_lifecycle"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Upgrade lifecycle (UPGRADE)", "ru": "Жизненный цикл изменения (UPGRADE)"}
     summary = {"en": "Proposals to change the protocols: which are rejected and why, when may one be activated, and is a "
                      "faulty one rolled back rather than patched?",
@@ -454,7 +482,11 @@ class UpgradeLifecycleModule(LabModule):
         "horizon_days": {"type": "int", "min": 2, "max": 2000, "default": 120, "unit": "day", "source": "user",
                          "label": {"en": "Days", "ru": "Дней"}},
         "proposals": {"type": "list", "min_items": 1, "max_items": 12, "items": PROPOSAL, "source": "user",
-                      "default": [{**{k: f["default"] for k, f in PROPOSAL["fields"].items() if "default" in f}, "id": "u1"}],
+                      "default": [{**{k: f["default"] for k, f in PROPOSAL["fields"].items() if "default" in f}, "id": "u1"},
+                                  {**{k: f["default"] for k, f in PROPOSAL["fields"].items() if "default" in f}, "id": "u2",
+                                   "channel": "direct_patch", "submitted_day": 1},
+                                  {**{k: f["default"] for k, f in PROPOSAL["fields"].items() if "default" in f}, "id": "u3",
+                                   "channel": "operator_tuning", "submitted_day": 2}],
                       "label": {"en": "Proposals (H-UP-1)", "ru": "Предложения (H-UP-1)"}},
         "crisis_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "day", "source": "user",
                           "label": {"en": "Active Crisis from/to day", "ru": "Активный кризис с/до дня"}},
