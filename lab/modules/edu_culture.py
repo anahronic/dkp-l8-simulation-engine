@@ -52,6 +52,9 @@ FAULTS = {
     "label_as_intelligence": "assessment outcomes are published as intelligence scores",
     "failure_as_fault": "a failed assessment is recorded as a fault marker",
     "nonreproducible_assessment": "the assessment outcome is not reproducible from its recorded performance",
+    "culture_overreach": "CULTURE carries out requests §2, §4.3 and §5 exclude (doctrine, justification by productivity, conformity)",
+    "persistence_by_scale": "support for a culture's persistence requires a minimum number of speakers",
+    "asymmetric_neutrality": "the dominant language is denied an assessment offered to the minority languages",
 }
 SUBJECT = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -120,6 +123,11 @@ EXCEPTION = {"declared": {"type": "bool", "default": False},
 
 def full_subject(**kw):
     return {**{k: f["default"] for k, f in SUBJECT["fields"].items() if "default" in f}, **kw}
+
+
+CULTURE_REQUESTS = {"define_moral_doctrine": "CULTURE-2-02", "define_belief_system": "CULTURE-2-02",
+                    "justify_by_productivity": "CULTURE-4.3-03", "enforce_conformity": "CULTURE-5-01"}
+JUSTIFICATIONS = ("economic performance", "demographic scale", "productivity metrics")              # CULTURE §4.3
 
 
 def run(r: Dict[str, Any]):
@@ -192,6 +200,22 @@ def run(r: Dict[str, Any]):
                                      (["culture efficiency ranking"] if "cultural_ranking" in faults else [])})
     put("action", "CULTURE", 4, {"programme": "minority archive", "participation": "mandatory" if "mandatory_participation" in faults
                                  else "voluntary", "self_identification_required": False})
+    for q in r["culture_requests"]:
+        rq = put("observation", "REQUEST", 4, {"request": q})
+        if "culture_overreach" in faults:
+            put("action", "CULTURE", 4, {"performed": q}, [rq.event_id])
+        else:
+            put("notice", "CULTURE", 4, {"request": q, "refused": True, "basis": CULTURE_REQUESTS[q]}, [rq.event_id])
+    speakers: Dict[str, int] = {}
+    for x in r["subjects"]:
+        speakers[x["language"]] = speakers.get(x["language"], 0) + 1
+    dominant = max(sorted(speakers), key=lambda l: speakers[l]) if speakers else None
+    for lang in sorted(speakers):
+        small = "persistence_by_scale" in faults and speakers[lang] < 2
+        put("evaluation", "CULTURE", 4, {"language_treatment": lang, "dominant": lang == dominant, "interface": True,
+                                         "assessment_offered": not ("asymmetric_neutrality" in faults and lang == dominant),
+                                         "persistence_supported": not small,
+                                         "criteria": ["demographic scale"] if small else []})
     ex = r["cultural_exception"]
     if ex["declared"]:
         enforced = "exception_enforced" in faults
@@ -204,6 +228,39 @@ def run(r: Dict[str, Any]):
     for i in range(r["content_audits"]):
         put("notice", "AUDIT", 6, {"content_audit": i, "under": "DKP-8-AUDIT-001", "allowed": "audit_refused" not in faults})
     return log
+
+
+def culture_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """CULTURE §2, §4.3, §5, §7 (review КТ5 reading)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    reqs = [m.value["request"] for m in msgs if m.source == "REQUEST" and "request" in m.value]
+    done = {m.value["performed"] for m in msgs if m.source == "CULTURE" and m.value.get("performed")}
+    treat = [m.value for m in msgs if m.source == "CULTURE" and "language_treatment" in m.value]
+    for rid, chk, ok in (("CULTURE-2-02", "no_doctrine", "CULTURE defined no belief system or moral doctrine"),
+                         ("CULTURE-5-01", "no_conformity_enforcement", "no cultural conformity enforced"),
+                         ("CULTURE-4.3-03", "persistence_without_justification",
+                          "no culture had to justify its persistence by economic performance, scale or productivity")):
+        mine = [q for q in reqs if CULTURE_REQUESTS[q] == rid]
+        bad = [f"{q} carried out" for q in mine if q in done]
+        if rid == "CULTURE-4.3-03":
+            bad += [f"{t['language_treatment']}: persistence conditioned on {', '.join(t['criteria'])}" for t in treat
+                    if set(t["criteria"]) & set(JUSTIFICATIONS) or not t["persistence_supported"]]
+        out.append(v(rid, chk, bad, f"{len(mine)} such request(s) refused; " + ok, "{n} breaches"))
+    keys = ("interface", "assessment_offered", "persistence_supported", "criteria")
+    shapes = {tuple(str(t[k]) for k in keys) for t in treat}
+    out.append(v("CULTURE-7-03", "neutrality_both_ways",
+                 [] if len(shapes) <= 1 else [f"{t['language_treatment']} ({'dominant' if t['dominant'] else 'minority'}): "
+                                              + ", ".join(f"{k}={t[k]}" for k in keys) for t in treat],
+                 f"{len(treat)} languages, dominant and minority, treated identically (interface, assessment, persistence)",
+                 "unequal treatment of dominant and minority cultures") if treat else
+               CheckResult("CULTURE-7-03", "neutrality_both_ways", NOT_APPLICABLE, "cultural neutrality",
+                           applicability="no language in use"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -402,7 +459,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     binding = [m.event_id for m in msgs if m.source == "CULTURE" and m.value.get("enforceable")]
     out.append(v("CULTURE-11-05", "informational_without_l8", binding if not r["l8_bundle_present"] else [],
                  "cultural interactions informational and non-binding (no L8 calibration)", "{n} binding cultural interactions"))
-    return out
+    return out + culture_checks(r, msgs)
 
 
 IMPLEMENTS = {
@@ -447,6 +504,10 @@ IMPLEMENTS = {
     "CULTURE-7-01": ("voluntary_participation", "IMPLEMENTED", None),
     "CULTURE-6-02": ("no_obligations_from_preservation", "IMPLEMENTED", None),
     "CULTURE-9-02": ("exception_bounded", "IMPLEMENTED", None),
+    "CULTURE-2-02": ("no_doctrine", "PARTIAL", "Observed through declared requests and CULTURE records."),
+    "CULTURE-4.3-03": ("persistence_without_justification", "PARTIAL", "Persistence support is a recorded per-language decision."),
+    "CULTURE-5-01": ("no_conformity_enforcement", "PARTIAL", "Observed through declared requests and CULTURE records."),
+    "CULTURE-7-03": ("neutrality_both_ways", "PARTIAL", "Neutrality observed as identical per-language treatment."),
     "CULTURE-9-03": ("conflicts_by_scope", "PARTIAL", "Observed as the rules named for the Cultural Exception."),
     "CULTURE-11-03": ("mechanism_declared", "PARTIAL", "The Cultural Exception is the mechanism modelled."),
     "EDU-10-03": ("content_auditable", "PARTIAL", "Audit requests are declared."),
@@ -478,7 +539,7 @@ IMPLEMENTS = {
 
 class EduCultureModule(LabModule):
     id = "edu_culture"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Education and culture (EDU, CULTURE)", "ru": "Образование и культура (EDU, CULTURE)"}
     summary = {"en": "A population speaking several languages takes the system-literacy assessment: does failing only bring "
                      "help, does no language or culture get priority, and does anything restrict people while L8 is uncalibrated?",
@@ -521,6 +582,10 @@ class EduCultureModule(LabModule):
                                   "ru": "Учебные модули к развёртыванию (свойства объявлены)"}},
         "content_audits": {"type": "int", "min": 0, "max": 20, "default": 1, "source": "user",
                            "label": {"en": "Audits of educational content requested (EDU §10)", "ru": "Запрошено аудитов учебного содержания (EDU §10)"}},
+        "culture_requests": {"type": "list", "min_items": 0, "max_items": len(CULTURE_REQUESTS),
+                             "items": {"type": "enum", "values": list(CULTURE_REQUESTS)}, "default": list(CULTURE_REQUESTS),
+                             "source": "user", "label": {"en": "Requests CULTURE §2, §4.3, §5 exclude",
+                                                         "ru": "Запросы, исключённые CULTURE §2, §4.3, §5"}},
         "cultural_exception": {"type": "object", "fields": EXCEPTION, "default": {k: f["default"] for k, f in EXCEPTION.items()},
                                "source": "user", "label": {"en": "Cultural Exception", "ru": "Культурное исключение"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},

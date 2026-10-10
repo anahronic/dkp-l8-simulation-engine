@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1333 (76.7 %) | 1010 | 1251 | 935 | 4 | 63 | 15 | 404 | 28 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1337 (77.0 %) | 1014 | 1255 | 939 | 4 | 63 | 15 | 400 | 24 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
 | C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 253 | 339 | 241 | 3 | 8 | 2 | 13 | 0 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 216 (73.7 %) | 174 | 200 | 160 | 0 | 9 | 7 | 77 | 12 | 251 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 220 (75.1 %) | 178 | 204 | 164 | 0 | 9 | 7 | 73 | 8 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 397 (77.7 %) | 318 | 376 | 297 | 0 | 18 | 3 | 114 | 7 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1333 (76.7 %) | 1010 | 1251 | 935 | 4 | 63 | 15 | 404 | 28 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1337 (77.0 %) | 1014 | 1255 | 939 | 4 | 63 | 15 | 400 | 24 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 115 | 236 | 0 | 351 |
+| implementation_only | 0 | 119 | 232 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -273,7 +273,7 @@ Withdrawn after verification (not author decisions):
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 26 | 26 | 0 | 0 | 0 | 3 | 23 |
 | DKP-4-ERROR-001 | 52 | 33 | 29 | 0 | 3 | 1 | 19 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
-| DKP-5-CULTURE-001 | 43 | 27 | 27 | 0 | 0 | 0 | 16 | 37 |
+| DKP-5-CULTURE-001 | 43 | 31 | 31 | 0 | 0 | 0 | 12 | 37 |
 | DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 55 |
 | DKP-5-HABITAT-001 | 56 | 52 | 48 | 0 | 1 | 3 | 4 | 50 |
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 37 |
@@ -1039,6 +1039,7 @@ Withdrawn after verification (not author decisions):
 | CULTURE-12-04 | PARTIAL | edition_finality · interfaces_resimulation | PASS | — | — |
 | CULTURE-12-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | CULTURE-12-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| CULTURE-2-02 | PARTIAL | edu_culture · no_doctrine | PASS | — | — |
 | CULTURE-3-02 | IMPLEMENTED | edu_culture · exception_non_enforceable | PASS | — | — |
 | CULTURE-4.1-01 | PARTIAL | edu_culture · no_systemic_priority | PASS | yes | — |
 | CULTURE-4.1-03 | IMPLEMENTED | edu_culture · no_reference_culture | PASS | yes | — |
@@ -1046,10 +1047,13 @@ Withdrawn after verification (not author decisions):
 | CULTURE-4.2-02 | PARTIAL | edu_culture · semantic_fidelity | PASS | — | — |
 | CULTURE-4.3-01 | IMPLEMENTED | edu_culture · no_cultural_optimization | PASS | yes | — |
 | CULTURE-4.3-02 | IMPLEMENTED | edu_culture · no_cultural_metrics | PASS | yes | — |
+| CULTURE-4.3-03 | PARTIAL | edu_culture · persistence_without_justification | PASS | — | — |
+| CULTURE-5-01 | PARTIAL | edu_culture · no_conformity_enforcement | PASS | — | — |
 | CULTURE-5-02 | PARTIAL | edu_culture · minority_languages_served | PASS | yes | — |
 | CULTURE-5-05 | IMPLEMENTED | edu_culture · language_not_competence_proxy | PASS | yes | — |
 | CULTURE-6-02 | IMPLEMENTED | edu_culture · no_obligations_from_preservation | PASS | — | — |
 | CULTURE-7-01 | IMPLEMENTED | edu_culture · voluntary_participation | PASS | — | — |
+| CULTURE-7-03 | PARTIAL | edu_culture · neutrality_both_ways | PASS | — | — |
 | CULTURE-8-01 | IMPLEMENTED | edu_culture · selectable_context | PASS | yes | — |
 | CULTURE-8-02 | IMPLEMENTED | edu_culture · no_default_culture | PASS | yes | — |
 | CULTURE-9-01 | PARTIAL | edu_culture · no_override_of_ptl | PASS | — | — |

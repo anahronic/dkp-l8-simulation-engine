@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 115,
+  "confirmed": 119,
   "reclassified": 7
  },
  "items": [
@@ -367,6 +367,58 @@
    "questions": [
     "Q-064"
    ]
+  },
+  {
+   "id": "CULTURE-2-02",
+   "document": "DKP-5-CULTURE-001",
+   "quote": "This protocol SHALL NOT:\n\ndefine belief systems or moral doctrines,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A scope ban ('SHALL NOT define belief systems or moral doctrines'); a request to define one is refused and no CULTURE record defines one. Observable through declared requests.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_doctrine"
+  },
+  {
+   "id": "CULTURE-4.3-03",
+   "document": "DKP-5-CULTURE-001",
+   "quote": "Cultural persistence SHALL NOT be required to justify itself via:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Cultural persistence may not be conditioned on economic performance, demographic scale or productivity: a per-language persistence decision with such a criterion, or a refusal for being small, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:persistence_without_justification"
+  },
+  {
+   "id": "CULTURE-5-01",
+   "document": "DKP-5-CULTURE-001",
+   "quote": "The following are explicitly forbidden:\n\nenforcement of cultural conformity,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "An explicit prohibition: enforcement of cultural conformity. Observable as a conformity requirement carried out or not refused.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:no_conformity_enforcement"
+  },
+  {
+   "id": "CULTURE-7-03",
+   "document": "DKP-5-CULTURE-001",
+   "quote": "Cultural neutrality applies equally to dominant and minority cultures.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Cultural neutrality applies equally to dominant and minority cultures': the treatment of each language (interface, assessment, persistence support) is identical whether it is dominant or minority. Observable per language.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "edu_culture:neutrality_both_ways"
   },
   {
    "id": "EDU-0-01",

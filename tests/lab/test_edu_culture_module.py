@@ -50,6 +50,9 @@ FAULT_CASES = {
     "label_as_intelligence": ({}, ["EDU-7-06"]),
     "failure_as_fault": ({}, ["EDU-Safeguards-06"]),
     "nonreproducible_assessment": ({}, ["EDU-3-04", "EDU-4-05"]),
+    "culture_overreach": ({}, ["CULTURE-2-02", "CULTURE-4.3-03", "CULTURE-5-01"]),
+    "persistence_by_scale": ({}, ["CULTURE-4.3-03"]),
+    "asymmetric_neutrality": ({}, ["CULTURE-7-03"]),
 }
 
 

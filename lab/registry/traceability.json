@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1333,
-  "covered_percent": 76.7,
+  "covered": 1337,
+  "covered_percent": 77.0,
   "statuses": {
-   "PASS": 1251,
+   "PASS": 1255,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 404
+   "UNCOVERED": 400
   },
   "resolvable": 672,
-  "resolvable_uncovered": 28,
-  "resolvable_uncovered_implementation_only": 28,
+  "resolvable_uncovered": 24,
+  "resolvable_uncovered_implementation_only": 24,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 1010,
-  "pass_with_open_point": 935
+  "covered_with_open_point": 1014,
+  "pass_with_open_point": 939
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1333,
-    "covered_percent": 76.7,
+    "covered": 1337,
+    "covered_percent": 77.0,
     "statuses": {
-     "PASS": 1251,
+     "PASS": 1255,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 404
+     "UNCOVERED": 400
     },
     "resolvable": 672,
-    "resolvable_uncovered": 28,
-    "resolvable_uncovered_implementation_only": 28,
+    "resolvable_uncovered": 24,
+    "resolvable_uncovered_implementation_only": 24,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 1010,
-    "pass_with_open_point": 935
+    "covered_with_open_point": 1014,
+    "pass_with_open_point": 939
    }
   },
   {
@@ -1700,21 +1700,21 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 216,
-    "covered_percent": 73.7,
+    "covered": 220,
+    "covered_percent": 75.1,
     "statuses": {
-     "PASS": 200,
+     "PASS": 204,
      "FAIL": 0,
      "UNKNOWN": 9,
      "NOT_APPLICABLE": 7,
-     "UNCOVERED": 77
+     "UNCOVERED": 73
     },
     "resolvable": 124,
-    "resolvable_uncovered": 12,
-    "resolvable_uncovered_implementation_only": 12,
+    "resolvable_uncovered": 8,
+    "resolvable_uncovered_implementation_only": 8,
     "unresolved_decisions": 251,
-    "covered_with_open_point": 174,
-    "pass_with_open_point": 160
+    "covered_with_open_point": 178,
+    "pass_with_open_point": 164
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 115,
-    "codex_draft": 236,
+    "lab_reconciled": 119,
+    "codex_draft": 232,
     "human_accepted": 0,
     "total": 351
    },
@@ -41874,30 +41874,37 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text provides no operational classifier for the prohibited regulatory activities. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_doctrine",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Observed through declared requests and CULTURE records.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42251,30 +42258,37 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational scope of cultural persistence and required justification is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "persistence_without_justification",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Persistence support is a recorded per-language decision.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42283,30 +42297,37 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Cultural conformity and its enforcement lack operational definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_conformity_enforcement",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Observed through declared requests and CULTURE records.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -42600,30 +42621,37 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of neutrality and dominant or minority status are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "neutrality_both_ways",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Neutrality observed as identical per-language treatment.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

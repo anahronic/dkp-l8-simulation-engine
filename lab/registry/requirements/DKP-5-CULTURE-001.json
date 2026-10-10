@@ -36,7 +36,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_ranking"
    },
    "tests": [
@@ -106,19 +106,25 @@
    "data_dependencies": [
     "protocol rules and enforcement actions"
    ],
-   "gap": "The text provides no operational classifier for the prohibited regulatory activities. No lab check implemented yet.",
+   "gap": "Observed through declared requests and CULTURE records.",
    "hypotheses_needed": [
     "Declare criteria for identifying each prohibited regulatory activity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.1.0",
+    "check": "no_doctrine"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -186,7 +192,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "exception_non_enforceable"
    },
    "tests": [
@@ -227,7 +233,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_systemic_priority"
    },
    "tests": [
@@ -304,7 +310,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_reference_culture"
    },
    "tests": [
@@ -346,7 +352,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "all_languages_supported"
    },
    "tests": [
@@ -390,7 +396,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "semantic_fidelity"
    },
    "tests": [
@@ -430,7 +436,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_cultural_optimization"
    },
    "tests": [
@@ -470,7 +476,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_cultural_metrics"
    },
    "tests": [
@@ -503,20 +509,26 @@
    "data_dependencies": [
     "cultural persistence policies and decision criteria"
    ],
-   "gap": "The operational scope of cultural persistence and required justification is unspecified. No lab check implemented yet.",
+   "gap": "Persistence support is a recorded per-language decision.",
    "hypotheses_needed": [
     "Declare which decisions and requirements can condition cultural persistence."
    ],
    "section_label": "4.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.1.0",
+    "check": "persistence_without_justification"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -538,19 +550,25 @@
    "data_dependencies": [
     "behavioral requirements and enforcement records"
    ],
-   "gap": "Cultural conformity and its enforcement lack operational definitions. No lab check implemented yet.",
+   "gap": "Observed through declared requests and CULTURE records.",
    "hypotheses_needed": [
     "Declare criteria distinguishing cultural conformity requirements from other behavioral rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.1.0",
+    "check": "no_conformity_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -580,7 +598,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "minority_languages_served"
    },
    "tests": [
@@ -690,7 +708,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "language_not_competence_proxy"
    },
    "tests": [
@@ -767,7 +785,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_obligations_from_preservation"
    },
    "tests": [
@@ -805,7 +823,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "voluntary_participation"
    },
    "tests": [
@@ -878,19 +896,25 @@
     "culture classifications",
     "neutrality policy and enforcement records"
    ],
-   "gap": "Operational definitions of neutrality and dominant or minority status are missing. No lab check implemented yet.",
+   "gap": "Neutrality observed as identical per-language treatment.",
    "hypotheses_needed": [
     "Declare culture classifications and how equal application of neutrality is assessed."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "edu_culture",
+    "version": "1.1.0",
+    "check": "neutrality_both_ways"
+   },
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -921,7 +945,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "selectable_context"
    },
    "tests": [
@@ -960,7 +984,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_default_culture"
    },
    "tests": [
@@ -1007,7 +1031,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_override_of_ptl"
    },
    "tests": [
@@ -1051,7 +1075,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "exception_bounded"
    },
    "tests": [
@@ -1091,7 +1115,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "conflicts_by_scope"
    },
    "tests": [
@@ -1129,7 +1153,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_verification_exemption"
    },
    "tests": [
@@ -1273,7 +1297,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_enforceable_rankings"
    },
    "tests": [
@@ -1350,7 +1374,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "mechanism_declared"
    },
    "tests": [
@@ -1423,7 +1447,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edu_culture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "informational_without_l8"
    },
    "tests": [
