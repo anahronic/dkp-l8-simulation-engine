@@ -17,6 +17,7 @@ What the texts leave open is declared, not assumed silently:
 
 from __future__ import annotations
 
+import re
 from typing import Any, Dict, List
 
 from lab.core.bus import EventLog, Message, epistemic_problems
@@ -25,6 +26,8 @@ from lab.core.module import LabModule, ModuleResult
 from lab.core.run import canonical_json, sha256_text
 from lab.core.schema import LabInputError
 from lab.modules.time import canonical, dy_doy
+
+import os
 
 HOURS_PER_DAY = 24
 TRIGGERS = ("d3", "error_cascade", "ptl_divergence", "multi_domain")
@@ -45,13 +48,49 @@ FAULTS = {
     "missing_metadata": "crisis suspensions are issued without epistemic metadata",
     "transfer_interpretation": "the A1 interpretation of rationing is attributed to an emergency council",
     "parameter_by_decree": "the crisis authority duration is set by a governance decision",
+    "expand_envelope": "a crisis action outside the declared Crisis Scope Envelope is executed",
+    "extrapolate_scope": "a crisis action is applied outside the declared Crisis Scope (another region)",
+    "crisis_interpretation_rule": "after the crisis, a crisis action is recorded as an interpretation rule for normal operation",
+    "crisis_new_obligation": "the crisis defines a new obligation for Subjects",
+    "normal_despite_trigger": "the state is reported as C0 while a confirmed crisis condition is present",
+    "numeric_in_text": "the CRISIS text checked contains a numerical authority limit (a mutated copy of the pinned text)",
+    "conceal_action": "a crisis action is executed without an audit commitment",
+    "permanent_control": "the crisis is kept after its exit conditions hold",
+    "utilitarian_rationing": "rationing prioritizes Subjects by perceived utility",
+    "human_directed_action": "a crisis action is directed by a human coordinator instead of protocol logic",
 }
 # CRISIS §1: the Crisis Scope Envelope lies inside S1; SCOPE §3 lists what S1 includes.  Lab table (H-CR-5).
 ACTION_DOMAIN = {"suspend_non_essential": "S1: temporary suspension of non-essential functions",
                  "ration": "S1: emergency prioritization bounded by Axiom A1",
+                 "freeze_non_critical_transitions": "S1: temporary suspension of non-essential functions",
                  "restrict_public_expression": "S2: cultural expression and symbolic systems"}
+ENVELOPE_ACTIONS = ("suspend_non_essential", "ration", "freeze_non_critical_transitions")       # CRISIS §6 items the lab models
 A1_FIELDS = {"interpretation_type": "CRISIS_BOUNDED", "interpretation_authority": "DKP-4-CRISIS-001",
              "authority_transferable": False, "post_crisis_audit": "MANDATORY"}                     # CRISIS §12.2
+
+
+_SNAP = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "corpus", "world-aad3e86", "Dikenocracy")
+INJECTED = "Crisis authority lapses after 72 hours."           # fault numeric_in_text: a mutated copy, never the pinned text
+
+
+def crisis_text() -> str:
+    with open(os.path.join(_SNAP, "Protocols", "L4_FailSafe", "DKP-4-CRISIS-001.md"), encoding="utf-8") as f:
+        return f.read()
+
+
+def numeric_quantities(text: str) -> List[str]:
+    """Numbers in a protocol text that are not identifiers, labels, section numbers or edition dates (CRISIS §6)."""
+    out = []
+    for i, line in enumerate(text.splitlines(), 1):
+        x = re.sub(r"^\s*#{1,6}\s*[\d.]*", "", line)                                   # heading numbers
+        x = re.sub(r"DKP-\d-[A-Z0-9-]+?-\d{3}(?:-[A-Z]+)?", "", x, flags=re.I)          # protocol identifiers
+        x = re.sub(r"(?:\bSection|§)\s*[\d.]*\d", "", x)                                # section references
+        x = re.sub(r"\b[ACDLST]\d\b", "", x)                                           # A1, C0-C4, D3, L0-L8, S1, T3
+        x = re.sub(r"\b\d{4}-\d{2}-\d{2}\b", "", x)                                     # edition dates
+        x = re.sub(r"SHA-?256(?:SUMS)?", "", x)
+        for m in re.finditer(r"\d+(?:[.,]\d+)?\s*(?:%|percent|hours?|days?|minutes?|seconds?)?", x):
+            out.append(f"line {i}: {m.group(0).strip()}")
+    return out
 
 
 def in_window(w, k):
@@ -85,10 +124,12 @@ def run(r: Dict[str, Any]):
                                measured_at=k if kind == "observation" else None,
                                decided_at=k if kind in ("decision", "action") else None,
                                value=value, epistemic=epistemic, provenance=tuple(prov), order=order[kind]))
-        if kind == "action":
+        if kind == "action" and not (conceal[0] and source == "CRISIS"):
             commits[eid] = sha256_text(canonical_json(m.as_dict()))
+        conceal[0] = False
         return m
 
+    conceal = [False]
     d3_run = 0
     entry_step = [None]
     in_crisis = False
@@ -134,7 +175,7 @@ def run(r: Dict[str, Any]):
         if active:
             in_crisis = True
             state = crisis_state([a for a in active if a != "forecast"]) if active != ["forecast"] else "C1"
-        elif in_crisis and exit_ok and confirmed:
+        elif in_crisis and exit_ok and confirmed and "permanent_control" not in faults:
             in_crisis, state, exit_step = False, "C0", k
             if "delayed_collapse" in faults:
                 authority_until = k + 6
@@ -143,29 +184,48 @@ def run(r: Dict[str, Any]):
               "scope_ref": f"DKP-4-CRISIS-001:{state}", "revalidation_required": True, "dispute_allowed": True}
         if "valid_crisis_output" in faults:
             md = {**md, "validity_state": "VALID", "confidence_state": "SUFFICIENT_DATA"}
-        cmsg = put("evaluation", "CRISIS", k, {"state": state, "active_triggers": active, **dti(k)},
+        shown = "C0" if "normal_despite_trigger" in faults and in_crisis and entry_step[0] is not None \
+            and k == entry_step[0] + 1 else state
+        cmsg = put("evaluation", "CRISIS", k, {"state": shown, "active_triggers": active, **dti(k)},
                    [ptl.event_id] if ptl else [], epistemic=md if state != "C0" else None)
         if in_crisis:
             if entry_step[0] is None:
                 entry_step[0] = k
+                put("notice", "CRISIS", k, {"envelope": sorted(r["crisis_envelope"]), "scope": r["crisis_scope_region"]},
+                    [cmsg.event_id])
+                if "crisis_new_obligation" in faults:
+                    put("notice", "CRISIS", k, {"defines": "obligation", "content": "mandatory labour service for all Subjects"},
+                        [cmsg.event_id])
                 if "parameter_by_decree" in faults:
                     put("notice", "GOVERNANCE", k, {"parameter": "crisis authority duration", "value_hours": 720,
                                                     "set_by": "governance decision"}, [cmsg.event_id])
             if confirmed or "stale_confirmation" in faults:
+                region = r["crisis_scope_region"]
+                conceal[0] = "conceal_action" in faults and k == entry_step[0]
                 a = put("action", "CRISIS", k, {"action": "suspend_non_essential", "state": state, "time_limited": True,
-                                                "reversible": True, "ends_at_exit": True, **dti(k)},
+                                                "reversible": True, "ends_at_exit": True, "scope": region, **dti(k)},
                         [cmsg.event_id], epistemic=None if "missing_metadata" in faults else md)
                 crisis_actions.append(a.event_id)
-                rule = "status" if "status_priority" in faults else r["allocation_rule"]
+                rule = "status" if "status_priority" in faults else "utility" if "utilitarian_rationing" in faults \
+                    else r["allocation_rule"]
                 a1 = {**md, **A1_FIELDS, "interprets": "Axiom A1 minimum required conditions"}
                 if "transfer_interpretation" in faults:
                     a1.update(interpretation_authority="emergency council", authority_transferable=True)
                 if r["a1_confidence_reading"] == "not_sufficient" and a1["confidence_state"] == "SUFFICIENT_DATA":
                     a1["confidence_state"] = "DEGRADED_SIGNAL"                       # §12.3 reading: no value is named (F-043)
-                put("action", "CRISIS", k, {"action": "ration", "rule": rule, "purpose": "life and core execution", **dti(k)},
-                    [cmsg.event_id], epistemic=a1)
+                put("action", "CRISIS", k, {"action": "ration", "rule": rule, "purpose": "life and core execution",
+                                            "scope": "R2" if "extrapolate_scope" in faults and k == entry_step[0] + 1 else region,
+                                            **dti(k)}, [cmsg.event_id], epistemic=a1)
+                if "expand_envelope" in faults and k == entry_step[0]:
+                    put("action", "CRISIS", k, {"action": "freeze_non_critical_transitions", "state": state, "scope": region,
+                                                **dti(k)}, [cmsg.event_id], epistemic=md)
+                if "human_directed_action" in faults and k == entry_step[0] + 2:
+                    put("action", "CRISIS", k, {"action": "suspend_non_essential", "state": state, "time_limited": True,
+                                                "reversible": True, "ends_at_exit": True, "scope": region,
+                                                "directed_by": "crisis coordinator", **dti(k)}, [ptl.event_id] if ptl else [],
+                        epistemic=md)
                 if "elevate_scope" in faults and k == entry_step[0]:
-                    put("action", "CRISIS", k, {"action": "restrict_public_expression", "state": state, **dti(k)},
+                    put("action", "CRISIS", k, {"action": "restrict_public_expression", "state": state, "scope": region, **dti(k)},
                         [cmsg.event_id], epistemic=md)
             if state in ("C3", "C4") and not broadcast_done and "no_broadcast" not in faults:
                 put("notice", "CRISIS", k, {"final_state_vector_broadcast": "external isolated archives"}, [cmsg.event_id])
@@ -201,7 +261,10 @@ def run(r: Dict[str, Any]):
             if k == r["post_crisis_decision_step"]:
                 prov = [cmsg.event_id] + (crisis_actions[:1] if "cite_precedent" in faults else [])
                 put("decision", "GOVERNANCE", k, {"decision": "routine allocation", "justification": "protocol rules"}, prov)
-        rows.append({"step": k, "state": state, "defense": level, "active_triggers": active, "confirmed": confirmed,
+                if "crisis_interpretation_rule" in faults and crisis_actions:
+                    put("notice", "INTERPRETATION", k, {"interpretation_rule": "crisis rationing is acceptable governance practice",
+                                                        "derived_from": crisis_actions[0]}, [crisis_actions[0]])
+        rows.append({"step": k, "state": shown, "defense": level, "active_triggers": active, "confirmed": confirmed,
                      "layers": dict(layers_active)})
     return log, rows, commits, {"exit_step": exit_step, "claims_open": claims_open}
 
@@ -242,6 +305,27 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
     else:
         out.append(na("CRISIS-4-02", "no_discretionary_entry", "crisis entry", "no crisis in this experiment"))
         out.append(na("CRISIS-4-01", "ptl_confirmed_triggers", "crisis entry", "no crisis in this experiment"))
+    # §5 C0: no crisis condition present (recomputed from the PTL observations) and no crisis action
+    cond, run_len = {}, 0
+    need = r["sustained_d3_steps"] if r["d3_reading"] == "sustained" else 1
+    for x in rows:
+        p = ptl.get(x["step"])
+        ok = bool(p and p.value["confirmed"])
+        run_len = run_len + 1 if ok and p.value["d3"] else 0
+        cond[x["step"]] = run_len >= need or (ok and any(p.value[t] for t in TRIGGERS if t != "d3"))
+    c0 = {x["step"] for x in rows if x["state"] == "C0"}
+    bad = [f"step {k}: C0 with a confirmed crisis condition" for k in sorted(c0) if cond[k]]
+    bad += [f"{m.event_id}: crisis action in a C0 step" for m in msgs if m.source == "CRISIS" and m.kind == "action" and m.arrived_at in c0]
+    out.append(v("CRISIS-5-02", "c0_without_conditions", bad,
+                 f"C0 held in {len(c0)} steps, none with a confirmed crisis condition or a crisis action",
+                 "{n} C0 steps with crisis conditions or crisis actions"))
+    # §6 Non-Precedent Rule: no numerical values in this protocol (the pinned text; a mutated copy under the fault)
+    text = crisis_text() + ("\n" + INJECTED if "numeric_in_text" in r["faults"] else "")
+    nums = numeric_quantities(text)
+    out.append(v("CRISIS-Non-PrecedentRule_-03", "no_numbers_in_protocol", nums,
+                 "the pinned DKP-4-CRISIS-001 defines no numerical value, threshold, coefficient, timer, decay curve or "
+                 "quantitative authority limit (identifiers, state labels, section numbers and edition dates excluded)",
+                 "{n} numerical quantities in the CRISIS text"))
     bad = [x["step"] for x in rows if x["state"] not in ("C0", "C1", "C2", "C3", "C4")] + \
           [m.event_id for m in msgs if m.source == "CRISIS" and m.kind == "evaluation" and "dti_day" not in m.value]
     out.append(v("CRISIS-5-01", "finite_dti_states", bad, "crisis states are C0–C4, each indexed by DTI-Day",
@@ -256,7 +340,10 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                          ("CRISIS-Non-PrecedentRule_-01", "no_precedent"), ("CRISIS-8-02", "human_logged"),
                          ("CRISIS-1-04", "envelope_in_s1"), ("CRISIS-2-03", "ptl_anchored"), ("CRISIS-12-01", "eb5_metadata"),
                          ("CRISIS-12.2-01", "a1_interpretation_fields"), ("CRISIS-12.3-01", "no_settled_axiom_interpretation"),
-                         ("CRISIS-Non-PrecedentRule_-04", "parameters_from_simulation")):
+                         ("CRISIS-Non-PrecedentRule_-04", "parameters_from_simulation"), ("CRISIS-1-03", "envelope_not_expanded"),
+                         ("CRISIS-2-05", "no_extrapolation"), ("CRISIS-2-02", "no_new_rights_obligations"),
+                         ("CRISIS-7-02", "no_concealment_permanence_utility"), ("CRISIS-8-01", "algorithmic_governance"),
+                         ("CRISIS-0-03", "no_precedent_or_future_authorization")):
             out.append(na(rid, chk, "crisis execution", "no crisis in this experiment"))
         return out + defense_checks(r, log, rows, msgs, v, na)
     cs = set(crisis_steps)
@@ -270,7 +357,7 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                  "PTL logging continued in every crisis step; no discretionary authority granted",
                  "{n} crisis steps without PTL logging or with a discretionary authority"))
     rations = [m for m in actions if m.value.get("action") == "ration"]
-    out.append(v("CRISIS-7-03", "no_status_priority", [m.event_id for m in rations if m.value["rule"] == "status"],
+    out.append(v("CRISIS-7-03", "no_status_priority", [m.event_id for m in rations if m.value["rule"] in ("status", "utility")],
                  "no allocation by social status, historical impact or perceived utility", "{n} allocations by status"))
     out.append(v("CRISIS-7-04", "allocation_basis", [m.event_id for m in rations if m.value["rule"] not in ("egalitarian", "proximity")],
                  f"allocation is {r['allocation_rule']} (egalitarian minimum or physical proximity)",
@@ -302,6 +389,41 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
     # §1 envelope in S1, §2 PTL anchoring, §12 metadata (EB §5), §12.2 A1 fields, §12.3 no settled interpretation
     out.append(v("CRISIS-1-04", "envelope_in_s1", [m.event_id for m in actions if not ACTION_DOMAIN.get(m.value.get("action"), "").startswith("S1")],
                  "every crisis action falls in an S1 category of SCOPE §3 (H-CR-5)", "{n} crisis actions outside S1"))
+
+    # §1 envelope declared at entry, never expanded; §2 nothing reused outside the declared Crisis Scope
+    env = [m for m in msgs if m.source == "CRISIS" and m.value.get("envelope") is not None]
+    declared = set(env[0].value["envelope"]) if env else set()
+    bad = ([] if len(env) == 1 else [f"{len(env)} envelope declarations"]) + \
+          [f"{m.event_id}: {m.value['action']} outside the declared envelope" for m in actions if m.value.get("action") not in declared]
+    out.append(v("CRISIS-1-03", "envelope_not_expanded", bad,
+                 f"one Crisis Scope Envelope declared at entry ({', '.join(sorted(declared))}); every crisis action within it",
+                 "{n} crisis actions outside the declared envelope or envelope changes"))
+    region = env[0].value["scope"] if env else None
+    out.append(v("CRISIS-2-05", "no_extrapolation", [f"{m.event_id}: applied to {m.value.get('scope')}" for m in actions
+                                                     if m.value.get("scope") != region],
+                 f"every crisis action applied within the declared Crisis Scope ({region})",
+                 "{n} crisis actions applied outside the declared Crisis Scope"))
+    defined = [f"{m.event_id}: defines {m.value['defines']}" for m in msgs if m.source == "CRISIS" and m.value.get("defines")]
+    granted = [m.event_id for m in msgs if m.source == "GOVERNANCE" and m.value.get("authority") and m.arrived_at in cs]
+    out.append(v("CRISIS-2-02", "no_new_rights_obligations", defined + granted,
+                 "the crisis defined no right, obligation or authority and redefined no axiom",
+                 "{n} rights, obligations or authorities introduced by the crisis"))
+    exitable = {x["step"]: (x["step"] in ptl and not cond[x["step"]] and x["confirmed"] and
+                            (not r["error_cascade_window"][1] > r["error_cascade_window"][0]
+                             or 0 <= r["error_correction_complete_step"] <= x["step"])) for x in rows}
+    kept = [f"step {x['step']}: crisis kept after the exit conditions held" for i, x in enumerate(rows)
+            if i and x["state"] != "C0" and rows[i - 1]["state"] != "C0" and exitable[x["step"]]]
+    hidden = [f"{m.event_id}: no audit commitment" for m in actions if m.event_id not in commits]
+    utility = [f"{m.event_id}: rationing by {m.value['rule']}" for m in rations if m.value["rule"] == "utility"]
+    out.append(v("CRISIS-7-02", "no_concealment_permanence_utility", hidden + kept[:1] + utility,
+                 "every crisis action committed for audit; the crisis ended when its exit conditions held; no utilitarian "
+                 "valuation of life", "{n} concealed actions, retained control or utilitarian valuations"))
+    derived = [m.event_id for m in actions if m.value.get("directed_by")
+               or not any(log.get(p).source == "CRISIS" and log.get(p).kind == "evaluation" for p in m.provenance)]
+    humans = [m.event_id for m in msgs if m.source == "HUMAN" and m.kind == "action"]
+    out.append(v("CRISIS-8-01", "algorithmic_governance", derived + granted + humans,
+                 f"all {len(actions)} crisis actions derive from the CRISIS state determination (protocol logic); no emergency "
+                 "human authority", "{n} crisis actions not derived from protocol logic, or emergency human authority"))
 
     def anchored(m):
         seen, todo = set(), list(m.provenance)
@@ -389,9 +511,18 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                  and any(log.get(p).kind == "action" and log.get(p).source == "CRISIS" for p in m.provenance)]
         out.append(v("CRISIS-Non-PrecedentRule_-01", "no_precedent", cited,
                      "no post-crisis decision cites a crisis action", "{n} post-crisis decisions cite crisis actions"))
+        crisis_ids = {m.event_id for m in actions}
+        after = [m for m in msgs if m.arrived_at >= ex and m.source not in ("PTL", "AUDIT")]
+        later = [f"{m.event_id}: cites a crisis action" for m in after if crisis_ids & set(m.provenance)]
+        later += [f"{m.event_id}: interpretation rule" for m in after if m.value.get("interpretation_rule")]
+        later += [f"{m.event_id}: authority after exit" for m in after if m.source == "GOVERNANCE" and m.value.get("authority")]
+        out.append(v("CRISIS-0-03", "no_precedent_or_future_authorization", later,
+                     "after the crisis nothing cites a crisis action, no interpretation rule or custom is recorded from it, and no "
+                     "authorization outlives it", "{n} precedents, interpretation rules or authorizations outliving the crisis"))
     else:
         for rid, chk in (("CRISIS-9-01", "automatic_exit"), ("CRISIS-9-05", "immediate_collapse"),
-                         ("CRISIS-9-02", "sequential_recovery"), ("CRISIS-Non-PrecedentRule_-01", "no_precedent")):
+                         ("CRISIS-9-02", "sequential_recovery"), ("CRISIS-Non-PrecedentRule_-01", "no_precedent"),
+                         ("CRISIS-0-03", "no_precedent_or_future_authorization")):
             out.append(na(rid, chk, "crisis exit", "the crisis does not end within the horizon"))
     return out + defense_checks(r, log, rows, msgs, v, na)
 
@@ -474,6 +605,16 @@ IMPLEMENTS = {
     "CRISIS-12.1-01": ("conditional_outputs", "PARTIAL", "Confidence and consistency are propagated from the scenario's PTL flags."),
     "CRISIS-12.1-02": ("scope_ref_flags", "IMPLEMENTED", None),
     "CRISIS-Non-PrecedentRule_-01": ("no_precedent", "PARTIAL", "Precedent is detected as citation (provenance) of a crisis action."),
+    "CRISIS-0-03": ("no_precedent_or_future_authorization", "PARTIAL", "Observed after the exit: citations of crisis actions, recorded "
+                    "interpretation rules, authority notices. Custom formed without a record is not observable."),
+    "CRISIS-1-03": ("envelope_not_expanded", "PARTIAL", "The envelope is a declared list of §6 actions (input crisis_envelope)."),
+    "CRISIS-2-02": ("no_new_rights_obligations", "PARTIAL", "Observed as explicit definitions and authority notices."),
+    "CRISIS-2-05": ("no_extrapolation", "PARTIAL", "The Crisis Scope is a declared region; reuse in another region is observed."),
+    "CRISIS-5-02": ("c0_without_conditions", "IMPLEMENTED", None),
+    "CRISIS-Non-PrecedentRule_-03": ("no_numbers_in_protocol", "IMPLEMENTED", None),
+    "CRISIS-7-02": ("no_concealment_permanence_utility", "PARTIAL", "Permanence observed as staying in crisis once the module's exit "
+                    "conditions hold; 'emergency governance' as authority notices (also §7, §9)."),
+    "CRISIS-8-01": ("algorithmic_governance", "IMPLEMENTED", None),
     "DEFENSE-5-02": ("d3_needs_confirmation", "IMPLEMENTED", None),
     "DEFENSE-8-02": ("resource_recovery_claim", "IMPLEMENTED", None),
     "DEFENSE-8-04": ("wind_down", "PARTIAL", "Admissible-state restoration is the end of the harm window."),
@@ -497,7 +638,7 @@ IMPLEMENTS = {
 
 class CrisisRecoveryModule(LabModule):
     id = "crisis_recovery"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Crisis and recovery (S-LAB-06)", "ru": "Кризис и восстановление (S-LAB-06)"}
     summary = {"en": "An existential threat or a cascading failure: does the system enter crisis only on PTL evidence, "
                      "keep logging, grant no one power, leave by itself and recover layer by layer?",
@@ -582,6 +723,12 @@ class CrisisRecoveryModule(LabModule):
         "a1_confidence_reading": {"type": "enum", "values": ["propagated", "not_sufficient"], "default": "propagated",
                                   "source": "alternative", "label": {"en": "Confidence of A1 outputs (H-CR-6, F-043)",
                                                                      "ru": "Уверенность выходов A1 (H-CR-6, F-043)"}},
+        "crisis_envelope": {"type": "list", "min_items": 1, "max_items": len(ENVELOPE_ACTIONS),
+                            "items": {"type": "enum", "values": list(ENVELOPE_ACTIONS)}, "default": ["ration", "suspend_non_essential"],
+                            "source": "user", "label": {"en": "Declared Crisis Scope Envelope: permitted actions (§1, §6)",
+                                                        "ru": "Объявленная оболочка кризиса: разрешённые действия (§1, §6)"}},
+        "crisis_scope_region": {"type": "str", "default": "R1", "source": "user",
+                                "label": {"en": "Declared Crisis Scope (region)", "ru": "Объявленная область кризиса (регион)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -636,6 +783,8 @@ class CrisisRecoveryModule(LabModule):
                                        "error_correction_complete_step": 32, "identifiable_harm_source": False},
             "faulty_crisis": {"faults": ["forecast_entry", "emergency_authority", "status_priority", "delayed_collapse",
                                          "finance_early", "cite_precedent", "unlogged_human"]},
+            "faulty_crisis_scope": {"faults": ["expand_envelope", "extrapolate_scope", "crisis_interpretation_rule",
+                                               "crisis_new_obligation", "human_directed_action"]},
             "no_crisis": {"d3_window": [0, 0], "human_intervention_step": -1},
             "exit_to_upgrade": {"exit_pathway": "upgrade"},
             "a1_confidence_not_sufficient": {"a1_confidence_reading": "not_sufficient"},

@@ -108,19 +108,25 @@
     "protocol interpretation records",
     "governance justification records"
    ],
-   "gap": "The text does not define a machine-readable test for precedent, custom, or normalization by interpretation. No lab check implemented yet.",
+   "gap": "Observed after the exit: citations of crisis actions, recorded interpretation rules, authority notices. Custom formed without a record is not observable.",
    "hypotheses_needed": [
     "Declare how normative reliance and interpretive effects are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "no_precedent_or_future_authorization"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -217,19 +223,25 @@
     "scope declaration history",
     "authorization provenance"
    ],
-   "gap": "The text does not define how scope inference and bypass are detected. No lab check implemented yet.",
+   "gap": "The envelope is a declared list of §6 actions (input crisis_envelope).",
    "hypotheses_needed": [
     "Declare scope comparison rules and authorization provenance semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "envelope_not_expanded"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -260,7 +272,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "envelope_in_s1"
    },
    "tests": [
@@ -336,19 +348,25 @@
     "rights and obligations registry",
     "authority registry"
    ],
-   "gap": "The baseline normative registries and semantic equivalence rules are not supplied. No lab check implemented yet.",
+   "gap": "Observed as explicit definitions and authority notices.",
    "hypotheses_needed": [
     "Declare how redefinitions and newly introduced normative effects are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "no_new_rights_obligations"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -377,7 +395,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ptl_anchored"
    },
    "tests": [
@@ -445,19 +463,25 @@
    "data_dependencies": [
     "cross-module artifact use and provenance"
    ],
-   "gap": "The document lacks a formal test for extrapolation, generalization, and semantic reuse. No lab check implemented yet.",
+   "gap": "The Crisis Scope is a declared region; reuse in another region is observed.",
    "hypotheses_needed": [
     "Declare artifact provenance and scope-membership semantics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "no_extrapolation"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -580,7 +604,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ptl_confirmed_triggers",
     "also": [
      {
@@ -625,7 +649,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_discretionary_entry"
    },
    "tests": [
@@ -661,7 +685,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "finite_dti_states"
    },
    "tests": [
@@ -689,19 +713,25 @@
    "data_dependencies": [
     "crisis condition assessments"
    ],
-   "gap": "The underlying crisis-condition tests are not fully defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a complete crisis-condition evaluator for the simulated domain."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "c0_without_conditions"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -772,7 +802,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -885,7 +915,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "persistence_needs_confirmation"
    },
    "tests": [
@@ -1047,7 +1077,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "action_qualities"
    },
    "tests": [
@@ -1088,7 +1118,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_precedent"
    },
    "tests": [
@@ -1152,19 +1182,25 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The prohibition's scope and the distinction between numerical parameter definitions and numeric identifiers are ambiguous. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare whether the prohibition is protocol-wide or authority-specific and how numerical definitions are classified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "no_numbers_in_protocol"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1196,7 +1232,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "parameters_from_simulation"
    },
    "tests": [
@@ -1237,7 +1273,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "logging_no_authority"
    },
    "tests": [
@@ -1276,19 +1312,25 @@
     "governance provenance",
     "allocation and valuation logic"
    ],
-   "gap": "Complete observability and formal definitions of emergency governance and utilitarian life valuation are missing. No lab check implemented yet.",
+   "gap": "Permanence observed as staying in crisis once the module's exit conditions hold; 'emergency governance' as authority notices (also §7, §9).",
    "hypotheses_needed": [
     "Declare an authoritative execution trace and classifiers for the prohibited governance and valuation practices."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "no_concealment_permanence_utility"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1319,7 +1361,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_status_priority"
    },
    "tests": [
@@ -1364,7 +1406,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "allocation_basis"
    },
    "tests": [
@@ -1440,19 +1482,25 @@
     "action and governance provenance",
     "authority grant records"
    ],
-   "gap": "The text supplies no provenance standard for establishing derivation from pre-defined logic. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how algorithmic derivation and pre-definition are verified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.2.0",
+    "check": "algorithmic_governance"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1481,7 +1529,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "human_logged"
    },
    "tests": [
@@ -1529,7 +1577,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "automatic_exit"
    },
    "tests": [
@@ -1572,7 +1620,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "sequential_recovery"
    },
    "tests": [
@@ -1692,7 +1740,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "immediate_collapse"
    },
    "tests": [
@@ -1738,7 +1786,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "actions_anchored_committed"
    },
    "tests": [
@@ -1785,7 +1833,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "final_state_broadcast"
    },
    "tests": [
@@ -1962,7 +2010,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "eb5_metadata"
    },
    "tests": [
@@ -2001,7 +2049,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "conditional_outputs"
    },
    "tests": [
@@ -2041,7 +2089,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "scope_ref_flags"
    },
    "tests": [
@@ -2076,7 +2124,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "a1_interpretation_fields"
    },
    "tests": [
@@ -2109,7 +2157,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_settled_axiom_interpretation"
    },
    "tests": [

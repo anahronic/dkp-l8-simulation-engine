@@ -31,6 +31,11 @@ def test_each_decision_matches_the_registry():
         else:
             assert it["verdict"] == "reclassified" and it["origin_after"] != "implementation_only", it["id"]
             assert cls[it["id"]]["primary"] == it["origin_after"], it["id"]
-            assert r["open_point"] == {"origin": it["origin_after"], "source": "lab_reconciled"}, it["id"]
+            # the open point stays: from the reconciliation, or from an open question of the same category
+            src = "agent_verified" if it.get("questions") else "lab_reconciled"
+            assert r["open_point"] == {"origin": it["origin_after"], "source": src}, it["id"]
+            assert r["decision_status"] == "UNRESOLVED", it["id"]
+            if it.get("check"):
+                assert r["coverage"] == "PARTIAL" and it["check"].split(":")[0] == r["implementation"]["module"], it["id"]
         if "checkable" in it:
             assert r["checkable"] == it["checkable"]["to"], it["id"]

@@ -42,6 +42,16 @@ FAULT_CASES = {
     "missing_metadata": ({}, ["CRISIS-12-01"]),
     "transfer_interpretation": ({}, ["CRISIS-12.2-01"]),
     "parameter_by_decree": ({}, ["CRISIS-Non-PrecedentRule_-04"]),
+    "expand_envelope": ({}, ["CRISIS-1-03"]),
+    "extrapolate_scope": ({}, ["CRISIS-2-05"]),
+    "crisis_interpretation_rule": ({}, ["CRISIS-0-03"]),
+    "crisis_new_obligation": ({}, ["CRISIS-2-02"]),
+    "normal_despite_trigger": ({}, ["CRISIS-5-02"]),
+    "numeric_in_text": ({}, ["CRISIS-Non-PrecedentRule_-03"]),
+    "conceal_action": ({}, ["CRISIS-7-02", "CRISIS-10-01"]),
+    "permanent_control": ({}, ["CRISIS-7-02"]),
+    "utilitarian_rationing": ({}, ["CRISIS-7-02", "CRISIS-7-03", "CRISIS-7-04"]),
+    "human_directed_action": ({}, ["CRISIS-8-01"]),
 }
 
 
@@ -79,3 +89,20 @@ def test_exit_and_sequential_recovery():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_pinned_crisis_text_has_no_numbers():
+    """CRISIS §6 Non-Precedent Rule: the pinned text defines no numerical value; the scan finds an injected one."""
+    from lab.modules.crisis_recovery import INJECTED, crisis_text, numeric_quantities
+    assert numeric_quantities(crisis_text()) == []
+    assert numeric_quantities(INJECTED) == ["line 1: 72 hours"]
+    assert numeric_quantities("see DKP-4-CRISIS-001 Section 8, states C0-C4, A1, edition 2026-10-04") == []
+
+
+def test_kt5_c0_and_crisis_scope():
+    """§5 C0 is recomputed from PTL observations; §1 envelope and §2 scope are declared inputs."""
+    res = statuses(run())
+    assert res["CRISIS-5-02"] == "PASS" and res["CRISIS-1-03"] == "PASS" and res["CRISIS-2-05"] == "PASS"
+    narrow = statuses(run(crisis_envelope=["ration"]))
+    assert narrow["CRISIS-1-03"] == "FAIL"           # the module still suspends non-essential functions: outside a narrower envelope
+    assert statuses(run(**M.examples()["no_crisis"]))["CRISIS-5-02"] == "PASS"

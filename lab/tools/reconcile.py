@@ -9,7 +9,8 @@ Each decision in ``reconciliation_input.json`` is the lab's reading of one provi
   * ``confirmed``: the text is clear and no author choice is needed; the provision gets a lab check (named here
     from the registry's implementation after ``sync_coverage``);
   * ``reclassified``: the draft origin is wrong; ``origin_after`` names the open point that blocks it, and the
-    classification file is updated to it.
+    classification file is updated to it.  A reclassified provision may still have a lab check under a named
+    reading (coverage PARTIAL); its open point stays, recorded by an open question where one is raised.
 A decision may also correct ``checkable`` (e.g. a draft ``no`` where a partial, observable check exists).  The
 reading is the agent's; nothing here is a human acceptance (A6).
 """
@@ -55,6 +56,10 @@ def build() -> Dict[str, Any]:
                 "acceptance": {"agent_reading": True, "human_accepted": False}}
         if d["verdict"] == "reclassified":
             item["origin_after"] = d["origin_after"]
+            if impl:                               # a check under a named reading may exist while the open point stays
+                item["check"] = f"{impl['module']}:{impl['check']}"
+            if r.get("open_questions"):
+                item["questions"] = r["open_questions"]
         else:
             item["check"] = f"{impl.get('module')}:{impl.get('check')}" if impl else None
         if "checkable" in d:

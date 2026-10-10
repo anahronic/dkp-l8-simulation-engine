@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1254 (72.2 %) | 931 | 1172 | 856 | 4 | 63 | 15 | 483 | 105 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1264 (72.8 %) | 941 | 1182 | 866 | 4 | 63 | 15 | 473 | 95 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 233 (55.0 %) | 146 | 213 | 129 | 1 | 17 | 2 | 191 | 37 | 337 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 243 (57.3 %) | 156 | 223 | 139 | 1 | 17 | 2 | 181 | 27 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 209 (71.3 %) | 167 | 193 | 153 | 0 | 9 | 7 | 84 | 19 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 373 (73.0 %) | 294 | 352 | 273 | 0 | 18 | 3 | 138 | 30 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1254 (72.2 %) | 931 | 1172 | 856 | 4 | 63 | 15 | 483 | 105 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1264 (72.8 %) | 941 | 1182 | 866 | 4 | 63 | 15 | 473 | 95 | 1414 |
 
 ### Stage criteria
 
@@ -168,12 +168,12 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
-| normative_ambiguity | 103 | 0 | 143 | 0 | 246 |
+| normative_ambiguity | 105 | 0 | 143 | 0 | 248 |
 | architecture_definition | 37 | 1 | 217 | 0 | 255 |
 | l8_parameter | 0 | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 0 | 227 | 0 | 227 |
 | external_dependency | 0 | 0 | 201 | 0 | 201 |
-| implementation_only | 0 | 42 | 315 | 0 | 357 |
+| implementation_only | 0 | 50 | 305 | 0 | 355 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -230,6 +230,7 @@ Draft author-question candidates (unverified, not questions): 360.
 - Q-061 [UNRESOLVED, normative_ambiguity] SCOPE §12: which protocols are 'dependent' (Depends-on lists: 2; references: 17)
 - Q-062 [UNRESOLVED, normative_ambiguity] 'Recorded only by the Last updated date': the document's own record, or every record (then no SHA256SUMS entry)
 - Q-063 [UNRESOLVED, normative_ambiguity] CRISIS §12.1 vs §12.3: which confidence_state does an A1 (axiom-interpreting) output carry when PTL data are sufficient
+- Q-064 [UNRESOLVED, normative_ambiguity] CRISIS-PATCH §11 'DKP does not degrade': within the null-output patch, or for DKP as a whole (CRISIS §1 'safe degradation', §5 C2 'System Degradation Mode', INTEROP §9 'degrade gracefully')
 
 Withdrawn after verification (not author decisions):
 
@@ -267,8 +268,8 @@ Withdrawn after verification (not author decisions):
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 33 | 33 | 0 | 0 | 0 | 16 | 47 |
 | DKP-3-POLICE-001 | 45 | 29 | 29 | 0 | 0 | 0 | 16 | 37 |
-| DKP-4-CRISIS-001 | 53 | 26 | 22 | 1 | 3 | 0 | 27 | 43 |
-| DKP-4-CRISIS-001-PATCH | 31 | 24 | 23 | 0 | 1 | 0 | 7 | 21 |
+| DKP-4-CRISIS-001 | 53 | 34 | 30 | 1 | 3 | 0 | 19 | 43 |
+| DKP-4-CRISIS-001-PATCH | 31 | 26 | 25 | 0 | 1 | 0 | 5 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 20 | 20 | 0 | 0 | 0 | 9 | 23 |
 | DKP-4-ERROR-001 | 52 | 25 | 21 | 0 | 3 | 1 | 27 | 46 |
 | DKP-4-UPGRADE-001 | 48 | 34 | 30 | 0 | 4 | 0 | 14 | 36 |
@@ -840,6 +841,8 @@ Withdrawn after verification (not author decisions):
 | POLICE-8-03 | PARTIAL | police_antiterror · no_precedent | PASS | — | — |
 | POLICE-8-04 | PARTIAL | police_antiterror · crisis_policing_in_scope | PASS | yes | — |
 | POLICE-9-01 | IMPLEMENTED | police_antiterror · aggregated_statistics | PASS | — | — |
+| CRISIS-0-03 | PARTIAL | crisis_recovery · no_precedent_or_future_authorization | PASS | yes | — |
+| CRISIS-1-03 | PARTIAL | crisis_recovery · envelope_not_expanded | PASS | yes | — |
 | CRISIS-1-04 | PARTIAL | crisis_recovery · envelope_in_s1 | PASS | yes | — |
 | CRISIS-10-01 | IMPLEMENTED | crisis_recovery · actions_anchored_committed | PASS | — | — |
 | CRISIS-10-02 | PARTIAL | crisis_recovery · final_state_broadcast | PASS | — | — |
@@ -851,21 +854,29 @@ Withdrawn after verification (not author decisions):
 | CRISIS-12.1-02 | IMPLEMENTED | crisis_recovery · scope_ref_flags | PASS | — | — |
 | CRISIS-12.2-01 | PARTIAL | crisis_recovery · a1_interpretation_fields | PASS | yes | — |
 | CRISIS-12.3-01 | PARTIAL | crisis_recovery · no_settled_axiom_interpretation | FAIL | yes | Q-063 |
+| CRISIS-2-02 | PARTIAL | crisis_recovery · no_new_rights_obligations | PASS | yes | — |
 | CRISIS-2-03 | IMPLEMENTED | crisis_recovery · ptl_anchored | PASS | yes | — |
+| CRISIS-2-05 | PARTIAL | crisis_recovery · no_extrapolation | PASS | yes | — |
 | CRISIS-4-01 | PARTIAL | crisis_recovery · ptl_confirmed_triggers | UNKNOWN | — | — |
 | CRISIS-4-02 | IMPLEMENTED | crisis_recovery · no_discretionary_entry | PASS | yes | — |
 | CRISIS-5-01 | PARTIAL | crisis_recovery · finite_dti_states | PASS | — | — |
+| CRISIS-5-02 | IMPLEMENTED | crisis_recovery · c0_without_conditions | PASS | — | — |
 | CRISIS-5-07 | PARTIAL | crisis_recovery · persistence_needs_confirmation | PASS | — | — |
 | CRISIS-6-04 | PARTIAL | crisis_recovery · action_qualities | PASS | — | — |
 | CRISIS-7-01 | IMPLEMENTED | crisis_recovery · logging_no_authority | PASS | yes | — |
+| CRISIS-7-02 | PARTIAL | crisis_recovery · no_concealment_permanence_utility | PASS | — | — |
 | CRISIS-7-03 | IMPLEMENTED | crisis_recovery · no_status_priority | PASS | yes | — |
 | CRISIS-7-04 | IMPLEMENTED | crisis_recovery · allocation_basis | PASS | yes | — |
+| CRISIS-8-01 | IMPLEMENTED | crisis_recovery · algorithmic_governance | PASS | yes | — |
 | CRISIS-8-02 | IMPLEMENTED | crisis_recovery · human_logged | PASS | yes | — |
 | CRISIS-9-01 | PARTIAL | crisis_recovery · automatic_exit | PASS | — | — |
 | CRISIS-9-02 | IMPLEMENTED | crisis_recovery · sequential_recovery | PASS | yes | — |
 | CRISIS-9-05 | IMPLEMENTED | crisis_recovery · immediate_collapse | PASS | yes | — |
 | CRISIS-Non-PrecedentRule_-01 | PARTIAL | crisis_recovery · no_precedent | PASS | yes | — |
+| CRISIS-Non-PrecedentRule_-03 | IMPLEMENTED | crisis_recovery · no_numbers_in_protocol | PASS | — | — |
 | CRISIS-Non-PrecedentRule_-04 | PARTIAL | crisis_recovery · parameters_from_simulation | UNKNOWN | yes | — |
+| CRISISPATCH-11-01 | PARTIAL | sensor_loss · no_degraded_mode | PASS | yes | Q-064 |
+| CRISISPATCH-11-02 | PARTIAL | sensor_loss · operates_or_not | PASS | yes | Q-064 |
 | CRISISPATCH-2-01 | PARTIAL | calibration_expiry · no_global_halt_from_expiry | UNKNOWN | yes | Q-026 |
 | CRISISPATCH-3-01 | IMPLEMENTED | sensor_loss · state_no_enforcement | PASS | — | — |
 | CRISISPATCH-3-02 | IMPLEMENTED | sensor_loss · no_penaltys_in_null_output | PASS | yes | — |

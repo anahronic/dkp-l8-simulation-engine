@@ -2,10 +2,148 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 42,
-  "reclassified": 1
+  "confirmed": 50,
+  "reclassified": 3
  },
  "items": [
+  {
+   "id": "CRISIS-0-03",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "Any action, restriction, suspension, or authority exercised under this protocol SHALL NOT create precedent, custom, interpretation rule, or future authorization outside an explicitly declared Crisis Scope.\n\nCrisis actions SHALL NOT be interpreted post-factum as evidence of normal system capability, acceptable governance practice, or latent authority. Post-crisis normalization by interpretation is explicitly forbidden.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Precedent, custom, interpretation rule and future authorization are observable as records after the exit that cite a crisis action, state a rule derived from it, or keep an authority; 'outside an explicitly declared Crisis Scope' is the time after exit and any other scope. Custom formed without any record is not observable (partial).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:no_precedent_or_future_authorization"
+  },
+  {
+   "id": "CRISIS-1-03",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "The Crisis Scope Envelope SHALL NOT be expanded, inferred, or bypassed under any circumstances.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The envelope is declared (§1: a hard subset of SCOPE); expansion is an action outside the declared list, inference is an envelope not declared at entry or changed later, bypass is an action without it. All observable with the envelope as an input.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:envelope_not_expanded"
+  },
+  {
+   "id": "CRISIS-2-02",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "- DKP-4-CRISIS-001 SHALL NOT redefine axioms.\n- DKP-4-CRISIS-001 SHALL NOT introduce new rights, obligations, or authorities.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Two hard constraints: no axiom redefinition, no new rights, obligations or authorities. A crisis output defining one of them, or an authority granted during the crisis, is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:no_new_rights_obligations"
+  },
+  {
+   "id": "CRISIS-2-05",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "No crisis condition, trigger, state, or action SHALL be extrapolated, generalized, or reused outside the explicitly declared Crisis Scope.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Reuse outside the explicitly declared Crisis Scope is observable when the scope is declared: an action applied to another region or domain.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:no_extrapolation"
+  },
+  {
+   "id": "CRISIS-5-02",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "C0 – Normal Operation No crisis conditions present.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "C0 is defined by the absence of crisis conditions; whether a C0 step coexists with a PTL-confirmed trigger (§4) or a crisis action is recomputable from the PTL observations. Only this direction is fixed: leaving C0 also needs the §9 exit conditions.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:c0_without_conditions"
+  },
+  {
+   "id": "CRISIS-7-02",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "- conceal actions or decisions from audit,\n- use Crisis as justification for permanent control or emergency governance,\n- apply utilitarian valuation of human life.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Three bans, each observable: a crisis action without an audit commitment, staying in crisis after the exit conditions hold (permanent control), rationing by a utility valuation of life.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:no_concealment_permanence_utility"
+  },
+  {
+   "id": "CRISIS-8-01",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "Crisis governance is algorithmic only.\n\nNo emergency human authority is created.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Algorithmic only' is concretized by §8 itself: all actions derive from pre-defined protocol logic; no emergency human authority. Both are observable (derivation from the CRISIS state determination; authority notices; human-directed actions).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:algorithmic_governance"
+  },
+  {
+   "id": "CRISIS-Non-PrecedentRule_-03",
+   "document": "DKP-4-CRISIS-001",
+   "quote": "No numerical values, thresholds, coefficients, timers, decay curves, or quantitative authority limits MAY be defined in this protocol.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A property of the protocol text itself: the pinned DKP-4-CRISIS-001 is scanned for numerical quantities (identifiers, state labels, section numbers and edition dates excluded). None is found.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "crisis_recovery:no_numbers_in_protocol"
+  },
+  {
+   "id": "CRISISPATCH-11-01",
+   "document": "DKP-4-CRISIS-001-PATCH",
+   "quote": "DKP does not degrade",
+   "draft_origin": "implementation_only",
+   "verdict": "reclassified",
+   "reason": "The statement has no qualifier. Within the null-output patch it is checkable (no partial or degraded mode; checked under H-SL-5); for DKP as a whole it excludes the degradation required by CRISIS §1 and §5 C2 and INTEROP §9. The scope is the author's choice (Q-064).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "origin_after": "normative_ambiguity",
+   "check": "sensor_loss:no_degraded_mode",
+   "questions": [
+    "Q-064"
+   ]
+  },
+  {
+   "id": "CRISISPATCH-11-02",
+   "document": "DKP-4-CRISIS-001-PATCH",
+   "quote": "- operates correctly\n- or does not operate",
+   "draft_origin": "implementation_only",
+   "verdict": "reclassified",
+   "reason": "Same sentence as CRISISPATCH-11-01 ('It either operates correctly or does not operate'); the same scope question (Q-064). Checked under the patch-local reading H-SL-5.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "origin_after": "normative_ambiguity",
+   "check": "sensor_loss:operates_or_not",
+   "questions": [
+    "Q-064"
+   ]
+  },
   {
    "id": "EDU-0-01",
    "document": "DKP-5-EDU-001",

@@ -401,6 +401,11 @@
   },
   {
    "module": "crisis_recovery",
+   "example": "faulty_crisis_scope",
+   "kind": "counterexample"
+  },
+  {
+   "module": "crisis_recovery",
    "example": "no_crisis",
    "kind": "reference"
   },
@@ -1435,21 +1440,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1254,
-  "covered_percent": 72.2,
+  "covered": 1264,
+  "covered_percent": 72.8,
   "statuses": {
-   "PASS": 1172,
+   "PASS": 1182,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 483
+   "UNCOVERED": 473
   },
-  "resolvable": 676,
-  "resolvable_uncovered": 105,
-  "resolvable_uncovered_implementation_only": 105,
+  "resolvable": 674,
+  "resolvable_uncovered": 95,
+  "resolvable_uncovered_implementation_only": 95,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 931,
-  "pass_with_open_point": 856
+  "covered_with_open_point": 941,
+  "pass_with_open_point": 866
  },
  "stages": [
   {
@@ -1499,21 +1504,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1254,
-    "covered_percent": 72.2,
+    "covered": 1264,
+    "covered_percent": 72.8,
     "statuses": {
-     "PASS": 1172,
+     "PASS": 1182,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 483
+     "UNCOVERED": 473
     },
-    "resolvable": 676,
-    "resolvable_uncovered": 105,
-    "resolvable_uncovered_implementation_only": 105,
+    "resolvable": 674,
+    "resolvable_uncovered": 95,
+    "resolvable_uncovered_implementation_only": 95,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 931,
-    "pass_with_open_point": 856
+    "covered_with_open_point": 941,
+    "pass_with_open_point": 866
    }
   },
   {
@@ -1620,21 +1625,21 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 233,
-    "covered_percent": 55.0,
+    "covered": 243,
+    "covered_percent": 57.3,
     "statuses": {
-     "PASS": 213,
+     "PASS": 223,
      "FAIL": 1,
      "UNKNOWN": 17,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 191
+     "UNCOVERED": 181
     },
-    "resolvable": 166,
-    "resolvable_uncovered": 37,
-    "resolvable_uncovered_implementation_only": 37,
+    "resolvable": 164,
+    "resolvable_uncovered": 27,
+    "resolvable_uncovered_implementation_only": 27,
     "unresolved_decisions": 337,
-    "covered_with_open_point": 146,
-    "pass_with_open_point": 129
+    "covered_with_open_point": 156,
+    "pass_with_open_point": 139
    }
   },
   {
@@ -2244,6 +2249,12 @@
    "title": "CRISIS §12.1 vs §12.3: which confidence_state does an A1 (axiom-interpreting) output carry when PTL data are sufficient",
    "status": "UNRESOLVED",
    "category": "normative_ambiguity"
+  },
+  {
+   "id": "Q-064",
+   "title": "CRISIS-PATCH §11 'DKP does not degrade': within the null-output patch, or for DKP as a whole (CRISIS §1 'safe degradation', §5 C2 'System Degradation Mode', INTEROP §9 'degrade gracefully')",
+   "status": "UNRESOLVED",
+   "category": "normative_ambiguity"
   }
  ],
  "semantic_gate": {
@@ -2740,7 +2751,7 @@
    {
     "status": "UNRESOLVED",
     "category": "normative_ambiguity",
-    "count": 34
+    "count": 35
    },
    {
     "status": "WITHDRAWN",
@@ -2769,11 +2780,11 @@
   "by_origin": [
    {
     "origin": "normative_ambiguity",
-    "agent_verified": 103,
+    "agent_verified": 105,
     "lab_reconciled": 0,
     "codex_draft": 143,
     "human_accepted": 0,
-    "total": 246
+    "total": 248
    },
    {
     "origin": "architecture_definition",
@@ -2810,10 +2821,10 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 42,
-    "codex_draft": 315,
+    "lab_reconciled": 50,
+    "codex_draft": 305,
     "human_accepted": 0,
-    "total": 357
+    "total": 355
    },
    {
     "origin": "pending",
@@ -3041,12 +3052,12 @@
     "pending": 0
    },
    "DKP-4-CRISIS-001-PATCH": {
-    "normative_ambiguity": 3,
+    "normative_ambiguity": 5,
     "architecture_definition": 5,
     "l8_parameter": 1,
     "empirical_model_data": 1,
     "external_dependency": 1,
-    "implementation_only": 10,
+    "implementation_only": 8,
     "pending": 0
    },
    "DKP-4-EPISTEMIC-TRANSITIONS-001": {
@@ -8381,7 +8392,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -9788,7 +9800,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
@@ -32367,30 +32380,44 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define a machine-readable test for precedent, custom, or normalization by interpretation. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "no_precedent_or_future_authorization",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Observed after the exit: citations of crisis actions, recorded interpretation rules, authority notices. Custom formed without a record is not observable.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis",
+    "crisis_recovery:faulty_crisis_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -32463,30 +32490,44 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define how scope inference and bypass are detected. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "envelope_not_expanded",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "The envelope is a declared list of §6 actions (input crisis_envelope).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis_outputs",
+    "crisis_recovery:faulty_crisis_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -32959,7 +33000,8 @@
    "status": "FAIL",
    "counterexample_detected_by": [
     "crisis_recovery:faulty_crisis",
-    "crisis_recovery:faulty_crisis_outputs"
+    "crisis_recovery:faulty_crisis_outputs",
+    "crisis_recovery:faulty_crisis_scope"
    ],
    "under_alternative_readings": {
     "PASS": 1,
@@ -33014,30 +33056,44 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The baseline normative registries and semantic equivalence rules are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "no_new_rights_obligations",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Observed as explicit definitions and authority notices.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis",
+    "crisis_recovery:faulty_crisis_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -33120,30 +33176,43 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document lacks a formal test for extrapolation, generalization, and semantic reuse. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "no_extrapolation",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "The Crisis Scope is a declared region; reuse in another region is observed.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -33346,30 +33415,41 @@
    "section": "5",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The underlying crisis-condition tests are not fully defined. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "c0_without_conditions",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -33417,7 +33497,7 @@
    "gap": "Essentiality, core isolation, and truth continuity are not operationally defined. No lab check implemented yet.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -33430,7 +33510,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "questions:Q-064"
+   ],
    "open_point": {
     "origin": "architecture_definition",
     "source": "codex_draft"
@@ -33738,30 +33820,41 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Complete observability and formal definitions of emergency governance and utilitarian life valuation are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "crisis_recovery",
+   "check": "no_concealment_permanence_utility",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": "Permanence observed as staying in crisis once the module's exit conditions hold; 'emergency governance' as authority notices (also §7, §9).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -33860,30 +33953,44 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text supplies no provenance standard for establishing derivation from pre-defined logic. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "algorithmic_governance",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "crisis_recovery:faulty_crisis",
+    "crisis_recovery:faulty_crisis_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -34242,32 +34349,43 @@
    "section": "Non-Precedent Rule:",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibition's scope and the distinction between numerical parameter definitions and numeric identifiers are ambiguous. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "crisis_recovery",
+   "check": "no_numbers_in_protocol",
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-CR-1",
+    "H-CR-2",
+    "H-CR-3",
+    "H-CR-4",
+    "H-CR-5",
+    "H-CR-6"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [
     "questions:Q-029"
    ],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -34384,30 +34502,48 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Degradation is not defined or explicitly limited to enforcement. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "sensor_loss",
+   "check": "no_degraded_mode",
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "gap": "Patch-local reading (H-SL-5); the scope of the statement is open (Q-064).",
    "also_checked_by": [],
-   "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "hypotheses": [
+    "H-SL-1",
+    "H-SL-2",
+    "H-SL-3",
+    "H-SL-4",
+    "H-SL-5"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-064"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "sensor_loss:faulty_override",
+    "sensor_loss:faulty_recovery"
+   ],
+   "under_alternative_readings": {
+    "FAIL": 1,
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "questions:Q-064"
+   ],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -34416,30 +34552,46 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Correct operation is undefined and the scope of nonoperation is ambiguous. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "sensor_loss",
+   "check": "operates_or_not",
+   "tests": [
+    "tests/lab/test_sensor_loss_module.py"
+   ],
+   "gap": "Patch-local reading (H-SL-5); 'correctly' is not checked beyond the other PATCH rules; the scope is open (Q-064).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-SL-1",
+    "H-SL-2",
+    "H-SL-3",
+    "H-SL-4",
+    "H-SL-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
-   "open_questions": [],
+   "open_questions": [
+    "Q-064"
+   ],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "sensor_loss:faulty_override",
+    "sensor_loss:faulty_recovery"
+   ],
+   "under_alternative_readings": {
+    "FAIL": 1,
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "normative_ambiguity",
+    "source": "agent_verified"
    }
   },
   {
@@ -34466,7 +34618,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -34515,7 +34668,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -34554,7 +34708,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -34597,7 +34752,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -34637,7 +34793,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -34680,7 +34837,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -34723,7 +34881,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -34765,7 +34924,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -34809,7 +34969,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -34851,7 +35012,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -34898,7 +35060,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -34943,7 +35106,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -34985,7 +35149,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -35031,7 +35196,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -35080,7 +35246,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -35125,7 +35292,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -35167,7 +35335,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -35240,7 +35409,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -35281,7 +35451,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -35354,7 +35525,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "NONE_IDENTIFIED",
@@ -35428,7 +35600,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -35471,7 +35644,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -35517,7 +35691,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -35562,7 +35737,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -36243,7 +36419,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "NONE_IDENTIFIED",
@@ -55974,7 +56151,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -56174,7 +56352,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -56224,7 +56403,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -56747,7 +56927,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
@@ -56798,7 +56979,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -57154,7 +57336,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -62800,7 +62983,8 @@
     "H-SL-1",
     "H-SL-2",
     "H-SL-3",
-    "H-SL-4"
+    "H-SL-4",
+    "H-SL-5"
    ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
@@ -68182,7 +68366,7 @@
    "gap": "The trigger classifications and the meaning of graceful degradation are not operationally defined.",
    "also_checked_by": [],
    "hypotheses": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
@@ -68195,7 +68379,9 @@
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
-   "text_verification": [],
+   "text_verification": [
+    "questions:Q-064"
+   ],
    "open_point": {
     "origin": "architecture_definition",
     "source": "codex_draft"

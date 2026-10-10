@@ -237,6 +237,15 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
     def na(rid, chk, what, why):
         return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
 
+    # PATCH §11 under the patch-local reading (H-SL-5, Q-064): every step either operates in all regions or in none
+    mixed = [f"step {k}: {len(x['regions_null'])} of {r['regions']} regions stopped" for k, x in enumerate(rows)
+             if 0 < len(x["regions_null"]) < r["regions"]]
+    stopped = {k for k, x in enumerate(rows) if x["null_output"]}
+    mixed += [f"{m.event_id}: output while not operating" for m in actions if m.arrived_at in stopped]
+    for rid, chk in (("CRISISPATCH-11-01", "no_degraded_mode"), ("CRISISPATCH-11-02", "operates_or_not")):
+        out.append(v(rid, chk, mixed, f"{len(rows) - len(stopped)} steps operating everywhere, {len(stopped)} stopped everywhere; no "
+                     "partial or degraded mode (patch-local reading H-SL-5; the global reading is open: Q-064)",
+                     "{n} steps or outputs in a partial (degraded) mode"))
     undecidable = [e["step"] for e in exp if e["trigger"] is None]
     if undecidable:
         out.append(CheckResult("CRISISPATCH-2-01", "null_output_trigger", UNKNOWN,
@@ -449,6 +458,9 @@ IMPLEMENTS = {
     "CRISISPATCH-7-01": ("no_authority_granted", "PARTIAL", "Authority is observed as an explicit notice only."),
     "CRISISPATCH-9-01": ("full_stop_at_breach", "IMPLEMENTED", None),
     "CRISISPATCH-9-02": ("no_partial_outputs", "IMPLEMENTED", None),
+    "CRISISPATCH-11-01": ("no_degraded_mode", "PARTIAL", "Patch-local reading (H-SL-5); the scope of the statement is open (Q-064)."),
+    "CRISISPATCH-11-02": ("operates_or_not", "PARTIAL", "Patch-local reading (H-SL-5); 'correctly' is not checked beyond the other "
+                          "PATCH rules; the scope is open (Q-064)."),
     "CRISISPATCH-9-03": ("recovery_automatic_deterministic", "IMPLEMENTED", None),
     "CRISISPATCH-9-04": ("no_authority_emerges", "PARTIAL", "Authority is observed as an explicit notice only."),
     "CRISISPATCH-4.1-02": ("violator_external", "PARTIAL", "The override attempt is a declared event."),
@@ -470,7 +482,7 @@ IMPLEMENTS = {
 
 class SensorLossModule(LabModule):
     id = "sensor_loss"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Local loss of sensors (S-LAB-03)", "ru": "Локальная потеря датчиков (S-LAB-03)"}
     summary = {"en": "Sensors in one region fail: when does the whole system stop enforcing, does anything replace it, "
                      "and does it come back by itself?",
@@ -500,6 +512,13 @@ class SensorLossModule(LabModule):
                   "resume (CRISIS PATCH §5.2 against ETRANS §4.4; open question Q-019).",
             "ru": "Восстановление: 'recompute' — принуждение возобновляется с новыми оценками; 'resume_outputs' — "
                   "возобновляются прежние выходы (CRISIS PATCH §5.2 против ETRANS §4.4; вопрос Q-019)."}},
+        {"id": "H-SL-5", "source": "hypothesis", "text": {
+            "en": "PATCH §11 ('DKP does not degrade; it either operates correctly or does not operate') is read within the patch: "
+                  "in the null-output setting there is no partial or degraded mode. Read for DKP as a whole it would collide with "
+                  "CRISIS §1 ('safe degradation'), §5 C2 ('System Degradation Mode') and INTEROP §9 ('degrade gracefully'): Q-064.",
+            "ru": "PATCH §11 ('DKP does not degrade; it either operates correctly or does not operate') читается в пределах патча: "
+                  "при нулевом выходе нет частичного или деградированного режима. Для DKP в целом это столкнулось бы с CRISIS §1 "
+                  "('safe degradation'), §5 C2 ('System Degradation Mode') и INTEROP §9 ('degrade gracefully'): Q-064."}},
         {"id": "H-SL-4", "source": "hypothesis", "text": {
             "en": "Global coverage (ORACLE §13) = share of regions with at least one admissible source.",
             "ru": "Глобальное покрытие (ORACLE §13) = доля регионов, где есть хотя бы один допустимый источник."}},
