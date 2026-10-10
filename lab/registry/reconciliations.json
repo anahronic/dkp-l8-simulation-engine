@@ -2,10 +2,89 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 82,
-  "reclassified": 6
+  "confirmed": 87,
+  "reclassified": 7
  },
  "items": [
+  {
+   "id": "ASSETS-11-03",
+   "document": "DKP-2-ASSETS-001",
+   "quote": "This protocol SHALL NOT override justice outcomes.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "ASSETS applies the Justice outcome as given: no waiver of a Restriction, Isolation or Exclusion and no non-essential control kept under it. Observable on ASSETS records.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "economic_access:no_justice_override"
+  },
+  {
+   "id": "ASSETS-3.2-01",
+   "document": "DKP-2-ASSETS-001",
+   "quote": "A Property Right is a system-granted, conditional permission to control, use, or derive benefit from an Asset.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes observable properties of every right: granted by system rule, conditional (persistence conditions, §5), revocable, not permanent; when a condition fails the right is degraded (§5 'No Property Right is permanent').",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "property_rights:property_right_conditional"
+  },
+  {
+   "id": "ASSETS-4-02",
+   "document": "DKP-2-ASSETS-001",
+   "quote": "Ownership SHALL NOT be granted solely on the basis of:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Three excluded bases; a request resting on prior possession, inheritance without obligation transfer or a contract detached from impact alone is refused. Observable with the basis declared.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "property_rights:no_grant_on_sole_basis"
+  },
+  {
+   "id": "ASSETS-7-01",
+   "document": "DKP-2-ASSETS-001",
+   "quote": "the protocol SHALL trigger:\n\n- graduated restrictions,",
+   "draft_origin": "implementation_only",
+   "verdict": "reclassified",
+   "reason": "The responses are clear (graduated restrictions, enforced divestment, reallocation), but the trigger is not decidable: 'Concentration thresholds are derived from impact metrics' gives no values. The response is checked given a declared trigger (H-PR-2); the threshold is an open parameter (CALIBRATION_MAP).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "origin_after": "l8_parameter",
+   "check": "property_rights:concentration_response"
+  },
+  {
+   "id": "ASSETS-9-01",
+   "document": "DKP-2-ASSETS-001",
+   "quote": "Certain assets are designated as Non-Privatizable or Conditionally Privatizable, including:",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The listed categories are designated Non-Privatizable or Conditionally Privatizable and, per the next sentence, held only under stewardship and always revocable. Which category is which is not assigned by the text (declared, H-PR-1), but the provision holds for either: designation recorded, never ordinary private property.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "property_rights:critical_assets_designated"
+  },
+  {
+   "id": "ASSETS-ReallocationTransparencyConstraint-03",
+   "document": "DKP-2-ASSETS-001",
+   "quote": "Public stewardship denotes algorithmic custodianship under open rules, not bureaucratic management.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Algorithmic custodianship under open rules, not bureaucratic management': the custodian of an asset under public stewardship is an algorithmic custodian bound to the open rule, not an administrative body. Observable on the reallocation record.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "economic_access:algorithmic_stewardship"
+  },
   {
    "id": "CODEX-3-01",
    "document": "CODE-OF-PLANETARY-SYNERGY",

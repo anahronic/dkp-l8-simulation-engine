@@ -46,6 +46,8 @@ FAULT_CASES = {
     "accept_shell": (SHELL, ["ASSETS-12-02", "ASSETS-IdentityBindingRequirement-01"]),
     "untraceable_fee": ({}, ["FINANCE-2-01"]),
     "discretionary_rate": ({}, ["FINANCE-3.2-03"]),
+    "bureaucratic_stewardship": ({}, ["ASSETS-ReallocationTransparencyConstraint-03"]),
+    "assets_override_justice": ({}, ["ASSETS-11-03", "ASSETS-11-01"]),
 }
 
 

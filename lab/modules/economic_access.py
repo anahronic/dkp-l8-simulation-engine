@@ -59,6 +59,8 @@ FAULTS = {
     "accept_shell": "an asset held through a shell structure is recognised as owned",
     "untraceable_fee": "an administrative fee is charged with no basis in L1 outputs",
     "discretionary_rate": "a loan officer adds a discretionary risk premium",
+    "bureaucratic_stewardship": "an asset under public stewardship is handed to an administrative agency with discretion",
+    "assets_override_justice": "ASSETS waives the Justice restriction for a strategic asset holder",
 }
 DISPOSITIONS = ("public stewardship", "alternative Subject", "reserve or mitigation pool")             # ASSETS §8.2
 ASSET = {"type": "object", "fields": {
@@ -250,8 +252,11 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Any]]:
             meta = None if "missing_metadata_enforced" in faults else md(jm.event_id)
             revocation = put("decision", "ASSETS", h, {"revocation": "Property Rights", "trigger": domain_on(ev, first),
                                                        "scope": r["revocation_scope"]}, [jm.event_id], epistemic=meta)
+            if "assets_override_justice" in faults:
+                put("notice", "ASSETS", h, {"justice_outcome_waived": domain_on(ev, first), "reason": "strategic asset holder"},
+                    [revocation.event_id])
             for aid, a in owned.items():
-                if not a["essential"]:
+                if not a["essential"] and "assets_override_justice" not in faults:
                     put("action", "ASSETS", h, {"asset": aid, "control": "suspended", "rule": "ASSETS §11"}, [revocation.event_id])
             if "revoke_life_access" in faults:
                 for aid, a in owned.items():
@@ -285,6 +290,8 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Any]]:
                                             "proceeds": owned[aid]["value"],
                                             "proceeds_to": "escrow" if into_escrow else "mitigation pool",
                                             "rule": "ASSETS §8.2 open rule: mitigation first",
+                                            "custodian": "regional asset agency (administrative discretion)"
+                                            if "bureaucratic_stewardship" in faults else "algorithmic custodian under the open rule",
                                             "decided_by": "committee" if "committee_override" in faults else "rule"},
                     [revocation.event_id])
         if acc and k == res_day and can_act(k) or (acc and res_day >= 0 and k > res_day and not returned
@@ -483,6 +490,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                      "{n} assets revoked against the scope or not revoked"))
         susp = {m.value["asset"] for m in assets if m.value.get("control") == "suspended"}
         need = {a for a, x in owned.items() if not x["essential"]} if revs and all(m.epistemic is not None for m in revs) else set()
+        waived = [f"{m.event_id}: {m.value['justice_outcome_waived']} waived" for m in assets if m.value.get("justice_outcome_waived")]
+        out.append(v("ASSETS-11-03", "no_justice_override", waived + [f"{a}: control kept under the Justice outcome"
+                                                                     for a in sorted(need - susp)],
+                     "ASSETS applied the Justice outcome as given: no waiver, non-essential control suspended",
+                     "{n} Justice outcomes overridden by ASSETS"))
         out.append(v("ASSETS-11-01", "non_essential_suspended", sorted(need - susp),
                      "control over non-essential assets suspended under Restriction, Isolation or Exclusion",
                      "{n} non-essential assets left under control"))
@@ -502,6 +514,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                          "{n} asset actions executed from a revocation order without metadata"))
     else:
         for rid, chk in (("ASSETS-8.1-01", "revocation_on_justice"), ("ASSETS-11-01", "non_essential_suspended"),
+                         ("ASSETS-11-03", "no_justice_override"),
                          ("ASSETS-11-02", "life_access_kept"), ("ASSETS-8.3-06", "revocation_metadata"),
                          ("ASSETS-8.3-07", "missing_metadata_non_operational"),
                          ("ASSETS-8.3-08", "missing_metadata_non_operational")):
@@ -577,10 +590,19 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         bad = [m.event_id for m in reallocs if m.value.get("decided_by") != "rule"]
         out.append(v("ASSETS-ReallocationTransparencyConstraint-02", "no_discretionary_body", bad,
                      "no committee or administrative body decided a reallocation", "{n} reallocations decided by a body"))
+        stew = [m for m in reallocs if m.value["reallocated"] == "public stewardship"]
+        out.append(v("ASSETS-ReallocationTransparencyConstraint-03", "algorithmic_stewardship",
+                     [f"{m.event_id}: {m.value.get('custodian')}" for m in stew
+                      if m.value.get("custodian") != "algorithmic custodian under the open rule" or not m.value.get("rule")],
+                     f"{len(stew)} assets under public stewardship held by an algorithmic custodian under the open rule",
+                     "{n} assets under public stewardship managed by an administrative body") if stew else
+                   na("ASSETS-ReallocationTransparencyConstraint-03", "algorithmic_stewardship", "public stewardship",
+                      "no asset placed under public stewardship"))
     else:
         out.append(na("ASSETS-8.2-01", "reallocation_disposition", "reallocation", "no revoked asset reallocated"))
         for rid, chk in (("ASSETS-ReallocationTransparencyConstraint-01", "rule_based_reallocation"),
-                         ("ASSETS-ReallocationTransparencyConstraint-02", "no_discretionary_body")):
+                         ("ASSETS-ReallocationTransparencyConstraint-02", "no_discretionary_body"),
+                         ("ASSETS-ReallocationTransparencyConstraint-03", "algorithmic_stewardship")):
             out.append(na(rid, chk, "reallocation", "no asset reallocated"))
     transfers = [m for m in assets if "transfer" in m.value and m.kind == "action"]
     if r["transfer"]["day"] >= 0:
@@ -625,6 +647,9 @@ IMPLEMENTS = {
     "FINANCE-3.2-03": ("no_discretionary_risk_pricing", "IMPLEMENTED", None),
     "ASSETS-8.1-01": ("revocation_on_justice", "PARTIAL", "Only the Justice-outcome trigger; scope reading H-EA-2."),
     "ASSETS-11-01": ("non_essential_suspended", "IMPLEMENTED", None),
+    "ASSETS-11-03": ("no_justice_override", "PARTIAL", "Observed as waivers and as control kept under an RIE outcome."),
+    "ASSETS-ReallocationTransparencyConstraint-03": ("algorithmic_stewardship", "PARTIAL", "The custodian is a recorded property of "
+                                                     "the reallocation."),
     "ASSETS-11-02": ("life_access_kept", "IMPLEMENTED", None),
     "ASSETS-8.3-01": ("dispute_window", "PARTIAL", "UNKNOWN when the execution clock and the ERROR §7 recording clock disagree (H-EA-3)."),
     "ASSETS-8.3-02": ("escrow", "IMPLEMENTED", None),
@@ -647,7 +672,7 @@ IMPLEMENTS = {
 
 class EconomicAccessModule(LabModule):
     id = "economic_access"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Financial access and property under Justice outcomes", "ru": "Доступ к финансам и собственность при решениях правосудия"}
     summary = {"en": "A Subject is excluded, disputes it and wins: is financial access suspended and restored on time, do "
                      "charges freeze during the status quo, are assets revoked by open rules, held in escrow and returned?",

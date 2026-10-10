@@ -152,7 +152,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_decision_during_halt",
     "also": [
      {
@@ -241,19 +241,25 @@
     "justice outcomes",
     "axiomatic constraints"
    ],
-   "gap": "Continuous impact contingency and the applicable justice and axiomatic constraints are not operationally specified. No lab check implemented yet.",
+   "gap": "The §5 conditions are declared events.",
    "hypotheses_needed": [
     "Declare how continuous contingency is monitored and how constraint changes affect active rights."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.0.0",
+    "check": "property_right_conditional"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -319,19 +325,25 @@
     "inheritance obligation transfers",
     "contract impact evidence"
    ],
-   "gap": "Exclusive reliance and detachment from measurable impact require a declared representation of grant justifications. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how exclusive reliance on prohibited grounds and contractual impact linkage are classified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.0.0",
+    "check": "no_grant_on_sole_basis"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -509,19 +521,25 @@
     "systemic fragility and harm assessments",
     "intervention records"
    ],
-   "gap": "Trigger classifiers, restriction graduation, and the relationship among the listed responses are undefined. No lab check implemented yet.",
+   "gap": "The trigger is a declared flag: thresholds are not given (H-PR-2; reclassified l8_parameter).",
    "hypotheses_needed": [
     "Declare trigger classifiers and whether responses are cumulative, alternative, or sequential."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.0.0",
+    "check": "concentration_response"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "l8_parameter",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -589,7 +607,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "revocation_on_justice"
    },
    "tests": [
@@ -627,7 +645,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "reallocation_disposition"
    },
    "tests": [
@@ -709,7 +727,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "rule_based_reallocation"
    },
    "tests": [
@@ -752,7 +770,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_discretionary_body"
    },
    "tests": [
@@ -788,19 +806,25 @@
     "published rules",
     "management authority records"
    ],
-   "gap": "Open rules and bureaucratic management lack operational definitions. No lab check implemented yet.",
+   "gap": "The custodian is a recorded property of the reallocation.",
    "hypotheses_needed": [
     "Declare criteria distinguishing algorithmic custodianship from bureaucratic management and determining rule openness."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.1.0",
+    "check": "algorithmic_stewardship"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -835,7 +859,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "dispute_window"
    },
    "tests": [
@@ -883,7 +907,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "escrow"
    },
    "tests": [
@@ -924,7 +948,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "claims_preserved"
    },
    "tests": [
@@ -967,7 +991,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "return_or_equivalent"
    },
    "tests": [
@@ -1010,7 +1034,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_prejudice"
    },
    "tests": [
@@ -1061,7 +1085,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "revocation_metadata",
     "also": [
      {
@@ -1116,7 +1140,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "missing_metadata_non_operational",
     "also": [
      {
@@ -1170,7 +1194,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "missing_metadata_non_operational"
    },
    "tests": [
@@ -1206,19 +1230,25 @@
     "ecological criticality assessments",
     "commons essentiality assessments"
    ],
-   "gap": "Category boundaries and the rule selecting between the two designations are unspecified. No lab check implemented yet.",
+   "gap": "Non-Privatizable vs Conditionally Privatizable per category is declared (H-PR-1).",
    "hypotheses_needed": [
     "Declare category membership criteria and a designation-selection rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.0.0",
+    "check": "critical_assets_designated"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1288,7 +1318,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "transfer_with_obligations"
    },
    "tests": [
@@ -1330,7 +1360,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "attribution_kept"
    },
    "tests": [
@@ -1371,7 +1401,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "non_essential_suspended"
    },
    "tests": [
@@ -1415,7 +1445,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "life_access_kept"
    },
    "tests": [
@@ -1451,19 +1481,25 @@
     "applicable justice outcomes",
     "asset decision effects"
    ],
-   "gap": "A formal representation of justice outcome requirements and an override test are missing. No lab check implemented yet.",
+   "gap": "Observed as waivers and as control kept under an RIE outcome.",
    "hypotheses_needed": [
     "Declare how decision effects are compared with justice outcomes and how apparent conflicts are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "economic_access",
+    "version": "1.1.0",
+    "check": "no_justice_override"
+   },
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1536,7 +1572,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_hidden_ownership"
    },
    "tests": [
@@ -1582,7 +1618,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "economic_access",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "shell_invalid"
    },
    "tests": [

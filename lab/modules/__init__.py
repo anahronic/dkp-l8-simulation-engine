@@ -25,6 +25,7 @@ from lab.modules.interop_failure import InteropFailureModule
 from lab.modules.oracle_ingestion import OracleIngestionModule
 from lab.modules.police_antiterror import PoliceAntiterrorModule
 from lab.modules.prevention import PreventionModule
+from lab.modules.property_rights import PropertyRightsModule
 from lab.modules.privacy_transparency import PrivacyTransparencyModule
 from lab.modules.resilience_structure import ResilienceStructureModule
 from lab.modules.scope_gate import ScopeGateModule
@@ -49,4 +50,5 @@ MODULES = {m.id: m for m in (PreventionModule(), TimeModule(), WorkCycleModule()
                              EpistemicGateModule(), AuditTraceModule(),
                              SimulationGateModule(), DefenseEnvelopeModule(),
                              HabitatDignityModule(), ResilienceStructureModule(),
-                             EditionFinalityModule(), FinanceMechanicsModule())}
+                             EditionFinalityModule(), FinanceMechanicsModule(),
+                             PropertyRightsModule())}

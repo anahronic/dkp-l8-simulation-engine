@@ -29,6 +29,7 @@
   "police_antiterror",
   "prevention",
   "privacy_transparency",
+  "property_rights",
   "resilience_structure",
   "scope_gate",
   "sensor_loss",
@@ -1458,6 +1459,21 @@
    "module": "finance_mechanics",
    "example": "four_subjects",
    "kind": "reference"
+  },
+  {
+   "module": "property_rights",
+   "example": "all_critical_non_privatizable",
+   "kind": "reference"
+  },
+  {
+   "module": "property_rights",
+   "example": "faulty_property",
+   "kind": "counterexample"
+  },
+  {
+   "module": "property_rights",
+   "example": "five_requests",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1465,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1299,
-  "covered_percent": 74.8,
+  "covered": 1305,
+  "covered_percent": 75.1,
   "statuses": {
-   "PASS": 1217,
+   "PASS": 1223,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 438
+   "UNCOVERED": 432
   },
-  "resolvable": 671,
-  "resolvable_uncovered": 60,
-  "resolvable_uncovered_implementation_only": 60,
+  "resolvable": 670,
+  "resolvable_uncovered": 54,
+  "resolvable_uncovered_implementation_only": 54,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 976,
-  "pass_with_open_point": 901
+  "covered_with_open_point": 982,
+  "pass_with_open_point": 907
  },
  "stages": [
   {
@@ -1529,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1299,
-    "covered_percent": 74.8,
+    "covered": 1305,
+    "covered_percent": 75.1,
     "statuses": {
-     "PASS": 1217,
+     "PASS": 1223,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 438
+     "UNCOVERED": 432
     },
-    "resolvable": 671,
-    "resolvable_uncovered": 60,
-    "resolvable_uncovered_implementation_only": 60,
+    "resolvable": 670,
+    "resolvable_uncovered": 54,
+    "resolvable_uncovered_implementation_only": 54,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 976,
-    "pass_with_open_point": 901
+    "covered_with_open_point": 982,
+    "pass_with_open_point": 907
    }
   },
   {
@@ -1650,21 +1666,21 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 251,
-    "covered_percent": 59.2,
+    "covered": 257,
+    "covered_percent": 60.6,
     "statuses": {
-     "PASS": 231,
+     "PASS": 237,
      "FAIL": 1,
      "UNKNOWN": 17,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 173
+     "UNCOVERED": 167
     },
-    "resolvable": 164,
-    "resolvable_uncovered": 19,
-    "resolvable_uncovered_implementation_only": 19,
+    "resolvable": 163,
+    "resolvable_uncovered": 13,
+    "resolvable_uncovered_implementation_only": 13,
     "unresolved_decisions": 337,
-    "covered_with_open_point": 164,
-    "pass_with_open_point": 147
+    "covered_with_open_point": 170,
+    "pass_with_open_point": 153
    }
   },
   {
@@ -2822,10 +2838,10 @@
    {
     "origin": "l8_parameter",
     "agent_verified": 0,
-    "lab_reconciled": 0,
+    "lab_reconciled": 1,
     "codex_draft": 128,
     "human_accepted": 0,
-    "total": 128
+    "total": 129
    },
    {
     "origin": "empirical_model_data",
@@ -2846,10 +2862,10 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 82,
-    "codex_draft": 270,
+    "lab_reconciled": 87,
+    "codex_draft": 264,
     "human_accepted": 0,
-    "total": 352
+    "total": 351
    },
    {
     "origin": "pending",
@@ -3007,10 +3023,10 @@
    "DKP-2-ASSETS-001": {
     "normative_ambiguity": 5,
     "architecture_definition": 7,
-    "l8_parameter": 2,
+    "l8_parameter": 3,
     "empirical_model_data": 6,
     "external_dependency": 7,
-    "implementation_only": 11,
+    "implementation_only": 10,
     "pending": 0
    },
    "DKP-2-FINANCE-001": {
@@ -21217,30 +21233,41 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A formal representation of justice outcome requirements and an override test are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "no_justice_override",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "Observed as waivers and as control kept under an RIE outcome.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -21649,30 +21676,37 @@
    "section": "3.2",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Continuous impact contingency and the applicable justice and axiomatic constraints are not operationally specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "property_right_conditional",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "The §5 conditions are declared events.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "property_rights:faulty_property"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -21713,30 +21747,37 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Exclusive reliance and detachment from measurable impact require a declared representation of grant justifications. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "property_rights",
+   "check": "no_grant_on_sole_basis",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "property_rights:faulty_property"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -21873,30 +21914,37 @@
    "section": "7",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Trigger classifiers, restriction graduation, and the relationship among the listed responses are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "concentration_response",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "The trigger is a declared flag: thresholds are not given (H-PR-2; reclassified l8_parameter).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "property_rights:faulty_property"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "codex_draft"
+    "origin": "l8_parameter",
+    "source": "lab_reconciled"
    }
   },
   {
@@ -22432,30 +22480,37 @@
    "section": "9",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Category boundaries and the rule selecting between the two designations are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "critical_assets_designated",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Non-Privatizable vs Conditionally Privatizable per category is declared (H-PR-1).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "property_rights:faulty_property"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -22627,30 +22682,41 @@
    "section": "Reallocation Transparency Constraint",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Open rules and bureaucratic management lack operational definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "economic_access",
+   "check": "algorithmic_stewardship",
+   "tests": [
+    "tests/lab/test_economic_access_module.py"
+   ],
+   "gap": "The custodian is a recorded property of the reallocation.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EA-1",
+    "H-EA-2",
+    "H-EA-3",
+    "H-EA-4",
+    "H-EA-5",
+    "H-EA-6"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

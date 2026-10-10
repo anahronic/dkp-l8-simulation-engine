@@ -135,6 +135,7 @@ Gap types: **l8_number** — a number, threshold or duration that L8 calibration
 | leverage limit function | l8_model | DKP-2-FINANCE-001 | §9 | "Leverage limits are impact-based, not volatility-based." | — | finance_mechanics.stand_in (basis only, H-FM-3) |
 | systemic safety margins for aggregate credit exposure | l8_number | DKP-2-FINANCE-001 | §5.1 | "aggregate exposure remains within systemic safety margins" | — | finance_mechanics.safety_margin |
 | transport-related impact on B(t) per unit of private transport | empirical_model | DKP-5-TRANSPORT-001 | §9 | "these impacts SHALL be measured via DKP-0-ORACLE-001," | — | transport_capacity.b_impact_per_km |
+| impact-based concentration thresholds for asset accumulation | l8_number | DKP-2-ASSETS-001 | §7 | "Concentration thresholds are derived from impact metrics, not nominal valuation or market price." | — | declared trigger flag per holding in module property_rights (H-PR-2) |
 
 External documents referenced but absent: DKP-2-ECONOMIC-001 (cited by DKP-5-TRANSPORT-001); DKP-PTL-REG-DATA-001 (cited by DKP-6-RESILIENCE-001).
 
@@ -155,7 +156,7 @@ SIMULATION §2 lists the protocols downstream of it and the three it is downstre
 | DKP-1-IMPACT-001 | not listed | — | 0 | numeric reference bounds Bᵢ (empirical_model); boundary-approach fraction of IMPACT (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-JUSTICE-001 | not listed | — | 0 | axiom-defined safe margins (empirical_model) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-1-PREVENTION-001 | not listed | — | 0 | PREVENTION ε_consistency, Δt_int, θ thresholds, Wₖ weights (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
-| DKP-2-ASSETS-001 | not listed | — | 1 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
+| DKP-2-ASSETS-001 | not listed | — | 1 | impact-based concentration thresholds for asset accumulation (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-2-FINANCE-001 | not listed | — | 1 | Justice-Weighted Cost of Capital and interest rate (the 'deterministic function') (l8_model); savings return function (duration, justice-weighted performance, systemic risk) (l8_model); Systemic Reserve Pool sizing function (l8_model); leverage limit function (l8_model); systemic safety margins for aggregate credit exposure (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-2-LABOR-001 | not listed | — | 0 | — | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
 | DKP-3-ANTITERROR-001 | not listed | — | 0 | acceptable civilian casualty risk (l8_number) | NON-ENFORCEABLE as written (SIMULATION §4): no bundle exists |
