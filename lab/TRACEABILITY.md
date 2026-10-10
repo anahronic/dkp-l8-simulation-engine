@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1337 (77.0 %) | 1014 | 1255 | 939 | 4 | 63 | 15 | 400 | 24 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1341 (77.2 %) | 1018 | 1259 | 943 | 4 | 63 | 15 | 396 | 20 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 23 (53.5 %) | 16 | 22 | 15 | 0 | 1 | 0 | 20 | 2 | 36 |
 | C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 253 | 339 | 241 | 3 | 8 | 2 | 13 | 0 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 263 (62.0 %) | 176 | 243 | 159 | 1 | 17 | 2 | 161 | 7 | 337 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 220 (75.1 %) | 178 | 204 | 164 | 0 | 9 | 7 | 73 | 8 | 251 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 224 (76.5 %) | 182 | 208 | 168 | 0 | 9 | 7 | 69 | 4 | 251 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 397 (77.7 %) | 318 | 376 | 297 | 0 | 18 | 3 | 114 | 7 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1337 (77.0 %) | 1014 | 1255 | 939 | 4 | 63 | 15 | 400 | 24 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1341 (77.2 %) | 1018 | 1259 | 943 | 4 | 63 | 15 | 396 | 20 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 1 | 128 | 0 | 129 |
 | empirical_model_data | 0 | 1 | 227 | 0 | 228 |
 | external_dependency | 0 | 2 | 201 | 0 | 203 |
-| implementation_only | 0 | 119 | 232 | 0 | 351 |
+| implementation_only | 0 | 123 | 228 | 0 | 351 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -279,7 +279,7 @@ Withdrawn after verification (not author decisions):
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 37 |
 | DKP-5-TRANSPORT-001 | 35 | 22 | 17 | 0 | 5 | 0 | 13 | 35 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 9 | 9 | 0 | 0 | 0 | 8 | 14 |
-| DKP-5-WORK-CYCLE-001 | 39 | 24 | 23 | 0 | 0 | 1 | 15 | 23 |
+| DKP-5-WORK-CYCLE-001 | 39 | 28 | 27 | 0 | 0 | 1 | 11 | 23 |
 | DKP-6-EXIT-001 | 62 | 36 | 35 | 0 | 0 | 1 | 26 | 49 |
 | DKP-6-INTEGRATION-001 | 51 | 22 | 22 | 0 | 0 | 0 | 29 | 37 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 37 |
@@ -1225,15 +1225,19 @@ Withdrawn after verification (not author decisions):
 | TRANSPORTA-A.5-04 | PARTIAL | edition_finality · full_system_simulation | PASS | — | — |
 | TRANSPORTA-A.5-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | TRANSPORTA-A.5-06 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
+| WORKCYCLE-10-02 | PARTIAL | work_cycle · exception_limited | PASS | yes | — |
+| WORKCYCLE-10-05 | PARTIAL | work_cycle · exception_no_precedent | PASS | — | — |
 | WORKCYCLE-11-01 | IMPLEMENTED | work_cycle · three_layers | PASS | yes | — |
 | WORKCYCLE-3-02 | IMPLEMENTED | work_cycle · cycle_day | PASS | — | Q-012 |
 | WORKCYCLE-3-03 | IMPLEMENTED | work_cycle · workday_has_work | PASS | — | — |
 | WORKCYCLE-3-04 | IMPLEMENTED | work_cycle · restday_no_work | PASS | yes | — |
 | WORKCYCLE-3-05 | IMPLEMENTED | work_cycle · presence_window | PASS | — | — |
+| WORKCYCLE-3-07 | IMPLEMENTED | work_cycle · recovery_block_present | PASS | yes | — |
 | WORKCYCLE-4.1-01 | PARTIAL | work_cycle · default_cycle | PASS | — | — |
 | WORKCYCLE-4.2-01 | IMPLEMENTED | work_cycle · max_consecutive | PASS | — | — |
 | WORKCYCLE-4.2-02 | IMPLEMENTED | work_cycle · rest_frequency | PASS | — | — |
 | WORKCYCLE-4.2-03 | IMPLEMENTED | work_cycle · sixty_cycles | PASS | — | — |
+| WORKCYCLE-4.2-04 | PARTIAL | work_cycle · week_without_authority | PASS | — | — |
 | WORKCYCLE-5.1-01 | IMPLEMENTED | work_cycle · workday_allocation | PASS | — | Q-013 |
 | WORKCYCLE-5.2-01 | IMPLEMENTED | work_cycle · recommended_layout | PASS | — | — |
 | WORKCYCLE-5.3-01 | IMPLEMENTED | work_cycle · recovery_not_work | PASS | yes | — |

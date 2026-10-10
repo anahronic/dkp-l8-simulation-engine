@@ -79,7 +79,7 @@ from lab.modules.work_cycle import FAULTS  # noqa: E402
 @pytest.mark.parametrize("fault", sorted(FAULTS))
 def test_fault_is_detected(fault):
     base = {"refusing_workers": 6} if fault in ("assign_refusers", "penalize_refusal") else \
-        {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty") else {}
+        {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty", "exception_precedent") else {}
     clean = {c.requirement_id: c.status for c in M.evaluate(M.validate(base)).checks}
     broken = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
     assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
@@ -101,3 +101,14 @@ def test_crisis_draft_is_time_limited():
     assert st["LABOR-9.1-01"] == st["LABOR-9.2-03"] == "PASS"
     st = {c.requirement_id: c.status for c in M.evaluate(M.validate(M.examples()["crisis_draft_faulty"])).checks}
     assert st["LABOR-9.2-03"] == "FAIL"
+
+
+def test_kt5_recovery_week_and_exceptions():
+    """Review КТ5 reading of WORK-CYCLE §3, §4.2, §10: each fault breaks only its own provision."""
+    crisis = {"refusing_workers": 6, "crisis_window": [3, 7]}
+    cases = {"work_in_recovery": ({}, "WORKCYCLE-3-07"), "week_authority": ({}, "WORKCYCLE-4.2-04"),
+             "permanent_obligation": (crisis, "WORKCYCLE-10-02"), "exception_precedent": (crisis, "WORKCYCLE-10-05")}
+    for fault, (base, rid) in cases.items():
+        st = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
+        assert st[rid] == "FAIL", fault
+        assert all(st[x] in ("PASS", "NOT_APPLICABLE") for _, x in cases.values() if x != rid), fault

@@ -1481,21 +1481,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1337,
-  "covered_percent": 77.0,
+  "covered": 1341,
+  "covered_percent": 77.2,
   "statuses": {
-   "PASS": 1255,
+   "PASS": 1259,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 400
+   "UNCOVERED": 396
   },
   "resolvable": 672,
-  "resolvable_uncovered": 24,
-  "resolvable_uncovered_implementation_only": 24,
+  "resolvable_uncovered": 20,
+  "resolvable_uncovered_implementation_only": 20,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 1014,
-  "pass_with_open_point": 939
+  "covered_with_open_point": 1018,
+  "pass_with_open_point": 943
  },
  "stages": [
   {
@@ -1545,21 +1545,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1337,
-    "covered_percent": 77.0,
+    "covered": 1341,
+    "covered_percent": 77.2,
     "statuses": {
-     "PASS": 1255,
+     "PASS": 1259,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 400
+     "UNCOVERED": 396
     },
     "resolvable": 672,
-    "resolvable_uncovered": 24,
-    "resolvable_uncovered_implementation_only": 24,
+    "resolvable_uncovered": 20,
+    "resolvable_uncovered_implementation_only": 20,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 1014,
-    "pass_with_open_point": 939
+    "covered_with_open_point": 1018,
+    "pass_with_open_point": 943
    }
   },
   {
@@ -1700,21 +1700,21 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 220,
-    "covered_percent": 75.1,
+    "covered": 224,
+    "covered_percent": 76.5,
     "statuses": {
-     "PASS": 204,
+     "PASS": 208,
      "FAIL": 0,
      "UNKNOWN": 9,
      "NOT_APPLICABLE": 7,
-     "UNCOVERED": 73
+     "UNCOVERED": 69
     },
     "resolvable": 124,
-    "resolvable_uncovered": 8,
-    "resolvable_uncovered_implementation_only": 8,
+    "resolvable_uncovered": 4,
+    "resolvable_uncovered_implementation_only": 4,
     "unresolved_decisions": 251,
-    "covered_with_open_point": 178,
-    "pass_with_open_point": 164
+    "covered_with_open_point": 182,
+    "pass_with_open_point": 168
    }
   },
   {
@@ -2862,8 +2862,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 119,
-    "codex_draft": 232,
+    "lab_reconciled": 123,
+    "codex_draft": 228,
     "human_accepted": 0,
     "total": 351
    },
@@ -51075,30 +51075,41 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define the acceptable duration bound or termination convention. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "work_cycle",
+   "check": "exception_limited",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": "The exception modelled is crisis drafting of refusing workers (LABOR §9.2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "work_cycle:crisis_draft_faulty"
+   ],
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -51171,30 +51182,39 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Precedent and the evidence sufficient to establish precedential reliance are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "work_cycle",
+   "check": "exception_no_precedent",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": "Precedent observed as a later drafting or a rule recorded from the exception.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -51532,30 +51552,41 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not completely define which activities qualify as dedicated to recovery. No lab check implemented yet.",
+   "coverage": "IMPLEMENTED",
+   "module": "work_cycle",
+   "check": "recovery_block_present",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": null,
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "work_cycle:recovery_faulty"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -51732,30 +51763,39 @@
    "section": "4.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not provide an operational definition of legal or computational authority. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "work_cycle",
+   "check": "week_without_authority",
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
+   "gap": "Authority observed as the scheduler's period; a display overlay is allowed.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-WC-1",
+    "H-WC-2",
+    "H-WC-3",
+    "H-WC-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

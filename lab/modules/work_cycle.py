@@ -40,6 +40,8 @@ FAULTS = {
     "post_crisis_penalty": "refusal during a declared crisis is penalised after it",
     "downgrade_forced_labor": "a report of forced labor is classified as a minor matter",
     "labor_as_punishment": "a request to use labor as punishment is executed",
+    "week_authority": "the scheduler places rest days by the 7-day week",
+    "exception_precedent": "after the crisis, refusing workers are drafted again on the crisis precedent",
 }
 CROSS_LAYER = ("redefine_justice", "override_impact", "punish", "ideological_criteria")                # LABOR §12
 
@@ -55,6 +57,12 @@ PERMITTED_RECOVERY = ("meal", "rest", "personal", "mobility")                   
 
 IMPLEMENTS = {
     "WORKCYCLE-3-02": ("cycle_day", "IMPLEMENTED", None),
+    "WORKCYCLE-3-07": ("recovery_block_present", "IMPLEMENTED", None),
+    "WORKCYCLE-4.2-04": ("week_without_authority", "PARTIAL", "Authority observed as the scheduler's period; a display overlay is "
+                         "allowed."),
+    "WORKCYCLE-10-02": ("exception_limited", "PARTIAL", "The exception modelled is crisis drafting of refusing workers (LABOR §9.2)."),
+    "WORKCYCLE-10-05": ("exception_no_precedent", "PARTIAL", "Precedent observed as a later drafting or a rule recorded from the "
+                        "exception."),
     "WORKCYCLE-4.1-01": ("default_cycle", "PARTIAL", "A non-default cycle gives UNKNOWN: the text does not say whether it is allowed."),
     "WORKCYCLE-4.2-01": ("max_consecutive", "IMPLEMENTED", None),
     "WORKCYCLE-4.2-02": ("rest_frequency", "IMPLEMENTED", None),
@@ -90,7 +98,7 @@ IMPLEMENTS = {
 
 class WorkCycleModule(LabModule):
     id = "work_cycle"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "24/7 service rosters (WORK-CYCLE)", "ru": "Круглосуточные смены (WORK-CYCLE)"}
     summary = {"en": "Is there enough staff for round-the-clock service without breaking the 6-day "
                      "cycle and the daily recovery block?",
@@ -149,6 +157,8 @@ class WorkCycleModule(LabModule):
                            "label": {"en": "High-intensity environment (§8.2)", "ru": "Высокая нагрузка (§8.2)"}},
         "refusing_workers": {"type": "int", "min": 0, "max": 1000, "default": 0, "source": "user",
                              "label": {"en": "Workers who refuse participation (LABOR §9.1)", "ru": "Отказавшихся от участия (LABOR §9.1)"}},
+        "local_week_overlay": {"type": "bool", "default": True, "source": "user",
+                               "label": {"en": "A local 7-day week is shown (overlay, §4.2)", "ru": "Показывать местную 7-дневную неделю (§4.2)"}},
         "crisis_window": {"type": "pair", "min": 0, "max": 360, "default": [0, 0], "unit": "day", "source": "user",
                           "label": {"en": "Declared crisis constraining refusal, from/to day (LABOR §9.2)",
                                     "ru": "Объявленный кризис, ограничивающий отказ, с/до дня (LABOR §9.2)"}},
@@ -202,7 +212,10 @@ class WorkCycleModule(LabModule):
             for k in range(-1, r["horizon_days"]):           # day -1: its shifts reach into hour 0
                 d = r["start_dti_day"] + k
                 kind = r["pattern"][(d + o) % n_pat]         # CycleDay = DTI-Day mod 6, shifted by the phase
-                if w in refusing and not (c0 <= k < c1 or ("permanent_obligation" in r["faults"] and k >= c1)):
+                if "week_authority" in r["faults"]:
+                    kind = "R" if d % 7 == 6 else "W"       # a 7-day week given computational authority
+                again = "exception_precedent" in r["faults"] and drafted and c1 + 2 <= k < c1 + 4
+                if w in refusing and not (c0 <= k < c1 or ("permanent_obligation" in r["faults"] and k >= c1) or again):
                     kind = "R"
                 days.append(kind)
             out.append({"worker": f"w{w + 1:03d}", "shift_start": s, "phase_offset": o,
@@ -283,8 +296,12 @@ class WorkCycleModule(LabModule):
                 decisions.append({"request": q, "granted": q == "monetize" and "recovery_buyout" in faults,
                                   "reason": "the recovery block is mandatory non-working time (§3, §5.3)"})
         outputs["recovery_requests"] = decisions
+        outputs["local_overlay"] = {"week": "7-day week shown for reading only", "authority": None} if r["local_week_overlay"] else None
+        if "exception_precedent" in faults and r["crisis_window"][1] > r["crisis_window"][0]:
+            outputs["schedule_rules"] = ["draft refusing workers on peak days, as during the crisis"]
         checks = [c for c in self.checks(r, roster, runs, deficit_hours) if c.requirement_id != "WORKCYCLE-5.3-01"] + \
-            self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions)
+            self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions) + \
+            exception_checks(r, roster, day_hours, outputs)
         explain = [
             {"en": f"{r['workers']} workers, shifts at {sorted(r['shift_starts'])} h: demand is fully covered in "
                    f"{H - deficit_hours} of {H} hours; largest shortfall {max_deficit:g} staff.",
@@ -537,3 +554,49 @@ class WorkCycleModule(LabModule):
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"work_exceeds_presence": {"work_hours": 9, "recovery_hours": 2}}
+
+
+def exception_checks(r, roster, day_hours, outputs) -> List[CheckResult]:
+    """WORK-CYCLE §3 (Recovery Block), §4.2 (7-day week), §10 (exceptions) — review КТ5 reading."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    wd = [(w, i, x) for w, rows in day_hours.items() for i, x in enumerate(rows) if x["kind"] == "W"]
+    out.append(v("WORKCYCLE-3-07", "recovery_block_present",
+                 [f"{w} day {i}: no recovery block" for w, i, x in wd if x["recovery"] < 1],
+                 f"all {len(wd)} workdays contain a non-working recovery block inside the presence window",
+                 "{n} workdays without a recovery block"))
+    n_pat = len(r["pattern"])
+    refusing = set(range(r["workers"] - r["refusing_workers"], r["workers"])) if "assign_refusers" not in r["faults"] else set()
+    c0, c1 = (int(x) for x in r["crisis_window"])
+    bad = []
+    for w in roster:
+        idx = int(w["worker"][1:]) - 1
+        if idx in refusing:
+            continue
+        for k, kind in enumerate(w["days"]):
+            want = r["pattern"][(r["start_dti_day"] + k + w["phase_offset"]) % n_pat]
+            if kind != want:
+                bad.append(f"{w['worker']} day {k}: {kind}, Cycle6 says {want}")
+    out.append(v("WORKCYCLE-4.2-04", "week_without_authority", bad[:20],
+                 "the roster follows the 6-day cycle only; the 7-day week is " +
+                 ("shown as a local overlay without authority" if outputs.get("local_overlay") else "not used"),
+                 "{n} roster days set by another period"))
+    if c1 > c0 and refusing:
+        drafted = {k for w in roster if int(w["worker"][1:]) - 1 in refusing for k, kind in enumerate(w["days"]) if kind == "W"}
+        after = sorted(k for k in drafted if k >= c1)
+        continued = bool({c1, c1 + 1} & drafted)          # the exception ran on past the crisis (rest days of Cycle6 aside)
+        out.append(v("WORKCYCLE-10-02", "exception_limited", [f"drafting continues on day {k}" for k in after] if continued else [],
+                     f"the exception (drafting refusing workers) lasted only the declared crisis days {c0}–{c1 - 1}",
+                     "{n} days of the exception beyond the crisis"))
+        rules = outputs.get("schedule_rules") or []
+        later = [] if continued else after
+        out.append(v("WORKCYCLE-10-05", "exception_no_precedent", [f"drafting again on day {k}" for k in later] + rules,
+                     "no later schedule reused the crisis exception", "{n} reuses of the exception as a precedent"))
+    else:
+        for rid, chk in (("WORKCYCLE-10-02", "exception_limited"), ("WORKCYCLE-10-05", "exception_no_precedent")):
+            out.append(CheckResult(rid, chk, NOT_APPLICABLE, "exceptions", applicability="no crisis exception in this experiment"))
+    return out

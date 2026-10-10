@@ -137,7 +137,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "cycle_day"
    },
    "tests": [
@@ -176,7 +176,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "workday_has_work"
    },
    "tests": [
@@ -209,7 +209,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "restday_no_work"
    },
    "tests": [
@@ -242,7 +242,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "presence_window"
    },
    "tests": [
@@ -307,19 +307,25 @@
     "work schedules",
     "recovery activity classifications"
    ],
-   "gap": "The text does not completely define which activities qualify as dedicated to recovery. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare a recovery activity classification consistent with the permitted examples."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.2.0",
+    "check": "recovery_block_present"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -349,7 +355,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "default_cycle"
    },
    "tests": [
@@ -385,7 +391,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "max_consecutive"
    },
    "tests": [
@@ -420,7 +426,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "rest_frequency"
    },
    "tests": [
@@ -454,7 +460,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "sixty_cycles"
    },
    "tests": [
@@ -484,19 +490,25 @@
     "legal rule metadata",
     "calendar and scheduling dependency records"
    ],
-   "gap": "The text does not provide an operational definition of legal or computational authority. No lab check implemented yet.",
+   "gap": "Authority observed as the scheduler's period; a display overlay is allowed.",
    "hypotheses_needed": [
     "Declare which rule dependencies constitute authority."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.2.0",
+    "check": "week_without_authority"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -523,7 +535,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "workday_allocation"
    },
    "tests": [
@@ -561,7 +573,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recommended_layout"
    },
    "tests": [
@@ -594,7 +606,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recovery_not_work"
    },
    "tests": [
@@ -662,7 +674,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recovery_untouchable"
    },
    "tests": [
@@ -694,7 +706,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recovery_activities"
    },
    "tests": [
@@ -728,7 +740,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "cycle_accounting_days"
    },
    "tests": [
@@ -761,7 +773,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "cycle_accounting_hours"
    },
    "tests": [
@@ -795,7 +807,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "year_accounting"
    },
    "tests": [
@@ -827,7 +839,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "year_recovery_480"
    },
    "tests": [
@@ -867,7 +879,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recovery_invariant"
    },
    "tests": [
@@ -906,7 +918,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "planning_failure"
    },
    "tests": [
@@ -946,7 +958,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "continuity_by_shifts"
    },
    "tests": [
@@ -989,7 +1001,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_exhaustion"
    },
    "tests": [
@@ -1027,7 +1039,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "shift_allocation"
    },
    "tests": [
@@ -1064,7 +1076,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "high_intensity_recovery"
    },
    "tests": [
@@ -1244,19 +1256,25 @@
    "data_dependencies": [
     "exception validity and termination records"
    ],
-   "gap": "The text does not define the acceptable duration bound or termination convention. No lab check implemented yet.",
+   "gap": "The exception modelled is crisis drafting of refusing workers (LABOR §9.2).",
    "hypotheses_needed": [
     "Declare how limited duration is established and checked."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.2.0",
+    "check": "exception_limited"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1348,19 +1366,25 @@
     "governance decision records",
     "decision dependency records"
    ],
-   "gap": "Precedent and the evidence sufficient to establish precedential reliance are undefined. No lab check implemented yet.",
+   "gap": "Precedent observed as a later drafting or a rule recorded from the exception.",
    "hypotheses_needed": [
     "Declare which forms of reliance on an exception constitute precedent."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.2.0",
+    "check": "exception_no_precedent"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1385,7 +1409,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "three_layers"
    },
    "tests": [

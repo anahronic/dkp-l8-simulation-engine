@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 119,
+  "confirmed": 123,
   "reclassified": 7
  },
  "items": [
@@ -1675,6 +1675,58 @@
     "human_accepted": false
    },
    "check": "transport_capacity:biosphere_informs_decisions"
+  },
+  {
+   "id": "WORKCYCLE-10-02",
+   "document": "DKP-5-WORK-CYCLE-001",
+   "quote": "- for limited duration,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Exceptions are permitted 'for limited duration': the exception the lab models (drafting refusing workers in a declared crisis, LABOR §9.2) must end with the crisis. Observable on the roster after the crisis.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "work_cycle:exception_limited"
+  },
+  {
+   "id": "WORKCYCLE-10-05",
+   "document": "DKP-5-WORK-CYCLE-001",
+   "quote": "No exception may establish precedent.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'No exception may establish precedent': no later schedule reuses the exception (a new drafting after the crisis, or a rule recorded from it). Observable on the roster and the recorded schedule rules.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "work_cycle:exception_no_precedent"
+  },
+  {
+   "id": "WORKCYCLE-3-07",
+   "document": "DKP-5-WORK-CYCLE-001",
+   "quote": "Mandatory non-working time within a workday dedicated to recovery.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition fixes that every workday contains a mandatory non-working block for recovery inside the presence window; a workday without it, or with work in it, is observable on the roster hours.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "work_cycle:recovery_block_present"
+  },
+  {
+   "id": "WORKCYCLE-4.2-04",
+   "document": "DKP-5-WORK-CYCLE-001",
+   "quote": "The 7-day week is explicitly non-normative and may exist only as a local cultural overlay without legal or computational authority.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Non-normative ... without legal or computational authority': the 7-day week may be shown as a local overlay, but no schedule may be computed from it. Observable as roster days that deviate from the 6-day cycle.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "work_cycle:week_without_authority"
   }
  ]
 }
