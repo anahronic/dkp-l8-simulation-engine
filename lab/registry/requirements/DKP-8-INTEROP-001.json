@@ -29,19 +29,25 @@
    "data_dependencies": [
     "operation records and classifications"
    ],
-   "gap": "The text does not operationally define the excluded functions. No lab check implemented yet.",
+   "gap": "The three exclusions are observed as refusals of declared requests; binding external rulings are also checked under §5.",
    "hypotheses_needed": [
     "Declare how operations are classified into the excluded functions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "excluded_functions_refused"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -63,19 +69,25 @@
     "operation traces",
     "translation rule definitions"
    ],
-   "gap": "An operational boundary between translation and other functions is missing. No lab check implemented yet.",
+   "gap": "'Purely translational' is observed as: INTEROP emits records only, no action.",
    "hypotheses_needed": [
     "Declare the permitted semantics and effects of a translation operation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "purely_translational"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -101,7 +113,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "external_not_governed"
    },
    "tests": [
@@ -131,19 +143,25 @@
     "interface specifications",
     "endpoint governance classifications"
    ],
-   "gap": "The required form and sufficiency of a formal interface definition are unspecified. No lab check implemented yet.",
+   "gap": "The interfaces are a declared lab list; their formal specification is not modelled.",
    "hypotheses_needed": [
     "Declare an accepted formal interface specification format."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "defined_interfaces"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -167,19 +185,25 @@
     "representation schemas",
     "mapping definitions"
    ],
-   "gap": "The mapping domain and the contextual state included in its inputs are unspecified. No lab check implemented yet.",
+   "gap": "Determinism of the declared mapping (same input, same output, both runs); the mapping itself is a lab stand-in: no translation function is given (§6, UNKNOWN in INTEROP-6-02).",
    "hypotheses_needed": [
     "Declare the complete input domain and any context affecting mapping outputs."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "deterministic_translation"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -202,19 +226,25 @@
     "import provenance",
     "protocol authorization records"
    ],
-   "gap": "Rules for identifying implicit normative imports and applicable authorizations are absent. No lab check implemented yet.",
+   "gap": "Leakage is observed through declared events: execution of an external ruling, compliance acts, consent inferences, an accepted external norm.",
    "hypotheses_needed": [
     "Declare how implicit imports and their authorization scope are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_normative_leakage"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -310,20 +340,26 @@
     "compatibility assessments",
     "normative decision provenance"
    ],
-   "gap": "A representation of the normative statuses and prohibited inference relationships is missing. No lab check implemented yet.",
+   "gap": "Observed as an explicit inference record; implicit treatment is not observable.",
    "hypotheses_needed": [
     "Declare how decisions and inference rules encode legitimacy, obligation, and consent."
    ],
    "section_label": "4.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "compatibility_not_consent"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -387,7 +423,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "exports_as_evidence"
    },
    "tests": [
@@ -421,7 +457,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "external_rulings_not_binding"
    },
    "tests": [
@@ -454,7 +490,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "compliance_by_subjects"
    },
    "tests": [
@@ -484,19 +520,25 @@
     "operation records",
     "external legal regime classifications"
    ],
-   "gap": "The boundary between adjudication and permitted legal information translation is unspecified. No lab check implemented yet.",
+   "gap": "Observed as the refusal of a declared request.",
    "hypotheses_needed": [
     "Declare a classification rule for adjudication of external legal conflicts."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_regime_adjudication"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -522,7 +564,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "economic_channels"
    },
    "tests": [
@@ -560,7 +602,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "justice_weighted_translation"
    },
    "tests": [
@@ -632,7 +674,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "external_values_flagged"
    },
    "tests": [
@@ -811,7 +853,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "blackbox_not_authoritative"
    },
    "tests": [
@@ -855,7 +897,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "external_info_as_i1"
    },
    "tests": [
@@ -896,7 +938,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_external_validation_for_ptl"
    },
    "tests": [
@@ -973,7 +1015,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "internal_execution_unaffected"
    },
    "tests": [
@@ -1015,7 +1057,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_rollback"
    },
    "tests": [
@@ -1052,7 +1094,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_crisis_from_interop"
    },
    "tests": [
@@ -1081,19 +1123,25 @@
    "data_dependencies": [
     "legal integration rules and execution records"
    ],
-   "gap": "An operational definition of automatic legal harmonization is missing. No lab check implemented yet.",
+   "gap": "Observed as the refusal of a declared request.",
    "hypotheses_needed": [
     "Declare how harmonization is distinguished from translation and how automation is identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_automatic_harmonization"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1122,7 +1170,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_external_decision_dependency"
    },
    "tests": [
@@ -1163,7 +1211,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_governance_by_api"
    },
    "tests": [
@@ -1204,7 +1252,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_silent_norm_import"
    },
    "tests": [
@@ -1349,7 +1397,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "boundary_events_recorded"
    },
    "tests": [
@@ -1420,19 +1468,25 @@
     "action records",
     "conflict and purpose classifications"
    ],
-   "gap": "The boundary between interoperability activity and geopolitical conflict resolution is unspecified. No lab check implemented yet.",
+   "gap": "Observed as the refusal of a declared request.",
    "hypotheses_needed": [
     "Declare how protocol actions are classified as geopolitical conflict resolution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_geopolitical_resolution"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1453,19 +1507,25 @@
    "data_dependencies": [
     "legal interoperability operations and effects"
    ],
-   "gap": "An operational distinction between legal compatibility and unification is missing. No lab check implemented yet.",
+   "gap": "Observed as the refusal of a declared request.",
    "hypotheses_needed": [
     "Declare the legal-system effects that constitute unification."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_legal_unification"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1486,19 +1546,25 @@
    "data_dependencies": [
     "protocol commitments and their scope"
    ],
-   "gap": "The text provides no structured representation or recognition rule for compliance guarantees. No lab check implemented yet.",
+   "gap": "Observed as the refusal of a declared request.",
    "hypotheses_needed": [
     "Declare how guarantees and their subjects are identified in protocol commitments."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_compliance_guarantee"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1520,19 +1586,25 @@
     "interface capabilities",
     "enforcement action provenance"
    ],
-   "gap": "The functions and directions covered by enforcement bridge are undefined. No lab check implemented yet.",
+   "gap": "Observed as the refusal of a declared request.",
    "hypotheses_needed": [
     "Declare what cross-boundary enforcement effects constitute an enforcement bridge."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "no_enforcement_bridge"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1542,7 +1614,7 @@
    "quote": "This protocol guarantees compatibility, not convergence.",
    "interpretation": "The stated guarantee concerns compatibility and excludes a guarantee of convergence. No observable success condition defines either term, and absence of a convergence guarantee does not prohibit convergence from occurring.",
    "kind": "contract",
-   "checkable": "no",
+   "checkable": "partial",
    "inputs": [
     "interoperability_outcomes",
     "protocol_guarantees"
@@ -1554,19 +1626,30 @@
     "interoperability outcomes",
     "guarantee statements"
    ],
-   "gap": "Compatibility and convergence lack operational definitions and acceptance criteria.",
+   "gap": "Read as a conjunction: interaction through defined interfaces (compatibility) and no harmonization, unification or adopted external norm (no convergence).",
    "hypotheses_needed": [
     "Declare observable meanings and acceptance criteria for compatibility and convergence."
    ],
-   "coverage": "NOT_COMPUTABLE",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.3.0",
+    "check": "compatibility_not_convergence"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
+   "checkable_reconciled": {
+    "from": "no",
+    "by": "lab reading",
+    "record": "lab/registry/reconciliations.json"
+   },
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

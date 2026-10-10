@@ -485,6 +485,11 @@
   },
   {
    "module": "interop_failure",
+   "example": "faulty_scope",
+   "kind": "counterexample"
+  },
+  {
+   "module": "interop_failure",
    "example": "former_lab_premise",
    "kind": "counterexample"
   },
@@ -1409,21 +1414,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1233,
-  "covered_percent": 71.0,
+  "covered": 1246,
+  "covered_percent": 71.7,
   "statuses": {
-   "PASS": 1151,
+   "PASS": 1164,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 504
+   "UNCOVERED": 491
   },
-  "resolvable": 675,
-  "resolvable_uncovered": 125,
-  "resolvable_uncovered_implementation_only": 125,
+  "resolvable": 676,
+  "resolvable_uncovered": 113,
+  "resolvable_uncovered_implementation_only": 113,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 910,
-  "pass_with_open_point": 835
+  "covered_with_open_point": 923,
+  "pass_with_open_point": 848
  },
  "stages": [
   {
@@ -1473,21 +1478,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1233,
-    "covered_percent": 71.0,
+    "covered": 1246,
+    "covered_percent": 71.7,
     "statuses": {
-     "PASS": 1151,
+     "PASS": 1164,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 504
+     "UNCOVERED": 491
     },
-    "resolvable": 675,
-    "resolvable_uncovered": 125,
-    "resolvable_uncovered_implementation_only": 125,
+    "resolvable": 676,
+    "resolvable_uncovered": 113,
+    "resolvable_uncovered_implementation_only": 113,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 910,
-    "pass_with_open_point": 835
+    "covered_with_open_point": 923,
+    "pass_with_open_point": 848
    }
   },
   {
@@ -1662,21 +1667,21 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 360,
-    "covered_percent": 70.5,
+    "covered": 373,
+    "covered_percent": 73.0,
     "statuses": {
-     "PASS": 339,
+     "PASS": 352,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 3,
-     "UNCOVERED": 151
+     "UNCOVERED": 138
     },
-    "resolvable": 181,
-    "resolvable_uncovered": 42,
-    "resolvable_uncovered_implementation_only": 42,
+    "resolvable": 182,
+    "resolvable_uncovered": 30,
+    "resolvable_uncovered_implementation_only": 30,
     "unresolved_decisions": 432,
-    "covered_with_open_point": 281,
-    "pass_with_open_point": 260
+    "covered_with_open_point": 294,
+    "pass_with_open_point": 273
    }
   },
   {
@@ -2784,8 +2789,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 21,
-    "codex_draft": 336,
+    "lab_reconciled": 34,
+    "codex_draft": 323,
     "human_accepted": 0,
     "total": 357
    },
@@ -66408,30 +66413,37 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not operationally define the excluded functions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "excluded_functions_refused",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "The three exclusions are observed as refusals of declared requests; binding external rulings are also checked under §5.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -66440,30 +66452,37 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of automatic legal harmonization is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_automatic_harmonization",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as the refusal of a declared request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -66751,30 +66770,37 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between interoperability activity and geopolitical conflict resolution is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_geopolitical_resolution",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as the refusal of a declared request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -66783,30 +66809,37 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational distinction between legal compatibility and unification is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_legal_unification",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as the refusal of a declared request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -66815,30 +66848,37 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text provides no structured representation or recognition rule for compliance guarantees. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_compliance_guarantee",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as the refusal of a declared request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -66847,30 +66887,37 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The functions and directions covered by enforcement bridge are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_enforcement_bridge",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as the refusal of a declared request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -66878,31 +66925,40 @@
    "document": "DKP-8-INTEROP-001",
    "section": "12",
    "kind": "contract",
-   "checkable": "no",
-   "coverage": "NOT_COMPUTABLE",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Compatibility and convergence lack operational definitions and acceptance criteria.",
+   "checkable": "partial",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "compatibility_not_convergence",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Read as a conjunction: interaction through defined interfaces (compatibility) and no harmonization, unification or adopted external norm (no convergence).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary",
+    "interop_failure:faulty_legal_economic",
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -67162,30 +67218,38 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational boundary between translation and other functions is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "purely_translational",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "'Purely translational' is observed as: INTEROP emits records only, no action.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_legal_economic",
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -67232,30 +67296,37 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required form and sufficiency of a formal interface definition are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "defined_interfaces",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "The interfaces are a declared lab list; their formal specification is not modelled.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -67264,30 +67335,37 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The mapping domain and the contextual state included in its inputs are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "deterministic_translation",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Determinism of the declared mapping (same input, same output, both runs); the mapping itself is a lab stand-in: no translation function is given (§6, UNKNOWN in INTEROP-6-02).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -67296,30 +67374,39 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Rules for identifying implicit normative imports and applicable authorizations are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_normative_leakage",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Leakage is observed through declared events: execution of an external ruling, compliance acts, consent inferences, an accepted external norm.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_boundary",
+    "interop_failure:faulty_legal_economic",
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -67392,30 +67479,37 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A representation of the normative statuses and prohibited inference relationships is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "compatibility_not_consent",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as an explicit inference record; implicit treatment is not observable.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -67565,30 +67659,37 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between adjudication and permitted legal information translation is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "interop_failure",
+   "check": "no_regime_adjudication",
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
+   "gap": "Observed as the refusal of a declared request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IO-1",
+    "H-IO-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "interop_failure:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

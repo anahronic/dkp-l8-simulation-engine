@@ -3,7 +3,7 @@
 import pytest
 
 from lab.core.schema import LabInputError
-from lab.modules.interop_failure import FAULTS, InteropFailureModule
+from lab.modules.interop_failure import FAULTS, REQUESTS, InteropFailureModule
 
 M = InteropFailureModule()
 REG = {"mirror_sources": 4, "ptl_loss_tolerance": 0.25, "mirror_role": "registered_ptl_source"}
@@ -40,6 +40,11 @@ FAULT_CASES = {
     "export_as_ruling": ({}, ["INTEROP-5-01"]),
     "system_complies": ({}, ["INTEROP-5-03"]),
     "direct_ledger_write": ({}, ["INTEROP-6-01"]),
+    "interop_overreach": ({}, ["INTEROP-1-01", "INTEROP-5-04", "INTEROP-10-01", "INTEROP-12-01", "INTEROP-12-02",
+                               "INTEROP-12-03", "INTEROP-12-04", "INTEROP-2-01", "INTEROP-3-04", "INTEROP-12-05"]),
+    "undeclared_interface": ({}, ["INTEROP-3-02", "INTEROP-12-05"]),
+    "nondeterministic_translation": ({}, ["INTEROP-3-03"]),
+    "compatibility_as_consent": ({}, ["INTEROP-4.3-01", "INTEROP-3-04"]),
 }
 
 
@@ -73,3 +78,28 @@ def test_source_roles_do_not_collide():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt5_excluded_functions_are_refused_one_by_one():
+    """Review КТ5 reading of INTEROP §1, §5, §10, §12: each excluded function is refused when requested, and only the
+    provision that excludes it reports it; with no request the provision is not applicable."""
+    for kind, rid in REQUESTS.items():
+        clean = run(out_of_scope_requests=[kind])
+        assert statuses(clean)[rid] == "PASS" and clean.outputs["requests_refused"] == 1, kind
+        broken = statuses(run(out_of_scope_requests=[kind], faults=["interop_overreach"]))
+        assert broken[rid] == "FAIL" and broken["INTEROP-2-01"] == "FAIL", kind
+        others = {r for r in REQUESTS.values() if r != rid}
+        assert all(broken[r] == "NOT_APPLICABLE" for r in others), kind
+    quiet = statuses(run(out_of_scope_requests=[]))
+    assert all(quiet[r] == "NOT_APPLICABLE" for r in set(REQUESTS.values()))
+
+
+def test_kt5_compatibility_not_convergence():
+    """INTEROP-12-05 (checkable no -> partial by the lab's reading): compatibility = interaction through defined
+    interfaces; convergence = internal rules taking an external norm.  Either side breaks it."""
+    assert statuses(run())["INTEROP-12-05"] == "PASS"
+    assert statuses(run(faults=["undeclared_interface"]))["INTEROP-12-05"] == "FAIL"
+    assert statuses(run(faults=["binding_external_ruling"]))["INTEROP-12-05"] == "FAIL"
+    assert statuses(run(out_of_scope_requests=["unify_legal_systems"], faults=["interop_overreach"]))["INTEROP-12-05"] == "FAIL"
+    # a refused unification request is not convergence
+    assert statuses(run(out_of_scope_requests=["unify_legal_systems"]))["INTEROP-12-05"] == "PASS"

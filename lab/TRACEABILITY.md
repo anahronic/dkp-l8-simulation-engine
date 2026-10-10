@@ -17,14 +17,14 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1233 (71.0 %) | 910 | 1151 | 835 | 4 | 63 | 15 | 504 | 125 | 1414 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1246 (71.7 %) | 923 | 1164 | 848 | 4 | 63 | 15 | 491 | 113 | 1414 |
 | B. First working site | PARTIAL | 1/1 | 43 | 22 (51.2 %) | 15 | 21 | 14 | 0 | 1 | 0 | 21 | 3 | 36 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 342 (93.7 %) | 243 | 329 | 231 | 3 | 8 | 2 | 23 | 9 | 266 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 225 (53.1 %) | 138 | 205 | 121 | 1 | 17 | 2 | 199 | 45 | 337 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 209 (71.3 %) | 167 | 193 | 153 | 0 | 9 | 7 | 84 | 19 | 251 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 360 (70.5 %) | 281 | 339 | 260 | 0 | 18 | 3 | 151 | 42 | 432 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 373 (73.0 %) | 294 | 352 | 273 | 0 | 18 | 3 | 138 | 30 | 432 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1233 (71.0 %) | 910 | 1151 | 835 | 4 | 63 | 15 | 504 | 125 | 1414 |
+| **All registrable documents** | | 38/38 | 1737 | 1246 (71.7 %) | 923 | 1164 | 848 | 4 | 63 | 15 | 491 | 113 | 1414 |
 
 ### Stage criteria
 
@@ -173,7 +173,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 0 | 128 | 0 | 128 |
 | empirical_model_data | 0 | 0 | 227 | 0 | 227 |
 | external_dependency | 0 | 0 | 201 | 0 | 201 |
-| implementation_only | 0 | 21 | 336 | 0 | 357 |
+| implementation_only | 0 | 34 | 323 | 0 | 357 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 360.
@@ -287,7 +287,7 @@ Withdrawn after verification (not author decisions):
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 25 | 25 | 0 | 0 | 0 | 19 | 41 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
-| DKP-8-INTEROP-001 | 49 | 23 | 22 | 0 | 1 | 0 | 26 | 41 |
+| DKP-8-INTEROP-001 | 49 | 36 | 35 | 0 | 1 | 0 | 13 | 41 |
 | DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
 
 ## Covered provisions
@@ -1456,20 +1456,33 @@ Withdrawn after verification (not author decisions):
 | AUDIT-EpistemicMetadataVerification-02 | PARTIAL | audit_trace · metadata_validity | PASS | yes | — |
 | AUDIT-EpistemicMetadataVerification-03 | PARTIAL | audit_trace · eb_classification | PASS | yes | — |
 | AUDIT-EpistemicMetadataVerification-04 | IMPLEMENTED | audit_trace · metadata_d2 | PASS | yes | Q-057 |
+| INTEROP-1-01 | PARTIAL | interop_failure · excluded_functions_refused | PASS | yes | — |
+| INTEROP-10-01 | PARTIAL | interop_failure · no_automatic_harmonization | PASS | yes | — |
 | INTEROP-10-02 | IMPLEMENTED | interop_failure · no_external_decision_dependency | PASS | — | — |
 | INTEROP-10-03 | IMPLEMENTED | interop_failure · no_governance_by_api | PASS | — | — |
 | INTEROP-10-04 | PARTIAL | interop_failure · no_silent_norm_import | PASS | yes | — |
 | INTEROP-11-03 | IMPLEMENTED | interop_failure · boundary_events_recorded | PASS | — | — |
+| INTEROP-12-01 | PARTIAL | interop_failure · no_geopolitical_resolution | PASS | yes | — |
+| INTEROP-12-02 | PARTIAL | interop_failure · no_legal_unification | PASS | yes | — |
+| INTEROP-12-03 | PARTIAL | interop_failure · no_compliance_guarantee | PASS | yes | — |
+| INTEROP-12-04 | PARTIAL | interop_failure · no_enforcement_bridge | PASS | yes | — |
+| INTEROP-12-05 | PARTIAL | interop_failure · compatibility_not_convergence | PASS | yes | — |
 | INTEROP-13-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | INTEROP-13-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | INTEROP-13-03 | PARTIAL | edition_finality · simulated | PASS | — | — |
 | INTEROP-13-04 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | INTEROP-13-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | INTEROP-13-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| INTEROP-2-01 | PARTIAL | interop_failure · purely_translational | PASS | yes | — |
 | INTEROP-3-01 | PARTIAL | interop_failure · external_not_governed | PASS | yes | — |
+| INTEROP-3-02 | PARTIAL | interop_failure · defined_interfaces | PASS | yes | — |
+| INTEROP-3-03 | PARTIAL | interop_failure · deterministic_translation | PASS | yes | — |
+| INTEROP-3-04 | PARTIAL | interop_failure · no_normative_leakage | PASS | yes | — |
+| INTEROP-4.3-01 | PARTIAL | interop_failure · compatibility_not_consent | PASS | yes | — |
 | INTEROP-5-01 | IMPLEMENTED | interop_failure · exports_as_evidence | PASS | yes | — |
 | INTEROP-5-02 | IMPLEMENTED | interop_failure · external_rulings_not_binding | PASS | yes | — |
 | INTEROP-5-03 | PARTIAL | interop_failure · compliance_by_subjects | PASS | yes | — |
+| INTEROP-5-04 | PARTIAL | interop_failure · no_regime_adjudication | PASS | yes | — |
 | INTEROP-6-01 | PARTIAL | interop_failure · economic_channels | PASS | yes | — |
 | INTEROP-6-02 | PARTIAL | interop_failure · justice_weighted_translation | UNKNOWN | — | — |
 | INTEROP-6-04 | IMPLEMENTED | interop_failure · external_values_flagged | PASS | — | — |

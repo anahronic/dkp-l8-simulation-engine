@@ -42,6 +42,10 @@ FAULTS = {
     "export_as_ruling": "a DKP output is exported to an external court as a binding ruling",
     "system_complies": "DKP itself acts to comply with an external ruling on a Subject's behalf",
     "direct_ledger_write": "an external economic system writes into DKP outside the three named channels",
+    "interop_overreach": "INTEROP carries out a function its scope excludes (harmonization, adjudication, enforcement bridge...)",
+    "undeclared_interface": "an external value arrives through an interface that is not formally defined",
+    "nondeterministic_translation": "the translation of an external value differs between runs",
+    "compatibility_as_consent": "a compatible interface is recorded as the external party's consent",
     "audit_modifies": "audit injects a corrective action into live execution",
     "mirror_feeds_ptl": "readings of an external oracle mirror are counted as PTL sources (the lab's former premise, F-013)",
     "crisis_from_interop": "the outage of an external oracle mirror enters Crisis",
@@ -60,6 +64,19 @@ def crisis_condition(r: Dict[str, Any], k: int, failure: bool) -> bool:
         return (r["ptl_loss_tolerance"] >= 0 and lost / registered > r["ptl_loss_tolerance"]
                 and "no_crisis_on_ptl_loss" not in faults)
     return "crisis_from_interop" in faults and failure and lo <= k < hi
+
+
+REQUESTS = {                                                  # functions INTEROP excludes, and where
+    "harmonize_legal_systems": "INTEROP-1-01", "enforce_dkp_externally": "INTEROP-1-01", "accept_external_norm": "INTEROP-1-01",
+    "adjudicate_regime_conflict": "INTEROP-5-04", "automatic_harmonization": "INTEROP-10-01", "resolve_geopolitical_conflict": "INTEROP-12-01",
+    "unify_legal_systems": "INTEROP-12-02", "guarantee_external_compliance": "INTEROP-12-03", "enforcement_bridge": "INTEROP-12-04"}
+INTERFACES = {"legal": "IB-LEGAL-1", "finance": "IB-FIN-1", "info": "IB-INFO-1", "oracle_mirror": "IB-ORACLE-1"}   # §3 formally defined
+
+
+def translate(value: float) -> Dict[str, Any]:
+    """§3 Translation Layer for an external value: a fixed mapping, flagged as external (§6); no CU value is invented."""
+    return {"external_value": value, "internal": {"externally_sourced": True, "justice_weighted": "not computed: no translation function"},
+            "mapping": "IB-FIN-1/v1"}
 
 
 def md(scope="interop"):
@@ -113,10 +130,19 @@ def run(r: Dict[str, Any], failure: bool = True):
         if crisis and not want:
             put("notice", "CRISIS", k, {"exit": True}, [ptl.event_id])
             crisis = False
+        # requests for functions INTEROP excludes (§1, §5, §10, §12): refused at the boundary
+        if k == r["request_step"]:
+            for kind in r["out_of_scope_requests"]:
+                q = put("observation", "EXTERNAL/REQUEST", k, {"request": kind})
+                if "interop_overreach" in faults:
+                    put("action", "INTEROP", k, {"perform": kind}, [q.event_id])
+                else:
+                    put("notice", "INTEROP", k, {"boundary_event": "out-of-scope request", "request": kind, "response": "refused",
+                                                 "basis": REQUESTS[kind], "interface": INTERFACES["legal"]}, [q.event_id])
         # external events at the boundary
         if failure and k == r["external_ruling_step"]:
             ext["ruling"] = put("observation", "EXTERNAL/LEGAL", k, {"ruling": "suspend subject X", "binding_claimed": True})
-            put("notice", "INTEROP", k, {"boundary_event": "external ruling received", "internal_status": "not binding",
+            put("notice", "INTEROP", k, {"boundary_event": "external ruling received", "internal_status": "not binding", "interface": INTERFACES["legal"],
                                          "compliance_responsibility": "Subject (INTEROP §5)"}, [ext["ruling"].event_id])
             if "system_complies" in faults:
                 put("action", "INTEROP", k, {"comply_with": "external ruling", "on_behalf_of": "subject X"}, [ext["ruling"].event_id])
@@ -128,18 +154,28 @@ def run(r: Dict[str, Any], failure: bool = True):
             ext["value"] = put("observation", "EXTERNAL/FINANCE", k, {"asset_bridge": 1000.0, "channel": "asset_bridge",
                                                                        "externally_sourced": flag,
                                                                        "justice_weighted": "not computed: no translation function"})
-            put("notice", "INTEROP", k, {"boundary_event": "external value", "translation_rule": "flag + FINANCE constraints"},
+            tr = translate(ext["value"].value["asset_bridge"])
+            if "nondeterministic_translation" in faults and failure:
+                tr["internal"] = dict(tr["internal"], rounding_salt=k)
+            put("notice", "INTEROP", k, {"translation": tr, "interface": INTERFACES["finance"]}, [ext["value"].event_id])
+            put("notice", "INTEROP", k, {"boundary_event": "external value", "translation_rule": "flag + FINANCE constraints",
+                                         "interface": "IB-ADHOC" if "undeclared_interface" in faults else INTERFACES["finance"]},
                 [ext["value"].event_id])
+            if "compatibility_as_consent" in faults:
+                put("notice", "INTEROP", k, {"inference": "external party consented: interface compatible"}, [ext["value"].event_id])
             for ch in ("reporting_gateway", "settlement_mirror") + (("direct_ledger_write",) if "direct_ledger_write" in faults else ()):
                 e = put("observation", "EXTERNAL/FINANCE", k, {"channel": ch, "externally_sourced": flag,
                                                                 "justice_weighted": "not computed: no translation function"})
-                put("notice", "INTEROP", k, {"boundary_event": f"external economic interaction via {ch}"}, [e.event_id])
+                put("notice", "INTEROP", k, {"boundary_event": f"external economic interaction via {ch}", "interface": INTERFACES["finance"]},
+                    [e.event_id])
         if failure and k == r["blackbox_step"]:
             ext["blackbox"] = put("observation", "EXTERNAL/BLACKBOX", k, {"control": "proprietary recommendation"})
-            put("notice", "INTEROP", k, {"boundary_event": "black-box input", "authoritative": False}, [ext["blackbox"].event_id])
+            put("notice", "INTEROP", k, {"boundary_event": "black-box input", "authoritative": False, "interface": INTERFACES["info"]},
+                [ext["blackbox"].event_id])
         if failure and k == r["external_info_step"]:
             ext["info"] = put("observation", "EXTERNAL/INFO", k, {"claim": "institutional consensus", "class": "I1"})
-            put("notice", "INTEROP", k, {"boundary_event": "external information", "class": "I1 (untrusted)"}, [ext["info"].event_id])
+            put("notice", "INTEROP", k, {"boundary_event": "external information", "class": "I1 (untrusted)", "interface": INTERFACES["info"]},
+                [ext["info"].event_id])
         # internal decision: from internal PTL only (unless a fault adds external provenance)
         prov = [ptl.event_id]
         value = {"decision": "allocate", "basis": "internal PTL", "internal_sources": r["internal_sources"]}
@@ -343,6 +379,62 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
     out.append(v("INTEROP-11-03", "boundary_events_recorded",
                  [] if boundary or not (ext_ids("EXTERNAL/LEGAL") | ext_ids("EXTERNAL/FINANCE") | ext_ids("EXTERNAL/INFO")) else ["none"],
                  f"{len(boundary)} boundary events recorded for review", "external events without boundary records"))
+    # §1, §5, §10, §12: functions INTEROP excludes are refused when requested
+    reqs = [m for m in msgs if m.source == "EXTERNAL/REQUEST"]
+    answered = {m.provenance[0]: m for m in msgs if m.source == "INTEROP" and m.value.get("request") and m.provenance}
+    performed = {log.get(m.provenance[0]).value["request"] for m in msgs
+                 if m.source == "INTEROP" and m.kind == "action" and m.value.get("perform") and m.provenance}
+    for rid, chk, what in (("INTEROP-1-01", "excluded_functions_refused", "harmonization, external enforcement, binding external norms"),
+                           ("INTEROP-5-04", "no_regime_adjudication", "adjudication between external legal regimes"),
+                           ("INTEROP-10-01", "no_automatic_harmonization", "automatic legal harmonization"),
+                           ("INTEROP-12-01", "no_geopolitical_resolution", "resolution of geopolitical conflicts"),
+                           ("INTEROP-12-02", "no_legal_unification", "unification of legal systems"),
+                           ("INTEROP-12-03", "no_compliance_guarantee", "a guarantee of compliance by external actors"),
+                           ("INTEROP-12-04", "no_enforcement_bridge", "acting as an enforcement bridge")):
+        mine = [m for m in reqs if REQUESTS[m.value["request"]] == rid]
+        if not mine:
+            out.append(na(rid, chk, what, "no such request in this experiment"))
+            continue
+        bad = [f"{m.value['request']} performed" if m.value["request"] in performed else f"{m.value['request']} not answered"
+               for m in mine if m.value["request"] in performed or answered.get(m.event_id, None) is None
+               or answered[m.event_id].value.get("response") != "refused"]
+        out.append(v(rid, chk, bad, f"{len(mine)} request(s) for {what} refused at the boundary ({rid})",
+                     "{n} excluded functions performed or not refused"))
+    acts = [m.event_id for m in msgs if m.source == "INTEROP" and m.kind in ("action", "decision")]
+    out.append(v("INTEROP-2-01", "purely_translational", acts,
+                 "INTEROP produced only boundary records, translations, exports as evidence and refusals; no action",
+                 "{n} INTEROP actions (compliance, rollback, excluded functions)"))
+    recs = [m for m in msgs if m.source == "INTEROP" and (m.value.get("boundary_event") or m.value.get("translation"))]
+    out.append(v("INTEROP-3-02", "defined_interfaces", [m.event_id for m in recs if m.value.get("interface") not in INTERFACES.values()],
+                 f"{len(recs)} boundary records, each at a formally defined interface ({', '.join(sorted(INTERFACES.values()))})",
+                 "{n} boundary records at an undeclared interface") if recs else
+               na("INTEROP-3-02", "defined_interfaces", "boundary records", "no interaction with an external system"))
+    trs = [m for m in msgs if m.source == "INTEROP" and m.value.get("translation")]
+    base_trs = [m.value["translation"] for m in baseline.messages() if m.source == "INTEROP" and m.value.get("translation")]
+    out.append(v("INTEROP-3-03", "deterministic_translation",
+                 [m.event_id for m in trs if m.value["translation"] != translate(m.value["translation"]["external_value"])
+                  or m.value["translation"] not in base_trs],
+                 f"{len(trs)} translation(s) equal to the declared mapping and identical across runs",
+                 "{n} translations differ from the declared mapping or between runs") if trs else
+               na("INTEROP-3-03", "deterministic_translation", "translations", "no external value translated"))
+    consent = [m.event_id for m in msgs if m.value and m.value.get("inference")]
+    out.append(v("INTEROP-4.3-01", "compatibility_not_consent", consent,
+                 "no compatibility at an interface was recorded as legitimacy, obligation or consent",
+                 "{n} inferences of consent, legitimacy or obligation from compatibility"))
+    norm = uses("EXTERNAL/LEGAL") if ext_ids("EXTERNAL/LEGAL") else []
+    comply = [m.event_id for m in msgs if m.source == "INTEROP" and m.kind == "action" and m.value.get("comply_with")]
+    leak = norm + comply + consent + sorted(x for x in performed if x == "accept_external_norm")
+    out.append(v("INTEROP-3-04", "no_normative_leakage", leak,
+                 "no external authority, norm or obligation entered DKP (no internal decision from an external ruling, no "
+                 "compliance act, no consent inferred, no external norm accepted)",
+                 "{n} imports of external authority, norms or obligations"))
+    converge = norm + sorted(x for x in performed if x in ("harmonize_legal_systems", "unify_legal_systems",
+                                                          "automatic_harmonization", "accept_external_norm"))
+    converge += [m.event_id for m in recs if m.value.get("interface") not in INTERFACES.values()]
+    out.append(v("INTEROP-12-05", "compatibility_not_convergence", converge,
+                 "external systems interacted through defined interfaces and translations, while internal rules took nothing "
+                 "from them (no harmonization, unification or adopted norm)",
+                 "{n} cases of convergence or of interaction without a defined interface"))
     mirrors = [m for m in msgs if m.source == "MIRROR"]
     if mirrors:
         bad = [m.event_id for m in mirrors if sha256_text(canonical_json(log.get(m.value["mirror_of"]).value)) != m.value["digest"]]
@@ -401,12 +493,29 @@ IMPLEMENTS = {
     "AUDIT-10-01": ("audit_observes_only", "IMPLEMENTED", None),
     "AUDIT-5.4-01": ("deterministic_execution", "PARTIAL", "Determinism of this module's execution only."),
     "CRISIS-4-01": ("ptl_loss_triggers_crisis", "PARTIAL", "Only the PTL-loss trigger; 'correction tolerance' is not defined (declared input)."),
+    "INTEROP-1-01": ("excluded_functions_refused", "PARTIAL", "The three exclusions are observed as refusals of declared requests; "
+                     "binding external rulings are also checked under §5."),
+    "INTEROP-2-01": ("purely_translational", "PARTIAL", "'Purely translational' is observed as: INTEROP emits records only, no action."),
+    "INTEROP-3-02": ("defined_interfaces", "PARTIAL", "The interfaces are a declared lab list; their formal specification is not modelled."),
+    "INTEROP-3-03": ("deterministic_translation", "PARTIAL", "Determinism of the declared mapping (same input, same output, both runs); "
+                     "the mapping itself is a lab stand-in: no translation function is given (§6, UNKNOWN in INTEROP-6-02)."),
+    "INTEROP-3-04": ("no_normative_leakage", "PARTIAL", "Leakage is observed through declared events: execution of an external ruling, "
+                     "compliance acts, consent inferences, an accepted external norm."),
+    "INTEROP-4.3-01": ("compatibility_not_consent", "PARTIAL", "Observed as an explicit inference record; implicit treatment is not observable."),
+    "INTEROP-5-04": ("no_regime_adjudication", "PARTIAL", "Observed as the refusal of a declared request."),
+    "INTEROP-10-01": ("no_automatic_harmonization", "PARTIAL", "Observed as the refusal of a declared request."),
+    "INTEROP-12-01": ("no_geopolitical_resolution", "PARTIAL", "Observed as the refusal of a declared request."),
+    "INTEROP-12-02": ("no_legal_unification", "PARTIAL", "Observed as the refusal of a declared request."),
+    "INTEROP-12-03": ("no_compliance_guarantee", "PARTIAL", "Observed as the refusal of a declared request."),
+    "INTEROP-12-04": ("no_enforcement_bridge", "PARTIAL", "Observed as the refusal of a declared request."),
+    "INTEROP-12-05": ("compatibility_not_convergence", "PARTIAL", "Read as a conjunction: interaction through defined interfaces "
+                      "(compatibility) and no harmonization, unification or adopted external norm (no convergence)."),
 }
 
 
 class InteropFailureModule(LabModule):
     id = "interop_failure"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Failure of an external interface (S-LAB-10)", "ru": "Отказ внешнего интерфейса (S-LAB-10)"}
     summary = {"en": "An external court, market, data provider or API fails or pushes in: does the inside keep running "
                      "unchanged, with nothing external becoming binding?",
@@ -461,6 +570,12 @@ class InteropFailureModule(LabModule):
         "stripping_entry_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 16, "unit": "h", "source": "user",
                                  "label": {"en": "Third-party entry point strips metadata from hour (-1: never)",
                                            "ru": "Сторонняя точка входа срезает метаданные с часа (-1: никогда)"}},
+        "request_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 2, "unit": "h", "source": "user",
+                         "label": {"en": "Out-of-scope requests arrive at hour (-1: never)", "ru": "Запросы вне сферы приходят в час (-1: никогда)"}},
+        "out_of_scope_requests": {"type": "list", "min_items": 0, "max_items": len(REQUESTS), "items": {"type": "enum", "values": list(REQUESTS)},
+                                  "default": list(REQUESTS), "source": "user",
+                                  "label": {"en": "Requests for functions INTEROP excludes (§1, §5, §10, §12)",
+                                            "ru": "Запросы функций, которые INTEROP исключает (§1, §5, §10, §12)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -475,6 +590,8 @@ class InteropFailureModule(LabModule):
             p.append("input.external_failure_window: whole hours")
         if len(set(r["faults"])) != len(r["faults"]):
             p.append("input.faults: repeated fault")
+        if len(set(r["out_of_scope_requests"])) != len(r["out_of_scope_requests"]):
+            p.append("input.out_of_scope_requests: repeated request")
         if p:
             raise LabInputError(p)
         return r
@@ -487,6 +604,7 @@ class InteropFailureModule(LabModule):
         outputs = {"internal_decisions": sum(1 for m in msgs if m.source == "DKP"),
                    "internal_decisions_without_failure": sum(1 for m in base.messages() if m.source == "DKP"),
                    "boundary_events": sum(1 for m in msgs if m.source == "INTEROP"),
+                   "requests_refused": sum(1 for m in msgs if m.source == "INTEROP" and m.value.get("response") == "refused"),
                    "crisis_entered": any(m.source == "CRISIS" and m.value.get("enter") for m in msgs),
                    "messages": [m.as_dict() for m in msgs if m.source != "AUDIT"][:300],
                    "event_log": {"time_unit": log.time_unit, "messages": len(log), "digest": log.digest()}}
@@ -526,6 +644,8 @@ class InteropFailureModule(LabModule):
             "former_lab_premise": {"mirror_sources": 4, "ptl_loss_tolerance": 0.25,
                                    "faults": ["mirror_feeds_ptl", "crisis_from_interop"]},
             "faulty_legal_economic": {"faults": ["govern_external", "export_as_ruling", "system_complies", "direct_ledger_write"]},
+            "faulty_scope": {"faults": ["interop_overreach", "undeclared_interface", "nondeterministic_translation",
+                                        "compatibility_as_consent"]},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

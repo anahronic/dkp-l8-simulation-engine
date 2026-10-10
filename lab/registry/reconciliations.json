@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 21,
+  "confirmed": 34,
   "reclassified": 1
  },
  "items": [
@@ -282,6 +282,179 @@
     "human_accepted": false
    },
    "check": "info_truth:permitted_responses"
+  },
+  {
+   "id": "INTEROP-1-01",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "- harmonize legal systems,\n- enforce DKP externally,\n- accept external norms as binding within DKP.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Three named exclusions of what INTEROP does (§1); a request for any of them is refused at the boundary, which is observable. 'Accept external norms as binding' is also checked under §5 (external rulings not binding).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:excluded_functions_refused"
+  },
+  {
+   "id": "INTEROP-10-01",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "- automatic legal harmonization,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A prohibited pattern (§10); a harmonization performed by INTEROP is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_automatic_harmonization"
+  },
+  {
+   "id": "INTEROP-12-01",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "- resolve geopolitical conflicts,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A scope limitation (§12: SHALL NOT); a request is refused.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_geopolitical_resolution"
+  },
+  {
+   "id": "INTEROP-12-02",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "- unify legal systems,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A scope limitation (§12: SHALL NOT); a request is refused.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_legal_unification"
+  },
+  {
+   "id": "INTEROP-12-03",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "- guarantee compliance by external actors,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A scope limitation (§12: SHALL NOT); a guarantee of external compliance requested of INTEROP is refused; §5 leaves compliance to Subjects.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_compliance_guarantee"
+  },
+  {
+   "id": "INTEROP-12-04",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "- act as an enforcement bridge.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A scope limitation (§12: SHALL NOT); acting as an enforcement bridge is refused; directives to external systems are also checked under §3 (INTEROP-3-01).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_enforcement_bridge"
+  },
+  {
+   "id": "INTEROP-12-05",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "This protocol guarantees compatibility, not convergence.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Read as a conjunction fixed by the rest of the text: compatibility = every interaction through a defined interface and translation (§3, §4.4); no convergence = no harmonization or unification (§1, §10, §12) and no external norm adopted (§5, §10). Both parts are observable; the draft 'checkable: no' is corrected to partial.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:compatibility_not_convergence",
+   "checkable": {
+    "from": "no",
+    "to": "partial"
+   }
+  },
+  {
+   "id": "INTEROP-2-01",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "This protocol is purely translational.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Purely translational' is concretized by §§3-5 and §9-10: INTEROP records, translates and exports as evidence; it performs no action of its own. An INTEROP action is observable.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:purely_translational"
+  },
+  {
+   "id": "INTEROP-3-02",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "Interop Boundary — a formally defined interface where DKP state interacts with an external system.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The definition requires a formally defined interface at every interaction; whether a boundary record names a declared interface is observable. The formal specification of each interface is not given in the text and is a lab list.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:defined_interfaces"
+  },
+  {
+   "id": "INTEROP-3-03",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "Translation Layer — deterministic mapping between DKP-native representations and external representations.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Deterministic mapping' is checkable as: the same external input gives the same translation (across runs and against the declared mapping). The content of the mapping for values is open under §6 (INTEROP-6-02, UNKNOWN); determinism is not.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:deterministic_translation"
+  },
+  {
+   "id": "INTEROP-3-04",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "Normative Leakage — implicit import of external authority, norms, or obligations into DKP without explicit protocol authorization.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Normative leakage is defined by its effects (external authority, norms or obligations entering DKP without protocol authorization); §5 and §10 name the forms: executing an external ruling, compliance acts by the system, a silent norm import. Each is an observable event.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_normative_leakage"
+  },
+  {
+   "id": "INTEROP-4.3-01",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "Technical or legal compatibility SHALL NOT be treated as legitimacy, obligation, or consent.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A recorded inference of consent, legitimacy or obligation from compatibility is observable; implicit treatment without a record is not, so the check is partial.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:compatibility_not_consent"
+  },
+  {
+   "id": "INTEROP-5-04",
+   "document": "DKP-8-INTEROP-001",
+   "quote": "DKP does not adjudicate conflicts between external legal regimes.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "A clear exclusion: DKP gives no ruling between external regimes. A request for such a ruling is refused.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "interop_failure:no_regime_adjudication"
   },
   {
    "id": "PREV-13-02",
