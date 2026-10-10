@@ -31,19 +31,25 @@
     "justice outcomes",
     "governance and social support responsibilities"
    ],
-   "gap": "Operational definitions of the excluded activities are not supplied. No lab check implemented yet.",
+   "gap": "Exclusions observed as refusals of declared requests and as the Justice outcome used unchanged; a fiat regime is not modelled beyond the request.",
    "hypotheses_needed": [
     "Declare how operations are classified against each excluded activity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "finance_exclusions"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -105,19 +111,25 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The operational scope of fungibility and the measurement of deployable capacity are unspecified. No lab check implemented yet.",
+   "gap": "Observed on ledger entries (no unit, no lot-dependent value).",
    "hypotheses_needed": [
     "Define equivalent CU holdings and the transaction contexts used to test interchangeability."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "cu_unitless_fungible"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -257,19 +269,25 @@
     "justice contributions",
     "impact exposure measurements"
    ],
-   "gap": "The comparison baseline and pricing response to interacting inputs are undefined. No lab check implemented yet.",
+   "gap": "Direction only, on pairs differing in one factor; JWCoC has no formula (stand-in, CALIBRATION_MAP); Justice history as a declared class (H-FM-2).",
    "hypotheses_needed": [
     "Declare whether directional comparisons hold other inputs fixed and how competing changes are handled."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "cost_direction"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -520,19 +538,25 @@
    "numeric_source": "hypothesis",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "The duration and termination criteria for a temporary credit imbalance are undefined. No lab check implemented yet.",
+   "gap": "The §5.1 conditions are declared values; 'temporary' as a term and closure by it.",
    "hypotheses_needed": [
     "Declare how a credit imbalance ends and what temporal interpretation of 'temporary' is used."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "credit_temporary_conditional"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -668,19 +692,25 @@
    "data_dependencies": [
     "return calculation provenance"
    ],
-   "gap": "The required evidence and scope of full auditability are not defined. No lab check implemented yet.",
+   "gap": "Recomputability and determinism; the return formula is a stand-in.",
    "hypotheses_needed": [
     "Declare an auditability standard for return calculations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "savings_deterministic_auditable"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -702,19 +732,25 @@
    "data_dependencies": [
     "impact measurements and projections"
    ],
-   "gap": "No impact-based sizing function or precise boundary for percentage-based sizing is provided. No lab check implemented yet.",
+   "gap": "Basis only (H-FM-3, metamorphic); the sizing function is a stand-in.",
    "hypotheses_needed": [
     "Declare an impact-based sizing function and how percentage-based rules are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "reserve_impact_based"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -992,19 +1028,25 @@
    "data_dependencies": [
     "impact measurements and projections"
    ],
-   "gap": "The impact-based limit function and treatment of indirect volatility inputs are undefined. No lab check implemented yet.",
+   "gap": "Basis only (H-FM-3, metamorphic); the limit function is a stand-in.",
    "hypotheses_needed": [
     "Declare the limit function and whether indirect volatility inputs are compatible with an impact basis."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "leverage_impact_based"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -1524,19 +1566,25 @@
     "identity attributions",
     "justice outcomes"
    ],
-   "gap": "Reinterpretation and injection of policy, ideology or moral judgment lack operational definitions. No lab check implemented yet.",
+   "gap": "Observed as attribution and Justice outcome used as given, refusals, and no fields beyond the pricing record.",
    "hypotheses_needed": [
     "Declare tests for measurement reinterpretation and prohibited semantic injection."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.0.0",
+    "check": "cross_layer_isolation"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {

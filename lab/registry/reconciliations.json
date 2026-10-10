@@ -2,7 +2,7 @@
  "schema": "dkp-lab-reconciliation/1",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "counts": {
-  "confirmed": 34,
+  "confirmed": 42,
   "reclassified": 1
  },
  "items": [
@@ -239,6 +239,110 @@
     "human_accepted": false
    },
    "check": "edu_culture:failure_is_signal"
+  },
+  {
+   "id": "FINANCE-1-01",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "- create or manage fiat monetary regimes,\n- override justice outcomes,\n- perform subjective valuation or preference aggregation,",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Three named exclusions (§1 'It does not'); FINANCE using a Justice outcome other than the recorded one, or carrying out a fiat-regime, subjective-valuation or preference-aggregation function, is observable. No author choice is needed for the exclusion itself.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:finance_exclusions"
+  },
+  {
+   "id": "FINANCE-13-01",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "- override identity attribution,\n- override justice outcomes,\n- inject policy, ideology, or moral judgment.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Cross-layer isolation (§13): identity attribution and Justice outcomes are inputs FINANCE uses as given, and FINANCE records carry no policy, ideology or moral judgment. Each is observable on FINANCE records; 'reinterpret impact measurements' is a separate provision.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:cross_layer_isolation"
+  },
+  {
+   "id": "FINANCE-3.1-01",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "Capital Units (CU) are unitless, fungible representations of deployable economic capacity within the system.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Unitless, fungible' fixes two properties of every ledger entry: no unit of account, and no value that depends on the lot or origin of the CU. 'Deployable economic capacity' is a gloss, not a computed quantity.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:cu_unitless_fungible"
+  },
+  {
+   "id": "FINANCE-3.2-02",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "Positive justice contribution reduces cost of capital. Negative or risky impact exposure increases cost of capital.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The JWCoC function is missing (CALIBRATION_MAP), but the sentence fixes its direction, and the direction is checkable for any function on pairs of Subjects that differ in one factor. Only the direction is claimed; reading of 'positive justice contribution' as a Justice-history class is H-FM-2.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:cost_direction"
+  },
+  {
+   "id": "FINANCE-5.1-02",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "Credit is a temporary imbalance, not a right.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "'Temporary imbalance, not a right': credit has a term and closes; it is issued only where the §5.1 conditions hold and can be refused. Both are observable with the conditions as declared values (their quantities are open under §5.1).",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:credit_temporary_conditional"
+  },
+  {
+   "id": "FINANCE-6.1-02",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "Savings returns are deterministic and fully auditable.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Determinism and auditability are checkable without the return formula: every return recomputes from its recorded inputs and is booked as computed; re-execution gives the same log.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:savings_deterministic_auditable"
+  },
+  {
+   "id": "FINANCE-6.2-01",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "Reserve sizing is impact-based, not percentage-based.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "The sizing function is missing (CALIBRATION_MAP), but 'impact-based, not percentage-based' fixes its basis: it must not change when only balances change and must follow the impact exposure (H-FM-3). Checked metamorphically for any declared function.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:reserve_impact_based"
+  },
+  {
+   "id": "FINANCE-9-02",
+   "document": "DKP-2-FINANCE-001",
+   "quote": "Leverage limits are impact-based, not volatility-based.",
+   "draft_origin": "implementation_only",
+   "verdict": "confirmed",
+   "reason": "Same structure as §6.2: the limit function is missing, the basis is fixed (impact headroom, not price volatility; H-FM-3). Checked metamorphically.",
+   "acceptance": {
+    "agent_reading": true,
+    "human_accepted": false
+   },
+   "check": "finance_mechanics:leverage_impact_based"
   },
   {
    "id": "INFO-0-02",

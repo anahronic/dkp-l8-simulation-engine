@@ -19,6 +19,7 @@
   "epistemic_gate",
   "exit_integration",
   "failure_chain",
+  "finance_mechanics",
   "habitat_dignity",
   "impact_attribution",
   "info_truth",
@@ -1407,6 +1408,26 @@
    "module": "edition_finality",
    "example": "unnamed_targets",
    "kind": "reference"
+  },
+  {
+   "module": "finance_mechanics",
+   "example": "faulty_basis",
+   "kind": "counterexample"
+  },
+  {
+   "module": "finance_mechanics",
+   "example": "faulty_pricing",
+   "kind": "counterexample"
+  },
+  {
+   "module": "finance_mechanics",
+   "example": "faulty_scope",
+   "kind": "counterexample"
+  },
+  {
+   "module": "finance_mechanics",
+   "example": "four_subjects",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1414,21 +1435,21 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1246,
-  "covered_percent": 71.7,
+  "covered": 1254,
+  "covered_percent": 72.2,
   "statuses": {
-   "PASS": 1164,
+   "PASS": 1172,
    "FAIL": 4,
    "UNKNOWN": 63,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 491
+   "UNCOVERED": 483
   },
   "resolvable": 676,
-  "resolvable_uncovered": 113,
-  "resolvable_uncovered_implementation_only": 113,
+  "resolvable_uncovered": 105,
+  "resolvable_uncovered_implementation_only": 105,
   "unresolved_decisions": 1414,
-  "covered_with_open_point": 923,
-  "pass_with_open_point": 848
+  "covered_with_open_point": 931,
+  "pass_with_open_point": 856
  },
  "stages": [
   {
@@ -1478,21 +1499,21 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1246,
-    "covered_percent": 71.7,
+    "covered": 1254,
+    "covered_percent": 72.2,
     "statuses": {
-     "PASS": 1164,
+     "PASS": 1172,
      "FAIL": 4,
      "UNKNOWN": 63,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 491
+     "UNCOVERED": 483
     },
     "resolvable": 676,
-    "resolvable_uncovered": 113,
-    "resolvable_uncovered_implementation_only": 113,
+    "resolvable_uncovered": 105,
+    "resolvable_uncovered_implementation_only": 105,
     "unresolved_decisions": 1414,
-    "covered_with_open_point": 923,
-    "pass_with_open_point": 848
+    "covered_with_open_point": 931,
+    "pass_with_open_point": 856
    }
   },
   {
@@ -1599,21 +1620,21 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 225,
-    "covered_percent": 53.1,
+    "covered": 233,
+    "covered_percent": 55.0,
     "statuses": {
-     "PASS": 205,
+     "PASS": 213,
      "FAIL": 1,
      "UNKNOWN": 17,
      "NOT_APPLICABLE": 2,
-     "UNCOVERED": 199
+     "UNCOVERED": 191
     },
     "resolvable": 166,
-    "resolvable_uncovered": 45,
-    "resolvable_uncovered_implementation_only": 45,
+    "resolvable_uncovered": 37,
+    "resolvable_uncovered_implementation_only": 37,
     "unresolved_decisions": 337,
-    "covered_with_open_point": 138,
-    "pass_with_open_point": 121
+    "covered_with_open_point": 146,
+    "pass_with_open_point": 129
    }
   },
   {
@@ -2789,8 +2810,8 @@
    {
     "origin": "implementation_only",
     "agent_verified": 0,
-    "lab_reconciled": 34,
-    "codex_draft": 323,
+    "lab_reconciled": 42,
+    "codex_draft": 315,
     "human_accepted": 0,
     "total": 357
    },
@@ -22402,30 +22423,39 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of the excluded activities are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "finance_exclusions",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Exclusions observed as refusals of declared requests and as the Justice outcome used unchanged; a fiat regime is not modelled beyond the request.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_pricing",
+    "finance_mechanics:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -22941,30 +22971,39 @@
    "section": "13",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Reinterpretation and injection of policy, ideology or moral judgment lack operational definitions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "cross_layer_isolation",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Observed as attribution and Justice outcome used as given, refusals, and no fields beyond the pricing record.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_pricing",
+    "finance_mechanics:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -23182,30 +23221,38 @@
    "section": "3.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational scope of fungibility and the measurement of deployable capacity are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "cu_unitless_fungible",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Observed on ledger entries (no unit, no lot-dependent value).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -23321,30 +23368,38 @@
    "section": "3.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The comparison baseline and pricing response to interacting inputs are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "cost_direction",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Direction only, on pairs differing in one factor; JWCoC has no formula (stand-in, CALIBRATION_MAP); Justice history as a declared class (H-FM-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_pricing"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -23457,30 +23512,38 @@
    "section": "5.1",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The duration and termination criteria for a temporary credit imbalance are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "credit_temporary_conditional",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "The §5.1 conditions are declared values; 'temporary' as a term and closure by it.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -23585,30 +23648,38 @@
    "section": "6.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required evidence and scope of full auditability are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "savings_deterministic_auditable",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Recomputability and determinism; the return formula is a stand-in.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_basis"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -23617,30 +23688,38 @@
    "section": "6.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "No impact-based sizing function or precise boundary for percentage-based sizing is provided. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "reserve_impact_based",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Basis only (H-FM-3, metamorphic); the sizing function is a stand-in.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_basis"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
@@ -23873,30 +23952,38 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The impact-based limit function and treatment of indirect volatility inputs are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "leverage_impact_based",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Basis only (H-FM-3, metamorphic); the limit function is a stand-in.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_basis"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
     "origin": "implementation_only",
-    "source": "codex_draft"
+    "source": "lab_reconciled"
    }
   },
   {
