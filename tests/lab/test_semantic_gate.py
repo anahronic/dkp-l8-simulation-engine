@@ -94,7 +94,8 @@ def test_codex_draft_never_creates_author_questions():
     assert cls["status"] == "DRAFT_UNREVIEWED"
     for rid, it in cls["items"].items():
         assert it["primary"] in verification.ORIGINS
-        if it["author_question_candidate"]:
+        # the candidate flag is the draft's; a primary corrected by the lab's reading (reconciled) may leave it behind
+        if it["author_question_candidate"] and not it.get("reconciled"):
             assert it["primary"] in verification.AUTHOR_ORIGINS, rid
     linked = {rid for q in _questions() for rid in q["requirements"]}
     assert all(q["verification"].endswith(q["id"]) for q in _questions())

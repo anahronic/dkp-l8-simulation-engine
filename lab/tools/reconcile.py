@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Reading of provisions whose draft open point is ``implementation_only`` (review КТ5).
+Reading of draft open points against the pinned corpus (reviews КТ5 and of checkpoint 6).
 
     python -m lab.tools.reconcile            write lab/registry/reconciliations.json from lab/registry/reconciliation_input.json
     python -m lab.tools.reconcile --check    exit 1 if the written file is stale or inconsistent with the registry
@@ -19,7 +19,13 @@ the text settles the draft need; the provision's decision_status becomes NONE_ID
 point is removed (the draft origin, its need and the reason stay here).  ``open``: something other than code remains
 (a missing formula, an undefined criterion, an external artifact, a contested reading); the open point stays with
 that ``origin`` and ``reason``.  A PARTIAL coverage is a limit of the check, recorded as ``coverage_limit``, not an
-open point.  The reading is the agent's; nothing here is a human acceptance (A6).
+open point.
+
+The same review asked for the remaining Codex-draft open points of uncovered provisions to be read the same way
+(``draft_origin`` names the draft): ``kept`` (the draft origin holds; ``partial_check`` says whether a clear core
+could be checked without deciding it), ``reclassified`` (another origin), or ``returned`` (the corpus settles what
+the draft said was missing; the provision is resolvable and needs a lab check, after which it carries a ``closure``
+like a confirmed one).  The reading is the agent's; nothing here is a human acceptance (A6).
 """
 
 from __future__ import annotations
@@ -38,6 +44,7 @@ CLASSIFICATION = os.path.join(REG, "unresolved_classification.json")
 REQ_DIR = os.path.join(REG, "requirements")
 RECORD = "lab/registry/reconciliations.json"
 CLOSURE_STATES = ("closed", "open")
+VERDICTS = ("confirmed", "reclassified", "kept", "returned")
 
 
 def registry() -> Dict[str, Dict[str, Any]]:
@@ -60,34 +67,41 @@ def build() -> Dict[str, Any]:
         d = inp["decisions"][rid]
         r = reg[rid]
         impl = r.get("implementation") or {}
-        item = {"id": rid, "document": r["document"], "quote": r["quote"], "draft_origin": "implementation_only",
+        draft = d.get("draft_origin", "implementation_only")
+        item = {"id": rid, "document": r["document"], "quote": r["quote"], "draft_origin": draft,
                 "verdict": d["verdict"], "reason": d["reason"],
                 "acceptance": {"agent_reading": True, "human_accepted": False}}
-        if d["verdict"] == "reclassified":
-            item["origin_after"] = d["origin_after"]
+        if d["verdict"] in ("reclassified", "kept"):
+            item["origin_after"] = d.get("origin_after", draft)
+            if "partial_check" in d:
+                item["partial_check"] = d["partial_check"]
             if impl:                               # a check under a named reading may exist while the open point stays
                 item["check"] = f"{impl['module']}:{impl['check']}"
             if r.get("open_questions"):
                 item["questions"] = r["open_questions"]
-        else:
+        else:                                      # confirmed or returned: only lab code was (or is) missing
             item["check"] = f"{impl.get('module')}:{impl.get('check')}" if impl else None
-            c = d["closure"]
-            item["closure"] = {"state": c["state"], "draft_need": r.get("hypotheses_needed") or [],
-                               "coverage_limit": r["gap"] if r["coverage"] == "PARTIAL" else None}
-            if c["state"] == "closed":
-                item["closure"].update(answer=c["answer"], decision_status_after="NONE_IDENTIFIED")
-            else:
-                item["closure"].update(origin=c["origin"], reason=c["reason"], decision_status_after="UNRESOLVED")
+            c = d.get("closure") if d["verdict"] == "returned" else d["closure"]
+            item["closure"] = None                 # a returned provision awaiting its lab check
+            if c:
+                item["closure"] = {"state": c["state"], "draft_need": r.get("hypotheses_needed") or [],
+                                   "coverage_limit": r["gap"] if r["coverage"] == "PARTIAL" else None}
+                if c["state"] == "closed":
+                    item["closure"].update(answer=c["answer"], decision_status_after="NONE_IDENTIFIED")
+                else:
+                    item["closure"].update(origin=c["origin"], reason=c["reason"], decision_status_after="UNRESOLVED")
         if "checkable" in d:
             item["checkable"] = d["checkable"]
         items.append(item)
-    counts = {"confirmed": sum(1 for x in items if x["verdict"] == "confirmed"),
-              "reclassified": sum(1 for x in items if x["verdict"] == "reclassified"),
-              "confirmed_closed": sum(1 for x in items if (x.get("closure") or {}).get("state") == "closed"),
-              "confirmed_open": sum(1 for x in items if (x.get("closure") or {}).get("state") == "open"),
+    by = lambda v: sum(1 for x in items if x["verdict"] == v)
+    counts = {"confirmed": by("confirmed"), "reclassified": by("reclassified"), "kept": by("kept"),
+              "returned": by("returned"),
+              "returned_awaiting_check": sum(1 for x in items if x["verdict"] == "returned" and not x["closure"]),
+              "closure_closed": sum(1 for x in items if (x.get("closure") or {}).get("state") == "closed"),
+              "closure_open": sum(1 for x in items if (x.get("closure") or {}).get("state") == "open"),
               "human_accepted": sum(1 for x in items if x["acceptance"]["human_accepted"])}
-    return {"schema": "dkp-lab-reconciliation/2", "rule": inp["rule"], "closure_rule": inp["closure_rule"],
-            "counts": counts, "items": items}
+    return {"schema": "dkp-lab-reconciliation/3", "rule": inp["rule"], "closure_rule": inp["closure_rule"],
+            "reading_rule": inp["reading_rule"], "counts": counts, "items": items}
 
 
 def apply_side_effects() -> None:
@@ -100,10 +114,13 @@ def apply_side_effects() -> None:
     for rid, d in inp["decisions"].items():
         it = cls["items"].setdefault(rid, {})
         c = d.get("closure") or {}
-        assert (d["verdict"] == "confirmed") == bool(c) and c.get("state", "closed") in CLOSURE_STATES, rid
+        assert d["verdict"] in VERDICTS and c.get("state", "closed") in CLOSURE_STATES, rid
+        assert (d["verdict"] != "confirmed" or c) and (not c or d["verdict"] in ("confirmed", "returned")), rid
         # the classification holds the open point that remains; the draft origin stays in the reconciliation record
-        if d["verdict"] == "reclassified":
-            want = {"primary": d["origin_after"]}
+        if d["verdict"] in ("reclassified", "kept"):
+            want = {"primary": d.get("origin_after", d.get("draft_origin"))}
+        elif not c:
+            want = {"primary": "implementation_only"}
         elif c["state"] == "closed":
             want = {"primary": "implementation_only", "closed": RECORD}
         else:

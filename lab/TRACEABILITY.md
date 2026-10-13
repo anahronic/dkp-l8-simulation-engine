@@ -20,14 +20,14 @@ human acceptance, which is counted apart.
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1361 (78.4 %) | 915 | 1278 | 839 | 4 | 63 | 16 | 376 | 0 | 1291 |
-| B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 15 | 24 | 14 | 0 | 1 | 0 | 18 | 0 | 33 |
-| C. Common checks | DONE | 8/8 | 365 | 352 (96.4 %) | 248 | 339 | 236 | 3 | 8 | 2 | 13 | 0 | 261 |
-| D. Transitions and rights | DONE | 9/9 | 424 | 270 (63.7 %) | 147 | 250 | 130 | 1 | 17 | 2 | 154 | 0 | 301 |
-| E. Applied modules | DONE | 7/7 | 293 | 228 (77.8 %) | 151 | 212 | 137 | 0 | 9 | 7 | 65 | 0 | 216 |
-| F. Remaining constraints and stress | DONE | 12/12 | 511 | 404 (79.1 %) | 284 | 382 | 262 | 0 | 18 | 4 | 107 | 0 | 391 |
-| G. General release | PARTIAL | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1361 (78.4 %) | 915 | 1278 | 839 | 4 | 63 | 16 | 376 | 0 | 1291 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1361 (78.4 %) | 915 | 1278 | 839 | 4 | 63 | 16 | 376 | 96 | 1291 |
+| B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 15 | 24 | 14 | 0 | 1 | 0 | 18 | 2 | 33 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 352 (96.4 %) | 248 | 339 | 236 | 3 | 8 | 2 | 13 | 3 | 261 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 270 (63.7 %) | 147 | 250 | 130 | 1 | 17 | 2 | 154 | 50 | 301 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 228 (77.8 %) | 151 | 212 | 137 | 0 | 9 | 7 | 65 | 15 | 216 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 404 (79.1 %) | 284 | 382 | 262 | 0 | 18 | 4 | 107 | 23 | 391 |
+| G. General release | NOT STARTED | — | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1361 (78.4 %) | 915 | 1278 | 839 | 4 | 63 | 16 | 376 | 96 | 1291 |
 
 Covered without an open point: 446; of all provisions, an open point closed by the lab agent's reading of the text: 123; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -43,11 +43,11 @@ Covered without an open point: 446; of all provisions, an open point closed by t
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 met: real checks, declared models and their limits; gaps exact by section
-- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 met: all parts implementable without unresolved decisions are checked
+- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
+- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
+- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 **not met**: all parts implementable without unresolved decisions are checked
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 
@@ -173,15 +173,15 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
-| normative_ambiguity | 105 | 5 | 143 | 0 | 253 |
-| architecture_definition | 37 | 12 | 217 | 0 | 266 |
-| l8_parameter | 0 | 4 | 128 | 0 | 132 |
-| empirical_model_data | 0 | 1 | 227 | 0 | 228 |
-| external_dependency | 0 | 3 | 201 | 0 | 204 |
-| implementation_only | 0 | 0 | 208 | 0 | 208 |
+| normative_ambiguity | 106 | 65 | 78 | 0 | 249 |
+| architecture_definition | 37 | 89 | 130 | 0 | 256 |
+| l8_parameter | 0 | 60 | 78 | 0 | 138 |
+| empirical_model_data | 0 | 76 | 124 | 0 | 200 |
+| external_dependency | 0 | 9 | 135 | 0 | 144 |
+| implementation_only | 0 | 96 | 208 | 0 | 304 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
-Draft author-question candidates (unverified, not questions): 360.
+Draft author-question candidates (unverified, not questions): 208.
 
 ## Open questions (author decisions)
 

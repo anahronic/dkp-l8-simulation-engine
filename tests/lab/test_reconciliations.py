@@ -24,8 +24,9 @@ def test_each_decision_matches_the_registry():
         r = reg[it["id"]]
         assert it["quote"] == r["quote"] and it["reason"]
         assert it["acceptance"] == {"agent_reading": True, "human_accepted": False}
-        if it["verdict"] == "confirmed":
-            assert r["coverage"] in ("IMPLEMENTED", "PARTIAL"), it["id"]
+        covered = r["coverage"] in ("IMPLEMENTED", "PARTIAL")
+        if it["verdict"] == "confirmed" or (it["verdict"] == "returned" and covered):
+            assert covered, it["id"]
             assert it["check"] and it["check"].split(":")[0] == r["implementation"]["module"], it["id"]
             c = it["closure"]
             assert c["draft_need"] == r["hypotheses_needed"], it["id"]
@@ -41,8 +42,14 @@ def test_each_decision_matches_the_registry():
                 assert c["state"] == "open" and c["origin"] != "implementation_only" and c["reason"], it["id"]
                 assert r["open_point"] == {"origin": c["origin"], "source": "lab_reconciled", "reason": c["reason"]}, it["id"]
                 assert "decision_basis" not in r and cls[it["id"]]["primary"] == c["origin"], it["id"]
+        elif it["verdict"] == "returned":
+            # read as resolvable and still without a lab check: it counts as resolvable and uncovered
+            assert it["closure"] is None and it["draft_origin"] != "implementation_only", it["id"]
+            assert r["open_point"] == {"origin": "implementation_only", "source": "lab_reconciled"}, it["id"]
+            assert cls[it["id"]]["primary"] == "implementation_only", it["id"]
         else:
-            assert it["verdict"] == "reclassified" and it["origin_after"] != "implementation_only", it["id"]
+            assert it["verdict"] in ("reclassified", "kept") and it["origin_after"] != "implementation_only", it["id"]
+            assert (it["verdict"] == "kept") == (it["origin_after"] == it["draft_origin"]), it["id"]
             assert cls[it["id"]]["primary"] == it["origin_after"], it["id"]
             # the open point stays: from the reconciliation, or from an open question of the same category
             src = "agent_verified" if it.get("questions") else "lab_reconciled"
@@ -57,9 +64,10 @@ def test_each_decision_matches_the_registry():
 def test_closure_counts_and_no_other_basis():
     rec = _load("reconciliations.json")
     closed = {it["id"] for it in rec["items"] if (it.get("closure") or {}).get("state") == "closed"}
-    assert rec["counts"]["confirmed_closed"] == len(closed)
-    assert rec["counts"]["confirmed_closed"] + rec["counts"]["confirmed_open"] == rec["counts"]["confirmed"]
-    assert rec["counts"]["human_accepted"] == 0
+    n = rec["counts"]
+    assert n["closure_closed"] == len(closed)
+    assert n["closure_closed"] + n["closure_open"] == n["confirmed"] + n["returned"] - n["returned_awaiting_check"]
+    assert n["human_accepted"] == 0
     # decision_basis comes only from a closed reconciliation
     assert {rid for rid, r in reconcile.registry().items() if r.get("decision_basis")} == closed
 
@@ -77,3 +85,11 @@ def test_an_open_question_reopens_a_provision_closed_by_reading():
     reopened = synced({"requirements": [dict(r)]}, {}, {"X-1-01": ["Q-999"]}, g)["requirements"][0]
     assert reopened["decision_status"] == "UNRESOLVED" and "decision_basis" not in reopened
     assert reopened["open_point"] == {"origin": "normative_ambiguity", "source": "agent_verified"}
+
+
+def test_no_uncovered_open_point_is_left_as_a_machine_draft():
+    """Review of checkpoint 6: every open point of an uncovered provision has been read against the corpus; none keeps
+    the Codex draft as its only basis."""
+    left = sorted(rid for rid, r in reconcile.registry().items()
+                  if r["coverage"] not in ("IMPLEMENTED", "PARTIAL") and (r.get("open_point") or {}).get("source") == "codex_draft")
+    assert left == []
