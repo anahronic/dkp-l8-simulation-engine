@@ -68,6 +68,13 @@ semantic verification gate read its wording against the literal text — derived
 `CONFIRMED_BY_AUTHOR`) and `decision_status` (`UNRESOLVED` when the draft names missing
 definitions or an author question links it), with `open_point.origin` saying what would close
 it.  Drafted interpretations are proposals for review, not readings accepted by the author.
+A draft need whose only cause was missing lab code is closed once the check exists and the lab
+agent's reading (`lab/registry/reconciliations.json`, `closure`) says how the text settles it:
+the provision gets `decision_status` `NONE_IDENTIFIED` with `decision_basis` (agent reading,
+`human_accepted: false`) and no open point; the draft origin and reason stay in the record.  If a
+formula, a criterion, an external artifact or a contested reading remains, the open point stays
+with that origin and the exact `reason`.  *Without an open point* means that no unresolved problem
+is identified; it never means *accepted by a human* (A6), which is counted apart.
 
 **Semantic verification gate.**  Before a provision leads to a FAIL in a reference example, a
 normative conflict, a systemic blocker or an author question, it is read against the literal

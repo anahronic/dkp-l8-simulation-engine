@@ -125,6 +125,7 @@ def build() -> Dict[str, Any]:
                 "violated_by_noncompliant_case": sorted(set(obs["noncompliant"].get(r["id"], []))),
                 "text_verification": read.get(r["id"], []),
                 "open_point": r.get("open_point"),
+                "decision_basis": r.get("decision_basis"),
             })
     by_doc: Dict[str, List[Dict[str, Any]]] = {}
     for row in rows:
@@ -154,6 +155,11 @@ def build() -> Dict[str, Any]:
             "covered_with_open_point": sum(1 for x in sel if x["coverage"] in ("IMPLEMENTED", "PARTIAL")
                                            and x["decision_status"] == "UNRESOLVED"),
             "pass_with_open_point": sum(1 for x in sel if x["status"] == "PASS" and x["decision_status"] == "UNRESOLVED"),
+            # "without an open point" = no identified unresolved problem; it is not a human acceptance (review of checkpoint 6)
+            "covered_without_open_point": sum(1 for x in sel if x["coverage"] in ("IMPLEMENTED", "PARTIAL")
+                                              and x["decision_status"] == "NONE_IDENTIFIED"),
+            "closed_by_agent_reading": sum(1 for x in sel if x["decision_basis"]),
+            "human_accepted": sum(1 for x in sel if x["interpretation_status"] in ("REVIEWED", "CONFIRMED_BY_AUTHOR")),
         }
 
     registrable = [d for d, v in docs.items() if v["kind"] in REGISTRABLE]
@@ -311,7 +317,10 @@ def markdown(t: Dict[str, Any]) -> str:
          "Interpretations are machine drafts; TEXT_VERIFIED means the wording was read against the literal",
          "text by the lab (not a human review).  Author questions: `lab/registry/open_questions.json`.",
          "*Resolvable* = implementable without an author decision: no open point, or an open point whose draft origin is",
-         "`implementation_only` (the text is clear; only lab code is missing).  The draft origin is a machine classification.", "",
+         "`implementation_only` (the text is clear; only lab code is missing).  The draft origin is a machine classification.",
+         "*Without an open point* = no unresolved problem is identified (decision_status NONE_IDENTIFIED); where a draft need",
+         "was answered by the lab agent's reading of the text, the basis is `lab/registry/reconciliations.json`.  It is not a",
+         "human acceptance, which is counted apart.", "",
          "## Stages of the specification", "",
          "| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |",
          "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
@@ -331,6 +340,9 @@ def markdown(t: Dict[str, Any]) -> str:
           f"{x['covered']} ({x['covered_percent']} %) | {x['covered_with_open_point']} | {st['PASS']} | "
           f"{x['pass_with_open_point']} | {st['FAIL']} | {st['UNKNOWN']} | "
           f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['unresolved_decisions']} |", "",
+          f"Covered without an open point: {x['covered_without_open_point']}; of all provisions, an open point closed by the "
+          f"lab agent's reading of the text: {x['closed_by_agent_reading']}; accepted by a human: {x['human_accepted']}.  "
+          "PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.", "",
           "### Stage criteria", ""]
     for s in t["stages"]:
         for c in s["criteria"]:

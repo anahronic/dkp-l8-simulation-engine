@@ -98,8 +98,12 @@ def test_every_requirement_is_marked_as_draft_and_decisions_are_explicit():
         for r in reg["requirements"]:
             # no tool sets a human review; TEXT_VERIFIED comes only from the semantic verification gate
             assert r["interpretation_status"] in ("DRAFT_UNREVIEWED", "TEXT_VERIFIED")
-            if r["hypotheses_needed"] or r["open_questions"]:
+            # a draft need answered by the agent's reading (decision_basis, review of checkpoint 6) is the only exception;
+            # an open author question always keeps the provision UNRESOLVED
+            if r["open_questions"] or (r["hypotheses_needed"] and not r.get("decision_basis")):
                 assert r["decision_status"] == "UNRESOLVED"
+            if r.get("decision_basis"):
+                assert r["decision_status"] == "NONE_IDENTIFIED" and r["decision_basis"]["human_accepted"] is False
 
 
 def test_hypothesis_references_are_declared():

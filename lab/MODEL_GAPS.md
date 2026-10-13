@@ -138,6 +138,9 @@ read against the literal text (`lab/registry/verifications.json`; `interpretatio
 TEXT_VERIFIED — not a human review).  The origin of every open point (`open_point.origin`:
 normative ambiguity, architecture definition, L8 parameter, empirical model/data, external
 dependency, implementation only) is a Codex draft unless an author question was verified
-(`lab/registry/unresolved_classification.json`; counts in TRACEABILITY.md).  Missing
+(`lab/registry/unresolved_classification.json`; counts in TRACEABILITY.md).  Draft
+`implementation_only` points were read one by one (`lab/registry/reconciliations.json`): after
+review of checkpoint 6, 123 are closed by the agent's reading (the check exists, the text settles the
+need; not a human acceptance) and 20 keep an open point with another origin and an exact reason.  Missing
 calibration, data, documents and code are not author questions; they are listed in
 `lab/CALIBRATION_MAP.md` (decomposition of F-014).  Documents whose drafting is not finished are shown as "not yet registered".

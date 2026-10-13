@@ -27,7 +27,20 @@ def test_each_decision_matches_the_registry():
         if it["verdict"] == "confirmed":
             assert r["coverage"] in ("IMPLEMENTED", "PARTIAL"), it["id"]
             assert it["check"] and it["check"].split(":")[0] == r["implementation"]["module"], it["id"]
-            assert r["open_point"] in (None, {"origin": "implementation_only", "source": "lab_reconciled"}), it["id"]
+            c = it["closure"]
+            assert c["draft_need"] == r["hypotheses_needed"], it["id"]
+            assert c["coverage_limit"] == (r["gap"] if r["coverage"] == "PARTIAL" else None), it["id"]
+            assert r["decision_status"] == c["decision_status_after"], it["id"]
+            if c["state"] == "closed":
+                # review of checkpoint 6: the draft need is answered by the agent's reading; no open point remains
+                assert c["answer"] and "open_point" not in r, it["id"]
+                assert r["decision_basis"] == {"by": "agent_reading", "record": reconcile.RECORD, "human_accepted": False}
+                assert cls[it["id"]]["primary"] == "implementation_only" and cls[it["id"]]["closed"] == reconcile.RECORD
+            else:
+                # what remains is not missing code: the open point keeps its own origin and the exact reason
+                assert c["state"] == "open" and c["origin"] != "implementation_only" and c["reason"], it["id"]
+                assert r["open_point"] == {"origin": c["origin"], "source": "lab_reconciled", "reason": c["reason"]}, it["id"]
+                assert "decision_basis" not in r and cls[it["id"]]["primary"] == c["origin"], it["id"]
         else:
             assert it["verdict"] == "reclassified" and it["origin_after"] != "implementation_only", it["id"]
             assert cls[it["id"]]["primary"] == it["origin_after"], it["id"]
@@ -39,3 +52,28 @@ def test_each_decision_matches_the_registry():
                 assert r["coverage"] == "PARTIAL" and it["check"].split(":")[0] == r["implementation"]["module"], it["id"]
         if "checkable" in it:
             assert r["checkable"] == it["checkable"]["to"], it["id"]
+
+
+def test_closure_counts_and_no_other_basis():
+    rec = _load("reconciliations.json")
+    closed = {it["id"] for it in rec["items"] if (it.get("closure") or {}).get("state") == "closed"}
+    assert rec["counts"]["confirmed_closed"] == len(closed)
+    assert rec["counts"]["confirmed_closed"] + rec["counts"]["confirmed_open"] == rec["counts"]["confirmed"]
+    assert rec["counts"]["human_accepted"] == 0
+    # decision_basis comes only from a closed reconciliation
+    assert {rid for rid, r in reconcile.registry().items() if r.get("decision_basis")} == closed
+
+
+def test_an_open_question_reopens_a_provision_closed_by_reading():
+    from lab.tools.sync_coverage import synced
+    r = {"id": "X-1-01", "hypotheses_needed": ["a draft need"], "coverage": "PARTIAL", "implementation": None, "gap": "g",
+         "checkable": "partial", "interpretation_status": "DRAFT_UNREVIEWED"}
+    g = {"verified": set(), "question_origin": {},
+         "draft": {"X-1-01": {"primary": "implementation_only", "reconciled": reconcile.RECORD, "closed": reconcile.RECORD}}}
+    closed = synced({"requirements": [dict(r)]}, {}, {}, g)["requirements"][0]
+    assert closed["decision_status"] == "NONE_IDENTIFIED" and "open_point" not in closed
+    assert closed["decision_basis"]["human_accepted"] is False
+    g["question_origin"] = {"X-1-01": "normative_ambiguity"}
+    reopened = synced({"requirements": [dict(r)]}, {}, {"X-1-01": ["Q-999"]}, g)["requirements"][0]
+    assert reopened["decision_status"] == "UNRESOLVED" and "decision_basis" not in reopened
+    assert reopened["open_point"] == {"origin": "normative_ambiguity", "source": "agent_verified"}

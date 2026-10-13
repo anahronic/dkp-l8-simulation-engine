@@ -123,14 +123,22 @@ def check_file(path: str, catalog: Dict[str, Any], seen_ids: Dict[str, str]) -> 
             problems.append(f"{where}: interpretation_status {r['interpretation_status']!r}")
         if r["decision_status"] not in DECISION:
             problems.append(f"{where}: decision_status {r['decision_status']!r}")
-        needs = bool(r["hypotheses_needed"]) or bool(r["open_questions"])
+        # a draft need (hypotheses_needed) answered by the agent's reading is recorded as decision_basis and leaves no
+        # open point; an open author question always keeps one (review of checkpoint 6)
+        basis = r.get("decision_basis")
+        needs = (bool(r["hypotheses_needed"]) and basis is None) or bool(r["open_questions"])
         if needs and r["decision_status"] != "UNRESOLVED":
             problems.append(f"{where}: open decisions but decision_status {r['decision_status']}")
+        if basis is not None:
+            if basis != {"by": "agent_reading", "record": "lab/registry/reconciliations.json", "human_accepted": False} \
+                    or r["decision_status"] != "NONE_IDENTIFIED" or not r["hypotheses_needed"]:
+                problems.append(f"{where}: decision_basis {basis!r} with decision_status {r['decision_status']}")
         op = r.get("open_point")
         if op is not None:
             if r["decision_status"] != "UNRESOLVED":
                 problems.append(f"{where}: open_point on a provision without an open decision")
-            if op.get("origin") not in ORIGINS or op.get("source") not in ("codex_draft", "agent_verified", "lab_reconciled"):
+            if op.get("origin") not in ORIGINS or op.get("source") not in ("codex_draft", "agent_verified", "lab_reconciled") \
+                    or set(op) - {"origin", "source", "reason"} or ("reason" in op and op["source"] != "lab_reconciled"):
                 problems.append(f"{where}: open_point {op!r}")
     return problems
 

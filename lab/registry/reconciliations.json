@@ -1,9 +1,13 @@
 {
- "schema": "dkp-lab-reconciliation/1",
+ "schema": "dkp-lab-reconciliation/2",
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
+ "closure_rule": "Review of checkpoint 6: for each confirmed provision the draft open point (implementation_only) is closed once the missing lab check exists, unless something else remains. 'closed': the agent's reading answers the draft need from the text (answer); decision_status becomes NONE_IDENTIFIED by agent reading, the open point is removed, and the draft classification and reason stay in this record. 'open': a missing formula, an undefined criterion, an external artifact or a contested reading remains; the open point stays with that origin and reason. A partial check (coverage PARTIAL) is a limit of coverage, not an open point. Nothing here is a human acceptance (A6).",
  "counts": {
   "confirmed": 143,
-  "reclassified": 7
+  "reclassified": 7,
+  "confirmed_closed": 123,
+  "confirmed_open": 20,
+  "human_accepted": 0
  },
  "items": [
   {
@@ -17,7 +21,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:defensive_containment"
+   "check": "police_antiterror:defensive_containment",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare criteria for classifying actions and mixed purposes."
+    ],
+    "coverage_limit": null,
+    "answer": "The classification is given by the text: containment = the §6 permitted actions while a confirmed stream lasts (§8 termination).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ANTITERROR-11-02",
@@ -30,7 +43,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:no_speech_or_override"
+   "check": "police_antiterror:no_speech_or_override",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare regulation and override classifications consistent with the technical isolation permission."
+    ],
+    "coverage_limit": "Observed as content filtering and recorded overrides.",
+    "answer": "§6.3 itself separates technical information isolation (signal amplitude) from content control; overrides are recorded acts.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ANTITERROR-5-02",
@@ -43,7 +65,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:t1_definition"
+   "check": "police_antiterror:t1_definition",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the timing and spatial semantics of immediate localized containment."
+    ],
+    "coverage_limit": "Targets and zones are declared per stream.",
+    "answer": "T1 entry and its permission are fixed by the text; 'localized' is relative to the confirmed stream's zone. 'Immediate' is a permission, not a deadline.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-11-03",
@@ -56,7 +87,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "economic_access:no_justice_override"
+   "check": "economic_access:no_justice_override",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how decision effects are compared with justice outcomes and how apparent conflicts are represented."
+    ],
+    "coverage_limit": "Observed as waivers and as control kept under an RIE outcome.",
+    "answer": "Overriding a Justice outcome = ASSETS changing or waiving it; §11 states the effects ASSETS applies.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-3.2-01",
@@ -69,7 +109,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "property_rights:property_right_conditional"
+   "check": "property_rights:property_right_conditional",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how continuous contingency is monitored and how constraint changes affect active rights."
+    ],
+    "coverage_limit": "The §5 conditions are declared events.",
+    "answer": "§5 lists the persistence conditions and the consequence of their failure (degradation, restriction, suspension).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-4-02",
@@ -82,7 +131,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "property_rights:no_grant_on_sole_basis"
+   "check": "property_rights:no_grant_on_sole_basis",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how exclusive reliance on prohibited grounds and contractual impact linkage are classified."
+    ],
+    "coverage_limit": null,
+    "answer": "The three excluded bases are named; 'solely' makes the test the absence of any §4 a-d basis.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-7-01",
@@ -109,7 +167,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "property_rights:critical_assets_designated"
+   "check": "property_rights:critical_assets_designated",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare category membership criteria and a designation-selection rule."
+    ],
+    "coverage_limit": "Non-Privatizable vs Conditionally Privatizable per category is declared (H-PR-1).",
+    "origin": "architecture_definition",
+    "reason": "The text does not assign each listed category to Non-Privatizable or Conditionally Privatizable and gives no membership criterion ('biosphere-critical', 'essential commons'); declared per category (H-PR-1).",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "ASSETS-ReallocationTransparencyConstraint-03",
@@ -122,7 +190,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "economic_access:algorithmic_stewardship"
+   "check": "economic_access:algorithmic_stewardship",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare criteria distinguishing algorithmic custodianship from bureaucratic management and determining rule openness."
+    ],
+    "coverage_limit": "The custodian is a recorded property of the reallocation.",
+    "answer": "The two preceding sentences of the constraint fix the criterion: deterministic rule-based procedure, no discretionary body.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AXIOMS-2-03",
@@ -135,7 +212,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "axiom_constraints:axioms_constrain_only"
+   "check": "axiom_constraints:axioms_constrain_only",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which components represent axiom definitions and which implement axiom application."
+    ],
+    "coverage_limit": "Observed as the fields of the axiom stage's records.",
+    "answer": "Axioms constrain; they compute no metric. The axiom stage's records show which kind of output it produces.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AXIOMS-3-01",
@@ -148,7 +234,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "axiom_constraints:axiom_forms"
+   "check": "axiom_constraints:axiom_forms",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a representation for forbidden states and hard priority orderings."
+    ],
+    "coverage_limit": "The form of each axiom is a lab reading of its wording (H-AX-5).",
+    "answer": "The verdict depends only on each axiom being one of the two forms and none being a weighted term; the assignment of an axiom to a form (H-AX-5, a model hypothesis) does not change it.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AXIOMS-AxiomA3-PhysicalRealitySupremacy-02",
@@ -161,7 +256,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "axiom_constraints:no_narrative_override"
+   "check": "axiom_constraints:no_narrative_override",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a representation of evidence conflicts and override decisions."
+    ],
+    "coverage_limit": "The basis of a candidate and its contradiction with PTL are declared.",
+    "answer": "A3's first sentence fixes the representation: decisions grounded in PTL outputs; a narrative against PTL cannot prevail.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AXIOMS-EpistemicClarification-04",
@@ -174,7 +278,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "axiom_constraints:bounded_not_truth"
+   "check": "axiom_constraints:bounded_not_truth",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a semantic classification of bounded evaluation, absolute-truth, and metaphysical claims."
+    ],
+    "coverage_limit": "Observed as the published status of the definitions.",
+    "answer": "Clarifications a)-c) concretize 'bounded evaluation constraints': application outputs carry metadata and stay disputable; no truth claim is published.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CODEX-3-01",
@@ -187,7 +300,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "code_synergy:manifesto_embedded"
+   "check": "code_synergy:manifesto_embedded",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the protocol transition and adversary model used to prove preservation."
+    ],
+    "coverage_limit": "'Forever' is checked over the run; the characterization of the message is not judged.",
+    "answer": "Presence and immutability of the specified message; the note's characterization of it is descriptive, not a rule.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CODEX-ClosingProvision-02",
@@ -228,7 +350,18 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "code_synergy:wild_node_definition"
+   "check": "code_synergy:wild_node_definition",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Define independence, prohibited coordination, and full compliance.",
+     "Distinguish general Wild Node status from startup and signature-slot eligibility."
+    ],
+    "coverage_limit": "Prior coordination and compliance are declared node properties.",
+    "origin": "architecture_definition",
+    "reason": "'Prior coordination with the founders' and 'independent party' have no criterion; whether a node is a Wild Node (and so whether A.5 launch conditions hold) rests on a declared property.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "CODEX-Glossary_Definitions-06",
@@ -241,7 +374,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "code_synergy:message_cryptographically_embedded"
+   "check": "code_synergy:message_cryptographically_embedded",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare cryptographic assumptions, allowed transitions, and network existence conditions."
+    ],
+    "coverage_limit": "Embedding = the message is inside the content hashed into block #0's digest (lab digest; the Code gives no block hash).",
+    "origin": "external_dependency",
+    "reason": "The real Genesis Block #0 and its hash are not in the corpus; embedding is checked only on a lab digest of the specified block.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "CODEX-Preamble-01",
@@ -254,7 +397,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "code_synergy:power_in_open_algorithms"
+   "check": "code_synergy:power_in_open_algorithms",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define publication and transparency tests.",
+     "Define which changes are compatible with immutability."
+    ],
+    "coverage_limit": "Read as three observable properties: parameters change only by UPGRADE with simulation, every PTL reading of B(t) is published, liability acts are executed by rule.",
+    "answer": "The Code itself makes the three forms concrete: immutability except by UPGRADE with simulation (A.1a), public PTL metrics (A.2), automated liability (A.3, A.6, §7.3, §8).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CODEX-Preamble-02",
@@ -267,7 +420,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "code_synergy:algorithms_not_subjects"
+   "check": "code_synergy:algorithms_not_subjects",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define algorithm classification and how binding rules are represented."
+    ],
+    "coverage_limit": "Observed as: liability acts fall on declared Subjects; no record names an algorithm as responsible.",
+    "answer": "The next sentence assigns all responsibility to originating Subjects (IDENTITY); a liability falling elsewhere is the observable breach.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-0-03",
@@ -280,7 +442,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:no_precedent_or_future_authorization"
+   "check": "crisis_recovery:no_precedent_or_future_authorization",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how normative reliance and interpretive effects are represented."
+    ],
+    "coverage_limit": "Observed after the exit: citations of crisis actions, recorded interpretation rules, authority notices. Custom formed without a record is not observable.",
+    "answer": "Normative reliance = citation, recorded rule or authority after exit (§6 Non-Precedent Rule lists the uses).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-1-03",
@@ -293,7 +464,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:envelope_not_expanded"
+   "check": "crisis_recovery:envelope_not_expanded",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare scope comparison rules and authorization provenance semantics."
+    ],
+    "coverage_limit": "The envelope is a declared list of §6 actions (input crisis_envelope).",
+    "answer": "Expansion, inference and bypass are relative to the declared envelope; the content of the envelope is the subject of §1's other sentences, not of this one.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-2-02",
@@ -306,7 +486,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:no_new_rights_obligations"
+   "check": "crisis_recovery:no_new_rights_obligations",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how redefinitions and newly introduced normative effects are detected."
+    ],
+    "coverage_limit": "Observed as explicit definitions and authority notices.",
+    "answer": "Redefinitions and new rights, obligations or authorities are recorded acts of the crisis layer.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-2-05",
@@ -319,7 +508,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:no_extrapolation"
+   "check": "crisis_recovery:no_extrapolation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare artifact provenance and scope-membership semantics."
+    ],
+    "coverage_limit": "The Crisis Scope is a declared region; reuse in another region is observed.",
+    "answer": "Scope membership is relative to the declared Crisis Scope; reuse outside it is a recorded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-5-02",
@@ -332,7 +530,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:c0_without_conditions"
+   "check": "crisis_recovery:c0_without_conditions",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a complete crisis-condition evaluator for the simulated domain."
+    ],
+    "coverage_limit": null,
+    "answer": "Crisis conditions are the §4 PTL-confirmed triggers; C0 is their absence.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-7-02",
@@ -345,7 +552,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:no_concealment_permanence_utility"
+   "check": "crisis_recovery:no_concealment_permanence_utility",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an authoritative execution trace and classifiers for the prohibited governance and valuation practices."
+    ],
+    "coverage_limit": "Permanence observed as staying in crisis once the module's exit conditions hold; 'emergency governance' as authority notices (also §7, §9).",
+    "answer": "Audit commitment, the §9 exit conditions and the §7 allocation bases fix the three tests.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-8-01",
@@ -358,7 +574,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:algorithmic_governance"
+   "check": "crisis_recovery:algorithmic_governance",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how algorithmic derivation and pre-definition are verified."
+    ],
+    "coverage_limit": null,
+    "answer": "§8 itself: every crisis action derives from pre-defined protocol logic; human intervention is a logged perturbation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-Non-PrecedentRule_-03",
@@ -371,7 +596,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "crisis_recovery:no_numbers_in_protocol"
+   "check": "crisis_recovery:no_numbers_in_protocol",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare whether the prohibition is protocol-wide or authority-specific and how numerical definitions are classified."
+    ],
+    "coverage_limit": null,
+    "answer": "'In this protocol' = the CRISIS text; the next sentence sends every numerical parameter to SIMULATION.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISISPATCH-11-01",
@@ -418,7 +652,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_doctrine"
+   "check": "edu_culture:no_doctrine",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare criteria for identifying each prohibited regulatory activity."
+    ],
+    "coverage_limit": "Observed through declared requests and CULTURE records.",
+    "answer": "A protocol output that defines a belief system or doctrine is recognizable as such; the clear core is checked.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CULTURE-4.3-03",
@@ -431,7 +674,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:persistence_without_justification"
+   "check": "edu_culture:persistence_without_justification",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which decisions and requirements can condition cultural persistence."
+    ],
+    "coverage_limit": "Persistence support is a recorded per-language decision.",
+    "answer": "The three excluded justifications are named.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CULTURE-5-01",
@@ -444,7 +696,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_conformity_enforcement"
+   "check": "edu_culture:no_conformity_enforcement",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare criteria distinguishing cultural conformity requirements from other behavioral rules."
+    ],
+    "coverage_limit": "Observed through declared requests and CULTURE records.",
+    "answer": "Enforcement of conformity = a requirement backed by a sanction for non-conformity; §5's other items name the related forms.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CULTURE-7-03",
@@ -457,7 +718,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:neutrality_both_ways"
+   "check": "edu_culture:neutrality_both_ways",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare culture classifications and how equal application of neutrality is assessed."
+    ],
+    "coverage_limit": "Neutrality observed as identical per-language treatment.",
+    "answer": "Equal application = identical treatment regardless of dominance; per-language treatment is recorded.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-0-01",
@@ -470,7 +740,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:not_a_ranking"
+   "check": "edu_culture:not_a_ranking",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which educational outputs constitute value judgments or social ranking."
+    ],
+    "coverage_limit": null,
+    "answer": "§7 and §11 concretize: outcomes are competence signals; ranking and worth labels are the excluded outputs.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-1-01",
@@ -483,7 +762,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_defined_values"
+   "check": "edu_culture:no_defined_values",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define a semantic classification for definitions of the excluded concepts."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "A module defining one of the listed concepts is a property of its content.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-10-01",
@@ -496,7 +784,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:open_or_inspectable"
+   "check": "edu_culture:open_or_inspectable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define qualifying open-source status and public inspection conditions."
+    ],
+    "coverage_limit": "Access is declared.",
+    "answer": "Two plain alternatives: open source or publicly inspectable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-11-01",
@@ -509,7 +806,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_success_definition"
+   "check": "edu_culture:no_success_definition",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which rules constitute definitions of personal success or intelligence."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "A rule that defines personal success or intelligence is a property of module content (§7 excludes intelligence labels).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-11-03",
@@ -522,7 +828,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_uniform_path"
+   "check": "edu_culture:no_uniform_path",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which path constraints constitute enforced uniformity."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "§5 separates a shared capability outcome from a uniform mandatory path; the path is a module property.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-2-02",
@@ -535,7 +850,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_ideological_narrative"
+   "check": "edu_culture:no_ideological_narrative",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Define which content and delivery practices constitute ideological narrative imposition."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "origin": "architecture_definition",
+    "reason": "'Ideological narrative' is not defined; §6 names mandated belief, worldview alignment and conformity, but a narrative without those features cannot be classified from the text. Only declared cases are recognized.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "EDU-2-03",
@@ -548,7 +873,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_correctness_definition"
+   "check": "edu_culture:no_correctness_definition",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define a classification of rules that prescribe moral or political correctness."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "A rule prescribing moral or political correctness is a property of module content.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-3-03",
@@ -561,7 +895,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:bounded_verifiable_module"
+   "check": "edu_culture:bounded_verifiable_module",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define adequate module boundaries and verification methods."
+    ],
+    "coverage_limit": "Boundaries and verification method are declared.",
+    "answer": "Bounded, verifiable, one competence domain: three properties of a module.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-3-04",
@@ -574,7 +917,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:assessment_event"
+   "check": "edu_culture:assessment_event",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define evidence sufficient to establish auditability, reproducibility, and performance-based competence."
+    ],
+    "coverage_limit": "Performance is a declared outcome; the outcome is recomputed from it.",
+    "answer": "Auditable and reproducible = the outcome recomputes from the recorded performance.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-4-03",
@@ -587,7 +939,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:free_of_ideological_enforcement"
+   "check": "edu_culture:free_of_ideological_enforcement",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define ideological enforcement in content and participation requirements."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "§6 concretizes ideological enforcement (mandated belief, worldview alignment, conformity).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-4-05",
@@ -600,7 +961,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:outcomes_reproducible"
+   "check": "edu_culture:outcomes_reproducible",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define the object and acceptance criteria of outcome reproduction and audit."
+    ],
+    "coverage_limit": "Performance is a declared outcome; the outcome is recomputed from it.",
+    "answer": "Outcomes are verified competence (§3, §7); reproduction is their recomputation from recorded performance.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-6-01",
@@ -613,7 +983,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_mandated_belief"
+   "check": "edu_culture:no_mandated_belief",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which participation or assessment requirements mandate belief acceptance."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "Mandated belief acceptance = required assent as a condition; §3 and §7 ask for observable knowledge only.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-6-02",
@@ -626,7 +1005,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_worldview_alignment"
+   "check": "edu_culture:no_worldview_alignment",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define conditions that require worldview alignment."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "A worldview-alignment condition is a module property.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-6-03",
@@ -639,7 +1027,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_conformity_enforcement"
+   "check": "edu_culture:no_conformity_enforcement",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define rules and actions that constitute enforcement of cultural or moral conformity."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "answer": "Enforcement = a sanction for non-conformity, a module property.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-7-06",
@@ -652,7 +1049,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:competence_signals"
+   "check": "edu_culture:competence_signals",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define outcome descriptions and uses that constitute judgments of worth or intelligence."
+    ],
+    "coverage_limit": null,
+    "answer": "Worth and intelligence labels on outcomes are the excluded uses.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-9-01",
@@ -665,7 +1071,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_indoctrination"
+   "check": "edu_culture:no_indoctrination",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which educational practices constitute ideological indoctrination."
+    ],
+    "coverage_limit": "Indoctrination observed as an ideological narrative or required assent.",
+    "answer": "Indoctrination is read through §6 and §2 (required assent, ideological narrative); the excluded practices are named there.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EDU-9-02",
@@ -678,7 +1093,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:no_political_conditioning"
+   "check": "edu_culture:no_political_conditioning",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Define political conditioning in educational practices."
+    ],
+    "coverage_limit": "Module properties are declared.",
+    "origin": "architecture_definition",
+    "reason": "'Political conditioning' is not defined; read as a political alignment condition or a definition of political correctness, which the text does not state.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "EDU-Safeguards-06",
@@ -691,7 +1116,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edu_culture:failure_is_signal"
+   "check": "edu_culture:failure_is_signal",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define classifications and uses that constitute corrective signaling or fault marking."
+    ],
+    "coverage_limit": null,
+    "answer": "Corrective signal = remediation; fault marker = a fault record on failure (§8 forbids penalties).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-0-01",
@@ -704,7 +1138,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:errors_as_states"
+   "check": "dispute_correction:errors_as_states",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how records and actions are classified as moral or intent-based treatment."
+    ],
+    "coverage_limit": "Observed as error records carrying states only, no blame or misconduct labels.",
+    "answer": "§5 states are the only error records; a blame or intent label is the excluded treatment.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-1-01",
@@ -717,7 +1160,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:procedural_non_punitive"
+   "check": "dispute_correction:procedural_non_punitive",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the authorized procedure and the test for punitive handling."
+    ],
+    "coverage_limit": "Procedural: §5 states in order; non-punitive: no measure sourced from the error case itself (a harsher recomputed Justice outcome is Q-021).",
+    "answer": "Procedure = §5-§8; non-punitive = no measure from the error case itself (§2, §11). Whether a harsher recomputed Justice outcome counts is Q-021 on ERROR-8-05, not this provision.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-11-01",
@@ -730,7 +1182,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:valid_appeal_not_suppressed"
+   "check": "dispute_correction:valid_appeal_not_suppressed",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare whether validity is formal or substantive and which acts or omissions constitute suppression."
+    ],
+    "coverage_limit": null,
+    "answer": "Valid = §3.2 appealable and §7 formal and timely; suppression = no error case opened.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-11-04",
@@ -743,7 +1204,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:no_discretionary_override"
+   "check": "dispute_correction:no_discretionary_override",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the distinction between discretionary overrides and authorized procedural actions."
+    ],
+    "coverage_limit": null,
+    "answer": "Authorized actions are the §7-§8 procedure and the recomputed Justice decision; anything else is an override.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-2-04",
@@ -756,7 +1226,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:no_ptl_reinterpretation"
+   "check": "dispute_correction:no_ptl_reinterpretation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how reinterpretation differs from correcting a measurement or oracle error."
+    ],
+    "coverage_limit": "Observed as measurements written by a source other than PTL; axiom reinterpretation is not modelled beyond that.",
+    "answer": "§8 sends corrections through new PTL observations; ERROR writing a measurement itself is reinterpretation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-5-02",
@@ -769,7 +1248,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:r1_non_coercive"
+   "check": "dispute_correction:r1_non_coercive",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which verification actions qualify as non-coercive."
+    ],
+    "coverage_limit": null,
+    "answer": "Non-coercive = no compulsion or new measure during verification; the status quo suspension (§7) is relief.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-6-04",
@@ -782,7 +1270,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:no_prediction_or_intent"
+   "check": "dispute_correction:no_prediction_or_intent",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare prediction and intent-inference classifications and whether the prohibition applies to initiation or all handling."
+    ],
+    "coverage_limit": "Observed as explicit inference or prediction records.",
+    "answer": "A plain ban; the §6 initiation sources are listed.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-9-03",
@@ -795,7 +1292,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:reversibility_preferred"
+   "check": "dispute_correction:reversibility_preferred",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare whether reversal has absolute priority or a defeasible preference."
+    ],
+    "coverage_limit": null,
+    "origin": "normative_ambiguity",
+    "reason": "'Prefer reversibility over compensation' does not say whether reversal is mandatory whenever possible or a defeasible preference; the lab checks it as mandatory.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "ETRANS-3-03",
@@ -808,7 +1315,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "failure_chain:no_persistent_authority"
+   "check": "failure_chain:no_persistent_authority",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how persistent authority and historical validity are represented."
+    ],
+    "coverage_limit": "The §3 invariant read through §4.2: no action on an evaluation made before a later degradation, dispute or loss of consistency.",
+    "answer": "§4.2 concretizes: no enforcement on a past VALID state after degradation, dispute or loss of consistency.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ETRANS-6-01",
@@ -821,7 +1337,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "failure_chain:downgrade_propagation_tested"
+   "check": "failure_chain:downgrade_propagation_tested",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare test adequacy and coverage criteria."
+    ],
+    "coverage_limit": "The lab stands in for L8: the tests run and catch a counterexample.",
+    "origin": "architecture_definition",
+    "reason": "The requirement binds L8 (DKP-8-SIMULATION), which defines no test adequacy criteria; the lab stands in for L8 and shows only that its own tests run and catch counterexamples.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "ETRANS-6-02",
@@ -834,7 +1360,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "failure_chain:enforcement_suspension_tested"
+   "check": "failure_chain:enforcement_suspension_tested",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare test adequacy and coverage criteria."
+    ],
+    "coverage_limit": "The lab stands in for L8: the tests run and catch a counterexample.",
+    "origin": "architecture_definition",
+    "reason": "As ETRANS-6-01: L8 test adequacy is not defined; the lab stands in for L8.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "ETRANS-6-03",
@@ -847,7 +1383,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "failure_chain:revalidation_triggers_tested"
+   "check": "failure_chain:revalidation_triggers_tested",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare test adequacy and coverage criteria."
+    ],
+    "coverage_limit": "The lab stands in for L8: the tests run and catch a counterexample.",
+    "origin": "architecture_definition",
+    "reason": "As ETRANS-6-01: L8 test adequacy is not defined; the lab stands in for L8.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "ETRANS-6-04",
@@ -860,7 +1406,18 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "failure_chain:state_persistence_tested"
+   "check": "failure_chain:state_persistence_tested",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare which state persistence is prohibited.",
+     "Declare test adequacy and coverage criteria."
+    ],
+    "coverage_limit": "The lab stands in for L8: the tests run and catch a counterexample.",
+    "origin": "architecture_definition",
+    "reason": "As ETRANS-6-01: L8 test adequacy is not defined; the lab stands in for L8.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "ETRANS-EpistemicStateTransitionProtocol-01",
@@ -873,7 +1430,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edition_finality:override_not_permitted"
+   "check": "edition_finality:override_not_permitted",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how actions are classified as overrides."
+    ],
+    "coverage_limit": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
+    "answer": "§7 separates the lawful change route (UPGRADE) from an override by another protocol.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-11-03",
@@ -886,7 +1452,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:no_crisis_precedent"
+   "check": "exit_integration:no_crisis_precedent",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare when reliance on crisis handling constitutes exit precedent."
+    ],
+    "coverage_limit": "Precedent is observed as an exit rule recorded from crisis handling.",
+    "answer": "Precedent = a rule for later exits derived from crisis handling (§11 also forbids redefining exit rights).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-3-03",
@@ -899,7 +1474,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:exit_event_procedure"
+   "check": "exit_integration:exit_event_procedure",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how procedure steps are matched to execution events."
+    ],
+    "coverage_limit": null,
+    "answer": "The declared procedure is §5-§7: declaration, cooling, phases; execution is matched to them in time.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-6-03",
@@ -912,7 +1496,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:cooling_no_escalation"
+   "check": "exit_integration:cooling_no_escalation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how obligation escalation and cooling-caused eligibility restrictions are identified."
+    ],
+    "coverage_limit": "Observed as obligation and eligibility records during cooling.",
+    "answer": "Obligation growth and new eligibility conditions during cooling are recorded acts.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-7-01",
@@ -925,7 +1518,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:phased_disengagement"
+   "check": "exit_integration:phased_disengagement",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how phased disengagement and abrupt severance are distinguished."
+    ],
+    "coverage_limit": null,
+    "answer": "Phases are declared at initiation (§7); abrupt severance = no phased sequence.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-8-01",
@@ -938,7 +1540,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:future_obligations_and_benefits_cease"
+   "check": "exit_integration:future_obligations_and_benefits_cease",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how historical obligations with later performance dates are classified."
+    ],
+    "coverage_limit": "Benefits and obligations are recorded events.",
+    "answer": "§9 (restitution tail) classifies prior obligations; everything incurred after execution is future.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-8-03",
@@ -951,7 +1562,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:historical_responsibility_kept"
+   "check": "exit_integration:historical_responsibility_kept",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which records or states represent historical responsibility."
+    ],
+    "coverage_limit": "Observed on the archive record.",
+    "answer": "Historical responsibility is what the archive keeps (§8, §12).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-1-01",
@@ -964,7 +1584,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:finance_exclusions"
+   "check": "finance_mechanics:finance_exclusions",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how operations are classified against each excluded activity."
+    ],
+    "coverage_limit": "Exclusions observed as refusals of declared requests and as the Justice outcome used unchanged; a fiat regime is not modelled beyond the request.",
+    "answer": "Each exclusion has a clear core: a fiat regime, a Justice outcome changed, a preference-based valuation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-13-01",
@@ -977,7 +1606,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:cross_layer_isolation"
+   "check": "finance_mechanics:cross_layer_isolation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare tests for measurement reinterpretation and prohibited semantic injection."
+    ],
+    "coverage_limit": "Observed as attribution and Justice outcome used as given, refusals, and no fields beyond the pricing record.",
+    "answer": "Attribution and Justice outcomes are inputs FINANCE uses as given; policy or moral fields are outside the pricing record.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-3.1-01",
@@ -990,7 +1628,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:cu_unitless_fungible"
+   "check": "finance_mechanics:cu_unitless_fungible",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define equivalent CU holdings and the transaction contexts used to test interchangeability."
+    ],
+    "coverage_limit": "Observed on ledger entries (no unit, no lot-dependent value).",
+    "answer": "Unitless and fungible fix the ledger form: no unit, no lot-dependent value.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-3.2-02",
@@ -1003,7 +1650,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:cost_direction"
+   "check": "finance_mechanics:cost_direction",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare whether directional comparisons hold other inputs fixed and how competing changes are handled."
+    ],
+    "coverage_limit": "Direction only, on pairs differing in one factor; JWCoC has no formula (stand-in, CALIBRATION_MAP); Justice history as a declared class (H-FM-2).",
+    "origin": "architecture_definition",
+    "reason": "'Positive justice contribution' is not defined as a quantity anywhere in the corpus; the direction is checked on a declared Justice-history class (H-FM-2).",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "FINANCE-5.1-02",
@@ -1016,7 +1673,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:credit_temporary_conditional"
+   "check": "finance_mechanics:credit_temporary_conditional",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how a credit imbalance ends and what temporal interpretation of 'temporary' is used."
+    ],
+    "coverage_limit": "The §5.1 conditions are declared values; 'temporary' as a term and closure by it.",
+    "answer": "Temporary = a term after which the imbalance closes; not a right = issued only under §5.1.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-6.1-02",
@@ -1029,7 +1695,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:savings_deterministic_auditable"
+   "check": "finance_mechanics:savings_deterministic_auditable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an auditability standard for return calculations."
+    ],
+    "coverage_limit": "Recomputability and determinism; the return formula is a stand-in.",
+    "answer": "Determinism and recomputability need no return formula; the formula is the gap of §6.1's first sentence (CALIBRATION_MAP).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-6.2-01",
@@ -1042,7 +1717,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:reserve_impact_based"
+   "check": "finance_mechanics:reserve_impact_based",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare an impact-based sizing function and how percentage-based rules are identified."
+    ],
+    "coverage_limit": "Basis only (H-FM-3, metamorphic): equal exposure gives an equal reserve, balances alone do not move it; the sizing function and its shape are not given.",
+    "origin": "l8_parameter",
+    "reason": "Reserve sizing needs a function that FINANCE does not give (CALIBRATION_MAP); the sentence fixes only its basis, which is checked.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "FINANCE-9-02",
@@ -1055,7 +1740,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "finance_mechanics:leverage_impact_based"
+   "check": "finance_mechanics:leverage_impact_based",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare the limit function and whether indirect volatility inputs are compatible with an impact basis."
+    ],
+    "coverage_limit": "Basis only (H-FM-3, metamorphic): equal exposure gives an equal limit, volatility alone does not move it; the limit function and its shape are not given.",
+    "origin": "l8_parameter",
+    "reason": "Leverage limits need a function that FINANCE does not give (CALIBRATION_MAP); the sentence fixes only its basis, which is checked.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "HABITAT-3-02",
@@ -1068,7 +1763,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "habitat_dignity:living_space_definition"
+   "check": "habitat_dignity:living_space_definition",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "An enclosure classification and an authoritative source of intended uses."
+    ],
+    "coverage_limit": "The kind of each space is declared (dwelling, shelter, storage, open lot).",
+    "answer": "The definition fixes the class (enclosed or semi-enclosed, intended for living); the kind of a concrete space is evidence about it.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INFO-0-02",
@@ -1082,6 +1786,15 @@
     "human_accepted": false
    },
    "check": "info_truth:descriptive_non_coercive",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Operational definitions of descriptive governance and coercive effects."
+    ],
+    "coverage_limit": "Coercion observed as deletion, penalty, legal effect, suspension or blocking (§§8-10).",
+    "answer": "§§8-10 concretize: annotation only; deletion, penalty, legal effect or change of rights are coercive.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   },
    "checkable": {
     "from": "no",
     "to": "partial"
@@ -1098,7 +1811,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "info_truth:factual_jurisdiction"
+   "check": "info_truth:factual_jurisdiction",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A declared jurisdiction and action-purpose classification method."
+    ],
+    "coverage_limit": "Requests beyond factual correspondence are declared.",
+    "answer": "§13's four exclusions fix the boundary of factual correspondence.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INFO-8-01",
@@ -1111,7 +1833,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "info_truth:permitted_responses"
+   "check": "info_truth:permitted_responses",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A declared response taxonomy separating annotation, amplification changes, remediation, and escalation."
+    ],
+    "coverage_limit": null,
+    "answer": "A closed MAY list of responses.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-11-05",
@@ -1124,7 +1855,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:no_hidden_dependency"
+   "check": "exit_integration:no_hidden_dependency",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define early phases and the disclosure needed for a dependency to count as visible."
+    ],
+    "coverage_limit": "Dependencies are declared events (fault scope_creep creates one).",
+    "answer": "Early phases are Phases 0-1 (§5); a dependency created there without declaration is the hidden dependency.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-3-06",
@@ -1137,7 +1877,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:rollback_definition"
+   "check": "exit_integration:rollback_definition",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define the required rollback controls."
+    ],
+    "coverage_limit": null,
+    "answer": "Controls named in the definition: prior phase, declared scope, declared cost (§7).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-7-04",
@@ -1150,7 +1899,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "exit_integration:rollback_preserves_records"
+   "check": "exit_integration:rollback_preserves_records",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define the continuity invariant and which data and audit records must be preserved."
+    ],
+    "coverage_limit": "Continuity is a recorded property of the rollback.",
+    "answer": "Data continuity and audit trails = nothing recorded before the rollback is erased.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-1-01",
@@ -1163,7 +1921,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:excluded_functions_refused"
+   "check": "interop_failure:excluded_functions_refused",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how operations are classified into the excluded functions."
+    ],
+    "coverage_limit": "The three exclusions are observed as refusals of declared requests; binding external rulings are also checked under §5.",
+    "answer": "Three exclusions of INTEROP's own function; their core is clear.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-10-01",
@@ -1176,7 +1943,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_automatic_harmonization"
+   "check": "interop_failure:no_automatic_harmonization",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how harmonization is distinguished from translation and how automation is identified."
+    ],
+    "coverage_limit": "Observed as the refusal of a declared request.",
+    "answer": "§3 and §4.4 separate translation (deterministic mapping) from harmonization (changing either system's rules).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-12-01",
@@ -1189,7 +1965,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_geopolitical_resolution"
+   "check": "interop_failure:no_geopolitical_resolution",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how protocol actions are classified as geopolitical conflict resolution."
+    ],
+    "coverage_limit": "Observed as the refusal of a declared request.",
+    "answer": "A scope limitation of INTEROP's own function; its core is clear.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-12-02",
@@ -1202,7 +1987,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_legal_unification"
+   "check": "interop_failure:no_legal_unification",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the legal-system effects that constitute unification."
+    ],
+    "coverage_limit": "Observed as the refusal of a declared request.",
+    "answer": "A scope limitation of INTEROP's own function; its core is clear.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-12-03",
@@ -1215,7 +2009,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_compliance_guarantee"
+   "check": "interop_failure:no_compliance_guarantee",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how guarantees and their subjects are identified in protocol commitments."
+    ],
+    "coverage_limit": "Observed as the refusal of a declared request.",
+    "answer": "§5 leaves compliance to Subjects; a guarantee by INTEROP is the excluded commitment.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-12-04",
@@ -1228,7 +2031,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_enforcement_bridge"
+   "check": "interop_failure:no_enforcement_bridge",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare what cross-boundary enforcement effects constitute an enforcement bridge."
+    ],
+    "coverage_limit": "Observed as the refusal of a declared request.",
+    "answer": "§3 (external systems not governed) and §5 fix the core: no enforcement across the boundary.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-12-05",
@@ -1242,6 +2054,15 @@
     "human_accepted": false
    },
    "check": "interop_failure:compatibility_not_convergence",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare observable meanings and acceptance criteria for compatibility and convergence."
+    ],
+    "coverage_limit": "Read as a conjunction: interaction through defined interfaces (compatibility) and no harmonization, unification or adopted external norm (no convergence).",
+    "answer": "Compatibility and convergence are made concrete by §3, §4.4, §1, §10 and §12.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   },
    "checkable": {
     "from": "no",
     "to": "partial"
@@ -1258,7 +2079,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:purely_translational"
+   "check": "interop_failure:purely_translational",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the permitted semantics and effects of a translation operation."
+    ],
+    "coverage_limit": "'Purely translational' is observed as: INTEROP emits records only, no action.",
+    "answer": "§§3-5 list what INTEROP does: record, translate, export as evidence; any own action exceeds it.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-3-02",
@@ -1271,7 +2101,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:defined_interfaces"
+   "check": "interop_failure:defined_interfaces",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare an accepted formal interface specification format."
+    ],
+    "coverage_limit": "The interfaces are a declared lab list; their formal specification is not modelled.",
+    "origin": "architecture_definition",
+    "reason": "No specification format makes an interface 'formally defined'; the lab uses a declared list of interfaces (cf. INTEROP-7-01, open specifications).",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "INTEROP-3-03",
@@ -1284,7 +2124,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:deterministic_translation"
+   "check": "interop_failure:deterministic_translation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the complete input domain and any context affecting mapping outputs."
+    ],
+    "coverage_limit": "Determinism of the declared mapping (same input, same output, both runs); the mapping itself is a lab stand-in: no translation function is given (§6, UNKNOWN in INTEROP-6-02).",
+    "answer": "Determinism is checkable for any mapping; the value mapping itself is the gap of INTEROP-6-02 (UNKNOWN), not of this definition.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-3-04",
@@ -1297,7 +2146,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_normative_leakage"
+   "check": "interop_failure:no_normative_leakage",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how implicit imports and their authorization scope are identified."
+    ],
+    "coverage_limit": "Leakage is observed through declared events: execution of an external ruling, compliance acts, consent inferences, an accepted external norm.",
+    "answer": "§5 and §10 name the forms of leakage (binding rulings, compliance acts, silent norm import).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-4.3-01",
@@ -1310,7 +2168,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:compatibility_not_consent"
+   "check": "interop_failure:compatibility_not_consent",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how decisions and inference rules encode legitimacy, obligation, and consent."
+    ],
+    "coverage_limit": "Observed as an explicit inference record; implicit treatment is not observable.",
+    "answer": "Treating compatibility as consent is an inference that is recorded or acted upon; its core is clear.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-5-04",
@@ -1323,7 +2190,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "interop_failure:no_regime_adjudication"
+   "check": "interop_failure:no_regime_adjudication",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a classification rule for adjudication of external legal conflicts."
+    ],
+    "coverage_limit": "Observed as the refusal of a declared request.",
+    "answer": "A plain exclusion: DKP gives no ruling between external regimes.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTSEC-3.2-02",
@@ -1336,7 +2212,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "internal_security:motivation_not_considered"
+   "check": "internal_security:motivation_not_considered",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how direct and indirect decision dependencies are detected."
+    ],
+    "coverage_limit": null,
+    "answer": "States must follow evidence levels alone; a motivation factor is the excluded input.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTSEC-6-01",
@@ -1349,7 +2234,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "internal_security:four_triggers_only"
+   "check": "internal_security:four_triggers_only",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare trigger classifiers and the PTL evidence requirement for Justice Execution Triggers."
+    ],
+    "coverage_limit": null,
+    "answer": "The four triggers are listed with their PTL anchoring.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTSEC-8-07",
@@ -1362,7 +2256,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "internal_security:cap_breach_critical"
+   "check": "internal_security:cap_breach_critical",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare whether the breach classification applies to the node-control limit alone or all section 8 violations."
+    ],
+    "coverage_limit": "Node shares are declared inputs.",
+    "origin": "normative_ambiguity",
+    "reason": "'Violation constitutes a critical architectural breach' follows the 4 % node rule at the end of §8; whether it covers that rule only or every §8 prohibition is not stated. Checked for the node rule.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "JUSTICE-10-02",
@@ -1375,7 +2279,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:individual_accountability_kept"
+   "check": "dispute_correction:individual_accountability_kept",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "An operational representation of individual accountability and its preservation."
+    ],
+    "coverage_limit": "A collective is a declared Subject of kind 'collective'.",
+    "answer": "§10's proportional distribution concretizes individual accountability: each contributing Subject keeps its share.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "JUSTICE-12-01",
@@ -1388,7 +2301,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:no_exemption"
+   "check": "dispute_correction:no_exemption",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A classification of prohibited exemption grounds and a model for detecting proxy-based exemptions."
+    ],
+    "coverage_limit": null,
+    "answer": "The five grounds are listed; an outcome changed by them is an exemption.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "JUSTICE-13-01",
@@ -1401,7 +2323,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:cross_layer_isolation"
+   "check": "dispute_correction:cross_layer_isolation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A semantic comparison rule for metric interpretation and a classifier for prohibited reasoning."
+    ],
+    "coverage_limit": "Axiom-defined bounds are not modelled beyond the declared safe margin.",
+    "answer": "The four bans have a clear core: metrics and attribution used as given, no policy or moral field.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "JUSTICE-14-01",
@@ -1414,7 +2345,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:reproducible"
+   "check": "dispute_correction:reproducible",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "An audit evidence standard and a declared reproducibility environment and comparison rule."
+    ],
+    "coverage_limit": null,
+    "answer": "Reproducible = recomputable from the protocol inputs by the §6-§9 rules (§14 traceability).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "JUSTICE-4-02",
@@ -1427,7 +2367,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:output_vector_clean"
+   "check": "dispute_correction:output_vector_clean",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Explicit classifiers for prohibited content and computation practices."
+    ],
+    "coverage_limit": "Observed as fields of the output vector.",
+    "answer": "§4 states the vector's form: computed, not interpreted; the four exclusions are its negative.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "JUSTICE-5-01",
@@ -1440,7 +2389,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "dispute_correction:domains_independent"
+   "check": "dispute_correction:domains_independent",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A definition of independence between domain evaluations."
+    ],
+    "coverage_limit": null,
+    "answer": "Independence = each domain decided by its own §6-§9 conditions.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "LABOR-10-03",
@@ -1453,7 +2411,18 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "work_cycle:restricted_not_coerced"
+   "check": "work_cycle:restricted_not_coerced",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Definitions of exploitation, coercion, and voluntary participation.",
+     "A declared interpretation of the crisis exception for restricted or isolated Subjects."
+    ],
+    "coverage_limit": "Participation, refusal and rate are declared; 'exploited' read as a rate below the standard one.",
+    "origin": "architecture_definition",
+    "reason": "'Exploited' has no criterion (read as a rate below the standard one), and how the crisis exception applies to Subjects under Restriction or Isolation is not stated.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "POLICE-0-01",
@@ -1466,7 +2435,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:sole_function"
+   "check": "police_antiterror:sole_function",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define how actions and mixed purposes map to the four permitted functions."
+    ],
+    "coverage_limit": "The four functions mapped to the police action kinds (H-PA-5); a PTL basis is required for harm prevention.",
+    "answer": "The four functions are listed; §3 and §4 concretize them as action kinds and triggers.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-0-02",
@@ -1479,7 +2457,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:no_law_guilt_truth"
+   "check": "police_antiterror:no_law_guilt_truth",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which institutional acts count as defining each listed category."
+    ],
+    "coverage_limit": "Observed as fields of police records and refused requests.",
+    "answer": "Defining law, policy, justice, guilt or truth is recognizable as such; §2 and §3 repeat the core.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-10-01",
@@ -1492,7 +2479,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:scope_limits"
+   "check": "police_antiterror:scope_limits",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define regulation and substitution using observable institutional effects."
+    ],
+    "coverage_limit": "Observed through declared requests; long-term punishment and exit rights are separate provisions.",
+    "answer": "Regulation of belief, speech or culture and sanctions in place of JUSTICE have a clear core.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-2-03",
@@ -1505,7 +2501,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:no_guilt_or_axiom"
+   "check": "police_antiterror:no_guilt_or_axiom",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define how action effects are classified into the prohibited categories."
+    ],
+    "coverage_limit": "Observed as fields of police records and refused requests.",
+    "answer": "Guilt, liability and axiom readings are outputs of JUSTICE and AXIOMS, not of police records.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-3-04",
@@ -1518,7 +2523,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:no_intent_or_judgment"
+   "check": "police_antiterror:no_intent_or_judgment",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which recorded reasoning and outputs constitute the prohibited acts."
+    ],
+    "coverage_limit": "Observed as fields of police records and refused requests.",
+    "answer": "An assessment of intent or motivation and a binding judgment are recognizable police outputs.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-7-01",
@@ -1531,7 +2545,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:no_prediction_or_profiling"
+   "check": "police_antiterror:no_prediction_or_profiling",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define the prohibited function classes and how use of a listed profiling basis is detected."
+    ],
+    "coverage_limit": "Requests for the two functions are declared.",
+    "answer": "§3 forbids acting on suspicion, profiling or predictive scoring; the two functions are named.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-7-03",
@@ -1544,7 +2567,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "police_antiterror:no_authority_expansion"
+   "check": "police_antiterror:no_authority_expansion",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define discretion and distinguish it from authorized crisis extension."
+    ],
+    "coverage_limit": null,
+    "answer": "§8 is the only lawful extension (declared crisis, explicit scope).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PREV-0-01",
@@ -1557,7 +2589,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edition_finality:override_not_permitted"
+   "check": "edition_finality:override_not_permitted",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define how overrides differ from amendments under §15."
+    ],
+    "coverage_limit": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
+    "answer": "§15 is the only change route; an override by another protocol is the excluded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PREV-11-03",
@@ -1570,7 +2611,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "prevention:deterministic_auditable"
+   "check": "prevention:deterministic_auditable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare all state treated as evaluation input and the evidence required for an audit."
+    ],
+    "coverage_limit": null,
+    "answer": "The §11 output fields and their inputs are the evaluation state; re-execution and recomputation are the audit.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PREV-13-01",
@@ -1583,7 +2633,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "prevention:no_hypothetical_states"
+   "check": "prevention:no_hypothetical_states",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare whether the invariant applies only to operational attribution or also to simulation states."
+    ],
+    "coverage_limit": "Checked on the S factor (from measured TA and SE) and the factor set; the bench is the verified v2.1.1, not modified.",
+    "answer": "The invariants govern PREVENTION's evaluation: its factors come from measured states, not counterfactual baselines (§3.11 CBF is audit-only).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PREV-13-02",
@@ -1613,7 +2672,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "privacy_transparency:no_override_of_privacy"
+   "check": "privacy_transparency:no_override_of_privacy",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how protocol effects conflict with privacy constraints and how each exception applies."
+    ],
+    "coverage_limit": null,
+    "answer": "The permitted exceptions are named in PRIVACY (§7 with TRANSPARENCY §8, §11).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "RESILIENCE-0-01",
@@ -1626,7 +2694,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "edition_finality:override_not_permitted"
+   "check": "edition_finality:override_not_permitted",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which configuration changes and actions count as overriding the protocol."
+    ],
+    "coverage_limit": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
+    "answer": "As the other headers: the change route is the finality clause; an override is an act of another protocol.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TIME-2-01",
@@ -1640,6 +2717,15 @@
     "human_accepted": false
    },
    "check": "time:neutral_anchor",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how anchors and prohibited event categories are identified."
+    ],
+    "coverage_limit": "Neutrality read as an arithmetic origin (DTI-Day = JDN by §3); whether JDN's own origin is neutral is fixed by §3, not judged.",
+    "answer": "§3 fixes the anchor arithmetically (DTI-Day = JDN); any other anchor is the excluded one.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   },
    "checkable": {
     "from": "no",
     "to": "partial"
@@ -1656,7 +2742,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "time:recomputable_index"
+   "check": "time:recomputable_index",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare whether arithmetic reconstruction from canonical fields is sufficient."
+    ],
+    "coverage_limit": null,
+    "answer": "Arithmetic reconstruction from the stored canonical fields is the recomputation §5-§6 define.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TIME-2-05",
@@ -1669,7 +2764,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "time:conversion_rules_provided"
+   "check": "time:conversion_rules_provided",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare whether Gregorian interoperability alone satisfies this provision."
+    ],
+    "coverage_limit": "Civil calendars = the Gregorian calendar the text names.",
+    "origin": "normative_ambiguity",
+    "reason": "'Civil calendars' is plural, but §6 gives conversion rules for the Gregorian calendar only; whether rules for other civil calendars are required is not stated.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "TIME-3-01",
@@ -1682,7 +2787,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "time:jdn_proleptic_count"
+   "check": "time:jdn_proleptic_count",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the timezone when checking timestamp-to-day boundaries."
+    ],
+    "coverage_limit": null,
+    "answer": "Civil days are whole JDN days; a timezone matters only for timestamps, which TIME does not define.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-12-03",
@@ -1695,7 +2809,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "privacy_transparency:aggregation_protects"
+   "check": "privacy_transparency:aggregation_protects",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare whether the permission is tested against privacy intent, demonstrated privacy effect, or both."
+    ],
+    "coverage_limit": "'MAY aggregate to protect privacy' read as: an aggregate covers at least the re-identification threshold (k not given: more than one Subject; H-PT-3).",
+    "origin": "l8_parameter",
+    "reason": "Whether an aggregate protects privacy depends on a re-identification threshold that is not defined (H-PT-3); the lab requires only more than one Subject.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "TRANSPARENCY-13-01",
@@ -1709,6 +2833,15 @@
     "human_accepted": false
    },
    "check": "privacy_transparency:no_moral_accountability",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a semantic review rubric for definitions of moral accountability."
+    ],
+    "coverage_limit": "Observed as a declared request; no output field defines moral accountability.",
+    "answer": "Defining moral accountability is recognizable as such; requests and output fields are checked.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   },
    "checkable": {
     "from": "no",
     "to": "partial"
@@ -1725,7 +2858,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "privacy_transparency:no_reputation_verification"
+   "check": "privacy_transparency:no_reputation_verification",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how a decision trace establishes that reputation or popularity replaced proof."
+    ],
+    "coverage_limit": null,
+    "answer": "§4 defines verification as proof; reputation or popularity in its place is the excluded basis.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-4-01",
@@ -1738,7 +2880,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "privacy_transparency:independently_verifiable"
+   "check": "privacy_transparency:independently_verifiable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the verifier's access, trust assumptions, and applicable protocol rules."
+    ],
+    "coverage_limit": "Verifiability = link to the request, reason and protocol references; the recomputation itself is the module's other checks.",
+    "answer": "Independent verification needs the decision linked to its inputs, reason and rules (§11 explanations, §12 audit hooks).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-4-03",
@@ -1751,7 +2902,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "privacy_transparency:proof_based_verification"
+   "check": "privacy_transparency:proof_based_verification",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare proof-validity rules and which actors may be untrusted."
+    ],
+    "coverage_limit": "The verification method is a recorded label.",
+    "answer": "The three kinds of proof are listed; trust in actors is the excluded basis.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-4-05",
@@ -1764,7 +2924,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "privacy_transparency:transparency_without_visibility"
+   "check": "privacy_transparency:transparency_without_visibility",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare whether the check concerns actual exposure, authorization for exposure, or both."
+    ],
+    "coverage_limit": null,
+    "answer": "§4 defines visibility (identity, personal data); transparency records carrying them are the excluded case.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-1-01",
@@ -1777,7 +2946,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:environment_not_behaviour"
+   "check": "transport_capacity:environment_not_behaviour",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A rule distinguishing direct driving regulation from environmental intervention."
+    ],
+    "coverage_limit": "Observed as TRANSPORT acts addressed to driving behaviour.",
+    "answer": "§8 rejects bans, moral pressure and punitive enforcement; acts addressed to driving behaviour are the excluded direct regulation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-10-01",
@@ -1804,7 +2982,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:no_dignity_tradeoff_equilibrium"
+   "check": "transport_capacity:no_dignity_tradeoff_equilibrium",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Operational definitions of bodily dignity sacrifice and viable equilibrium."
+    ],
+    "coverage_limit": "The normative half only; 'is not adopted at scale' is an empirical claim the behaviour model H-TR-1 assumes.",
+    "answer": "The normative half: accepting a standing or forced-contact configuration as the target is the excluded assumption (§4-§5 make dignity concrete through PPDI).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-4.2-02",
@@ -1817,7 +3004,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:ppdi_quality_only"
+   "check": "transport_capacity:ppdi_quality_only",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A classification of metric uses as system quality, justice scoring, or liability scoring."
+    ],
+    "coverage_limit": null,
+    "answer": "A justice or liability score is a JUSTICE or liability record derived from PPDI; system quality is its only use.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-5-01",
@@ -1830,7 +3026,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:standing_not_standard"
+   "check": "transport_capacity:standing_not_standard",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "A rule distinguishing standard operation from exceptional operation."
+    ],
+    "coverage_limit": "'Standard operating mode' read as the nominal capacity of the service plan.",
+    "origin": "normative_ambiguity",
+    "reason": "'Standard operating mode' is not defined; read as the nominal capacity of the service plan. A plan counting standing places only at peaks may or may not be standard operation.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "TRANSPORT-7.3-04",
@@ -1843,7 +3049,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:incentive_without_enforcement"
+   "check": "transport_capacity:incentive_without_enforcement",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A definition distinguishing incentives from behavioral enforcement."
+    ],
+    "coverage_limit": "'Without behavioural enforcement' only; the per-Subject incentive is not modelled.",
+    "answer": "Incentive = a cost difference; enforcement = an order or outcome; §8 rejects the latter.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-9-03",
@@ -1856,7 +3071,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:biosphere_informs_decisions"
+   "check": "transport_capacity:biosphere_informs_decisions",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "A test of operative influence in each decision process."
+    ],
+    "coverage_limit": "'Influence' read as: the day's transport impact on B(t) is an input of each funding or redesign decision (declared coefficient).",
+    "origin": "normative_ambiguity",
+    "reason": "'SHALL influence' has no operative test; checked as the impact on B(t) being an input of each decision, which does not show that it changed any decision.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "TRANSPORTA-A.2-02",
@@ -1869,7 +3094,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:defense_contains_threats"
+   "check": "transport_capacity:defense_contains_threats",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare physical-threat classification rules and an operational meaning of real-time containment."
+    ],
+    "coverage_limit": "The attack is a declared event.",
+    "answer": "Hostile events belong to DEFENSE (A.2); a transport containment action is the excluded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORTA-A.3-01",
@@ -1882,7 +3116,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:autonomy_evaluated_identically"
+   "check": "transport_capacity:autonomy_evaluated_identically",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the comparison scope and which evaluation procedure elements must be identical."
+    ],
+    "coverage_limit": "RED per kilometre with a declared coefficient (H-TR-2).",
+    "answer": "The three items after the colon state what is identical: RED and PPDI competition, ownership irrelevant, physical impact the sole criterion.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORTA-A.4-01",
@@ -1895,7 +3138,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "transport_capacity:no_axiom_trigger"
+   "check": "transport_capacity:no_axiom_trigger",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a rule for distinguishing direct axiom triggers from axiom-compatible enforcement rules."
+    ],
+    "coverage_limit": "Observed as recorded triggers of transport enforcement.",
+    "answer": "A direct trigger = an enforcement act whose trigger is an axiom itself rather than a measured quantity.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "UPGRADE-0-01",
@@ -1908,7 +3160,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "upgrade_lifecycle:only_lawful_mechanism"
+   "check": "upgrade_lifecycle:only_lawful_mechanism",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Apply section 3 exclusions when determining which modifications require this procedure."
+    ],
+    "coverage_limit": "Other routes are declared channels of a proposal.",
+    "answer": "§3 separates presentation-only corrections; every other modification goes through the procedure.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "UPGRADE-11-02",
@@ -1921,7 +3182,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "upgrade_lifecycle:no_opaque_tuning"
+   "check": "upgrade_lifecycle:no_opaque_tuning",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare sufficient transparency and the boundary between deterministic tuning and discretion."
+    ],
+    "coverage_limit": "Discretionary tuning is a declared channel.",
+    "answer": "§5 contents (specification, before/after comparison) define a non-opaque change; a change at an operator's discretion is the excluded one.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "UPGRADE-5-01",
@@ -1934,7 +3204,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "upgrade_lifecycle:proposal_contents"
+   "check": "upgrade_lifecycle:proposal_contents",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare required proposal schemas, completeness rules, relevant domains, and rollback determinism semantics."
+    ],
+    "coverage_limit": "The contents are declared per proposal (missing_items).",
+    "answer": "The five contents are listed; incompleteness is decided by their presence (§5).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-10-02",
@@ -1947,7 +3226,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "work_cycle:exception_limited"
+   "check": "work_cycle:exception_limited",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how limited duration is established and checked."
+    ],
+    "coverage_limit": "The exception modelled is crisis drafting of refusing workers (LABOR §9.2).",
+    "answer": "Limited duration = the exception ends with the crisis scope that permits it (§10 first item).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-10-05",
@@ -1960,7 +3248,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "work_cycle:exception_no_precedent"
+   "check": "work_cycle:exception_no_precedent",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which forms of reliance on an exception constitute precedent."
+    ],
+    "coverage_limit": "Precedent observed as a later drafting or a rule recorded from the exception.",
+    "answer": "Precedent = later reuse of the exception or a rule recorded from it.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-3-07",
@@ -1973,7 +3270,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "work_cycle:recovery_block_present"
+   "check": "work_cycle:recovery_block_present",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a recovery activity classification consistent with the permitted examples."
+    ],
+    "coverage_limit": null,
+    "answer": "§5.3 lists permitted recovery activities and excludes work.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-4.2-04",
@@ -1986,7 +3292,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": "work_cycle:week_without_authority"
+   "check": "work_cycle:week_without_authority",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which rule dependencies constitute authority."
+    ],
+    "coverage_limit": "Authority observed as the scheduler's period; a display overlay is allowed.",
+    "answer": "Computational authority = the 7-day week driving the schedule; a display overlay has none.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   }
  ]
 }

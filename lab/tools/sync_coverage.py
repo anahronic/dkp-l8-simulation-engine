@@ -90,9 +90,16 @@ def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
         if r["interpretation_status"] in ("DRAFT_UNREVIEWED", "TEXT_VERIFIED"):
             r["interpretation_status"] = "TEXT_VERIFIED" if r["id"] in g["verified"] else "DRAFT_UNREVIEWED"
         r["open_questions"] = links.get(r["id"], [])
-        r["decision_status"] = "UNRESOLVED" if (r.get("hypotheses_needed") or r["open_questions"]) \
+        draft = g["draft"].get(r["id"]) or {}
+        # review of checkpoint 6: a draft need answered by the agent's reading of the text (reconciliations.json) no
+        # longer leaves an open point; an open author question always does.  This is not a human acceptance.
+        closed = bool(draft.get("closed")) and not r["open_questions"]
+        r["decision_status"] = "UNRESOLVED" if (r["open_questions"] or (r.get("hypotheses_needed") and not closed)) \
             else "NONE_IDENTIFIED"
         r.pop("open_point", None)
+        r.pop("decision_basis", None)
+        if closed and r.get("hypotheses_needed"):
+            r["decision_basis"] = {"by": "agent_reading", "record": draft["closed"], "human_accepted": False}
         if r["decision_status"] == "UNRESOLVED":
             if r["id"] in g["question_origin"]:
                 r["open_point"] = {"origin": g["question_origin"][r["id"]], "source": "agent_verified"}
@@ -100,6 +107,8 @@ def synced(reg: Dict[str, Any], decl: Dict[str, Dict[str, Any]],
                 d = g["draft"][r["id"]]
                 # an origin corrected by the lab's reading (lab/registry/reconciliations.json) is no longer a machine draft
                 r["open_point"] = {"origin": d["primary"], "source": "lab_reconciled" if d.get("reconciled") else "codex_draft"}
+                if d.get("residual_reason"):
+                    r["open_point"]["reason"] = d["residual_reason"]
         d = decl.get(r["id"])
         base_gap = (r.get("gap") or "").replace(NOT_IMPLEMENTED_GAP, "").strip() or None
         if d:
