@@ -143,12 +143,14 @@ RELEASE = {"type": "object", "fields": {
 
 # header line "Override: Not permitted" -> the provision that registers it (EB-0-01 is module epistemic_gate)
 OVERRIDE_HEADERS = {"DKP-4-EPISTEMIC-TRANSITIONS-001": "ETRANS-EpistemicStateTransitionProtocol-01",
-                    "DKP-1-PREVENTION-001": "PREV-0-01", "DKP-6-RESILIENCE-001": "RESILIENCE-0-01"}
+                    "DKP-1-PREVENTION-001": "PREV-0-01", "DKP-6-RESILIENCE-001": "RESILIENCE-0-01",
+                    "DKP-4-CRISIS-001-PATCH": "CRISISPATCH-0-01"}
 OVERRIDE = {"type": "object", "fields": {"doc": {"type": "enum", "values": list(OVERRIDE_HEADERS)},
                                          "by": {"type": "enum", "values": DOC_IDS}}}
 OVERRIDES = [{"doc": "DKP-4-EPISTEMIC-TRANSITIONS-001", "by": "DKP-2-FINANCE-001"},
              {"doc": "DKP-1-PREVENTION-001", "by": "DKP-4-CRISIS-001"},
-             {"doc": "DKP-6-RESILIENCE-001", "by": "DKP-4-CRISIS-001"}]
+             {"doc": "DKP-6-RESILIENCE-001", "by": "DKP-4-CRISIS-001"},
+             {"doc": "DKP-4-CRISIS-001-PATCH", "by": "DKP-6-RESILIENCE-001"}]
 
 
 def header(doc: str) -> Dict[str, Any]:
@@ -525,7 +527,7 @@ CHANGES = [
 
 class EditionFinalityModule(LabModule):
     id = "edition_finality"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Editions and finality clauses (all documents)", "ru": "Редакции и заключительные положения (все документы)"}
     summary = {"en": "Changes to thirty documents go through a gate that applies each document's own finality clause; editions are "
                      "published in releases, dated and listed in SHA256SUMS.txt.  Is a quiet edit refused, a typo fix kept out of "

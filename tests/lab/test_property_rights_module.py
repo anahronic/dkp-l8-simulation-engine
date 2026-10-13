@@ -22,11 +22,13 @@ def test_reference_breaks_no_rule(name):
 
 
 FAULT_CASES = {
-    "absolute_right": ["ASSETS-3.2-01"],
-    "grant_by_possession": ["ASSETS-4-02"],
+    "absolute_right": ["ASSETS-3.2-01", "ASSETS-1-01", "ASSETS-5-02"],
+    "grant_by_possession": ["ASSETS-4-02", "ASSETS-1-01"],
     "privatize_commons": ["ASSETS-9-01"],
     "ignore_concentration": ["ASSETS-7-01"],
-    "no_suspension_on_failure": ["ASSETS-3.2-01"],
+    "no_suspension_on_failure": ["ASSETS-3.2-01", "ASSETS-5-02"],
+    "anonymous_holding": ["ASSETS-12-01"],
+    "assets_overrides": ["ASSETS-13-01", "ASSETS-1-01"],
 }
 
 

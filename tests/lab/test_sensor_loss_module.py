@@ -55,12 +55,14 @@ FAULT_CASES = {
     "priority_routing": ["CRISISPATCH-4.3-01"],
     "manual_restart": ["CRISISPATCH-5.2-02", "CRISISPATCH-6-01"],
     "stop_measurement": ["CRISISPATCH-3-06", "CRISISPATCH-5.1-01"],
-    "precedent": ["CRISISPATCH-7-01", "CRISISPATCH-9-04"],
+    "precedent": ["CRISISPATCH-7-01", "CRISISPATCH-9-04", "CRISISPATCH-7-03"],
     "escalate_from_region": ["SCOPE-8-05"],
-    "accept_injection": ["CRISISPATCH-8.1-01"],
-    "absorb_external": ["CRISISPATCH-4.1-02"],
+    "accept_injection": ["CRISISPATCH-8.1-01", "CRISISPATCH-8.1-02"],
+    "absorb_external": ["CRISISPATCH-4.1-02", "CRISISPATCH-8.1-02"],
     "wait_for_certification": ["CRISISPATCH-6-02"],
     "crisis_via_enforcement": ["CRISISPATCH-7-02"],
+    "governance_layer_recovery": ["CRISISPATCH-6-03", "CRISISPATCH-5.2-01"],
+    "null_state_precedent": ["CRISISPATCH-7-03"],
 }
 
 

@@ -343,7 +343,8 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                          ("CRISIS-Non-PrecedentRule_-04", "parameters_from_simulation"), ("CRISIS-1-03", "envelope_not_expanded"),
                          ("CRISIS-2-05", "no_extrapolation"), ("CRISIS-2-02", "no_new_rights_obligations"),
                          ("CRISIS-7-02", "no_concealment_permanence_utility"), ("CRISIS-8-01", "algorithmic_governance"),
-                         ("CRISIS-0-03", "no_precedent_or_future_authorization")):
+                         ("CRISIS-0-03", "no_precedent_or_future_authorization"), ("CRISIS-0-02", "no_new_powers_temporary"),
+                         ("CRISIS-1-02", "within_envelope_subset_of_scope"), ("CRISIS-2-04", "within_scope_applicability")):
             out.append(na(rid, chk, "crisis execution", "no crisis in this experiment"))
         return out + defense_checks(r, log, rows, msgs, v, na)
     cs = set(crisis_steps)
@@ -524,6 +525,28 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                          ("CRISIS-9-02", "sequential_recovery"), ("CRISIS-Non-PrecedentRule_-01", "no_precedent"),
                          ("CRISIS-0-03", "no_precedent_or_future_authorization")):
             out.append(na(rid, chk, "crisis exit", "the crisis does not end within the horizon"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    ex = info["exit_step"]
+    after = [m for m in msgs if ex is not None and m.arrived_at >= ex]
+    outlive = [f"{m.event_id}: authority after exit" for m in after if m.source == "GOVERNANCE" and m.value.get("authority")]
+    out.append(v("CRISIS-0-02", "no_new_powers_temporary", defined + granted + outlive,
+                 "the crisis created no right, obligation or authority, and its constraints ended with it",
+                 "{n} new powers or constraints outliving the crisis"))
+    non_s1 = [f"{m.event_id}: {m.value.get('action')} is {ACTION_DOMAIN.get(m.value.get('action'), 'unclassified')}"
+              for m in actions if not ACTION_DOMAIN.get(m.value.get("action"), "").startswith("S1")]
+    env_bad = [f"envelope item {a} outside S1" for a in sorted(declared) if not ACTION_DOMAIN.get(a, "").startswith("S1")]
+    env_bad += [f"{m.event_id}: {m.value['action']} outside the declared envelope" for m in actions
+                if m.value.get("action") not in declared]
+    out.append(v("CRISIS-1-02", "within_envelope_subset_of_scope", env_bad + non_s1,
+                 f"all {len(actions)} crisis actions within the declared envelope, itself inside S1 of DKP-7-SCOPE-001",
+                 "{n} crisis actions or envelope items outside the envelope or outside S1"))
+    elsewhere = [f"{m.event_id}: applied to {m.value.get('scope')}" for m in actions if m.value.get("scope") != region]
+    norms = [f"{m.event_id}: interpretation rule" for m in after if m.value.get("interpretation_rule")]
+    norms += [f"{m.event_id}: cites a crisis action" for m in after if m.kind == "decision"
+              and {a.event_id for a in actions} & set(m.provenance)]
+    out.append(v("CRISIS-2-04", "within_scope_applicability", non_s1 + elsewhere + defined + outlive + norms,
+                 "crisis execution stayed within SCOPE: S1 only, in the declared region, no new rights, no authority beyond "
+                 "the crisis, no precedent", "{n} extensions of applicability beyond DKP-7-SCOPE-001"))
     return out + defense_checks(r, log, rows, msgs, v, na)
 
 
@@ -611,6 +634,10 @@ IMPLEMENTS = {
     "CRISIS-2-02": ("no_new_rights_obligations", "PARTIAL", "Observed as explicit definitions and authority notices."),
     "CRISIS-2-05": ("no_extrapolation", "PARTIAL", "The Crisis Scope is a declared region; reuse in another region is observed."),
     "CRISIS-5-02": ("c0_without_conditions", "IMPLEMENTED", None),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "CRISIS-0-02": ("no_new_powers_temporary", "PARTIAL", "Powers are observed as definitions and authority notices; 'temporarily' as nothing outliving the exit."),
+    "CRISIS-1-02": ("within_envelope_subset_of_scope", "PARTIAL", "The envelope is a declared list of §6 actions; S1 membership per SCOPE §3 (H-CR-5)."),
+    "CRISIS-2-04": ("within_scope_applicability", "PARTIAL", "SCOPE §3-§5 boundaries observed as S1 membership, the declared region, new rights, outliving authority and precedent."),
     "CRISIS-Non-PrecedentRule_-03": ("no_numbers_in_protocol", "IMPLEMENTED", None),
     "CRISIS-7-02": ("no_concealment_permanence_utility", "PARTIAL", "Permanence observed as staying in crisis once the module's exit "
                     "conditions hold; 'emergency governance' as authority notices (also §7, §9)."),
@@ -638,7 +665,7 @@ IMPLEMENTS = {
 
 class CrisisRecoveryModule(LabModule):
     id = "crisis_recovery"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Crisis and recovery (S-LAB-06)", "ru": "Кризис и восстановление (S-LAB-06)"}
     summary = {"en": "An existential threat or a cascading failure: does the system enter crisis only on PTL evidence, "
                      "keep logging, grant no one power, leave by itself and recover layer by layer?",

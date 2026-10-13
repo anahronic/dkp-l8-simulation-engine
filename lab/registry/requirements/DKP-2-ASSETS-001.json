@@ -33,19 +33,26 @@
     "justice constraints",
     "physical constraints"
    ],
-   "gap": "The contribution measure and operational justice and physical limits are unspecified. No lab check implemented yet.",
+   "gap": "Contribution and bounds are the declared §4 conditions.",
    "hypotheses_needed": [
     "Declare how measurable contribution and applicable justice and physical limits are established."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.2.0",
+    "check": "property_is_conditional_allocation"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -248,7 +255,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "property_right_conditional"
    },
    "tests": [
@@ -333,7 +340,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "property_rights",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_grant_on_sole_basis"
    },
    "tests": [
@@ -408,19 +415,26 @@
     "persistence-condition evaluations",
     "asset right transition logs"
    ],
-   "gap": "The response-selection rule, degradation state, and temporal meaning of trigger are unspecified. No lab check implemented yet.",
+   "gap": "Failures are declared events; any of the three responses counts.",
    "hypotheses_needed": [
     "Declare transition semantics and response selection without inventing a normative deadline."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.2.0",
+    "check": "failure_triggers_degradation"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -530,7 +544,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "concentration_response"
    },
    "tests": [
@@ -1240,7 +1254,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "critical_assets_designated"
    },
    "tests": [
@@ -1533,19 +1547,26 @@
     "identity Subject registry",
     "public audit interfaces"
    ],
-   "gap": "The referenced Subject definition and operational requirements for public auditability and unambiguous binding are absent. No lab check implemented yet.",
+   "gap": "Registration and public audit are register entries; binding = an identified Subject.",
    "hypotheses_needed": [
     "Supply the Subject identity specification and declare auditability and binding validation rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.2.0",
+    "check": "ownership_registered_auditable_bound"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1663,19 +1684,26 @@
     "axiomatic constraints",
     "architecture and change records"
    ],
-   "gap": "The relevant baselines and tests distinguishing permitted application from redefinition, alteration, or discretion are unspecified. No lab check implemented yet.",
+   "gap": "Observed as waivers, overrides or discretionary grants recorded by ASSETS.",
    "hypotheses_needed": [
     "Declare comparison baselines and semantic tests for the four forbidden changes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.2.0",
+    "check": "no_cross_layer_override"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1717,7 +1745,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "upgrade_procedure"
    },
    "tests": [
@@ -1764,7 +1792,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "modification_requirements"
    },
    "tests": [
@@ -1811,7 +1839,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "presentation_not_upgrade"
    },
    "tests": [
@@ -1854,7 +1882,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "edition_finality",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "edition_integrity"
    },
    "tests": [

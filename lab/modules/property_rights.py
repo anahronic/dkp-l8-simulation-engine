@@ -41,6 +41,8 @@ FAULTS = {
     "privatize_commons": "a §9 asset is granted as ordinary private property",
     "ignore_concentration": "an accumulation declared as increasing systemic fragility draws no §7 response",
     "no_suspension_on_failure": "a right stays in force after a §5 condition fails (only the suspension is skipped)",
+    "anonymous_holding": "a granted right is registered without its Subject and kept out of public audit",
+    "assets_overrides": "ASSETS waives failed conditions and grants the right at its board's discretion",
 }
 
 REQUEST = {"type": "object", "fields": {
@@ -97,7 +99,11 @@ def run(r: Dict[str, Any]) -> EventLog:
         if q["category"] in CRITICAL:
             designation = r["critical_designation"][q["category"]]
             put("notice", "ASSETS", 0, {"asset": q["asset"], "designation": designation, "category": q["category"]}, [req.event_id])
-        if sole or not all(cond.values()):
+        override = "assets_overrides" in faults and not sole and not all(cond.values())
+        if override:
+            put("notice", "ASSETS", 0, {"request": q["id"], "exemption": "failed conditions waived", "justice_override": True,
+                                        "by": "asset board discretion"}, [ev.event_id])
+        elif sole or not all(cond.values()):
             why = (f"basis '{q['basis']}' alone (§4)" if sole else "conditions " + ", ".join(c for c, ok in cond.items() if not ok))
             put("decision", "ASSETS", 0, {"request": q["id"], "granted": False, "reason": why}, [ev.event_id])
             continue
@@ -112,6 +118,9 @@ def run(r: Dict[str, Any]) -> EventLog:
                                           "revocable": "absolute_right" not in faults,
                                           **({"permanent": True} if "absolute_right" in faults else {})}, [ev.event_id])
         rights[q["id"]] = g
+        anon = "anonymous_holding" in faults
+        put("notice", "REGISTER", 0, {"right": g.event_id, "asset": q["asset"], "subject": None if anon else q["subject"],
+                                      "public": not anon}, [g.event_id])
     for k in range(0, r["horizon_days"]):                 # day 0 included: a failure on the day of the grant (КТ6-GPT-02)
         for q in r["requests"]:
             if q["condition_fails_day"] == k and q["id"] in rights:
@@ -175,6 +184,40 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                  f"{len(crit)} §9 asset(s) designated ({', '.join(sorted(set(des.values()))) or '-'}; split by H-PR-1) and held only "
                  "under revocable stewardship", "{n} §9 assets privatized or not designated") if crit else
                na("ASSETS-9-01", "critical_assets_designated", "§9 assets", "no request concerns a §9 asset"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    if granted:
+        bad = [f"{q}: right recorded as absolute or not revocable" for q, m in granted.items()
+               if m.value.get("permanent") or not m.value.get("revocable")]
+        bad += [f"{q}: granted without the §4 contribution conditions ({req[q]['basis']})" for q in granted
+                if req[q]["basis"] in SOLE_BASES or not all(conditions(req[q]).values())]
+        out.append(v("ASSETS-1-01", "property_is_conditional_allocation", bad,
+                     f"{len(granted)} right(s), each a revocable allocation of control resting on the §4 contribution conditions",
+                     "{n} rights that are absolute or not justified by contribution"))
+        reg = {m.value["right"]: m.value for m in msgs if m.source == "REGISTER"}
+        bad = [f"{q}: not registered" for q, m in granted.items() if m.event_id not in reg]
+        bad += [f"{q}: register entry without its Subject or not public" for q, m in granted.items()
+                if m.event_id in reg and (not reg[m.event_id]["subject"] or not reg[m.event_id]["public"])]
+        out.append(v("ASSETS-12-01", "ownership_registered_auditable_bound", bad,
+                     f"{len(granted)} right(s) registered, open to public audit and bound to an identified Subject",
+                     "{n} holdings not registered, not auditable or not bound to a Subject"))
+    else:
+        out.append(na("ASSETS-1-01", "property_is_conditional_allocation", "Property Rights", "no right granted"))
+        out.append(na("ASSETS-12-01", "ownership_registered_auditable_bound", "ownership structures", "no right granted"))
+    fails = [(q, x["condition_fails_day"]) for q, x in req.items() if q in granted and 0 <= x["condition_fails_day"] < r["horizon_days"]]
+    bad = [f"{q}: no degradation, restriction or suspension by day {k}" for q, k in fails
+           if not any(x.source == "ASSETS" and x.value.get("right") == granted[q].event_id and x.arrived_at <= k
+                      and x.value.get("status") in ("suspended", "restricted", "degraded") for x in msgs)]
+    out.append(v("ASSETS-5-02", "failure_triggers_degradation", bad,
+                 f"{len(fails)} condition failure(s), each followed automatically by degradation, restriction or suspension",
+                 "{n} failures without an automatic response") if fails else
+               na("ASSETS-5-02", "failure_triggers_degradation", "condition failures", "no granted right had a condition fail"))
+    bad = [f"{m.value['request']}: {k}" for m in msgs if m.source == "ASSETS" for k in ("exemption", "justice_override", "by")
+           if k in m.value and m.kind == "notice"]
+    bad += [m.event_id for m in msgs if m.source in ("IMPACT", "JUSTICE") and any(log.get(p).source == "ASSETS" for p in m.provenance)]
+    out.append(v("ASSETS-13-01", "no_cross_layer_override", bad,
+                 "ASSETS applied Justice and impact inputs as given: no waiver, exemption, override or discretionary grant",
+                 "{n} cross-layer overrides by ASSETS") if req else
+               na("ASSETS-13-01", "no_cross_layer_override", "ASSETS decisions", "no request to decide"))
     flagged = [m for m in msgs if m.source == "IMPACT" and m.value["increases_fragility"]]
     resp = {m.value["holder"] for m in msgs if m.source == "ASSETS" and m.value.get("response") in RESPONSES}
     out.append(v("ASSETS-7-01", "concentration_response", [m.value["holder"] for m in flagged if m.value["holder"] not in resp],
@@ -191,12 +234,17 @@ IMPLEMENTS = {
                     "reclassified l8_parameter)."),
     "ASSETS-9-01": ("critical_assets_designated", "PARTIAL", "Non-Privatizable vs Conditionally Privatizable per category is declared "
                     "(H-PR-1)."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "ASSETS-1-01": ("property_is_conditional_allocation", "PARTIAL", "Contribution and bounds are the declared §4 conditions."),
+    "ASSETS-5-02": ("failure_triggers_degradation", "PARTIAL", "Failures are declared events; any of the three responses counts."),
+    "ASSETS-12-01": ("ownership_registered_auditable_bound", "PARTIAL", "Registration and public audit are register entries; binding = an identified Subject."),
+    "ASSETS-13-01": ("no_cross_layer_override", "PARTIAL", "Observed as waivers, overrides or discretionary grants recorded by ASSETS."),
 }
 
 
 class PropertyRightsModule(LabModule):
     id = "property_rights"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Property rights: granting, conditions, critical assets", "ru": "Права собственности: выдача, условия, критические активы"}
     summary = {"en": "Subjects ask for property rights. Are rights granted only under the ASSETS conditions, never on possession "
                      "alone, kept only while the conditions hold, and are water, air and commons held only in revocable stewardship?",

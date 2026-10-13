@@ -43,6 +43,8 @@ FAULTS = {
     "absorb_external": "an external system that tries to replace enforcement is treated as a DKP fallback authority",
     "wait_for_certification": "recovery waits for an external certification",
     "crisis_via_enforcement": "crisis mechanisms during the null-output state run through the DKP enforcement layer",
+    "governance_layer_recovery": "recovery waits for a decision of an emergency governance council",
+    "null_state_precedent": "after recovery, the handling of the null-output state is recorded as a rule for future episodes",
 }
 
 
@@ -161,6 +163,11 @@ def run(r: Dict[str, Any]) -> Tuple[EventLog, List[Dict[str, Any]]]:
         if recovering and "wait_for_certification" in faults and r["external_certification_offered"] and pending_restart is None:
             pending_restart = k + r["approval_delay_steps"]
             put("notice", "CRISIS-PATCH", k, {"recovery_waits_for": "external certification"})
+        if recovering and "governance_layer_recovery" in faults and pending_restart is None:
+            pending_restart = k + r["approval_delay_steps"]
+            put("notice", "CRISIS-PATCH", k, {"recovery_decided_by": "emergency governance council"})
+        if recovering and "null_state_precedent" in faults:
+            put("notice", "CRISIS-PATCH", k, {"rule_from_null_state": "enforcement pauses follow the last episode's handling"})
         if pending_restart is not None:
             if k < pending_restart:
                 state = {g: True for g in range(r["regions"])}
@@ -332,6 +339,29 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
         else:
             for rid, chk in (("CRISISPATCH-4.1-02", "violator_external"), ("CRISISPATCH-8.1-01", "dkp_stays_inactive")):
                 out.append(na(rid, chk, "override attempt", "no external override attempt during the null-output state"))
+        # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+        if ends:
+            gov = [m.event_id for m in msgs if m.value.get("recovery_decided_by")]
+            out.append(v("CRISISPATCH-6-03", "no_governance_layer_recovery", gov,
+                         "recovery came from the §5.2 rule alone; no governance body decided it",
+                         "{n} recoveries decided or delayed by an emergency governance layer"))
+            after = [m for m in msgs if m.arrived_at >= min(ends)]
+            prec = [m.event_id for m in after if m.value.get("rule_from_null_state")]
+            prec += [m.event_id for m in after if m.source == "GOVERNANCE"]
+            out.append(v("CRISISPATCH-7-03", "no_precedent_created", prec,
+                         "after recovery no rule, custom or authority derived from the null-output episode remains",
+                         "{n} precedents or authorities left by the null-output episode"))
+        else:
+            out.append(na("CRISISPATCH-6-03", "no_governance_layer_recovery", "recovery", "the null-output state does not end"))
+            out.append(na("CRISISPATCH-7-03", "no_precedent_created", "after the null-output state", "it does not end"))
+        if att:
+            executed = [m.event_id for m in actions if set(m.provenance) & {a.event_id for a in att}]
+            absorbed = [p for p, m in rej.items() if m.value["classification"] != "external system"]
+            out.append(v("CRISISPATCH-8.1-02", "external_stays_outside", executed + absorbed,
+                         "the injecting system stayed outside DKP: its decision produced no DKP output and it was classified external",
+                         "{n} injected decisions inside DKP or injecting systems absorbed"))
+        else:
+            out.append(na("CRISISPATCH-8.1-02", "external_stays_outside", "override attempt", "no external override attempt"))
         cert = [m for m in msgs if m.source == "CRISIS-PATCH" and ("external_certification" in m.value or "recovery_waits_for" in m.value)]
         if cert:
             out.append(v("CRISISPATCH-6-02", "no_external_certification",
@@ -360,7 +390,9 @@ def checks(r: Dict[str, Any], log: EventLog, rows: List[Dict[str, Any]]) -> List
                          ("CRISISPATCH-4.3-01", "no_selective_restoration"), ("ETRANS-4.4-02", "no_auto_reactivation"),
                          ("CRISISPATCH-7-01", "no_authority_granted"), ("CRISISPATCH-9-04", "no_authority_emerges"),
                          ("CRISISPATCH-4.1-02", "violator_external"), ("CRISISPATCH-8.1-01", "dkp_stays_inactive"),
-                         ("CRISISPATCH-6-02", "no_external_certification"), ("CRISISPATCH-7-02", "crisis_without_enforcement")):
+                         ("CRISISPATCH-6-02", "no_external_certification"), ("CRISISPATCH-7-02", "crisis_without_enforcement"),
+                         ("CRISISPATCH-6-03", "no_governance_layer_recovery"), ("CRISISPATCH-7-03", "no_precedent_created"),
+                         ("CRISISPATCH-8.1-02", "external_stays_outside")):
             out.append(na(rid, chk, "null-output handling", why))
     # ORACLE caps and systemic halt
     bad = []
@@ -466,6 +498,10 @@ IMPLEMENTS = {
     "CRISISPATCH-4.1-02": ("violator_external", "PARTIAL", "The override attempt is a declared event."),
     "CRISISPATCH-8.1-01": ("dkp_stays_inactive", "IMPLEMENTED", None),
     "CRISISPATCH-6-02": ("no_external_certification", "PARTIAL", "The certification offer is a declared event."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "CRISISPATCH-6-03": ("no_governance_layer_recovery", "PARTIAL", "A governance layer is observed as a body deciding or delaying recovery."),
+    "CRISISPATCH-7-03": ("no_precedent_created", "PARTIAL", "Precedent is observed as a recorded rule or an authority outliving the episode."),
+    "CRISISPATCH-8.1-02": ("external_stays_outside", "PARTIAL", "The injection is a declared event."),
     "CRISISPATCH-7-02": ("crisis_without_enforcement", "PARTIAL", "The crisis mechanism is a declared notice."),
     "ETRANS-4.4-02": ("no_auto_reactivation", "IMPLEMENTED", None),
     "ORACLE-8-01": ("source_owner_caps", "IMPLEMENTED", None),
@@ -482,7 +518,7 @@ IMPLEMENTS = {
 
 class SensorLossModule(LabModule):
     id = "sensor_loss"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Local loss of sensors (S-LAB-03)", "ru": "Локальная потеря датчиков (S-LAB-03)"}
     summary = {"en": "Sensors in one region fail: when does the whole system stop enforcing, does anything replace it, "
                      "and does it come back by itself?",

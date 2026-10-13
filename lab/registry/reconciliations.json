@@ -5,11 +5,11 @@
  "reading_rule": "Review of checkpoint 6: the remaining open points of uncovered provisions, whose origin was a Codex draft, are read one by one against the pinned corpus (all 38 documents), as the implementation_only drafts were. 'kept': the draft origin holds; the open point stays, now as the lab's reading; partial_check says whether a clear core could be checked without deciding the open point. 'reclassified': another origin blocks it (origin_after). 'returned': the corpus settles what the draft said was missing (most often a reference to a corpus document read as external); the provision is resolvable (implementation_only) and needs a lab check; once the check exists it carries a closure like a confirmed decision. Nothing here is a human acceptance (A6).",
  "counts": {
   "confirmed": 143,
-  "reclassified": 31,
-  "kept": 251,
-  "returned": 96,
-  "returned_awaiting_check": 57,
-  "closure_closed": 161,
+  "reclassified": 33,
+  "kept": 250,
+  "returned": 95,
+  "returned_awaiting_check": 45,
+  "closure_closed": 172,
   "closure_open": 21,
   "human_accepted": 0
  },
@@ -427,8 +427,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "property_rights:property_is_conditional_allocation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how measurable contribution and applicable justice and physical limits are established."
+    ],
+    "coverage_limit": "Contribution and bounds are the declared §4 conditions.",
+    "answer": "JUSTICE and ORACLE are in the corpus; §4 (bases) and §5 (persistence) make the definition concrete.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-1-02",
@@ -477,8 +485,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "property_rights:ownership_registered_auditable_bound",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply the Subject identity specification and declare auditability and binding validation rules."
+    ],
+    "coverage_limit": "Registration and public audit are register entries; binding = an identified Subject.",
+    "answer": "IDENTITY is in the corpus; registration, public auditability and binding to a Subject are properties of the register.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-13-01",
@@ -491,8 +507,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "property_rights:no_cross_layer_override",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare comparison baselines and semantic tests for the four forbidden changes."
+    ],
+    "coverage_limit": "Observed as waivers, overrides or discretionary grants recorded by ASSETS.",
+    "answer": "JUSTICE, IMPACT and AXIOMS are in the corpus; a waiver, override or discretionary grant by ASSETS is a recorded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-2-01",
@@ -605,8 +629,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "property_rights:failure_triggers_degradation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare transition semantics and response selection without inventing a normative deadline."
+    ],
+    "coverage_limit": "Failures are declared events; any of the three responses counts.",
+    "answer": "The response set is closed and automatic; what degradation does beyond being one of the three is not needed for the rule.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ASSETS-6-01",
@@ -1322,14 +1354,14 @@
    "document": "DKP-4-CRISIS-001",
    "quote": "Crisis mode is invoked exclusively when normal protocol execution is insufficient to preserve axiomatic integrity, system survival, or admissible physical states, as confirmed by Physical Truth Layer (PTL) evidence and downstream L3 escalation.",
    "draft_origin": "empirical_model_data",
-   "verdict": "returned",
-   "reason": "The text names the test of insufficiency: 'as confirmed by PTL evidence and downstream L3 escalation'. Crisis entry without a PTL confirmation and an L3 escalation record is observable (CRISIS-5-02 closed).",
+   "verdict": "reclassified",
+   "reason": "§0 says crisis mode is invoked exclusively 'as confirmed by PTL evidence and downstream L3 escalation' and §2 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols', while §4 makes entry mandatory ('SHALL be entered') on triggers that no L3 protocol escalates: a cascading failure escalated from DKP-4-ERROR-001 (L4), a verified loss or divergence of PTL outputs, simultaneous multi-domain harm. Whether those triggers also need an L3 escalation is a contested reading, found when the check was being written (the first reading had returned the provision as resolvable); a candidate author question, not yet verified. Core: entries on D3 and T3 carry an L3 escalation record.",
    "acceptance": {
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "origin_after": "normative_ambiguity",
+   "partial_check": true
   },
   {
    "id": "CRISIS-0-02",
@@ -1342,8 +1374,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "crisis_recovery:no_new_powers_temporary",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a power-comparison model and survival and reversibility predicates."
+    ],
+    "coverage_limit": "Powers are observed as definitions and authority notices; 'temporarily' as nothing outliving the exit.",
+    "answer": "Concretized by §2 (no new rights, obligations or authorities) and §9 (the crisis ends at its exit conditions).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-0-03",
@@ -1392,8 +1432,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "crisis_recovery:within_envelope_subset_of_scope",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a representation and membership test for scope envelopes."
+    ],
+    "coverage_limit": "The envelope is a declared list of §6 actions; S1 membership per SCOPE §3 (H-CR-5).",
+    "answer": "SCOPE is in the corpus: §5 bounds Crisis Scope inside S1 and §3 classifies S1; the envelope is declared at entry.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-1-03",
@@ -1422,13 +1470,13 @@
    "document": "DKP-4-CRISIS-001",
    "quote": "- only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols,\n- upstream of DKP-4-UPGRADE-001 (when recovery is possible).",
    "draft_origin": "architecture_definition",
-   "verdict": "kept",
-   "reason": "The ordering relation with UPGRADE is not defined. Core: crisis entry carries an escalation record from an L3 protocol (INTSEC, DEFENSE, ANTITERROR, POLICE).",
+   "verdict": "reclassified",
+   "reason": "Not only the undefined ordering with UPGRADE: 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols' meets §4 triggers that no L3 protocol escalates (ERROR cascade, PTL loss or divergence, multi-domain harm); the same contested reading as CRISIS-0-01 (candidate author question, not yet verified). Core: entries on D3 carry a DEFENSE escalation record.",
    "acceptance": {
     "agent_reading": true,
     "human_accepted": false
    },
-   "origin_after": "architecture_definition",
+   "origin_after": "normative_ambiguity",
    "partial_check": true
   },
   {
@@ -1464,8 +1512,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "crisis_recovery:within_scope_applicability",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how the applicability effects of logic and interpretations are represented."
+    ],
+    "coverage_limit": "SCOPE §3-§5 boundaries observed as S1 membership, the declared region, new rights, outliving authority and precedent.",
+    "answer": "SCOPE §3-§5 give the boundaries: S1 only, the declared Crisis Scope, no new rights, no authority beyond the crisis, no precedent.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISIS-2-05",
@@ -1773,8 +1829,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "edition_finality:override_not_permitted",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which override actions the metadata governs."
+    ],
+    "coverage_limit": "An override is a declared attempt by another protocol; changes through UPGRADE are checked under the finality clause.",
+    "answer": "Read as the other 'Override: Not permitted' headers (edition_finality): no other protocol may override the addendum.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISISPATCH-10-01",
@@ -1835,8 +1899,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "sensor_loss:no_governance_layer_recovery",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which recovery components constitute an emergency governance layer."
+    ],
+    "coverage_limit": "A governance layer is observed as a body deciding or delaying recovery.",
+    "answer": "SCOPE is in the corpus; §5.2 makes recovery automatic, so a governance body deciding it is the forbidden pattern.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CRISISPATCH-7-03",
@@ -1849,8 +1921,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null,
+   "check": "sensor_loss:no_precedent_created",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an observable surrogate for creation of precedent and its limitations."
+    ],
+    "coverage_limit": "Precedent is observed as a recorded rule or an authority outliving the episode.",
+    "answer": "Precedent is concretized in the corpus (CRISIS-0-03 and others): a recorded rule or an authority outliving the episode.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   },
    "checkable": {
     "from": "no",
     "to": "partial"
@@ -1867,8 +1947,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "sensor_loss:external_stays_outside",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how external-system operations are assigned to or excluded from the DKP domain."
+    ],
+    "coverage_limit": "The injection is a declared event.",
+    "answer": "§4.1 and §8.1 fix the result: injected decisions stay outside DKP and the injecting system is external.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CULTURE-10-01",
