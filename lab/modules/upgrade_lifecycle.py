@@ -54,6 +54,8 @@ FAULTS = {
     "presentation_as_upgrade": "a presentation-only change is run through the upgrade procedure",
     "threshold_as_cosmetic": "a threshold change is treated as a presentation change and skips the procedure",
     "results_only": "the simulation methodology is withheld (results only) and the upgrade is activated anyway",
+    "erase_artifact": "the simulation record of a rolled-back upgrade is removed from the archive",
+    "refuse_error_in_cooldown": "an ERROR procedure initiated during the post-crisis cooldown is refused",
 }
 PROPOSAL = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -205,7 +207,69 @@ def run(r: Dict[str, Any]):
                     s["status"] = "rolled_back"
                     version["current"] = back
                     version["stable"] = back
+        for d in r["cooldown_error_initiations"]:
+            if d == k:
+                within = crisis_seen and k >= hi and (stab < 0 or k < hi + stab)
+                put("notice", "ERROR", k, {"error_initiated_by": "Subject", "trigger": "suspected regression",
+                                           "during_cooldown": within,
+                                           "accepted": "refuse_error_in_cooldown" not in faults or not within})
+    # UPGRADE §10: every upgrade artifact archived permanently, with an anchor reference, auditable under AUDIT
+    arts = [m for m in log.messages() if m.source in ("UPGRADE", "SIMULATION")]
+    gone = []
+    if "erase_artifact" in faults:
+        rolled = {m.value["proposal"] for m in arts if m.value.get("rollback_to")}
+        gone = [m.event_id for m in arts if m.source == "SIMULATION" and m.value["proposal"] in rolled][:1] or \
+            [m.event_id for m in arts if m.source == "SIMULATION"][:1]
+    put("notice", "ARCHIVE", r["horizon_days"] - 1, {"artifacts": [m.event_id for m in arts if m.event_id not in gone],
+                                                       "removed": gone, "permanent": True,
+                                                       "ptl_anchor": "lab digest of the PTL time index (declared)",
+                                                       "audit": "DKP-8-AUDIT-001 §6 (traces and recomputation)"})
     return log, {pid: s["status"] for pid, s in state.items()}, dict(version)
+
+
+def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+    arch = [m for m in msgs if m.source == "ARCHIVE"]
+    arts = [m for m in msgs if m.source in ("UPGRADE", "SIMULATION")]
+    kept = set(arch[0].value["artifacts"]) if arch else set()
+    bad = [f"{m.event_id}: not archived" for m in arts if m.event_id not in kept]
+    bad += [] if arch and arch[0].value["permanent"] and arch[0].value["ptl_anchor"] else ["archive not permanent or not anchored"]
+    out.append(v("UPGRADE-10-01", "artifacts_archived", bad,
+                 f"all {len(arts)} upgrade artifacts archived permanently with an anchor reference and an audit route",
+                 "{n} upgrade artifacts missing from the permanent archive"))
+    P = {p["id"]: p for p in r["proposals"]}
+    act = [m.value["proposal"] for m in msgs if m.source == "UPGRADE" and m.value.get("activated")]
+    lin = {m.value["proposal"]: m.value for m in msgs if m.source == "UPGRADE" and "lineage" in m.value}
+    lin_id = {m.value["proposal"]: m.event_id for m in msgs if m.source == "UPGRADE" and "lineage" in m.value}
+    sim = {m.value["proposal"]: m.value for m in msgs if m.source == "SIMULATION"}
+    ann = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and "activation_window_announced" in m.value}
+    bad = []
+    for pid in act:
+        if set(PROPOSAL_ITEMS) - set(lin.get(pid, {}).get("contents", [])):
+            bad.append(f"{pid}: specification incomplete")
+        if not sim.get(pid, {}).get("methodology"):
+            bad.append(f"{pid}: simulation methodology not public")
+        if pid not in ann:
+            bad.append(f"{pid}: not announced")
+        if lin_id.get(pid) not in kept:
+            bad.append(f"{pid}: not archived for audit")
+    out.append(v("UPGRADE-4.4-01", "visible_specified_auditable", bad,
+                 f"{len(act)} activated upgrade(s), each publicly announced with published methodology, a complete §5 "
+                 "specification and an archived trace", "{n} upgrades not visible, not specified or not auditable") if act else
+               CheckResult("UPGRADE-4.4-01", "visible_specified_auditable", NOT_APPLICABLE, "activated upgrades",
+                           applicability="no upgrade activated"))
+    inits = [m for m in msgs if m.source == "ERROR" and m.value.get("error_initiated_by") and m.value.get("during_cooldown")]
+    out.append(v("UPGRADE-Post-CrisisCooldownRule-03", "error_open_in_cooldown", [m.event_id for m in inits if not m.value["accepted"]],
+                 f"{len(inits)} ERROR initiation(s) by Subjects during the cooldown accepted",
+                 "{n} ERROR initiations refused during the cooldown") if inits else
+               CheckResult("UPGRADE-Post-CrisisCooldownRule-03", "error_open_in_cooldown", NOT_APPLICABLE, "ERROR initiations",
+                           applicability="none during a post-crisis cooldown"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -420,6 +484,10 @@ IMPLEMENTS = {
     "UPGRADE-0-01": ("only_lawful_mechanism", "PARTIAL", "Other routes are declared channels of a proposal."),
     "UPGRADE-5-01": ("proposal_contents", "PARTIAL", "The contents are declared per proposal (missing_items)."),
     "UPGRADE-11-02": ("no_opaque_tuning", "PARTIAL", "Discretionary tuning is a declared channel."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "UPGRADE-10-01": ("artifacts_archived", "PARTIAL", "Archive and audit route are recorded; the PTL anchor is a declared reference (no evidence contract, cf. EXIT-5-02)."),
+    "UPGRADE-4.4-01": ("visible_specified_auditable", "PARTIAL", "Visibility = announcement and published methodology; specification = §5 contents; audit = archived trace."),
+    "UPGRADE-Post-CrisisCooldownRule-03": ("error_open_in_cooldown", "PARTIAL", "ERROR initiations are declared events; the cooldown end is declared (F-020)."),
     "UPGRADE-4.1-01": ("axioms_untouched", "PARTIAL", "The effect on the axioms is a declared property of the proposal."),
     "UPGRADE-2-03": ("axioms_untouched", "PARTIAL", "The effect on the axioms is a declared property of the proposal."),
     "UPGRADE-2-04": ("ptl_rules_untouched", "PARTIAL", "Targets are declared."),
@@ -446,7 +514,7 @@ IMPLEMENTS = {
 
 class UpgradeLifecycleModule(LabModule):
     id = "upgrade_lifecycle"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Upgrade lifecycle (UPGRADE)", "ru": "Жизненный цикл изменения (UPGRADE)"}
     summary = {"en": "Proposals to change the protocols: which are rejected and why, when may one be activated, and is a "
                      "faulty one rolled back rather than patched?",
@@ -496,6 +564,10 @@ class UpgradeLifecycleModule(LabModule):
         "open_appeals": {"type": "list", "min_items": 0, "max_items": 20,
                          "items": {"type": "pair", "min": 0, "max": 10 ** 6}, "default": [], "source": "user",
                          "label": {"en": "Unresolved ERROR/Justice appeals from/to day", "ru": "Незакрытые апелляции с/до дня"}},
+        "cooldown_error_initiations": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "int", "min": 0, "max": 10 ** 6},
+                                       "default": [], "unit": "day", "source": "user",
+                                       "label": {"en": "ERROR procedures initiated by Subjects on days",
+                                                 "ru": "Процедуры ERROR, начатые Субъектами, в дни"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -528,7 +600,7 @@ class UpgradeLifecycleModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, status, version = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + returned_checks(r, log.messages())
         msgs = log.messages()
         decisions = [m.value for m in msgs if m.source == "UPGRADE" and m.kind in ("decision", "action")]
         outputs = {"status": status, "version": version, "decisions": decisions,
@@ -575,6 +647,9 @@ class UpgradeLifecycleModule(LabModule):
                 {"id": "a", "initiator_link": "group_x"},
                 {"id": "b", "submitted_day": 2, "initiator_link": "group_x", "results_published_day": 6, "activation_day": 45}]},
             "presentation_only": {"proposals": [{"id": "typo", "kind": "presentation_only"}]},
+            "error_in_cooldown": {"crisis_window": [0, 10], "stabilization_days": 20, "cooldown_error_initiations": [15],
+                                  "proposals": [{"id": "later", "submitted_day": 31, "results_published_day": 35,
+                                                 "announced_day": 40, "activation_day": 70}]},
             "activation_refused_cooling": {"proposals": [{"id": "u1", "activation_day": 25}]},
             "faulty_upgrades": {"crisis_window": [60, 70], "open_appeals": [[38, 45]], "proposals": [
                 {"id": "u1", "deviation_day": 50},

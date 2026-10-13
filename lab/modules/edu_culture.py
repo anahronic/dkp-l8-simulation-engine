@@ -55,6 +55,8 @@ FAULTS = {
     "culture_overreach": "CULTURE carries out requests §2, §4.3 and §5 exclude (doctrine, justification by productivity, conformity)",
     "persistence_by_scale": "support for a culture's persistence requires a minimum number of speakers",
     "asymmetric_neutrality": "the dominant language is denied an assessment offered to the minority languages",
+    "assimilation_incentive": "a tax credit is offered on condition of adopting the dominant language",
+    "worldview_gate": "access to education is denied on the basis of a declared worldview",
 }
 SUBJECT = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -200,6 +202,10 @@ def run(r: Dict[str, Any]):
                                      (["culture efficiency ranking"] if "cultural_ranking" in faults else [])})
     put("action", "CULTURE", 4, {"programme": "minority archive", "participation": "mandatory" if "mandatory_participation" in faults
                                  else "voluntary", "self_identification_required": False})
+    if "assimilation_incentive" in faults:
+        put("action", "CULTURE", 4, {"incentive": "tax credit", "condition": "adopt the dominant language"})
+    if "worldview_gate" in faults and r["subjects"]:
+        put("action", "EDU", 1, {"subject": r["subjects"][0]["id"], "education_access": "denied", "basis": "declared worldview"})
     for q in r["culture_requests"]:
         rq = put("observation", "REQUEST", 4, {"request": q})
         if "culture_overreach" in faults:
@@ -260,6 +266,57 @@ def culture_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
                  "unequal treatment of dominant and minority cultures") if treat else
                CheckResult("CULTURE-7-03", "neutrality_both_ways", NOT_APPLICABLE, "cultural neutrality",
                            applicability="no language in use"))
+    return out
+
+
+def outcomes(msgs) -> Dict[str, Any]:
+    """What governance did to each Subject: assessment result and the kinds of EDU acts addressed to it."""
+    out: Dict[str, Any] = {}
+    for m in msgs:
+        if m.source == "EDU" and m.value.get("subject"):
+            o = out.setdefault(m.value["subject"], {"passed": None, "acts": []})
+            if "passed" in m.value:
+                o["passed"] = m.value["passed"]
+            elif m.kind == "action":
+                o["acts"].append(sorted(k for k in m.value if k != "subject"))
+    return out
+
+
+def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+    if r["subjects"]:
+        # metamorphic: the same Subjects with one language and no minority flag must be treated the same way
+        same = dict(r, subjects=[dict(x, language=r["dominant_language"], minority=False) for x in r["subjects"]])
+        a, b = outcomes(msgs), outcomes(run(same).messages())
+        diff = [f"{k}: {a[k]} vs {b.get(k)}" for k in sorted(a) if a[k] != b.get(k)]
+        langs = sorted({x["language"] for x in r["subjects"]})
+        out.append(v("CULTURE-4.1-02", "language_agnostic", diff,
+                     f"governance outcomes for {len(a)} Subjects ({len(langs)} languages) are unchanged when every Subject is "
+                     "given the dominant language: culture-neutral and language-agnostic", "{n} outcomes that depend on language"))
+        out.append(v("CULTURE-7-02", "affiliation_affects_nothing", diff,
+                     "no Subject's rights, access or outcomes change with its cultural affiliation (language, minority status)",
+                     "{n} outcomes that change with cultural affiliation"))
+    else:
+        for rid, chk in (("CULTURE-4.1-02", "language_agnostic"), ("CULTURE-7-02", "affiliation_affects_nothing")):
+            out.append(CheckResult(rid, chk, NOT_APPLICABLE, "cultural neutrality", applicability="no Subject"))
+    inc = [m.event_id for m in msgs if m.source in ("CULTURE", "EDU") and m.value.get("incentive")
+           and m.value.get("condition")]
+    out.append(v("CULTURE-5-03", "no_assimilation_incentive", inc, "no economic incentive is tied to cultural assimilation",
+                 "{n} incentives tied to assimilation"))
+    gate = [m.event_id for m in msgs if m.source == "EDU" and m.value.get("education_access") == "denied"
+            and any(w in str(m.value.get("basis")) for w in ("opinion", "worldview", "belief"))]
+    out.append(v("EDU-2-05", "no_worldview_gate", gate, "no access to education was restricted on opinion or worldview",
+                 "{n} restrictions of access on opinion or worldview"))
+    disc = [f"{m.value['subject']}: {k}" for m in msgs if m.source == "EDU" and m.kind == "action"
+            for k in ("penalty", "excluded", "basic_right_withheld") if k in m.value]
+    out.append(v("EDU-8-04", "not_disciplinary", disc,
+                 "educational outcomes led to remediation only: no penalty, exclusion or withheld right",
+                 "{n} uses of education as enforcement or discipline"))
     return out
 
 
@@ -459,7 +516,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     binding = [m.event_id for m in msgs if m.source == "CULTURE" and m.value.get("enforceable")]
     out.append(v("CULTURE-11-05", "informational_without_l8", binding if not r["l8_bundle_present"] else [],
                  "cultural interactions informational and non-binding (no L8 calibration)", "{n} binding cultural interactions"))
-    return out + culture_checks(r, msgs)
+    return out + culture_checks(r, msgs) + returned_checks(r, msgs)
 
 
 IMPLEMENTS = {
@@ -508,6 +565,12 @@ IMPLEMENTS = {
     "CULTURE-4.3-03": ("persistence_without_justification", "PARTIAL", "Persistence support is a recorded per-language decision."),
     "CULTURE-5-01": ("no_conformity_enforcement", "PARTIAL", "Observed through declared requests and CULTURE records."),
     "CULTURE-7-03": ("neutrality_both_ways", "PARTIAL", "Neutrality observed as identical per-language treatment."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "CULTURE-4.1-02": ("language_agnostic", "PARTIAL", "Metamorphic over the declared Subjects: outcomes with every Subject in the dominant language."),
+    "CULTURE-7-02": ("affiliation_affects_nothing", "PARTIAL", "Affiliation = declared language and minority status; metamorphic comparison."),
+    "CULTURE-5-03": ("no_assimilation_incentive", "PARTIAL", "Observed as incentives with a cultural condition."),
+    "EDU-2-05": ("no_worldview_gate", "PARTIAL", "Observed as access decisions whose basis is opinion or worldview."),
+    "EDU-8-04": ("not_disciplinary", "PARTIAL", "Observed as penalties, exclusions or withheld rights following assessments."),
     "CULTURE-9-03": ("conflicts_by_scope", "PARTIAL", "Observed as the rules named for the Cultural Exception."),
     "CULTURE-11-03": ("mechanism_declared", "PARTIAL", "The Cultural Exception is the mechanism modelled."),
     "EDU-10-03": ("content_auditable", "PARTIAL", "Audit requests are declared."),
@@ -539,7 +602,7 @@ IMPLEMENTS = {
 
 class EduCultureModule(LabModule):
     id = "edu_culture"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Education and culture (EDU, CULTURE)", "ru": "Образование и культура (EDU, CULTURE)"}
     summary = {"en": "A population speaking several languages takes the system-literacy assessment: does failing only bring "
                      "help, does no language or culture get priority, and does anything restrict people while L8 is uncalibrated?",

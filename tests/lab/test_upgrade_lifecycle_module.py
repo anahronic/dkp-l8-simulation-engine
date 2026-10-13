@@ -37,13 +37,16 @@ FAULT_CASES = {
     "short_cooling": ({"proposals": [{"id": "a"}, {"id": "b", "activation_day": 25}]}, ["UPGRADE-Post-CrisisCooldownRule-02"]),
     "activate_with_open_appeal": ({"open_appeals": [[38, 45]], "proposals": [{"id": "a"}, {"id": "b", "activation_day": 60}]},
                                   ["UPGRADE-8-01"]),
-    "unannounced": ({"proposals": [{"id": "a"}, {"id": "b", "announced_day": -1, "activation_day": 60}]}, ["UPGRADE-8-01"]),
+    "unannounced": ({"proposals": [{"id": "a"}, {"id": "b", "announced_day": -1, "activation_day": 60}]}, ["UPGRADE-8-01",
+                                                                                                          "UPGRADE-4.4-01"]),
     "no_rollback": (FIX, ["UPGRADE-9-01", "UPGRADE-9-03"]),
     "stack_fix": (FIX, ["UPGRADE-9-02"]),
     "ignore_correlation": (EX["correlated_initiators"], ["UPGRADE-7-02"]),
     "presentation_as_upgrade": (EX["presentation_only"], ["UPGRADE-3-02", "UPGRADE-12-03"]),
     "threshold_as_cosmetic": ({}, ["UPGRADE-3-01"]),
-    "results_only": ({}, ["UPGRADE-6-03"]),
+    "results_only": ({}, ["UPGRADE-6-03", "UPGRADE-4.4-01"]),
+    "erase_artifact": ({}, ["UPGRADE-10-01"]),
+    "refuse_error_in_cooldown": (EX["error_in_cooldown"], ["UPGRADE-Post-CrisisCooldownRule-03"]),
 }
 
 

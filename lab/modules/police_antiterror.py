@@ -64,6 +64,7 @@ FAULTS = {
     "police_overreach": "police carry out requests §2, §3 and §10 exclude (speech, sanctions, verdicts, norms)",
     "retaliatory_strike": "after the harm stream ceased, ANTITERROR strikes at the attackers' origin",
     "override_justice_decision": "ANTITERROR extends a detention beyond the Justice decision",
+    "police_rehabilitation": "a detention record sets a long-term rehabilitation programme",
 }
 PROTECTED = ("civilian_population", "public_space", "civilian_transport", "hospital", "school", "shelter",
              "food_node", "water_node", "energy_node")                                              # ANTITERROR §3.3
@@ -235,7 +236,8 @@ def run(r: Dict[str, Any]):
                             if r["detention_limit_hours"] > 0 else s["to_hour"]
                         detained[p] = {"from": h, "until": end, "stream": i}
                         extra = {**({"guilt": "guilty of assault"} if "police_verdict" in faults else {}),
-                                 **({"motivation": "ideological"} if "interpret_intent" in faults else {})}
+                                 **({"motivation": "ideological"} if "interpret_intent" in faults else {}),
+                                 **({"rehabilitation_programme": "12 months"} if "police_rehabilitation" in faults else {})}
                         put("action", "POLICE", h, {"action": "detention", "subject": p, "purpose": "stop active harm",
                                                     "until_hour": end, "officer": "officer-17", "logged": True,
                                                     "review": None if "no_review" in faults else "automatic: DKP-1-JUSTICE-001",
@@ -343,6 +345,47 @@ def antiterror_principle_checks(r, msgs, v) -> List[CheckResult]:
     return out
 
 
+def returned_checks(r, msgs, police, v) -> List[CheckResult]:
+    """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
+    out = []
+    at = [m for m in msgs if m.source == "ANTITERROR" and m.kind == "action"]
+    states = sorted(((m.arrived_at, m.value["state"]) for m in msgs if m.source == "ANTITERROR" and m.kind == "notice"
+                     and "state" in m.value))
+
+    def state_at(h):
+        cur = "T0"
+        for k, st in states:
+            if k <= h:
+                cur = st
+        return cur
+    punitive = [f"{m.event_id}: {m.value['action']}" for m in at if m.value["action"] not in AT_ACTIONS or m.value.get("overrides")]
+    out.append(v("ANTITERROR-1-01", "not_punitive_not_justice", punitive,
+                 f"all {len(at)} anti-terror actions are containment; none punishes or takes a Justice decision",
+                 "{n} punitive actions or substitutions for Justice"))
+    fear = [f"{m.event_id}: {m.value['action']}" for m in at if m.value["action"] not in AT_ACTIONS]
+    fear += [f"{m.event_id}: action after the stream ceased" for m in at if state_at(m.arrived_at) == "T0"]
+    out.append(v("ANTITERROR-4.3-02", "no_punishment_deterrence_retaliation", fear,
+                 "no anti-terror action outside §6 containment or after the confirmed stream: no punishment, deterrence "
+                 "through fear or symbolic retaliation", "{n} punitive, deterrent or retaliatory actions"))
+    fwd = {m.arrived_at for m in msgs if m.source == "IMPACT" and m.value.get("containment_log_forwarded")}
+    bad = [f"{m.event_id}: no DTI-Day" for m in at if "dti" not in m.value]
+    bad += [f"{m.event_id}: not logged" for m in at if not m.value.get("logged")]
+    bad += [f"{m.event_id}: not forwarded for Justice review" for m in at if m.arrived_at not in fwd]
+    out.append(v("ANTITERROR-10-01", "indexed_reviewable", bad,
+                 f"all {len(at)} anti-terror actions DTI-indexed, logged for post-event review and forwarded for Justice review",
+                 "{n} actions not indexed, not reviewable or not forwarded") if at else
+               CheckResult("ANTITERROR-10-01", "indexed_reviewable", NOT_APPLICABLE, "anti-terror actions",
+                           applicability="no anti-terror action in this run"))
+    det = [m for m in police if m.value["action"] == "detention"]
+    bad = [f"{m.event_id}: {k}" for m in police for k in ("rehabilitation_programme", "punishment", "exit_blocked", "identity_changed")
+           if k in m.value]
+    bad += [f"{m.event_id}: detention without end" for m in det if m.value.get("until_hour") is None]
+    out.append(v("POLICE-10-02", "no_long_term_punishment", bad,
+                 f"{len(det)} detention(s), each bounded; no punishment or rehabilitation defined, no exit or identity act by police",
+                 "{n} police acts defining punishment or overriding exit or identity"))
+    return out
+
+
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     msgs = log.messages()
     out: List[CheckResult] = []
@@ -366,6 +409,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     police = [m for m in msgs if m.source == "POLICE" and m.kind == "action"]
     out += role_checks(r, msgs, police, v)
     out += antiterror_principle_checks(r, msgs, v)
+    out += returned_checks(r, msgs, police, v)
     # POLICE §2, §7, §8: police acts stay inside SCOPE; prohibited functions are critical breaches
     out.append(v("POLICE-2-02", "police_within_scope", [m.event_id for m in police if m.value["action"] not in POLICE_ACTIONS],
                  f"all {len(police)} police actions are safety execution of the kinds POLICE defines (S0/S1 under SCOPE, H-PA-5)",
@@ -607,6 +651,11 @@ IMPLEMENTS = {
     "POLICE-8-03": ("no_precedent", "PARTIAL", "Observed as the extension ending with the Crisis."),
     "POLICE-9-01": ("aggregated_statistics", "IMPLEMENTED", None),
     "ANTITERROR-0-02": ("defensive_containment", "IMPLEMENTED", None),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "ANTITERROR-1-01": ("not_punitive_not_justice", "PARTIAL", "Observed as actions outside §6 containment or overriding a Justice decision."),
+    "ANTITERROR-4.3-02": ("no_punishment_deterrence_retaliation", "PARTIAL", "Read as ANTITERROR-0-02: actions outside §6 containment or after the stream ceased."),
+    "ANTITERROR-10-01": ("indexed_reviewable", "PARTIAL", "Reviewability and Justice review observed as the action log and its forwarding to IMPACT."),
+    "POLICE-10-02": ("no_long_term_punishment", "PARTIAL", "Observed as punishment or rehabilitation fields and unbounded detentions."),
     "ANTITERROR-5-02": ("t1_definition", "PARTIAL", "Targets and zones are declared per stream."),
     "ANTITERROR-11-02": ("no_speech_or_override", "PARTIAL", "Observed as content filtering and recorded overrides."),
     "POLICE-0-01": ("sole_function", "PARTIAL", "The four functions mapped to the police action kinds (H-PA-5); a PTL basis is "
@@ -646,7 +695,7 @@ IMPLEMENTS = {
 
 class PoliceAntiterrorModule(LabModule):
     id = "police_antiterror"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Policing and anti-terror containment (POLICE, ANTITERROR)", "ru": "Полиция и антитеррор (POLICE, ANTITERROR)"}
     summary = {"en": "An attack in a public place: do police and anti-terror units act only on PTL-confirmed harm, stay in "
                      "the threat zone, detain only attackers for a limited time, and stop when the harm stops?",

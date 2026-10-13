@@ -25,16 +25,16 @@ def test_examples_break_no_rule(name):
 
 
 FAULT_CASES = {
-    "punish_literacy_failure": ({}, ["EDU-Safeguards-01", "EDU-9-04"]),
-    "permanent_exclusion": ({}, ["EDU-Safeguards-02", "EDU-8-05"]),
-    "gate_basic_rights": ({}, ["EDU-11-05"]),
+    "punish_literacy_failure": ({}, ["EDU-Safeguards-01", "EDU-9-04", "EDU-8-04"]),
+    "permanent_exclusion": ({}, ["EDU-Safeguards-02", "EDU-8-05", "EDU-8-04"]),
+    "gate_basic_rights": ({}, ["EDU-11-05", "EDU-8-04"]),
     "restrict_without_bundle": ({}, ["EDU-12-04", "EDU-12-02"]),
     "irreversible_restriction": (CAL, ["EDU-12-01", "EDU-12-03"]),
     "no_remediation": ({}, ["EDU-Safeguards-05", "EDU-8-01"]),
     "belief_screening": ({}, ["EDU-9-03", "EDU-7-05", "EDU-2-04"]),
     "credential_privilege": ({}, ["EDU-4-02", "EDU-9-05"]),
     "profile_learning_data": ({}, ["EDU-10-06"]),
-    "language_as_competence": ({}, ["CULTURE-5-05", "EDU-7-04"]),
+    "language_as_competence": ({}, ["CULTURE-5-05", "EDU-7-04", "CULTURE-4.1-02", "CULTURE-7-02"]),
     "cultural_ranking": ({}, ["CULTURE-4.3-01", "CULTURE-4.3-02", "CULTURE-0-01"]),
     "default_dominant_language": ({}, ["CULTURE-8-02", "CULTURE-4.1-03"]),
     "lossy_translation": ({}, ["CULTURE-4.2-02"]),
@@ -53,6 +53,8 @@ FAULT_CASES = {
     "culture_overreach": ({}, ["CULTURE-2-02", "CULTURE-4.3-03", "CULTURE-5-01"]),
     "persistence_by_scale": ({}, ["CULTURE-4.3-03"]),
     "asymmetric_neutrality": ({}, ["CULTURE-7-03"]),
+    "assimilation_incentive": ({}, ["CULTURE-5-03"]),
+    "worldview_gate": ({}, ["EDU-2-05"]),
 }
 
 

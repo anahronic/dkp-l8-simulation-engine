@@ -51,6 +51,8 @@ FAULTS = {
     "override_justice": "FINANCE re-grades a Subject's Justice outcome before pricing",
     "override_attribution": "a credit is booked to a Subject other than the one IDENTITY attributes it to",
     "inject_judgment": "a moral label is written into a cost-of-capital record",
+    "default_penalty": "FINANCE adds a default surcharge of its own instead of leaving the outcome to JUSTICE",
+    "time_preference": "credit is discounted by a time-preference factor that does not depend on projected impact",
 }
 
 SUBJECT = {"type": "object", "fields": {
@@ -61,14 +63,16 @@ SUBJECT = {"type": "object", "fields": {
     "savings": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0.0, "source": "user"},
     "credit_request": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0.0, "source": "user"},
     "credit_term_days": {"type": "int", "min": 1, "max": 3650, "default": 30, "source": "user"},
-    "projected_output": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0.0, "source": "user"}}}
+    "projected_output": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0.0, "source": "user"},
+    "impact_trend": {"type": "number", "min": -100, "max": 100, "default": 0.0, "source": "user"}}}
 STAND_IN = {"type": "object", "fields": {
     "rate_base": {"type": "number", "min": 0, "max": 1, "default": 0.04},
     "rate_per_contribution": {"type": "number", "min": 0, "max": 1, "default": 0.02},
     "rate_per_exposure_unit": {"type": "number", "min": 0, "max": 1, "default": 0.005},
     "savings_rate_per_day": {"type": "number", "min": 0, "max": 0.01, "default": 0.0001},
     "reserve_per_impact_unit": {"type": "number", "min": 0, "max": 10 ** 6, "default": 100.0},
-    "leverage_per_headroom": {"type": "number", "min": 0, "max": 10 ** 6, "default": 1000.0}}}
+    "leverage_per_headroom": {"type": "number", "min": 0, "max": 10 ** 6, "default": 1000.0},
+    "discount_per_impact_change": {"type": "number", "min": 0, "max": 1, "default": 0.001}}}
 SUBJECTS_DEFAULT = [
     {"id": "A", "justice": "positive", "impact_exposure": 2.0, "volatility": 0.3, "savings": 1000.0, "credit_request": 500.0,
      "credit_term_days": 30, "projected_output": 800.0},
@@ -161,6 +165,15 @@ def run(r: Dict[str, Any]) -> EventLog:
                 to = "holding:" + sid if "override_attribution" in faults else sid
                 book(0, to, cu, "credit", [act.event_id, ident.event_id], of=sid)
                 credits[sid] = {"outstanding": cu, "daily": cu / term, "due": due, "exposure": s["impact_exposure"], "issue": act.event_id}
+                # FINANCE (Explicit Time Preference Prohibition): discounting only from projected impact-channel change
+                trend = s["impact_trend"]
+                if "time_preference" in faults:
+                    df = 1.0 / (1.0 + 0.05 * term / 365.0)
+                else:
+                    df = 1.0 / (1.0 + sp["discount_per_impact_change"] * abs(trend) * term)
+                put("evaluation", "FINANCE", 0, {"discount_factor": round(df, 10), "subject": sid, "term_days": term,
+                                                 "impact_trend": trend, "discount_formula": "stand-in 1/(1+c*|trend|*term)"},
+                    [imp.event_id, act.event_id])
             else:
                 put("notice", "FINANCE", 0, {"credit_refused": sid, "failed": sorted(c for c, ok in cond.items() if not ok)}, [ev.event_id])
     for k in range(r["horizon_days"]):
@@ -171,10 +184,19 @@ def run(r: Dict[str, Any]) -> EventLog:
                     put("action", "FINANCE", k, {"perform": kind}, [q.event_id])
                 else:
                     put("notice", "FINANCE", k, {"request": kind, "response": "refused", "basis": list(REQUESTS[kind])}, [q.event_id])
+        for dflt in r["defaults"]:
+            c = credits.get(dflt["subject"])
+            if dflt["day"] == k and c and c["outstanding"] > 0 and not c.get("defaulted"):
+                c["defaulted"] = True
+                dn = put("notice", "FINANCE", k, {"default": dflt["subject"], "outstanding": c["outstanding"],
+                                                  "routed_to": "DKP-1-JUSTICE-001", "outcome": "justice-defined"}, [c["issue"]])
+                if "default_penalty" in faults:
+                    put("action", "FINANCE", k, {"penalty": "default surcharge", "subject": dflt["subject"], "rate_add": 0.1},
+                        [dn.event_id])
         if k > 0:
             for sid in sorted(credits):
                 c = credits[sid]
-                if c["outstanding"] <= 0 or c["due"] is None:
+                if c["outstanding"] <= 0 or c["due"] is None or c.get("defaulted"):
                     continue
                 pay = c["outstanding"] if k >= c["due"] else min(c["daily"], c["outstanding"])
                 c["outstanding"] = round(c["outstanding"] - pay, 9)
@@ -259,6 +281,8 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
             bad.append(f"{m.value['credit_issue']}: issued without the §5.1 conditions holding")
         if not m.value.get("term_days"):
             bad.append(f"{m.value['credit_issue']}: no term")
+        elif any(x.source == "FINANCE" and x.value.get("default") == m.value["credit_issue"] for x in msgs):
+            pass                                          # a default ends the credit through JUSTICE (§8.1), not by repayment
         else:
             due = m.arrived_at + m.value["term_days"]
             closed = [x for x in msgs if x.source == "FINANCE" and x.value.get("credit_closed") == m.value["credit_issue"]]
@@ -340,7 +364,43 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     return out
 
 
+def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+    dfl = [m for m in msgs if m.source == "FINANCE" and m.value.get("default")]
+    pen = [m.event_id for m in msgs if m.source == "FINANCE" and (m.value.get("penalty") or m.value.get("rate_add"))]
+    out.append(v("FINANCE-8.1-02", "default_routed_to_justice",
+                 [m.event_id for m in dfl if m.value.get("routed_to") != "DKP-1-JUSTICE-001"] + pen,
+                 f"{len(dfl)} default(s) handed to JUSTICE for its outcome; FINANCE added no penalty of its own",
+                 "{n} defaults punished by FINANCE or not handed to JUSTICE") if dfl else
+               CheckResult("FINANCE-8.1-02", "default_routed_to_justice", NOT_APPLICABLE, "defaults",
+                           applicability="no default in this run"))
+    disc = [m for m in msgs if m.source == "FINANCE" and "discount_factor" in m.value]
+    if disc:
+        flat = dict(r, subjects=[dict(x, impact_trend=0.0) for x in r["subjects"]])
+        again = [m.value for m in run(flat).messages() if m.source == "FINANCE" and "discount_factor" in m.value]
+        bad = [f"{x['subject']}: discount {x['discount_factor']} with no projected impact change" for x in again
+               if abs(x["discount_factor"] - 1.0) > 1e-12]
+        bad += [f"{m.value['subject']}: discount without an IMPACT basis" for m in disc
+                if not any(p.startswith("impact-") for p in m.provenance)]
+        out.append(v("FINANCE-ExplicitTimePreferenceProhibition-02", "discount_only_from_impact", bad,
+                     f"{len(disc)} discount factor(s), each from projected impact-channel change; with no change there is none "
+                     "(metamorphic)", "{n} discounts not explained by projected impact change"))
+    else:
+        out.append(CheckResult("FINANCE-ExplicitTimePreferenceProhibition-02", "discount_only_from_impact", NOT_APPLICABLE,
+                               "temporal discounting", applicability="no credit issued"))
+    return out
+
+
 IMPLEMENTS = {
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "FINANCE-8.1-02": ("default_routed_to_justice", "PARTIAL", "Defaults are declared events; the outcome itself is JUSTICE's."),
+    "FINANCE-ExplicitTimePreferenceProhibition-02": ("discount_only_from_impact", "PARTIAL", "Metamorphic: with no projected "
+                                                     "impact change there is no discount; the discount function is a stand-in."),
     "FINANCE-1-01": ("finance_exclusions", "PARTIAL", "Exclusions observed as refusals of declared requests and as the Justice outcome "
                      "used unchanged; a fiat regime is not modelled beyond the request."),
     "FINANCE-3.1-01": ("cu_unitless_fungible", "PARTIAL", "Observed on ledger entries (no unit, no lot-dependent value)."),
@@ -360,7 +420,7 @@ IMPLEMENTS = {
 
 class FinanceMechanicsModule(LabModule):
     id = "finance_mechanics"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Finance mechanics: cost of capital, credit, reserves, leverage",
              "ru": "Финансовая механика: цена капитала, кредит, резервы, плечо"}
     summary = {"en": "Several Subjects borrow and save. Does the cost of capital move in the direction FINANCE fixes, is credit "
@@ -411,6 +471,9 @@ class FinanceMechanicsModule(LabModule):
         "requests": {"type": "list", "min_items": 0, "max_items": len(REQUESTS), "items": {"type": "enum", "values": list(REQUESTS)},
                      "default": list(REQUESTS), "source": "user",
                      "label": {"en": "Requests for functions FINANCE excludes (§1, §13)", "ru": "Запросы функций, исключённых FINANCE (§1, §13)"}},
+        "defaults": {"type": "list", "min_items": 0, "max_items": 20, "source": "user", "default": [],
+                     "items": {"type": "object", "fields": {"subject": {"type": "str"}, "day": {"type": "int", "min": 0, "max": 3650}}},
+                     "label": {"en": "Defaults {subject, day} (FINANCE §8.1)", "ru": "Дефолты {subject, day} (FINANCE §8.1)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -433,7 +496,7 @@ class FinanceMechanicsModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + returned_checks(r, log.messages())
         msgs = log.messages()
         rates = {m.value["subject"]: m.value["rate"] for m in msgs if m.source == "FINANCE" and "formula" in m.value
                  and m.value.get("formula", "").startswith("stand-in JWCoC")}
@@ -460,6 +523,8 @@ class FinanceMechanicsModule(LabModule):
     def examples(self) -> Dict[str, Dict[str, Any]]:
         return {
             "four_subjects": {},
+            "default_and_trend": {"defaults": [{"subject": "C", "day": 5}],
+                                  "subjects": [dict(x, impact_trend=0.5 if x["id"] == "C" else 0.0) for x in SUBJECTS_DEFAULT]},
             "faulty_pricing": {"faults": ["jwcoc_inverted", "override_justice", "inject_judgment"]},
             "faulty_basis": {"faults": ["percentage_reserve", "volatility_leverage", "discretionary_return"]},
             "faulty_scope": {"faults": ["finance_overreach", "override_attribution", "denominated_cu", "credit_as_right"]},

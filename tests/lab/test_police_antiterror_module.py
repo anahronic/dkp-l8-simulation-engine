@@ -26,7 +26,7 @@ GAP = EX["sustained_with_refresh_gap"]
 FAULT_CASES = {
     "act_on_suspicion": (EX["unconfirmed_report"], ["POLICE-3-06", "POLICE-4-01", "ANTITERROR-4.1-01"]),
     "invalid_order": (EX["orders_and_protest"], ["POLICE-2-05"]),
-    "indefinite_detention": ({}, ["POLICE-5.1-02", "POLICE-5.1-05"]),
+    "indefinite_detention": ({}, ["POLICE-5.1-02", "POLICE-5.1-05", "POLICE-10-02"]),
     "no_review": ({}, ["POLICE-5.1-04"]),
     "excess_force": ({}, ["POLICE-5.2-02"]),
     "lethal_force": ({}, ["POLICE-5.2-04"]),
@@ -40,8 +40,8 @@ FAULT_CASES = {
     "collective_responsibility": ({}, ["ANTITERROR-2-02", "ANTITERROR-7-01"]),
     "suppress_dissent": (EX["orders_and_protest"], ["ANTITERROR-7-02"]),
     "retrospective": ({}, ["ANTITERROR-7-03"]),
-    "not_forwarded": ({}, ["ANTITERROR-8-02"]),
-    "impose_sanction": ({}, ["ANTITERROR-11-01"]),
+    "not_forwarded": ({}, ["ANTITERROR-8-02", "ANTITERROR-10-01"]),
+    "impose_sanction": ({}, ["ANTITERROR-11-01", "ANTITERROR-1-01", "ANTITERROR-4.3-02"]),
     "terror_on_combatants": ({"streams": [{"from_hour": 2, "to_hour": 6, "kind": "terror_event", "zone": "z1", "target": "combatants"}]},
                              ["ANTITERROR-3.3-01", "ANTITERROR-5-01"]),
     "run_prohibited": ({}, ["POLICE-2-02", "POLICE-7-04"]),
@@ -51,8 +51,9 @@ FAULT_CASES = {
     "profile_by_belief": ({}, ["POLICE-7-01", "POLICE-7-04", "POLICE-0-01"]),
     "expand_authority": ({}, ["POLICE-7-03", "POLICE-7-04"]),
     "police_overreach": ({}, ["POLICE-10-01", "POLICE-0-02", "POLICE-2-03", "POLICE-3-04", "POLICE-0-01"]),
-    "retaliatory_strike": ({}, ["ANTITERROR-0-02"]),
-    "override_justice_decision": ({}, ["ANTITERROR-11-02", "ANTITERROR-0-02"]),
+    "retaliatory_strike": ({}, ["ANTITERROR-0-02", "ANTITERROR-1-01", "ANTITERROR-4.3-02", "ANTITERROR-10-01"]),
+    "override_justice_decision": ({}, ["ANTITERROR-11-02", "ANTITERROR-0-02", "ANTITERROR-1-01", "ANTITERROR-4.3-02"]),
+    "police_rehabilitation": ({}, ["POLICE-10-02"]),
 }
 
 

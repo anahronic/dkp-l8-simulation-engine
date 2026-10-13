@@ -35,7 +35,10 @@ FAULT_CASES = {
     "override_justice": ["FINANCE-1-01", "FINANCE-13-01"],
     "override_attribution": ["FINANCE-13-01"],
     "inject_judgment": ["FINANCE-13-01"],
+    "default_penalty": ["FINANCE-8.1-02"],
+    "time_preference": ["FINANCE-ExplicitTimePreferenceProhibition-02"],
 }
+EXTRA = {"default_penalty": {"defaults": [{"subject": "C", "day": 5}]}}
 
 
 def test_every_fault_has_a_case():
@@ -44,7 +47,8 @@ def test_every_fault_has_a_case():
 
 @pytest.mark.parametrize("fault", sorted(FAULT_CASES))
 def test_fault_is_detected(fault):
-    clean, broken = statuses(run()), statuses(run(faults=[fault]))
+    extra = EXTRA.get(fault, {})
+    clean, broken = statuses(run(**extra)), statuses(run(**extra, faults=[fault]))
     for rid in FAULT_CASES[fault]:
         assert clean[rid] == "PASS", (rid, clean[rid])
         assert broken[rid] == "FAIL", (fault, rid, broken[rid])
@@ -102,3 +106,10 @@ def test_kt6_03_plateaus_are_impact_based():
         fm.reserve_of, fm.leverage_of = orig_r, orig_l
     assert statuses(run(faults=["percentage_reserve"]))["FINANCE-6.2-01"] == "FAIL"
     assert statuses(run(faults=["volatility_leverage"]))["FINANCE-9-02"] == "FAIL"
+
+
+def test_discounting_only_from_projected_impact_change():
+    """Explicit Time Preference Prohibition (returned provision -02): a discount exists only where projected impact changes."""
+    st = statuses(run(**M.examples()["default_and_trend"]))
+    assert st["FINANCE-ExplicitTimePreferenceProhibition-02"] == "PASS" and st["FINANCE-8.1-02"] == "PASS"
+    assert statuses(run(faults=["time_preference"]))["FINANCE-ExplicitTimePreferenceProhibition-02"] == "FAIL"
