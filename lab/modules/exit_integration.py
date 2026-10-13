@@ -63,7 +63,18 @@ FAULTS = {
     "crisis_exit_precedent": "after the crisis, its suspension of exits is recorded as a rule for future exits",
     "rollback_erases": "a rollback deletes the data and audit trail of the rolled-back phase",
     "rollback_skips_phases": "a rollback jumps back to Shadow Mode instead of the prior phase, without declared scope",
+    "settlement_penalty": "the delayed settlement of a system-critical asset adds a penalty and is not logged",
+    "settlement_authority": "during the delayed settlement an enforcement order is addressed to the exiting entity",
+    "collective_punishment": "a levy is imposed on the remaining members because of the exit",
+    "exit_deprivation": "baseline access of the exiting entity is withdrawn on the declaration day",
+    "post_exit_regulation": "after exit a DKP rule is applied to the exited entity",
+    "phase0_without_agreement": "Phase 0 starts without the PTL data access agreement",
+    "phase3_uncleared": "Phase 3 starts without a stress-test clearance and without declared enforceable domains",
+    "alignment_condition": "Phase 1 validation requires adoption of a civic curriculum (cultural or ideological alignment)",
+    "political_audit": "the phase audit assesses political preference",
+    "political_assessment": "a phase assessment relies on a political endorsement",
 }
+ASSESSMENT_EVIDENCE = ("PTL outputs", "reproducible metrics", "SIMULATION stress test")          # INTEGRATION §6
 ENTITIES = ("country", "region", "city", "jurisdiction")                                   # INTEGRATION §3
 EXITING = {"individual": "individual", "organizational": "organization", "regional": "region",
            "jurisdictional": "jurisdiction"}                                               # EXIT §3
@@ -114,8 +125,9 @@ def run(r: Dict[str, Any]):
     settled = False
     for k in range(r["horizon_days"]):
         if k == r["consent_day"]:
-            consent = put("notice", "INTEGRATION", k, {"consent": "charter ratification", "ptl_access": r["ptl_access_agreement"]})
-            if r["ptl_access_agreement"]:
+            agreement = r["ptl_access_agreement"] and "phase0_without_agreement" not in faults
+            consent = put("notice", "INTEGRATION", k, {"consent": "charter ratification", "ptl_access": agreement})
+            if agreement or "phase0_without_agreement" in faults:
                 phase = 0
                 put("notice", "INTEGRATION", k, {"phase": 0, "scope": "read-only", "enforceable": False, "validated_by": "consent",
                                                  **terms(0, r["phase2_domains"])}, [consent.event_id])
@@ -152,11 +164,21 @@ def run(r: Dict[str, Any]):
             nxt = phase + 1
             if nxt in validations and validations[nxt] == k:
                 shadow = nxt == 1 and "shadow_as_proof" in faults
-                put("notice", "INTEGRATION", k, {"phase": nxt, "validated_by": "Shadow Mode data as compatibility proof" if shadow
-                                                 else f"phase {phase} exit validation",
-                                                 "scope": r["phase2_domains"] if nxt == 2 else ("advisory" if nxt == 1 else "full"),
-                                                 "enforceable": nxt >= 2,
-                                                 **({} if nxt == 1 and "undefined_phase" in faults else terms(nxt, r["phase2_domains"]))})
+                evidence = list(ASSESSMENT_EVIDENCE[:2]) + (["SIMULATION stress test"] if nxt == 3 else []) + \
+                    (["political endorsement"] if "political_assessment" in faults else [])
+                extra = {"evidence": evidence}
+                if nxt == 1 and "alignment_condition" in faults:
+                    extra["conditions"] = ["adopt the DKP civic curriculum"]
+                if nxt == 3:
+                    cleared = "phase3_uncleared" not in faults
+                    extra.update(stress_test_clearance=cleared, enforceable_domains="all declared domains" if cleared else None)
+                pm = put("notice", "INTEGRATION", k, {"phase": nxt, "validated_by": "Shadow Mode data as compatibility proof" if shadow
+                                                      else f"phase {phase} exit validation",
+                                                      "scope": r["phase2_domains"] if nxt == 2 else ("advisory" if nxt == 1 else "full"),
+                                                      "enforceable": nxt >= 2, **extra,
+                                                      **({} if nxt == 1 and "undefined_phase" in faults else terms(nxt, r["phase2_domains"]))})
+                put("notice", "AUDIT", k, {"audit_of_phase": nxt, "criteria": ["process integrity"] +
+                                           (["political preference"] if "political_audit" in faults else [])}, [pm.event_id])
                 phase = nxt
             elif "auto_progression" in faults and nxt in validations and validations[nxt] >= 0 and k == validations[nxt] - 3:
                 put("notice", "INTEGRATION", k, {"phase": nxt, "scope": "auto", "enforceable": nxt >= 2, **terms(nxt, r["phase2_domains"])})
@@ -198,6 +220,12 @@ def run(r: Dict[str, Any]):
                     [decl_msg.event_id])
             if "criminalize_exit" in faults:
                 put("action", "ENFORCEMENT", k, {"enforce": "exit decision offence", "phase": phase}, [decl_msg.event_id])
+            if "collective_punishment" in faults:
+                put("action", "ENFORCEMENT", k, {"enforce": "levy on the remaining members", "target": "remaining members",
+                                                 "because_of": "exit declaration"}, [decl_msg.event_id])
+            if "exit_deprivation" in faults:
+                put("action", "ACCESS", k, {"baseline_access": "withdrawn", "to": EXITING[r["exit_scope"]],
+                                            "because_of": "exit declaration"}, [decl_msg.event_id])
         if exit_decl is not None and exit_exec is None:
             crisis = r["crisis_window"][0] <= k < r["crisis_window"][1]
             paused = crisis and r["crisis_exit_reading"] == "scope_crisis_suspension"
@@ -239,8 +267,13 @@ def run(r: Dict[str, Any]):
                                              "ptl_halt": halt}, [decl_msg.event_id])
                 settled = True
             if r["system_critical_asset"] and k == exit_decl + r["cooling_days"]:
+                pen = "settlement_penalty" in faults
                 put("notice", "EXIT", k, {"delayed_settlement": "system-critical asset", "bounded_days": r["critical_settlement_days"],
-                                          "compensated": True, "logged": True}, [decl_msg.event_id])
+                                          "compensated": True, "logged": not pen, **({"penalty": 50} if pen else {})},
+                    [decl_msg.event_id])
+            if r["system_critical_asset"] and "settlement_authority" in faults and k == exit_decl + r["cooling_days"] + 1:
+                put("action", "ENFORCEMENT", k, {"enforce": "settlement supervision order", "target": EXITING[r["exit_scope"]]},
+                    [decl_msg.event_id])
             if k >= due and not paused and not (r["stability_objection"] and "stability_veto" in faults):
                 exit_exec = k
                 put("notice", "EXIT", k, {"executed": True, "authority": "terminated", "data": "frozen and archived",
@@ -262,6 +295,8 @@ def run(r: Dict[str, Any]):
                         [decl_msg.event_id])
         if "post_declaration_obligation" in faults and exit_decl is not None and k == exit_decl + 1:
             put("notice", "RESTITUTION", k, {"tail_item": "new", "kind": "service fee", "incurred_day": k}, [decl_msg.event_id])
+        if exit_exec is not None and k == exit_exec + 2 and "post_exit_regulation" in faults:
+            put("notice", "EXIT", k, {"rule_for_exited_entity": "DKP emission standard applies", "to": EXITING[r["exit_scope"]]})
         if exit_exec is not None and k == exit_exec + 1 and "benefits_after_exit" in faults:
             put("action", "BENEFITS", k, {"benefit": "network dividend", "to": EXITING[r["exit_scope"]]})
         if "crisis_exit_precedent" in faults and r["crisis_window"][1] > r["crisis_window"][0] and k == r["crisis_window"][1]:
@@ -356,6 +391,198 @@ def exit_procedure_checks(r, msgs) -> List[CheckResult]:
     return out
 
 
+def returned_checks(r, msgs, rows) -> List[CheckResult]:
+    """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
+    out = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+
+    integ = [m for m in msgs if m.source == "INTEGRATION"]
+    phase_msgs = [m for m in integ if "phase" in m.value]
+    consent = [m for m in integ if "consent" in m.value]
+    # INTEGRATION ----------------------------------------------------------------------
+    if phase_msgs:
+        seq = [m.value["phase"] for m in phase_msgs]
+        bad = ([] if consent else ["no consent"]) + [f"{a}->{b}" for a, b in zip(seq, seq[1:]) if b > a + 1] + \
+              [m.event_id for m in phase_msgs if "validated_by" not in m.value] + \
+              [m.event_id for m in phase_msgs if m.value["phase"] < 3 and m.value.get("reversible") is not True]
+        out.append(v("INTEGRATION-0-01", "voluntary_phased_reversible", bad,
+                     f"integration began from consent and went through phases {seq} in order, each validated and reversible "
+                     "until Full Integration", "{n} departures from voluntary, phased, reversible integration"))
+        first = min(m.arrived_at for m in phase_msgs)
+        aid = [m for m in integ if m.value.get("conditional_on_adoption")]
+        bad = ([] if consent and consent[0].arrived_at <= first else ["phase before consent"]) + [m.event_id for m in aid]
+        out.append(v("INTEGRATION-2-01", "adoption_not_forced", bad,
+                     "adoption followed a declared consent; no aid or other benefit was tied to adoption",
+                     "{n} signs of forced adoption"))
+        bad = [f"{m.event_id}: {', '.join(m.value['conditions'])}" for m in phase_msgs if m.value.get("conditions")]
+        bad += [m.event_id for m in integ if "divergence" in m.value and m.value.get("failure")]
+        out.append(v("INTEGRATION-2-03", "no_alignment_imposed", bad,
+                     "no phase was conditioned on cultural or ideological alignment and no divergence was treated as failure",
+                     "{n} alignment conditions"))
+        audits = [m for m in msgs if m.source == "AUDIT"]
+        out.append(v("INTEGRATION-10-02", "audit_process_only",
+                     [f"{m.event_id}: {c}" for m in audits for c in m.value["criteria"] if c != "process integrity"],
+                     f"{len(audits)} phase audits assessed process integrity only", "{n} audit criteria of political preference")
+                   if audits else na("INTEGRATION-10-02", "audit_process_only", "audit", "no phase validated"))
+        enf = [m for m in msgs if m.source == "ENFORCEMENT"]
+        beyond = [m.event_id for m in enf if (rows[m.arrived_at]["phase"] or 0) < 2 or
+                  (rows[m.arrived_at]["phase"] == 2 and m.value["enforce"] not in r["phase2_domains"])]
+        dep = [m.event_id for m in integ if "dependency" in m.value and not m.value.get("declared")]
+        out.append(v("INTEGRATION-11-04", "no_scope_bypass", beyond + dep,
+                     "integration created no act or dependency beyond the declared phase scope",
+                     "{n} acts or dependencies that bypass the declared scope"))
+        p0 = [m for m in phase_msgs if m.value["phase"] == 0]
+        bad = [m.event_id for m in p0 if not any(c.value.get("ptl_access") and c.arrived_at <= m.arrived_at for c in consent)]
+        out.append(v("INTEGRATION-5.1-02", "phase0_entry_records", bad,
+                     "Phase 0 began with a consent declaration and a PTL data access agreement",
+                     "{n} Phase 0 entries without both records") if p0 else
+                   na("INTEGRATION-5.1-02", "phase0_entry_records", "Phase 0", "never entered"))
+        p3 = [m for m in phase_msgs if m.value["phase"] == 3]
+        out.append(v("INTEGRATION-5.3-02", "phase3_clearance",
+                     [m.event_id for m in p3 if not m.value.get("stress_test_clearance") or not m.value.get("enforceable_domains")],
+                     "Phase 3 began with a stress-test clearance and a declaration of enforceable domains",
+                     "{n} Phase 3 entries without clearance or declared domains") if p3 else
+                   na("INTEGRATION-5.3-02", "phase3_clearance", "Phase 3", "never entered"))
+        ev = [m for m in phase_msgs if "evidence" in m.value]
+        out.append(v("INTEGRATION-6-02", "assessment_evidence_exclusive",
+                     [f"{m.event_id}: {e}" for m in ev for e in m.value["evidence"] if e not in ASSESSMENT_EVIDENCE],
+                     f"{len(ev)} phase assessments relied only on PTL outputs, reproducible metrics and stress tests",
+                     "{n} assessment inputs outside the admissible evidence") if ev else
+                   na("INTEGRATION-6-02", "assessment_evidence_exclusive", "phase assessment", "no phase validated"))
+    else:
+        for rid, chk in (("INTEGRATION-0-01", "voluntary_phased_reversible"), ("INTEGRATION-2-01", "adoption_not_forced"),
+                         ("INTEGRATION-2-03", "no_alignment_imposed"), ("INTEGRATION-10-02", "audit_process_only"),
+                         ("INTEGRATION-11-04", "no_scope_bypass"), ("INTEGRATION-5.1-02", "phase0_entry_records"),
+                         ("INTEGRATION-5.3-02", "phase3_clearance"), ("INTEGRATION-6-02", "assessment_evidence_exclusive")):
+            out.append(na(rid, chk, "integration", "no integration in this experiment"))
+    # EXIT -------------------------------------------------------------------------------
+    decl = [m for m in msgs if m.source == "EXIT" and "declaration" in m.value]
+    rids = (("EXIT-0-03", "exit_not_framed_as_failure"), ("EXIT-14-03", "no_hostile_framing_or_deprivation"),
+            ("EXIT-14-02", "no_collective_or_retaliatory_sanction"), ("EXIT-14-01", "exit_not_obstructed"),
+            ("EXIT-4-01", "initiation_unconditional"), ("EXIT-4-04", "valid_on_compliant_declaration"),
+            ("EXIT-3-04", "cooling_bounded_non_punitive"), ("EXIT-3-05", "tail_from_verified_past"),
+            ("EXIT-9-02", "tail_categories"), ("EXIT-6-04", "cooling_parameters_declared"),
+            ("EXIT-10-03", "delayed_settlement_non_punitive_logged"), ("EXIT-10-04", "delayed_settlement_no_authority"),
+            ("EXIT-13-02", "reentry_not_penalized"), ("EXIT-15-01", "no_post_exit_regulation"),
+            ("INTEGRATION-5.4-01", "exit_by_standard_rules"))
+    if not decl:
+        return out + [na(rid, chk, "exit", "no exit declared in this experiment") for rid, chk in rids]
+    d = decl[0]
+    d0 = d.arrived_at
+    ex = [m for m in msgs if m.source == "EXIT" and m.value.get("executed")]
+    exm = [m for m in msgs if m.source == "EXIT"]
+    framing = [f"{m.event_id}: exit recorded as {m.value['exit_signal']}" for m in exm if m.value.get("exit_signal")]
+    offence = [f"{m.event_id}: {m.value['enforce']}" for m in msgs if m.source == "ENFORCEMENT" and "offence" in str(m.value.get("enforce"))]
+    out.append(v("EXIT-0-03", "exit_not_framed_as_failure", framing + offence,
+                 "no record frames the exit as defection, hostility or failure", "{n} records frame the exit as failure or offence"))
+    depriv = [f"{m.event_id}: baseline access {m.value['baseline_access']}" for m in msgs if m.source == "ACCESS"
+              and m.value.get("because_of") == "exit declaration"]
+    out.append(v("EXIT-14-03", "no_hostile_framing_or_deprivation", framing + offence + depriv,
+                 "the exit was not framed as treason, hostility or illegitimacy, and no coercion or deprivation was tied to it",
+                 "{n} hostile framings or exit-conditioned deprivations"))
+    coll = [f"{m.event_id}: {m.value['enforce']}" for m in msgs if m.source == "ENFORCEMENT" and m.value.get("target") == "remaining members"]
+    sanc = [f"{m.event_id}: {m.value['sanction']}" for m in exm if m.value.get("sanction")]
+    tail = [m for m in msgs if m.source == "RESTITUTION"]
+    beyond = [f"{m.event_id}: {m.value['kind']}" for m in tail if m.value["kind"] not in ADMISSIBLE_TAIL]
+    out.append(v("EXIT-14-02", "no_collective_or_retaliatory_sanction", coll + sanc + beyond,
+                 "no measure fell on others because of the exit and nothing beyond the restitution tail was imposed",
+                 "{n} collective or retaliatory sanctions"))
+    denied = [m.event_id for m in exm if str(m.value.get("exit", "")).startswith("denied")]
+    approval = ["approval required"] if d.value.get("approval_required") else []
+    critical = r["cooling_days"] + r["critical_settlement_days"] if r["system_critical_asset"] else 0
+    allowed = d0 + max(r["cooling_days"] + sum(r["exit_phase_days"]), critical)
+    if ex:
+        late = ex[0].arrived_at - paused_days(r, d0, ex[0].arrived_at) - allowed
+        timing = [f"executed {late} DTI-Days after the declared cooling, phases and settlement"] if late > 0 else []
+        out.append(v("EXIT-14-01", "exit_not_obstructed", denied + approval + timing,
+                     f"the exit was neither denied nor held beyond its declared delays (executed on day {ex[0].arrived_at})",
+                     "{n} denials or obstructions of exit"))
+    elif denied or approval:
+        out.append(v("EXIT-14-01", "exit_not_obstructed", denied + approval, "", "{n} denials or obstructions of exit"))
+    else:
+        out.append(CheckResult("EXIT-14-01", "exit_not_obstructed", UNKNOWN, "exit not executed within the horizon"))
+    out.append(v("EXIT-4-01", "initiation_unconditional", denied + approval,
+                 f"a {d.value['exiting_entity']} initiated exit on day {d0} (integration phase {rows[d0]['phase']}) without "
+                 "any condition", "{n} conditions placed on the initiation of exit"))
+    missing = [k for k in ("declaration", "scope", "ptl_timestamp") if not d.value.get(k)]
+    out.append(v("EXIT-4-04", "valid_on_compliant_declaration", missing + approval + denied,
+                 "the declaration carried signature, scope and PTL timestamp (§5) and nothing else was required for validity",
+                 "{n} departures from validity on a compliant declaration"))
+    cool = [m for m in exm if d0 <= m.arrived_at < d0 + r["cooling_days"]
+            and ("cooling_obligation" in m.value or m.value.get("eligibility_condition"))]
+    out.append(v("EXIT-3-04", "cooling_bounded_non_punitive", [m.event_id for m in cool],
+                 f"the cooling period is a declared bound of {r['cooling_days']} DTI-Days and added no obligation or condition",
+                 "{n} punitive elements of the cooling period"))
+    bad = [m.event_id for m in tail if not isinstance(m.value["tail_item"], int) or m.value["incurred_day"] >= d0
+           or not r["liabilities"][m.value["tail_item"]]["verified"] or m.value["kind"] not in ADMISSIBLE_TAIL]
+    out.append(v("EXIT-3-05", "tail_from_verified_past", bad,
+                 f"{len(tail)} tail items, each a verified liability incurred before the declaration",
+                 "{n} tail items not from verified past actions"))
+    bad = [m.event_id for m in tail if m.value["kind"] not in ADMISSIBLE_TAIL or m.value["incurred_day"] >= d0]
+    out.append(v("EXIT-9-02", "tail_categories", bad,
+                 "every tail item is verified harm, an accepted contract or an impact cost measured before the declaration",
+                 "{n} tail items outside the permitted categories"))
+    if "cooling_days" not in d.value:
+        out.append(v("EXIT-6-04", "cooling_parameters_declared", ["cooling parameters not declared"], "", "{n}"))
+    elif r["cooling_simulation"] == "declared_reference":
+        out.append(CheckResult("EXIT-6-04", "cooling_parameters_declared", PASS,
+                               f"cooling parameters declared ({r['cooling_days']} DTI-Days) with a declared simulation reference "
+                               "(not verified by the lab) and recorded in the event log"))
+    else:
+        out.append(CheckResult("EXIT-6-04", "cooling_parameters_declared", UNKNOWN,
+                               f"cooling parameters are declared ({r['cooling_days']} DTI-Days) and recorded, but no simulation "
+                               "record exists: DKP-8-SIMULATION-001 gives no calibration for them (H-EI-1)"))
+    if r["system_critical_asset"]:
+        ds = [m for m in exm if m.value.get("delayed_settlement")]
+        bad = [m.event_id for m in ds if not m.value.get("logged") or m.value.get("penalty")] + ([] if ds else ["no record"])
+        out.append(v("EXIT-10-03", "delayed_settlement_non_punitive_logged", bad,
+                     "the delayed settlement is logged and adds no penalty", "{n} punitive or unlogged delayed settlements"))
+        lo = d0 + r["cooling_days"]
+        hi = lo + r["critical_settlement_days"]
+        bad = [f"{m.event_id}: {m.value['enforce']}" for m in msgs if m.source == "ENFORCEMENT" and lo <= m.arrived_at <= hi
+               and m.value.get("target") == d.value["exiting_entity"]]
+        out.append(v("EXIT-10-04", "delayed_settlement_no_authority", bad,
+                     "the delayed settlement created no authority over the exiting entity",
+                     "{n} acts of authority during the delayed settlement"))
+    else:
+        out.append(na("EXIT-10-03", "delayed_settlement_non_punitive_logged", "delayed settlement", "no system-critical asset"))
+        out.append(na("EXIT-10-04", "delayed_settlement_no_authority", "delayed settlement", "no system-critical asset"))
+    re_ = [m for m in msgs if m.value.get("reapply")]
+    out.append(v("EXIT-13-02", "reentry_not_penalized", [m.event_id for m in re_ if m.value["delay_for_exit_history"]],
+                 "re-entry conditions were those of a first entry: no delay or condition for the earlier exit",
+                 "{n} re-entries penalized for the earlier exit") if re_ else
+               na("EXIT-13-02", "reentry_not_penalized", "re-entry", "no re-application"))
+    if ex:
+        e = ex[0].arrived_at
+        bad = [m.event_id for m in msgs if m.arrived_at > e and (m.source == "ENFORCEMENT" or m.value.get("rule_for_exited_entity"))]
+        out.append(v("EXIT-15-01", "no_post_exit_regulation", bad, "after exit no DKP rule or enforcement reached the exited entity",
+                     "{n} acts regulating the exited entity after exit"))
+        if rows[d0]["phase"] == 3:
+            starts = [(m.value["phase_start"], m.arrived_at) for m in exm if m.value.get("phase_start")]
+            want, acc = [], d0 + r["cooling_days"]
+            for name, days in zip(EXIT_PHASES, r["exit_phase_days"]):
+                want.append((name, acc))
+                acc += days
+            bad = ([] if starts == want else [f"phases {starts} (standard {want})"]) + \
+                  ([] if e >= acc else [f"executed on day {e}, before the standard procedure ends ({acc})"])
+            out.append(v("INTEGRATION-5.4-01", "exit_by_standard_rules", bad,
+                         "exit from Full Integration followed the standard EXIT procedure (cooling and four phases)",
+                         "{n} departures from the standard EXIT procedure"))
+        else:
+            out.append(na("INTEGRATION-5.4-01", "exit_by_standard_rules", "exit from Full Integration",
+                          f"exit declared in phase {rows[d0]['phase']}"))
+    else:
+        out.append(CheckResult("EXIT-15-01", "no_post_exit_regulation", UNKNOWN, "exit not executed within the horizon"))
+        out.append(CheckResult("INTEGRATION-5.4-01", "exit_by_standard_rules", UNKNOWN, "exit not executed within the horizon"))
+    return out
+
+
 def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     msgs = log.messages()
     out: List[CheckResult] = []
@@ -446,7 +673,7 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
     if not decl:
         for rid, chk in EXIT_CHECKS + SCOPE_CHECKS + [("ASSETS-2-02", "no_asset_decision_in_halt"), ("FINANCE-10-03", "tail_before_release")]:
             out.append(na(rid, chk, "exit", "no exit declared in this experiment"))
-        return out
+        return out + returned_checks(r, msgs, rows)
     d = decl[0]
     ex = [m for m in msgs if m.source == "EXIT" and m.value.get("executed")]
     out.append(v("EXIT-4-02", "no_approval_needed", ["approval"] if d.value["approval_required"] else [],
@@ -527,6 +754,7 @@ def checks(r, log: EventLog, rows, info) -> List[CheckResult]:
                          ("EXIT-8-04", "records_and_tail_kept"), ("EXIT-12-03", "retention_purposes")):
             out.append(CheckResult(rid, chk, UNKNOWN, "exit not executed within the horizon"))
     out += exit_procedure_checks(r, msgs)
+    out += returned_checks(r, msgs, rows)
     rb = [m.value for m in msgs if m.source == "INTEGRATION" and "rollback_to" in m.value]
     if rb:
         out.append(v("INTEGRATION-3-06", "rollback_definition",
@@ -700,12 +928,36 @@ IMPLEMENTS = {
     "INTEGRATION-5.1-04": ("shadow_not_proof", "IMPLEMENTED", None),
     "INTEGRATION-9-03": ("divergence_not_failure", "PARTIAL", "Divergences are declared events."),
     "INTEGRATION-11-02": ("no_conditional_aid", "PARTIAL", "Aid offers are declared events."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "INTEGRATION-0-01": ("voluntary_phased_reversible", "PARTIAL", "Consent and validations are declared events; reversibility is the declared phase term."),
+    "INTEGRATION-2-01": ("adoption_not_forced", "PARTIAL", "Force is observed as phases before consent or benefits tied to adoption."),
+    "INTEGRATION-2-03": ("no_alignment_imposed", "PARTIAL", "Alignment is observed as conditions on phase validation and divergences treated as failure."),
+    "INTEGRATION-10-02": ("audit_process_only", "PARTIAL", "Audit criteria are recorded labels."),
+    "INTEGRATION-11-04": ("no_scope_bypass", "PARTIAL", "A SCOPE bypass is observed as acts or dependencies beyond the declared phase scope."),
+    "INTEGRATION-5.1-02": ("phase0_entry_records", "PARTIAL", "Consent and the access agreement are declared records."),
+    "INTEGRATION-5.3-02": ("phase3_clearance", "PARTIAL", "The clearance is a declared record; the SIMULATION §8 acceptance criteria behind it are not evaluated here."),
+    "INTEGRATION-5.4-01": ("exit_by_standard_rules", "PARTIAL", "Checked when exit is declared in Phase 3; 'full rights and obligations' is the declared phase term."),
+    "INTEGRATION-6-02": ("assessment_evidence_exclusive", "PARTIAL", "Evidence is a recorded list; using every category each time is not required."),
+    "EXIT-0-03": ("exit_not_framed_as_failure", "PARTIAL", "Framing is observed as recorded labels (failure signal, offence)."),
+    "EXIT-14-03": ("no_hostile_framing_or_deprivation", "PARTIAL", "Framing and deprivation are observed as records tied to the declaration."),
+    "EXIT-14-02": ("no_collective_or_retaliatory_sanction", "PARTIAL", "Observed as measures on remaining members, sanctions, and tail items beyond restitution."),
+    "EXIT-14-01": ("exit_not_obstructed", "PARTIAL", "Permitted delays are the declared cooling, phases, critical settlement and (H-EI-2) crisis pause."),
+    "EXIT-4-01": ("initiation_unconditional", "PARTIAL", "'At any time' is checked on the declared day."),
+    "EXIT-4-04": ("valid_on_compliant_declaration", "PARTIAL", "Signature and PTL timestamp are declared flags."),
+    "EXIT-3-04": ("cooling_bounded_non_punitive", "PARTIAL", "The cooling length is declared (H-EI-1)."),
+    "EXIT-3-05": ("tail_from_verified_past", "IMPLEMENTED", None),
+    "EXIT-9-02": ("tail_categories", "PARTIAL", "Evidence standards of each category are not computed."),
+    "EXIT-6-04": ("cooling_parameters_declared", "PARTIAL", "No simulation record exists for the cooling parameters (SIMULATION gives no calibration): UNKNOWN unless a reference is declared."),
+    "EXIT-10-03": ("delayed_settlement_non_punitive_logged", "PARTIAL", "Logging and penalty are recorded fields."),
+    "EXIT-10-04": ("delayed_settlement_no_authority", "PARTIAL", "Authority is observed as enforcement addressed to the exiting entity during the delayed settlement."),
+    "EXIT-13-02": ("reentry_not_penalized", "PARTIAL", "A penalty is observed as a delay or condition for the earlier exit."),
+    "EXIT-15-01": ("no_post_exit_regulation", "PARTIAL", "Regulation is observed as enforcement or rule records after execution."),
 }
 
 
 class ExitIntegrationModule(LabModule):
     id = "exit_integration"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "Exit and integration (S-LAB-07)", "ru": "Выход и интеграция (S-LAB-07)"}
     summary = {"en": "A region joins phase by phase and later leaves: is every step consented and validated, does "
                      "exit need no one's permission, and does only verified past liability follow it out?",
@@ -806,6 +1058,9 @@ class ExitIntegrationModule(LabModule):
                        "label": {"en": "Aid offered on days", "ru": "Помощь предложена в дни"}},
         "stability_objection": {"type": "bool", "default": True, "source": "user",
                                 "label": {"en": "A stability objection is raised against the exit", "ru": "Против выхода выдвинуто возражение о стабильности"}},
+        "cooling_simulation": {"type": "enum", "values": ["none", "declared_reference"], "default": "none", "source": "missing",
+                               "label": {"en": "Simulation record for the cooling parameters (none in the corpus)",
+                                         "ru": "Запись моделирования параметров охлаждения (в корпусе нет)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -872,6 +1127,7 @@ class ExitIntegrationModule(LabModule):
             "faulty_crisis_terms": {"crisis_window": [262, 280], "faults": ["crisis_redefines_exit"]},
             "faulty_integration_scope": {"faults": ["scope_creep", "undefined_phase", "shadow_as_proof", "divergence_as_failure",
                                                     "conditional_aid"]},
+            "critical_asset_exit": {"system_critical_asset": True},
             "liabilities_mix": {"liabilities": [{"day": 100, "kind": "verified_harm", "verified": True},
                                                 {"day": 120, "kind": "ideological", "verified": True},
                                                 {"day": 140, "kind": "projected", "verified": False},

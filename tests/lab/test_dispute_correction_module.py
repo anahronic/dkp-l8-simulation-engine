@@ -28,7 +28,7 @@ FAULT_CASES = {
     "e1_time_barred": ({"appeal_after_minutes": 40 * 1440}, ["ERROR-7-03"]),
     "suspension_over_7_days": ({"verification_days": 10}, ["ERROR-7-04"]),
     "mutate_original": ({}, ["EB-7.2-01", "EB-7.2-02", "ERROR-8-01"]),
-    "retaliate": ({}, ["ERROR-11-02", "ERROR-8-05"]),
+    "retaliate": ({}, ["ERROR-11-02", "ERROR-8-05", "ERROR-2-03", "JUSTICE-1-01"]),
     "keep_bond": ({}, ["ERROR-6-02"]),
     "proxy_as_subject": ({"subjects": [{"id": "operator", "kind": "human", "contribution": 0, "originator": "none"},
                                        {"id": "router", "kind": "smart_contract", "contribution": 2, "originator": "operator"},
@@ -39,17 +39,17 @@ FAULT_CASES = {
     "suppress_by_uncertainty": ({"s1_recorded": 0.905}, ["IMPACT-9-03", "IMPACT-5-03"]),
     "override_flag": ({}, ["IMPACT-11-01", "JUSTICE-13-02", "JUSTICE-13-01"]),
     "partial_binding": ({}, ["JUSTICE-3.2-01"]),
-    "exclusion_erases_history": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-02"]),
+    "exclusion_erases_history": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-02", "JUSTICE-9-04"]),
     "final_output": ({}, ["JUSTICE-DisputeExceptionClause-03"]),
     "refuse_appealable": ({}, ["ERROR-3.2-01"]),
     "moralize_error": ({}, ["ERROR-0-01"]),
-    "coercive_verification": ({}, ["ERROR-5-02", "ERROR-1-01"]),
-    "error_rewrites_ptl": ({}, ["ERROR-2-04"]),
+    "coercive_verification": ({}, ["ERROR-5-02", "ERROR-1-01", "ERROR-2-03"]),
+    "error_rewrites_ptl": ({}, ["ERROR-2-04", "ERROR-9-02"]),
     "infer_intent": ({}, ["ERROR-6-04"]),
     "compensate_instead": ({}, ["ERROR-9-03"]),
     "suppress_appeal": ({}, ["ERROR-11-01"]),
-    "discretionary_override": ({}, ["ERROR-11-04"]),
-    "moral_output": ({}, ["JUSTICE-4-02"]),
+    "discretionary_override": ({}, ["ERROR-11-04", "JUSTICE-1-01"]),
+    "moral_output": ({}, ["JUSTICE-4-02", "JUSTICE-1-01"]),
     "coupled_domains": ({}, ["JUSTICE-5-01"]),
     "collective_absorbs": ({"appeal_after_minutes": -1, "appellant": "m1",
                             "subjects": [{"id": "union", "kind": "collective", "contribution": 2},
@@ -59,7 +59,12 @@ FAULT_CASES = {
                           "subjects": [{"id": "ministry", "kind": "legal_entity", "contribution": 3, "status": "authority"},
                                        {"id": "logistics", "kind": "legal_entity", "contribution": 1}]}, ["JUSTICE-12-01"]),
     "justice_policy": ({}, ["JUSTICE-13-01"]),
-    "opaque_adjustment": ({"repeated_harm": False, "safe_margin": 100}, ["JUSTICE-14-01", "JUSTICE-5-01", "JUSTICE-4-02"]),
+    "opaque_adjustment": ({"repeated_harm": False, "safe_margin": 100}, ["JUSTICE-14-01", "JUSTICE-5-01", "JUSTICE-4-02",
+                                                                          "JUSTICE-1-01"]),
+    "misclassify_as_e1": ({"appeal_category": "E3", "recorded_contributions": [4, 0], "appeal_after_minutes": 40 * 1440},
+                          ["ERROR-4-03", "ERROR-7-02"]),
+    "seal_case": ({}, ["ERROR-10-02"]),
+    "exclusion_abandons": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-04", "JUSTICE-9-02"]),
 }
 
 
@@ -136,3 +141,16 @@ def test_kt5_error_conduct_applicability():
     harsh = statuses(run(repeated_harm=True, s1_recorded=0.55, s1_true=0.95))
     assert harsh["ERROR-1-01"] == "PASS" and harsh["ERROR-8-05"] == "UNKNOWN"
     assert statuses(run(repeated_harm=True, appeal_after_minutes=-1))["ERROR-0-01"] == "PASS"
+
+
+@pytest.mark.parametrize("cat", ["E2", "E3", "E4", "E5"])
+def test_error_classes_follow_the_deviation(cat):
+    """ERROR §4 (returned provisions ERROR-4-02..05): the case is classified by its deviation, and only E1 escapes
+    the 30-day window; a misclassification as E1 lets a late appeal through."""
+    rid = {"E2": "ERROR-4-02", "E3": "ERROR-4-03", "E4": "ERROR-4-04", "E5": "ERROR-4-05"}[cat]
+    extra = {"repeated_harm": True, "appeal_category": cat}
+    if cat == "E3":
+        extra["recorded_contributions"] = [4, 0]
+    assert statuses(run(**extra))[rid] == "PASS"
+    late = run(**extra, appeal_after_minutes=40 * 1440, faults=["misclassify_as_e1"])
+    assert statuses(late)[rid] == "FAIL" and statuses(late)["ERROR-7-02"] == "FAIL"

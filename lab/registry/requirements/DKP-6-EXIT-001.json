@@ -69,7 +69,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exit_not_denied"
    },
    "tests": [
@@ -97,19 +97,26 @@
    "data_dependencies": [
     "system classifications and descriptions of exit"
    ],
-   "gap": "The document supplies no method for identifying equivalent hostile or failure framing. No lab check implemented yet.",
+   "gap": "Framing is observed as recorded labels (failure signal, offence).",
    "hypotheses_needed": [
     "Declare a classification method for descriptions of exit."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "exit_not_framed_as_failure"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -135,7 +142,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "not_sanction_or_failure"
    },
    "tests": [
@@ -168,7 +175,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "not_prohibited_or_criminalized"
    },
    "tests": [
@@ -270,7 +277,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exiting_entity"
    },
    "tests": [
@@ -307,7 +314,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exit_event_procedure"
    },
    "tests": [
@@ -342,19 +349,26 @@
    "data_dependencies": [
     "exit timing and cooling-period measures"
    ],
-   "gap": "The document does not define how to determine whether a delay is punitive. No lab check implemented yet.",
+   "gap": "The cooling length is declared (H-EI-1).",
    "hypotheses_needed": [
     "Declare a test for punitive delay."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "cooling_bounded_non_punitive"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -377,19 +391,26 @@
    "data_dependencies": [
     "action verification and obligation attribution records"
    ],
-   "gap": "Verification and attribution procedures are not defined. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Declare how actions are verified and attributed to residual obligations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "tail_from_verified_past"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -447,19 +468,26 @@
    "data_dependencies": [
     "entity classification and initiation rules"
    ],
-   "gap": "Subject classification is not defined in the supplied document. No lab check implemented yet.",
+   "gap": "'At any time' is checked on the declared day.",
    "hypotheses_needed": [
     "Declare which entities qualify as Subjects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "initiation_unconditional"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -485,7 +513,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_approval_needed"
    },
    "tests": [
@@ -520,7 +548,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "never_suspended"
    },
    "tests": [
@@ -556,19 +584,26 @@
    "data_dependencies": [
     "declaration validation results and status history"
    ],
-   "gap": "Full declaration compliance depends on unspecified signature and PTL validation interfaces. No lab check implemented yet.",
+   "gap": "Signature and PTL timestamp are declared flags.",
    "hypotheses_needed": [
     "Declare how signature and PTL compliance are validated."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "valid_on_compliant_declaration"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -599,7 +634,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "signed_scoped_declaration"
    },
    "tests": [
@@ -668,7 +703,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_additional_authorization"
    },
    "tests": [
@@ -740,7 +775,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "cooling_bounded"
    },
    "tests": [
@@ -783,7 +818,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "cooling_no_escalation"
    },
    "tests": [
@@ -821,19 +856,26 @@
    "data_dependencies": [
     "parameter declarations, simulation records, and audit evidence"
    ],
-   "gap": "The simulation protocol and criteria for sufficient auditability are not supplied. No lab check implemented yet.",
+   "gap": "No simulation record exists for the cooling parameters (SIMULATION gives no calibration): UNKNOWN unless a reference is declared.",
    "hypotheses_needed": [
     "Declare the evidence needed to establish parameter auditability."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "cooling_parameters_declared"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+    "origin": "l8_parameter",
+    "source": "lab_reconciled",
+    "reason": "The cooling parameters have no calibration in DKP-8-SIMULATION-001 (H-EI-1), so no simulation record of them can exist; the check stays UNKNOWN on the simulation part."
    }
   },
   {
@@ -861,7 +903,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "phased_disengagement"
    },
    "tests": [
@@ -901,7 +943,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "phases_declared"
    },
    "tests": [
@@ -974,7 +1016,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "future_obligations_and_benefits_cease"
    },
    "tests": [
@@ -1016,7 +1058,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "mechanisms_disengage"
    },
    "tests": [
@@ -1056,7 +1098,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "historical_responsibility_kept"
    },
    "tests": [
@@ -1097,7 +1139,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "records_and_tail_kept"
    },
    "tests": [
@@ -1134,7 +1176,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "only_prior_verified"
    },
    "tests": [
@@ -1169,19 +1211,26 @@
    "data_dependencies": [
     "physical harm evidence, contract acceptance records, and impact cost measurements"
    ],
-   "gap": "The required physical verification, explicit acceptance, and impact measurement standards are undefined. No lab check implemented yet.",
+   "gap": "Evidence standards of each category are not computed.",
    "hypotheses_needed": [
     "Declare evidence standards for each permitted restitution category."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "tail_categories"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1210,7 +1259,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_punitive_tail"
    },
    "tests": [
@@ -1250,7 +1299,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_new_obligations"
    },
    "tests": [
@@ -1326,7 +1375,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "delayed_settlement_bounded"
    },
    "tests": [
@@ -1359,19 +1408,26 @@
    "data_dependencies": [
     "settlement terms and accessible settlement logs"
    ],
-   "gap": "The document defines neither non-punitive settlement nor sufficient logging transparency. No lab check implemented yet.",
+   "gap": "Logging and penalty are recorded fields.",
    "hypotheses_needed": [
     "Declare tests for punitive settlement and transparent logging."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "delayed_settlement_non_punitive_logged"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1393,19 +1449,26 @@
    "data_dependencies": [
     "authority scopes and change records"
    ],
-   "gap": "The document does not define a representation or comparison rule for DKP authority. No lab check implemented yet.",
+   "gap": "Authority is observed as enforcement addressed to the exiting entity during the delayed settlement.",
    "hypotheses_needed": [
     "Declare how authority scopes and expansions are represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "delayed_settlement_no_authority"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1467,7 +1530,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "valid_during_crisis"
    },
    "tests": [
@@ -1541,7 +1604,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_crisis_precedent"
    },
    "tests": [
@@ -1583,7 +1646,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "crisis_scoped"
    },
    "tests": [
@@ -1621,7 +1684,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "finance_settlement"
    },
    "tests": [
@@ -1665,7 +1728,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "data_frozen"
    },
    "tests": [
@@ -1702,7 +1765,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "retention_purposes"
    },
    "tests": [
@@ -1773,7 +1836,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "may_reapply"
    },
    "tests": [
@@ -1802,19 +1865,26 @@
    "data_dependencies": [
     "re-entry conditions and charges"
    ],
-   "gap": "The document does not define what constitutes a re-entry penalty. No lab check implemented yet.",
+   "gap": "A penalty is observed as a delay or condition for the earlier exit.",
    "hypotheses_needed": [
     "Declare how ordinary entry conditions are distinguished from re-entry penalties."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "reentry_not_penalized"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1841,7 +1911,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "reentry_not_delayed"
    },
    "tests": [
@@ -1878,7 +1948,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "restitution_before_reentry"
    },
    "tests": [
@@ -1911,19 +1981,26 @@
    "data_dependencies": [
     "exit workflow and decision records"
    ],
-   "gap": "The boundary between permitted delay and prohibited obstruction is undefined. No lab check implemented yet.",
+   "gap": "Permitted delays are the declared cooling, phases, critical settlement and (H-EI-2) crisis pause.",
    "hypotheses_needed": [
     "Declare an obstruction test consistent with the permitted cooling and settlement delays."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "exit_not_obstructed"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1946,20 +2023,27 @@
    "data_dependencies": [
     "sanction decisions, affected-party records, and restitution determinations"
    ],
-   "gap": "Collective punishment, retaliatory purpose, and comparison with permitted restitution require operational classifications. No lab check implemented yet.",
+   "gap": "Observed as measures on remaining members, sanctions, and tail items beyond restitution.",
    "hypotheses_needed": [
     "Declare tests for collective punishment and retaliation.",
     "Declare how sanctions are compared with permitted restitution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "no_collective_or_retaliatory_sanction"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1981,19 +2065,26 @@
    "data_dependencies": [
     "communications and evidence of exit-related actions"
    ],
-   "gap": "The document does not supply semantic classification or exit-conditioning attribution methods. No lab check implemented yet.",
+   "gap": "Framing and deprivation are observed as records tied to the declaration.",
    "hypotheses_needed": [
     "Declare how prohibited framing and actions are identified and attributed to exit."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "no_hostile_framing_or_deprivation"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -2016,19 +2107,26 @@
    "data_dependencies": [
     "system membership classifications and regulatory actions"
    ],
-   "gap": "The text does not define the system classification boundary or precise post-exit starting event. No lab check implemented yet.",
+   "gap": "Regulation is observed as enforcement or rule records after execution.",
    "hypotheses_needed": [
     "Declare system membership classification and the applicable exit milestone."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "no_post_exit_regulation"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -2093,7 +2191,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "authority_terminates"
    },
    "tests": [

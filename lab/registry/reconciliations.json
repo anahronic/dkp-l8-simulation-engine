@@ -8,9 +8,9 @@
   "reclassified": 31,
   "kept": 251,
   "returned": 96,
-  "returned_awaiting_check": 96,
-  "closure_closed": 123,
-  "closure_open": 20,
+  "returned_awaiting_check": 57,
+  "closure_closed": 161,
+  "closure_open": 21,
   "human_accepted": 0
  },
  "items": [
@@ -2793,8 +2793,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:case_reviewable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare who can review cases, the necessary information, and the retention horizon."
+    ],
+    "coverage_limit": "Reviewability is a recorded property of the closed case; a retention horizon is not modelled.",
+    "answer": "Reviewable post-factum = the closed case record stays open to review.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-10-03",
@@ -2907,8 +2915,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:no_new_coercive_measures",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the baseline and operational classification of coercive measures."
+    ],
+    "coverage_limit": "Coercion is observed as measures sourced from the error case (appeal or ERROR records).",
+    "answer": "The upstream protocols are in the corpus; a coercive measure sourced from the error case itself is observable (ERROR-5-02, -1-01).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-2-04",
@@ -2985,8 +3001,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:category_e2",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the protocol specification used as the execution reference."
+    ],
+    "coverage_limit": "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked.",
+    "answer": "A class definition; the reference logic is the protocol text in the corpus, executed by the lab modules.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-4-03",
@@ -2999,8 +3023,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:category_e3",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the reference used to establish attribution correctness."
+    ],
+    "coverage_limit": "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked.",
+    "answer": "A class definition; IDENTITY is in the corpus.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-4-04",
@@ -3013,8 +3045,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:category_e4",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the reference computation and mapping rules."
+    ],
+    "coverage_limit": "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked.",
+    "answer": "A class definition; IMPACT is in the corpus.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-4-05",
@@ -3027,8 +3067,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:category_e5",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the applicable timing, escalation, and isolation requirements."
+    ],
+    "coverage_limit": "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked.",
+    "answer": "A class definition; TIME and the escalation and isolation rules are in the corpus.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-5-01",
@@ -3141,8 +3189,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:ptl_consistency_preserved",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the PTL consistency invariant and whether intermediate states must satisfy it."
+    ],
+    "coverage_limit": "Observed as measurements written outside PTL; the ORACLE consistency rules are not re-run here.",
+    "answer": "ORACLE is in the corpus; ERROR §8 sends corrections through new PTL observations, so a measurement written outside PTL is the breach (ERROR-2-04).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ERROR-9-03",
@@ -3385,8 +3441,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:exit_not_framed_as_failure",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a classification method for descriptions of exit."
+    ],
+    "coverage_limit": "Framing is observed as recorded labels (failure signal, offence).",
+    "answer": "The excluded labels are named (§0, §14).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-10-01",
@@ -3413,8 +3477,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:delayed_settlement_non_punitive_logged",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare tests for punitive settlement and transparent logging."
+    ],
+    "coverage_limit": "Logging and penalty are recorded fields.",
+    "answer": "Non-punitive is concretized by §9 and §14 (nothing beyond restitution); logging is a recorded property.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-10-04",
@@ -3427,8 +3499,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:delayed_settlement_no_authority",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how authority scopes and expansions are represented."
+    ],
+    "coverage_limit": "Authority is observed as enforcement addressed to the exiting entity during the delayed settlement.",
+    "answer": "SCOPE is in the corpus; authority over the exiting entity during the delayed settlement is a recorded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-10-05",
@@ -3491,8 +3571,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:reentry_not_penalized",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how ordinary entry conditions are distinguished from re-entry penalties."
+    ],
+    "coverage_limit": "A penalty is observed as a delay or condition for the earlier exit.",
+    "answer": "A penalty is a delay or condition for the earlier exit (§13 delay rule); INTEGRATION gives the ordinary terms.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-14-01",
@@ -3505,8 +3593,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:exit_not_obstructed",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an obstruction test consistent with the permitted cooling and settlement delays."
+    ],
+    "coverage_limit": "Permitted delays are the declared cooling, phases, critical settlement and (H-EI-2) crisis pause.",
+    "answer": "The permitted delays are declared (§6 cooling, §7 phases, §10 settlement); anything beyond them, a denial or an approval is obstruction.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-14-02",
@@ -3519,8 +3615,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:no_collective_or_retaliatory_sanction",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare tests for collective punishment and retaliation.",
+     "Declare how sanctions are compared with permitted restitution."
+    ],
+    "coverage_limit": "Observed as measures on remaining members, sanctions, and tail items beyond restitution.",
+    "answer": "Collective punishment = a measure on others because of the exit; retaliation = anything beyond the restitution tail (§9).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-14-03",
@@ -3533,8 +3638,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:no_hostile_framing_or_deprivation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how prohibited framing and actions are identified and attributed to exit."
+    ],
+    "coverage_limit": "Framing and deprivation are observed as records tied to the declaration.",
+    "answer": "Framing labels are named; exit-conditioned coercion or deprivation is a record tied to the declaration.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-15-01",
@@ -3547,8 +3660,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:no_post_exit_regulation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare system membership classification and the applicable exit milestone."
+    ],
+    "coverage_limit": "Regulation is observed as enforcement or rule records after execution.",
+    "answer": "After execution (§7) only the restitution tail remains; any other rule or enforcement addressed to the exited entity is regulation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-15-02",
@@ -3625,8 +3746,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:cooling_bounded_non_punitive",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a test for punitive delay."
+    ],
+    "coverage_limit": "The cooling length is declared (H-EI-1).",
+    "answer": "Bounded = a declared finite duration; non-punitive = nothing added during cooling (EXIT-6-03).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-3-05",
@@ -3639,8 +3768,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:tail_from_verified_past",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how actions are verified and attributed to residual obligations."
+    ],
+    "coverage_limit": null,
+    "answer": "§9 concretizes: only verified liabilities from before the declaration.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-3-06",
@@ -3667,8 +3804,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:initiation_unconditional",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which entities qualify as Subjects."
+    ],
+    "coverage_limit": "'At any time' is checked on the declared day.",
+    "answer": "'Any ... at any time' admits no condition on initiation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-4-04",
@@ -3681,8 +3826,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:valid_on_compliant_declaration",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how signature and PTL compliance are validated."
+    ],
+    "coverage_limit": "Signature and PTL timestamp are declared flags.",
+    "answer": "Validity rests on the §5 declaration contents only.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "EXIT-5-02",
@@ -3731,8 +3884,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:cooling_parameters_declared",
+   "closure": {
+    "state": "open",
+    "draft_need": [
+     "Declare the evidence needed to establish parameter auditability."
+    ],
+    "coverage_limit": "No simulation record exists for the cooling parameters (SIMULATION gives no calibration): UNKNOWN unless a reference is declared.",
+    "origin": "l8_parameter",
+    "reason": "The cooling parameters have no calibration in DKP-8-SIMULATION-001 (H-EI-1), so no simulation record of them can exist; the check stays UNKNOWN on the simulation part.",
+    "decision_status_after": "UNRESOLVED"
+   }
   },
   {
    "id": "EXIT-7-01",
@@ -3825,8 +3987,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:tail_categories",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare evidence standards for each permitted restitution category."
+    ],
+    "coverage_limit": "Evidence standards of each category are not computed.",
+    "answer": "The categories are listed and their time limit is the declaration.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "FINANCE-1-01",
@@ -4642,8 +4812,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:voluntary_phased_reversible",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define observable evidence of compulsion and the controls sufficient to qualify integration as controlled."
+    ],
+    "coverage_limit": "Consent and validations are declared events; reversibility is the declared phase term.",
+    "answer": "§4-§7 make the four properties concrete: consent before Phase 0, phases in order with explicit validation, reversibility as a declared term until Full Integration.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-10-02",
@@ -4656,8 +4834,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:audit_process_only",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply the referenced audit rules.",
+     "Define how audit criteria are classified as process integrity or political preference."
+    ],
+    "coverage_limit": "Audit criteria are recorded labels.",
+    "answer": "AUDIT is in the corpus; the focus is a property of the audit criteria, which are recorded.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-11-01",
@@ -4684,8 +4871,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:no_scope_bypass",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply the scope protocol requirements and define how bypass is detected."
+    ],
+    "coverage_limit": "A SCOPE bypass is observed as acts or dependencies beyond the declared phase scope.",
+    "answer": "SCOPE is in the corpus; a bypass shows as an act or dependency beyond the declared phase scope.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-11-05",
@@ -4720,8 +4915,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:adoption_not_forced",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which actions constitute force and how they are attributed to the protocol."
+    ],
+    "coverage_limit": "Force is observed as phases before consent or benefits tied to adoption.",
+    "answer": "Force is observable as integration before consent or a benefit tied to adoption (§11 conditional aid).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-2-02",
@@ -4748,8 +4951,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:no_alignment_imposed",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define which requirements impose cultural or ideological alignment."
+    ],
+    "coverage_limit": "Alignment is observed as conditions on phase validation and divergences treated as failure.",
+    "answer": "Imposed alignment is observable as a cultural or ideological condition on a phase, or a divergence treated as failure (§9).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-3-03",
@@ -4840,8 +5051,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:phase0_entry_records",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how consent validity is established."
+    ],
+    "coverage_limit": "Consent and the access agreement are declared records.",
+    "answer": "The two entry records are named by the text.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-5.1-03",
@@ -4896,8 +5115,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:phase3_clearance",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply or explicitly model the referenced clearance requirements."
+    ],
+    "coverage_limit": "The clearance is a declared record; the SIMULATION §8 acceptance criteria behind it are not evaluated here.",
+    "answer": "SIMULATION (§8 acceptance criteria) is in the corpus; Phase 3 waits for its clearance record and a declaration of enforceable domains.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-5.3-03",
@@ -4924,8 +5151,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:exit_by_standard_rules",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply the applicability rules and external protocol requirements."
+    ],
+    "coverage_limit": "Checked when exit is declared in Phase 3; 'full rights and obligations' is the declared phase term.",
+    "answer": "EXIT is in the corpus; exit from Full Integration follows its standard procedure.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-5.4-02",
@@ -4966,8 +5201,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "exit_integration:assessment_evidence_exclusive",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define reproducibility acceptance and supply stress-testing rules.",
+     "Declare whether every assessment must use all three evidence categories."
+    ],
+    "coverage_limit": "Evidence is a recorded list; using every category each time is not required.",
+    "answer": "An exclusivity rule over three named evidence categories.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEGRATION-7-02",
@@ -5130,8 +5374,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:interop_auditable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an auditability test and the evidence it requires."
+    ],
+    "coverage_limit": "AUDIT §6 read as a traced record per boundary event and identical recomputation.",
+    "answer": "AUDIT §6 defines auditability: traced records and identical independent recomputation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-11-02",
@@ -5158,8 +5410,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:no_interop_audit_authority",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply an audit authority model if the referenced protocol remains unavailable."
+    ],
+    "coverage_limit": "Observed as audit verdicts issued by INTEROP.",
+    "answer": "AUDIT is in the corpus; an audit act by INTEROP is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-12-01",
@@ -5375,8 +5635,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:axioms_not_overridden",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how operation semantics are compared with the governing axioms."
+    ],
+    "coverage_limit": "An external reinterpretation is a declared boundary event.",
+    "answer": "AXIOMS is in the corpus; an external reinterpretation is refused at the boundary and never enters an internal decision.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-4.2-01",
@@ -5389,8 +5657,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:no_jurisdiction_expansion",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply an explicit scope model if the referenced protocol remains unavailable."
+    ],
+    "coverage_limit": "Observed as directives or enforcement addressed across the boundary.",
+    "answer": "SCOPE is in the corpus; jurisdiction beyond it shows as directives or enforcement addressed across the boundary.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-4.3-01",
@@ -5425,8 +5701,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:explicit_translation_rules",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the evidence required to establish that a translation rule is explicit and auditable."
+    ],
+    "coverage_limit": "Explicit = a declared interface and mapping; the mapping itself is a lab stand-in (INTEROP-6-02).",
+    "answer": "Explicit = a declared interface and mapping (INTEROP-3-02, -3-03); auditable = AUDIT §6 trace and recomputation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-5-04",
@@ -5475,8 +5759,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:finance_constraints_not_bypassed",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply an explicit finance constraint model if the referenced protocol remains unavailable."
+    ],
+    "coverage_limit": "FINANCE constraints at the boundary: the flag and the named channels; JWCoC is not computed.",
+    "answer": "FINANCE is in the corpus; at the boundary its constraints are the flag and the named channels (§6).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-7-01",
@@ -5517,8 +5809,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "interop_failure:audit_hooks",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an audit hook contract if the referenced protocol remains unavailable."
+    ],
+    "coverage_limit": "Hooks = the audit records of AUDIT §4-§6 for decisions and metadata deviations.",
+    "answer": "AUDIT is in the corpus: the hooks are the records its §4-§6 audit consumes.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTEROP-9-01",
@@ -5794,8 +6094,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:consequences_not_punishment",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A classification of punishment and a model of binding downstream effects."
+    ],
+    "coverage_limit": "Observed as moral or discretionary fields and as measures not computed by JUSTICE.",
+    "answer": "JUSTICE §4, §7-§9 and §14 make it concrete: computed, recomputable consequences applied as given, without moral or discretionary elements.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "JUSTICE-10-02",
@@ -6108,8 +6416,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "dispute_correction:exclusion_scope",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Definitions of abandonment and moral condemnation and a model of indirect lethal exposure."
+    ],
+    "coverage_limit": "Effects are recorded labels; indirect lethal exposure is not modelled beyond them.",
+    "answer": "A rule about what exclusion authorizes: participation and privileges only, no moral label; observable on the exclusion record.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "LABOR-1-01",

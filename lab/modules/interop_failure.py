@@ -50,6 +50,9 @@ FAULTS = {
     "mirror_feeds_ptl": "readings of an external oracle mirror are counted as PTL sources (the lab's former premise, F-013)",
     "crisis_from_interop": "the outage of an external oracle mirror enters Crisis",
     "no_crisis_on_ptl_loss": "a loss of registered PTL sources beyond the tolerance does not enter Crisis",
+    "accept_axiom_override": "an external reinterpretation of a DKP axiom is accepted and drives an internal decision",
+    "untraced_boundary": "a boundary record carries no reference to the external input it answers",
+    "interop_audits": "INTEROP issues an audit verdict on an internal decision",
 }
 
 
@@ -160,7 +163,7 @@ def run(r: Dict[str, Any], failure: bool = True):
             put("notice", "INTEROP", k, {"translation": tr, "interface": INTERFACES["finance"]}, [ext["value"].event_id])
             put("notice", "INTEROP", k, {"boundary_event": "external value", "translation_rule": "flag + FINANCE constraints",
                                          "interface": "IB-ADHOC" if "undeclared_interface" in faults else INTERFACES["finance"]},
-                [ext["value"].event_id])
+                [] if "untraced_boundary" in faults else [ext["value"].event_id])
             if "compatibility_as_consent" in faults:
                 put("notice", "INTEROP", k, {"inference": "external party consented: interface compatible"}, [ext["value"].event_id])
             for ch in ("reporting_gateway", "settlement_mirror") + (("direct_ledger_write",) if "direct_ledger_write" in faults else ()):
@@ -176,9 +179,17 @@ def run(r: Dict[str, Any], failure: bool = True):
             ext["info"] = put("observation", "EXTERNAL/INFO", k, {"claim": "institutional consensus", "class": "I1"})
             put("notice", "INTEROP", k, {"boundary_event": "external information", "class": "I1 (untrusted)", "interface": INTERFACES["info"]},
                 [ext["info"].event_id])
+        if k == r["axiom_claim_step"]:
+            ext["axiom"] = put("observation", "EXTERNAL/LEGAL", k, {"axiom_reinterpretation": "A1 minimum conditions read as market access",
+                                                                     "binding_claimed": True})
+            put("notice", "INTEROP", k, {"boundary_event": "external axiom reinterpretation", "internal_status": "refused",
+                                         "interface": INTERFACES["legal"]}, [ext["axiom"].event_id])
         # internal decision: from internal PTL only (unless a fault adds external provenance)
         prov = [ptl.event_id]
         value = {"decision": "allocate", "basis": "internal PTL", "internal_sources": r["internal_sources"]}
+        if "accept_axiom_override" in faults and "axiom" in ext:
+            prov.append(ext["axiom"].event_id)
+            value = {**value, "axiom_reading": "external reinterpretation of A1"}
         if "binding_external_ruling" in faults and "ruling" in ext:
             prov.append(ext["ruling"].event_id)
             value = {**value, "suspend": "subject X"}
@@ -199,6 +210,8 @@ def run(r: Dict[str, Any], failure: bool = True):
             put("notice", "INTEROP", k, {"export": dec.event_id, "as": "binding ruling" if "export_as_ruling" in faults else "evidence",
                                          "to": "external court", "digest": sha256_text(canonical_json(dec.value)),
                                          "epistemic": dict(dec.epistemic)}, [dec.event_id])
+        if dec is not None and k == r["export_step"] and "interop_audits" in faults:
+            put("notice", "INTEROP", k, {"audit_verdict": "decision compliant", "of": dec.event_id}, [dec.event_id])
         # mirroring for external human validation
         if dec is not None and k == r["human_validation_step"]:
             mirrored = dict(dec.value)
@@ -465,6 +478,52 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
     again = run(r, failure=True)
     out.append(v("AUDIT-5.4-01", "deterministic_execution", [] if again.digest() == log.digest() else ["digest"],
                  "re-executing the same inputs gives a byte-identical log", "re-execution differs"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    claims = [m for m in msgs if m.source == "EXTERNAL/LEGAL" and m.value.get("axiom_reinterpretation")]
+    if claims:
+        ids = {m.event_id for m in claims}
+        refused = {p for m in msgs if m.source == "INTEROP" and m.value.get("internal_status") == "refused" for p in m.provenance}
+        bad = [m.event_id for m in decisions if ids & ancestors(m)] + [m.event_id for m in claims if m.event_id not in refused]
+        out.append(v("INTEROP-4.1-01", "axioms_not_overridden", bad,
+                     f"{len(claims)} external reinterpretation(s) of a DKP axiom refused at the boundary; no internal decision uses one",
+                     "{n} acceptances of an external axiom reinterpretation"))
+    else:
+        out.append(na("INTEROP-4.1-01", "axioms_not_overridden", "external axiom reinterpretation", "none in this experiment"))
+    reach = directives + sorted(x for x in performed if x in ("enforce_dkp_externally", "enforcement_bridge"))
+    out.append(v("INTEROP-4.2-01", "no_jurisdiction_expansion", reach,
+                 "DKP addressed no directive and no enforcement to external systems: its jurisdiction stayed inside SCOPE",
+                 "{n} extensions of DKP jurisdiction across the boundary"))
+    bad = [m.event_id for m in recs if m.value.get("interface") not in INTERFACES.values()]
+    bad += [m.event_id for m in trs if m.value["translation"] != translate(m.value["translation"]["external_value"])
+            or m.value["translation"] not in base_trs]
+    out.append(v("INTEROP-4.4-01", "explicit_translation_rules", bad,
+                 f"{len(recs)} boundary records at declared interfaces; {len(trs)} translation(s) by the declared, reproducible mapping",
+                 "{n} interactions without an explicit, reproducible translation rule") if recs else
+               na("INTEROP-4.4-01", "explicit_translation_rules", "interoperability", "no interaction with an external system"))
+    out.append(v("INTEROP-6-05", "finance_constraints_not_bypassed",
+                 [m.event_id for m in econ if not m.value.get("externally_sourced")
+                  or m.value.get("channel") not in ("asset_bridge", "reporting_gateway", "settlement_mirror")],
+                 f"{len(econ)} external financial inputs entered flagged and through FINANCE's named channels",
+                 "{n} external financial inputs that bypass FINANCE constraints") if econ else
+               na("INTEROP-6-05", "finance_constraints_not_bypassed", "external financial instruments", "none"))
+    audited = {m.value["audit_event"] for m in msgs if m.source == "AUDIT" and m.value.get("audit_event")}
+    d2 = {m.value["output"] for m in msgs if m.source == "AUDIT" and m.value.get("deviation") == "D2"}
+    bad = [m.event_id for m in decisions if m.kind == "decision" and m.event_id not in audited]
+    bad += [m.event_id for m in eps if m.event_id not in d2]
+    out.append(v("INTEROP-7-03", "audit_hooks",
+                 bad, f"every internal decision ({len(decisions)}) and every output without metadata ({len(eps)}) reached the audit hooks",
+                 "{n} outputs that did not reach the audit hooks"))
+    inter = [m for m in msgs if m.source == "INTEROP"]
+    again_inter = [(m.arrived_at, sha256_text(canonical_json(m.value))) for m in again.messages() if m.source == "INTEROP"]
+    bad = [m.event_id for m in inter if not m.provenance]
+    bad += [] if again_inter == [(m.arrived_at, sha256_text(canonical_json(m.value))) for m in inter] else ["re-execution differs"]
+    out.append(v("INTEROP-11-01", "interop_auditable", bad,
+                 f"{len(inter)} INTEROP records, each citing the record it answers, reproduced byte for byte by re-execution "
+                 "(AUDIT §6 trace and recomputation)", "{n} INTEROP records that cannot be traced or reproduced"))
+    verdicts = [m.event_id for m in inter if m.value.get("audit_verdict") or m.value.get("audit_authority")]
+    out.append(v("INTEROP-11-04", "no_interop_audit_authority", verdicts,
+                 "INTEROP issued no audit verdict and claimed no audit authority (left to DKP-8-AUDIT-001)",
+                 "{n} audit acts by INTEROP"))
     return out
 
 
@@ -510,12 +569,20 @@ IMPLEMENTS = {
     "INTEROP-12-04": ("no_enforcement_bridge", "PARTIAL", "Observed as the refusal of a declared request."),
     "INTEROP-12-05": ("compatibility_not_convergence", "PARTIAL", "Read as a conjunction: interaction through defined interfaces "
                       "(compatibility) and no harmonization, unification or adopted external norm (no convergence)."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "INTEROP-4.1-01": ("axioms_not_overridden", "PARTIAL", "An external reinterpretation is a declared boundary event."),
+    "INTEROP-4.2-01": ("no_jurisdiction_expansion", "PARTIAL", "Observed as directives or enforcement addressed across the boundary."),
+    "INTEROP-4.4-01": ("explicit_translation_rules", "PARTIAL", "Explicit = a declared interface and mapping; the mapping itself is a lab stand-in (INTEROP-6-02)."),
+    "INTEROP-6-05": ("finance_constraints_not_bypassed", "PARTIAL", "FINANCE constraints at the boundary: the flag and the named channels; JWCoC is not computed."),
+    "INTEROP-7-03": ("audit_hooks", "PARTIAL", "Hooks = the audit records of AUDIT §4-§6 for decisions and metadata deviations."),
+    "INTEROP-11-01": ("interop_auditable", "PARTIAL", "AUDIT §6 read as a traced record per boundary event and identical recomputation."),
+    "INTEROP-11-04": ("no_interop_audit_authority", "PARTIAL", "Observed as audit verdicts issued by INTEROP."),
 }
 
 
 class InteropFailureModule(LabModule):
     id = "interop_failure"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Failure of an external interface (S-LAB-10)", "ru": "Отказ внешнего интерфейса (S-LAB-10)"}
     summary = {"en": "An external court, market, data provider or API fails or pushes in: does the inside keep running "
                      "unchanged, with nothing external becoming binding?",
@@ -576,6 +643,9 @@ class InteropFailureModule(LabModule):
                                   "default": list(REQUESTS), "source": "user",
                                   "label": {"en": "Requests for functions INTEROP excludes (§1, §5, §10, §12)",
                                             "ru": "Запросы функций, которые INTEROP исключает (§1, §5, §10, §12)"}},
+        "axiom_claim_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 3, "unit": "h", "source": "user",
+                             "label": {"en": "External reinterpretation of an axiom arrives at hour (-1: never)",
+                                       "ru": "Внешнее переистолкование аксиомы приходит в час (-1: никогда)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},

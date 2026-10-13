@@ -32,19 +32,26 @@
     "consent evidence",
     "integration control and reversal records"
    ],
-   "gap": "The text does not operationally define voluntariness or controlled integration. No lab check implemented yet.",
+   "gap": "Consent and validations are declared events; reversibility is the declared phase term.",
    "hypotheses_needed": [
     "Define observable evidence of compulsion and the controls sufficient to qualify integration as controlled."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "voluntary_phased_reversible"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -66,19 +73,26 @@
    "data_dependencies": [
     "adoption decisions and coercion evidence"
    ],
-   "gap": "The text supplies no operational definition or evidentiary test for forced adoption. No lab check implemented yet.",
+   "gap": "Force is observed as phases before consent or benefits tied to adoption.",
    "hypotheses_needed": [
     "Define which actions constitute force and how they are attributed to the protocol."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "adoption_not_forced"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -136,19 +150,26 @@
    "data_dependencies": [
     "integration conditions and cultural or ideological impact assessments"
    ],
-   "gap": "The text does not define an operational test for imposed cultural or ideological alignment. No lab check implemented yet.",
+   "gap": "Alignment is observed as conditions on phase validation and divergences treated as failure.",
    "hypotheses_needed": [
     "Define which requirements impose cultural or ideological alignment."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "no_alignment_imposed"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -176,7 +197,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_authority_beyond_phase"
    },
    "tests": [
@@ -209,7 +230,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "integrating_entity"
    },
    "tests": [
@@ -245,7 +266,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "phase_terms_defined"
    },
    "tests": [
@@ -390,7 +411,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "rollback_definition"
    },
    "tests": [
@@ -435,7 +456,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "explicit_consent"
    },
    "tests": [
@@ -475,7 +496,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "sequential_phases"
    },
    "tests": [
@@ -511,7 +532,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "explicit_validation"
    },
    "tests": [
@@ -587,7 +608,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "scope_containment"
    },
    "tests": [
@@ -628,7 +649,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "shadow_mode_no_effects"
    },
    "tests": [
@@ -663,20 +684,27 @@
     "consent validation",
     "PTL data access agreement"
    ],
-   "gap": "The substantive validation method for consent is not fully specified. No lab check implemented yet.",
+   "gap": "Consent and the access agreement are declared records.",
    "hypotheses_needed": [
     "Declare how consent validity is established."
    ],
    "section_label": "5.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "phase0_entry_records"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -741,7 +769,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "shadow_not_proof"
    },
    "tests": [
@@ -904,7 +932,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "phase2_domains_only"
    },
    "tests": [
@@ -937,20 +965,27 @@
     "simulation stress-test clearance",
     "domain declarations"
    ],
-   "gap": "The referenced stress-test clearance requirements are not supplied. No lab check implemented yet.",
+   "gap": "The clearance is a declared record; the SIMULATION §8 acceptance criteria behind it are not evaluated here.",
    "hypotheses_needed": [
     "Supply or explicitly model the referenced clearance requirements."
    ],
    "section_label": "5.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "phase3_clearance"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1024,20 +1059,27 @@
     "rights and obligations specifications",
     "standard exit rules"
    ],
-   "gap": "Applicable protocol content, full rights and obligations, and standard exit requirements are not supplied. No lab check implemented yet.",
+   "gap": "Checked when exit is declared in Phase 3; 'full rights and obligations' is the declared phase term.",
    "hypotheses_needed": [
     "Supply the applicability rules and external protocol requirements."
    ],
    "section_label": "5.4",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "exit_by_standard_rules"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1147,20 +1189,27 @@
     "metric reproduction evidence",
     "simulation stress-test results"
    ],
-   "gap": "Reproducibility criteria and the referenced stress-testing rules are absent, and required use of every listed category is not explicit. No lab check implemented yet.",
+   "gap": "Evidence is a recorded list; using every category each time is not required.",
    "hypotheses_needed": [
     "Define reproducibility acceptance and supply stress-testing rules.",
     "Declare whether every assessment must use all three evidence categories."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "assessment_evidence_exclusive"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1192,7 +1241,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "shock_halts_and_suspends"
    },
    "tests": [
@@ -1269,7 +1318,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "rollback_logged"
    },
    "tests": [
@@ -1308,7 +1357,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "rollback_preserves_records"
    },
    "tests": [
@@ -1496,7 +1545,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "divergence_not_failure"
    },
    "tests": [
@@ -1535,7 +1584,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "steps_documented"
    },
    "tests": [
@@ -1568,20 +1617,27 @@
     "audit procedures",
     "audit criteria and findings"
    ],
-   "gap": "The referenced audit rules and a classification separating process integrity from political preference are absent. No lab check implemented yet.",
+   "gap": "Audit criteria are recorded labels.",
    "hypotheses_needed": [
     "Supply the referenced audit rules.",
     "Define how audit criteria are classified as process integrity or political preference."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "audit_process_only"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1644,7 +1700,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_conditional_aid"
    },
    "tests": [
@@ -1684,7 +1740,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_retroactive_enforcement"
    },
    "tests": [
@@ -1721,19 +1777,26 @@
     "scope protocol requirements",
     "scope compliance assessments"
    ],
-   "gap": "The referenced scope rules and their bypass criteria are not supplied. No lab check implemented yet.",
+   "gap": "A SCOPE bypass is observed as acts or dependencies beyond the declared phase scope.",
    "hypotheses_needed": [
     "Supply the scope protocol requirements and define how bypass is detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.5.0",
+    "check": "no_scope_bypass"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1764,7 +1827,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_hidden_dependency"
    },
    "tests": [

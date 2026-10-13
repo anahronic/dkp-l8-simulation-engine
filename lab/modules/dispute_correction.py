@@ -68,7 +68,14 @@ FAULTS = {
     "exempt_by_status": "Subjects with an official, jurisdictional, ideological or cultural status are left out of the outcome",
     "justice_policy": "the Justice output carries a policy directive",
     "opaque_adjustment": "a review panel adds a restriction the inputs do not trigger",
+    "misclassify_as_e1": "an error of another category is classified E1 and so escapes the 30-day window",
+    "seal_case": "the closed error case is sealed and no longer open to review",
+    "exclusion_abandons": "exclusion also withdraws life support from the excluded Subject",
 }
+DEVIATIONS = {"E1": "PTL sensor, ingestion or oracle misreporting", "E2": "protocol logic executed incorrectly or out of order",
+              "E3": "incorrect identity binding or responsibility assignment",
+              "E4": "incorrect impact magnitude, scope or channel mapping",
+              "E5": "violation of timing, escalation rules or isolation constraints"}                # ERROR §4
 EXCLUSION_EFFECTS = ["removal from system participation", "loss of system-provided privileges",
                      "persistence of historical attribution"]                                      # JUSTICE §9
 
@@ -245,7 +252,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
             dec["adjusted_by"] = "review panel"
         if doms["exclusion"]:
             dec["exclusion_effects"] = EXCLUSION_EFFECTS[:2] + (["historical attribution erased"] if "exclusion_erases_history" in faults
-                                                                else EXCLUSION_EFFECTS[2:])
+                                                                else EXCLUSION_EFFECTS[2:]) + \
+                (["withdrawal of life support"] if "exclusion_abandons" in faults else [])
         dmd = md("VALID", "SUFFICIENT_DATA", "CONSISTENT", scope, reval=True)
         if "final_output" in faults:
             dmd["dispute_allowed"] = False
@@ -284,6 +292,14 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
                                              "allegation": r["appeal_allegation"], "bond": "posted", **dti(r, ta)},
                  (dec1.event_id,))
     out["appeal"] = appeal.event_id
+    classified = "E1" if "misclassify_as_e1" in faults else r["appeal_category"]
+    put("notice", "ERROR", ta, {"classified": classified, "deviation": DEVIATIONS[r["appeal_category"]], **dti(r, ta)},
+        (appeal.event_id,))
+
+    def close(at, state):
+        put("notice", "ERROR", at, {"case_closed": state, "record": "kept", "reviewable": "seal_case" not in faults},
+            (appeal.event_id,))
+
     if "retaliate" in faults:
         put("action", "ENFORCEMENT", ta, {"apply": "restriction", "subjects": [r["appellant"]], "reason": "appeal"},
             (appeal.event_id,), decided=ta)
@@ -294,11 +310,12 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         put("notice", "ERROR", ta, {"state": "NOT_APPEALABLE", "reason": "marked irreversible by a higher-layer rule"
                                     if r["higher_layer_irreversible"] else "affects no right, access, asset or status", **dti(r, ta)},
             (appeal.event_id,))
+        close(ta, "NOT_APPEALABLE")
         out.update(state="NOT_APPEALABLE", active_final=sorted(active), final_decision=dec1.event_id)
         return log, store, out
     formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
     late = days > APPEAL_WINDOW_DAYS
-    if r["appeal_category"] == "E1":
+    if classified == "E1":
         late = late and "e1_time_barred" in faults
     else:
         late = late and "late_appeal_accepted" not in faults
@@ -309,6 +326,7 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         put("notice", "ERROR", ta, {"state": "REJECTED_PROCEDURAL", "late": late, "formal": formal,
                                     "prejudice": "none", "bond": "returned (procedural rejection)", **dti(r, ta)},
             (appeal.event_id,))
+        close(ta, "REJECTED_PROCEDURAL")
         out.update(state="REJECTED_PROCEDURAL", active_final=sorted(active), final_decision=dec1.event_id)
         return log, store, out
     r1 = put("notice", "ERROR", ta, {"state": "R1", **dti(r, ta)}, (appeal.event_id,))
@@ -351,6 +369,7 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     if not confirmed:
         put("notice", "ERROR", tv, {"state": "REJECTED_UNFOUNDED", "bond": "audit costs", **dti(r, tv)},
             (appeal.event_id,))
+        close(tv, "REJECTED_UNFOUNDED")
         out.update(state="REJECTED_UNFOUNDED", bond="audit costs", active_final=sorted(active),
                    final_decision=dec1.event_id)
         return log, store, out
@@ -401,6 +420,7 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     if r["residual_dispute"]:
         put("notice", "ERROR", tv, {"state": "R4", **dti(r, tv)}, (appeal.event_id,))
         out["state"] = "R4"
+    close(tv, out["state"])
     out["active_final"] = sorted(d for d in ENFORCING if new_domains.get(d))
     out["final_decision"] = dec2_id
     return log, store, out
@@ -900,7 +920,8 @@ def justice_conduct(r, log: EventLog) -> List[CheckResult]:
     if not decs:
         for rid, chk in (("JUSTICE-4-02", "output_vector_clean"), ("JUSTICE-5-01", "domains_independent"),
                          ("JUSTICE-10-02", "individual_accountability_kept"), ("JUSTICE-12-01", "no_exemption"),
-                         ("JUSTICE-13-01", "cross_layer_isolation"), ("JUSTICE-14-01", "reproducible")):
+                         ("JUSTICE-13-01", "cross_layer_isolation"), ("JUSTICE-14-01", "reproducible"),
+                         ("JUSTICE-1-01", "consequences_not_punishment"), ("JUSTICE-9-04", "exclusion_scope")):
             res.append(na(rid, chk, "Justice evaluation", "no Justice decision (attribution blocked or NO_ATTRIBUTION)"))
         return res
     bad = [f"{m.event_id}: {k}" for m in decs for k in m.value if k in MORAL_FIELDS]
@@ -965,10 +986,31 @@ def justice_conduct(r, log: EventLog) -> List[CheckResult]:
     res.append(verdict("JUSTICE-14-01", "reproducible", not bad,
                        f"{len(decs)} decisions recomputed from their IMPACT and IDENTITY inputs by the §6-§9 rules; re-execution identical",
                        f"{len(bad)} opaque, discretionary or non-reproducible results", {"violations": bad[:10]}))
+    # JUSTICE §1 (returned after the reading of checkpoint 6): consequences, not punishment; binding, not discretionary
+    ids = {m.event_id for m in decs}
+    bad = [f"{m.event_id}: {k}" for m in decs for k in m.value if k in MORAL_FIELDS]
+    bad += [f"{m.event_id}: {m.value['apply']} not computed by JUSTICE" for m in msgs if m.source == "ENFORCEMENT"
+            and m.kind == "action" and "apply" in m.value and not set(m.provenance) & ids]
+    bad += [f"{m.event_id}: override" for m in msgs if m.source == "ERROR" and "override" in m.value]
+    res.append(verdict("JUSTICE-1-01", "consequences_not_punishment", not bad,
+                       f"every measure applies a computed Justice consequence as given ({len(decs)} decisions); no moral label, "
+                       "discretionary adjustment or measure from another source", f"{len(bad)} punitive or discretionary elements",
+                       {"violations": bad[:10]}))
+    exc = [m for m in decs if m.value["domains"].get("exclusion")]
+    if exc:
+        bad = [f"{m.event_id}: {e}" for m in exc for e in m.value.get("exclusion_effects", []) if e not in EXCLUSION_EFFECTS]
+        bad += [f"{m.event_id}: {k}" for m in exc for k in m.value if k in MORAL_FIELDS]
+        res.append(verdict("JUSTICE-9-04", "exclusion_scope", not bad,
+                           "exclusion ends participation and system-provided privileges only, keeps history, and carries no "
+                           "moral condemnation", f"{len(bad)} effects beyond the scope of exclusion", {"violations": bad[:10]}))
+    else:
+        res.append(na("JUSTICE-9-04", "exclusion_scope", "exclusion", "no exclusion decided"))
     return res
 
 
 ERROR_STATES = ("R0", "R1", "R2", "R3", "R4", "NOT_APPEALABLE", "REJECTED_PROCEDURAL", "REJECTED_UNFOUNDED")
+CLASS_CHECKS = (("ERROR-4-02", "category_e2"), ("ERROR-4-03", "category_e3"), ("ERROR-4-04", "category_e4"),
+                ("ERROR-4-05", "category_e5"))
 BLAME_KEYS = ("cause", "blame", "misconduct", "fault_of")
 
 
@@ -1002,9 +1044,35 @@ def error_conduct(r, log: EventLog, out) -> List[CheckResult]:
         why = "no appeal in this experiment" if r["appeal_after_minutes"] < 0 else "no Justice decision to appeal"
         for rid, chk in (("ERROR-1-01", "procedural_non_punitive"), ("ERROR-2-04", "no_ptl_reinterpretation"),
                          ("ERROR-5-02", "r1_non_coercive"), ("ERROR-9-03", "reversibility_preferred"),
-                         ("ERROR-11-01", "valid_appeal_not_suppressed")):
+                         ("ERROR-11-01", "valid_appeal_not_suppressed"), ("ERROR-2-03", "no_new_coercive_measures"),
+                         ("ERROR-9-02", "ptl_consistency_preserved"), ("ERROR-10-02", "case_reviewable")) + CLASS_CHECKS:
             res.append(na(rid, chk, "error case", why))
         return res
+    # ERROR §4 (returned after the reading of checkpoint 6): the class follows the deviation, and the class sets the window
+    cl = [m for m in err if "classified" in m.value]
+    for rid, chk in CLASS_CHECKS:
+        cat = "E" + chk[-1]
+        if r["appeal_category"] != cat:
+            res.append(na(rid, chk, f"{cat} errors", f"the appeal concerns a {r['appeal_category']} deviation"))
+        else:
+            got = cl[0].value["classified"] if cl else None
+            res.append(verdict(rid, chk, got == cat,
+                               f"the deviation ({DEVIATIONS[cat]}) is classified {cat} and handled under its limitation rule",
+                               f"the deviation ({DEVIATIONS[cat]}) is classified {got}"))
+    coercive = [a.event_id for a in acts if ({appeal.event_id} | {m.event_id for m in err}) & set(a.provenance)
+                and ("apply" in a.value or "compel" in a.value)]
+    res.append(verdict("ERROR-2-03", "no_new_coercive_measures", not coercive,
+                       "the error case introduced no coercive measure: every measure in force comes from a Justice decision",
+                       f"{len(coercive)} coercive measures introduced by the error case", {"violations": coercive[:10]}))
+    closed = [m for m in err if "case_closed" in m.value]
+    opened = [m for m in err if m.arrived_at >= appeal.arrived_at and "state" in m.value]
+    if opened:
+        bad = [m.event_id for m in closed if not m.value["reviewable"]] + ([] if closed else ["no closing record"])
+        res.append(verdict("ERROR-10-02", "case_reviewable", not bad,
+                           f"the error case closed in {closed[0].value['case_closed'] if closed else '-'} with its record kept and "
+                           "open to post-factum review", "the closed case is not open to review", {"violations": bad[:10]}))
+    else:
+        res.append(na("ERROR-10-02", "case_reviewable", "closed error case", "no error case was opened"))
     punitive = [a.event_id for a in acts if ({appeal.event_id} | {m.event_id for m in err}) & set(a.provenance)
                 and ("apply" in a.value or "compel" in a.value)]
     model = [x for x in states if x in ("R0", "R1", "R2", "R3", "R4")]
@@ -1017,6 +1085,12 @@ def error_conduct(r, log: EventLog, out) -> List[CheckResult]:
     res.append(verdict("ERROR-2-04", "no_ptl_reinterpretation", not rewritten,
                        "every measurement in the case is a PTL observation; ERROR wrote none", f"{len(rewritten)} measurements written by ERROR",
                        {"violations": rewritten[:10]}))
+    if any(m.value.get("state") == "R1" for m in err):
+        res.append(verdict("ERROR-9-02", "ptl_consistency_preserved", not rewritten,
+                           "the correction left the PTL record as PTL wrote it: corrected values arrive as new PTL observations",
+                           f"{len(rewritten)} measurements written outside PTL", {"violations": rewritten[:10]}))
+    else:
+        res.append(na("ERROR-9-02", "ptl_consistency_preserved", "correction", "no verification was opened"))
     r1 = [m for m in err if m.value.get("state") == "R1"]
     if r1:
         nxt = [m.arrived_at for m in err if m.value.get("state") in ("R2", "REJECTED_UNFOUNDED")]
@@ -1156,6 +1230,16 @@ IMPLEMENTS = {
     "EB-7.2-02": ("dispute_new_evaluation", "IMPLEMENTED", None),
     "EB-7.2-03": ("dispute_recomputes", "PARTIAL", "Admissibility of new data is the appeal's evidence only."),
     "EB-7.2-04": ("dispute_delta", "IMPLEMENTED", None),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "ERROR-2-03": ("no_new_coercive_measures", "PARTIAL", "Coercion is observed as measures sourced from the error case (appeal or ERROR records)."),
+    "ERROR-9-02": ("ptl_consistency_preserved", "PARTIAL", "Observed as measurements written outside PTL; the ORACLE consistency rules are not re-run here."),
+    "ERROR-10-02": ("case_reviewable", "PARTIAL", "Reviewability is a recorded property of the closed case; a retention horizon is not modelled."),
+    "ERROR-4-02": ("category_e2", "PARTIAL", "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked."),
+    "ERROR-4-03": ("category_e3", "PARTIAL", "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked."),
+    "ERROR-4-04": ("category_e4", "PARTIAL", "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked."),
+    "ERROR-4-05": ("category_e5", "PARTIAL", "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked."),
+    "JUSTICE-1-01": ("consequences_not_punishment", "PARTIAL", "Observed as moral or discretionary fields and as measures not computed by JUSTICE."),
+    "JUSTICE-9-04": ("exclusion_scope", "PARTIAL", "Effects are recorded labels; indirect lethal exposure is not modelled beyond them."),
 }
 
 SUBJECT = {"type": "object", "fields": {
@@ -1170,7 +1254,7 @@ SUBJECT = {"type": "object", "fields": {
 
 class DisputeCorrectionModule(LabModule):
     id = "dispute_correction"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "Dispute and correction (S-LAB-04)", "ru": "Спор и исправление (S-LAB-04)"}
     summary = {"en": "A measurement or an attribution was wrong: is the appeal accepted in time, is the decision "
                      "recomputed without new penalties, is the original kept and the difference shown?",
@@ -1417,6 +1501,9 @@ class DisputeCorrectionModule(LabModule):
             "late_e3_appeal": {**base, "appeal_category": "E3", "recorded_contributions": [4, 0],
                                "appeal_after_minutes": 40 * DAY},
             "late_e1_appeal": {**base, "appeal_after_minutes": 40 * DAY},
+            "execution_error_appeal": {**base, "appeal_category": "E2"},
+            "impact_error_appeal": {**base, "appeal_category": "E4"},
+            "procedural_error_appeal": {**base, "appeal_category": "E5"},
             "unfounded_appeal": {**base, "s1_true": 0.95},
             "no_attribution": {**base, "attribution_confidence": 0.6, "s1_recorded": 1.0, "s0": 0.0},
             "calibration_missing": {**base, "attribution_threshold": -1},

@@ -20,16 +20,16 @@ human acceptance, which is counted apart.
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1361 (78.4 %) | 915 | 1278 | 839 | 4 | 63 | 16 | 376 | 96 | 1291 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1400 (80.6 %) | 916 | 1317 | 840 | 4 | 64 | 15 | 337 | 57 | 1253 |
 | B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 15 | 24 | 14 | 0 | 1 | 0 | 18 | 2 | 33 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 352 (96.4 %) | 248 | 339 | 236 | 3 | 8 | 2 | 13 | 3 | 261 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 270 (63.7 %) | 147 | 250 | 130 | 1 | 17 | 2 | 154 | 50 | 301 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 300 (70.8 %) | 148 | 280 | 131 | 1 | 18 | 1 | 124 | 20 | 272 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 228 (77.8 %) | 151 | 212 | 137 | 0 | 9 | 7 | 65 | 15 | 216 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 404 (79.1 %) | 284 | 382 | 262 | 0 | 18 | 4 | 107 | 23 | 391 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 413 (80.8 %) | 284 | 391 | 262 | 0 | 18 | 4 | 98 | 14 | 382 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1361 (78.4 %) | 915 | 1278 | 839 | 4 | 63 | 16 | 376 | 96 | 1291 |
+| **All registrable documents** | | 38/38 | 1737 | 1400 (80.6 %) | 916 | 1317 | 840 | 4 | 64 | 15 | 337 | 57 | 1253 |
 
-Covered without an open point: 446; of all provisions, an open point closed by the lab agent's reading of the text: 123; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
+Covered without an open point: 484; of all provisions, an open point closed by the lab agent's reading of the text: 161; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
 ### Stage criteria
 
@@ -169,16 +169,16 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1291 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1253 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
 | normative_ambiguity | 106 | 65 | 78 | 0 | 249 |
 | architecture_definition | 37 | 89 | 130 | 0 | 256 |
-| l8_parameter | 0 | 60 | 78 | 0 | 138 |
+| l8_parameter | 0 | 61 | 78 | 0 | 139 |
 | empirical_model_data | 0 | 76 | 124 | 0 | 200 |
 | external_dependency | 0 | 9 | 135 | 0 | 144 |
-| implementation_only | 0 | 96 | 208 | 0 | 304 |
+| implementation_only | 0 | 57 | 208 | 0 | 265 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 208.
@@ -264,7 +264,7 @@ Withdrawn after verification (not author decisions):
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
-| DKP-1-JUSTICE-001 | 41 | 27 | 24 | 0 | 3 | 0 | 14 | 27 |
+| DKP-1-JUSTICE-001 | 41 | 29 | 26 | 0 | 3 | 0 | 12 | 25 |
 | DKP-1-PREVENTION-001 | 43 | 25 | 24 | 0 | 1 | 0 | 18 | 33 |
 | DKP-2-ASSETS-001 | 43 | 29 | 28 | 0 | 1 | 0 | 14 | 34 |
 | DKP-2-FINANCE-001 | 44 | 25 | 23 | 0 | 2 | 0 | 19 | 34 |
@@ -276,7 +276,7 @@ Withdrawn after verification (not author decisions):
 | DKP-4-CRISIS-001 | 53 | 34 | 30 | 1 | 3 | 0 | 19 | 35 |
 | DKP-4-CRISIS-001-PATCH | 31 | 26 | 25 | 0 | 1 | 0 | 5 | 21 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 26 | 26 | 0 | 0 | 0 | 3 | 21 |
-| DKP-4-ERROR-001 | 52 | 33 | 29 | 0 | 3 | 1 | 19 | 39 |
+| DKP-4-ERROR-001 | 52 | 40 | 36 | 0 | 3 | 1 | 12 | 32 |
 | DKP-4-UPGRADE-001 | 48 | 37 | 33 | 0 | 4 | 0 | 11 | 33 |
 | DKP-5-CULTURE-001 | 43 | 31 | 31 | 0 | 0 | 0 | 12 | 33 |
 | DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 39 |
@@ -285,15 +285,15 @@ Withdrawn after verification (not author decisions):
 | DKP-5-TRANSPORT-001 | 35 | 22 | 17 | 0 | 5 | 0 | 13 | 31 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 12 | 12 | 0 | 0 | 0 | 5 | 11 |
 | DKP-5-WORK-CYCLE-001 | 39 | 28 | 27 | 0 | 0 | 1 | 11 | 19 |
-| DKP-6-EXIT-001 | 62 | 36 | 35 | 0 | 0 | 1 | 26 | 43 |
-| DKP-6-INTEGRATION-001 | 51 | 25 | 25 | 0 | 0 | 0 | 26 | 34 |
+| DKP-6-EXIT-001 | 62 | 50 | 49 | 0 | 1 | 0 | 12 | 30 |
+| DKP-6-INTEGRATION-001 | 51 | 34 | 34 | 0 | 0 | 0 | 17 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
 | DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
 | DKP-7-PRIVACY-001 | 39 | 32 | 29 | 0 | 3 | 0 | 7 | 30 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 31 | 31 | 0 | 0 | 0 | 13 | 36 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
-| DKP-8-INTEROP-001 | 49 | 36 | 35 | 0 | 1 | 0 | 13 | 29 |
+| DKP-8-INTEROP-001 | 49 | 43 | 42 | 0 | 1 | 0 | 6 | 22 |
 | DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
 
 ## Covered provisions
@@ -618,6 +618,7 @@ Withdrawn after verification (not author decisions):
 | IMPACT-ReferenceBoundsB_-01 | PARTIAL | impact_attribution · bounds_imported | PASS | — | Q-023 |
 | IMPACT-ReversibilityFlagR_-01 | PARTIAL | dispute_correction · r_is_irreversibility | PASS | — | Q-022 |
 | IMPACT-UncertaintyEnvelopeU_-01 | PARTIAL | impact_attribution · uncertainty_envelope | PASS | — | — |
+| JUSTICE-1-01 | PARTIAL | dispute_correction · consequences_not_punishment | PASS | yes | — |
 | JUSTICE-10-01 | IMPLEMENTED | dispute_correction · proportional_distribution | PASS | — | — |
 | JUSTICE-10-02 | PARTIAL | dispute_correction · individual_accountability_kept | PASS | — | — |
 | JUSTICE-11-02 | IMPLEMENTED | dispute_correction · periodic_not_faster_than_ttl | PASS | — | — |
@@ -642,6 +643,7 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-8-01 | PARTIAL | dispute_correction · isolation_trigger | PASS | — | Q-022 |
 | JUSTICE-9-01 | PARTIAL | dispute_correction · exclusion_trigger | PASS | — | — |
 | JUSTICE-9-02 | IMPLEMENTED | dispute_correction · exclusion_consequences | PASS | yes | — |
+| JUSTICE-9-04 | PARTIAL | dispute_correction · exclusion_scope | PASS | yes | — |
 | JUSTICE-DisputeExceptionClause-01 | PARTIAL | dispute_correction · dispute_not_blocked_by_ttl | PASS | — | Q-020 |
 | JUSTICE-DisputeExceptionClause-02 | PARTIAL | dispute_correction · dispute_exception_conditions | UNKNOWN | — | Q-020 |
 | JUSTICE-DisputeExceptionClause-03 | IMPLEMENTED | dispute_correction · no_final_output | PASS | yes | — |
@@ -979,6 +981,7 @@ Withdrawn after verification (not author decisions):
 | ERROR-0-01 | PARTIAL | dispute_correction · errors_as_states | PASS | yes | — |
 | ERROR-1-01 | PARTIAL | dispute_correction · procedural_non_punitive | PASS | yes | — |
 | ERROR-10-01 | IMPLEMENTED | dispute_correction · case_logged | PASS | — | — |
+| ERROR-10-02 | PARTIAL | dispute_correction · case_reviewable | PASS | — | — |
 | ERROR-11-01 | IMPLEMENTED | dispute_correction · valid_appeal_not_suppressed | PASS | — | — |
 | ERROR-11-02 | IMPLEMENTED | dispute_correction · no_retaliation | PASS | yes | — |
 | ERROR-11-04 | IMPLEMENTED | dispute_correction · no_discretionary_override | PASS | yes | — |
@@ -987,9 +990,14 @@ Withdrawn after verification (not author decisions):
 | ERROR-12-03 | PARTIAL | edition_finality · compatibility_declared | UNKNOWN | — | Q-060 |
 | ERROR-12-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ERROR-12-05 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
+| ERROR-2-03 | PARTIAL | dispute_correction · no_new_coercive_measures | PASS | yes | — |
 | ERROR-2-04 | PARTIAL | dispute_correction · no_ptl_reinterpretation | PASS | yes | — |
 | ERROR-2-05 | IMPLEMENTED | dispute_correction · request_not_override | PASS | yes | Q-021 |
 | ERROR-3.2-01 | PARTIAL | dispute_correction · appealable_definition | PASS | — | — |
+| ERROR-4-02 | PARTIAL | dispute_correction · category_e2 | PASS | — | — |
+| ERROR-4-03 | PARTIAL | dispute_correction · category_e3 | PASS | — | — |
+| ERROR-4-04 | PARTIAL | dispute_correction · category_e4 | PASS | — | — |
+| ERROR-4-05 | PARTIAL | dispute_correction · category_e5 | PASS | — | — |
 | ERROR-5-02 | IMPLEMENTED | dispute_correction · r1_non_coercive | PASS | yes | — |
 | ERROR-5-03 | PARTIAL | dispute_correction · r2_validated | PASS | — | — |
 | ERROR-5-04 | IMPLEMENTED | dispute_correction · r3_requires_correction | PASS | — | — |
@@ -1007,6 +1015,7 @@ Withdrawn after verification (not author decisions):
 | ERROR-8-03 | PARTIAL | dispute_correction · irreversible_logged | PASS | yes | — |
 | ERROR-8-04 | IMPLEMENTED | dispute_correction · justice_uses_corrected_inputs | PASS | yes | Q-021 |
 | ERROR-8-05 | PARTIAL | dispute_correction · no_new_penalties | UNKNOWN | yes | Q-021 |
+| ERROR-9-02 | PARTIAL | dispute_correction · ptl_consistency_preserved | PASS | yes | — |
 | ERROR-9-03 | IMPLEMENTED | dispute_correction · reversibility_preferred | PASS | — | — |
 | ERROR-9-05 | PARTIAL | crisis_recovery · systemic_error_escalates | PASS | — | — |
 | UPGRADE-0-01 | PARTIAL | upgrade_lifecycle · only_lawful_mechanism | PASS | — | — |
@@ -1275,8 +1284,11 @@ Withdrawn after verification (not author decisions):
 | WORKCYCLE-8.2-01 | IMPLEMENTED | work_cycle · shift_allocation | PASS | — | — |
 | WORKCYCLE-8.2-02 | IMPLEMENTED | work_cycle · high_intensity_recovery | NOT_APPLICABLE | — | Q-013 |
 | EXIT-0-02 | IMPLEMENTED | exit_integration · exit_not_denied | PASS | yes | — |
+| EXIT-0-03 | PARTIAL | exit_integration · exit_not_framed_as_failure | PASS | yes | — |
 | EXIT-1-01 | IMPLEMENTED | exit_integration · not_sanction_or_failure | PASS | yes | — |
-| EXIT-10-02 | PARTIAL | exit_integration · delayed_settlement_bounded | NOT_APPLICABLE | — | — |
+| EXIT-10-02 | PARTIAL | exit_integration · delayed_settlement_bounded | PASS | — | — |
+| EXIT-10-03 | PARTIAL | exit_integration · delayed_settlement_non_punitive_logged | PASS | — | — |
+| EXIT-10-04 | PARTIAL | exit_integration · delayed_settlement_no_authority | PASS | — | — |
 | EXIT-11-01 | IMPLEMENTED | exit_integration · valid_during_crisis | PASS | — | — |
 | EXIT-11-03 | PARTIAL | exit_integration · no_crisis_precedent | PASS | — | — |
 | EXIT-11-04 | PARTIAL | exit_integration · crisis_scoped | PASS | yes | — |
@@ -1284,8 +1296,13 @@ Withdrawn after verification (not author decisions):
 | EXIT-12-02 | IMPLEMENTED | exit_integration · data_frozen | PASS | yes | — |
 | EXIT-12-03 | IMPLEMENTED | exit_integration · retention_purposes | PASS | yes | — |
 | EXIT-13-01 | IMPLEMENTED | exit_integration · may_reapply | PASS | — | — |
+| EXIT-13-02 | PARTIAL | exit_integration · reentry_not_penalized | PASS | yes | — |
 | EXIT-13-03 | IMPLEMENTED | exit_integration · reentry_not_delayed | PASS | yes | — |
 | EXIT-13-04 | IMPLEMENTED | exit_integration · restitution_before_reentry | PASS | — | — |
+| EXIT-14-01 | PARTIAL | exit_integration · exit_not_obstructed | PASS | yes | — |
+| EXIT-14-02 | PARTIAL | exit_integration · no_collective_or_retaliatory_sanction | PASS | yes | — |
+| EXIT-14-03 | PARTIAL | exit_integration · no_hostile_framing_or_deprivation | PASS | yes | — |
+| EXIT-15-01 | PARTIAL | exit_integration · no_post_exit_regulation | PASS | — | — |
 | EXIT-15-03 | IMPLEMENTED | exit_integration · authority_terminates | PASS | — | — |
 | EXIT-16-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | EXIT-16-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
@@ -1295,12 +1312,17 @@ Withdrawn after verification (not author decisions):
 | EXIT-2-01 | IMPLEMENTED | exit_integration · not_prohibited_or_criminalized | PASS | yes | — |
 | EXIT-3-02 | IMPLEMENTED | exit_integration · exiting_entity | PASS | — | — |
 | EXIT-3-03 | IMPLEMENTED | exit_integration · exit_event_procedure | PASS | — | — |
+| EXIT-3-04 | PARTIAL | exit_integration · cooling_bounded_non_punitive | PASS | — | — |
+| EXIT-3-05 | IMPLEMENTED | exit_integration · tail_from_verified_past | PASS | yes | — |
+| EXIT-4-01 | PARTIAL | exit_integration · initiation_unconditional | PASS | yes | — |
 | EXIT-4-02 | IMPLEMENTED | exit_integration · no_approval_needed | PASS | yes | — |
 | EXIT-4-03 | PARTIAL | exit_integration · never_suspended | PASS | — | Q-032 |
+| EXIT-4-04 | PARTIAL | exit_integration · valid_on_compliant_declaration | PASS | yes | — |
 | EXIT-5-01 | PARTIAL | exit_integration · signed_scoped_declaration | PASS | — | — |
 | EXIT-5-03 | IMPLEMENTED | exit_integration · no_additional_authorization | PASS | yes | — |
 | EXIT-6-02 | PARTIAL | exit_integration · cooling_bounded | PASS | — | Q-031 |
 | EXIT-6-03 | PARTIAL | exit_integration · cooling_no_escalation | PASS | — | — |
+| EXIT-6-04 | PARTIAL | exit_integration · cooling_parameters_declared | UNKNOWN | — | — |
 | EXIT-7-01 | IMPLEMENTED | exit_integration · phased_disengagement | PASS | — | — |
 | EXIT-7-02 | IMPLEMENTED | exit_integration · phases_declared | PASS | — | — |
 | EXIT-8-01 | PARTIAL | exit_integration · future_obligations_and_benefits_cease | PASS | — | — |
@@ -1308,17 +1330,23 @@ Withdrawn after verification (not author decisions):
 | EXIT-8-03 | PARTIAL | exit_integration · historical_responsibility_kept | PASS | — | — |
 | EXIT-8-04 | IMPLEMENTED | exit_integration · records_and_tail_kept | PASS | yes | — |
 | EXIT-9-01 | IMPLEMENTED | exit_integration · only_prior_verified | PASS | yes | — |
+| EXIT-9-02 | PARTIAL | exit_integration · tail_categories | PASS | yes | — |
 | EXIT-9-03 | IMPLEMENTED | exit_integration · no_punitive_tail | PASS | yes | — |
 | EXIT-9-04 | IMPLEMENTED | exit_integration · no_new_obligations | PASS | yes | — |
+| INTEGRATION-0-01 | PARTIAL | exit_integration · voluntary_phased_reversible | PASS | yes | — |
 | INTEGRATION-10-01 | IMPLEMENTED | exit_integration · steps_documented | PASS | — | — |
+| INTEGRATION-10-02 | PARTIAL | exit_integration · audit_process_only | PASS | — | — |
 | INTEGRATION-11-02 | PARTIAL | exit_integration · no_conditional_aid | PASS | yes | — |
 | INTEGRATION-11-03 | IMPLEMENTED | exit_integration · no_retroactive_enforcement | PASS | yes | — |
+| INTEGRATION-11-04 | PARTIAL | exit_integration · no_scope_bypass | PASS | yes | — |
 | INTEGRATION-11-05 | PARTIAL | exit_integration · no_hidden_dependency | PASS | yes | — |
 | INTEGRATION-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | INTEGRATION-12-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | INTEGRATION-12-03 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | INTEGRATION-12-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | INTEGRATION-12-05 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| INTEGRATION-2-01 | PARTIAL | exit_integration · adoption_not_forced | PASS | yes | — |
+| INTEGRATION-2-03 | PARTIAL | exit_integration · no_alignment_imposed | PASS | yes | — |
 | INTEGRATION-2-04 | IMPLEMENTED | exit_integration · no_authority_beyond_phase | PASS | yes | — |
 | INTEGRATION-3-01 | IMPLEMENTED | exit_integration · integrating_entity | PASS | — | — |
 | INTEGRATION-3-02 | IMPLEMENTED | exit_integration · phase_terms_defined | PASS | yes | — |
@@ -1328,9 +1356,13 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-4.2-02 | IMPLEMENTED | exit_integration · explicit_validation | PASS | yes | — |
 | INTEGRATION-4.4-01 | PARTIAL | exit_integration · scope_containment | PASS | yes | — |
 | INTEGRATION-5.1-01 | IMPLEMENTED | exit_integration · shadow_mode_no_effects | PASS | yes | — |
+| INTEGRATION-5.1-02 | PARTIAL | exit_integration · phase0_entry_records | PASS | — | — |
 | INTEGRATION-5.1-04 | IMPLEMENTED | exit_integration · shadow_not_proof | PASS | yes | — |
 | INTEGRATION-5.2-01 | PARTIAL | code_synergy · no_kill_switch_in_phase_1 | PASS | — | Q-050 |
 | INTEGRATION-5.3-01 | IMPLEMENTED | exit_integration · phase2_domains_only | PASS | yes | — |
+| INTEGRATION-5.3-02 | PARTIAL | exit_integration · phase3_clearance | PASS | yes | — |
+| INTEGRATION-5.4-01 | PARTIAL | exit_integration · exit_by_standard_rules | PASS | — | — |
+| INTEGRATION-6-02 | PARTIAL | exit_integration · assessment_evidence_exclusive | PASS | — | — |
 | INTEGRATION-7-01 | PARTIAL | exit_integration · shock_halts_and_suspends | PASS | — | — |
 | INTEGRATION-7-03 | IMPLEMENTED | exit_integration · rollback_logged | PASS | — | — |
 | INTEGRATION-7-04 | PARTIAL | exit_integration · rollback_preserves_records | PASS | — | — |
@@ -1582,7 +1614,9 @@ Withdrawn after verification (not author decisions):
 | INTEROP-10-02 | IMPLEMENTED | interop_failure · no_external_decision_dependency | PASS | — | — |
 | INTEROP-10-03 | IMPLEMENTED | interop_failure · no_governance_by_api | PASS | — | — |
 | INTEROP-10-04 | PARTIAL | interop_failure · no_silent_norm_import | PASS | yes | — |
+| INTEROP-11-01 | PARTIAL | interop_failure · interop_auditable | PASS | — | — |
 | INTEROP-11-03 | IMPLEMENTED | interop_failure · boundary_events_recorded | PASS | — | — |
+| INTEROP-11-04 | PARTIAL | interop_failure · no_interop_audit_authority | PASS | — | — |
 | INTEROP-12-01 | PARTIAL | interop_failure · no_geopolitical_resolution | PASS | yes | — |
 | INTEROP-12-02 | PARTIAL | interop_failure · no_legal_unification | PASS | yes | — |
 | INTEROP-12-03 | PARTIAL | interop_failure · no_compliance_guarantee | PASS | yes | — |
@@ -1599,7 +1633,10 @@ Withdrawn after verification (not author decisions):
 | INTEROP-3-02 | PARTIAL | interop_failure · defined_interfaces | PASS | yes | — |
 | INTEROP-3-03 | PARTIAL | interop_failure · deterministic_translation | PASS | yes | — |
 | INTEROP-3-04 | PARTIAL | interop_failure · no_normative_leakage | PASS | yes | — |
+| INTEROP-4.1-01 | PARTIAL | interop_failure · axioms_not_overridden | PASS | — | — |
+| INTEROP-4.2-01 | PARTIAL | interop_failure · no_jurisdiction_expansion | PASS | yes | — |
 | INTEROP-4.3-01 | PARTIAL | interop_failure · compatibility_not_consent | PASS | yes | — |
+| INTEROP-4.4-01 | PARTIAL | interop_failure · explicit_translation_rules | PASS | yes | — |
 | INTEROP-5-01 | IMPLEMENTED | interop_failure · exports_as_evidence | PASS | yes | — |
 | INTEROP-5-02 | IMPLEMENTED | interop_failure · external_rulings_not_binding | PASS | yes | — |
 | INTEROP-5-03 | PARTIAL | interop_failure · compliance_by_subjects | PASS | yes | — |
@@ -1607,6 +1644,8 @@ Withdrawn after verification (not author decisions):
 | INTEROP-6-01 | PARTIAL | interop_failure · economic_channels | PASS | yes | — |
 | INTEROP-6-02 | PARTIAL | interop_failure · justice_weighted_translation | UNKNOWN | — | — |
 | INTEROP-6-04 | IMPLEMENTED | interop_failure · external_values_flagged | PASS | — | — |
+| INTEROP-6-05 | PARTIAL | interop_failure · finance_constraints_not_bypassed | PASS | yes | — |
+| INTEROP-7-03 | PARTIAL | interop_failure · audit_hooks | PASS | yes | — |
 | INTEROP-7-04 | IMPLEMENTED | interop_failure · blackbox_not_authoritative | PASS | yes | — |
 | INTEROP-8-01 | PARTIAL | interop_failure · external_info_as_i1 | PASS | yes | — |
 | INTEROP-8-02 | IMPLEMENTED | interop_failure · no_external_validation_for_ptl | PASS | yes | — |
