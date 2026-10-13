@@ -539,6 +539,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                      f"{len(neg)} persons with a negative justice balance received baseline access and kept the balance",
                      "{n} negative balances cleared by baseline access") if neg else
                    na("LABOR-4.2-01", "baseline_keeps_responsibility", "negative justice balance", "no recipient has one"))
+        # LABOR §1 (returned after the reading of checkpoint 6): no one forced into labor to preserve life, accountability kept
+        cleared = [p for p in neg if ub[p]["justice_balance_after"] != ub[p]["justice_balance_before"]]
+        out.append(v("LABOR-1-01", "no_forced_labor_for_life", bad + cleared,
+                     f"all {len(ub)} persons kept survival access whatever their activity, and impact accountability stayed in place",
+                     "{n} persons whose survival depended on labor or whose accountability was erased"))
         passive = [p for p, x in ub.items() if x["activity"] == "none"]
         bad = [p for p, x in ub.items() if (x["additional_benefits_rating"] == "reduced") != (x["activity"] == "none")]
         out.append(v("CODEX-18.1-01", "contribution_obligation", [p for p, x in ub.items() if x["activity"] not in ACTIVITIES + ("none",)],
@@ -592,6 +597,7 @@ IMPLEMENTS = {
     "CODEX-17.1-01": ("ubr_by_birth", "PARTIAL", "Quantities are not given."),
     "LABOR-4.1-02": ("baseline_not_contingent", "PARTIAL", "UBR stands for the baseline."),
     "LABOR-4.2-01": ("baseline_keeps_responsibility", "PARTIAL", "UBR stands for the baseline; the justice balance is a declared number."),
+    "LABOR-1-01": ("no_forced_labor_for_life", "PARTIAL", "Read through §4.1 and §6: UBR stands for the baseline; accountability is the declared justice balance."),
     "CODEX-18.1-01": ("contribution_obligation", "PARTIAL", "Activities are declared."),
     "CODEX-18.1-02": ("passivity_rating", "PARTIAL", "The rating scale is not given; relation to PRIVACY and LABOR: F-033."),
     "PRIVACY-10-01": ("no_social_credit_scoring", "PARTIAL", "Only the Code's passivity rating is examined (F-033)."),
@@ -622,7 +628,7 @@ S, N, B, I = {"type": "str"}, {"type": "number", "min": 0, "max": 10 ** 12}, {"t
 
 class CodeEconomyModule(LabModule):
     id = "code_economy"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Code of Planetary Synergy: economy and society (§1-§6, §9-§18)",
              "ru": "Кодекс планетарной синергии: экономика и общество (§1-§6, §9-§18)"}
     summary = {"en": "Pegs, tranches, exports, patents, talent leases, Operators, budgets, reserves, vote buying, inheritance and UBR: "

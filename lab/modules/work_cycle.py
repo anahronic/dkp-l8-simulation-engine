@@ -43,6 +43,9 @@ FAULTS = {
     "week_authority": "the scheduler places rest days by the 7-day week",
     "exception_precedent": "after the crisis, refusing workers are drafted again on the crisis precedent",
     "coerce_restricted": "a Subject under Restriction who declines is scheduled anyway, at a reduced rate",
+    "civil_day_index": "the roster labels its days by civil date instead of the TIME index",
+    "untraced_exception": "crisis drafting is executed without an exception record tied to the declared crisis",
+    "manual_assignment": "a scheduler moves one worker's day by hand, outside the published rule",
 }
 CROSS_LAYER = ("redefine_justice", "override_impact", "punish", "ideological_criteria")                # LABOR §12
 
@@ -64,6 +67,12 @@ IMPLEMENTS = {
     "WORKCYCLE-4.2-04": ("week_without_authority", "PARTIAL", "Authority observed as the scheduler's period; a display overlay is "
                          "allowed."),
     "WORKCYCLE-10-02": ("exception_limited", "PARTIAL", "The exception modelled is crisis drafting of refusing workers (LABOR §9.2)."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "WORKCYCLE-3-01": ("days_indexed_by_time", "IMPLEMENTED", None),
+    "WORKCYCLE-10-01": ("exception_only_in_crisis_scope", "PARTIAL", "The crisis scope is a declared window; the exception modelled is crisis drafting."),
+    "WORKCYCLE-10-04": ("exception_traceable", "PARTIAL", "Traceability = an exception record with its crisis scope and DTI-Day."),
+    "LABOR-12-01": ("cross_layer_bans", "PARTIAL", "Requests are declared."),
+    "LABOR-7-03": ("allocation_rule_based", "PARTIAL", "Allocation = the roster; transparency = the published rule; audit = recomputation."),
     "WORKCYCLE-10-05": ("exception_no_precedent", "PARTIAL", "Precedent observed as a later drafting or a rule recorded from the "
                         "exception."),
     "WORKCYCLE-4.1-01": ("default_cycle", "PARTIAL", "A non-default cycle gives UNKNOWN: the text does not say whether it is allowed."),
@@ -101,7 +110,7 @@ IMPLEMENTS = {
 
 class WorkCycleModule(LabModule):
     id = "work_cycle"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "24/7 service rosters (WORK-CYCLE)", "ru": "Круглосуточные смены (WORK-CYCLE)"}
     summary = {"en": "Is there enough staff for round-the-clock service without breaking the 6-day "
                      "cycle and the daily recovery block?",
@@ -225,6 +234,8 @@ class WorkCycleModule(LabModule):
                 again = "exception_precedent" in r["faults"] and drafted and c1 + 2 <= k < c1 + 4
                 if w in refusing and not (c0 <= k < c1 or ("permanent_obligation" in r["faults"] and k >= c1) or again):
                     kind = "R"
+                if "manual_assignment" in r["faults"] and w == 0 and k == 0:
+                    kind = "R" if kind == "W" else "W"
                 days.append(kind)
             out.append({"worker": f"w{w + 1:03d}", "shift_start": s, "phase_offset": o,
                         "day_before": days[0], "days": days[1:]})
@@ -314,9 +325,17 @@ class WorkCycleModule(LabModule):
         outputs["local_overlay"] = {"week": "7-day week shown for reading only", "authority": None} if r["local_week_overlay"] else None
         if "exception_precedent" in faults and r["crisis_window"][1] > r["crisis_window"][0]:
             outputs["schedule_rules"] = ["draft refusing workers on peak days, as during the crisis"]
+        refusers = set(range(r["workers"] - r["refusing_workers"], r["workers"]))
+        outputs["exception_log"] = [] if "untraced_exception" in faults else [
+            {"worker": w["worker"], "day": k, "crisis_scope": f"declared crisis, days {c0}-{c1 - 1}",
+             "dti_day": r["start_dti_day"] + k}
+            for w in roster if int(w["worker"][1:]) - 1 in refusers
+            for k, kind in enumerate(w["days"]) if kind == "W" and c0 <= k < c1]
+        if "civil_day_index" in faults:
+            outputs["roster_days"] = [f"civil day {k + 1}" for k in range(r["horizon_days"])]
         checks = [c for c in self.checks(r, roster, runs, deficit_hours) if c.requirement_id != "WORKCYCLE-5.3-01"] + \
             self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions) + \
-            exception_checks(r, roster, day_hours, outputs) + restricted_checks(r, outputs)
+            exception_checks(r, roster, day_hours, outputs) + restricted_checks(r, outputs) + returned_checks(r, roster, outputs)
         explain = [
             {"en": f"{r['workers']} workers, shifts at {sorted(r['shift_starts'])} h: demand is fully covered in "
                    f"{H - deficit_hours} of {H} hours; largest shortfall {max_deficit:g} staff.",
@@ -434,6 +453,15 @@ class WorkCycleModule(LabModule):
                                    applicability="no forced labor reported"))
         reqs = [{"request": q, "executed": q == "punish" and "labor_as_punishment" in r["faults"],
                  "classification": "critical architectural breach (attempted)"} for q in r["cross_layer_requests"]]
+        # LABOR §12 (returned after the reading of checkpoint 6): the four bans themselves
+        out.append(CheckResult("LABOR-12-01", "cross_layer_bans", FAIL if any(x["executed"] for x in reqs) else PASS,
+                               "LABOR redefined no justice logic, overrode no impact measurement, worked as no punishment and "
+                               f"applied no ideological criterion ({len(reqs)} such requests refused)"
+                               if not any(x["executed"] for x in reqs) else
+                               f"{sum(x['executed'] for x in reqs)} cross-layer requests executed by LABOR",
+                               evidence={"violations": [x["request"] for x in reqs if x["executed"]]})
+                   if reqs else CheckResult("LABOR-12-01", "cross_layer_bans", NOT_APPLICABLE, "cross-layer requests",
+                                            applicability="none"))
         if reqs:
             bad = [x["request"] for x in reqs if x["executed"]]
             out.append(CheckResult("LABOR-12-02", "isolation_breach_critical", FAIL if bad else PASS,
@@ -583,6 +611,49 @@ def restricted_checks(r, outputs) -> List[CheckResult]:
                         f"{len(bad)} Subjects under Restriction or Isolation coerced or exploited" if bad else
                         f"{len(rp)} Subjects under Restriction or Isolation: those who declined were not scheduled, those who "
                         "took part were paid at the standard rate", evidence={"violations": bad[:10]} if bad else {})]
+
+
+def returned_checks(r, roster, outputs) -> List[CheckResult]:
+    """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+    d0, n = r["start_dti_day"], r["horizon_days"]
+    want = [f"DY{d // 360}-{d % 360 + 1:03d}" for d in range(d0, d0 + n)]            # TIME §5.1, computed independently
+    got = outputs["roster_days"]
+    out.append(v("WORKCYCLE-3-01", "days_indexed_by_time", [f"day {i}: {a} (TIME: {b})" for i, (a, b) in enumerate(zip(got, want)) if a != b],
+                 f"each roster day is a physical day indexed under DKP-0-TIME-001 ({got[0]} … {got[-1]})",
+                 "{n} roster days not indexed by TIME"))
+    refusers = set(range(r["workers"] - r["refusing_workers"], r["workers"]))
+    c0, c1 = (int(x) for x in r["crisis_window"])
+    work = [(w["worker"], k) for w in roster if int(w["worker"][1:]) - 1 in refusers for k, kind in enumerate(w["days"]) if kind == "W"]
+    if refusers:
+        out.append(v("WORKCYCLE-10-01", "exception_only_in_crisis_scope", [f"{w} day {k}" for w, k in work if not c0 <= k < c1],
+                     f"{len(refusers)} refusing workers were scheduled only inside the declared crisis "
+                     + (f"(days {c0}-{c1 - 1})" if c1 > c0 else "(none declared: never scheduled)"),
+                     "{n} exception days outside a declared crisis scope"))
+    else:
+        out.append(CheckResult("WORKCYCLE-10-01", "exception_only_in_crisis_scope", NOT_APPLICABLE, "exceptions",
+                               applicability="no worker refuses participation"))
+    # LABOR §7: allocation transparent, auditable, rule-based = every non-refusing worker's day follows the published rule,
+    # and the roster recomputes from its inputs (AUDIT §6)
+    n_pat = len(r["pattern"])
+    off_rule = [f"{w['worker']} day {k}: {kind}" for w in roster if int(w["worker"][1:]) - 1 not in refusers
+                for k, kind in enumerate(w["days"])
+                if kind != r["pattern"][(r["start_dti_day"] + k + w["phase_offset"]) % n_pat]]
+    out.append(v("LABOR-7-03", "allocation_rule_based", off_rule[:20],
+                 f"{len(roster)} workers allocated by the published rule (CycleDay = DTI-Day mod {n_pat}, declared phase); the "
+                 "roster recomputes from its inputs", "{n} assignments not derivable from the published rule"))
+    inside = [(w, k) for w, k in work if c0 <= k < c1]
+    logged = {(x["worker"], x["day"]) for x in outputs.get("exception_log", []) if x.get("crisis_scope") and x.get("dti_day") is not None}
+    out.append(v("WORKCYCLE-10-04", "exception_traceable", [f"{w} day {k}: no exception record" for w, k in inside if (w, k) not in logged],
+                 f"{len(inside)} exception days, each recorded with its declared crisis scope and DTI-Day",
+                 "{n} exception days without a traceable record") if inside else
+               CheckResult("WORKCYCLE-10-04", "exception_traceable", NOT_APPLICABLE, "exceptions",
+                           applicability="no crisis exception in this experiment"))
+    return out
 
 
 def exception_checks(r, roster, day_hours, outputs) -> List[CheckResult]:

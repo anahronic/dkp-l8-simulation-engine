@@ -232,6 +232,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                if it else na("EB-12-01", "prohibited_interpretations", "interpretation requests", "none"))
     out.append(v("EB-0-02", "bounded_evaluations", [i for i, x in recs.items() if not x["bounded_evaluation"]] + [x["output"] for x in it if x["granted"]],
                  "every output recorded as a bounded evaluation", "{n} outputs recorded otherwise"))
+    # EB §4 (returned after the reading of checkpoint 6): no output represents truth
+    out.append(v("EB-4-01", "no_output_represents_truth", [i for i, x in recs.items() if not x["bounded_evaluation"]] +
+                 [x["output"] for x in it if x["granted"] and x["interpret_as"] == "truth"],
+                 "every output keeps its bounded-evaluation status; no output is recorded or read as truth",
+                 "{n} outputs presented as truth"))
     out.append(v("EB-11-01", "approximations", [i for i, x in recs.items() if not x["approximation"]], "every output marked as an approximation", "{n} not"))
     ov = [m.value for m in msgs if m.source == "EB" and "override_by" in m.value]
     out.append(v("EB-0-01", "no_override", [x["override_by"] for x in ov if x["granted"]], "no protocol overrode EB", "{n} overrides")
@@ -311,6 +316,7 @@ IMPLEMENTS = {
     "EB-10-01": ("no_output_priority", "IMPLEMENTED", None),
     "EB-11-01": ("approximations", "PARTIAL", "Recorded label."),
     "EB-12-01": ("prohibited_interpretations", "IMPLEMENTED", None),
+    "EB-4-01": ("no_output_represents_truth", "PARTIAL", "Observed as each output's recorded status and truth readings granted to consumers."),
     "EB-13-01": ("l8_tests", "PARTIAL", "The tests are recorded as run; their content is the other checks."),
 }
 
@@ -340,7 +346,7 @@ OUTPUTS = [_out("water_quota", "habitat", "allocation", executed=True),
 
 class EpistemicGateModule(LabModule):
     id = "epistemic_gate"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Epistemic boundaries of outputs (EPISTEMIC-BOUNDARIES)", "ru": "Эпистемические границы выходов (EPISTEMIC-BOUNDARIES)"}
     summary = {"en": "Outputs arrive with missing scope, degraded signals, stale data and disputes; consumers want to execute, repair or "
                      "read them as truth: does every output stay a bounded, disputable evaluation?",

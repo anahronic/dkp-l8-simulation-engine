@@ -40,7 +40,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "power_in_open_algorithms"
    },
    "tests": [
@@ -82,7 +82,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "algorithms_not_subjects"
    },
    "tests": [
@@ -121,19 +121,26 @@
     "Subject identity records",
     "causal attribution records"
    ],
-   "gap": "The referenced identity specification and responsibility attribution procedure are absent. No lab check implemented yet.",
+   "gap": "IDENTITY's originating Subjects are the declared regions, nodes and owners.",
    "hypotheses_needed": [
     "Declare how originating Subjects and shared responsibility are determined."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.2.0",
+    "check": "responsibility_with_originators"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -155,19 +162,26 @@
    "data_dependencies": [
     "governance roles and change provenance"
    ],
-   "gap": "Appointment and alteration by political will are not operationally defined. No lab check implemented yet.",
+   "gap": "Observed as parameter changes outside UPGRADE, liability by vote and admission by approval.",
    "hypotheses_needed": [
     "Define prohibited appointment and political-control relationships."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.2.0",
+    "check": "justice_unappointed_unaltered"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -262,19 +276,26 @@
     "damage determinations",
     "liability creation logs"
    ],
-   "gap": "Damage recognition and liability attribution rules are unspecified. No lab check implemented yet.",
+   "gap": "Damage modelled as recorded aggression; liability as the automatic slashing act.",
    "hypotheses_needed": [
     "Define qualifying damage events and automatic liability creation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_synergy",
+    "version": "1.2.0",
+    "check": "damage_generates_liability"
+   },
+   "tests": [
+    "tests/lab/test_code_synergy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -408,7 +429,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "two_circuits"
    },
    "tests": [
@@ -452,7 +473,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "mirror_peg_anchor"
    },
    "tests": [
@@ -497,7 +518,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "venture_gateway"
    },
    "tests": [
@@ -542,7 +563,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "snap_protocol"
    },
    "tests": [
@@ -584,7 +605,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "targeted_smart_contracts"
    },
    "tests": [
@@ -626,7 +647,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "tranche_on_verified_kpi"
    },
    "tests": [
@@ -667,7 +688,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "export_requires_participation"
    },
    "tests": [
@@ -710,7 +731,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "equity_tokens"
    },
    "tests": [
@@ -753,7 +774,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "public_domain_after_5_years"
    },
    "tests": [
@@ -797,7 +818,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ai_exam_recognition"
    },
    "tests": [
@@ -839,7 +860,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "absolute_exit"
    },
    "tests": [
@@ -882,7 +903,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "relocation_costs"
    },
    "tests": [
@@ -925,7 +946,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "lease_fee"
    },
    "tests": [
@@ -968,7 +989,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "post_factum"
    },
    "tests": [
@@ -1012,7 +1033,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "education_fund"
    },
    "tests": [
@@ -1055,7 +1076,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "stake_proportional_to_gdp"
    },
    "tests": [
@@ -1099,7 +1120,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "dividends_while_at_peace"
    },
    "tests": [
@@ -1141,7 +1162,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "slashing"
    },
    "tests": [
@@ -1187,7 +1208,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "kill_switch_law"
    },
    "tests": [
@@ -1233,7 +1254,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "weapons_write_off"
    },
    "tests": [
@@ -1277,7 +1298,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_irremovable_power"
    },
    "tests": [
@@ -1321,7 +1342,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "kpi_contract"
    },
    "tests": [
@@ -1364,7 +1385,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "glass_pocket"
    },
    "tests": [
@@ -1408,7 +1429,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "covert_lobbying"
    },
    "tests": [
@@ -1452,7 +1473,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "full_product_cost"
    },
    "tests": [
@@ -1490,7 +1511,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "reserve_share"
    },
    "tests": [
@@ -1530,7 +1551,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "invisible_extraction"
    },
    "tests": [
@@ -1576,7 +1597,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "sensor_income"
    },
    "tests": [
@@ -1619,7 +1640,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "statements_verified"
    },
    "tests": [
@@ -1657,7 +1678,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "quadratic_cost"
    },
    "tests": [
@@ -1703,7 +1724,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "field_weight"
    },
    "tests": [
@@ -1746,7 +1767,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "open_algorithms"
    },
    "tests": [
@@ -1787,7 +1808,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "personal_assets_heritable"
    },
    "tests": [
@@ -1829,7 +1850,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_infrastructure_inheritance"
    },
    "tests": [
@@ -1872,7 +1893,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ultra_large_return"
    },
    "tests": [
@@ -1914,7 +1935,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ubr_by_birth"
    },
    "tests": [
@@ -1956,7 +1977,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "contribution_obligation"
    },
    "tests": [
@@ -1998,7 +2019,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "passivity_rating"
    },
    "tests": [
@@ -2046,7 +2067,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "main_equation"
    },
    "tests": [
@@ -2083,7 +2104,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "b_index_range"
    },
    "tests": [
@@ -2121,7 +2142,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "k_calibration"
    },
    "tests": [
@@ -2164,7 +2185,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "kill_switches_at_b_min"
    },
    "tests": [
@@ -2208,7 +2229,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_on_chain_tuning"
    },
    "tests": [
@@ -2255,7 +2276,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "upgrade_and_simulation"
    },
    "tests": [
@@ -2298,7 +2319,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_protocol_modifies_parameters"
    },
    "tests": [
@@ -2343,7 +2364,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "system_failure_after_180_days"
    },
    "tests": [
@@ -2386,7 +2407,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "stack_only"
    },
    "tests": [
@@ -2422,7 +2443,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "level0_weight"
    },
    "tests": [
@@ -2458,7 +2479,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "level0_coverage"
    },
    "tests": [
@@ -2565,7 +2586,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "level1_weight"
    },
    "tests": [
@@ -2637,7 +2658,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "hash_before_return"
    },
    "tests": [
@@ -2669,7 +2690,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "level2_weight"
    },
    "tests": [
@@ -2747,7 +2768,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "validator_stake"
    },
    "tests": [
@@ -2794,7 +2815,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "divergence_arbitration"
    },
    "tests": [
@@ -2838,7 +2859,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "nuclear_bloc_distribution"
    },
    "tests": [
@@ -2880,7 +2901,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "node_energy"
    },
    "tests": [
@@ -2964,7 +2985,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ptl_confirmed_nodes"
    },
    "tests": [
@@ -3009,7 +3030,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "dead_man_switch"
    },
    "tests": [
@@ -3056,7 +3077,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "mercy_suspension"
    },
    "tests": [
@@ -3104,7 +3125,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "council_sortition"
    },
    "tests": [
@@ -3150,7 +3171,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "mercy_within_scope"
    },
    "tests": [
@@ -3193,7 +3214,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_applicability_expansion"
    },
    "tests": [
@@ -3236,7 +3257,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_s2_s3_override"
    },
    "tests": [
@@ -3280,7 +3301,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_new_authority"
    },
    "tests": [
@@ -3322,7 +3343,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "mercy_ends_with_crisis_scope"
    },
    "tests": [
@@ -3368,7 +3389,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "severity_only"
    },
    "tests": [
@@ -3411,7 +3432,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "startup_cluster_launch"
    },
    "tests": [
@@ -3492,7 +3513,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "connection_by_referendum"
    },
    "tests": [
@@ -3538,7 +3559,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ownership_caps"
    },
    "tests": [
@@ -3582,7 +3603,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "cap_violation_sanction"
    },
    "tests": [
@@ -3661,7 +3682,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "six_startup_signatures"
    },
    "tests": [
@@ -3697,7 +3718,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "genesis_header"
    },
    "tests": [
@@ -3729,7 +3750,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "genesis_parameters"
    },
    "tests": [
@@ -3761,7 +3782,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "genesis_anchors"
    },
    "tests": [
@@ -3793,7 +3814,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "immutable_message"
    },
    "tests": [
@@ -3832,7 +3853,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "wild_slot_reserved"
    },
    "tests": [
@@ -3914,7 +3935,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "manifesto_embedded"
    },
    "tests": [
@@ -3959,7 +3980,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "genesis_no_predecessor"
    },
    "tests": [
@@ -4117,7 +4138,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "wild_node_definition"
    },
    "tests": [
@@ -4160,7 +4181,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_synergy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "message_cryptographically_embedded"
    },
    "tests": [

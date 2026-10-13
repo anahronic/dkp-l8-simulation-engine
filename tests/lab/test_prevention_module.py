@@ -53,6 +53,8 @@ def _status(checks, rid):
     ("PREV-3.6-02", lambda r: r["factors"].__setitem__("S", 0.123)),
     ("PREV-3.3-01", lambda r: r["ta"].__setitem__("fresh_classes", ["optical"])),
     ("PREV-3.8-01", lambda r: r["factors"].__setitem__("A", 1.5)),
+    ("PREV-1-01", lambda r: r["se"].__setitem__("valid", False)),             # credit without a valid measured suppression
+    ("PREV-7-01", lambda r: r.__setitem__("liability_presumed", True)),       # attribution creating a liability
 ])
 def test_rechecks_detect_counterexamples(rid, mutate):
     """Each re-check really looks at the records: a corrupted record makes it FAIL."""

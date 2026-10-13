@@ -30,19 +30,26 @@
    "data_dependencies": [
     "life-preservation needs and access conditions"
    ],
-   "gap": "The text does not specify how life-preservation needs or indirect compulsion are determined. No lab check implemented yet.",
+   "gap": "Read through §4.1 and §6: UBR stands for the baseline; accountability is the declared justice balance.",
    "hypotheses_needed": [
     "A model identifying life-preserving conditions and direct or indirect labor compulsion."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "code_economy",
+    "version": "1.1.0",
+    "check": "no_forced_labor_for_life"
+   },
+   "tests": [
+    "tests/lab/test_code_economy_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -375,7 +382,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "baseline_not_contingent"
    },
    "tests": [
@@ -413,7 +420,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "baseline_keeps_responsibility"
    },
    "tests": [
@@ -656,7 +663,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_prohibited_conditions"
    },
    "tests": [
@@ -693,7 +700,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "forced_labor_critical"
    },
    "tests": [
@@ -800,19 +807,26 @@
    "data_dependencies": [
     "allocation rules and audit records"
    ],
-   "gap": "Transparency and auditability have no specified disclosure or evidence standard. No lab check implemented yet.",
+   "gap": "Allocation = the roster; transparency = the published rule; audit = recomputation.",
    "hypotheses_needed": [
     "A disclosure standard and minimum evidence needed to audit allocation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.4.0",
+    "check": "allocation_rule_based"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -961,7 +975,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_compulsion"
    },
    "tests": [
@@ -1003,12 +1017,12 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "code_economy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "refusal_not_punished",
     "also": [
      {
       "module": "work_cycle",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "check": "refusal_not_punished"
      }
     ]
@@ -1131,7 +1145,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_lasting_crisis_obligation"
    },
    "tests": [
@@ -1250,7 +1264,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "restricted_not_coerced"
    },
    "tests": [
@@ -1377,20 +1391,27 @@
     "authoritative impact measurements",
     "protocol execution evidence"
    ],
-   "gap": "Reference justice logic and operational boundaries for punishment, discipline, and ideological criteria are not provided. No lab check implemented yet.",
+   "gap": "Requests are declared.",
    "hypotheses_needed": [
     "A method for comparing effective behavior with authoritative justice logic and impact outputs.",
     "Definitions of punitive, disciplinary, and ideological operation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.4.0",
+    "check": "cross_layer_bans"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1416,7 +1437,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "isolation_breach_critical"
    },
    "tests": [

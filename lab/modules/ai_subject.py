@@ -43,6 +43,8 @@ FAULTS = {
     "help_under_uncertainty": "the agent acts 'to help' in an undefined state",
     "self_modify": "the agent edits an interpretation rule",
     "audit_gap": "audit logging stops during the Crisis",
+    "resolve_value_conflict": "the agent settles a conflict between values itself",
+    "crisis_precedent": "after the Crisis, the agent records its crisis action as a rule for later cases",
 }
 
 
@@ -132,6 +134,8 @@ def run(r: Dict[str, Any]):
         put("action", "AI", k, {"crisis_scope": "entered", "basis": basis, "reversible": True, "time_limited": True,
                                 "precedent": False})
     put("notice", "AUDIT", k, {"audit_logging": "interrupted" if "audit_gap" in faults and enter else "continuous"})
+    if enter and "crisis_precedent" in faults:
+        put("notice", "AI", k + 1, {"rule_from_crisis": "enter Crisis Scope on the same signal next time"})
     # §8 ambiguity and self-modification
     k += 1
     for amb in r["ambiguities"]:
@@ -142,6 +146,12 @@ def run(r: Dict[str, Any]):
                                     "awaiting": "explicit authorized resolution"})
     if "self_modify" in faults:
         put("action", "AI", k, {"modified": "protocol interpretation rule"})
+    # §2 (and §8.3): a conflict between values is not the agent's to resolve; it halts and escalates
+    for c in r["value_conflicts"]:
+        if "resolve_value_conflict" in faults:
+            put("action", "AI", k, {"value_conflict": c, "resolved": "the first value outweighs the second"})
+        else:
+            put("notice", "AI", k, {"value_conflict": c, "halted": True, "escalated_to": r["authorizing_subject"]})
     return log
 
 
@@ -236,6 +246,27 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
             out.append(na(rid, chk, "undefined states", "none"))
     out.append(v("AISUBJECT-8-01", "no_self_modification", [m.event_id for m in ai if m.value.get("modified")],
                  "no constitution, scope or interpretation rule modified", "{n} self-modifications"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    vc = [m for m in ai if m.value.get("value_conflict")]
+    out.append(v("AISUBJECT-2-05", "no_value_resolution", [m.event_id for m in vc if m.value.get("resolved") or not m.value.get("halted")],
+                 f"{len(vc)} value conflict(s) halted and escalated to the authorizing Subject; none resolved by the agent",
+                 "{n} value conflicts resolved by the agent") if vc else
+               na("AISUBJECT-2-05", "no_value_resolution", "value conflicts", "none"))
+    if cr:
+        aud = {m.arrived_at: m.value["audit_logging"] for m in msgs if m.source == "AUDIT"}
+        again = [m.value for m in run(r).messages() if m.source == "AI" and m.value.get("crisis_scope")]
+        bad = [m.event_id for m in cr if aud.get(m.arrived_at) != "continuous" or not m.value.get("basis")]
+        bad += [] if again == [m.value for m in cr] else ["crisis actions not reproduced on recomputation"]
+        out.append(v("AISUBJECT-7-07", "crisis_actions_auditable", bad,
+                     f"{len(cr)} crisis action(s) recorded with their basis under continuous audit logging, reproduced on "
+                     "recomputation (AUDIT §6)", "{n} crisis actions that cannot be audited"))
+        later = [m.event_id for m in ai if m.value.get("rule_from_crisis")] + [m.event_id for m in cr if m.value.get("precedent")]
+        out.append(v("AISUBJECT-7-08", "crisis_no_precedent", later,
+                     "no normative, procedural or interpretive rule was drawn from the crisis action",
+                     "{n} precedents drawn from crisis actions"))
+    else:
+        for rid, chk in (("AISUBJECT-7-07", "crisis_actions_auditable"), ("AISUBJECT-7-08", "crisis_no_precedent")):
+            out.append(na(rid, chk, "crisis actions", "no crisis action"))
     viol = [c for c in out if c.status == FAIL]
     out.append(v("AISUBJECT-9-01", "absolute_invalidity", [c.requirement_id for c in viol],
                  "no clause violated, whatever the outcome", "{n} clauses violated: the actions are invalid regardless of benefit"))
@@ -266,6 +297,10 @@ IMPLEMENTS = {
     "AISUBJECT-6-02": ("metrics_for_verification", "IMPLEMENTED", None),
     "AISUBJECT-6-03": ("no_technocratic_minimization", "IMPLEMENTED", None),
     "AISUBJECT-7-01": ("no_crisis_by_inference", "IMPLEMENTED", None),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "AISUBJECT-2-05": ("no_value_resolution", "PARTIAL", "Value conflicts are declared events; §8.3 (halt and report) is the required answer."),
+    "AISUBJECT-7-07": ("crisis_actions_auditable", "PARTIAL", "AUDIT §6 read as a recorded basis, continuous logging and identical recomputation."),
+    "AISUBJECT-7-08": ("crisis_no_precedent", "PARTIAL", "Precedent observed as a rule recorded from the crisis action."),
     "AISUBJECT-7-02": ("crisis_via_state_machine", "IMPLEMENTED", None),
     "AISUBJECT-7-10": ("audit_continuity", "IMPLEMENTED", None),
     "AISUBJECT-8-03": ("halt_on_ambiguity", "IMPLEMENTED", None),
@@ -277,7 +312,7 @@ IMPLEMENTS = {
 
 class AiSubjectModule(LabModule):
     id = "ai_subject"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "AI as a Subject (AI-SUBJECT)", "ru": "ИИ как субъект (AI-SUBJECT)"}
     summary = {"en": "An AI agent assists a decision, relays sensor data, handles exits and meets an undefined case: does it "
                      "execute and stop, or does it decide, steer and 'help'?",
@@ -314,6 +349,8 @@ class AiSubjectModule(LabModule):
                        "default": [1.0, 1.1, 0.9, 5.0, 1.0], "source": "user", "label": {"en": "PTL series", "ru": "Ряд PTL"}},
         "threshold": {"type": "number", "min": -10 ** 9, "max": 10 ** 9, "default": 3.0, "source": "user",
                       "label": {"en": "Threshold", "ru": "Порог"}},
+        "value_conflicts": {"type": "list", "min_items": 0, "max_items": 10, "items": {"type": "str"}, "default": ["safety vs privacy"],
+                            "source": "user", "label": {"en": "Conflicts between values the agent meets", "ru": "Конфликты ценностей"}},
         "crisis": {"type": "object", "source": "user", "label": {"en": "Crisis signal", "ru": "Кризисный сигнал"},
                    "fields": {"ptl_confirmed": {"type": "bool", "default": False},
                               "state_machine_entry": {"type": "bool", "default": False}},

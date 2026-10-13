@@ -29,7 +29,7 @@ FAULT_CASES = {
     "conditional_fallback": ["EB-5.x-05"],
     "scope_drift": ["EB-4-02"],
     "degraded_in_critical": ["EB-10-01"],
-    "truth_reading": ["EB-12-01"],
+    "truth_reading": ["EB-12-01", "EB-4-01"],
     "mutate_on_dispute": ["EB-7.2-01"],
     "no_delta": ["EB-7.2-04"],
     "suppress_dispute": ["EB-3-01", "EB-6-01"],

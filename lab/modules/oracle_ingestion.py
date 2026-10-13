@@ -395,6 +395,13 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     out.append(v("ORACLE-15-01", "cross_layer_isolation", [x["layer_request"] for x in lr if x["executed"] or x["by"] not in br],
                  "every higher-layer attempt refused and flagged as a critical integrity breach", "{n} attempts executed or unflagged")
                if lr else na("ORACLE-15-01", "cross_layer_isolation", "higher-layer requests", "none"))
+    # Epistemic Interpretation Note b) (returned after the reading of checkpoint 6): higher layers never override measured
+    # reality; corrections arrive as new PTL observations (ERROR §8)
+    out.append(v("ORACLE-EpistemicInterpretationNote-02", "no_override_of_measured_reality",
+                 [f"{x['by']}: {x['layer_request']}" for x in lr if x["executed"]],
+                 f"{len(lr)} higher-layer attempt(s) to change weights, TTLs or values refused; measured reality stands as PTL wrote it",
+                 "{n} higher-layer overrides of measured reality") if lr else
+               na("ORACLE-EpistemicInterpretationNote-02", "no_override_of_measured_reality", "higher-layer requests", "none"))
     # constants and finality
     table = {"source": SOURCE_CAP, "owner": OWNER_CAP, "divergence": DIVERGENCE, "halt": CONF_HALT, "coverage": COVERAGE_MIN}
     out.append(v("ORACLE-16-01", "constants_source_owner_divergence", [] if table["source"] == table["owner"] == 0.04 and table["divergence"] == 0.07 else ["table"],
@@ -519,6 +526,7 @@ IMPLEMENTS = {
     "ORACLE-14-03": ("deferral_changes_nothing", "IMPLEMENTED", None),
     "ORACLE-14-04": ("deferral_time_limited", "PARTIAL", "Limit = 180 days of Code A.4 (F-027 applies)."),
     "ORACLE-15-01": ("cross_layer_isolation", "IMPLEMENTED", None),
+    "ORACLE-EpistemicInterpretationNote-02": ("no_override_of_measured_reality", "PARTIAL", "Observed as higher-layer requests to change weights, TTLs or values."),
     "ORACLE-16-01": ("constants_source_owner_divergence", "IMPLEMENTED", None),
     "ORACLE-16-02": ("constants_window_halt_coverage", "IMPLEMENTED", None),
     "ORACLE-18-01": ("immutable_once_deployed", "IMPLEMENTED", None),
@@ -538,7 +546,7 @@ def _lst(fields, default, label, mx=20):
 
 class OracleIngestionModule(LabModule):
     id = "oracle_ingestion"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Physical Truth Layer pipeline (ORACLE §1-§18)", "ru": "Конвейер слоя физической истины (ORACLE §1-§18)"}
     summary = {"en": "Thirty sensors, a human panel, a proprietary feed, one class going silent, a request to enforce on B(t): does the PTL "
                      "admit, weight, aggregate, halt and refuse exactly as ORACLE says?",

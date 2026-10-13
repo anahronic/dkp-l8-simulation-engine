@@ -99,19 +99,26 @@
    "data_dependencies": [
     "DTI day indices"
    ],
-   "gap": "The referenced time protocol and its indexing rules are absent. No lab check implemented yet.",
+   "gap": null,
    "hypotheses_needed": [
     "Supply the authoritative DTI indexing rules."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "IMPLEMENTED",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.4.0",
+    "check": "days_indexed_by_time"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -137,7 +144,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "cycle_day"
    },
    "tests": [
@@ -176,7 +183,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "workday_has_work"
    },
    "tests": [
@@ -209,7 +216,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "restday_no_work"
    },
    "tests": [
@@ -242,7 +249,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "presence_window"
    },
    "tests": [
@@ -314,7 +321,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "recovery_block_present"
    },
    "tests": [
@@ -356,7 +363,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "default_cycle"
    },
    "tests": [
@@ -392,7 +399,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "max_consecutive"
    },
    "tests": [
@@ -427,7 +434,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "rest_frequency"
    },
    "tests": [
@@ -461,7 +468,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "sixty_cycles"
    },
    "tests": [
@@ -498,7 +505,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "week_without_authority"
    },
    "tests": [
@@ -537,7 +544,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "workday_allocation"
    },
    "tests": [
@@ -575,7 +582,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "recommended_layout"
    },
    "tests": [
@@ -608,7 +615,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "recovery_not_work"
    },
    "tests": [
@@ -676,7 +683,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "recovery_untouchable"
    },
    "tests": [
@@ -708,7 +715,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "recovery_activities"
    },
    "tests": [
@@ -742,7 +749,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "cycle_accounting_days"
    },
    "tests": [
@@ -775,7 +782,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "cycle_accounting_hours"
    },
    "tests": [
@@ -809,7 +816,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "year_accounting"
    },
    "tests": [
@@ -841,7 +848,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "year_recovery_480"
    },
    "tests": [
@@ -881,7 +888,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "recovery_invariant"
    },
    "tests": [
@@ -920,7 +927,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "planning_failure"
    },
    "tests": [
@@ -960,7 +967,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "continuity_by_shifts"
    },
    "tests": [
@@ -1003,7 +1010,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_exhaustion"
    },
    "tests": [
@@ -1041,7 +1048,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "shift_allocation"
    },
    "tests": [
@@ -1078,7 +1085,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "high_intensity_recovery"
    },
    "tests": [
@@ -1224,19 +1231,26 @@
    "data_dependencies": [
     "crisis declarations and scope records"
    ],
-   "gap": "The text does not define crisis qualification or sufficient scope clarity. No lab check implemented yet.",
+   "gap": "The crisis scope is a declared window; the exception modelled is crisis drafting.",
    "hypotheses_needed": [
     "Declare crisis qualification and scope completeness criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.4.0",
+    "check": "exception_only_in_crisis_scope"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1265,7 +1279,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "exception_limited"
    },
    "tests": [
@@ -1334,19 +1348,26 @@
     "crisis protocol traceability requirements",
     "exception audit records"
    ],
-   "gap": "The applicable crisis protocols and their required traceability fields are absent. No lab check implemented yet.",
+   "gap": "Traceability = an exception record with its crisis scope and DTI-Day.",
    "hypotheses_needed": [
     "Identify the applicable crisis protocols and supply their traceability requirements."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.4.0",
+    "check": "exception_traceable"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1376,7 +1397,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "exception_no_precedent"
    },
    "tests": [
@@ -1413,7 +1434,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "three_layers"
    },
    "tests": [

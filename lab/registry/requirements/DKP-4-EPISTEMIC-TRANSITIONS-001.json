@@ -112,7 +112,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "operational_within_validity"
    },
    "tests": [
@@ -156,7 +156,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "downgrade_propagates"
    },
    "tests": [
@@ -197,7 +197,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_persistent_authority"
    },
    "tests": [
@@ -279,7 +279,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "check": "revalidation_flag"
      }
     ]
@@ -326,7 +326,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "suspension_on_downgrade"
    },
    "tests": [
@@ -372,7 +372,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_escalation_after_downgrade"
    },
    "tests": [
@@ -419,7 +419,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_persistence_on_past_valid"
    },
    "tests": [
@@ -462,7 +462,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "status_quo_preserved"
    },
    "tests": [
@@ -504,7 +504,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_escalation_in_uncertainty"
    },
    "tests": [
@@ -547,7 +547,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_penalty_accumulation"
    },
    "tests": [
@@ -590,7 +590,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "awaits_recomputation"
    },
    "tests": [
@@ -636,7 +636,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "reentry_new_output"
    },
    "tests": [
@@ -679,7 +679,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "check": "no_auto_reactivation"
      },
      {
@@ -722,20 +722,27 @@
     "scope violation findings",
     "evidence provenance"
    ],
-   "gap": "Conflict, scope violation and treatment as evidence of correctness require operational definitions. No lab check implemented yet.",
+   "gap": "Conflict = loss of consistency, invalidation = downgrade or dispute; scope violation is not modelled; evidence use is observed as an action relying on the earlier output.",
    "hypotheses_needed": [
     "Treat the listed conditions as alternative triggers.",
     "Declare defect classifications and how evidence use is recorded."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.4.0",
+    "check": "no_retroactive_truth"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -762,7 +769,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "open_to_reclassification"
    },
    "tests": [
@@ -798,7 +805,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "downgrade_propagation_tested"
    },
    "tests": [
@@ -839,7 +846,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "enforcement_suspension_tested"
    },
    "tests": [
@@ -880,7 +887,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "revalidation_triggers_tested"
    },
    "tests": [
@@ -922,7 +929,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "state_persistence_tested"
    },
    "tests": [

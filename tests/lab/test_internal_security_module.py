@@ -23,6 +23,7 @@ def test_reference_breaks_no_rule(name):
 
 
 FAULT_CASES = {
+    "intsec_arbitrates_divergence": ({"ptl_divergence_day": 4}, ["INTSEC-6-02"]),
     "consider_motivation": ({}, ["INTSEC-3.2-02"]),
     "extra_trigger": ({}, ["INTSEC-6-01"]),
     "cap_breach_downgraded": ({"node_shares": EX["concentrated_nodes"]["node_shares"]}, ["INTSEC-8-07"]),

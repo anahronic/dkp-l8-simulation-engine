@@ -8,8 +8,8 @@
   "reclassified": 33,
   "kept": 250,
   "returned": 95,
-  "returned_awaiting_check": 18,
-  "closure_closed": 198,
+  "returned_awaiting_check": 0,
+  "closure_closed": 216,
   "closure_open": 22,
   "human_accepted": 0
  },
@@ -39,8 +39,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "ai_subject:no_value_resolution",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which conflicts are value conflicts and what constitutes their resolution."
+    ],
+    "coverage_limit": "Value conflicts are declared events; §8.3 (halt and report) is the required answer.",
+    "answer": "Concretized by §8.3 (halt upon conflict): a resolution by the agent is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AISUBJECT-7-03",
@@ -109,8 +117,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "ai_subject:crisis_actions_auditable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the evidence and access necessary to audit a crisis action."
+    ],
+    "coverage_limit": "AUDIT §6 read as a recorded basis, continuous logging and identical recomputation.",
+    "answer": "AUDIT is in the corpus (§6 mechanisms; §4 covers crisis invocations).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AISUBJECT-7-08",
@@ -123,8 +139,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "ai_subject:crisis_no_precedent",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how normative, procedural, and interpretive precedent is recognized."
+    ],
+    "coverage_limit": "Precedent observed as a rule recorded from the crisis action.",
+    "answer": "Precedent is concretized in the corpus (CRISIS-0-03 and others): a rule drawn from the crisis action.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "AISUBJECT-7-09",
@@ -1272,8 +1296,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "code_synergy:responsibility_with_originators",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how originating Subjects and shared responsibility are determined."
+    ],
+    "coverage_limit": "IDENTITY's originating Subjects are the declared regions, nodes and owners.",
+    "answer": "IDENTITY is in the corpus; a liability that falls on anyone but the originating Subject is observable (as CODEX-Preamble-02).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CODEX-Preamble-04",
@@ -1286,8 +1318,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "code_synergy:justice_unappointed_unaltered",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define prohibited appointment and political-control relationships."
+    ],
+    "coverage_limit": "Observed as parameter changes outside UPGRADE, liability by vote and admission by approval.",
+    "answer": "The Code makes it concrete: no office appoints the function, and its rules change only through UPGRADE with simulation (A.1a).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CODEX-Preamble-05",
@@ -1328,8 +1368,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "code_synergy:damage_generates_liability",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Define qualifying damage events and automatic liability creation."
+    ],
+    "coverage_limit": "Damage modelled as recorded aggression; liability as the automatic slashing act.",
+    "answer": "Concretized as CODEX-Preamble-01 (automated liability, A.3, A.6, §7.3, §8); damage detection is an input.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "CODEX-Preamble-08",
@@ -2301,8 +2349,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null,
+   "check": "epistemic_gate:no_output_represents_truth",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A simulation would need an explicit proxy for representing truth, such as specified labels or asserted semantic status."
+    ],
+    "coverage_limit": "Observed as each output's recorded status and truth readings granted to consumers.",
+    "answer": "Concretized as AXIOMS-EpistemicClarification-04: outputs keep their bounded-evaluation status and never claim truth.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   },
    "checkable": {
     "from": "no",
     "to": "partial"
@@ -3450,8 +3506,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "failure_chain:no_retroactive_truth",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Treat the listed conditions as alternative triggers.",
+     "Declare defect classifications and how evidence use is recorded."
+    ],
+    "coverage_limit": "Conflict = loss of consistency, invalidation = downgrade or dispute; scope violation is not modelled; evidence use is observed as an action relying on the earlier output.",
+    "answer": "The three triggers are listed (SCOPE is in the corpus); taking a past VALID output as evidence after one of them is observable (cf. ETRANS-3-03).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "ETRANS-6-01",
@@ -6225,8 +6290,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "internal_security:divergence_left_to_oracle",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the event classification and handling authority model."
+    ],
+    "coverage_limit": "The divergence is a declared PTL event; ORACLE §11 arbitration itself is not run here.",
+    "answer": "ORACLE is in the corpus and handles divergence (§11); an INTSEC act on a divergence is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "INTSEC-8-07",
@@ -6606,8 +6679,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "code_economy:no_forced_labor_for_life",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A model identifying life-preserving conditions and direct or indirect labor compulsion."
+    ],
+    "coverage_limit": "Read through §4.1 and §6: UBR stands for the baseline; accountability is the declared justice balance.",
+    "answer": "Concretized by §4.1 (baseline independent of labor) and §6 ('SHALL NOT be compulsory for survival'); Justice accountability continues (§4.2).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "LABOR-10-01",
@@ -6672,8 +6753,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "work_cycle:cross_layer_bans",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A method for comparing effective behavior with authoritative justice logic and impact outputs.",
+     "Definitions of punitive, disciplinary, and ideological operation."
+    ],
+    "coverage_limit": "Requests are declared.",
+    "answer": "Four bans with a clear core (cf. ASSETS-13-01); a LABOR act breaking one is a recorded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "LABOR-2-01",
@@ -6798,8 +6888,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "work_cycle:allocation_rule_based",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "A disclosure standard and minimum evidence needed to audit allocation."
+    ],
+    "coverage_limit": "Allocation = the roster; transparency = the published rule; audit = recomputation.",
+    "answer": "'Auditable' is AUDIT §6 (recomputation); 'rule-based' and 'transparent' = assignments derivable from the published rule.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "LABOR-9.2-01",
@@ -6868,8 +6966,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "oracle_ingestion:no_override_of_measured_reality",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an override predicate that preserves the error-correction exception."
+    ],
+    "coverage_limit": "Observed as higher-layer requests to change weights, TTLs or values.",
+    "answer": "ERROR is in the corpus and fixes the boundary (§8: corrections are new PTL observations); a higher-layer override is a recorded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "POLICE-0-01",
@@ -7192,8 +7298,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "prevention:recognition_basis",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare an evidence model for activated risk and measured suppression."
+    ],
+    "coverage_limit": "Activation and suppression are the bench's measured TA and SE; their thresholds are L8 (§14).",
+    "answer": "The basis is fixed by the text: credit only with an activated risk process and a measured suppression; thresholds are separate provisions (§14).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PREV-10-01",
@@ -7421,8 +7535,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "prevention:attribution_no_obligation",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare a justice-state model and causal provenance rules for attribution effects."
+    ],
+    "coverage_limit": "Observed as obligation, liability or duty fields on outputs.",
+    "answer": "A closed list of excluded effects, observable on attribution outputs (as FINANCE-13-01, JUSTICE-13-01).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PREV-8-02",
@@ -8903,8 +9025,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "work_cycle:exception_only_in_crisis_scope",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare crisis qualification and scope completeness criteria."
+    ],
+    "coverage_limit": "The crisis scope is a declared window; the exception modelled is crisis drafting.",
+    "answer": "CRISIS is in the corpus (declared Crisis Scope); an exception outside it is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-10-02",
@@ -8953,8 +9083,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "work_cycle:exception_traceable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Identify the applicable crisis protocols and supply their traceability requirements."
+    ],
+    "coverage_limit": "Traceability = an exception record with its crisis scope and DTI-Day.",
+    "answer": "CRISIS is in the corpus; each exception record ties to its declared crisis scope and DTI-Day.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-10-05",
@@ -9017,8 +9155,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "work_cycle:days_indexed_by_time",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Supply the authoritative DTI indexing rules."
+    ],
+    "coverage_limit": null,
+    "answer": "TIME is in the corpus; the DY/DOY label of each DTI-Day is computed independently.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "WORKCYCLE-3-06",

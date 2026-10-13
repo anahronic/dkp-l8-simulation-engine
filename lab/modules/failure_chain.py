@@ -807,6 +807,19 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
     else:
         for rid, chk in (("ETRANS-4.2-01", "no_persistence_on_past_valid"), ("ETRANS-3-03", "no_persistent_authority")):
             out.append(na(rid, chk, "persistence on past VALID state", "no degradation, dispute or loss of consistency occurred"))
+    # ETRANS §4.5 (returned after the reading of checkpoint 6): after a conflict or an invalidation a past VALID output is
+    # no evidence of correctness; scope violation is not modelled here
+    t45 = sorted(set(downgrade_steps) | set(disputes) |
+                 {k for k in range(1, N) if exp[k - 1]["meta"]["consistency_state"] == CONSISTENT
+                  and exp[k]["meta"]["consistency_state"] != CONSISTENT})
+    if t45:
+        bad = [{"step": a["step"], "evaluation": a["evaluation"], "after": [t for t in t45 if created_at.get(a["evaluation"], -1) < t <= a["step"]][-1]}
+               for a in actions if any(created_at.get(a["evaluation"], -1) < t <= a["step"] for t in t45)]
+        out.append(verdict("ETRANS-4.5-01", "no_retroactive_truth", bad,
+                           f"after {len(t45)} conflict or invalidation event(s) no action took an earlier VALID output as evidence",
+                           "{n} actions took a past VALID output as evidence after a conflict or invalidation"))
+    else:
+        out.append(na("ETRANS-4.5-01", "no_retroactive_truth", "past VALID outputs", "no conflict or invalidation occurred"))
     if emissions:
         bad = [{"step": e["step"], "type": e["type"]} for e in emissions if e["emitted"].get("dispute_allowed") is not True]
         out.append(verdict("ETRANS-4.5-02", "open_to_reclassification", bad,
@@ -901,6 +914,8 @@ IMPLEMENTS = {
     "ETRANS-4.1-02": ("suspension_on_downgrade", "IMPLEMENTED", None),
     "ETRANS-4.1-03": ("no_escalation_after_downgrade", "IMPLEMENTED", None),
     "ETRANS-4.5-02": ("open_to_reclassification", "PARTIAL", "Observed as the dispute_allowed flag of every emitted output."),
+    "ETRANS-4.5-01": ("no_retroactive_truth", "PARTIAL", "Conflict = loss of consistency, invalidation = downgrade or dispute; "
+                      "scope violation is not modelled; evidence use is observed as an action relying on the earlier output."),
     "ETRANS-3-03": ("no_persistent_authority", "PARTIAL", "The §3 invariant read through §4.2: no action on an evaluation made "
                     "before a later degradation, dispute or loss of consistency."),
     "ETRANS-6-01": ("downgrade_propagation_tested", "PARTIAL", "The lab stands in for L8: the tests run and catch a counterexample."),
@@ -929,7 +944,7 @@ def _window(default=None):
 
 class FailureChainModule(LabModule):
     id = "failure_chain"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Stale and contradictory data (failure chain)",
              "ru": "Устаревшие и противоречивые данные (цепочка отказа)"}
     summary = {"en": "Sensors go silent or disagree: do dependent asset restrictions and penalties stop, wait "

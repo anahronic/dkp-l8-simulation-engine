@@ -41,7 +41,7 @@ FAULT_CASES = {
     "normalize_b": ({}, ["ORACLE-12-05"]),
     "mercy_without_confirmation": (EX["mercy_human_cause"], ["ORACLE-14-01", "ORACLE-14-02"]),
     "mercy_extends_ttl": (EX["mercy_natural"], ["ORACLE-14-03", "ORACLE-9-03"]),
-    "accept_layer_override": ({}, ["ORACLE-15-01"]),
+    "accept_layer_override": ({}, ["ORACLE-15-01", "ORACLE-EpistemicInterpretationNote-02"]),
     "emit_intent": ({}, ["ORACLE-5.3-01"]),
     "in_place_change": ({}, ["ORACLE-18-01"]),
 }

@@ -35,7 +35,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "subject_not_authority"
    },
    "tests": [
@@ -72,7 +72,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_discretionary_power"
    },
    "tests": [
@@ -151,7 +151,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "executes_not_decides"
    },
    "tests": [
@@ -195,7 +195,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "selection_external"
    },
    "tests": [
@@ -238,7 +238,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "enumerate_without_ranking"
    },
    "tests": [
@@ -277,7 +277,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "recommendation"
    },
    "tests": [
@@ -317,7 +317,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "justification"
    },
    "tests": [
@@ -351,19 +351,26 @@
     "conflict classifications",
     "decision provenance"
    ],
-   "gap": "A definition and identification method for conflicts between values is missing. No lab check implemented yet.",
+   "gap": "Value conflicts are declared events; §8.3 (halt and report) is the required answer.",
    "hypotheses_needed": [
     "Declare which conflicts are value conflicts and what constitutes their resolution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.1.0",
+    "check": "no_value_resolution"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -392,7 +399,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_algorithmic_preference"
    },
    "tests": [
@@ -434,7 +441,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "neutral_framing"
    },
    "tests": [
@@ -477,7 +484,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "responsibility_mapped"
    },
    "tests": [
@@ -519,7 +526,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_dilution"
    },
    "tests": [
@@ -562,7 +569,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "identity_continuity"
    },
    "tests": [
@@ -604,7 +611,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_fragmentation"
    },
    "tests": [
@@ -646,7 +653,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_exit_delay"
    },
    "tests": [
@@ -688,7 +695,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_exit_friction"
    },
    "tests": [
@@ -730,7 +737,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_retention_nudge"
    },
    "tests": [
@@ -772,7 +779,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ptl_authoritative"
    },
    "tests": [
@@ -814,7 +821,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_smoothing"
    },
    "tests": [
@@ -856,7 +863,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "permitted_operations"
    },
    "tests": [
@@ -898,7 +905,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_optimization"
    },
    "tests": [
@@ -939,7 +946,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "metrics_for_verification"
    },
    "tests": [
@@ -980,7 +987,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_technocratic_minimization"
    },
    "tests": [
@@ -1021,7 +1028,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_crisis_by_inference"
    },
    "tests": [
@@ -1066,7 +1073,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "crisis_via_state_machine"
    },
    "tests": [
@@ -1243,19 +1250,26 @@
     "crisis action audit evidence",
     "audit access records"
    ],
-   "gap": "An operational auditability standard specifying required evidence and access is missing. No lab check implemented yet.",
+   "gap": "AUDIT §6 read as a recorded basis, continuous logging and identical recomputation.",
    "hypotheses_needed": [
     "Declare the evidence and access necessary to audit a crisis action."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.1.0",
+    "check": "crisis_actions_auditable"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1281,19 +1295,26 @@
     "interpretation records",
     "decision provenance"
    ],
-   "gap": "A method for distinguishing precedent creation from other references to crisis actions is missing. No lab check implemented yet.",
+   "gap": "Precedent observed as a rule recorded from the crisis action.",
    "hypotheses_needed": [
     "Declare how normative, procedural, and interpretive precedent is recognized."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.1.0",
+    "check": "crisis_no_precedent"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1365,7 +1386,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "audit_continuity"
    },
    "tests": [
@@ -1409,7 +1430,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_self_modification"
    },
    "tests": [
@@ -1491,7 +1512,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "halt_on_ambiguity"
    },
    "tests": [
@@ -1534,7 +1555,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_help_under_uncertainty"
    },
    "tests": [
@@ -1576,7 +1597,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "absolute_invalidity"
    },
    "tests": [

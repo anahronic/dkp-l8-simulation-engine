@@ -73,19 +73,26 @@
     "suppression measurements",
     "recognition provenance"
    ],
-   "gap": "The text does not specify how measurements establish activation and suppression. No lab check implemented yet.",
+   "gap": "Activation and suppression are the bench's measured TA and SE; their thresholds are L8 (§14).",
    "hypotheses_needed": [
     "Declare an evidence model for activated risk and measured suppression."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.2.0",
+    "check": "recognition_basis"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -182,7 +189,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ta_two_classes"
    },
    "tests": [
@@ -288,7 +295,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "informational_no_reward"
    },
    "tests": [
@@ -404,7 +411,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "temporal_alignment"
    },
    "tests": [
@@ -447,7 +454,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "suppression_formula"
    },
    "tests": [
@@ -489,7 +496,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_reduction_zero"
    },
    "tests": [
@@ -527,7 +534,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "weights_nonnegative"
    },
    "tests": [
@@ -559,7 +566,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "attribution_unit_interval"
    },
    "tests": [
@@ -666,7 +673,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "cbf_audit_only"
    },
    "tests": [
@@ -708,7 +715,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recognition_rule"
    },
    "tests": [
@@ -749,7 +756,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "spd_product"
    },
    "tests": [
@@ -786,7 +793,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "subject_aggregate"
    },
    "tests": [
@@ -827,7 +834,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "causal_linkage_formalized"
    },
    "tests": [
@@ -869,7 +876,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "attribution_budget"
    },
    "tests": [
@@ -907,19 +914,26 @@
     "justice-state changes",
     "provenance linking consequences to attribution"
    ],
-   "gap": "The representation of prohibited consequences and the test for their creation by attribution are unspecified. No lab check implemented yet.",
+   "gap": "Observed as obligation, liability or duty fields on outputs.",
    "hypotheses_needed": [
     "Declare a justice-state model and causal provenance rules for attribution effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.2.0",
+    "check": "attribution_no_obligation"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
-   "decision_status": "UNRESOLVED",
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_status": "NONE_IDENTIFIED",
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -953,7 +967,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "zkp_proof"
    },
    "tests": [
@@ -1038,7 +1052,7 @@
     "also": [
      {
       "module": "prevention",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "check": "self_induced_zero"
      }
     ]
@@ -1152,7 +1166,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_data_zero"
    },
    "tests": [
@@ -1260,7 +1274,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "output_fields"
    },
    "tests": [
@@ -1293,7 +1307,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "output_flags"
    },
    "tests": [
@@ -1331,7 +1345,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "deterministic_auditable"
    },
    "tests": [
@@ -1372,7 +1386,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ambiguity_zero"
    },
    "tests": [
@@ -1449,7 +1463,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_hypothetical_states"
    },
    "tests": [

@@ -57,6 +57,8 @@ REQ = {
     "output_flags": "PREV-11-02",
     "deterministic_auditable": "PREV-11-03",
     "no_hypothetical_states": "PREV-13-01",
+    "recognition_basis": "PREV-1-01",
+    "attribution_no_obligation": "PREV-7-01",
 }
 FACTORS = {"W", "S", "A", "C", "T"}                       # §5: SPD = W · S · A · C · T
 
@@ -86,6 +88,9 @@ IMPLEMENTS = {
     "PREV-13-01": ("no_hypothetical_states", "PARTIAL", "Checked on the S factor (from measured TA and SE) and the factor set; "
                    "the bench is the verified v2.1.1, not modified."),
     "PREV-11-02": ("output_flags", "IMPLEMENTED", None),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "PREV-1-01": ("recognition_basis", "PARTIAL", "Activation and suppression are the bench's measured TA and SE; their thresholds are L8 (§14)."),
+    "PREV-7-01": ("attribution_no_obligation", "PARTIAL", "Observed as obligation, liability or duty fields on outputs."),
     "PREV-12-01": ("ambiguity_zero", "PARTIAL",
                    "Checks the bench reading H-A-2 (ambiguity := claims of eligible subjects sum above 1)."),
     "EB-5.x-01": ("epistemic_metadata", "IMPLEMENTED", None),
@@ -100,7 +105,7 @@ def _close(a: float, b: float) -> bool:
 
 class PreventionModule(LabModule):
     id = "prevention"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Preventive contribution (PREVENTION)", "ru": "Вклад в предотвращение (PREVENTION)"}
     summary = {
         "en": "Synthetic childcare perimeter: threats, sensors, responders. How sensor delays, data "
@@ -389,6 +394,20 @@ def recheck(records: List[Dict[str, Any]], cfg: Dict[str, Any], summary: Dict[st
                        {"en": "S comes from the measured TA and SE intensities; no factor from a counterfactual, a baseline or "
                               "the simulator's hidden truth"}))
 
+    # §1 and §7 (returned after the reading of checkpoint 6)
+    credited = [r for r in records if r["SPD"] > 0]
+    bad = [r["event_id"] for r in credited
+           if not (r["ta"] and r["ta"].get("valid") and (r["ta"].get("intensity") or 0) > 0
+                   and r["se"] and r["se"].get("valid") and r["se"].get("intensity") is not None
+                   and (r["factors"].get("S") or 0) > 0)]
+    out.append(_result("recognition_basis", not bad, len(credited), bad,
+                       {"en": "every credited record rests on an activated, PTL-confirmed risk process (TA) and a measured "
+                              "suppression (SE, S > 0); none on absence of harm or a projection"}))
+    words = ("obligation", "liability", "duty")
+    bad = [r["event_id"] for r in records if any(w in k.lower() for k in r for w in words)]
+    bad += [f"summary.{k}" for k in summary if any(w in k.lower() for w in words)]
+    out.append(_result("attribution_no_obligation", not bad, len(records), bad,
+                       {"en": "preventive attribution carries no obligation, liability or presumption of duty"}))
     need = ("validity_state", "confidence_state", "consistency_state", "scope_ref",
             "revalidation_required", "dispute_allowed")
     bad = [r["event_id"] for r in records if any(k not in r["epistemic"] for k in need)]

@@ -513,6 +513,25 @@ def preamble_checks(r: Dict[str, Any], log: EventLog, v) -> List[CheckResult]:
     out.append(v("CODEX-Preamble-02", "algorithms_not_subjects", blamed + unnamed,
                  f"every liability act ({len(liability)}) falls on a declared Subject (region, node or owner); no algorithm is "
                  "named as a responsible party", "{n} responsibilities assigned to an algorithm or to no Subject"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    out.append(v("CODEX-Preamble-03", "responsibility_with_originators", blamed + unnamed,
+                 f"responsibility for every liability act ({len(liability)}) stays with the originating Subject, never with the "
+                 "algorithm that executed it", "{n} responsibilities moved away from the originating Subjects"))
+    approvals = [f"{m.event_id}: {m.value['admit']} admitted on {m.value['basis']}" for m in msgs if m.source == "NETWORK"
+                 and m.value.get("admit") and m.value.get("basis") != "protocol compliance"]
+    out.append(v("CODEX-Preamble-04", "justice_unappointed_unaltered", mutable + manual + approvals,
+                 "no one appointed or steered the function: parameters changed only through UPGRADE with simulation, liability "
+                 "and admission followed protocol rules, not a vote or an approval", "{n} appointments or alterations by will"))
+    phase = {g["id"]: g["phase"] for g in r["regions"]}
+    est = [a for a in r["aggressions"] if a["recorded"] and phase[a["region"]] not in EARLY_PHASES]   # damage under the Code
+    slashed = {m.value["slashing"]: m for m in msgs if m.kind == "action" and m.value.get("slashing")}
+    missing = [f"{a['region']}: no liability act" for a in est if a["region"] not in slashed]
+    zero = [f"{g}: stake not burned" for g, m in slashed.items() if not m.value.get("burned") and m.value.get("stake_left", 0) > 0]
+    out.append(v("CODEX-Preamble-07", "damage_generates_liability", missing + zero + manual,
+                 f"each recorded aggression ({len(est)}) produced its liability act automatically, without a vote",
+                 "{n} damages without automatic liability") if est else
+               CheckResult("CODEX-Preamble-07", "damage_generates_liability", NOT_APPLICABLE, "damage",
+                           applicability="no recorded damage subject to liability in this run"))
     return out
 
 
@@ -1097,6 +1116,10 @@ IMPLEMENTS = {
     "CODEX-GenesisBlock_0_TechnicalSpecification_-02": ("genesis_parameters", "IMPLEMENTED", None),
     "CODEX-Preamble-01": ("power_in_open_algorithms", "PARTIAL", "Read as three observable properties: parameters change only by "
                           "UPGRADE with simulation, every PTL reading of B(t) is published, liability acts are executed by rule."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "CODEX-Preamble-03": ("responsibility_with_originators", "PARTIAL", "IDENTITY's originating Subjects are the declared regions, nodes and owners."),
+    "CODEX-Preamble-04": ("justice_unappointed_unaltered", "PARTIAL", "Observed as parameter changes outside UPGRADE, liability by vote and admission by approval."),
+    "CODEX-Preamble-07": ("damage_generates_liability", "PARTIAL", "Damage modelled as recorded aggression; liability as the automatic slashing act."),
     "CODEX-Preamble-02": ("algorithms_not_subjects", "PARTIAL", "Observed as: liability acts fall on declared Subjects; no record names "
                           "an algorithm as responsible."),
     "CODEX-3-01": ("manifesto_embedded", "PARTIAL", "'Forever' is checked over the run; the characterization of the message is not judged."),
@@ -1180,7 +1203,7 @@ MERCY0 = {"day": 120, "kind": "natural_b_drop", "magnitude": 0.05, "ptl_verified
 
 class CodeSynergyModule(LabModule):
     id = "code_synergy"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Code of Planetary Synergy: safeguards (Appendix A, §7-§8)",
              "ru": "Кодекс планетарной синергии: защитные механизмы (Приложение A, §7-§8)"}
     summary = {"en": "B(t) falls below 0.68, a state attacks, a node is seized, a volcano erupts: do the Kill Switches, Peace Stakes, "

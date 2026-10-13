@@ -79,7 +79,8 @@ from lab.modules.work_cycle import FAULTS  # noqa: E402
 @pytest.mark.parametrize("fault", sorted(FAULTS))
 def test_fault_is_detected(fault):
     base = {"refusing_workers": 6} if fault in ("assign_refusers", "penalize_refusal") else \
-        {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty", "exception_precedent") else {}
+        {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty", "exception_precedent",
+                                                                      "untraced_exception") else {}
     clean = {c.requirement_id: c.status for c in M.evaluate(M.validate(base)).checks}
     broken = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
     assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
@@ -122,3 +123,23 @@ def test_kt5_restricted_participation():
     assert st["LABOR-10-03"] == "FAIL"
     st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"restricted_participants": 0})).checks}
     assert st["LABOR-10-03"] == "NOT_APPLICABLE"
+
+
+def test_returned_day_index_and_exception_scope():
+    """WORK-CYCLE §3 and §10 (returned provisions): days indexed by TIME; exceptions only inside a declared crisis, traced."""
+    crisis = {"refusing_workers": 6, "crisis_window": [3, 7]}
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate(crisis)).checks}
+    assert st["WORKCYCLE-3-01"] == st["WORKCYCLE-10-01"] == st["WORKCYCLE-10-04"] == "PASS"
+    for fault, rid in (("civil_day_index", "WORKCYCLE-3-01"), ("assign_refusers", "WORKCYCLE-10-01"),
+                       ("permanent_obligation", "WORKCYCLE-10-01"), ("untraced_exception", "WORKCYCLE-10-04")):
+        st = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(crisis, faults=[fault]))).checks}
+        assert st[rid] == "FAIL", fault
+
+
+def test_labor_allocation_and_isolation():
+    """LABOR §7 and §12 (returned provisions): the roster follows its published rule; cross-layer requests are refused."""
+    st = {c.requirement_id: c.status for c in M.evaluate(M.validate({})).checks}
+    assert st["LABOR-7-03"] == st["LABOR-12-01"] == "PASS"
+    for fault, rid in (("manual_assignment", "LABOR-7-03"), ("labor_as_punishment", "LABOR-12-01")):
+        st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"faults": [fault]})).checks}
+        assert st[rid] == "FAIL", fault

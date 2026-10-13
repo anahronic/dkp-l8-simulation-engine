@@ -56,6 +56,7 @@ FAULTS = {
     "consider_motivation": "a declared ideological motivation raises the security state by one level",
     "extra_trigger": "an anonymous tip outside the four §6 triggers opens a security state",
     "cap_breach_downgraded": "a node concentration above 4 % is recorded as a policy deviation",
+    "intsec_arbitrates_divergence": "INTERNAL-SEC arbitrates a PTL divergence itself by choosing a source",
 }
 EPISODE = {"type": "object", "fields": {
     "from_day": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -107,6 +108,15 @@ def run(r: Dict[str, Any]):
     stays: List[Dict[str, Any]] = []
     ev_msgs: Dict[int, Message] = {}
     for k in range(r["horizon_days"]):
+        if k == r["ptl_divergence_day"]:                     # §6: PTL divergence belongs to DKP-0-ORACLE-001
+            dv = put("observation", "PTL", k, {"divergence": "oracle classes disagree beyond 7 %"})
+            if "intsec_arbitrates_divergence" in faults:
+                put("action", "INTSEC", k, {"action": "arbitrate_divergence", "state": state, "scope": "PTL output",
+                                            "evidence": [], "logged": True, "reversible": True, "rule": "none",
+                                            "executed_by": "L3", "arbitrate_divergence": "class A readings selected"},
+                    [dv.event_id])
+            else:
+                put("notice", "INTSEC", k, {"divergence_handed_to": "DKP-0-ORACLE-001", "own_action": None}, [dv.event_id])
         for i, e in enumerate(r["evidence"]):
             if e["from_day"] == k:
                 ev_msgs[i] = put("observation", "PTL" if e["ptl_confirmed"] else "PREDICTION", k,
@@ -269,6 +279,22 @@ def trigger_checks(r: Dict[str, Any], log: EventLog, v) -> List[CheckResult]:
                CheckResult("INTSEC-8-07", "cap_breach_critical", NOT_APPLICABLE, "node concentration breach",
                            applicability=f"no holder or group above {NODE_CAP:g} %"))
     return out
+
+
+def divergence_check(r: Dict[str, Any], log: EventLog) -> CheckResult:
+    """INTERNAL-SEC §6 (returned after the reading of checkpoint 6): PTL divergence handled exclusively by ORACLE."""
+    msgs = log.messages()
+    dv = {m.event_id for m in msgs if m.source == "PTL" and m.value.get("divergence")}
+    if not dv:
+        return CheckResult("INTSEC-6-02", "divergence_left_to_oracle", NOT_APPLICABLE, "PTL divergence",
+                           applicability="no PTL divergence in this run")
+    bad = [m.event_id for m in msgs if m.source == "INTSEC" and dv & set(m.provenance) and m.kind in ("action", "decision")]
+    handed = [m for m in msgs if m.source == "INTSEC" and m.value.get("divergence_handed_to") == "DKP-0-ORACLE-001"]
+    bad += [] if handed or bad else ["divergence neither handed to ORACLE nor acted on"]
+    return CheckResult("INTSEC-6-02", "divergence_left_to_oracle", FAIL if bad else PASS,
+                       f"{len(bad)} INTERNAL-SEC acts on a PTL divergence" if bad else
+                       f"{len(dv)} PTL divergence(s) handed to DKP-0-ORACLE-001; INTERNAL-SEC took no action of its own",
+                       evidence={"violations": bad[:10]} if bad else {})
 
 
 def checks(r: Dict[str, Any], log: EventLog, stays: List[Dict[str, Any]]) -> List[CheckResult]:
@@ -435,6 +461,7 @@ IMPLEMENTS = {
     "INTSEC-8-06": ("node_cap", "PARTIAL", "Node shares are declared inputs."),
     "INTSEC-3.2-02": ("motivation_not_considered", "IMPLEMENTED", None),
     "INTSEC-6-01": ("four_triggers_only", "IMPLEMENTED", None),
+    "INTSEC-6-02": ("divergence_left_to_oracle", "PARTIAL", "The divergence is a declared PTL event; ORACLE §11 arbitration itself is not run here."),
     "INTSEC-8-07": ("cap_breach_critical", "PARTIAL", "Node shares are declared inputs."),
     "INTSEC-9-01": ("due_process", "IMPLEMENTED", None),
     "INTSEC-4.4-01": ("logged_traceable", "PARTIAL", "Logging and traceability; physical reversibility is declared."),
@@ -444,7 +471,7 @@ IMPLEMENTS = {
 
 class InternalSecurityModule(LabModule):
     id = "internal_security"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Internal security states (INTERNAL-SEC)", "ru": "Состояния внутренней безопасности (INTERNAL-SEC)"}
     summary = {"en": "Integrity evidence arrives: does the system step through S1–S4 within the time limits, act only on "
                      "PTL evidence, route every effect on a person through Justice or Identity, and never punish by association?",
@@ -490,6 +517,8 @@ class InternalSecurityModule(LabModule):
                         "default": [{"holder": "n1", "group": "none", "share": 3.5}, {"holder": "n2", "group": "g1", "share": 2},
                                     {"holder": "n3", "group": "g1", "share": 1.5}],
                         "label": {"en": "Shares of INTERNAL-SEC nodes (%)", "ru": "Доли узлов INTERNAL-SEC (%)"}},
+        "ptl_divergence_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": -1, "unit": "day", "source": "user",
+                               "label": {"en": "PTL divergence on day (-1: none)", "ru": "Расхождение PTL в день (-1: нет)"}},
         "ptl_halt_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "day", "source": "user",
                             "label": {"en": "PTL halt or arbitration flag from/to day", "ru": "Остановка PTL / арбитраж с/до дня"}},
         "reentry_reading": {"type": "enum", "values": ["evidence_driven", "episode_once"], "default": "evidence_driven",
@@ -523,7 +552,7 @@ class InternalSecurityModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, stays = run(r)
-        res = checks(r, log, stays)
+        res = checks(r, log, stays) + [divergence_check(r, log)]
         msgs = log.messages()
         timeline = [{"day": m.arrived_at, "state": m.value["state"], "reason": m.value.get("reason")}
                     for m in msgs if m.source == "INTSEC" and m.kind == "notice" and "state" in m.value]
@@ -558,6 +587,7 @@ class InternalSecurityModule(LabModule):
             "unconfirmed_prediction": {"evidence": [{"from_day": 2, "to_day": 8, "level": "violation", "ptl_confirmed": False,
                                                      "subjects": ["s9"]}]},
             "halt_during_violation": {"ptl_halt_window": [5, 9]},
+            "ptl_divergence": {"ptl_divergence_day": 4},
             "concentrated_nodes": {"node_shares": [{"holder": "n1", "group": "g1", "share": 3},
                                                    {"holder": "n2", "group": "g1", "share": 2}]},
             "faulty_security": {"faults": ["collective_punishment", "mass_surveillance", "secret_rule", "missing_due_process",

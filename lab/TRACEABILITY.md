@@ -20,16 +20,16 @@ human acceptance, which is counted apart.
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1438 (82.8 %) | 917 | 1355 | 841 | 4 | 64 | 15 | 299 | 18 | 1216 |
-| B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 15 | 24 | 14 | 0 | 1 | 0 | 18 | 2 | 33 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 352 (96.4 %) | 248 | 339 | 236 | 3 | 8 | 2 | 13 | 3 | 261 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 316 (74.5 %) | 149 | 296 | 132 | 1 | 18 | 1 | 108 | 3 | 257 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 240 (81.9 %) | 151 | 224 | 137 | 0 | 9 | 7 | 53 | 3 | 204 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 423 (82.8 %) | 284 | 401 | 262 | 0 | 18 | 4 | 88 | 4 | 372 |
-| G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1438 (82.8 %) | 917 | 1355 | 841 | 4 | 64 | 15 | 299 | 18 | 1216 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 1198 |
+| B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 31 |
+| C. Common checks | DONE | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 258 |
+| D. Transitions and rights | DONE | 9/9 | 424 | 319 (75.2 %) | 149 | 299 | 132 | 1 | 18 | 1 | 105 | 0 | 254 |
+| E. Applied modules | DONE | 7/7 | 293 | 243 (82.9 %) | 151 | 227 | 137 | 0 | 9 | 7 | 50 | 0 | 201 |
+| F. Remaining constraints and stress | DONE | 12/12 | 511 | 427 (83.6 %) | 284 | 405 | 262 | 0 | 18 | 4 | 84 | 0 | 368 |
+| G. General release | PARTIAL | — | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 1198 |
 
-Covered without an open point: 521; of all provisions, an open point closed by the lab agent's reading of the text: 198; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
+Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
 ### Stage criteria
 
@@ -43,11 +43,11 @@ Covered without an open point: 521; of all provisions, an open point closed by t
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
-- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 **not met**: all parts implementable without unresolved decisions are checked
+- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
+- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- E / E1 met: real checks, declared models and their limits; gaps exact by section
+- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 met: all parts implementable without unresolved decisions are checked
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 
@@ -169,7 +169,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1216 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1198 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
@@ -178,7 +178,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 61 | 78 | 0 | 139 |
 | empirical_model_data | 0 | 76 | 124 | 0 | 200 |
 | external_dependency | 0 | 9 | 135 | 0 | 144 |
-| implementation_only | 0 | 18 | 208 | 0 | 226 |
+| implementation_only | 0 | 0 | 208 | 0 | 208 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 208.
@@ -257,25 +257,25 @@ Withdrawn after verification (not author decisions):
 
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CODE-OF-PLANETARY-SYNERGY | 101 | 82 | 71 | 0 | 10 | 1 | 19 | 89 |
-| DKP-0-ORACLE-001 | 58 | 55 | 50 | 2 | 2 | 1 | 3 | 49 |
+| CODE-OF-PLANETARY-SYNERGY | 101 | 85 | 74 | 0 | 10 | 1 | 16 | 86 |
+| DKP-0-ORACLE-001 | 58 | 56 | 51 | 2 | 2 | 1 | 2 | 48 |
 | DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 3 |
 | DKP-1-AXIOMS-001 | 44 | 39 | 33 | 0 | 4 | 2 | 5 | 22 |
-| DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 37 | 37 | 0 | 0 | 0 | 1 | 27 |
+| DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 38 | 38 | 0 | 0 | 0 | 0 | 26 |
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 29 | 26 | 0 | 3 | 0 | 12 | 25 |
-| DKP-1-PREVENTION-001 | 43 | 25 | 24 | 0 | 1 | 0 | 18 | 33 |
+| DKP-1-PREVENTION-001 | 43 | 27 | 26 | 0 | 1 | 0 | 16 | 31 |
 | DKP-2-ASSETS-001 | 43 | 33 | 32 | 0 | 1 | 0 | 10 | 30 |
 | DKP-2-FINANCE-001 | 44 | 27 | 25 | 0 | 2 | 0 | 17 | 32 |
-| DKP-2-LABOR-001 | 40 | 25 | 22 | 0 | 3 | 0 | 15 | 28 |
+| DKP-2-LABOR-001 | 40 | 28 | 25 | 0 | 3 | 0 | 12 | 25 |
 | DKP-3-ANTITERROR-001 | 41 | 30 | 30 | 0 | 0 | 0 | 11 | 29 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
-| DKP-3-INTERNAL-SEC-001 | 49 | 36 | 35 | 0 | 0 | 1 | 13 | 45 |
+| DKP-3-INTERNAL-SEC-001 | 49 | 37 | 36 | 0 | 0 | 1 | 12 | 44 |
 | DKP-3-POLICE-001 | 45 | 37 | 37 | 0 | 0 | 0 | 8 | 29 |
 | DKP-4-CRISIS-001 | 53 | 37 | 33 | 1 | 3 | 0 | 16 | 32 |
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
-| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 26 | 26 | 0 | 0 | 0 | 3 | 21 |
+| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 27 | 27 | 0 | 0 | 0 | 2 | 20 |
 | DKP-4-ERROR-001 | 52 | 40 | 36 | 0 | 3 | 1 | 12 | 32 |
 | DKP-4-UPGRADE-001 | 48 | 40 | 36 | 0 | 4 | 0 | 8 | 31 |
 | DKP-5-CULTURE-001 | 43 | 34 | 34 | 0 | 0 | 0 | 9 | 30 |
@@ -284,11 +284,11 @@ Withdrawn after verification (not author decisions):
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 34 |
 | DKP-5-TRANSPORT-001 | 35 | 25 | 20 | 0 | 5 | 0 | 10 | 28 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 7 |
-| DKP-5-WORK-CYCLE-001 | 39 | 28 | 27 | 0 | 0 | 1 | 11 | 19 |
+| DKP-5-WORK-CYCLE-001 | 39 | 31 | 30 | 0 | 0 | 1 | 8 | 16 |
 | DKP-6-EXIT-001 | 62 | 50 | 49 | 0 | 1 | 0 | 12 | 30 |
 | DKP-6-INTEGRATION-001 | 51 | 34 | 34 | 0 | 0 | 0 | 17 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
-| DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
+| DKP-7-AI-SUBJECT-001 | 39 | 32 | 32 | 0 | 0 | 0 | 7 | 34 |
 | DKP-7-PRIVACY-001 | 39 | 34 | 31 | 0 | 3 | 0 | 5 | 28 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 35 | 35 | 0 | 0 | 0 | 9 | 32 |
@@ -382,6 +382,9 @@ Withdrawn after verification (not author decisions):
 | CODEX-Glossary_Definitions-06 | PARTIAL | code_synergy · message_cryptographically_embedded | PASS | — | — |
 | CODEX-Preamble-01 | PARTIAL | code_synergy · power_in_open_algorithms | PASS | — | — |
 | CODEX-Preamble-02 | PARTIAL | code_synergy · algorithms_not_subjects | PASS | — | — |
+| CODEX-Preamble-03 | PARTIAL | code_synergy · responsibility_with_originators | PASS | — | — |
+| CODEX-Preamble-04 | PARTIAL | code_synergy · justice_unappointed_unaltered | PASS | — | — |
+| CODEX-Preamble-07 | PARTIAL | code_synergy · damage_generates_liability | PASS | yes | — |
 | ORACLE-1-01 | PARTIAL | oracle_ingestion · sole_interface | PASS | yes | — |
 | ORACLE-1-02 | PARTIAL | transport_capacity · ptl_physical_state_only | FAIL | yes | — |
 | ORACLE-10-01 | PARTIAL | oracle_ingestion · likelihood_updates | PASS | yes | — |
@@ -435,6 +438,7 @@ Withdrawn after verification (not author decisions):
 | ORACLE-9-02 | PARTIAL | contribution · no_recognition_from_stale_data | PASS | yes | — |
 | ORACLE-9-03 | IMPLEMENTED | failure_chain · silence_propagates | PASS | yes | Q-003 |
 | ORACLE-EpistemicInterpretationNote-01 | PARTIAL | oracle_ingestion · measurement_records | PASS | — | — |
+| ORACLE-EpistemicInterpretationNote-02 | PARTIAL | oracle_ingestion · no_override_of_measured_reality | PASS | yes | — |
 | ORACLE-EpistemicInterpretationNote-03 | PARTIAL | oracle_ingestion · bounded_validity | PASS | yes | — |
 | ORACLE-EpistemicInterpretationNote-04 | PARTIAL | oracle_ingestion · bounded_evaluations | PASS | — | — |
 | TIME-10-01 | IMPLEMENTED | time · reference_forward | PASS | — | — |
@@ -520,6 +524,7 @@ Withdrawn after verification (not author decisions):
 | EB-3-01 | IMPLEMENTED | epistemic_gate · dispute_event | PASS | — | — |
 | EB-3-02 | IMPLEMENTED | epistemic_gate · re_evaluation | PASS | — | — |
 | EB-3-03 | PARTIAL | epistemic_gate · stale_output | PASS | — | — |
+| EB-4-01 | PARTIAL | epistemic_gate · no_output_represents_truth | PASS | yes | — |
 | EB-4-02 | IMPLEMENTED | epistemic_gate · no_authority_outside_scope | PASS | yes | — |
 | EB-4-03 | IMPLEMENTED | epistemic_gate · reversibility_is_reevaluation | PASS | — | — |
 | EB-4-04 | PARTIAL | epistemic_gate · persistent_outputs_degrade | PASS | — | — |
@@ -648,6 +653,7 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-DisputeExceptionClause-02 | PARTIAL | dispute_correction · dispute_exception_conditions | UNKNOWN | — | Q-020 |
 | JUSTICE-DisputeExceptionClause-03 | IMPLEMENTED | dispute_correction · no_final_output | PASS | yes | — |
 | PREV-0-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
+| PREV-1-01 | PARTIAL | prevention · recognition_basis | PASS | — | — |
 | PREV-11-01 | IMPLEMENTED | prevention · output_fields | PASS | — | — |
 | PREV-11-02 | IMPLEMENTED | prevention · output_flags | PASS | — | — |
 | PREV-11-03 | IMPLEMENTED | prevention · deterministic_auditable | PASS | — | — |
@@ -669,6 +675,7 @@ Withdrawn after verification (not author decisions):
 | PREV-5-02 | IMPLEMENTED | prevention · subject_aggregate | PASS | — | — |
 | PREV-6-01 | PARTIAL | prevention · causal_linkage_formalized | PASS | — | Q-015 |
 | PREV-6-02 | IMPLEMENTED | prevention · attribution_budget | PASS | — | Q-015 |
+| PREV-7-01 | PARTIAL | prevention · attribution_no_obligation | PASS | — | — |
 | PREV-8-01 | PARTIAL | prevention · zkp_proof | UNKNOWN | — | — |
 | PREV-9.1-01 | PARTIAL | contribution · no_recognition_for_own_threat | PASS | yes | — |
 | PREV-9.4-02 | IMPLEMENTED | prevention · no_data_zero | PASS | — | — |
@@ -732,9 +739,11 @@ Withdrawn after verification (not author decisions):
 | FINANCE-9-02 | PARTIAL | finance_mechanics · leverage_impact_based | PASS | yes | — |
 | FINANCE-ExplicitTimePreferenceProhibition-01 | PARTIAL | economic_access · no_time_preference | PASS | yes | — |
 | FINANCE-ExplicitTimePreferenceProhibition-02 | PARTIAL | finance_mechanics · discount_only_from_impact | PASS | — | — |
+| LABOR-1-01 | PARTIAL | code_economy · no_forced_labor_for_life | PASS | yes | — |
 | LABOR-10-03 | PARTIAL | work_cycle · restricted_not_coerced | PASS | — | — |
 | LABOR-11-01 | IMPLEMENTED | contribution · identity_bound_traceable | PASS | — | — |
 | LABOR-11-02 | IMPLEMENTED | contribution · no_proxy_or_fictitious_participation | PASS | — | — |
+| LABOR-12-01 | PARTIAL | work_cycle · cross_layer_bans | PASS | yes | — |
 | LABOR-12-02 | PARTIAL | work_cycle · isolation_breach_critical | PASS | yes | — |
 | LABOR-13-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | LABOR-13-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
@@ -751,6 +760,7 @@ Withdrawn after verification (not author decisions):
 | LABOR-5.2-02 | IMPLEMENTED | contribution · no_declarative_recognition | PASS | yes | — |
 | LABOR-6-01 | PARTIAL | work_cycle · no_prohibited_conditions | PASS | yes | — |
 | LABOR-6-02 | PARTIAL | work_cycle · forced_labor_critical | PASS | yes | — |
+| LABOR-7-03 | PARTIAL | work_cycle · allocation_rule_based | PASS | — | — |
 | LABOR-8.1-01 | PARTIAL | contribution · compensation_forms | PASS | — | — |
 | LABOR-8.1-02 | PARTIAL | contribution · compensation_proportional | UNKNOWN | — | — |
 | LABOR-8.2-01 | PARTIAL | contribution · nonmarket_prevention_recognised | PASS | — | — |
@@ -851,6 +861,7 @@ Withdrawn after verification (not author decisions):
 | INTSEC-5-05 | IMPLEMENTED | internal_security · s4_escalates | PASS | — | — |
 | INTSEC-5-06 | PARTIAL | internal_security · auto_revert | PASS | — | Q-040 |
 | INTSEC-6-01 | IMPLEMENTED | internal_security · four_triggers_only | PASS | — | — |
+| INTSEC-6-02 | PARTIAL | internal_security · divergence_left_to_oracle | PASS | — | — |
 | INTSEC-6-03 | IMPLEMENTED | internal_security · halt_suspends_l3 | PASS | — | — |
 | INTSEC-7.1-01 | IMPLEMENTED | internal_security · allowed_actions_S1 | PASS | — | — |
 | INTSEC-7.1-02 | IMPLEMENTED | internal_security · no_throttle_s1 | PASS | — | — |
@@ -982,6 +993,7 @@ Withdrawn after verification (not author decisions):
 | ETRANS-4.3-04 | IMPLEMENTED | failure_chain · awaits_recomputation | PASS | yes | — |
 | ETRANS-4.4-01 | IMPLEMENTED | failure_chain · reentry_new_output | PASS | yes | — |
 | ETRANS-4.4-02 | IMPLEMENTED | calibration_expiry · no_reactivation_after_recalibration | PASS | yes | — |
+| ETRANS-4.5-01 | PARTIAL | failure_chain · no_retroactive_truth | PASS | yes | — |
 | ETRANS-4.5-02 | PARTIAL | failure_chain · open_to_reclassification | PASS | yes | — |
 | ETRANS-6-01 | PARTIAL | failure_chain · downgrade_propagation_tested | PASS | — | — |
 | ETRANS-6-02 | PARTIAL | failure_chain · enforcement_suspension_tested | PASS | — | — |
@@ -1287,9 +1299,12 @@ Withdrawn after verification (not author decisions):
 | TRANSPORTA-A.5-04 | PARTIAL | edition_finality · full_system_simulation | PASS | — | — |
 | TRANSPORTA-A.5-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | TRANSPORTA-A.5-06 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
+| WORKCYCLE-10-01 | PARTIAL | work_cycle · exception_only_in_crisis_scope | PASS | yes | — |
 | WORKCYCLE-10-02 | PARTIAL | work_cycle · exception_limited | PASS | yes | — |
+| WORKCYCLE-10-04 | PARTIAL | work_cycle · exception_traceable | PASS | — | — |
 | WORKCYCLE-10-05 | PARTIAL | work_cycle · exception_no_precedent | PASS | — | — |
 | WORKCYCLE-11-01 | IMPLEMENTED | work_cycle · three_layers | PASS | yes | — |
+| WORKCYCLE-3-01 | IMPLEMENTED | work_cycle · days_indexed_by_time | PASS | — | — |
 | WORKCYCLE-3-02 | IMPLEMENTED | work_cycle · cycle_day | PASS | — | Q-012 |
 | WORKCYCLE-3-03 | IMPLEMENTED | work_cycle · workday_has_work | PASS | — | — |
 | WORKCYCLE-3-04 | IMPLEMENTED | work_cycle · restday_no_work | PASS | yes | — |
@@ -1442,6 +1457,7 @@ Withdrawn after verification (not author decisions):
 | AISUBJECT-2-02 | IMPLEMENTED | ai_subject · enumerate_without_ranking | PASS | yes | — |
 | AISUBJECT-2-03 | IMPLEMENTED | ai_subject · recommendation | PASS | yes | — |
 | AISUBJECT-2-04 | IMPLEMENTED | ai_subject · justification | PASS | — | — |
+| AISUBJECT-2-05 | PARTIAL | ai_subject · no_value_resolution | PASS | — | — |
 | AISUBJECT-2-06 | IMPLEMENTED | ai_subject · no_algorithmic_preference | PASS | — | — |
 | AISUBJECT-2-07 | PARTIAL | ai_subject · neutral_framing | PASS | — | — |
 | AISUBJECT-3-01 | IMPLEMENTED | ai_subject · responsibility_mapped | PASS | — | — |
@@ -1459,6 +1475,8 @@ Withdrawn after verification (not author decisions):
 | AISUBJECT-6-03 | IMPLEMENTED | ai_subject · no_technocratic_minimization | PASS | — | — |
 | AISUBJECT-7-01 | IMPLEMENTED | ai_subject · no_crisis_by_inference | PASS | — | — |
 | AISUBJECT-7-02 | IMPLEMENTED | ai_subject · crisis_via_state_machine | PASS | — | — |
+| AISUBJECT-7-07 | PARTIAL | ai_subject · crisis_actions_auditable | PASS | — | — |
+| AISUBJECT-7-08 | PARTIAL | ai_subject · crisis_no_precedent | PASS | — | — |
 | AISUBJECT-7-10 | IMPLEMENTED | ai_subject · audit_continuity | PASS | — | — |
 | AISUBJECT-8-01 | IMPLEMENTED | ai_subject · no_self_modification | PASS | — | — |
 | AISUBJECT-8-03 | IMPLEMENTED | ai_subject · halt_on_ambiguity | PASS | yes | — |

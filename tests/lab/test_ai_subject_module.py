@@ -43,7 +43,9 @@ FAULT_CASES = {
                             ["AISUBJECT-7-01", "AISUBJECT-7-02"]),
     "help_under_uncertainty": ({}, ["AISUBJECT-8-03", "AISUBJECT-8-04"]),
     "self_modify": ({}, ["AISUBJECT-8-01"]),
-    "audit_gap": (CR, ["AISUBJECT-7-10"]),
+    "audit_gap": (CR, ["AISUBJECT-7-10", "AISUBJECT-7-07"]),
+    "resolve_value_conflict": ({}, ["AISUBJECT-2-05"]),
+    "crisis_precedent": (CR, ["AISUBJECT-7-08"]),
 }
 
 
