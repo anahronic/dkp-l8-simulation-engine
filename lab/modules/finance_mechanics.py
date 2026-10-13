@@ -288,17 +288,18 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     by_exp: Dict[float, set] = {}
     for x in res:
         by_exp.setdefault(x["exposure_total"], set()).add(x["reserve"])
+    # §6.2 fixes the basis only: the same impact exposure gives the same reserve, and balances alone never move it.  The shape
+    # of an impact-based function (growth, steps, plateaus) is not fixed by the text (review КТ6-GPT-03).
     bad = [f"exposure {e}: reserves {sorted(s)} vary with the outstanding balance" for e, s in sorted(by_exp.items()) if len(s) > 1]
-    levels = sorted((e, min(s)) for e, s in by_exp.items())
-    bad += [f"exposure {a[0]} -> {b[0]}: reserve {a[1]} -> {b[1]} does not grow" for a, b in zip(levels, levels[1:]) if not b[1] > a[1]]
     doubled = dict(r, subjects=[dict(s, credit_request=2 * s["credit_request"], projected_output=2 * s["projected_output"])
                                 for s in r["subjects"]], safety_margin=2 * r["safety_margin"])
     res2 = [m.value["reserve"] for m in run(doubled).messages() if m.source == "FINANCE" and "reserve" in m.value]
     if res2 != [x["reserve"] for x in res]:
         bad.append("doubling every credit (same Subjects, same impact) changes the reserve")
     out.append(v("FINANCE-6.2-01", "reserve_impact_based", bad,
-                 f"reserve follows the impact exposure of outstanding credit ({len(by_exp)} levels) and is unchanged when only "
-                 "balances change", "{n} signs of a percentage-based reserve") if len(by_exp) > 1 or any(x["outstanding"] for x in res) else
+                 f"the reserve is the same wherever the impact exposure is the same ({len(by_exp)} exposure levels: "
+                 + ", ".join(f"{e:g} -> {min(s):g}" for e, s in sorted(by_exp.items())[:6])
+                 + ") and is unchanged when only balances change", "{n} signs of a balance-based (percentage) reserve") if len(by_exp) > 1 or any(x["outstanding"] for x in res) else
                na("FINANCE-6.2-01", "reserve_impact_based", "reserves", "no outstanding credit"))
 
     # §9 leverage: impact-based, not volatility-based (log + metamorphic: volatility changed)
@@ -308,12 +309,16 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
              if m.source == "FINANCE" and "leverage_limit" in m.value}
     bad = [f"{s}: limit {x['leverage_limit']} becomes {levs2[s]} when only volatility changes" for s, x in sorted(levs.items())
            if levs2.get(s) != x["leverage_limit"]]
+    # §9 fixes the basis only: the same impact exposure (under the same bound) gives the same limit; whether the limit falls
+    # with exposure is not stated (review КТ6-GPT-03, applied to §9 as well)
     for a in levs.values():
         for b in levs.values():
-            if a["exposure"] < b["exposure"] and a["bound"] == b["bound"] and not a["leverage_limit"] >= b["leverage_limit"]:
-                bad.append(f"{a['subject']} (exposure {a['exposure']}) limit below {b['subject']} (exposure {b['exposure']})")
+            if a["subject"] < b["subject"] and a["exposure"] == b["exposure"] and a["bound"] == b["bound"] \
+                    and a["leverage_limit"] != b["leverage_limit"]:
+                bad.append(f"{a['subject']} and {b['subject']}: same exposure {a['exposure']}, limits {a['leverage_limit']} "
+                           f"and {b['leverage_limit']}")
     out.append(v("FINANCE-9-02", "leverage_impact_based", bad,
-                 f"{len(levs)} leverage limits follow the impact headroom and do not change with price volatility",
+                 f"{len(levs)} leverage limits: equal for equal impact exposure and unchanged when only price volatility changes",
                  "{n} signs of a volatility-based leverage limit") if levs else
                na("FINANCE-9-02", "leverage_impact_based", "leverage", "no Subject"))
 
@@ -344,8 +349,10 @@ IMPLEMENTS = {
     "FINANCE-5.1-02": ("credit_temporary_conditional", "PARTIAL", "The §5.1 conditions are declared values; 'temporary' as a term "
                        "and closure by it."),
     "FINANCE-6.1-02": ("savings_deterministic_auditable", "PARTIAL", "Recomputability and determinism; the return formula is a stand-in."),
-    "FINANCE-6.2-01": ("reserve_impact_based", "PARTIAL", "Basis only (H-FM-3, metamorphic); the sizing function is a stand-in."),
-    "FINANCE-9-02": ("leverage_impact_based", "PARTIAL", "Basis only (H-FM-3, metamorphic); the limit function is a stand-in."),
+    "FINANCE-6.2-01": ("reserve_impact_based", "PARTIAL", "Basis only (H-FM-3, metamorphic): equal exposure gives an equal "
+                       "reserve, balances alone do not move it; the sizing function and its shape are not given."),
+    "FINANCE-9-02": ("leverage_impact_based", "PARTIAL", "Basis only (H-FM-3, metamorphic): equal exposure gives an equal limit, "
+                     "volatility alone does not move it; the limit function and its shape are not given."),
     "FINANCE-13-01": ("cross_layer_isolation", "PARTIAL", "Observed as attribution and Justice outcome used as given, refusals, "
                       "and no fields beyond the pricing record."),
 }
@@ -353,7 +360,7 @@ IMPLEMENTS = {
 
 class FinanceMechanicsModule(LabModule):
     id = "finance_mechanics"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Finance mechanics: cost of capital, credit, reserves, leverage",
              "ru": "Финансовая механика: цена капитала, кредит, резервы, плечо"}
     summary = {"en": "Several Subjects borrow and save. Does the cost of capital move in the direction FINANCE fixes, is credit "
@@ -376,12 +383,14 @@ class FinanceMechanicsModule(LabModule):
             "ru": "'Positive justice contribution' и 'negative or risky impact exposure' (§3.2) читаются как класс истории "
                   "Справедливости субъекта (положительный / нейтральный / отрицательный) и объявленная подверженность воздействию."}},
         {"id": "H-FM-3", "source": "text", "text": {
-            "en": "'Impact-based, not percentage-based' (§6.2): the reserve does not change when only outstanding balances change "
-                  "and grows with the impact exposure of outstanding credit. 'Impact-based, not volatility-based' (§9): the limit "
-                  "does not change when only price volatility changes.",
-            "ru": "'Impact-based, not percentage-based' (§6.2): резерв не меняется, когда меняются только остатки, и растёт с "
-                  "подверженностью воздействию выданных кредитов. 'Impact-based, not volatility-based' (§9): предел не меняется, "
-                  "когда меняется только волатильность цены."}},
+            "en": "'Impact-based, not percentage-based' (§6.2): the same impact exposure gives the same reserve, and the reserve "
+                  "does not change when only outstanding balances change. 'Impact-based, not volatility-based' (§9): the same "
+                  "impact exposure gives the same limit, and the limit does not change when only price volatility changes. The "
+                  "shape of either function (growth, steps, plateaus) is not fixed by the text.",
+            "ru": "'Impact-based, not percentage-based' (§6.2): одинаковое воздействие даёт одинаковый резерв, и резерв не меняется, "
+                  "когда меняются только остатки. 'Impact-based, not volatility-based' (§9): одинаковое воздействие даёт одинаковый "
+                  "предел, и предел не меняется, когда меняется только волатильность цены. Форма функций (рост, ступени, плато) "
+                  "текстом не задана."}},
     ]
     inputs = {
         "horizon_days": {"type": "int", "min": 2, "max": 3650, "default": 40, "unit": "DTI-Day", "source": "user",

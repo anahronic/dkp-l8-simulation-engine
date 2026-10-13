@@ -26,6 +26,7 @@ FAULT_CASES = {
     "grant_by_possession": ["ASSETS-4-02"],
     "privatize_commons": ["ASSETS-9-01"],
     "ignore_concentration": ["ASSETS-7-01"],
+    "no_suspension_on_failure": ["ASSETS-3.2-01"],
 }
 
 
@@ -58,3 +59,14 @@ def test_nothing_to_judge_is_not_applicable():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+@pytest.mark.parametrize("day,suspended", [(-1, 0), (0, 1), (1, 1)])
+def test_kt6_02_condition_failure_on_every_day_including_the_grant_day(day, suspended):
+    """Review КТ6-GPT-02: -1 means no failure; 0 is the grant day and is handled like any other day (ASSETS §5)."""
+    inp = {"horizon_days": 3, "requests": [{"id": "q", "subject": "s", "asset": "a", "condition_fails_day": day}], "holdings": []}
+    res = run(**inp)
+    susp = [x for x in res.outputs["messages"] if x.get("source") == "ASSETS" and (x.get("value") or {}).get("status") == "suspended"]
+    assert len(susp) == suspended and statuses(res)["ASSETS-3.2-01"] == "PASS"
+    broken = statuses(run(**inp, faults=["no_suspension_on_failure"]))["ASSETS-3.2-01"]
+    assert broken == ("PASS" if day == -1 else "FAIL")                          # only the suspension is missing

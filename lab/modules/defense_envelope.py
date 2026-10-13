@@ -105,6 +105,7 @@ def run(r: Dict[str, Any]):
 
     segs = r["ptl_timeline"]
     level, last_conf, vpi_auth, chain = "D0", {}, None, "genesis"
+    vpi_point, vpi_min_ttl = None, None   # last grant or revalidation; minimum trajectory TTL in force since then (§3.6)
     obs_ids: Dict[int, str] = {}
     act_req: Dict[int, list] = {}
     for a in r["actions"]:
@@ -150,11 +151,17 @@ def run(r: Dict[str, Any]):
             if "vpi_unmarked" in faults:
                 meta = {"validity_state": "VALID"}
             vpi_auth = k
+            vpi_point, vpi_min_ttl = k, s["trajectory_ttl_steps"]
             put("decision", "DEFENSE", k, {"vpi_authorization": "granted", "epistemic": meta}, [o.event_id])
         elif vpi_auth is not None:
-            if s["harm"] == "vpi" and fresh and (k - vpi_auth) % max(1, s["trajectory_ttl_steps"]) == 0 and k != vpi_auth \
-                    and "vpi_skip_revalidation" not in faults:
-                put("evaluation", "DEFENSE", k, {"vpi_revalidated": True, "age_steps": 0}, [o.event_id])
+            if s["harm"] == "vpi" and fresh:
+                # §3.6: the interval may not exceed the minimum TTL of the trajectory data in force since the last point;
+                # a shorter TTL arriving mid-interval shortens the deadline (review КТ6-GPT-01)
+                vpi_min_ttl = min(vpi_min_ttl, s["trajectory_ttl_steps"])
+                if k - vpi_point >= vpi_min_ttl and "vpi_skip_revalidation" not in faults:
+                    put("evaluation", "DEFENSE", k, {"vpi_revalidated": True, "age_steps": 0,
+                                                     "trajectory_ttl_steps": s["trajectory_ttl_steps"]}, [o.event_id])
+                    vpi_point, vpi_min_ttl = k, s["trajectory_ttl_steps"]
             if not (s["harm"] == "vpi" and fresh) and "vpi_not_terminated" not in faults:
                 put("decision", "DEFENSE", k, {"vpi_authorization": "terminated",
                                                "reason": "trajectory confirmation stopped" if not fresh else "harm no longer a trajectory"})
@@ -283,7 +290,13 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         # each authorization is its own episode: from its grant to its termination (or the end of the horizon); the time
         # between a terminated and the next authorization is not authorized time (review КТ5-GPT-01)
         terms = sorted(m.arrived_at for m in auth if m.value["vpi_authorization"] == "terminated")
-        reval = sorted(m.arrived_at for m in D("vpi_revalidated"))
+        ptl_obs = {m.event_id: m for m in msgs if m.source == "PTL" and m.kind == "observation"}
+        ptl_ttl = {m.arrived_at: m.value["trajectory_ttl_steps"] for m in ptl_obs.values()
+                   if m.value["harm"] == "vpi" and m.value["confirmed"]}
+        # a revalidation counts only when it rests on a confirmed VPI observation of its own step
+        reval = sorted(m.arrived_at for m in D("vpi_revalidated")
+                       if any(p in ptl_obs and ptl_obs[p].arrived_at == m.arrived_at and ptl_obs[p].value["harm"] == "vpi"
+                              and ptl_obs[p].value["confirmed"] for p in m.provenance))
         late_stop, gaps_bad = [], []
         for i, g in enumerate(grants):
             g0 = g.arrived_at
@@ -293,10 +306,12 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
             if stop is not None and end != stop:
                 late_stop.append(stop)
             close = end if end is not None else H
-            ttl = g.value["epistemic"].get("revalidation_interval", 0) or 1
             pts = [g0] + [k for k in reval if g0 < k < close] + [close]
-            gaps_bad += [f"authorization at step {g0}: {b - a} steps from {a} to {b} (TTL {ttl})"
-                         for a, b in zip(pts, pts[1:]) if b - a > ttl]
+            for a, b in zip(pts, pts[1:]):
+                # the minimum trajectory TTL of the PTL data in force during [a, b), read from the observations (§3.6)
+                ttl = min((ptl_ttl[k] for k in range(a, b) if k in ptl_ttl), default=1)
+                if b - a > ttl:
+                    gaps_bad.append(f"authorization at step {g0}: {b - a} steps from {a} to {b} (minimum TTL {ttl})")
         out.append(v("DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03", "vpi_termination", late_stop,
                      f"each of {len(grants)} VPI authorizations ended at once when its trajectory confirmation stopped",
                      "{n} VPI authorizations outlived their confirmation"))
@@ -502,7 +517,7 @@ ACTIONS = [_act("shield_grid", 6, "shielding"), _act("forecast_strike", 4, "pree
 
 class DefenseEnvelopeModule(LabModule):
     id = "defense_envelope"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Defense envelope (DEFENSE)", "ru": "Контур обороны (DEFENSE)"}
     summary = {"en": "A trajectory, an attack, a sustained and an existential phase, a lapse of confirmation: do states, actions, "
                      "volunteers, neutralization and wind-down stay inside DEFENSE — and where does the text stop?",

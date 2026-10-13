@@ -40,6 +40,7 @@ FAULTS = {
     "grant_by_possession": "a right is granted on prior possession alone",
     "privatize_commons": "a §9 asset is granted as ordinary private property",
     "ignore_concentration": "an accumulation declared as increasing systemic fragility draws no §7 response",
+    "no_suspension_on_failure": "a right stays in force after a §5 condition fails (only the suspension is skipped)",
 }
 
 REQUEST = {"type": "object", "fields": {
@@ -111,11 +112,12 @@ def run(r: Dict[str, Any]) -> EventLog:
                                           "revocable": "absolute_right" not in faults,
                                           **({"permanent": True} if "absolute_right" in faults else {})}, [ev.event_id])
         rights[q["id"]] = g
-    for k in range(1, r["horizon_days"]):
+    for k in range(0, r["horizon_days"]):                 # day 0 included: a failure on the day of the grant (КТ6-GPT-02)
         for q in r["requests"]:
             if q["condition_fails_day"] == k and q["id"] in rights:
-                f = put("observation", "JUSTICE", k, {"subject": q["subject"], "net_justice_contribution": -1.0})
-                if "absolute_right" not in faults:
+                f = put("observation", "JUSTICE", k, {"subject": q["subject"], "net_justice_contribution": -1.0,
+                                                      "after_grant": True})
+                if "absolute_right" not in faults and "no_suspension_on_failure" not in faults:
                     put("action", "ASSETS", k, {"right": rights[q["id"]].event_id, "status": "suspended",
                                                 "reason": "a §5 condition failed"}, [f.event_id, rights[q["id"]].event_id])
     for hd in r["holdings"]:
@@ -146,10 +148,14 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
         g = m.value
         if g.get("permanent") or not g.get("revocable") or not g.get("persistence_conditions"):
             bad.append(f"{q}: right recorded as absolute or permanent")
-        k = req[q]["condition_fails_day"]
-        if 0 < k < r["horizon_days"] and not any(x.source == "ASSETS" and x.value.get("right") == m.event_id and x.arrived_at == k
-                                                 for x in msgs):
-            bad.append(f"{q}: right kept after a §5 condition failed on day {k}")
+        # failure days from the input (0 counts: a failure on the grant day) and from any JUSTICE record of the holder
+        days = {req[q]["condition_fails_day"]} - {-1}
+        days |= {x.arrived_at for x in msgs if x.source == "JUSTICE" and x.value.get("subject") == g["subject"]
+                 and x.value.get("net_justice_contribution", 0) < 0}
+        for k in sorted(d for d in days if 0 <= d < r["horizon_days"]):
+            if not any(x.source == "ASSETS" and x.value.get("right") == m.event_id and x.arrived_at <= k
+                       and x.value.get("status") in ("suspended", "restricted", "degraded") for x in msgs):
+                bad.append(f"{q}: right kept after a §5 condition failed on day {k}")
     out.append(v("ASSETS-3.2-01", "property_right_conditional", bad,
                  f"{len(granted)} right(s) granted by system rule, conditional, revocable and suspended when a condition failed",
                  "{n} rights that are absolute, permanent or not contingent") if granted else
@@ -190,7 +196,7 @@ IMPLEMENTS = {
 
 class PropertyRightsModule(LabModule):
     id = "property_rights"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Property rights: granting, conditions, critical assets", "ru": "Права собственности: выдача, условия, критические активы"}
     summary = {"en": "Subjects ask for property rights. Are rights granted only under the ASSETS conditions, never on possession "
                      "alone, kept only while the conditions hold, and are water, air and commons held only in revocable stewardship?",

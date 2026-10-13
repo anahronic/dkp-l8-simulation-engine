@@ -83,3 +83,22 @@ def test_requests_are_refused_where_excluded():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_kt6_03_plateaus_are_impact_based():
+    """Review КТ6-GPT-03: §6.2 and §9 fix the basis, not the shape.  A step or plateau function of impact exposure passes;
+    a balance-based reserve and a volatility-based limit still fail."""
+    import math
+    from lab.modules import finance_mechanics as fm
+    r = M.validate({})
+    pick = lambda res: {c.requirement_id: c.status for c in res}
+    orig_r, orig_l = fm.reserve_of, fm.leverage_of
+    try:
+        fm.reserve_of = lambda sp, e, o, faults: 100.0 * math.ceil(e / 10.0)          # (0, 0), (4, 100), (10, 100)
+        fm.leverage_of = lambda sp, bound, e, vol, faults: 5000.0 if e < 7 else 0.0
+        st = pick(fm.checks(r, fm.run(r)))
+        assert st["FINANCE-6.2-01"] == "PASS" and st["FINANCE-9-02"] == "PASS"
+    finally:
+        fm.reserve_of, fm.leverage_of = orig_r, orig_l
+    assert statuses(run(faults=["percentage_reserve"]))["FINANCE-6.2-01"] == "FAIL"
+    assert statuses(run(faults=["volatility_leverage"]))["FINANCE-9-02"] == "FAIL"

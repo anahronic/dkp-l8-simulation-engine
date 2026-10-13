@@ -1037,7 +1037,7 @@
    "quote": "Reserve sizing is impact-based, not percentage-based.",
    "draft_origin": "implementation_only",
    "verdict": "confirmed",
-   "reason": "The sizing function is missing (CALIBRATION_MAP), but 'impact-based, not percentage-based' fixes its basis: it must not change when only balances change and must follow the impact exposure (H-FM-3). Checked metamorphically for any declared function.",
+   "reason": "The sizing function is missing (CALIBRATION_MAP), but 'impact-based, not percentage-based' fixes its basis: the same impact exposure gives the same reserve and balances alone never move it (H-FM-3). The shape of the function (growth, steps, plateaus) is not fixed and not required (narrowed after review КТ6-GPT-03). Checked metamorphically for any declared function.",
    "acceptance": {
     "agent_reading": true,
     "human_accepted": false
@@ -1050,7 +1050,7 @@
    "quote": "Leverage limits are impact-based, not volatility-based.",
    "draft_origin": "implementation_only",
    "verdict": "confirmed",
-   "reason": "Same structure as §6.2: the limit function is missing, the basis is fixed (impact headroom, not price volatility; H-FM-3). Checked metamorphically.",
+   "reason": "Same structure as §6.2: the limit function is missing, the basis is fixed: the same impact exposure gives the same limit and price volatility alone never moves it (H-FM-3). Whether the limit falls with exposure is not stated and not required (narrowed after review КТ6-GPT-03). Checked metamorphically.",
    "acceptance": {
     "agent_reading": true,
     "human_accepted": false

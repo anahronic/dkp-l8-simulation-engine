@@ -70,7 +70,7 @@ def test_kt5_01_each_vpi_authorization_is_its_own_episode():
     assert statuses(res)["DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03"] == "PASS"
     broken = run(**PROBE_KT5_01, faults=["vpi_skip_revalidation"])               # a real missed refresh in the second episode
     c = {x.requirement_id: x for x in broken.checks}[VPI2]
-    assert c.status == "FAIL" and c.evidence["violations"] == ["authorization at step 10: 5 steps from 10 to 15 (TTL 3)"]
+    assert c.status == "FAIL" and c.evidence["violations"] == ["authorization at step 10: 5 steps from 10 to 15 (minimum TTL 3)"]
 
 
 def test_kt5_02_no_evacuation_exception():
@@ -90,3 +90,30 @@ def test_kt5_02_evidence_validity_under_stability_and_lost_integrity():
     acts = {a["action"]: a for a in run(**EX["evacuation_integrity_lost"]).outputs["actions"]}
     assert not acts["evacuate"]["executed"]
     assert statuses(run(**EX["evacuation_integrity_lost"], faults=["act_without_confirmation"]))["DEFENSE-4.1-01"] == "FAIL"
+
+
+def test_kt6_01_ttl_change_inside_one_authorization():
+    """Review КТ6-GPT-01: the revalidation interval may not exceed the minimum trajectory TTL in force since the last
+    revalidation (DEFENSE §3.6), read from the PTL observations; a shorter TTL mid-episode shortens the deadline."""
+    from lab.core.bus import EventLog
+    from lab.modules.defense_envelope import checks, run as run_log
+    rid = "DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-02"
+    base = {"horizon_steps": 7, "ptl_timeline": [{"from_step": 0, "harm": "vpi", "trajectory_ttl_steps": 6},
+                                                 {"from_step": 2, "harm": "vpi", "trajectory_ttl_steps": 2},
+                                                 {"from_step": 6, "harm": "none"}],
+            "actions": [], "participants": [], "refusals": [], "outside_requests": [], "changes": []}
+    r = M.validate(base)
+    good = run_log(r)
+    marks = [(e.arrived_at, e.value.get("vpi_authorization") or "revalidated") for e in good.messages()
+             if e.value.get("vpi_authorization") or e.value.get("vpi_revalidated")]
+    assert marks == [(0, "granted"), (2, "revalidated"), (4, "revalidated"), (6, "terminated")]
+    st = {c.requirement_id: c.status for c in checks(r, good)}
+    assert st[rid] == "PASS"                                                    # positive: decreasing TTL handled
+    bad = EventLog(good.time_unit, tie_rule=good.tie_rule)
+    for e in good.messages():
+        if not (e.arrived_at == 4 and e.value.get("vpi_revalidated")):
+            bad.append(e)
+    assert {c.requirement_id: c.status for c in checks(r, bad)}[rid] == "FAIL"   # negative: next revalidation missing
+    rf = M.validate({**base, "faults": ["vpi_skip_revalidation"]})
+    assert {c.requirement_id: c.status for c in checks(rf, run_log(rf))}[rid] == "FAIL"
+    assert statuses(run(**M.examples()["vpi_two_episodes"]))[rid] == "PASS"     # two episodes stay independent
