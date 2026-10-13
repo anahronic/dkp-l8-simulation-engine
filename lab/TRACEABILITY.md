@@ -20,16 +20,16 @@ human acceptance, which is counted apart.
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1411 (81.2 %) | 916 | 1328 | 840 | 4 | 64 | 15 | 326 | 45 | 1242 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1424 (82.0 %) | 916 | 1341 | 840 | 4 | 64 | 15 | 313 | 32 | 1229 |
 | B. First working site | PARTIAL | 1/1 | 43 | 25 (58.1 %) | 15 | 24 | 14 | 0 | 1 | 0 | 18 | 2 | 33 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 352 (96.4 %) | 248 | 339 | 236 | 3 | 8 | 2 | 13 | 3 | 261 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 311 (73.3 %) | 148 | 291 | 131 | 1 | 18 | 1 | 113 | 8 | 261 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 228 (77.8 %) | 151 | 212 | 137 | 0 | 9 | 7 | 65 | 15 | 216 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 413 (80.8 %) | 284 | 391 | 262 | 0 | 18 | 4 | 98 | 14 | 382 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 235 (80.2 %) | 151 | 219 | 137 | 0 | 9 | 7 | 58 | 8 | 209 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 419 (82.0 %) | 284 | 397 | 262 | 0 | 18 | 4 | 92 | 8 | 376 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1411 (81.2 %) | 916 | 1328 | 840 | 4 | 64 | 15 | 326 | 45 | 1242 |
+| **All registrable documents** | | 38/38 | 1737 | 1424 (82.0 %) | 916 | 1341 | 840 | 4 | 64 | 15 | 313 | 32 | 1229 |
 
-Covered without an open point: 495; of all provisions, an open point closed by the lab agent's reading of the text: 172; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
+Covered without an open point: 508; of all provisions, an open point closed by the lab agent's reading of the text: 185; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
 ### Stage criteria
 
@@ -169,7 +169,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1242 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1229 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
@@ -178,7 +178,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 | l8_parameter | 0 | 61 | 78 | 0 | 139 |
 | empirical_model_data | 0 | 76 | 124 | 0 | 200 |
 | external_dependency | 0 | 9 | 135 | 0 | 144 |
-| implementation_only | 0 | 45 | 208 | 0 | 253 |
+| implementation_only | 0 | 32 | 208 | 0 | 240 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 208.
@@ -282,16 +282,16 @@ Withdrawn after verification (not author decisions):
 | DKP-5-EDU-001 | 64 | 52 | 48 | 0 | 1 | 3 | 12 | 39 |
 | DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 49 |
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 34 |
-| DKP-5-TRANSPORT-001 | 35 | 22 | 17 | 0 | 5 | 0 | 13 | 31 |
-| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 12 | 12 | 0 | 0 | 0 | 5 | 11 |
+| DKP-5-TRANSPORT-001 | 35 | 25 | 20 | 0 | 5 | 0 | 10 | 28 |
+| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 7 |
 | DKP-5-WORK-CYCLE-001 | 39 | 28 | 27 | 0 | 0 | 1 | 11 | 19 |
 | DKP-6-EXIT-001 | 62 | 50 | 49 | 0 | 1 | 0 | 12 | 30 |
 | DKP-6-INTEGRATION-001 | 51 | 34 | 34 | 0 | 0 | 0 | 17 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
 | DKP-7-AI-SUBJECT-001 | 39 | 29 | 29 | 0 | 0 | 0 | 10 | 37 |
-| DKP-7-PRIVACY-001 | 39 | 32 | 29 | 0 | 3 | 0 | 7 | 30 |
+| DKP-7-PRIVACY-001 | 39 | 34 | 31 | 0 | 3 | 0 | 5 | 28 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
-| DKP-7-TRANSPARENCY-001 | 44 | 31 | 31 | 0 | 0 | 0 | 13 | 36 |
+| DKP-7-TRANSPARENCY-001 | 44 | 35 | 35 | 0 | 0 | 0 | 9 | 32 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
 | DKP-8-INTEROP-001 | 49 | 43 | 42 | 0 | 1 | 0 | 6 | 22 |
 | DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
@@ -1235,6 +1235,7 @@ Withdrawn after verification (not author decisions):
 | TRANSPORT-1-01 | PARTIAL | transport_capacity · environment_not_behaviour | PASS | yes | — |
 | TRANSPORT-10-01 | PARTIAL | transport_capacity · decrease_without_prohibition | PASS | yes | — |
 | TRANSPORT-11-02 | IMPLEMENTED | transport_capacity · no_justice_outcomes | PASS | yes | — |
+| TRANSPORT-11-04 | PARTIAL | transport_capacity · no_defense_crisis_override | PASS | — | — |
 | TRANSPORT-3-02 | PARTIAL | transport_capacity · no_dignity_tradeoff_equilibrium | PASS | — | — |
 | TRANSPORT-4-01 | PARTIAL | transport_capacity · ppdi_published | UNKNOWN | — | — |
 | TRANSPORT-4.1-01 | PARTIAL | transport_capacity · ppdi_components | PASS | — | — |
@@ -1249,16 +1250,22 @@ Withdrawn after verification (not author decisions):
 | TRANSPORT-7.1-01 | PARTIAL | transport_capacity · red_quantified | UNKNOWN | — | Q-036 |
 | TRANSPORT-7.2-01 | IMPLEMENTED | transport_capacity · red_redirected | UNKNOWN | yes | Q-036 |
 | TRANSPORT-7.2-02 | IMPLEMENTED | transport_capacity · red_not_a_tax | PASS | yes | — |
+| TRANSPORT-7.3-01 | PARTIAL | transport_capacity · modulation_ptl_supported | PASS | — | — |
 | TRANSPORT-7.3-03 | IMPLEMENTED | transport_capacity · no_moral_weighting | PASS | — | — |
 | TRANSPORT-7.3-04 | PARTIAL | transport_capacity · incentive_without_enforcement | PASS | yes | — |
 | TRANSPORT-8-01 | IMPLEMENTED | transport_capacity · no_bans_or_punishment | PASS | yes | — |
 | TRANSPORT-8-02 | PARTIAL | transport_capacity · comfort_driven_shift | UNKNOWN | — | — |
+| TRANSPORT-9-02 | PARTIAL | transport_capacity · impact_measured_via_oracle | PASS | — | — |
 | TRANSPORT-9-03 | PARTIAL | transport_capacity · biosphere_informs_decisions | PASS | yes | — |
 | TRANSPORTA-A.1-01 | IMPLEMENTED | transport_capacity · no_justice_trigger | PASS | yes | — |
 | TRANSPORTA-A.1-02 | IMPLEMENTED | transport_capacity · degradation_signal_only | PASS | yes | — |
+| TRANSPORTA-A.1-03 | PARTIAL | transport_capacity · consequences_only_through_justice | PASS | yes | — |
+| TRANSPORTA-A.2-01 | PARTIAL | transport_capacity · hostile_events_not_addressed | PASS | — | — |
 | TRANSPORTA-A.2-02 | PARTIAL | transport_capacity · defense_contains_threats | PASS | — | — |
+| TRANSPORTA-A.2-03 | PARTIAL | transport_capacity · redesign_structural_only | PASS | — | — |
 | TRANSPORTA-A.3-01 | PARTIAL | transport_capacity · autonomy_evaluated_identically | PASS | — | — |
 | TRANSPORTA-A.3-03 | PARTIAL | transport_capacity · ownership_irrelevant | PASS | — | — |
+| TRANSPORTA-A.3-04 | PARTIAL | transport_capacity · physical_impact_sole_criterion | PASS | — | — |
 | TRANSPORTA-A.4-01 | PARTIAL | transport_capacity · no_axiom_trigger | PASS | — | — |
 | TRANSPORTA-A.5-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | TRANSPORTA-A.5-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
@@ -1452,8 +1459,10 @@ Withdrawn after verification (not author decisions):
 | PRIVACY-11-05 | IMPLEMENTED | privacy_transparency · crisis_reduction_bounded | PASS | — | — |
 | PRIVACY-11-06 | IMPLEMENTED | privacy_transparency · crisis_reduction_bounded | PASS | — | — |
 | PRIVACY-12-01 | IMPLEMENTED | privacy_transparency · privacy_rules_public | PASS | — | — |
+| PRIVACY-12-02 | PARTIAL | privacy_transparency · privacy_auditable | PASS | — | — |
 | PRIVACY-12-03 | PARTIAL | privacy_transparency · privacy_rules_public | PASS | — | — |
 | PRIVACY-12-04 | PARTIAL | privacy_transparency · privacy_rules_public | PASS | — | — |
+| PRIVACY-13-01 | PARTIAL | privacy_transparency · privacy_no_shield | PASS | — | — |
 | PRIVACY-14-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | PRIVACY-14-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | PRIVACY-14-03 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | yes | — |
@@ -1556,6 +1565,9 @@ Withdrawn after verification (not author decisions):
 | TRANSPARENCY-12-03 | PARTIAL | privacy_transparency · aggregation_protects | PASS | — | — |
 | TRANSPARENCY-12-04 | IMPLEMENTED | privacy_transparency · audit_without_personal_data | PASS | — | — |
 | TRANSPARENCY-13-01 | PARTIAL | privacy_transparency · no_moral_accountability | PASS | — | — |
+| TRANSPARENCY-13-02 | PARTIAL | privacy_transparency · no_attribution_by_transparency | PASS | — | — |
+| TRANSPARENCY-13-03 | PARTIAL | privacy_transparency · no_override_of_protections | PASS | — | — |
+| TRANSPARENCY-13-04 | PARTIAL | privacy_transparency · no_scope_expansion | PASS | — | — |
 | TRANSPARENCY-14-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | TRANSPARENCY-14-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
 | TRANSPARENCY-14-03 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
@@ -1574,6 +1586,7 @@ Withdrawn after verification (not author decisions):
 | TRANSPARENCY-8-01 | IMPLEMENTED | privacy_transparency · deanonymization_conditions | PASS | — | — |
 | TRANSPARENCY-8-02 | IMPLEMENTED | privacy_transparency · deanonymization_bounded | PASS | yes | — |
 | TRANSPARENCY-8-03 | IMPLEMENTED | privacy_transparency · deanonymization_bounded | PASS | yes | — |
+| TRANSPARENCY-8-04 | PARTIAL | privacy_transparency · deanonymization_auditable | PASS | — | — |
 | TRANSPARENCY-8-05 | IMPLEMENTED | privacy_transparency · deanonymization_bounded | PASS | yes | — |
 | TRANSPARENCY-9-02 | IMPLEMENTED | privacy_transparency · prohibited_purposes | PASS | yes | — |
 | TRANSPARENCY-9-03 | IMPLEMENTED | privacy_transparency · prohibited_purposes | PASS | yes | — |

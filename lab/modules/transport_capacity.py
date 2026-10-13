@@ -52,6 +52,10 @@ FAULTS = {
     "transport_contains_attack": "TRANSPORT itself contains an attack on a line instead of leaving it to DEFENSE",
     "autonomy_discount": "autonomous vehicles get a lower RED for the same kilometres",
     "axiom_trigger": "a transport line is suspended directly on 'Axiom A1' as the trigger",
+    "reopen_after_defense": "TRANSPORT reopens a line that DEFENSE closed after an attack",
+    "unsupported_modulation": "RED is modulated without PTL-confirmed evidence of risk reduction",
+    "self_measured_impact": "TRANSPORT records its own impact on B(t) instead of taking it from ORACLE",
+    "redesign_for_attack": "a redesign measure is taken in response to an attack",
 }
 OWNERSHIP = ("private", "shared", "public", "cooperative")
 AUTONOMY = ("manual", "assisted", "autonomous")
@@ -133,12 +137,17 @@ def run(r: Dict[str, Any]):
         else:
             put("notice", "TRANSPORT", k, {"handed_to": "DKP-3-DEFENSE-001", "reason": "real-time containment is Defense's (A.2)"},
                 [ev.event_id])
+        if "reopen_after_defense" in faults:
+            put("action", "TRANSPORT", k + 1, {"reopen_line": True, "overrides": "DKP-3-DEFENSE-001 closure"}, [ev.event_id])
+        if "redesign_for_attack" in faults:
+            put("action", "TRANSPORT", k + 1, {"response": "armoured redesign of the line"}, [ev.event_id])
     if "axiom_trigger" in faults:
         put("action", "TRANSPORT", 0, {"enforcement": "suspend line 4", "trigger": "Axiom A1"})
     for d in days:
         k = d["day"] * 24 + 23
-        bio = put("observation", "ORACLE/B", k, {"day": d["day"], "transport_impact_on_B": round(d["private_km"] * r["b_impact_per_km"], 9),
-                                                  "unit": "B(t) units (declared coefficient)"})
+        bio = put("observation", "TRANSPORT" if "self_measured_impact" in faults else "ORACLE/B", k,
+                  {"day": d["day"], "transport_impact_on_B": round(d["private_km"] * r["b_impact_per_km"], 9),
+                   "unit": "B(t) units (declared coefficient)"})
         uses_b = [] if "ignore_biosphere" in faults else [bio.event_id]
         ppdi = put("evaluation", "TRANSPORT/PPDI", k, {
             "day": d["day"], "seated_trip_share": d["seated_share"],
@@ -171,7 +180,9 @@ def run(r: Dict[str, Any]):
                 "proxy_model": "declared coefficient × private kilometres (H-TR-2)",
                 "uncertainty": {k2: round(v2 * r["red_uncertainty"], 6) for k2, v2 in red.items()},
                 "not_a_subjective_state": True}
-            rm = put("evaluation", "TRANSPORT/RED", k, {"day": d["day"], **red, "modulation": weight, **proxy,
+            support = None if "unsupported_modulation" in faults else "PTL-confirmed risk reduction (declared profile)"
+            rm = put("evaluation", "TRANSPORT/RED", k, {"day": d["day"], **red, "modulation": weight, "modulation_support": support,
+                                                        **proxy,
                                                         "quantified_by": "PTL (TRANSPORT §7.1)", "channels": ptl_channels,
                                                         "unit": "model unit (no coefficient in the corpus)"}, [ppdi.event_id])
             cost = sum(v for v in red.values())
@@ -390,6 +401,48 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
     out.append(v("TRANSPORTA-A.4-01", "no_axiom_trigger",
                  [m.event_id for m in msgs if m.source == "TRANSPORT" and str(m.value.get("trigger", "")).startswith("Axiom")],
                  "no transport action is triggered directly by an axiom", "{n} enforcement acts with an axiom as trigger"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    if hostile:
+        hid = {h.event_id for h in hostile}
+        tr = [m for m in msgs if m.source == "TRANSPORT" and hid & set(m.provenance)]
+        over = [m.event_id for m in tr if m.value.get("containment") or m.value.get("overrides")]
+        out.append(v("TRANSPORT-11-04", "no_defense_crisis_override", over,
+                     "TRANSPORT left the attack to DEFENSE and changed none of its decisions",
+                     "{n} transport acts overriding Defense or Crisis"))
+        out.append(v("TRANSPORTA-A.2-01", "hostile_events_not_addressed", [m.event_id for m in tr if not m.value.get("handed_to")],
+                     "TRANSPORT's only act on the hostile event was to hand it to DEFENSE",
+                     "{n} transport acts addressing a hostile event"))
+        out.append(v("TRANSPORTA-A.2-03", "redesign_structural_only", [m.event_id for m in tr if m.value.get("response")],
+                     "no redesign measure answers the attack; redesign follows structural records only",
+                     "{n} redesign measures taken in response to an attack"))
+    else:
+        for rid, chk in (("TRANSPORT-11-04", "no_defense_crisis_override"), ("TRANSPORTA-A.2-01", "hostile_events_not_addressed"),
+                         ("TRANSPORTA-A.2-03", "redesign_structural_only")):
+            out.append(na(rid, chk, "hostile events", "no attack in this experiment"))
+    if reds:
+        out.append(v("TRANSPORT-7.3-01", "modulation_ptl_supported",
+                     [m.event_id for m in reds if m.value.get("modulation") != "PTL-confirmed risk profile"
+                      or not m.value.get("modulation_support")],
+                     f"{len(reds)} RED evaluations modulated only on PTL-confirmed risk reduction, without moral or reputational weight",
+                     "{n} RED modulations without PTL-confirmed support"))
+    else:
+        out.append(na("TRANSPORT-7.3-01", "modulation_ptl_supported", "RED modulation", "RED not computed"))
+    impacts = [m for m in msgs if "transport_impact_on_B" in (m.value or {})]
+    out.append(v("TRANSPORT-9-02", "impact_measured_via_oracle", [m.event_id for m in impacts if not m.source.startswith(("ORACLE", "PTL"))],
+                 f"{len(impacts)} daily transport impacts on B(t) taken from ORACLE records",
+                 "{n} transport impacts on B(t) not measured via ORACLE") if impacts else
+               na("TRANSPORT-9-02", "impact_measured_via_oracle", "transport impacts on B(t)", "none recorded"))
+    cons = [m.event_id for m in msgs if m.source in ("LIABILITY", "JUSTICE")]
+    cons += [m.event_id for m in msgs if m.source == "TRANSPORT" and m.value.get("mandate")]
+    out.append(v("TRANSPORTA-A.1-03", "consequences_only_through_justice", cons,
+                 "no consequence for a Subject arose from transport metrics outside DKP-1-JUSTICE-001",
+                 "{n} consequences imposed outside JUSTICE"))
+    out.append(v("TRANSPORTA-A.3-04", "physical_impact_sole_criterion",
+                 [x["vehicle"] for x in fleet if abs(x["red"] - x["km"] * r["red_per_km"]) > 1e-9
+                  or x["criterion"] != "physical impact (kilometres)"],
+                 f"{len(fleet)} vehicles evaluated by physical impact alone, whatever their ownership or autonomy",
+                 "{n} vehicles evaluated on another criterion") if fleet else
+               na("TRANSPORTA-A.3-04", "physical_impact_sole_criterion", "fleet evaluation", "no RED coefficient declared (H-TR-2)"))
     just = [m.event_id for m in msgs if m.source == "JUSTICE"]
     for rid, chk in (("TRANSPORTA-A.1-01", "no_justice_trigger"), ("TRANSPORTA-A.1-02", "degradation_signal_only"),
                      ("TRANSPORT-11-02", "no_justice_outcomes")):
@@ -430,6 +483,14 @@ IMPLEMENTS = {
     "TRANSPORTA-A.1-01": ("no_justice_trigger", "IMPLEMENTED", None),
     "TRANSPORTA-A.3-03": ("ownership_irrelevant", "PARTIAL", "RED per kilometre with a declared coefficient (H-TR-2)."),
     "TRANSPORTA-A.1-02": ("degradation_signal_only", "IMPLEMENTED", None),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "TRANSPORT-11-04": ("no_defense_crisis_override", "PARTIAL", "Observed on a declared attack: containment or reopening by TRANSPORT."),
+    "TRANSPORTA-A.2-01": ("hostile_events_not_addressed", "PARTIAL", "The attack is a declared event; the hand-over is TRANSPORT's only permitted act."),
+    "TRANSPORTA-A.2-03": ("redesign_structural_only", "PARTIAL", "Observed as redesign measures citing an attack."),
+    "TRANSPORT-7.3-01": ("modulation_ptl_supported", "PARTIAL", "The risk profile and its PTL support are declared fields."),
+    "TRANSPORT-9-02": ("impact_measured_via_oracle", "PARTIAL", "The impact coefficient is declared; provenance from ORACLE is checked."),
+    "TRANSPORTA-A.1-03": ("consequences_only_through_justice", "PARTIAL", "Consequences are observed as liability scores, mandates or Justice outcomes from transport metrics."),
+    "TRANSPORTA-A.3-04": ("physical_impact_sole_criterion", "PARTIAL", "RED per kilometre with a declared coefficient (H-TR-2)."),
     "IMPACT-10-02": ("no_aggregated_score", "PARTIAL", "Where RED combines its channels is not defined: UNKNOWN for a single delta (F-015)."),
     "ORACLE-1-02": ("ptl_physical_state_only", "PARTIAL", "Checked on RED only: PTL asked to quantify an economic exposure (F-015)."),
     "ORACLE-5.2-02": ("red_proxy_declared", "IMPLEMENTED", None),
@@ -439,7 +500,7 @@ IMPLEMENTS = {
 
 class TransportCapacityModule(LabModule):
     id = "transport_capacity"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Transport capacity (S-LAB-09)", "ru": "Транспортная вместимость (S-LAB-09)"}
     summary = {"en": "A corridor at rush hour: queues, seats and external harm side by side — is standing an exception, "
                      "is under-provisioning met by more capacity, and does RED fund better transport without punishing anyone?",

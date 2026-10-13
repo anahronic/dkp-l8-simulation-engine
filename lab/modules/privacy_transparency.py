@@ -69,6 +69,10 @@ FAULTS = {
     "transparency_exposes_identity": "a published decision names the requester",
     "small_cell_aggregate": "an aggregate covering a single Subject is released",
     "moral_ledger": "a request to publish moral accountability is granted",
+    "privacy_shields_liability": "a de-anonymization meeting every condition of TRANSPARENCY §8 is refused on privacy grounds",
+    "transparency_attributes": "a published decision names a responsible Subject",
+    "transparency_overrides_info": "a transparency release removes an information act that INFO protects",
+    "transparency_scope_creep": "TRANSPARENCY adds a personal domain to the public domains",
 }
 REQUEST = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -165,6 +169,8 @@ def run(r: Dict[str, Any]):
             dec = {**dec, "grant": True}
         if "hide_public_domain" in faults and q["domain"] == "governance_logic":
             dec = {**dec, "grant": False, "reason": "withheld"}
+        if "privacy_shields_liability" in faults and dec.get("deanonymization") and dec["grant"]:
+            dec = {**dec, "grant": False, "reason": "privacy protects the Subject"}
         v = {"request": q["id"], "grant": dec["grant"], "reason": dec["reason"], "protocol_refs": dec["refs"],
              "audit_hook": True, "level": q["level"], "domain": q["domain"]}
         if "unexplained_decision" in faults and k == 0:
@@ -172,6 +178,8 @@ def run(r: Dict[str, Any]):
             v.pop("protocol_refs")
         if "no_audit_hook" in faults and k == 0:
             v["audit_hook"] = False
+        if "transparency_attributes" in faults and k == 0 and dec["grant"]:
+            v["attribution"] = "the operator is responsible"
         if dec.get("raw_data"):
             v["raw_personal_data"] = True
         if dec.get("deanonymization") and dec["grant"]:
@@ -200,6 +208,10 @@ def run(r: Dict[str, Any]):
                                         "functions_for_anonymous": "reduced" if "anonymous_fewer_rights" in faults else "full"})
     put("notice", "PRIVACY", k, {"rules_published": True, "thresholds_published": True,
                                  "subject_verifiable": True, "re_identification_threshold": r["reidentification_k"]})
+    if "transparency_overrides_info" in faults:
+        put("notice", "TRANSPARENCY", k, {"info_claim_removed": "claim c-17", "protection_overridden": "DKP-5-INFO-001 §8"})
+    if "transparency_scope_creep" in faults:
+        put("notice", "TRANSPARENCY", k, {"public_domains_added": ["mobility"]})
     return log
 
 
@@ -275,6 +287,38 @@ def transparency_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                  f"({'declared k' if r['reidentification_k'] >= 2 else 'k not given: more than one Subject'}, H-PT-3)",
                  "{n} aggregates too small to protect privacy") if agg else
                na("TRANSPARENCY-12-03", "aggregation_protects", "aggregation", "no aggregate of a personal domain released"))
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    traced = lambda m: (m.value.get("audit_hook") and m.provenance and m.provenance[0] in req and m.value.get("reason")
+                        and m.value.get("protocol_refs"))
+    rules = [m for m in msgs if m.source == "PRIVACY" and m.kind == "notice" and m.value.get("rules_published")]
+    out.append(v("PRIVACY-12-02", "privacy_auditable",
+                 [f"{m.value['request']}: no audit trace" for m in decs if not traced(m)] + ([] if rules else ["rules not published"]),
+                 f"rules and thresholds published; all {len(decs)} decisions leave an audit hook and a trace (request, reason, "
+                 "references) from which an auditor recomputes them (AUDIT §6)", "{n} privacy decisions or rules that cannot be audited"))
+    dean = [m for m in decs if m.value.get("case_bound") is not None or m.value.get("time_bound_until") is not None]
+    out.append(v("TRANSPARENCY-8-04", "deanonymization_auditable", [m.value["request"] for m in dean if not traced(m)],
+                 f"{len(dean)} de-anonymization(s), each with an audit hook and a trace to its request and reason",
+                 "{n} de-anonymizations that cannot be audited") if dean else
+               na("TRANSPARENCY-8-04", "deanonymization_auditable", "de-anonymization", "none granted"))
+    meets = [m for m in decs if m.provenance and m.provenance[0] in req and (lambda q: q["level"] == "individual"
+             and q["domain"] in CONDITIONAL + ("identity",) and q["scope_trigger"] and q["harm_verified"]
+             and q["attribution_required"] and not q["anonymous_path"])(req[m.provenance[0]])]
+    out.append(v("PRIVACY-13-01", "privacy_no_shield", [m.value["request"] for m in meets if not m.value["grant"]],
+                 f"{len(meets)} request(s) meeting every §8 condition granted: privacy did not shield liability or block attribution",
+                 "{n} attributions blocked by privacy") if meets else
+               na("PRIVACY-13-01", "privacy_no_shield", "attribution under verified harm", "no request meets the §8 conditions"))
+    out.append(v("TRANSPARENCY-13-02", "no_attribution_by_transparency",
+                 [f"{m.value['request']}: {k}" for m in decs for k in m.value if k in ("attribution", "responsible_subject")],
+                 "transparency records attribute nothing: attribution stays with JUSTICE", "{n} attributions in transparency records"))
+    tn = [m for m in msgs if m.source == "TRANSPARENCY"]
+    out.append(v("TRANSPARENCY-13-03", "no_override_of_protections",
+                 [m.event_id for m in tn if m.value.get("info_claim_removed") or m.value.get("protection_overridden")],
+                 "no transparency act removed or overrode a cultural or informational protection",
+                 "{n} transparency acts overriding CULTURE or INFO protections"))
+    out.append(v("TRANSPARENCY-13-04", "no_scope_expansion",
+                 [m.event_id for m in tn if m.value.get("public_domains_added") or m.value.get("identity_exposure") == "increased"],
+                 "transparency added no public domain and raised no identity exposure: system scope unchanged",
+                 "{n} expansions of system scope by transparency"))
     moral = [m for m in decs if m.provenance and m.provenance[0] in req and req[m.provenance[0]]["purpose"] == "moral_accountability"]
     out.append(v("TRANSPARENCY-13-01", "no_moral_accountability", [m.value["request"] for m in moral if m.value["grant"]],
                  f"{len(moral)} request(s) to define or publish moral accountability refused (§13)",
@@ -459,6 +503,13 @@ IMPLEMENTS = {
     "TRANSPARENCY-4-05": ("transparency_without_visibility", "IMPLEMENTED", None),
     "TRANSPARENCY-12-03": ("aggregation_protects", "PARTIAL", "'MAY aggregate to protect privacy' read as: an aggregate covers at "
                            "least the re-identification threshold (k not given: more than one Subject; H-PT-3)."),
+    # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    "PRIVACY-12-02": ("privacy_auditable", "PARTIAL", "AUDIT §6 read as an audit hook and a recomputable trace per decision."),
+    "TRANSPARENCY-8-04": ("deanonymization_auditable", "PARTIAL", "AUDIT §6 read as an audit hook and a recomputable trace per de-anonymization."),
+    "PRIVACY-13-01": ("privacy_no_shield", "PARTIAL", "Observed as refusals of requests meeting every TRANSPARENCY §8 condition."),
+    "TRANSPARENCY-13-02": ("no_attribution_by_transparency", "PARTIAL", "Observed as attribution fields in transparency records."),
+    "TRANSPARENCY-13-03": ("no_override_of_protections", "PARTIAL", "Observed as transparency acts removing or overriding a protected record."),
+    "TRANSPARENCY-13-04": ("no_scope_expansion", "PARTIAL", "Observed as added public domains or raised identity exposure."),
     "TRANSPARENCY-13-01": ("no_moral_accountability", "PARTIAL", "Observed as a declared request; no output field defines moral "
                            "accountability."),
     "PRIVACY-12-01": ("privacy_rules_public", "IMPLEMENTED", None),
@@ -470,7 +521,7 @@ IMPLEMENTS = {
 
 class PrivacyTransparencyModule(LabModule):
     id = "privacy_transparency"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Privacy and transparency (PRIVACY, TRANSPARENCY)", "ru": "Приватность и прозрачность (PRIVACY, TRANSPARENCY)"}
     summary = {"en": "Requests to publish or process data: is the system verifiable without exposing people, and is a "
                      "person's identity revealed only when harm is verified and nothing anonymous would do?",

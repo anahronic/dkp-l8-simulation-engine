@@ -8,8 +8,8 @@
   "reclassified": 33,
   "kept": 250,
   "returned": 95,
-  "returned_awaiting_check": 45,
-  "closure_closed": 172,
+  "returned_awaiting_check": 32,
+  "closure_closed": 185,
   "closure_open": 21,
   "human_accepted": 0
  },
@@ -7375,8 +7375,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "privacy_transparency:privacy_auditable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the evidence and procedure sufficient to audit each privacy provision."
+    ],
+    "coverage_limit": "AUDIT §6 read as an audit hook and a recomputable trace per decision.",
+    "answer": "'Auditable' in the corpus is AUDIT §6 (trace and independent recomputation; §4 covers all protocol executions).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PRIVACY-13-01",
@@ -7389,8 +7397,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "privacy_transparency:privacy_no_shield",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare how shielding liability, preventing attribution, and justifying harm concealment are detected."
+    ],
+    "coverage_limit": "Observed as refusals of requests meeting every TRANSPARENCY §8 condition.",
+    "answer": "AXIOMS and JUSTICE are in the corpus; privacy blocking an attribution that meets TRANSPARENCY §8 is the shield the text forbids.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "PRIVACY-3-01",
@@ -7757,8 +7773,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "privacy_transparency:no_attribution_by_transparency",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the authoritative attribution workflow and what constitutes replacing it."
+    ],
+    "coverage_limit": "Observed as attribution fields in transparency records.",
+    "answer": "JUSTICE is in the corpus; an attribution in a transparency record is observable (cf. TRANSPARENCY-13-01).",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-13-03",
@@ -7771,8 +7795,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "privacy_transparency:no_override_of_protections",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the applicable protections and the rule-conflict evaluation procedure."
+    ],
+    "coverage_limit": "Observed as transparency acts removing or overriding a protected record.",
+    "answer": "The protections are in the corpus (CULTURE §6, INFO §8-§10); overriding one is a recorded act.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-13-04",
@@ -7785,8 +7817,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "privacy_transparency:no_scope_expansion",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the scope baseline and how increases in authority are detected."
+    ],
+    "coverage_limit": "Observed as added public domains or raised identity exposure.",
+    "answer": "SCOPE is in the corpus; adding public domains or raising identity exposure is a recorded expansion.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-3-01",
@@ -7957,8 +7997,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "privacy_transparency:deanonymization_auditable",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the auditor's access and the evidence needed to audit an event."
+    ],
+    "coverage_limit": "AUDIT §6 read as an audit hook and a recomputable trace per de-anonymization.",
+    "answer": "AUDIT is in the corpus (§6 mechanisms); each de-anonymization keeps a trace an auditor recomputes.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPARENCY-9-01",
@@ -8119,8 +8167,17 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:no_defense_crisis_override",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Identification of the applicable Defense and Crisis protocols.",
+     "A rule for detecting overrides and resolving protocol conflicts."
+    ],
+    "coverage_limit": "Observed on a declared attack: containment or reopening by TRANSPORT.",
+    "answer": "DEFENSE and CRISIS are in the corpus; a transport act that contains an attack or undoes a Defense decision is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-3-01",
@@ -8228,8 +8285,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:modulation_ptl_supported",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Evidence validation and identity linkage rules if the referenced protocols are unavailable."
+    ],
+    "coverage_limit": "The risk profile and its PTL support are declared fields.",
+    "answer": "IDENTITY and ORACLE are in the corpus; §7.3 lists the conditions of the permitted modulation.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-7.3-02",
@@ -8292,8 +8357,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:impact_measured_via_oracle",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Oracle measurement and provenance validation rules if the referenced protocol is unavailable."
+    ],
+    "coverage_limit": "The impact coefficient is declared; provenance from ORACLE is checked.",
+    "answer": "ORACLE is in the corpus; the provenance of the impact value is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORT-9-03",
@@ -8329,8 +8402,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:consequences_only_through_justice",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare the attribution standard and applicable thresholds if the referenced procedure is unavailable."
+    ],
+    "coverage_limit": "Consequences are observed as liability scores, mandates or Justice outcomes from transport metrics.",
+    "answer": "JUSTICE is in the corpus; a consequence imposed from transport metrics outside it is observable.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORTA-A.2-01",
@@ -8343,8 +8424,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:hostile_events_not_addressed",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare classification rules for active harm and hostile events."
+    ],
+    "coverage_limit": "The attack is a declared event; the hand-over is TRANSPORT's only permitted act.",
+    "answer": "The scope statement behind A.2-02: hostile events belong to DEFENSE; TRANSPORT only hands them over.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORTA-A.2-02",
@@ -8379,8 +8468,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:redesign_structural_only",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare classification rules distinguishing structural risk generation from attacks."
+    ],
+    "coverage_limit": "Observed as redesign measures citing an attack.",
+    "answer": "Redesign answers structural risk records; a measure citing an attack is the excluded case.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORTA-A.3-01",
@@ -8429,8 +8526,16 @@
     "agent_reading": true,
     "human_accepted": false
    },
-   "check": null,
-   "closure": null
+   "check": "transport_capacity:physical_impact_sole_criterion",
+   "closure": {
+    "state": "closed",
+    "draft_need": [
+     "Declare which evaluation inputs and derived criteria qualify as physical impact."
+    ],
+    "coverage_limit": "RED per kilometre with a declared coefficient (H-TR-2).",
+    "answer": "One of the three items A.3-01 was closed on; metamorphic over ownership and autonomy.",
+    "decision_status_after": "NONE_IDENTIFIED"
+   }
   },
   {
    "id": "TRANSPORTA-A.4-01",

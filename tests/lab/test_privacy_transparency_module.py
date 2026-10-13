@@ -32,20 +32,24 @@ FAULT_CASES = {
     "profiling_granted": ({}, ["PRIVACY-10-01", "TRANSPARENCY-9-02"]),
     "convenience_override": ({}, ["PRIVACY-4.4-01"]),
     "crisis_permanent": (HC, ["PRIVACY-11-06", "TRANSPARENCY-10-04"]),
-    "crisis_identity_by_default": (HC, ["TRANSPARENCY-10-02"]),
+    "crisis_identity_by_default": (HC, ["TRANSPARENCY-10-02", "TRANSPARENCY-13-04"]),
     "hide_public_domain": ({}, ["TRANSPARENCY-5-01"]),
     "identity_required": ({}, ["PRIVACY-8-01", "TRANSPARENCY-3-02"]),
     "anonymous_fewer_rights": ({}, ["PRIVACY-8-02"]),
-    "unexplained_decision": ({}, ["TRANSPARENCY-11-01"]),
-    "no_audit_hook": ({}, ["TRANSPARENCY-12-01"]),
+    "unexplained_decision": ({}, ["TRANSPARENCY-11-01", "PRIVACY-12-02"]),
+    "no_audit_hook": ({}, ["TRANSPARENCY-12-01", "PRIVACY-12-02"]),
     "audit_without_zk": ({}, ["PRIVACY-9-02"]),
     "breach_downgraded": ({}, ["PRIVACY-10-02"]),
     "reputation_verification": ({}, ["TRANSPARENCY-3-04", "TRANSPARENCY-4-03"]),
     "trust_attestation": ({}, ["TRANSPARENCY-4-03"]),
-    "unverifiable_decision": ({}, ["TRANSPARENCY-4-01"]),
+    "unverifiable_decision": ({}, ["TRANSPARENCY-4-01", "PRIVACY-12-02"]),
     "transparency_exposes_identity": ({}, ["TRANSPARENCY-4-05"]),
     "small_cell_aggregate": ({}, ["TRANSPARENCY-12-03"]),
     "moral_ledger": ({}, ["TRANSPARENCY-13-01"]),
+    "privacy_shields_liability": (HC, ["PRIVACY-13-01"]),
+    "transparency_attributes": ({}, ["TRANSPARENCY-13-02"]),
+    "transparency_overrides_info": ({}, ["TRANSPARENCY-13-03"]),
+    "transparency_scope_creep": ({}, ["TRANSPARENCY-13-04"]),
 }
 
 
@@ -91,3 +95,10 @@ def test_kt5_no_override_of_privacy():
     for fault, base in (("release_absolute_individual", {}), ("audit_raw_data", {}), ("deanonymize_without_harm", HC),
                         ("convenience_override", {})):
         assert statuses(run(**base, faults=[fault]))["PRIVACY-3-01"] == "FAIL", fault
+
+
+def test_deanonymization_must_stay_auditable():
+    """TRANSPARENCY §8 (returned provision TRANSPARENCY-8-04): the granted de-anonymization of h1 loses its audit trace."""
+    assert statuses(run(**HC))["TRANSPARENCY-8-04"] == "PASS"
+    for f in ("no_audit_hook", "unverifiable_decision", "unexplained_decision"):
+        assert statuses(run(**HC, faults=[f]))["TRANSPARENCY-8-04"] == "FAIL", f

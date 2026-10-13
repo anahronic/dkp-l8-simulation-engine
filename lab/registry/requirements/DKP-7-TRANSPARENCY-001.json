@@ -68,7 +68,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_identity_condition"
    },
    "tests": [
@@ -104,7 +104,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "absolute_domains"
    },
    "tests": [
@@ -144,7 +144,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_reputation_verification"
    },
    "tests": [
@@ -186,7 +186,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "independently_verifiable"
    },
    "tests": [
@@ -262,7 +262,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "proof_based_verification"
    },
    "tests": [
@@ -338,7 +338,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "transparency_without_visibility"
    },
    "tests": [
@@ -384,7 +384,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "public_by_default"
    },
    "tests": [
@@ -423,7 +423,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "public_by_default"
    },
    "tests": [
@@ -502,7 +502,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deanonymization_conditions"
    },
    "tests": [
@@ -587,7 +587,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deanonymization_conditions"
    },
    "tests": [
@@ -632,7 +632,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deanonymization_conditions"
    },
    "tests": [
@@ -672,7 +672,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deanonymization_bounded"
    },
    "tests": [
@@ -713,7 +713,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deanonymization_bounded"
    },
    "tests": [
@@ -747,19 +747,26 @@
    "data_dependencies": [
     "de-anonymization records and supporting evidence"
    ],
-   "gap": "The evidence requirements and operational auditability test are missing. No lab check implemented yet.",
+   "gap": "AUDIT §6 read as an audit hook and a recomputable trace per de-anonymization.",
    "hypotheses_needed": [
     "Declare the auditor's access and the evidence needed to audit an event."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.3.0",
+    "check": "deanonymization_auditable"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -789,7 +796,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deanonymization_bounded"
    },
    "tests": [
@@ -864,7 +871,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "prohibited_purposes"
    },
    "tests": [
@@ -904,7 +911,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "prohibited_purposes"
    },
    "tests": [
@@ -945,7 +952,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_cross_domain_linkage"
    },
    "tests": [
@@ -1022,7 +1029,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -1066,7 +1073,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -1107,7 +1114,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "crisis_transparency"
    },
    "tests": [
@@ -1148,7 +1155,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "crisis_reduction_bounded"
    },
    "tests": [
@@ -1191,7 +1198,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "explained_decisions"
    },
    "tests": [
@@ -1267,7 +1274,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "audit_hooks"
    },
    "tests": [
@@ -1341,7 +1348,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "aggregation_protects"
    },
    "tests": [
@@ -1383,7 +1390,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "audit_without_personal_data"
    },
    "tests": [
@@ -1422,7 +1429,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "privacy_transparency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_moral_accountability"
    },
    "tests": [
@@ -1461,19 +1468,26 @@
    "data_dependencies": [
     "justice attribution procedures and decision provenance"
    ],
-   "gap": "The justice attribution interface and the test for procedural replacement are missing. No lab check implemented yet.",
+   "gap": "Observed as attribution fields in transparency records.",
    "hypotheses_needed": [
     "Declare the authoritative attribution workflow and what constitutes replacing it."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.3.0",
+    "check": "no_attribution_by_transparency"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1496,19 +1510,26 @@
    "data_dependencies": [
     "applicable cultural and informational protections and conflict decisions"
    ],
-   "gap": "The protected rules and a procedure for identifying overrides are not supplied. No lab check implemented yet.",
+   "gap": "Observed as transparency acts removing or overriding a protected record.",
    "hypotheses_needed": [
     "Declare the applicable protections and the rule-conflict evaluation procedure."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.3.0",
+    "check": "no_override_of_protections"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
@@ -1530,19 +1551,26 @@
    "data_dependencies": [
     "system scope definitions and authority-change records"
    ],
-   "gap": "A formal system-scope representation and expansion test are missing. No lab check implemented yet.",
+   "gap": "Observed as added public domains or raised identity exposure.",
    "hypotheses_needed": [
     "Declare the scope baseline and how increases in authority are detected."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "privacy_transparency",
+    "version": "1.3.0",
+    "check": "no_scope_expansion"
+   },
+   "tests": [
+    "tests/lab/test_privacy_transparency_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
-   "decision_status": "UNRESOLVED",
+   "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
-   "open_point": {
-    "origin": "implementation_only",
-    "source": "lab_reconciled"
+   "decision_basis": {
+    "by": "agent_reading",
+    "record": "lab/registry/reconciliations.json",
+    "human_accepted": false
    }
   },
   {
