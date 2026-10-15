@@ -34,7 +34,7 @@ FAULT_CASES = {
     "belief_screening": ({}, ["EDU-9-03", "EDU-7-05", "EDU-2-04"]),
     "credential_privilege": ({}, ["EDU-4-02", "EDU-9-05"]),
     "profile_learning_data": ({}, ["EDU-10-06"]),
-    "language_as_competence": ({}, ["CULTURE-5-05", "EDU-7-04", "CULTURE-4.1-02", "CULTURE-7-02"]),
+    "language_as_competence": ({}, ["CULTURE-5-05", "EDU-7-04", "CULTURE-4.1-02", "CULTURE-7-02", "CULTURE-6-01"]),
     "cultural_ranking": ({}, ["CULTURE-4.3-01", "CULTURE-4.3-02", "CULTURE-0-01"]),
     "default_dominant_language": ({}, ["CULTURE-8-02", "CULTURE-4.1-03"]),
     "lossy_translation": ({}, ["CULTURE-4.2-02"]),
@@ -54,7 +54,14 @@ FAULT_CASES = {
     "persistence_by_scale": ({}, ["CULTURE-4.3-03"]),
     "asymmetric_neutrality": ({}, ["CULTURE-7-03"]),
     "assimilation_incentive": ({}, ["CULTURE-5-03"]),
-    "worldview_gate": ({}, ["EDU-2-05"]),
+    "worldview_gate": ({}, ["EDU-2-05", "EDU-4-04"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "rank_by_unrelated": ({}, ["EDU-11-02"]),
+    "edu_feeds_justice": ({}, ["EDU-2-01"]),
+    "eligibility_exclusion": ({}, ["EDU-4-04"]),
+    "exception_blocks_signal": (EXC, ["CULTURE-9-05"]),
+    "audit_assesses_merit": ({}, ["CULTURE-10-02"]),
+    "unsimulated_mechanism": ({}, ["CULTURE-11-02"]),
 }
 
 
@@ -88,3 +95,15 @@ def test_minority_language_assessed_in_its_own_language():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_core_clear_parts_and_their_open_remainders():
+    """Review КТ7-GPT-01: a restriction under a declared bundle needs assistance (EDU §8); ranking by assessment results
+    stays UNKNOWN (ordering within a competence category is open); a simulation after the use does not count (CULTURE §11)."""
+    assert statuses(run(**CAL))["EDU-8-02"] == "PASS"
+    assert statuses(run(**CAL, faults=["no_remediation"]))["EDU-8-02"] == "FAIL"
+    assert statuses(run())["EDU-8-02"] == "NOT_APPLICABLE"
+    assert statuses(run(faults=["rank_by_assessment"]))["EDU-11-02"] == "UNKNOWN"
+    late = [{"id": "language_routing", "affects_access_or_visibility": True, "simulation_day": 6, "use_day": 4}]
+    assert statuses(run(mechanisms=late))["CULTURE-11-02"] == "FAIL"
+    assert statuses(run(mechanisms=[dict(late[0], affects_access_or_visibility=False)]))["CULTURE-11-02"] == "NOT_APPLICABLE"

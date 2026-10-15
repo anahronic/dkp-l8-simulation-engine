@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1518 (87.4 %) | 979 | 1433 | 901 | 4 | 66 | 15 | 219 | 0 | 85 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1535 (88.4 %) | 996 | 1449 | 917 | 4 | 66 | 16 | 202 | 0 | 68 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 6 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 370 (87.3 %) | 200 | 348 | 181 | 1 | 20 | 1 | 54 | 0 | 15 | 254 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 247 (84.3 %) | 155 | 231 | 141 | 0 | 9 | 7 | 46 | 0 | 17 | 201 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 434 (84.9 %) | 291 | 412 | 269 | 0 | 18 | 4 | 77 | 0 | 35 | 368 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 9 | 201 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 443 (86.7 %) | 300 | 421 | 278 | 0 | 18 | 4 | 68 | 0 | 26 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1518 (87.4 %) | 979 | 1433 | 901 | 4 | 66 | 15 | 219 | 0 | 85 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1535 (88.4 %) | 996 | 1449 | 917 | 4 | 66 | 16 | 202 | 0 | 68 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -272,17 +272,17 @@ Withdrawn after verification (not author decisions):
 | DKP-2-ASSETS-001 | 43 | 40 | 39 | 0 | 1 | 0 | 3 | 30 |
 | DKP-2-FINANCE-001 | 44 | 35 | 33 | 0 | 2 | 0 | 9 | 32 |
 | DKP-2-LABOR-001 | 40 | 39 | 36 | 0 | 3 | 0 | 1 | 25 |
-| DKP-3-ANTITERROR-001 | 41 | 30 | 30 | 0 | 0 | 0 | 11 | 29 |
+| DKP-3-ANTITERROR-001 | 41 | 34 | 34 | 0 | 0 | 0 | 7 | 29 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 37 | 36 | 0 | 0 | 1 | 12 | 44 |
-| DKP-3-POLICE-001 | 45 | 37 | 37 | 0 | 0 | 0 | 8 | 29 |
+| DKP-3-POLICE-001 | 45 | 42 | 42 | 0 | 0 | 0 | 3 | 29 |
 | DKP-4-CRISIS-001 | 53 | 37 | 33 | 1 | 3 | 0 | 16 | 32 |
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 27 | 27 | 0 | 0 | 0 | 2 | 20 |
 | DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 32 |
 | DKP-4-UPGRADE-001 | 48 | 40 | 36 | 0 | 4 | 0 | 8 | 31 |
-| DKP-5-CULTURE-001 | 43 | 34 | 34 | 0 | 0 | 0 | 9 | 30 |
-| DKP-5-EDU-001 | 64 | 54 | 50 | 0 | 1 | 3 | 10 | 37 |
+| DKP-5-CULTURE-001 | 43 | 38 | 38 | 0 | 0 | 0 | 5 | 30 |
+| DKP-5-EDU-001 | 64 | 58 | 53 | 0 | 1 | 4 | 6 | 37 |
 | DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 49 |
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 34 |
 | DKP-5-TRANSPORT-001 | 35 | 25 | 20 | 0 | 5 | 0 | 10 | 28 |
@@ -817,7 +817,9 @@ Withdrawn after verification (not author decisions):
 | ANTITERROR-3.3-01 | PARTIAL | police_antiterror · protected_domain_targets | PASS | yes | — |
 | ANTITERROR-4.1-01 | IMPLEMENTED | police_antiterror · ptl_confirmed_terror | PASS | yes | — |
 | ANTITERROR-4.2-01 | PARTIAL | police_antiterror · identity_not_a_risk_signal | PASS | — | — |
+| ANTITERROR-4.3-01 | PARTIAL | police_antiterror · containment_objective | PASS | yes | — |
 | ANTITERROR-4.3-02 | PARTIAL | police_antiterror · no_punishment_deterrence_retaliation | PASS | yes | — |
+| ANTITERROR-4.4-01 | PARTIAL | police_antiterror · localized_to_stream | PASS | yes | — |
 | ANTITERROR-4.4-02 | PARTIAL | police_antiterror · immediately_terminable | PASS | yes | — |
 | ANTITERROR-5-01 | IMPLEMENTED | police_antiterror · t0_iff_no_stream | PASS | yes | — |
 | ANTITERROR-5-02 | PARTIAL | police_antiterror · t1_definition | PASS | yes | — |
@@ -830,7 +832,9 @@ Withdrawn after verification (not author decisions):
 | ANTITERROR-7-01 | PARTIAL | police_antiterror · no_collective_punishment | PASS | — | — |
 | ANTITERROR-7-02 | PARTIAL | police_antiterror · no_suppression_of_dissent | PASS | — | — |
 | ANTITERROR-7-03 | IMPLEMENTED | police_antiterror · no_retrospective_justification | PASS | yes | — |
+| ANTITERROR-8-01 | PARTIAL | police_antiterror · no_infrastructure_shielding | PASS | — | — |
 | ANTITERROR-8-02 | IMPLEMENTED | police_antiterror · logs_to_impact | PASS | yes | — |
+| ANTITERROR-8-03 | PARTIAL | police_antiterror · justice_post_factum | PASS | — | — |
 | ANTITERROR-8-04 | IMPLEMENTED | police_antiterror · terminate_on_cessation | PASS | yes | — |
 | ANTITERROR-9-01 | PARTIAL | police_antiterror · escalation_rules | PASS | — | — |
 | DEFENSE-0-01 | PARTIAL | defense_envelope · not_political_or_punitive | PASS | yes | — |
@@ -926,6 +930,8 @@ Withdrawn after verification (not author decisions):
 | POLICE-2-03 | PARTIAL | police_antiterror · no_guilt_or_axiom | PASS | — | — |
 | POLICE-2-04 | IMPLEMENTED | police_antiterror · within_ptl_conditions | PASS | — | — |
 | POLICE-2-05 | IMPLEMENTED | police_antiterror · valid_orders_only | PASS | — | — |
+| POLICE-3-01 | PARTIAL | police_antiterror · only_on_harm_or_decision | PASS | — | — |
+| POLICE-3-02 | PARTIAL | police_antiterror · intervention_cites_basis | PASS | — | — |
 | POLICE-3-03 | IMPLEMENTED | police_antiterror · no_suspicion_or_prediction | PASS | — | — |
 | POLICE-3-04 | PARTIAL | police_antiterror · no_intent_or_judgment | PASS | — | — |
 | POLICE-3-06 | IMPLEMENTED | police_antiterror · no_ptl_no_intervention | PASS | — | — |
@@ -942,6 +948,7 @@ Withdrawn after verification (not author decisions):
 | POLICE-6-02 | IMPLEMENTED | police_antiterror · ptl_logged | PASS | — | — |
 | POLICE-6-03 | PARTIAL | police_antiterror · responsibility_traceable | PASS | yes | — |
 | POLICE-7-01 | PARTIAL | police_antiterror · no_prediction_or_profiling | PASS | yes | — |
+| POLICE-7-02 | PARTIAL | police_antiterror · no_norm_enforcement | PASS | — | — |
 | POLICE-7-03 | IMPLEMENTED | police_antiterror · no_authority_expansion | PASS | — | — |
 | POLICE-7-04 | PARTIAL | police_antiterror · prohibited_critical | PASS | yes | — |
 | POLICE-8-01 | IMPLEMENTED | police_antiterror · extension_only_in_crisis | PASS | — | — |
@@ -949,6 +956,8 @@ Withdrawn after verification (not author decisions):
 | POLICE-8-03 | PARTIAL | police_antiterror · no_precedent | PASS | — | — |
 | POLICE-8-04 | PARTIAL | police_antiterror · crisis_policing_in_scope | PASS | yes | — |
 | POLICE-9-01 | IMPLEMENTED | police_antiterror · aggregated_statistics | PASS | — | — |
+| POLICE-9-02 | PARTIAL | police_antiterror · incident_reconstructable | PASS | — | — |
+| POLICE-9-03 | PARTIAL | police_antiterror · authority_registered | PASS | yes | — |
 | CRISIS-0-02 | PARTIAL | crisis_recovery · no_new_powers_temporary | PASS | yes | — |
 | CRISIS-0-03 | PARTIAL | crisis_recovery · no_precedent_or_future_authorization | PASS | yes | — |
 | CRISIS-1-02 | PARTIAL | crisis_recovery · within_envelope_subset_of_scope | PASS | yes | — |
@@ -1130,7 +1139,9 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-Post-CrisisCooldownRule-05 | PARTIAL | upgrade_lifecycle · reversible_window | PASS | — | — |
 | UPGRADE-Post-CrisisCooldownRule-06 | IMPLEMENTED | upgrade_lifecycle · logged | PASS | — | — |
 | CULTURE-0-01 | IMPLEMENTED | edu_culture · no_ranking | PASS | yes | — |
+| CULTURE-10-02 | PARTIAL | edu_culture · audit_scope_excludes_merit | PASS | — | — |
 | CULTURE-11-01 | IMPLEMENTED | edu_culture · no_enforceable_rankings | PASS | yes | — |
+| CULTURE-11-02 | PARTIAL | edu_culture · simulated_before_use | PASS | — | — |
 | CULTURE-11-03 | PARTIAL | edu_culture · mechanism_declared | PASS | — | — |
 | CULTURE-11-05 | PARTIAL | edu_culture · informational_without_l8 | PASS | — | — |
 | CULTURE-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
@@ -1153,6 +1164,7 @@ Withdrawn after verification (not author decisions):
 | CULTURE-5-02 | PARTIAL | edu_culture · minority_languages_served | PASS | yes | — |
 | CULTURE-5-03 | PARTIAL | edu_culture · no_assimilation_incentive | PASS | — | — |
 | CULTURE-5-05 | IMPLEMENTED | edu_culture · language_not_competence_proxy | PASS | yes | — |
+| CULTURE-6-01 | PARTIAL | edu_culture · no_forced_dominant_language | PASS | yes | — |
 | CULTURE-6-02 | IMPLEMENTED | edu_culture · no_obligations_from_preservation | PASS | — | — |
 | CULTURE-7-01 | IMPLEMENTED | edu_culture · voluntary_participation | PASS | — | — |
 | CULTURE-7-02 | PARTIAL | edu_culture · affiliation_affects_nothing | PASS | yes | — |
@@ -1163,6 +1175,7 @@ Withdrawn after verification (not author decisions):
 | CULTURE-9-02 | IMPLEMENTED | edu_culture · exception_bounded | PASS | — | — |
 | CULTURE-9-03 | PARTIAL | edu_culture · conflicts_by_scope | PASS | — | — |
 | CULTURE-9-04 | IMPLEMENTED | edu_culture · no_verification_exemption | PASS | — | — |
+| CULTURE-9-05 | PARTIAL | edu_culture · safety_signal_delivered | PASS | — | — |
 | EDU-0-01 | IMPLEMENTED | edu_culture · not_a_ranking | PASS | yes | — |
 | EDU-1-01 | PARTIAL | edu_culture · no_defined_values | PASS | yes | — |
 | EDU-10-01 | PARTIAL | edu_culture · open_or_inspectable | PASS | yes | — |
@@ -1172,6 +1185,7 @@ Withdrawn after verification (not author decisions):
 | EDU-10-05 | PARTIAL | edu_culture · learning_data_protected | UNKNOWN | — | Q-059 |
 | EDU-10-06 | IMPLEMENTED | edu_culture · learning_data_not_profiled | PASS | — | — |
 | EDU-11-01 | PARTIAL | edu_culture · no_success_definition | PASS | yes | — |
+| EDU-11-02 | PARTIAL | edu_culture · no_ranking_beyond_competence | PASS | — | — |
 | EDU-11-03 | PARTIAL | edu_culture · no_uniform_path | PASS | yes | — |
 | EDU-11-05 | IMPLEMENTED | edu_culture · not_a_rights_gate | PASS | — | — |
 | EDU-12-01 | IMPLEMENTED | edu_culture · restriction_reversible | NOT_APPLICABLE | — | — |
@@ -1184,6 +1198,7 @@ Withdrawn after verification (not author decisions):
 | EDU-13-04 | IMPLEMENTED | edition_finality · compatibility_declared | PASS | — | — |
 | EDU-13-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | EDU-13-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| EDU-2-01 | PARTIAL | edu_culture · edu_not_an_input | PASS | — | — |
 | EDU-2-02 | PARTIAL | edu_culture · no_ideological_narrative | PASS | yes | — |
 | EDU-2-03 | PARTIAL | edu_culture · no_correctness_definition | PASS | yes | — |
 | EDU-2-04 | IMPLEMENTED | edu_culture · no_belief_evaluation | PASS | yes | — |
@@ -1192,6 +1207,7 @@ Withdrawn after verification (not author decisions):
 | EDU-3-04 | PARTIAL | edu_culture · assessment_event | PASS | yes | — |
 | EDU-4-02 | IMPLEMENTED | edu_culture · competence_over_credential | PASS | — | — |
 | EDU-4-03 | PARTIAL | edu_culture · free_of_ideological_enforcement | PASS | yes | — |
+| EDU-4-04 | PARTIAL | edu_culture · no_exclusion_rule | PASS | — | — |
 | EDU-4-05 | PARTIAL | edu_culture · outcomes_reproducible | PASS | yes | — |
 | EDU-6-01 | PARTIAL | edu_culture · no_mandated_belief | PASS | yes | — |
 | EDU-6-02 | PARTIAL | edu_culture · no_worldview_alignment | PASS | yes | — |
@@ -1202,6 +1218,7 @@ Withdrawn after verification (not author decisions):
 | EDU-7-05 | IMPLEMENTED | edu_culture · no_ideology_items | PASS | yes | — |
 | EDU-7-06 | IMPLEMENTED | edu_culture · competence_signals | PASS | yes | — |
 | EDU-8-01 | IMPLEMENTED | edu_culture · targeted_modules | PASS | — | — |
+| EDU-8-02 | PARTIAL | edu_culture · assistance_with_restriction | NOT_APPLICABLE | — | — |
 | EDU-8-03 | IMPLEMENTED | edu_culture · support_not_penalty | PASS | yes | — |
 | EDU-8-04 | PARTIAL | edu_culture · not_disciplinary | PASS | yes | — |
 | EDU-8-05 | IMPLEMENTED | edu_culture · no_permanent_denial | PASS | — | — |

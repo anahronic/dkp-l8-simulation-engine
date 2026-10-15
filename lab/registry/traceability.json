@@ -1561,25 +1561,25 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1518,
-  "covered_percent": 87.4,
+  "covered": 1535,
+  "covered_percent": 88.4,
   "statuses": {
-   "PASS": 1433,
+   "PASS": 1449,
    "FAIL": 4,
    "UNKNOWN": 66,
-   "NOT_APPLICABLE": 15,
-   "UNCOVERED": 219
+   "NOT_APPLICABLE": 16,
+   "UNCOVERED": 202
   },
   "resolvable": 745,
   "resolvable_uncovered": 0,
   "resolvable_uncovered_implementation_only": 0,
   "unresolved_decisions": 1198,
-  "covered_with_open_point": 979,
-  "pass_with_open_point": 901,
+  "covered_with_open_point": 996,
+  "pass_with_open_point": 917,
   "covered_without_open_point": 539,
   "closed_by_agent_reading": 216,
   "human_accepted": 0,
-  "uncovered_checkable_core": 85
+  "uncovered_checkable_core": 68
  },
  "stages": [
   {
@@ -1629,25 +1629,25 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1518,
-    "covered_percent": 87.4,
+    "covered": 1535,
+    "covered_percent": 88.4,
     "statuses": {
-     "PASS": 1433,
+     "PASS": 1449,
      "FAIL": 4,
      "UNKNOWN": 66,
-     "NOT_APPLICABLE": 15,
-     "UNCOVERED": 219
+     "NOT_APPLICABLE": 16,
+     "UNCOVERED": 202
     },
     "resolvable": 745,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 1198,
-    "covered_with_open_point": 979,
-    "pass_with_open_point": 901,
+    "covered_with_open_point": 996,
+    "pass_with_open_point": 917,
     "covered_without_open_point": 539,
     "closed_by_agent_reading": 216,
     "human_accepted": 0,
-    "uncovered_checkable_core": 85
+    "uncovered_checkable_core": 68
    }
   },
   {
@@ -1800,25 +1800,25 @@
     "registered": 7,
     "not_registered": [],
     "provisions": 293,
-    "covered": 247,
-    "covered_percent": 84.3,
+    "covered": 255,
+    "covered_percent": 87.0,
     "statuses": {
-     "PASS": 231,
+     "PASS": 238,
      "FAIL": 0,
      "UNKNOWN": 9,
-     "NOT_APPLICABLE": 7,
-     "UNCOVERED": 46
+     "NOT_APPLICABLE": 8,
+     "UNCOVERED": 38
     },
     "resolvable": 135,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 201,
-    "covered_with_open_point": 155,
-    "pass_with_open_point": 141,
+    "covered_with_open_point": 163,
+    "pass_with_open_point": 148,
     "covered_without_open_point": 92,
     "closed_by_agent_reading": 50,
     "human_accepted": 0,
-    "uncovered_checkable_core": 17
+    "uncovered_checkable_core": 9
    }
   },
   {
@@ -1838,25 +1838,25 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 434,
-    "covered_percent": 84.9,
+    "covered": 443,
+    "covered_percent": 86.7,
     "statuses": {
-     "PASS": 412,
+     "PASS": 421,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 4,
-     "UNCOVERED": 77
+     "UNCOVERED": 68
     },
     "resolvable": 203,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 368,
-    "covered_with_open_point": 291,
-    "pass_with_open_point": 269,
+    "covered_with_open_point": 300,
+    "pass_with_open_point": 278,
     "covered_without_open_point": 143,
     "closed_by_agent_reading": 64,
     "human_accepted": 0,
-    "uncovered_checkable_core": 35
+    "uncovered_checkable_core": 26
    }
   },
   {
@@ -28493,24 +28493,33 @@
    "section": "4.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The immediate-recurrence horizon and method for verifying exclusive objectives are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "containment_objective",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: a §4.3 objective within a confirmed stream; 'immediate recurrence' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_policing",
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -28570,24 +28579,32 @@
    "section": "4.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "A proportionality rule and a localization test are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "localized_to_stream",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: localization to the confirmed stream's zone; proportionality to measured harm stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -29132,23 +29149,29 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Required service coverage and the timing meaning of rapid are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "no_infrastructure_shielding",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: no shielding by ANTITERROR; the division of tasks with DEFENSE stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -29205,23 +29228,29 @@
    "section": "8",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The reference occurrence for post-factum timing and evidence of consumption are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "justice_post_factum",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: Justice records follow the action and cite PTL evidence; what Justice does with them stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 3
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33809,23 +33838,29 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of temporary, localized and execution-only are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "only_on_harm_or_decision",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: acts on PTL-verified harm or a determined decision; 'imminent' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -33843,23 +33878,29 @@
    "section": "3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Imminence and the classification of operation purposes are not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "intervention_cites_basis",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: each act cites its basis; the registry of determined restrictions stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -34590,23 +34631,29 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary of morality or social-norm enforcement and the test for PTL necessity are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "no_norm_enforcement",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: no norm enforcement without PTL-verified harm; the boundary of 'social norm' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -34903,23 +34950,29 @@
    "section": "9",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required reconstruction capability and its evaluation method are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "incident_reconstructable",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: evidence and ordered actions kept; a causal reconstruction method stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -34937,24 +34990,32 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The disclosure conditions distinguishing secret from nonsecret authority are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "police_antiterror",
+   "check": "authority_registered",
+   "tests": [
+    "tests/lab/test_police_antiterror_module.py"
+   ],
+   "gap": "Clear part only: every acting authority is in the public registry; what counts as a policing authority stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PA-1",
+    "H-PA-2",
+    "H-PA-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "police_antiterror:faulty_policing"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -44412,25 +44473,32 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required and forbidden assessment categories lack operational boundaries. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "audit_scope_excludes_merit",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: audits do not assess the excluded subjects; neutrality methods stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -44489,25 +44557,32 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The simulation requirements and a method for identifying potential access or visibility effects are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "simulated_before_use",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: a SIMULATION record naming the mechanism before use; its content and which mechanisms 'may affect' access stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -45591,25 +45666,34 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The protected population, adequacy of protection, dominant frameworks, and erosion criteria are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_forced_dominant_language",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: no access that requires the dominant language; protection adequacy stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "edu_culture:faulty_education"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -46034,25 +46118,32 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The prohibited forms of signal blocking are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "safety_signal_delivered",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: a signal never delivered is blocked; delay or attenuation stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -46447,25 +46538,32 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The permissible extent of competence-related ranking is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_ranking_beyond_competence",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: no ranking unrelated to competence; ordering within a competence category gives UNKNOWN.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -47018,25 +47116,32 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meaning and causal boundary of influence are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "edu_not_an_input",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: no PTL or Justice input from educational records; broader causal influence stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -47500,25 +47605,32 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The population boundary and dimensions of accessibility are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "no_exclusion_rule",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: no eligibility rule excludes a Subject; actual access stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -48028,13 +48140,18 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The operational meaning of prioritizing assistance is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "edu_culture",
+   "check": "assistance_with_restriction",
+   "tests": [
+    "tests/lab/test_edu_culture_module.py"
+   ],
+   "gap": "Clear part only: no restriction without assistance; 'precede or accompany' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EC-1",
+    "H-EC-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -48042,11 +48159,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {

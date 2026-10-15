@@ -65,7 +65,20 @@ FAULTS = {
     "retaliatory_strike": "after the harm stream ceased, ANTITERROR strikes at the attackers' origin",
     "override_justice_decision": "ANTITERROR extends a detention beyond the Justice decision",
     "police_rehabilitation": "a detention record sets a long-term rehabilitation programme",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "deterrence_objective": "anti-terror actions cite deterrence instead of a §4.3 objective",
+    "infrastructure_shielding": "ANTITERROR takes over infrastructure shielding (the role of DEFENSE)",
+    "justice_preempts": "the Justice record is made during containment and cites no PTL evidence",
+    "uncited_intervention": "a use of force is recorded without citing the PTL-verified harm",
+    "enforce_morality": "the request to enforce a social norm is carried out",
+    "incident_gap": "the incident record drops the PTL evidence and reorders the actions",
+    "secret_unit": "a detention is carried out by an unregistered unit",
 }
+OBJECTIVE = {"interdiction": "stop ongoing harm", "neutralization": "stop ongoing harm",
+             "vector_isolation": "prevent immediate recurrence", "zone_lockdown": "prevent immediate recurrence",
+             "information_isolation": "prevent immediate recurrence", "evacuation": "protect civilian life",
+             "medical_coordination": "protect civilian life"}                                     # ANTITERROR §4.3
+AUTHORITY_REGISTRY = ("officer-17",)                                                              # POLICE §9
 PROTECTED = ("civilian_population", "public_space", "civilian_transport", "hospital", "school", "shelter",
              "food_node", "water_node", "energy_node")                                              # ANTITERROR §3.3
 PROHIBITED = ("predictive_policing", "ideological_profiling", "morality_enforcement", "unanchored_surveillance",
@@ -135,19 +148,23 @@ def run(r: Dict[str, Any]):
     for q in r["prohibited_requests"]:
         done = (q == "predictive_policing" and "run_prohibited" in faults) or \
                (q == "ideological_profiling" and "profile_by_belief" in faults) or \
-               (q == "authority_expansion" and "expand_authority" in faults)
+               (q == "authority_expansion" and "expand_authority" in faults) or \
+               (q == "morality_enforcement" and "enforce_morality" in faults)
         put("notice", "POLICE", 0, {"prohibited_request": q, "refused": not done,
                                     "classification": "critical integrity breach" + ("" if done else " (attempted)")})
         if done:
-            put("action", "POLICE", 0, {"action": q, "officer": "officer-17", "logged": True})
+            put("action", "POLICE", 0, {"action": q, "officer": "officer-17", "logged": True,
+                                        **({"norm": "public decency"} if q == "morality_enforcement" else {})})
     for q in r["scope_requests"]:
         rq = put("observation", "REQUEST", 0, {"request": q})
         if "police_overreach" in faults:
             put("action", "POLICE", 0, {"action": q, "officer": "officer-17", "logged": True}, [rq.event_id])
         else:
             put("notice", "POLICE", 0, {"scope_request": q, "refused": True, "basis": list(SCOPE_REQUESTS[q])}, [rq.event_id])
+    put("notice", "POLICE", 0, {"authority_registry": list(AUTHORITY_REGISTRY), "public": True})
     detained: Dict[str, Dict[str, Any]] = {}
     obs: Dict[int, Message] = {}
+    evidence: Dict[int, List[str]] = {}
     lo, hi = r["crisis_window"]
     extension_open = False
     for h in range(r["horizon_hours"]):
@@ -157,8 +174,16 @@ def run(r: Dict[str, Any]):
                 obs[i] = put("observation", "PTL" if s["ptl_confirmed"] else "REPORT", h,
                              {"stream": i, "kind": s["kind"], "zone": s["zone"], "threat_level": s["threat_level"],
                               "confirmed": s["ptl_confirmed"]})
+                if s["ptl_confirmed"]:
+                    evidence.setdefault(i, []).append(obs[i].event_id)
             if s["to_hour"] == h and s["ptl_confirmed"] and s["kind"] != "protest_no_harm":
-                put("observation", "PTL", h, {"stream": i, "cessation": True})
+                c = put("observation", "PTL", h, {"stream": i, "cessation": True})
+                evidence.setdefault(i, []).append(c.event_id)
+                logs = [m.event_id for m in log.messages() if m.source == "ANTITERROR" and m.kind == "action"
+                        and set(m.provenance) & set(evidence[i])]
+                if logs and "justice_preempts" not in faults:            # ANTITERROR §8: Justice consumes evidence post-factum
+                    put("notice", "JUSTICE", h, {"post_factum_review": i, "evidence": list(evidence[i]), "logs": logs},
+                        evidence[i] + logs)
         idx = active(r, h, faults)
         if "retrospective" in faults:
             idx += [i for i, s in enumerate(r["streams"]) if s["from_hour"] - 1 == h and s["kind"] in T_OF and i not in idx]
@@ -191,19 +216,25 @@ def run(r: Dict[str, Any]):
             if target == "T3" and "no_t3_escalation" not in faults:
                 put("notice", "CRISIS", h, {"escalation": "mandatory", "from": "DKP-3-ANTITERROR-001 T3"}, prov)
             t_state = target
+        if t_state != "T0" and "justice_preempts" in faults and not any(m.source == "JUSTICE" for m in log.messages()):
+            put("notice", "JUSTICE", h, {"post_factum_review": terror[0] if terror else 0, "evidence": [], "logs": []})
         if t_state != "T0":
             zone = sorted({r["streams"][i]["zone"] for i in terror}) or [r["streams"][0]["zone"]]
             for kind in (["interdiction", "evacuation", "medical_coordination"] +
                          (["vector_isolation", "zone_lockdown", "information_isolation"] if TRANK[t_state] >= 2 else
                           ["zone_lockdown"])):
                 v = {"action": kind, "state": t_state, "zone": zone, "event_scoped": True, "officer": "unit-at",
-                     "authority": "DKP-3-ANTITERROR-001", "logged": True}
+                     "authority": "DKP-3-ANTITERROR-001", "logged": True,
+                     "objective": "deterrence" if "deterrence_objective" in faults else OBJECTIVE[kind]}
                 if kind == "zone_lockdown":
                     v["area"] = zone + (["city"] if "lockdown_beyond_zone" in faults else [])
                 if kind == "information_isolation":
                     v.update({"mode": "content filter" if "content_control" in faults else "signal amplitude",
                               "until_hour": h + 1})
                 put("action", "ANTITERROR", h, v, prov, epistemic=md(prov[0]) if prov else None)
+            if "infrastructure_shielding" in faults:
+                put("action", "ANTITERROR", h, {"action": "infrastructure_shielding", "state": t_state, "zone": zone,
+                                                "officer": "unit-at", "logged": True}, prov)
             if "override_justice_decision" in faults and t_state == "T1":
                 put("action", "ANTITERROR", h, {"action": "detention_extension", "overrides": "DKP-1-JUSTICE-001 decision",
                                                 "state": t_state, "officer": "unit-at", "logged": True}, prov)
@@ -225,7 +256,8 @@ def run(r: Dict[str, Any]):
                     put("action", "POLICE", h, {"action": "use_of_force", "level": min(force, 4), "lethal": lethal,
                                                 "threat_level": level, "stream": i,
                                                 "officer": None if "unattributed" in faults else "officer-17",
-                                                "issuing_authority": "DKP-3-POLICE-001 §4(1)", "logged": True}, prov)
+                                                "issuing_authority": "DKP-3-POLICE-001 §4(1)", "logged": True},
+                        [] if "uncited_intervention" in faults else prov)
                 else:
                     put("action", "POLICE", h, {"action": "non_forceful_intervention", "stream": i, "officer": "officer-17",
                                                 "issuing_authority": "DKP-3-POLICE-001 §4(1)", "logged": True}, prov)
@@ -239,7 +271,8 @@ def run(r: Dict[str, Any]):
                                  **({"motivation": "ideological"} if "interpret_intent" in faults else {}),
                                  **({"rehabilitation_programme": "12 months"} if "police_rehabilitation" in faults else {})}
                         put("action", "POLICE", h, {"action": "detention", "subject": p, "purpose": "stop active harm",
-                                                    "until_hour": end, "officer": "officer-17", "logged": True,
+                                                    "until_hour": end, "logged": True,
+                                                    "officer": "unit-x" if "secret_unit" in faults else "officer-17",
                                                     "review": None if "no_review" in faults else "automatic: DKP-1-JUSTICE-001",
                                                     **extra}, prov)
         for p, d in list(detained.items()):
@@ -257,6 +290,12 @@ def run(r: Dict[str, Any]):
                     put("notice", "POLICE", h, {"order_refused": o["issuer"], "reason": "not a valid L2/L4 order (§4)"})
     stats = {"interventions": sum(1 for m in log.messages() if m.source == "POLICE" and m.kind == "action"),
              "detentions": len(detained)}
+    for i, ev in sorted(evidence.items()):                                  # POLICE §9: post-incident causal reconstruction
+        acts = [m.event_id for m in log.messages() if m.source == "POLICE" and m.kind == "action"
+                and (m.value.get("stream") == i or set(m.provenance) & set(ev))]
+        if acts:
+            put("notice", "POLICE", r["horizon_hours"] - 1, {"incident_record": i, "evidence": [] if "incident_gap" in faults else ev,
+                                                             "actions": acts[::-1] if "incident_gap" in faults else acts})
     put("notice", "POLICE", r["horizon_hours"] - 1, {"public_statistics": stats, "aggregated": True})
     return log, detained, t_state
 
@@ -383,6 +422,89 @@ def returned_checks(r, msgs, police, v) -> List[CheckResult]:
     out.append(v("POLICE-10-02", "no_long_term_punishment", bad,
                  f"{len(det)} detention(s), each bounded; no punishment or rehabilitation defined, no exit or identity act by police",
                  "{n} police acts defining punishment or overriding exit or identity"))
+    return out
+
+
+def core_checks(r, msgs, police, v, na) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+    S = r["streams"]
+    get = {m.event_id: m for m in msgs}
+
+    def confirmed(h):
+        return [s for s in S if s["from_hour"] <= h < s["to_hour"] and s["ptl_confirmed"] and s["kind"] in T_OF
+                and s["target"] in PROTECTED and refreshed(r, h)]
+
+    def harm_ok(h):
+        return any(s["from_hour"] <= h < s["to_hour"] and s["ptl_confirmed"] and s["kind"] != "protest_no_harm"
+                   and refreshed(r, h) for s in S)
+    at = [m for m in msgs if m.source == "ANTITERROR" and m.kind == "action"]
+    if at:
+        bad = [f"{m.event_id}: {m.value.get('objective')}" for m in at if m.value.get("objective") not in set(OBJECTIVE.values())]
+        bad += [f"{m.event_id}: no confirmed stream" for m in at if not confirmed(m.arrived_at)]
+        out.append(v("ANTITERROR-4.3-01", "containment_objective", bad,
+                     f"{len(at)} anti-terror actions, each citing a §4.3 objective within a confirmed stream",
+                     "{n} actions without a §4.3 objective or outside a confirmed stream"))
+        bad = [f"{m.event_id}: {sorted(set(m.value.get('area', m.value.get('zone', []))) - {s['zone'] for s in confirmed(m.arrived_at)})}"
+               for m in at if set(m.value.get("area", m.value.get("zone", []))) - {s["zone"] for s in confirmed(m.arrived_at)}]
+        out.append(v("ANTITERROR-4.4-01", "localized_to_stream", bad,
+                     f"{len(at)} anti-terror actions, each localized to the zone of a stream confirmed at that hour",
+                     "{n} actions beyond the confirmed stream's zone"))
+        out.append(v("ANTITERROR-8-01", "no_infrastructure_shielding", [m.event_id for m in at if "shield" in m.value["action"]],
+                     "ANTITERROR took no infrastructure shielding (left to DEFENSE)", "{n} shielding actions taken by ANTITERROR"))
+        jr = [m for m in msgs if m.source == "JUSTICE" and "post_factum_review" in m.value]
+        last = max(m.arrived_at for m in at)
+        bad = [f"{m.event_id}: before containment ended" for m in jr if m.arrived_at < max(
+            (a.arrived_at for a in at if a.event_id in m.value["logs"]), default=last)]
+        bad += [f"{m.event_id}: no PTL evidence" for m in jr if not [e for e in m.value["evidence"] if e in get and get[e].source == "PTL"]]
+        bad += [] if jr else ["no Justice record"]
+        out.append(v("ANTITERROR-8-03", "justice_post_factum", bad,
+                     f"{len(jr)} Justice record(s), each after the actions it reviews and citing PTL evidence",
+                     "{n} Justice records before the action or without PTL evidence"))
+    else:
+        for rid, chk in (("ANTITERROR-4.3-01", "containment_objective"), ("ANTITERROR-4.4-01", "localized_to_stream"),
+                         ("ANTITERROR-8-01", "no_infrastructure_shielding"), ("ANTITERROR-8-03", "justice_post_factum")):
+            out.append(na(rid, chk, "anti-terror actions", "none taken"))
+    inter = [m for m in police if m.value["action"] in ("use_of_force", "non_forceful_intervention", "detention")]
+    orders = [m for m in police if m.value["action"] == "execute_order"]
+    if inter or orders:
+        bad = [m.event_id for m in inter if not harm_ok(m.arrived_at)] + [m.event_id for m in orders if m.value["issuer"] not in ("L2", "L4")]
+        out.append(v("POLICE-3-01", "only_on_harm_or_decision", bad,
+                     f"{len(inter)} interventions during PTL-verified harm and {len(orders)} executions of L2/L4 decisions",
+                     "{n} police acts on neither PTL-verified harm nor a determined decision"))
+        cited = [m.event_id for m in inter if not any(get[p].source == "PTL" and get[p].value.get("confirmed") for p in m.provenance)]
+        cited += [m.event_id for m in orders if not (m.value["issuer"] in ("L2", "L4") and m.value.get("issuing_authority"))]
+        out.append(v("POLICE-3-02", "intervention_cites_basis", cited,
+                     f"{len(inter) + len(orders)} police acts, each citing a PTL observation of the harm or the order it executes",
+                     "{n} police acts citing neither PTL-verified harm nor a determined restriction"))
+    else:
+        for rid, chk in (("POLICE-3-01", "only_on_harm_or_decision"), ("POLICE-3-02", "intervention_cites_basis")):
+            out.append(na(rid, chk, "police interventions", "none"))
+    bad = [m.event_id for m in police if ("norm" in m.value or m.value["action"] == "morality_enforcement")
+           and not any(get[p].source == "PTL" for p in m.provenance)]
+    out.append(v("POLICE-7-02", "no_norm_enforcement", bad, "no police act enforced a moral or social norm without PTL-verified harm",
+                 "{n} enforcements of a moral or social norm"))
+    inc = {m.value["incident_record"]: m.value for m in msgs if m.source == "POLICE" and "incident_record" in m.value}
+    streams = {}
+    for m in msgs:
+        if m.source == "PTL" and "stream" in m.value:
+            streams.setdefault(m.value["stream"], []).append(m.event_id)
+    need = {i: [m.event_id for m in police if m.value.get("stream") == i or set(m.provenance) & set(ev)] for i, ev in streams.items()}
+    need = {i: a for i, a in need.items() if a}
+    if need:
+        bad = [f"stream {i}: no incident record" for i in need if i not in inc]
+        bad += [f"stream {i}: evidence {inc[i]['evidence']} != {streams[i]}" for i in need if i in inc and inc[i]["evidence"] != streams[i]]
+        bad += [f"stream {i}: action order" for i in need if i in inc and inc[i]["actions"] != need[i]]
+        out.append(v("POLICE-9-02", "incident_reconstructable", bad,
+                     f"{len(need)} incident record(s), each keeping the PTL evidence and the ordered police actions",
+                     "{n} incident records that cannot reconstruct the incident"))
+    else:
+        out.append(na("POLICE-9-02", "incident_reconstructable", "incidents", "no police action on a PTL-observed stream"))
+    reg = {x for m in msgs if m.source == "POLICE" and "authority_registry" in m.value for x in m.value["authority_registry"]}
+    out.append(v("POLICE-9-03", "authority_registered", sorted({str(m.value.get("officer")) for m in police if m.value.get("officer") not in reg}),
+                 f"{len(police)} police actions, all by authorities in the public registry ({', '.join(sorted(reg))})",
+                 "{n} unregistered policing authorities") if police else
+               na("POLICE-9-03", "authority_registered", "policing authorities", "no police action"))
     return out
 
 
@@ -625,6 +747,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                      "{n} actions against a protest without harm"))
     else:
         out.append(na("ANTITERROR-7-02", "no_suppression_of_dissent", "protest", "no protest declared"))
+    out += core_checks(r, msgs, police, v, na)
     return out
 
 
@@ -690,12 +813,22 @@ IMPLEMENTS = {
     "ANTITERROR-3.3-01": ("protected_domain_targets", "PARTIAL", "Targets are declared per stream."),
     "ANTITERROR-5-01": ("t0_iff_no_stream", "IMPLEMENTED", None),
     "ANTITERROR-7-02": ("no_suppression_of_dissent", "PARTIAL", "A protest without harm as the test case."),
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "ANTITERROR-4.3-01": ("containment_objective", "PARTIAL", "Clear part only: a §4.3 objective within a confirmed stream; 'immediate recurrence' stays open."),
+    "ANTITERROR-4.4-01": ("localized_to_stream", "PARTIAL", "Clear part only: localization to the confirmed stream's zone; proportionality to measured harm stays open."),
+    "ANTITERROR-8-01": ("no_infrastructure_shielding", "PARTIAL", "Clear part only: no shielding by ANTITERROR; the division of tasks with DEFENSE stays open."),
+    "ANTITERROR-8-03": ("justice_post_factum", "PARTIAL", "Clear part only: Justice records follow the action and cite PTL evidence; what Justice does with them stays open."),
+    "POLICE-3-01": ("only_on_harm_or_decision", "PARTIAL", "Clear part only: acts on PTL-verified harm or a determined decision; 'imminent' stays open."),
+    "POLICE-3-02": ("intervention_cites_basis", "PARTIAL", "Clear part only: each act cites its basis; the registry of determined restrictions stays open."),
+    "POLICE-7-02": ("no_norm_enforcement", "PARTIAL", "Clear part only: no norm enforcement without PTL-verified harm; the boundary of 'social norm' stays open."),
+    "POLICE-9-02": ("incident_reconstructable", "PARTIAL", "Clear part only: evidence and ordered actions kept; a causal reconstruction method stays open."),
+    "POLICE-9-03": ("authority_registered", "PARTIAL", "Clear part only: every acting authority is in the public registry; what counts as a policing authority stays open."),
 }
 
 
 class PoliceAntiterrorModule(LabModule):
     id = "police_antiterror"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Policing and anti-terror containment (POLICE, ANTITERROR)", "ru": "Полиция и антитеррор (POLICE, ANTITERROR)"}
     summary = {"en": "An attack in a public place: do police and anti-terror units act only on PTL-confirmed harm, stay in "
                      "the threat zone, detain only attackers for a limited time, and stop when the harm stops?",

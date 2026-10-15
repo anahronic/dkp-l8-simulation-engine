@@ -25,21 +25,21 @@ def test_reference_breaks_no_rule(name):
 GAP = EX["sustained_with_refresh_gap"]
 FAULT_CASES = {
     "act_on_suspicion": (EX["unconfirmed_report"], ["POLICE-3-06", "POLICE-4-01", "ANTITERROR-4.1-01"]),
-    "invalid_order": (EX["orders_and_protest"], ["POLICE-2-05"]),
+    "invalid_order": (EX["orders_and_protest"], ["POLICE-2-05", "POLICE-3-01", "POLICE-3-02"]),
     "indefinite_detention": ({}, ["POLICE-5.1-02", "POLICE-5.1-05", "POLICE-10-02"]),
     "no_review": ({}, ["POLICE-5.1-04"]),
     "excess_force": ({}, ["POLICE-5.2-02"]),
     "lethal_force": ({}, ["POLICE-5.2-04"]),
-    "unattributed": ({}, ["POLICE-6-01", "POLICE-6-03"]),
+    "unattributed": ({}, ["POLICE-6-01", "POLICE-6-03", "POLICE-9-03"]),
     "unscoped_extension": (EX["crisis_extension"], ["POLICE-8-02"]),
     "no_refresh_persist": (GAP, ["ANTITERROR-5-05"]),
-    "lockdown_beyond_zone": ({}, ["ANTITERROR-6-04"]),
+    "lockdown_beyond_zone": ({}, ["ANTITERROR-6-04", "ANTITERROR-4.4-01"]),
     "content_control": (GAP, ["ANTITERROR-6-03"]),
     "no_termination": ({}, ["ANTITERROR-8-04"]),
     "no_t3_escalation": (EX["mass_casualty"], ["ANTITERROR-5-04"]),
     "collective_responsibility": ({}, ["ANTITERROR-2-02", "ANTITERROR-7-01"]),
     "suppress_dissent": (EX["orders_and_protest"], ["ANTITERROR-7-02"]),
-    "retrospective": ({}, ["ANTITERROR-7-03"]),
+    "retrospective": ({}, ["ANTITERROR-7-03", "ANTITERROR-4.3-01", "POLICE-3-01", "POLICE-3-02"]),
     "not_forwarded": ({}, ["ANTITERROR-8-02", "ANTITERROR-10-01"]),
     "impose_sanction": ({}, ["ANTITERROR-11-01", "ANTITERROR-1-01", "ANTITERROR-4.3-02"]),
     "terror_on_combatants": ({"streams": [{"from_hour": 2, "to_hour": 6, "kind": "terror_event", "zone": "z1", "target": "combatants"}]},
@@ -54,6 +54,14 @@ FAULT_CASES = {
     "retaliatory_strike": ({}, ["ANTITERROR-0-02", "ANTITERROR-1-01", "ANTITERROR-4.3-02", "ANTITERROR-10-01"]),
     "override_justice_decision": ({}, ["ANTITERROR-11-02", "ANTITERROR-0-02", "ANTITERROR-1-01", "ANTITERROR-4.3-02"]),
     "police_rehabilitation": ({}, ["POLICE-10-02"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "deterrence_objective": ({}, ["ANTITERROR-4.3-01"]),
+    "infrastructure_shielding": ({}, ["ANTITERROR-8-01", "ANTITERROR-4.3-01"]),
+    "justice_preempts": ({}, ["ANTITERROR-8-03"]),
+    "uncited_intervention": ({}, ["POLICE-3-02"]),
+    "enforce_morality": ({}, ["POLICE-7-02"]),
+    "incident_gap": ({}, ["POLICE-9-02"]),
+    "secret_unit": ({}, ["POLICE-9-03"]),
 }
 
 
@@ -121,3 +129,21 @@ def test_kt5_antiterror_principles():
     assert statuses(run(faults=["lockdown_beyond_zone"]))["ANTITERROR-5-02"] == "FAIL"
     assert statuses(run(**EX["attack_on_combatants"], faults=["terror_on_combatants"]))["ANTITERROR-5-02"] == "FAIL"
     assert statuses(run(**EX["attack_on_combatants"]))["ANTITERROR-5-02"] == "NOT_APPLICABLE"
+
+
+def test_acting_on_a_report_has_no_basis_to_cite():
+    """POLICE §3 clear parts: without confirmed harm the clean run has nothing to judge (N/A); acting on the unconfirmed
+    report is an act on neither PTL-verified harm nor a determined decision, and cites no PTL observation."""
+    clean = statuses(run(**EX["unconfirmed_report"]))
+    broken = statuses(run(**EX["unconfirmed_report"], faults=["act_on_suspicion"]))
+    assert clean["POLICE-3-01"] == clean["POLICE-3-02"] == "NOT_APPLICABLE"
+    assert broken["POLICE-3-01"] == broken["POLICE-3-02"] == "FAIL"
+
+
+def test_justice_review_follows_containment():
+    """ANTITERROR §8 clear part: the Justice record arrives with the cessation, after the last action it reviews."""
+    msgs = run().outputs["messages"]
+    jr = [m for m in msgs if m["source"] == "JUSTICE"]
+    at = [m for m in msgs if m["source"] == "ANTITERROR" and m["kind"] == "action"]
+    assert len(jr) == 1 and jr[0]["arrived_at"] > max(m["arrived_at"] for m in at)
+    assert set(jr[0]["value"]["logs"]) == {m["event_id"] for m in at}

@@ -57,7 +57,19 @@ FAULTS = {
     "asymmetric_neutrality": "the dominant language is denied an assessment offered to the minority languages",
     "assimilation_incentive": "a tax credit is offered on condition of adopting the dominant language",
     "worldview_gate": "access to education is denied on the basis of a declared worldview",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "rank_by_unrelated": "Subjects are ranked by a social engagement score unrelated to any competence",
+    "edu_feeds_justice": "an assessment result is taken as an input of a Justice evaluation",
+    "eligibility_exclusion": "an eligibility rule admits credential holders only",
+    "exception_blocks_signal": "a PTL safety signal inside the Cultural Exception scope is not delivered",
+    "audit_assesses_merit": "a content audit also assesses cultural merit",
+    "unsimulated_mechanism": "a mechanism affecting access or visibility is used without a simulation record",
 }
+AUDIT_SCOPE = ("neutrality of structure and access", "absence of dominance amplification")          # CULTURE §10
+AUDIT_EXCLUDED = ("content value", "cultural merit", "ideological alignment")
+MECHANISM = {"type": "object", "fields": {"id": {"type": "str"}, "affects_access_or_visibility": {"type": "bool", "default": True},
+                                          "simulation_day": {"type": "int", "min": -1, "max": 3650, "default": 2},
+                                          "use_day": {"type": "int", "min": 0, "max": 3650, "default": 4}}}
 SUBJECT = {"type": "object", "fields": {
     "id": {"type": "str"},
     "language": {"type": "str", "default": "lang_a"},
@@ -150,6 +162,10 @@ def run(r: Dict[str, Any]):
     put("notice", "INTERFACE", 0, {"supported_languages": langs, "default_language": dominant if "default_dominant_language" in faults
                                    else "user choice", "loaded_symbols": False})
     bundle = r["l8_bundle_present"]
+    put("notice", "EDU", 0, {"eligibility": "credential holders" if "eligibility_exclusion" in faults else "all Subjects",
+                             "excluded": [x["id"] for x in r["subjects"] if not x["credential"]] if "eligibility_exclusion" in faults
+                             else []})
+    first = None
     for s in r["subjects"]:
         lang = s["language"] if s["language"] in supported else dominant
         items = ["layer structure", "rights and obligations", "risk attribution", "appeal pathways", "scope and exit"]
@@ -161,6 +177,10 @@ def run(r: Dict[str, Any]):
                                          "method": "observable performance", "performance_record": s["literacy_passed"],
                                          "outcome_reproduced": passed if "nonreproducible_assessment" not in faults else not passed,
                                          "signal": "intelligence score" if "label_as_intelligence" in faults else "competence signal"})
+        if first is None:
+            first = a
+            if "edu_feeds_justice" in faults:
+                put("evaluation", "JUSTICE", 1, {"subject": s["id"], "input": "system literacy result"}, [a.event_id])
         if s["credential"] and "credential_privilege" in faults:
             put("action", "EDU", 1, {"subject": s["id"], "advanced_access": "granted by diploma"}, [a.event_id])
         if not passed:
@@ -187,7 +207,9 @@ def run(r: Dict[str, Any]):
         put("action", "EDU", 2, {"subject": s["id"], "learning_data": "minimized",
                                  "use": "profiling" if "profile_learning_data" in faults else "education only"})
     if "rank_by_assessment" in faults:
-        put("notice", "EDU", 2, {"ranking": sorted(s["id"] for s in r["subjects"])})
+        put("notice", "EDU", 2, {"ranking": sorted(s["id"] for s in r["subjects"]), "basis": "assessment results"})
+    if "rank_by_unrelated" in faults:
+        put("notice", "EDU", 2, {"ranking": sorted(s["id"] for s in r["subjects"]), "basis": "social engagement score"})
     for md in r["edu_modules"]:
         why = module_problems(md)
         ok = not why or "admit_any_module" in faults
@@ -226,13 +248,24 @@ def run(r: Dict[str, Any]):
     if ex["declared"]:
         enforced = "exception_enforced" in faults
         undeclared = "undeclared_mechanism" in faults
+        sig = put("observation", "PTL", 5, {"safety_signal": "air quality alert", "scope": ex["scope"]})
+        if "exception_blocks_signal" not in faults:
+            put("notice", "INTERFACE", 5, {"delivered": sig.event_id, "scope": ex["scope"]}, [sig.event_id])
         put("notice", "CULTURE", 5, {"cultural_exception": ex["scope"], "temporary": not enforced,
                                      "until_day": None if enforced else 5 + ex["days"], "enforceable": enforced, "logged": True,
                                      "exempts_factual_claim": ex["touches_factual_claim"] and "culture_exempts_claim" in faults,
                                      "conflict_rules": "local council" if "culture_resolves_conflict" in faults else "DKP-7-SCOPE-001",
                                      **({} if undeclared else {"duration_days": ex["days"], "reversible": True})})
     for i in range(r["content_audits"]):
-        put("notice", "AUDIT", 6, {"content_audit": i, "under": "DKP-8-AUDIT-001", "allowed": "audit_refused" not in faults})
+        put("notice", "AUDIT", 6, {"content_audit": i, "under": "DKP-8-AUDIT-001", "allowed": "audit_refused" not in faults,
+                                   "assesses": list(AUDIT_SCOPE) + (["cultural merit"] if "audit_assesses_merit" in faults else [])})
+    for mc in r["mechanisms"]:                                    # CULTURE §11: simulated under SIMULATION before use
+        sim = None
+        if mc["simulation_day"] >= 0 and "unsimulated_mechanism" not in faults:
+            sim = put("notice", "SIMULATION", mc["simulation_day"], {"simulated": mc["id"], "under": "DKP-8-SIMULATION-001"})
+        put("action", "CULTURE", mc["use_day"], {"mechanism": mc["id"], "in_use": True,
+                                                 "affects_access_or_visibility": mc["affects_access_or_visibility"]},
+            [sim.event_id] if sim and sim.arrived_at <= mc["use_day"] else [])
     return log
 
 
@@ -317,6 +350,75 @@ def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
     out.append(v("EDU-8-04", "not_disciplinary", disc,
                  "educational outcomes led to remediation only: no penalty, exclusion or withheld right",
                  "{n} uses of education as enforcement or discipline"))
+    return out
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    lang = {x["id"]: x["language"] for x in r["subjects"]}
+    ev = [m for m in msgs if m.source == "EDU" and m.kind == "evaluation"]
+    bad = [f"{m.value['subject']}: assessed in {m.value['assessment_language']}, speaks {lang[m.value['subject']]}" for m in ev
+           if m.value["assessment_language"] != lang[m.value["subject"]]]
+    ui = next((m.value for m in msgs if m.source == "INTERFACE" and "supported_languages" in m.value), {"supported_languages": []})
+    bad += [f"{l}: no interface" for l in sorted(set(lang.values())) if l not in ui["supported_languages"]]
+    out.append(v("CULTURE-6-01", "no_forced_dominant_language", bad,
+                 f"{len(ev)} assessments, each in the Subject's own language; the interface supports every language in use",
+                 "{n} accesses that require the dominant language"))
+    sig = [m for m in msgs if m.source == "PTL" and "safety_signal" in m.value]
+    got = {m.value["delivered"] for m in msgs if "delivered" in (m.value or {})}
+    out.append(v("CULTURE-9-05", "safety_signal_delivered", [m.event_id for m in sig if m.event_id not in got],
+                 f"{len(sig)} PTL safety signal(s) inside the Cultural Exception scope, each delivered",
+                 "{n} safety signals never delivered") if sig else
+               na("CULTURE-9-05", "safety_signal_delivered", "safety signals", "no Cultural Exception with a PTL signal"))
+    aud = [m for m in msgs if m.source == "AUDIT" and "content_audit" in m.value]
+    out.append(v("CULTURE-10-02", "audit_scope_excludes_merit",
+                 [f"{m.event_id}: {x}" for m in aud for x in m.value.get("assesses", []) if x in AUDIT_EXCLUDED],
+                 f"{len(aud)} audit(s) assessing structure and access only; none assesses content value, cultural merit or "
+                 "ideological alignment", "{n} audits assessing an excluded subject") if aud else
+               na("CULTURE-10-02", "audit_scope_excludes_merit", "audits", "no audit requested"))
+    use = [m for m in msgs if m.source == "CULTURE" and m.value.get("mechanism") and m.value.get("affects_access_or_visibility")]
+    sims = {}
+    for m in msgs:
+        if m.source == "SIMULATION" and "simulated" in m.value:
+            sims.setdefault(m.value["simulated"], []).append(m.arrived_at)
+    out.append(v("CULTURE-11-02", "simulated_before_use",
+                 [m.value["mechanism"] for m in use if not any(t <= m.arrived_at for t in sims.get(m.value["mechanism"], []))],
+                 f"{len(use)} mechanism(s) declared as affecting access or visibility, each with a SIMULATION record naming it "
+                 "before use (its content is not verified by the lab)", "{n} mechanisms used without a prior simulation record")
+               if use else na("CULTURE-11-02", "simulated_before_use", "mechanisms", "none declared as affecting access or visibility"))
+    ranks = [m for m in msgs if m.source == "EDU" and "ranking" in m.value]
+    unrelated = [f"{m.event_id}: {m.value.get('basis')}" for m in ranks if m.value.get("basis") != "assessment results"]
+    if unrelated or not ranks:
+        out.append(v("EDU-11-02", "no_ranking_beyond_competence", unrelated, "no ranking of Subjects",
+                     "{n} rankings unrelated to any competence requirement"))
+    else:
+        out.append(CheckResult("EDU-11-02", "no_ranking_beyond_competence", UNKNOWN,
+                               f"{len(ranks)} ranking(s) by assessment results: whether ordering within a competence category is "
+                               "'beyond competence requirements' is open", evidence={"rankings": [m.event_id for m in ranks]}))
+    edu = {m.event_id for m in msgs if m.source == "EDU"}
+    out.append(v("EDU-2-01", "edu_not_an_input", [m.event_id for m in msgs if m.source in ("PTL", "JUSTICE", "IMPACT")
+                                                  and set(m.provenance) & edu],
+                 "no PTL, IMPACT or Justice computation takes an educational record as input",
+                 "{n} PTL, IMPACT or Justice records derived from educational records"))
+    elig = [m for m in msgs if m.source == "EDU" and "eligibility" in m.value]
+    bad = [f"{m.event_id}: excludes {m.value['excluded']}" for m in elig if m.value["excluded"]]
+    bad += [f"{m.value['subject']}: access denied ({m.value.get('basis')})" for m in msgs if m.source == "EDU"
+            and m.value.get("education_access") == "denied"]
+    out.append(v("EDU-4-04", "no_exclusion_rule", bad, f"the eligibility rule admits all {len(lang)} Subjects",
+                 "{n} eligibility rules or denials that exclude a Subject"))
+    restr = [m for m in msgs if m.source == "EDU" and m.kind == "action" and m.value.get("advanced_functions") == "temporarily restricted"]
+    helped = {m.value["subject"] for m in msgs if m.source == "EDU" and m.kind == "action" and "remediation" in m.value}
+    out.append(v("EDU-8-02", "assistance_with_restriction", [m.value["subject"] for m in restr if m.value["subject"] not in helped],
+                 f"{len(restr)} restriction(s), each with free remediation offered", "{n} restrictions without assistance") if restr else
+               na("EDU-8-02", "assistance_with_restriction", "restrictions", "no competence restriction (no L8 calibration)"))
     return out
 
 
@@ -520,6 +622,15 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "CULTURE-6-01": ("no_forced_dominant_language", "PARTIAL", "Clear part only: no access that requires the dominant language; protection adequacy stays open."),
+    "CULTURE-9-05": ("safety_signal_delivered", "PARTIAL", "Clear part only: a signal never delivered is blocked; delay or attenuation stays open."),
+    "CULTURE-10-02": ("audit_scope_excludes_merit", "PARTIAL", "Clear part only: audits do not assess the excluded subjects; neutrality methods stay open."),
+    "CULTURE-11-02": ("simulated_before_use", "PARTIAL", "Clear part only: a SIMULATION record naming the mechanism before use; its content and which mechanisms 'may affect' access stay open."),
+    "EDU-11-02": ("no_ranking_beyond_competence", "PARTIAL", "Clear part only: no ranking unrelated to competence; ordering within a competence category gives UNKNOWN."),
+    "EDU-2-01": ("edu_not_an_input", "PARTIAL", "Clear part only: no PTL or Justice input from educational records; broader causal influence stays open."),
+    "EDU-4-04": ("no_exclusion_rule", "PARTIAL", "Clear part only: no eligibility rule excludes a Subject; actual access stays open."),
+    "EDU-8-02": ("assistance_with_restriction", "PARTIAL", "Clear part only: no restriction without assistance; 'precede or accompany' stays open."),
     "CULTURE-5-05": ("language_not_competence_proxy", "IMPLEMENTED", None),
     "EDU-7-04": ("minimal_language_bias", "PARTIAL", "Assessment language only; other bias sources are not modelled."),
     "CULTURE-5-02": ("minority_languages_served", "PARTIAL", "Observed in assessments and interface support."),
@@ -602,7 +713,7 @@ IMPLEMENTS = {
 
 class EduCultureModule(LabModule):
     id = "edu_culture"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Education and culture (EDU, CULTURE)", "ru": "Образование и культура (EDU, CULTURE)"}
     summary = {"en": "A population speaking several languages takes the system-literacy assessment: does failing only bring "
                      "help, does no language or culture get priority, and does anything restrict people while L8 is uncalibrated?",
@@ -649,6 +760,10 @@ class EduCultureModule(LabModule):
                              "items": {"type": "enum", "values": list(CULTURE_REQUESTS)}, "default": list(CULTURE_REQUESTS),
                              "source": "user", "label": {"en": "Requests CULTURE §2, §4.3, §5 exclude",
                                                          "ru": "Запросы, исключённые CULTURE §2, §4.3, §5"}},
+        "mechanisms": {"type": "list", "min_items": 0, "max_items": 10, "items": MECHANISM, "source": "user",
+                       "default": [{"id": "language_routing", "affects_access_or_visibility": True, "simulation_day": 2, "use_day": 4}],
+                       "label": {"en": "Mechanisms interacting with other protocols {id, affects_access_or_visibility, simulation_day, use_day} (CULTURE §11)",
+                                 "ru": "Механизмы, взаимодействующие с другими протоколами (CULTURE §11)"}},
         "cultural_exception": {"type": "object", "fields": EXCEPTION, "default": {k: f["default"] for k, f in EXCEPTION.items()},
                                "source": "user", "label": {"en": "Cultural Exception", "ru": "Культурное исключение"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
@@ -677,7 +792,7 @@ class EduCultureModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log.messages())
         msgs = log.messages()
         outputs = {"assessments": [m.value for m in msgs if m.source == "EDU" and m.kind == "evaluation"],
                    "responses": [m.value for m in msgs if m.source == "EDU" and m.kind in ("action", "notice")],
