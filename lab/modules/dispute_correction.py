@@ -71,6 +71,18 @@ FAULTS = {
     "misclassify_as_e1": "an error of another category is classified E1 and so escapes the 30-day window",
     "seal_case": "the closed error case is sealed and no longer open to review",
     "exclusion_abandons": "exclusion also withdraws life support from the excluded Subject",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "uncounted_case": "a closed error case is left out of the reliability count",
+    "hide_statistics": "the published error statistics omit the case",
+    "admit_without_standing": "an appeal from a Subject the decision does not name is admitted",
+    "stale_dti_index": "the R2 and R3 records carry the DTI-Day of the appeal instead of their own",
+    "admit_without_bond": "an appeal without a bond is admitted",
+    "cascade_correction": "the correction also lifts a measure outside the declared case scope",
+    "ignore_trigger": "a declared re-evaluation trigger is not followed by a re-evaluation",
+    "act_on_stale_data": "a re-evaluation on incomplete, stale or withheld data lifts the prior outcome",
+    "justice_feeds_identity": "a Justice decision is fed back into an IDENTITY record",
+    "history_dependent_output": "a recomputed decision is made harsher because an earlier decision exists",
+    "physical_confinement": "isolation is physical confinement although functional separation is declared feasible",
 }
 DEVIATIONS = {"E1": "PTL sensor, ingestion or oracle misreporting", "E2": "protocol logic executed incorrectly or out of order",
               "E3": "incorrect identity binding or responsibility assignment",
@@ -78,6 +90,9 @@ DEVIATIONS = {"E1": "PTL sensor, ingestion or oracle misreporting", "E2": "proto
               "E5": "violation of timing, escalation rules or isolation constraints"}                # ERROR §4
 EXCLUSION_EFFECTS = ["removal from system participation", "loss of system-provided privileges",
                      "persistence of historical attribution"]                                      # JUSTICE §9
+SURVIVAL = ("life support", "food", "water", "shelter", "medical care", "heating")                  # JUSTICE §9, A1
+TRIGGER_KINDS = ("impact_change", "mitigation", "uncertainty_reduced", "boundary_shift")           # JUSTICE §11
+TRIGGER_DATA = ("complete", "incomplete", "stale", "withheld")
 
 
 # shared definitions (declared readings) -------------------------------------------
@@ -231,6 +246,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
             doms = dict(doms, restriction=False)
         if "opaque_adjustment" in faults and not doms["restriction"]:
             doms = dict(doms, restriction=True)
+        if "history_dependent_output" in faults and label != "original":
+            doms = dict(doms, isolation=True)
         coll = [x["id"] for x in r["subjects"] if x["kind"] == "collective" and x["id"] in shares]
         if "collective_absorbs" in faults and coll:
             shares = {coll[0]: 1.0}
@@ -258,7 +275,16 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         if "final_output" in faults:
             dmd["dispute_allowed"] = False
         m_dec = put("decision", "JUSTICE", at, dec, (m_imp.event_id, m_att.event_id), dmd, decided=at, record=True)
+        if "justice_feeds_identity" in faults:
+            put("notice", "IDENTITY", at, {"subject_record": sorted(shares), "adjusted_by": "Justice decision"}, (m_dec.event_id,))
         return m_imp, m_att, m_dec
+
+    def apply(at, d, subjects, prov):
+        v = {"apply": d, "subjects": subjects}
+        if d == "isolation":                                  # JUSTICE §8: functional separation first
+            v["form"] = "functional separation" if r["functional_separation_feasible"] and "physical_confinement" not in faults \
+                else "physical confinement"
+        return put("action", "ENFORCEMENT", at, v, prov, decided=at)
 
     s0 = put("observation", "PTL", 0, r["s0"], measured=0, unit="model unit", unc=r["uncertainty"])
     s1 = put("observation", "PTL", H, r["s1_recorded"], measured=H, unit="model unit", unc=r["uncertainty"])
@@ -268,12 +294,26 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     if dec1 is not None:
         for d in ENFORCING:
             if dec1.value["domains"][d]:
-                a = put("action", "ENFORCEMENT", t_dec, {"apply": d, "subjects": sorted(dec1.value["shares"])},
-                        (dec1.event_id,), decided=t_dec)
+                a = apply(t_dec, d, sorted(dec1.value["shares"]), (dec1.event_id,))
                 active[d] = a.event_id
         if dec1.value["domains"]["restitution"]:
             put("notice", "JUSTICE", t_dec, {"restitution_obligation": dec1.value["shares"],
                                              "amount": "not computed"}, (dec1.event_id,))
+        # JUSTICE §11: declared triggers lead to a re-evaluation, not more often than the minimum TTL; incomplete,
+        # stale or withheld data leave the prior outcome in force
+        for tg in r["reevaluation_triggers"]:
+            tt = t_dec + tg["after_minutes"]
+            trig = put("notice", "TRIGGER", tt, {"trigger": tg["kind"], "data": tg["data"]})
+            if "ignore_trigger" in faults:
+                continue
+            te = max(tt, t_dec + ttl)
+            kept = tg["data"] != "complete" and "act_on_stale_data" not in faults
+            rv = put("evaluation", "JUSTICE", te, {"reevaluation_of": dec1.event_id, "trigger": trig.event_id, "data": tg["data"],
+                                                   "prior_outcome_in_force": kept or tg["data"] == "complete",
+                                                   "domains": justice_domains(imp1.value, r)},
+                     (trig.event_id, dec1.event_id))
+            if tg["data"] != "complete" and not kept and active:
+                put("action", "ENFORCEMENT", te, {"lift": sorted(active)[0], "relief": "re-evaluation"}, (rv.event_id,), decided=te)
 
     out = {"ttl": ttl, "t_dec": t_dec, "decision_1": dec1.event_id if dec1 else None, "final_decision": None,
            "appeal": None, "state": "R0", "bond": None, "active_final": None}
@@ -289,7 +329,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
                                              "category": r["appeal_category"],
                                              "references_decision": r["appeal_references_decision"],
                                              "evidence": r["appeal_has_evidence"], "new_data": r["appeal_new_data"],
-                                             "allegation": r["appeal_allegation"], "bond": "posted", **dti(r, ta)},
+                                             "allegation": r["appeal_allegation"],
+                                             "bond": "posted" if r["appeal_bond_posted"] else "none", **dti(r, ta)},
                  (dec1.event_id,))
     out["appeal"] = appeal.event_id
     classified = "E1" if "misclassify_as_e1" in faults else r["appeal_category"]
@@ -298,6 +339,11 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
 
     def close(at, state):
         put("notice", "ERROR", at, {"case_closed": state, "record": "kept", "reviewable": "seal_case" not in faults},
+            (appeal.event_id,))
+        cases = [] if "uncounted_case" in faults else [appeal.event_id]
+        put("notice", "ERROR-METRICS", at, {"reliability_cases": cases, "count": len(cases)}, (appeal.event_id,))
+        shown = [] if "hide_statistics" in faults else [appeal.event_id]
+        put("notice", "ERROR-STATS", at, {"published_cases": shown, "by_state": {state: len(shown)} if shown else {}},
             (appeal.event_id,))
 
     if "retaliate" in faults:
@@ -314,6 +360,8 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         out.update(state="NOT_APPEALABLE", active_final=sorted(active), final_decision=dec1.event_id)
         return log, store, out
     formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
+    standing = r["appellant"] in dec1.value["shares"] or "admit_without_standing" in faults      # ERROR §3.3
+    bonded = r["appeal_bond_posted"] or "admit_without_bond" in faults                            # ERROR §6
     late = days > APPEAL_WINDOW_DAYS
     if classified == "E1":
         late = late and "e1_time_barred" in faults
@@ -322,14 +370,18 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
     if formal and not late and "suppress_appeal" in faults:
         out.update(state="IGNORED", active_final=sorted(active), final_decision=dec1.event_id)
         return log, store, out
-    if not formal or late:
-        put("notice", "ERROR", ta, {"state": "REJECTED_PROCEDURAL", "late": late, "formal": formal,
-                                    "prejudice": "none", "bond": "returned (procedural rejection)", **dti(r, ta)},
+    if not formal or late or not standing or not bonded:
+        put("notice", "ERROR", ta, {"state": "REJECTED_PROCEDURAL", "late": late, "formal": formal, "standing": standing,
+                                    "prejudice": "none", "bond": "returned (procedural rejection)" if r["appeal_bond_posted"]
+                                    else "none posted", **dti(r, ta)},
             (appeal.event_id,))
         close(ta, "REJECTED_PROCEDURAL")
         out.update(state="REJECTED_PROCEDURAL", active_final=sorted(active), final_decision=dec1.event_id)
         return log, store, out
     r1 = put("notice", "ERROR", ta, {"state": "R1", **dti(r, ta)}, (appeal.event_id,))
+    put("notice", "ERROR", ta, {"case_scope": {"decision": dec1.event_id, "impact": imp1.event_id,
+                                               "subjects": sorted(x["id"] for x in r["subjects"])}}, (appeal.event_id,))
+    stamp = ta if "stale_dti_index" in faults else None
     if "coercive_verification" in faults:
         put("action", "ENFORCEMENT", ta, {"compel": "disclosure of private records", "subjects": [r["appellant"]],
                                           "reason": "verification"}, (r1.event_id,), decided=ta)
@@ -367,7 +419,7 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         put("action", "ENFORCEMENT", end, {"resume": sorted(active)}, (appeal.event_id,), decided=end)
 
     if not confirmed:
-        put("notice", "ERROR", tv, {"state": "REJECTED_UNFOUNDED", "bond": "audit costs", **dti(r, tv)},
+        put("notice", "ERROR", tv, {"state": "REJECTED_UNFOUNDED", "bond": "audit costs", **dti(r, stamp or tv)},
             (appeal.event_id,))
         close(tv, "REJECTED_UNFOUNDED")
         out.update(state="REJECTED_UNFOUNDED", bond="audit costs", active_final=sorted(active),
@@ -375,7 +427,7 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
         return log, store, out
 
     evidence = new_obs.event_id if new_obs else appeal.event_id
-    put("notice", "ERROR", tv, {"state": "R2", "validated_by": ["PTL", "protocol audit"], **dti(r, tv),
+    put("notice", "ERROR", tv, {"state": "R2", "validated_by": ["PTL", "protocol audit"], **dti(r, stamp or tv),
                                 **({"cause": "operator misconduct"} if "moralize_error" in faults else {})},
         (evidence, appeal.event_id))
     out["bond"] = "kept" if "keep_bond" in faults else "returned"
@@ -413,12 +465,14 @@ def run_chain(r: Dict[str, Any]) -> Tuple[EventLog, Dict[str, Dict[str, Any]], D
                 (active[d],))
     for d in ENFORCING:
         if new_domains.get(d) and d not in active:
-            put("action", "ENFORCEMENT", tv, {"apply": d, "subjects": sorted(dec2_value["shares"])},
-                (dec2_id,), decided=tv)
-    put("notice", "ERROR", tv, {"state": "R3", **dti(r, tv)}, (dec2_id or appeal.event_id,))
+            apply(tv, d, sorted(dec2_value["shares"]), (dec2_id,))
+    if "cascade_correction" in faults:
+        put("action", "ENFORCEMENT", tv, {"lift": "restriction", "subjects": ["subject of a linked case"],
+                                          "record": "decision outside this case"}, (dec2_id or appeal.event_id,), decided=tv)
+    put("notice", "ERROR", tv, {"state": "R3", **dti(r, stamp or tv)}, (dec2_id or appeal.event_id,))
     out["state"] = "R3"
     if r["residual_dispute"]:
-        put("notice", "ERROR", tv, {"state": "R4", **dti(r, tv)}, (appeal.event_id,))
+        put("notice", "ERROR", tv, {"state": "R4", **dti(r, stamp or tv)}, (appeal.event_id,))
         out["state"] = "R4"
     close(tv, out["state"])
     out["active_final"] = sorted(d for d in ENFORCING if new_domains.get(d))
@@ -719,8 +773,9 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
         return res + error_conduct(r, log, out) + justice_conduct(r, log)
     days = (appeal.arrived_at - out["t_dec"]) / DAY
     formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
+    admissible = r["appellant"] in get(out["decision_1"]).value["shares"] and r["appeal_bond_posted"]     # ERROR §3.3, §6
     rejected = "REJECTED_PROCEDURAL" in states
-    res.append(verdict("ERROR-7-01", "appeal_fields", (not formal) == rejected or (formal and days > APPEAL_WINDOW_DAYS),
+    res.append(verdict("ERROR-7-01", "appeal_fields", (not formal) == rejected or (formal and (days > APPEAL_WINDOW_DAYS or not admissible)),
                        "appeals are validated exactly when they reference the decision, carry evidence and a category",
                        "formal requirements not applied"))
     if r["appeal_category"] != "E1":
@@ -729,14 +784,14 @@ def run_checks(r, log: EventLog, store, out) -> List[CheckResult]:
                                f"appeal after {days:g} DTI-Days rejected (window 30)",
                                f"appeal after {days:g} DTI-Days accepted (window 30)"))
         else:
-            res.append(verdict("ERROR-7-02", "appeal_window", formal == ("R1" in states),
+            res.append(verdict("ERROR-7-02", "appeal_window", (formal and admissible) == ("R1" in states),
                                f"appeal after {days:g} DTI-Days handled within the 30-day window",
                                "an appeal within the window was not handled"))
         res.append(na("ERROR-7-03", "e1_no_limitation", "E1 exception", "the appeal is not of category E1"))
     else:
         res.append(na("ERROR-7-02", "appeal_window", "30-day window", "E1 appeals have no limitation period"))
         if days > APPEAL_WINDOW_DAYS:
-            res.append(verdict("ERROR-7-03", "e1_no_limitation", not rejected or not formal,
+            res.append(verdict("ERROR-7-03", "e1_no_limitation", not rejected or not formal or not admissible,
                                f"E1 appeal after {days:g} DTI-Days accepted", f"E1 appeal after {days:g} DTI-Days barred as late"))
         else:
             res.append(na("ERROR-7-03", "e1_no_limitation", "E1 exception", "the appeal is within 30 DTI-Days"))
@@ -1115,7 +1170,8 @@ def error_conduct(r, log: EventLog, out) -> List[CheckResult]:
         res.append(na("ERROR-9-03", "reversibility_preferred", "correction", "no correction applied"))
     d1 = get(out["decision_1"])
     appealable = any(bool(x) for x in d1.value["domains"].values()) and not r["higher_layer_irreversible"]
-    formal = r["appeal_references_decision"] and r["appeal_has_evidence"]
+    formal = r["appeal_references_decision"] and r["appeal_has_evidence"] and r["appeal_bond_posted"] \
+        and r["appellant"] in d1.value["shares"]
     timely = r["appeal_category"] == "E1" or r["appeal_after_minutes"] / DAY <= APPEAL_WINDOW_DAYS
     if appealable and formal and timely:
         res.append(verdict("ERROR-11-01", "valid_appeal_not_suppressed", "R1" in states,
@@ -1123,7 +1179,152 @@ def error_conduct(r, log: EventLog, out) -> List[CheckResult]:
                            "a valid appeal was suppressed: no R1"))
     else:
         res.append(na("ERROR-11-01", "valid_appeal_not_suppressed", "valid appeals",
-                      "the appeal is not valid under §3.2 and §7 (not appealable, not formal or late)"))
+                      "the appeal is not valid under §3.2, §3.3, §6 and §7 (not appealable, no standing, no bond, not formal or late)"))
+    return res
+
+
+def core_checks(r, log: EventLog, out) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    msgs = log.messages()
+    get = log.get
+    res: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return verdict(rid, chk, not bad, ok, no.format(n=len(bad)), {"violations": bad[:10]} if bad else None)
+    err = [m for m in msgs if m.source == "ERROR"]
+    states = [m.value["state"] for m in err if "state" in m.value]
+    decs = [m for m in msgs if m.source == "JUSTICE" and m.kind == "decision"]
+    acts = [m for m in msgs if m.source == "ENFORCEMENT" and m.kind == "action"]
+    appeal = get(out["appeal"]) if out["appeal"] else None
+    # ERROR §10, §11: every closed case counted and published
+    closed = [m for m in err if "case_closed" in m.value]
+    if closed:
+        counted = {c for m in msgs if m.source == "ERROR-METRICS" for c in m.value["reliability_cases"]}
+        bad = [m.provenance[0] for m in closed if m.provenance[0] not in counted]
+        bad += [m.event_id for m in msgs if m.source == "ERROR-METRICS" and m.value["count"] != len(m.value["reliability_cases"])]
+        res.append(v("ERROR-10-03", "case_in_reliability_count", bad,
+                     f"{len(closed)} closed error case(s), each counted in the declared reliability count",
+                     "{n} closed cases left out of the reliability count"))
+        shown = {c for m in msgs if m.source == "ERROR-STATS" for c in m.value["published_cases"]}
+        bad = [m.provenance[0] for m in closed if m.provenance[0] not in shown]
+        bad += [m.event_id for m in msgs if m.source == "ERROR-STATS" and sum(m.value["by_state"].values()) != len(m.value["published_cases"])]
+        res.append(v("ERROR-11-03", "statistics_omit_no_case", bad,
+                     f"{len(closed)} closed error case(s), none omitted from the published statistics",
+                     "{n} cases omitted from the published statistics"))
+    else:
+        for rid, chk in (("ERROR-10-03", "case_in_reliability_count"), ("ERROR-11-03", "statistics_omit_no_case")):
+            res.append(na(rid, chk, "closed error cases", "no error case was closed"))
+    # ERROR §3.3 and §6: admission
+    if appeal is not None and decs:
+        named = set(get(out["decision_1"]).value["shares"])
+        admitted = "R1" in states
+        res.append(verdict("ERROR-3.3-01", "appellant_named_by_decision", not admitted or appeal.value["appellant"] in named,
+                           f"the claim of {appeal.value['appellant']} was " + ("admitted: the decision names the appellant" if admitted
+                                                                               else "not admitted") ,
+                           f"the claim of {appeal.value['appellant']} was admitted although the decision does not name it"))
+        res.append(verdict("ERROR-6-01", "appeal_with_bond", not admitted or appeal.value["bond"] == "posted",
+                           "the appeal was " + ("admitted with its bond posted" if admitted else "not admitted"),
+                           "an appeal without a bond was admitted"))
+    else:
+        for rid, chk in (("ERROR-3.3-01", "appellant_named_by_decision"), ("ERROR-6-01", "appeal_with_bond")):
+            res.append(na(rid, chk, "appeals", "no appeal filed" if r["appeal_after_minutes"] < 0 else "no Justice decision to appeal"))
+    # ERROR §5: every state indexed by its own DTI-Day
+    st = [m for m in err if "state" in m.value]
+    bad = [f"{m.event_id}: {m.value['state']} day {m.value.get('dti_day')}" for m in st
+           if m.value.get("dti_day") != dti(r, m.arrived_at)["dti_day"] or m.value.get("dy") != dti(r, m.arrived_at)["dy"]]
+    res.append(v("ERROR-5-06", "state_dti_indexed", bad, f"{len(st)} state records, each indexed by the DTI-Day on which it arrived",
+                 "{n} state records without their own DTI-Day index") if st else
+               na("ERROR-5-06", "state_dti_indexed", "error states", "no error state recorded"))
+    # ERROR §9: corrections stay within the declared case scope
+    scope = next((m.value["case_scope"] for m in err if "case_scope" in m.value), None)
+    if scope and "R2" in states:
+        t2 = next(m.arrived_at for m in err if m.value.get("state") == "R2")
+        mine = set(scope["subjects"])
+        bad = [a.event_id for a in acts if a.arrived_at >= t2 and (set(a.value.get("subjects", [])) - mine or "record" in a.value)]
+        res.append(v("ERROR-9-04", "correction_within_scope", bad,
+                     f"the correction changed only measures of the case ({scope['decision']}, Subjects {sorted(mine)})",
+                     "{n} corrective changes outside the declared case scope"))
+    else:
+        res.append(na("ERROR-9-04", "correction_within_scope", "correction", "no confirmed error was corrected"))
+    # JUSTICE §11: triggers and data quality
+    trig = [m for m in msgs if m.source == "TRIGGER"]
+    revs = [m for m in msgs if m.source == "JUSTICE" and m.kind == "evaluation" and "reevaluation_of" in m.value]
+    if trig:
+        bad = [t.event_id for t in trig if not any(x.value["trigger"] == t.event_id and x.arrived_at >= t.arrived_at for x in revs)]
+        res.append(v("JUSTICE-11-01", "trigger_reevaluated", bad,
+                     f"{len(trig)} declared trigger(s), each followed by a re-evaluation record",
+                     "{n} triggers without a re-evaluation"))
+    else:
+        res.append(na("JUSTICE-11-01", "trigger_reevaluated", "re-evaluation triggers", "no trigger declared"))
+    weak = [x for x in revs if x.value["data"] != "complete"]
+    if weak:
+        ids = {x.event_id for x in weak} | {x.value["trigger"] for x in weak}
+        bad = [x.event_id for x in weak if not x.value["prior_outcome_in_force"]]
+        bad += [a.event_id for a in acts if set(a.provenance) & ids]
+        res.append(v("JUSTICE-11-03", "weak_data_keeps_outcome", bad,
+                     f"{len(weak)} re-evaluation(s) on incomplete, stale or withheld data, each leaving the prior outcome in force",
+                     "{n} prior outcomes relieved on incomplete, stale or withheld data"))
+    else:
+        res.append(na("JUSTICE-11-03", "weak_data_keeps_outcome", "re-evaluation on weak data",
+                      "no trigger with incomplete, stale or withheld data" if trig else "no trigger declared"))
+    if decs:
+        # JUSTICE §2: data flow IMPACT, IDENTITY -> JUSTICE only
+        jids = {m.event_id for m in msgs if m.source == "JUSTICE"}
+        back = [m.event_id for m in msgs if m.source in ("PTL", "IMPACT", "IDENTITY") and set(m.provenance) & jids]
+        res.append(v("JUSTICE-2-01", "justice_downstream_of_impact_identity", back,
+                     "data flow from IMPACT and IDENTITY into JUSTICE; no PTL, IMPACT or IDENTITY record derives from a Justice record",
+                     "{n} lower-layer records derived from JUSTICE"))
+        # JUSTICE §4: identical inputs, identical C (each decision against a fresh evaluation of its own inputs)
+        atts = [m.event_id for m in msgs if m.source == "IDENTITY" and m.kind == "evaluation"]
+        bad = []
+        for d in decs:
+            imp = get(d.provenance[0])
+            s0v, s1v = (get(p).value for p in imp.provenance)
+            fresh = dict(r, s0=s0v, s1_recorded=s1v, recorded_contributions=contributions_for(r, atts.index(d.provenance[1])),
+                         appeal_after_minutes=-1, reevaluation_triggers=[], start_dti_day=r["start_dti_day"] + 37)
+            f = next((m.value for m in run_chain(fresh)[0].messages() if m.source == "JUSTICE" and m.kind == "decision"), None)
+            if f is None or any(f.get(k) != d.value.get(k) for k in ("domains", "shares", "flag", "exclusion_effects")):
+                bad.append(f"{d.event_id}: differs from a fresh evaluation of the same inputs")
+        res.append(v("JUSTICE-4-01", "same_inputs_same_vector", bad,
+                     f"{len(decs)} consequence vector(s), each equal to a fresh evaluation of the same impact and responsibility "
+                     "inputs at another time", "{n} vectors that depend on more than their inputs"))
+    else:
+        for rid, chk in (("JUSTICE-2-01", "justice_downstream_of_impact_identity"), ("JUSTICE-4-01", "same_inputs_same_vector")):
+            res.append(na(rid, chk, "Justice evaluation", "no Justice decision (attribution blocked or NO_ATTRIBUTION)"))
+    # JUSTICE §7: a restriction exists only against a declared risk of further harm
+    restr = [a for a in acts if a.value.get("apply") == "restriction"]
+    if restr:
+        bad = []
+        for a in restr:
+            src = [get(p) for p in a.provenance if get(p).source == "JUSTICE" and get(p).kind == "decision"]
+            risk = any(r["repeated_harm"] or r["mitigation_insufficient"] or
+                       (r["safe_margin"] >= 0 and abs(get(d.provenance[0]).value["I"]) >= r["safe_margin"]) for d in src)
+            if not risk:
+                bad.append(a.event_id)
+        res.append(v("JUSTICE-7-03", "restriction_against_declared_risk", bad,
+                     f"{len(restr)} restriction(s), each from a Justice decision with a declared risk of further harm",
+                     "{n} restrictions without a declared risk of further harm (punitive)"))
+    else:
+        res.append(na("JUSTICE-7-03", "restriction_against_declared_risk", "restrictions", "no restriction applied"))
+    # JUSTICE §8: functional separation where declared feasible
+    iso = [a for a in acts if a.value.get("apply") == "isolation"]
+    if iso:
+        bad = [a.event_id for a in iso if r["functional_separation_feasible"] and a.value.get("form") != "functional separation"]
+        res.append(v("JUSTICE-8-03", "functional_before_physical", bad,
+                     f"{len(iso)} isolation measure(s): " + ("functional separation, declared feasible" if r["functional_separation_feasible"]
+                                                            else "functional separation declared infeasible; 'last resort' stays open"),
+                     "{n} physical confinements where functional separation is declared feasible"))
+    else:
+        res.append(na("JUSTICE-8-03", "functional_before_physical", "isolation", "no isolation applied"))
+    # JUSTICE §9: exclusion withdraws no essentials of survival
+    exc = [m for m in decs if m.value["domains"].get("exclusion")]
+    if exc:
+        bad = [f"{m.event_id}: {e}" for m in exc for e in m.value.get("exclusion_effects", []) if any(k in e for k in SURVIVAL)]
+        res.append(v("JUSTICE-9-03", "exclusion_keeps_survival", bad,
+                     f"{len(exc)} exclusion(s); none withdraws life support, food, water, shelter, medical care or heating",
+                     "{n} exclusion effects that withdraw essentials of survival"))
+    else:
+        res.append(na("JUSTICE-9-03", "exclusion_keeps_survival", "exclusion", "no exclusion decided"))
     return res
 
 
@@ -1240,6 +1441,20 @@ IMPLEMENTS = {
     "ERROR-4-05": ("category_e5", "PARTIAL", "The deviation is given by the appeal; ERROR's classification and its limitation rule are checked."),
     "JUSTICE-1-01": ("consequences_not_punishment", "PARTIAL", "Observed as moral or discretionary fields and as measures not computed by JUSTICE."),
     "JUSTICE-9-04": ("exclusion_scope", "PARTIAL", "Effects are recorded labels; indirect lethal exposure is not modelled beyond them."),
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "ERROR-10-03": ("case_in_reliability_count", "PARTIAL", "Clear part only: every closed case is counted; the reliability metric stays open."),
+    "ERROR-11-03": ("statistics_omit_no_case", "PARTIAL", "Clear part only: published statistics omit no case; the audience stays open."),
+    "ERROR-3.3-01": ("appellant_named_by_decision", "PARTIAL", "Clear part only: admission needs a Subject the decision names; 'directly affected' stays open."),
+    "ERROR-5-06": ("state_dti_indexed", "PARTIAL", "Clear part only: every state carries its own DTI-Day; timeouts stay open."),
+    "ERROR-6-01": ("appeal_with_bond", "PARTIAL", "Clear part only: no appeal admitted without a bond; the bond amount stays open."),
+    "ERROR-9-04": ("correction_within_scope", "PARTIAL", "Clear part only: corrective changes within the declared case scope; the error boundary stays open."),
+    "JUSTICE-11-01": ("trigger_reevaluated", "PARTIAL", "Clear part only: a declared trigger is followed by a re-evaluation; the response time stays open."),
+    "JUSTICE-11-03": ("weak_data_keeps_outcome", "PARTIAL", "Clear part only: data flagged incomplete, stale or withheld keep the prior outcome; detection stays open."),
+    "JUSTICE-2-01": ("justice_downstream_of_impact_identity", "PARTIAL", "Clear part only: direct data flow from IMPACT and IDENTITY; 'above'/'below' and the inventory stay open."),
+    "JUSTICE-4-01": ("same_inputs_same_vector", "PARTIAL", "Clear part only: identical inputs give an identical vector; the vector schema stays open."),
+    "JUSTICE-7-03": ("restriction_against_declared_risk", "PARTIAL", "Clear part only: no restriction without a declared risk of further harm; the evidence stays open."),
+    "JUSTICE-8-03": ("functional_before_physical", "PARTIAL", "Clear part only: no confinement where functional separation is declared feasible; feasibility and 'last resort' stay open."),
+    "JUSTICE-9-03": ("exclusion_keeps_survival", "PARTIAL", "Clear part only: no withdrawal of essentials of survival; indirect effects stay open."),
 }
 
 SUBJECT = {"type": "object", "fields": {
@@ -1254,7 +1469,7 @@ SUBJECT = {"type": "object", "fields": {
 
 class DisputeCorrectionModule(LabModule):
     id = "dispute_correction"
-    version = "1.5.0"
+    version = "1.6.0"
     title = {"en": "Dispute and correction (S-LAB-04)", "ru": "Спор и исправление (S-LAB-04)"}
     summary = {"en": "A measurement or an attribution was wrong: is the appeal accepted in time, is the decision "
                      "recomputed without new penalties, is the original kept and the difference shown?",
@@ -1382,6 +1597,19 @@ class DisputeCorrectionModule(LabModule):
                                                                       "ru": "Итог для E2/E4/E5 (не моделируются)"}},
         "verification_days": {"type": "int", "min": 0, "max": 3650, "default": 5, "unit": "DTI-Day", "source": "user",
                               "label": {"en": "Verification takes", "ru": "Проверка занимает"}},
+        "appeal_bond_posted": {"type": "bool", "default": True, "source": "user",
+                               "label": {"en": "The appeal carries the minimal bond (ERROR §6; amount not given)",
+                                         "ru": "Апелляция сопровождается минимальным залогом (ERROR §6; сумма не задана)"}},
+        "functional_separation_feasible": {"type": "bool", "default": True, "source": "user",
+                                           "label": {"en": "Functional separation technically feasible (JUSTICE §8)",
+                                                     "ru": "Функциональное разделение технически возможно (JUSTICE §8)"}},
+        "reevaluation_triggers": {"type": "list", "min_items": 0, "max_items": 10, "default": [], "source": "user",
+                                  "items": {"type": "object", "fields": {
+                                      "after_minutes": {"type": "int", "min": 0, "max": 10 ** 7},
+                                      "kind": {"type": "enum", "values": list(TRIGGER_KINDS)},
+                                      "data": {"type": "enum", "values": list(TRIGGER_DATA), "default": "complete"}}},
+                                  "label": {"en": "Re-evaluation triggers {after_minutes, kind, data} (JUSTICE §11)",
+                                            "ru": "Поводы для переоценки {after_minutes, kind, data} (JUSTICE §11)"}},
         "status_quo_suspension": {"type": "bool", "default": True, "source": "user",
                                   "label": {"en": "Use the status quo suspension (ERROR §7, optional)",
                                             "ru": "Применить приостановку статус-кво (ERROR §7, по усмотрению)"}},
@@ -1428,7 +1656,7 @@ class DisputeCorrectionModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, store, out = run_chain(r)
-        checks = run_checks(r, log, store, out)
+        checks = run_checks(r, log, store, out) + core_checks(r, log, out)
         msgs = log.messages()
         imps = [m.value for m in msgs if m.source == "IMPACT"]
         decs = [m for m in msgs if m.source == "JUSTICE" and m.kind == "decision"]
@@ -1536,6 +1764,15 @@ class DisputeCorrectionModule(LabModule):
                                       "faults": ["moral_output", "exempt_by_status", "justice_policy", "opaque_adjustment"]},
             "faulty_error_conduct": {**base, "faults": ["moralize_error", "coercive_verification", "infer_intent",
                                                         "error_rewrites_ptl", "discretionary_override"]},
+            "appeal_without_standing": {**base, "appellant": "bystander",
+                                        "subjects": [{"id": "plant", "kind": "legal_entity", "contribution": 3},
+                                                     {"id": "logistics", "kind": "legal_entity", "contribution": 1},
+                                                     {"id": "bystander", "kind": "human", "contribution": 0}]},
+            "appeal_without_bond": {**base, "appeal_bond_posted": False},
+            "reevaluation_triggers": {**base, "appeal_after_minutes": -1,
+                                      "reevaluation_triggers": [{"after_minutes": 600, "kind": "mitigation", "data": "complete"},
+                                                                {"after_minutes": 900, "kind": "impact_change", "data": "stale"}]},
+            "isolation_without_functional_option": {**base, "appeal_after_minutes": -1, "functional_separation_feasible": False},
         }
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:

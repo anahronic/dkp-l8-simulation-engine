@@ -22,13 +22,18 @@ def test_reference_chain_breaks_no_rule(name):
     assert "FAIL" not in statuses(run(**M.examples()[name])).values()
 
 
+STANDING = {"appellant": "bystander", "subjects": [{"id": "plant", "kind": "legal_entity", "contribution": 3},
+                                                  {"id": "logistics", "kind": "legal_entity", "contribution": 1},
+                                                  {"id": "bystander", "kind": "human", "contribution": 0}]}
+TRIGGERS = {"appeal_after_minutes": -1, "reevaluation_triggers": [{"after_minutes": 600, "kind": "mitigation", "data": "complete"},
+                                                                  {"after_minutes": 900, "kind": "impact_change", "data": "stale"}]}
 FAULT_CASES = {
     "late_appeal_accepted": ({"appeal_category": "E3", "recorded_contributions": [4, 0], "appeal_after_minutes": 40 * 1440},
                              ["ERROR-7-02"]),
     "e1_time_barred": ({"appeal_after_minutes": 40 * 1440}, ["ERROR-7-03"]),
     "suspension_over_7_days": ({"verification_days": 10}, ["ERROR-7-04"]),
     "mutate_original": ({}, ["EB-7.2-01", "EB-7.2-02", "ERROR-8-01"]),
-    "retaliate": ({}, ["ERROR-11-02", "ERROR-8-05", "ERROR-2-03", "JUSTICE-1-01"]),
+    "retaliate": ({}, ["ERROR-11-02", "ERROR-8-05", "ERROR-2-03", "JUSTICE-1-01", "JUSTICE-7-03"]),
     "keep_bond": ({}, ["ERROR-6-02"]),
     "proxy_as_subject": ({"subjects": [{"id": "operator", "kind": "human", "contribution": 0, "originator": "none"},
                                        {"id": "router", "kind": "smart_contract", "contribution": 2, "originator": "operator"},
@@ -64,7 +69,20 @@ FAULT_CASES = {
     "misclassify_as_e1": ({"appeal_category": "E3", "recorded_contributions": [4, 0], "appeal_after_minutes": 40 * 1440},
                           ["ERROR-4-03", "ERROR-7-02"]),
     "seal_case": ({}, ["ERROR-10-02"]),
-    "exclusion_abandons": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1}, ["JUSTICE-9-04", "JUSTICE-9-02"]),
+    "exclusion_abandons": ({"persistent_axiom_violation": True, "appeal_after_minutes": -1},
+                           ["JUSTICE-9-04", "JUSTICE-9-02", "JUSTICE-9-03"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "uncounted_case": ({}, ["ERROR-10-03"]),
+    "hide_statistics": ({}, ["ERROR-11-03"]),
+    "admit_without_standing": (STANDING, ["ERROR-3.3-01"]),
+    "stale_dti_index": ({}, ["ERROR-5-06"]),
+    "admit_without_bond": ({"appeal_bond_posted": False}, ["ERROR-6-01"]),
+    "cascade_correction": ({}, ["ERROR-9-04"]),
+    "ignore_trigger": (TRIGGERS, ["JUSTICE-11-01"]),
+    "act_on_stale_data": (TRIGGERS, ["JUSTICE-11-03"]),
+    "justice_feeds_identity": ({}, ["JUSTICE-2-01"]),
+    "history_dependent_output": ({}, ["JUSTICE-4-01"]),
+    "physical_confinement": ({}, ["JUSTICE-8-03"]),
 }
 
 
@@ -154,3 +172,38 @@ def test_error_classes_follow_the_deviation(cat):
     assert statuses(run(**extra))[rid] == "PASS"
     late = run(**extra, appeal_after_minutes=40 * 1440, faults=["misclassify_as_e1"])
     assert statuses(late)[rid] == "FAIL" and statuses(late)["ERROR-7-02"] == "FAIL"
+
+
+def test_admission_needs_standing_and_a_bond():
+    """ERROR §3.3 and §6 clear parts: a claim from a Subject the decision does not name, or without a bond, is rejected
+    procedurally; the existing admission checks (§7) count such a rejection as correct, not as a suppressed appeal."""
+    for extra in (STANDING, {"appeal_bond_posted": False}):
+        res = run(repeated_harm=True, **extra)
+        st = statuses(res)
+        assert res.outputs["final_state"] == "REJECTED_PROCEDURAL"
+        assert st["ERROR-3.3-01"] == st["ERROR-6-01"] == st["ERROR-7-01"] == "PASS"
+        assert st["ERROR-11-01"] == "NOT_APPLICABLE"
+
+
+def test_reevaluation_waits_for_the_ttl_and_weak_data_keep_the_outcome():
+    """JUSTICE §11 clear parts: a trigger leads to a re-evaluation no earlier than the minimum TTL after the decision;
+    stale data keep the prior outcome and change no measure."""
+    res = run(repeated_harm=True, **TRIGGERS)
+    msgs = res.outputs["messages"]
+    dec = next(m for m in msgs if m["source"] == "JUSTICE" and m["kind"] == "decision")
+    revs = [m for m in msgs if m["source"] == "JUSTICE" and m["kind"] == "evaluation"]
+    ttl = min(m["arrived_at"] for m in revs) - dec["arrived_at"]
+    assert len(revs) == 2 and ttl >= 600
+    assert all(m["value"]["prior_outcome_in_force"] for m in revs)
+    assert not [m for m in msgs if m["kind"] == "action" and set(m["provenance"]) & {x["event_id"] for x in revs}]
+    st = statuses(res)
+    assert st["JUSTICE-11-01"] == st["JUSTICE-11-03"] == "PASS"
+
+
+def test_isolation_form_and_restriction_basis():
+    """JUSTICE §8 and §7 clear parts: confinement is only in place where functional separation is declared infeasible
+    (the 'last resort' part stays open); a restriction from the appeal itself has no declared risk of further harm."""
+    assert statuses(run(repeated_harm=True, appeal_after_minutes=-1, functional_separation_feasible=False))["JUSTICE-8-03"] == "PASS"
+    assert statuses(run(repeated_harm=True, faults=["physical_confinement"]))["JUSTICE-8-03"] == "FAIL"
+    assert statuses(run())["JUSTICE-7-03"] == "NOT_APPLICABLE"
+    assert statuses(run(repeated_harm=True))["JUSTICE-7-03"] == "PASS"

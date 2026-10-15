@@ -80,7 +80,8 @@ from lab.modules.work_cycle import FAULTS  # noqa: E402
 def test_fault_is_detected(fault):
     base = {"refusing_workers": 6} if fault in ("assign_refusers", "penalize_refusal") else \
         {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty", "exception_precedent",
-                                                                      "untraced_exception") else {}
+                                                                      "untraced_exception", "crisis_withdraws_access",
+                                                                      "no_recovery_compensation") else {}
     clean = {c.requirement_id: c.status for c in M.evaluate(M.validate(base)).checks}
     broken = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
     assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
@@ -143,3 +144,46 @@ def test_labor_allocation_and_isolation():
     for fault, rid in (("manual_assignment", "LABOR-7-03"), ("labor_as_punishment", "LABOR-12-01")):
         st = {c.requirement_id: c.status for c in M.evaluate(M.validate({"faults": [fault]})).checks}
         assert st[rid] == "FAIL", fault
+
+
+REFUSALS, CRISIS = {"refusing_workers": 6}, {"refusing_workers": 6, "crisis_window": [3, 7]}
+CORE_FAULTS = {          # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "bar_restricted": ({}, ["LABOR-10-01"]),
+    "no_recovery_pathway": ({}, ["LABOR-10-02", "LABOR-5.1-01"]),
+    "compulsory_pathway": ({}, ["LABOR-5.1-01"]),
+    "single_opportunity": ({}, ["LABOR-5.1-02"]),
+    "no_consent_record": ({}, ["LABOR-3.2-01", "LABOR-7-01"]),
+    "coerce_restricted": ({}, ["LABOR-3.2-01", "LABOR-7-01"]),
+    "assign_refusers": (REFUSALS, ["LABOR-3.2-01", "LABOR-7-01", "LABOR-9.2-01"]),
+    "access_requires_work": ({}, ["LABOR-4.1-01", "LABOR-5.1-01"]),
+    "crisis_withdraws_access": (CRISIS, ["LABOR-4.1-01", "LABOR-9.2-02"]),
+    "permanent_obligation": (CRISIS, ["LABOR-9.2-01", "LABOR-9.2-02"]),
+    "restore_without_contribution": ({}, ["LABOR-4.2-02"]),
+    "no_recovery_compensation": (CRISIS, ["WORKCYCLE-10-03"]),
+    "week_authority": ({}, ["WORKCYCLE-2-02"]),
+    "work_in_recovery": ({}, ["WORKCYCLE-5.3-02"]),
+    "justify_recovery": ({}, ["WORKCYCLE-5.3-02"]),
+    "unmonitored_category": ({}, ["WORKCYCLE-9-01"]),
+}
+
+
+@pytest.mark.parametrize("fault", sorted(CORE_FAULTS))
+def test_core_fault_hits_its_provision(fault):
+    base, rids = CORE_FAULTS[fault]
+    clean, _ = run(**base)
+    broken, _ = run(**base, faults=[fault])
+    for rid in rids:
+        assert clean[rid] == PASS and broken[rid] == FAIL, (fault, rid, clean[rid], broken[rid])
+
+
+def test_restricted_subjects_keep_access_pathways_and_consent():
+    """LABOR §4.1, §5.1, §10 clear parts: the Subject who declines keeps baseline access and a voluntary offer; the
+    participants are scheduled with explicit consent; a restoration cites the participant's contribution record."""
+    st, out = run()
+    rp = {x["subject"]: x for x in out["restricted_participation"]}
+    assert rp["x1"]["declines"] and not rp["x1"]["scheduled"] and rp["x1"]["recovery_pathway"]["voluntary"]
+    assert {x["subject"]: x["access"] for x in out["baseline_access"]}["x1"] == "kept"
+    assert out["restorations"] == [{"subject": "x2", "restored": "full participation and access", "basis": "CR-x2"}]
+    assert st["WORKCYCLE-2-02"] == PASS and st["LABOR-9.2-01"] == NOT_APPLICABLE
+    st, _ = run(pattern=["W", "W", "W", "R", "W", "R"], compensation_declared=True)
+    assert st["WORKCYCLE-2-02"] == UNKNOWN

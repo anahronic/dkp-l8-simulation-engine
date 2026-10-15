@@ -74,13 +74,19 @@
    "data_dependencies": [
     "system protocol hierarchy and dependency graph"
    ],
-   "gap": "Operational semantics for downstream, above, alongside, and below are not defined. No lab check implemented yet.",
+   "gap": "Clear part only: data flow from PTL into LABOR; the layer terms stay open.",
    "hypotheses_needed": [
     "A mapping from each stated layer relationship to a checkable architectural relation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "contribution",
+    "version": "1.1.0",
+    "check": "labor_downstream_of_ptl"
+   },
+   "tests": [
+    "tests/lab/test_contribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -115,7 +121,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_participation_rules_under_inconsistency"
    },
    "tests": [
@@ -159,7 +165,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "only_measured_attributed_contribution"
    },
    "tests": [
@@ -195,14 +201,20 @@
     "activity recognition decisions",
     "consent records"
    ],
-   "gap": "Recognition, restorative activity, and verification of voluntariness lack operational definitions. No lab check implemented yet.",
+   "gap": "Clear part only: a consent record per participant; 'recognized' and 'restorative activity' stay open.",
    "hypotheses_needed": [
     "A recognition procedure and a definition of restorative activity.",
     "A method for establishing voluntary engagement."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "participation_has_consent"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -238,7 +250,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "impact_only_evaluation"
    },
    "tests": [
@@ -270,7 +282,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "record_immutable_time_indexed"
    },
    "tests": [
@@ -308,7 +320,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "record_links"
    },
    "tests": [
@@ -341,13 +353,19 @@
     "life-preservation needs",
     "emergency medical assessments"
    ],
-   "gap": "Axiom A1 and measurable standards for minimum life-preserving resources are not supplied. No lab check implemented yet.",
+   "gap": "Clear part only: access independent of participation; adequacy of the minimum stays open.",
    "hypotheses_needed": [
     "A model defining sufficient nutrition, protection from lethal exposure, and emergency medical access."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "access_not_conditioned"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -453,13 +471,19 @@
     "restitution records",
     "participation and access states"
    ],
-   "gap": "The scope of full participation and access and the qualifying relationship to contribution or restitution are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: a restoration cites a contribution record; the state mapping stays open.",
    "hypotheses_needed": [
     "Definitions of full participation, full access, and qualifying contribution or restitution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "restoration_needs_contribution"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -492,14 +516,20 @@
     "capacity and context assessments",
     "available recovery pathways"
    ],
-   "gap": "The text does not operationalize recovery capability, transparency, humiliation, punishment, or scaling to capacity and context. No lab check implemented yet.",
+   "gap": "Clear part only: a voluntary offer, refusal keeps access; recovery effect and scaling stay open.",
    "hypotheses_needed": [
     "A model for whether a pathway enables recovery.",
     "Assessment rules for the required pathway qualities and capacity scaling."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "voluntary_pathway_offered"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -529,14 +559,20 @@
     "opportunity inventory",
     "assignment and dependency patterns"
    ],
-   "gap": "Diversity, monoculture, exploitation, and the adequacy of preventive measures are not operationally defined. No lab check implemented yet.",
+   "gap": "Clear part only: more than one kind offered; an adequacy measure for diversity stays open.",
    "hypotheses_needed": [
     "A diversity measure and adequacy criterion.",
     "Definitions and detection models for exploitation, monoculture, and forced specialization."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "plural_opportunities"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -576,7 +612,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "justice_recovery_function"
    },
    "tests": [
@@ -617,7 +653,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_declarative_recognition"
    },
    "tests": [
@@ -663,7 +699,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_prohibited_conditions"
    },
    "tests": [
@@ -700,7 +736,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "forced_labor_critical"
    },
    "tests": [
@@ -737,14 +773,20 @@
     "consent records",
     "allocation history"
    ],
-   "gap": "The derivation of needs and tests for avoiding concentration, exploitation, and dependency are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no assignment without explicit consent; needs derivation and pattern tests stay open.",
    "hypotheses_needed": [
     "A mapping from impact deficits to system needs.",
     "An allocation model and criteria for the prohibited allocation patterns."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "assignment_with_consent"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -814,7 +856,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "allocation_rule_based"
    },
    "tests": [
@@ -852,7 +894,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "compensation_forms"
    },
    "tests": [
@@ -893,7 +935,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "compensation_proportional"
    },
    "tests": [
@@ -937,7 +979,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "nonmarket_prevention_recognised"
    },
    "tests": [
@@ -975,7 +1017,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_compulsion"
    },
    "tests": [
@@ -1022,7 +1064,7 @@
     "also": [
      {
       "module": "work_cycle",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "check": "refusal_not_punished"
      }
     ]
@@ -1064,13 +1106,19 @@
     "formal crisis declaration",
     "system survival or collapse threat assessment"
    ],
-   "gap": "The crisis protocol and a model connecting nonparticipation to systemic survival or collapse are absent. No lab check implemented yet.",
+   "gap": "Clear part only: the constraint only in a declared crisis; the survival threat stays open.",
    "hypotheses_needed": [
     "A counterfactual model of the systemic effects of nonparticipation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "refusal_constrained_only_in_crisis"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1101,14 +1149,20 @@
     "declared threat assessments",
     "life-preservation and sustainability assessments"
    ],
-   "gap": "The axioms and operational criteria for strict time limits, proportionality, and prioritization are not supplied. No lab check implemented yet.",
+   "gap": "Clear part only: ends with the crisis, A1 access kept; proportionality stays open.",
    "hypotheses_needed": [
     "A proportionality model and interpretation of strict time limitation.",
     "A decision rule preserving A1 while prioritizing A2."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "constraint_ends_and_keeps_a1"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1145,7 +1199,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_lasting_crisis_obligation"
    },
    "tests": [
@@ -1178,13 +1232,19 @@
     "Restriction or Isolation status",
     "activity supervision and limits"
    ],
-   "gap": "The referenced justice states and standards for limited or supervised activity are not supplied. No lab check implemented yet.",
+   "gap": "Clear part only: not barred from all participation; 'limited or supervised' stays open.",
    "hypotheses_needed": [
     "Operational definitions of limited and supervised activities."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "restricted_not_barred"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1215,13 +1275,19 @@
     "justice restriction states",
     "recovery pathway availability"
    ],
-   "gap": "The justice protocol and criteria establishing that a pathway can produce recovery are absent. No lab check implemented yet.",
+   "gap": "Clear part only: a pathway is available; its effectiveness stays open.",
    "hypotheses_needed": [
     "A model of pathway accessibility and justice recovery."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "restricted_keep_recovery_pathway"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1264,7 +1330,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "restricted_not_coerced"
    },
    "tests": [
@@ -1312,7 +1378,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "identity_bound_traceable"
    },
    "tests": [
@@ -1353,7 +1419,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "contribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_proxy_or_fictitious_participation"
    },
    "tests": [
@@ -1399,7 +1465,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "cross_layer_bans"
    },
    "tests": [
@@ -1437,7 +1503,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "isolation_breach_critical"
    },
    "tests": [

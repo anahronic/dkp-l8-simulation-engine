@@ -40,6 +40,7 @@ FAULTS = {
     "ignore_inconsistency": "records made under oracle inconsistency are recognised",
     "accept_stale": "records whose TA or SE was stale or invalid are recognised",
     "wrong_time_index": "the DTI time index of a record is shifted by one day",
+    "labor_feeds_ptl": "a PTL observation is derived from a Contribution Record (review КТ7-GPT-01 core of LABOR-2-01)",
 }
 NOT_MONEY = "SPD (PREVENTION recognition score); not money, not Capital Units"
 
@@ -110,6 +111,11 @@ def build(r: Dict[str, Any], records: List[Dict[str, Any]]):
         store[cr["record_id"]] = copy.deepcopy(cr)
         log.append(Message(event_id=cr["record_id"], kind="notice", source="LABOR", arrived_at=at, value=cr,
                            epistemic=md, provenance=tuple([ev.event_id] + prov), order=2))
+    if "labor_feeds_ptl" in faults and store:
+        first = log.get(sorted(store)[0])
+        log.append(Message(event_id="ta-feedback", kind="observation", source="PTL/TA", measured_at=first.arrived_at,
+                           arrived_at=first.arrived_at, value={"intensity": 0.0, "valid": True, "consistent": True, "stale_classes": []},
+                           unit="intensity", provenance=(first.event_id,), order=3))
     if "mutate_record" in faults and store:
         first = sorted(store)[0]
         store[first]["recognition"]["value"] = round(store[first]["recognition"]["value"] * 2, 12)
@@ -199,6 +205,14 @@ def run_checks(r, records, log: EventLog, store) -> List[CheckResult]:
                          ("LABOR-8.1-01", "compensation_forms"),
                          ("LABOR-8.2-01", "nonmarket_prevention_recognised")):
             out.append(na(rid, chk, "Contribution Records", why))
+    # LABOR §2 clear part: data flow from PTL into LABOR, never the reverse
+    labor = {m.event_id for m in crs}
+    back = [m.event_id for m in msgs if m.source.startswith("PTL") and set(m.provenance) & labor]
+    back += [m.event_id for m in crs if not any(log.get(p).source.startswith("PTL") for p in m.value["measured_impact"])]
+    out.append(verdict("LABOR-2-01", "labor_downstream_of_ptl", back,
+                       f"{len(crs)} Contribution Records derive from PTL observations; no PTL record derives from LABOR",
+                       "{n} reversed or missing PTL data flows") if crs else
+               na("LABOR-2-01", "labor_downstream_of_ptl", "data flow", "no Contribution Record"))
     incons = [k for k, m in bench.items() if m.value["status"] == "INFORMATIONAL"]
     if incons:
         bad = [m.event_id for m in crs if m.value["bench_record"] in incons]
@@ -254,6 +268,7 @@ def run_checks(r, records, log: EventLog, store) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    "LABOR-2-01": ("labor_downstream_of_ptl", "PARTIAL", "Clear part only: data flow from PTL into LABOR; the layer terms stay open."),
     "LABOR-2-02": ("no_participation_rules_under_inconsistency", "PARTIAL", "Oracle inconsistency of the bench stands for PTL divergence; systemic halt is not modelled."),
     "LABOR-3.1-01": ("only_measured_attributed_contribution", "PARTIAL", "Voluntariness and 'sustained' are not modelled."),
     "LABOR-3.2-02": ("impact_only_evaluation", "PARTIAL", "Invariance is checked against declared claims and attribution only."),
@@ -278,7 +293,7 @@ _PREV = PreventionModule()
 
 class ContributionModule(LabModule):
     id = "contribution"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Prevention and recognition of contribution (S-LAB-01)",
              "ru": "Предотвращение и признание вклада (S-LAB-01)"}
     summary = {"en": "Who gets a Contribution Record for preventing harm? Only measured, attributable reductions; "

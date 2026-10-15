@@ -37,7 +37,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "consequences_not_punishment"
    },
    "tests": [
@@ -73,13 +73,19 @@
    "data_dependencies": [
     "system architecture and protocol classification"
    ],
-   "gap": "The architectural ordering relation and complete downstream protocol inventory are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: direct data flow from IMPACT and IDENTITY; 'above'/'below' and the inventory stay open.",
    "hypotheses_needed": [
     "A precise meaning of above and below and a complete classification of protocols."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "justice_downstream_of_impact_identity"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -111,7 +117,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "justice_inputs"
    },
    "tests": [
@@ -149,7 +155,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "justice_inputs"
    },
    "tests": [
@@ -186,7 +192,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "flag_contract"
    },
    "tests": [
@@ -222,7 +228,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "binding_contents"
    },
    "tests": [
@@ -290,13 +296,19 @@
     "Identity bindings",
     "Axioms constraints"
    ],
-   "gap": "The mapping algorithm and consequence-vector schema are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: identical inputs give an identical vector; the vector schema stays open.",
    "hypotheses_needed": [
     "A declared consequence mapping and vector representation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "same_inputs_same_vector"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -329,7 +341,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "output_vector_clean"
    },
    "tests": [
@@ -367,7 +379,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "domains_independent"
    },
    "tests": [
@@ -403,7 +415,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "all_domains_evaluated"
    },
    "tests": [
@@ -440,7 +452,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "restitution_trigger"
    },
    "tests": [
@@ -484,7 +496,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "restitution_outputs"
    },
    "tests": [
@@ -560,7 +572,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "restriction_trigger"
    },
    "tests": [
@@ -630,13 +642,19 @@
    "data_dependencies": [
     "restriction implementation and outcome evidence"
    ],
-   "gap": "Punitive use and exclusive harm-prevention purpose lack operational tests. No lab check implemented yet.",
+   "gap": "Clear part only: no restriction without a declared risk of further harm; the evidence stays open.",
    "hypotheses_needed": [
     "A model distinguishing punitive restrictions from measures serving only harm prevention."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "restriction_against_declared_risk"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -673,7 +691,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "isolation_trigger"
    },
    "tests": [
@@ -745,13 +763,19 @@
     "technical feasibility assessments",
     "records of available or attempted alternatives"
    ],
-   "gap": "Technical feasibility and the evidence required to establish last resort are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no confinement where functional separation is declared feasible; feasibility and 'last resort' stay open.",
    "hypotheses_needed": [
     "A technical feasibility model and a declared last-resort decision rule."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "functional_before_physical"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -789,7 +813,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "exclusion_trigger"
    },
    "tests": [
@@ -831,7 +855,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "exclusion_consequences"
    },
    "tests": [
@@ -865,13 +889,19 @@
     "Axiom A1",
     "physical harm and survival impact assessments"
    ],
-   "gap": "Axiom A1 and a causal method for assessing exclusion's life and harm consequences are absent. No lab check implemented yet.",
+   "gap": "Clear part only: no withdrawal of essentials of survival; indirect effects stay open.",
    "hypotheses_needed": [
     "A causal model of exclusion effects, including deprivation and survival conditions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "exclusion_keeps_survival"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -907,7 +937,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "exclusion_scope"
    },
    "tests": [
@@ -949,7 +979,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "proportional_distribution"
    },
    "tests": [
@@ -989,7 +1019,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "individual_accountability_kept"
    },
    "tests": [
@@ -1027,13 +1057,19 @@
     "mitigation events",
     "system boundary updates"
    ],
-   "gap": "Trigger detection semantics and the permitted delay before completing re-evaluation are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: a declared trigger is followed by a re-evaluation; the response time stays open.",
    "hypotheses_needed": [
     "Rules for detecting the listed changes and a declared re-evaluation response time."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "trigger_reevaluated"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1071,7 +1107,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "periodic_not_faster_than_ttl"
    },
    "tests": [
@@ -1107,13 +1143,19 @@
     "data provenance and freshness",
     "expected evidence inventory"
    ],
-   "gap": "Completeness, staleness, and selective withholding are not fully defined or observable from the submission alone. No lab check implemented yet.",
+   "gap": "Clear part only: data flagged incomplete, stale or withheld keep the prior outcome; detection stays open.",
    "hypotheses_needed": [
     "An evidence completeness model, a freshness rule, and a model for detecting withheld data."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "weak_data_keeps_outcome"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1185,7 +1227,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "dispute_not_blocked_by_ttl"
    },
    "tests": [
@@ -1236,7 +1278,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "dispute_exception_conditions"
    },
    "tests": [
@@ -1275,7 +1317,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_final_output"
    },
    "tests": [
@@ -1313,7 +1355,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_exemption"
    },
    "tests": [
@@ -1359,7 +1401,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "cross_layer_isolation"
    },
    "tests": [
@@ -1395,7 +1437,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "isolation_breach_critical"
    },
    "tests": [
@@ -1434,7 +1476,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "reproducible"
    },
    "tests": [

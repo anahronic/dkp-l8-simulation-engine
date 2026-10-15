@@ -46,7 +46,21 @@ FAULTS = {
     "civil_day_index": "the roster labels its days by civil date instead of the TIME index",
     "untraced_exception": "crisis drafting is executed without an exception record tied to the declared crisis",
     "manual_assignment": "a scheduler moves one worker's day by hand, outside the published rule",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "bar_restricted": "Subjects under Restriction or Isolation are barred from all participation",
+    "no_recovery_pathway": "Subjects under Restriction or Isolation are left without a pathway for justice recovery",
+    "compulsory_pathway": "the restoration pathway is made compulsory",
+    "single_opportunity": "only one kind of participation opportunity is offered",
+    "no_consent_record": "a worker is scheduled without a consent record",
+    "access_requires_work": "baseline access is withheld from Subjects who do not take part",
+    "crisis_withdraws_access": "workers drafted in a crisis lose baseline access during it",
+    "restore_without_contribution": "full participation is restored without a contribution or restitution record",
+    "no_recovery_compensation": "a crisis exception carries no recovery-compensation record",
+    "unmonitored_category": "sick leave frequency is not monitored",
 }
+OPPORTUNITIES = ("supervised maintenance", "ecological restoration", "care support")                 # LABOR §5.1 (lab examples)
+MONITORED = ("error and incident rates", "sick leave frequency", "staff attrition", "output per productive hour",
+             "recovery compliance rate")                                                             # WORK-CYCLE §9
 CROSS_LAYER = ("redefine_justice", "override_impact", "punish", "ideological_criteria")                # LABOR §12
 
 
@@ -105,12 +119,27 @@ IMPLEMENTS = {
     "LABOR-9.1-02": ("refusal_not_punished", "IMPLEMENTED", None),
     "LABOR-6-01": ("no_prohibited_conditions", "PARTIAL", "Only compulsion and punishment of refusal are observable here."),
     "TIME-5.1-01": ("roster_dti_index", "PARTIAL", "The roster's start day is checked; each day follows by +1."),
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "LABOR-3.2-01": ("participation_has_consent", "PARTIAL", "Clear part only: a consent record per participant; 'recognized' and 'restorative activity' stay open."),
+    "LABOR-7-01": ("assignment_with_consent", "PARTIAL", "Clear part only: no assignment without explicit consent; needs derivation and pattern tests stay open."),
+    "LABOR-4.1-01": ("access_not_conditioned", "PARTIAL", "Clear part only: access independent of participation; adequacy of the minimum stays open."),
+    "LABOR-9.2-01": ("refusal_constrained_only_in_crisis", "PARTIAL", "Clear part only: the constraint only in a declared crisis; the survival threat stays open."),
+    "LABOR-9.2-02": ("constraint_ends_and_keeps_a1", "PARTIAL", "Clear part only: ends with the crisis, A1 access kept; proportionality stays open."),
+    "LABOR-10-01": ("restricted_not_barred", "PARTIAL", "Clear part only: not barred from all participation; 'limited or supervised' stays open."),
+    "LABOR-10-02": ("restricted_keep_recovery_pathway", "PARTIAL", "Clear part only: a pathway is available; its effectiveness stays open."),
+    "LABOR-5.1-01": ("voluntary_pathway_offered", "PARTIAL", "Clear part only: a voluntary offer, refusal keeps access; recovery effect and scaling stay open."),
+    "LABOR-5.1-02": ("plural_opportunities", "PARTIAL", "Clear part only: more than one kind offered; an adequacy measure for diversity stays open."),
+    "LABOR-4.2-02": ("restoration_needs_contribution", "PARTIAL", "Clear part only: a restoration cites a contribution record; the state mapping stays open."),
+    "WORKCYCLE-10-03": ("exception_recovery_compensation", "PARTIAL", "Clear part only: a compensation record per exception; the amount stays open."),
+    "WORKCYCLE-2-02": ("adaptation_keeps_invariant", "PARTIAL", "Clear part only: the §7 invariant under any adaptation; whether all allocations are invariants stays open."),
+    "WORKCYCLE-5.3-02": ("recovery_kept_unconditional", "PARTIAL", "Clear part only: not work, not reduced, no justification; what 'monetized' covers stays open."),
+    "WORKCYCLE-9-01": ("five_categories_monitored", "PARTIAL", "Clear part only: the five categories are monitored; metric definitions and cadence stay open."),
 }
 
 
 class WorkCycleModule(LabModule):
     id = "work_cycle"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "24/7 service rosters (WORK-CYCLE)", "ru": "Круглосуточные смены (WORK-CYCLE)"}
     summary = {"en": "Is there enough staff for round-the-clock service without breaking the 6-day "
                      "cycle and the daily recovery block?",
@@ -174,6 +203,9 @@ class WorkCycleModule(LabModule):
                                               "ru": "Субъекты под ограничением или изоляцией (LABOR §10)"}},
         "restricted_declining": {"type": "int", "min": 0, "max": 100, "default": 1, "source": "user",
                                  "label": {"en": "...of whom decline to take part", "ru": "...из них отказываются участвовать"}},
+        "restored_participants": {"type": "int", "min": 0, "max": 100, "default": 1, "source": "user",
+                                  "label": {"en": "...of the participants, restored to full participation (LABOR §4.2)",
+                                            "ru": "...из участников восстановлены в полном участии (LABOR §4.2)"}},
         "local_week_overlay": {"type": "bool", "default": True, "source": "user",
                                "label": {"en": "A local 7-day week is shown (overlay, §4.2)", "ru": "Показывать местную 7-дневную неделю (§4.2)"}},
         "crisis_window": {"type": "pair", "min": 0, "max": 360, "default": [0, 0], "unit": "day", "source": "user",
@@ -316,26 +348,57 @@ class WorkCycleModule(LabModule):
                                   "reason": "the recovery block is mandatory non-working time (§3, §5.3)"})
         outputs["recovery_requests"] = decisions
         c0, c1 = (int(x) for x in r["crisis_window"])
+        offers = list(OPPORTUNITIES[:1] if "single_opportunity" in faults else OPPORTUNITIES)
+        barred = "bar_restricted" in faults
         outputs["restricted_participation"] = [
             {"subject": f"x{i + 1}", "under": "Restriction or Isolation (JUSTICE)", "declines": i < r["restricted_declining"],
-             "scheduled": i >= r["restricted_declining"] or "coerce_restricted" in faults,
+             "scheduled": (i >= r["restricted_declining"] or "coerce_restricted" in faults) and not barred,
+             "participation_permitted": not barred,
+             "consent": "explicit" if i >= r["restricted_declining"] and not barred else None,
              "rate": "reduced" if "coerce_restricted" in faults and i < r["restricted_declining"] else "standard",
-             "supervised": True, "crisis": c1 > c0}
+             "supervised": True, "crisis": c1 > c0,
+             "recovery_pathway": None if "no_recovery_pathway" in faults else
+             {"offers": offers, "voluntary": "compulsory_pathway" not in faults, "transparent": True}}
             for i in range(r["restricted_participants"])]
+        part = [x for x in outputs["restricted_participation"] if x["scheduled"] and x["consent"]]
+        outputs["contribution_records"] = [{"record": f"CR-{x['subject']}", "subject": x["subject"], "activity": offers[0],
+                                            "measured": "declared"} for x in part]
+        outputs["restorations"] = [{"subject": x["subject"], "restored": "full participation and access",
+                                    "basis": None if "restore_without_contribution" in faults else f"CR-{x['subject']}"}
+                                   for x in part[:r["restored_participants"]]]
+        refusing_ids = {f"w{w + 1:03d}" for w in range(r["workers"] - r["refusing_workers"], r["workers"])}
+        outputs["consent_records"] = [{"subject": f"w{w + 1:03d}", "consent": "explicit"} for w in range(r["workers"])
+                                      if f"w{w + 1:03d}" not in refusing_ids and not ("no_consent_record" in faults and w == 0)]
+        access = []
+        for w in range(r["workers"]):
+            wid = f"w{w + 1:03d}"
+            gone = wid in refusing_ids and ("access_requires_work" in faults or (c1 > c0 and "crisis_withdraws_access" in faults))
+            access.append({"subject": wid, "access": "withheld" if gone else "kept"})
+        access += [{"subject": x["subject"], "access": "withheld" if x["declines"] and "access_requires_work" in faults else "kept"}
+                   for x in outputs["restricted_participation"]]
+        outputs["baseline_access"] = access
         outputs["local_overlay"] = {"week": "7-day week shown for reading only", "authority": None} if r["local_week_overlay"] else None
         if "exception_precedent" in faults and r["crisis_window"][1] > r["crisis_window"][0]:
             outputs["schedule_rules"] = ["draft refusing workers on peak days, as during the crisis"]
         refusers = set(range(r["workers"] - r["refusing_workers"], r["workers"]))
         outputs["exception_log"] = [] if "untraced_exception" in faults else [
             {"worker": w["worker"], "day": k, "crisis_scope": f"declared crisis, days {c0}-{c1 - 1}",
-             "dti_day": r["start_dti_day"] + k}
+             "dti_day": r["start_dti_day"] + k,
+             "recovery_compensation": None if "no_recovery_compensation" in faults else
+             {"recovery_block_kept": True, "additional_recovery_hours": "parameter, not given (WORK-CYCLE §10)"}}
             for w in roster if int(w["worker"][1:]) - 1 in refusers
             for k, kind in enumerate(w["days"]) if kind == "W" and c0 <= k < c1]
         if "civil_day_index" in faults:
             outputs["roster_days"] = [f"civil day {k + 1}" for k in range(r["horizon_days"])]
+        wdays = [x for rows in day_hours.values() for x in rows if x["kind"] == "W"]
+        outputs["monitoring"] = {c: "needs operational data; not measured by the lab" for c in MONITORED
+                                 if not (c == "sick leave frequency" and "unmonitored_category" in faults)}
+        outputs["monitoring"]["recovery compliance rate"] = (
+            round(sum(1 for x in wdays if x["recovery"] >= int(math.ceil(rec))) / len(wdays), 6) if wdays else None)
         checks = [c for c in self.checks(r, roster, runs, deficit_hours) if c.requirement_id != "WORKCYCLE-5.3-01"] + \
             self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions) + \
-            exception_checks(r, roster, day_hours, outputs) + restricted_checks(r, outputs) + returned_checks(r, roster, outputs)
+            exception_checks(r, roster, day_hours, outputs) + restricted_checks(r, outputs) + returned_checks(r, roster, outputs) + \
+            core_checks(r, roster, day_hours, outputs)
         explain = [
             {"en": f"{r['workers']} workers, shifts at {sorted(r['shift_starts'])} h: demand is fully covered in "
                    f"{H - deficit_hours} of {H} hours; largest shortfall {max_deficit:g} staff.",
@@ -597,6 +660,124 @@ class WorkCycleModule(LabModule):
 
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"work_exceeds_presence": {"work_hours": 9, "recovery_hours": 2}}
+
+
+def core_checks(r, roster, day_hours, outputs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    c0, c1 = (int(x) for x in r["crisis_window"])
+    crisis = c1 > c0
+    refusing = {f"w{w + 1:03d}" for w in range(r["workers"] - r["refusing_workers"], r["workers"])}
+    consent = {x["subject"] for x in outputs["consent_records"] if x["consent"] == "explicit"}
+    rp = outputs["restricted_participation"]
+    access = {x["subject"]: x["access"] for x in outputs["baseline_access"]}
+    work = [(w["worker"], k) for w in roster for k, kind in enumerate(w["days"]) if kind == "W"]
+    # LABOR §3.2 and §7: participation and assignment rest on explicit consent; a declared crisis is the only exception (§9.2)
+    excused = lambda w, k: w in refusing and crisis and c0 <= k < c1
+    bad = sorted({w for w, k in work if w not in consent and not excused(w, k)})
+    bad += [x["subject"] for x in rp if x["scheduled"] and x["consent"] != "explicit"]
+    out.append(v("LABOR-3.2-01", "participation_has_consent", bad,
+                 f"{len({w for w, k in work})} scheduled workers and {sum(x['scheduled'] for x in rp)} restricted participants, each with "
+                 "a consent record (drafted workers on declared crisis days excepted, LABOR §9.2)",
+                 "{n} participants without a consent record"))
+    bad = [f"{w} day {k}" for w, k in work if w not in consent and not excused(w, k)]
+    bad += [f"{x['subject']}: scheduled after declining" for x in rp if x["scheduled"] and x["declines"] and not x["crisis"]]
+    out.append(v("LABOR-7-01", "assignment_with_consent", bad,
+                 f"{len(work)} assignments, each with explicit consent or inside a declared crisis",
+                 "{n} assignments without explicit consent"))
+    # LABOR §4.1: baseline access independent of participation
+    bad = [k for k, a in access.items() if a != "kept"]
+    out.append(v("LABOR-4.1-01", "access_not_conditioned", bad,
+                 f"{len(access)} Subjects keep baseline access, including {len(refusing)} who refuse and "
+                 f"{sum(x['declines'] for x in rp)} restricted Subjects who decline", "{n} Subjects whose access depends on participation"))
+    # LABOR §9.2: refusal constrained only in a declared crisis; the constraint ends with it and A1 is kept
+    if refusing:
+        late = [f"{w} day {k}" for w, k in work if w in refusing and not (crisis and c0 <= k < c1)]
+        out.append(v("LABOR-9.2-01", "refusal_constrained_only_in_crisis", late,
+                     f"{len(refusing)} refusing workers scheduled only " + (f"on declared crisis days {c0}-{c1 - 1}" if crisis else "never (no crisis)"),
+                     "{n} assignments of refusing workers outside a declared crisis"))
+    else:
+        out.append(na("LABOR-9.2-01", "refusal_constrained_only_in_crisis", "refusal", "no worker refuses participation"))
+    if refusing and crisis:
+        bad = [f"{w} day {k}" for w, k in work if w in refusing and k >= c1]
+        bad += [f"{w}: baseline access {access.get(w)}" for w in sorted(refusing) if access.get(w) != "kept"]
+        out.append(v("LABOR-9.2-02", "constraint_ends_and_keeps_a1", bad,
+                     f"the constraint ended with the crisis on day {c1}; drafted workers kept baseline access throughout",
+                     "{n} constraints outliving the crisis or withdrawing baseline access"))
+    else:
+        out.append(na("LABOR-9.2-02", "constraint_ends_and_keeps_a1", "crisis constraint", "no declared crisis constrains refusal"))
+    # LABOR §5.1 and §10: Subjects in a negative Justice state (here: under Restriction or Isolation)
+    if rp:
+        out.append(v("LABOR-10-01", "restricted_not_barred",
+                     [x["subject"] for x in rp if not x["participation_permitted"] or (not x["declines"] and not x["scheduled"])],
+                     f"{len(rp)} Subjects under Restriction or Isolation may take part; those who wish to are scheduled (supervised)",
+                     "{n} Subjects under Restriction or Isolation barred from participation"))
+        out.append(v("LABOR-10-02", "restricted_keep_recovery_pathway",
+                     [x["subject"] for x in rp if not (x["recovery_pathway"] or {}).get("offers")],
+                     f"{len(rp)} Subjects under Restriction or Isolation, each with an available pathway for justice recovery",
+                     "{n} Subjects without a recovery pathway"))
+        bad = [x["subject"] for x in rp if not x["recovery_pathway"] or not x["recovery_pathway"]["voluntary"]]
+        bad += [f"{x['subject']}: access {access.get(x['subject'])} after declining" for x in rp if x["declines"] and access.get(x["subject"]) != "kept"]
+        out.append(v("LABOR-5.1-01", "voluntary_pathway_offered", bad,
+                     f"{len(rp)} Subjects in a negative Justice state, each offered a voluntary pathway; declining changed no baseline access",
+                     "{n} missing or compulsory pathways, or access lost by declining"))
+        kinds = sorted({o for x in rp for o in (x["recovery_pathway"] or {}).get("offers", [])})
+        out.append(v("LABOR-5.1-02", "plural_opportunities", [] if len(kinds) > 1 else [f"only {kinds}"],
+                     f"{len(kinds)} kinds of opportunity offered: {', '.join(kinds)}", "{n} offer lists with a single kind of opportunity"))
+    else:
+        for rid, chk in (("LABOR-10-01", "restricted_not_barred"), ("LABOR-10-02", "restricted_keep_recovery_pathway"),
+                         ("LABOR-5.1-01", "voluntary_pathway_offered"), ("LABOR-5.1-02", "plural_opportunities")):
+            out.append(na(rid, chk, "Subjects under Restriction or Isolation", "none in this experiment"))
+    rs = outputs["restorations"]
+    recs = {x["record"] for x in outputs["contribution_records"]}
+    out.append(v("LABOR-4.2-02", "restoration_needs_contribution", [x["subject"] for x in rs if x["basis"] not in recs],
+                 f"{len(rs)} restoration(s), each citing a contribution record", "{n} restorations without a contribution or restitution record")
+               if rs else na("LABOR-4.2-02", "restoration_needs_contribution", "restorations", "no restoration in this experiment"))
+    # WORK-CYCLE §10: mandatory recovery compensation for each exception
+    ex = outputs.get("exception_log", [])
+    out.append(v("WORKCYCLE-10-03", "exception_recovery_compensation", [f"{x['worker']} day {x['day']}" for x in ex if not x.get("recovery_compensation")],
+                 f"{len(ex)} exception days, each with a recovery-compensation record (amount: a parameter)",
+                 "{n} exception days without recovery compensation") if ex else
+               na("WORKCYCLE-10-03", "exception_recovery_compensation", "exceptions", "no crisis exception in this experiment"))
+    # WORK-CYCLE §2: any adaptation keeps the §7 Recovery Invariant
+    runs = {}
+    for w in roster:
+        best = cur = 0
+        for x in w["days"]:
+            cur = cur + 1 if x == "W" else 0
+            best = max(best, cur)
+        runs[w["worker"]] = best
+    over = sorted(w for w, n in runs.items() if n > 2)
+    adapted = r["pattern"] != DEFAULT_PATTERN or r["high_intensity"] or sorted(r["shift_starts"]) != [0, 4, 8, 12, 16, 20]
+    what = "the declared adaptation" if adapted else "the standard roster"
+    if over and r["compensation_declared"]:
+        out.append(CheckResult("WORKCYCLE-2-02", "adaptation_keeps_invariant", UNKNOWN,
+                               f"{len(over)} workers exceed 2 consecutive workdays under {what}; compensation is declared, its "
+                               "safety cannot be shown here", evidence={"workers": over[:10]}))
+    else:
+        out.append(v("WORKCYCLE-2-02", "adaptation_keeps_invariant", over,
+                     f"{what} keeps the §7 Recovery Invariant: no worker over 2 consecutive workdays",
+                     "{n} workers over 2 consecutive workdays without compensation"))
+    # WORK-CYCLE §5.3: recovery not counted as work, not reduced, no justification
+    need = int(math.ceil(r["recovery_hours"]))
+    bad = [f"{w} day {i}" for w, rows in day_hours.items() for i, x in enumerate(rows) if x["kind"] == "W" and x["recovery"] < need]
+    bad += [f"{d['request']}: justification demanded" for d in outputs["recovery_requests"] if d.get("justification_required")]
+    out.append(v("WORKCYCLE-5.3-02", "recovery_kept_unconditional", bad,
+                 f"every workday keeps {need} h of recovery outside work and coverage; no justification is demanded",
+                 "{n} reduced recovery blocks or demands for justification"))
+    # WORK-CYCLE §9: the five categories are monitored
+    mon = outputs["monitoring"]
+    out.append(v("WORKCYCLE-9-01", "five_categories_monitored", [c for c in MONITORED if c not in mon],
+                 "the five §9 categories are monitored (recovery compliance computed; the other four need operational data)",
+                 "{n} §9 categories not monitored"))
+    return out
 
 
 def restricted_checks(r, outputs) -> List[CheckResult]:

@@ -38,7 +38,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "errors_as_states"
    },
    "tests": [
@@ -80,7 +80,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "procedural_non_punitive"
    },
    "tests": [
@@ -200,7 +200,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_new_coercive_measures"
    },
    "tests": [
@@ -244,7 +244,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_ptl_reinterpretation"
    },
    "tests": [
@@ -283,7 +283,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "request_not_override"
    },
    "tests": [
@@ -365,7 +365,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "appealable_definition"
    },
    "tests": [
@@ -397,13 +397,19 @@
     "decision effect attribution",
     "formal claim records"
    ],
-   "gap": "The document does not define how to establish that a Subject is directly affected. No lab check implemented yet.",
+   "gap": "Clear part only: admission needs a Subject the decision names; 'directly affected' stays open.",
    "hypotheses_needed": [
     "Declare the test for a direct effect on a Subject."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "appellant_named_by_decision"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -474,7 +480,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "category_e2"
    },
    "tests": [
@@ -517,7 +523,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "category_e3"
    },
    "tests": [
@@ -560,7 +566,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "category_e4"
    },
    "tests": [
@@ -605,7 +611,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "category_e5"
    },
    "tests": [
@@ -683,7 +689,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "r1_non_coercive"
    },
    "tests": [
@@ -723,7 +729,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "r2_validated"
    },
    "tests": [
@@ -756,7 +762,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "r3_requires_correction"
    },
    "tests": [
@@ -791,7 +797,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "r4_after_r3"
    },
    "tests": [
@@ -823,13 +829,19 @@
     "state history",
     "timeout policy"
    ],
-   "gap": "Timeout durations, clocks, and expiry behavior are missing. No lab check implemented yet.",
+   "gap": "Clear part only: every state carries its own DTI-Day; timeouts stay open.",
    "hypotheses_needed": [
     "Declare timeout durations, start events, and expiry behavior for every state."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "state_dti_indexed"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -862,13 +874,19 @@
     "appeal submissions",
     "bond ledger"
    ],
-   "gap": "The minimal bond amount or determination rule is not defined. No lab check implemented yet.",
+   "gap": "Clear part only: no appeal admitted without a bond; the bond amount stays open.",
    "hypotheses_needed": [
     "Declare the minimal bond rule and whether the listed initiation pathways are exhaustive."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "appeal_with_bond"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -905,7 +923,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "bond_returned"
    },
    "tests": [
@@ -948,7 +966,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "bond_to_audit"
    },
    "tests": [
@@ -989,7 +1007,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_prediction_or_intent"
    },
    "tests": [
@@ -1030,7 +1048,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "appeal_fields"
    },
    "tests": [
@@ -1067,7 +1085,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "appeal_window",
     "also": [
      {
@@ -1118,7 +1136,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "e1_no_limitation",
     "also": [
      {
@@ -1172,7 +1190,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "status_quo_suspension"
    },
    "tests": [
@@ -1213,7 +1231,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "procedural_rejection_without_prejudice"
    },
    "tests": [
@@ -1254,7 +1272,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "recompute_after_confirmation"
    },
    "tests": [
@@ -1298,7 +1316,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "rollback_reversible"
    },
    "tests": [
@@ -1342,7 +1360,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "irreversible_logged"
    },
    "tests": [
@@ -1382,7 +1400,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "justice_uses_corrected_inputs"
    },
    "tests": [
@@ -1426,7 +1444,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_new_penalties"
    },
    "tests": [
@@ -1504,7 +1522,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "ptl_consistency_preserved"
    },
    "tests": [
@@ -1547,7 +1565,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "reversibility_preferred"
    },
    "tests": [
@@ -1583,13 +1601,19 @@
     "error scope assessments",
     "causal change traces"
    ],
-   "gap": "Error scope, cascade identification, and the strictness of avoid are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: corrective changes within the declared case scope; the error boundary stays open.",
    "hypotheses_needed": [
     "Declare the error boundary, cascade model, and whether avoidance is absolute or best effort."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "correction_within_scope"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1672,7 +1696,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "case_logged"
    },
    "tests": [
@@ -1711,7 +1735,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "case_reviewable"
    },
    "tests": [
@@ -1747,13 +1771,19 @@
     "reliability metric definitions",
     "metric contribution records"
    ],
-   "gap": "Metric computation rules and the reporting period for inclusion are absent. No lab check implemented yet.",
+   "gap": "Clear part only: every closed case is counted; the reliability metric stays open.",
    "hypotheses_needed": [
     "Declare the metric contribution rule and reporting period."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "case_in_reliability_count"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1791,7 +1821,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "valid_appeal_not_suppressed"
    },
    "tests": [
@@ -1834,7 +1864,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_retaliation"
    },
    "tests": [
@@ -1868,13 +1898,19 @@
     "error statistics inventory",
     "statistics access and disclosure records"
    ],
-   "gap": "The required audience, disclosure scope, and meaning of hiding are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: published statistics omit no case; the audience stays open.",
    "hypotheses_needed": [
     "Declare the visibility obligations used to identify hidden statistics."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "dispute_correction",
+    "version": "1.6.0",
+    "check": "statistics_omit_no_case"
+   },
+   "tests": [
+    "tests/lab/test_dispute_correction_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1910,7 +1946,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "dispute_correction",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "check": "no_discretionary_override"
    },
    "tests": [

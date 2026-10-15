@@ -64,13 +64,19 @@
     "sector adaptation specifications",
     "recovery safety assessments"
    ],
-   "gap": "The complete invariant set and the test for safe equivalent compensation are not fully specified. No lab check implemented yet.",
+   "gap": "Clear part only: the §7 invariant under any adaptation; whether all allocations are invariants stays open.",
    "hypotheses_needed": [
     "Declare which provisions constitute invariants and how equivalent compensation is evaluated."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "adaptation_keeps_invariant"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -106,7 +112,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "days_indexed_by_time"
    },
    "tests": [
@@ -144,7 +150,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "cycle_day"
    },
    "tests": [
@@ -183,7 +189,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "workday_has_work"
    },
    "tests": [
@@ -216,7 +222,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "restday_no_work"
    },
    "tests": [
@@ -249,7 +255,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "presence_window"
    },
    "tests": [
@@ -321,7 +327,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "recovery_block_present"
    },
    "tests": [
@@ -363,7 +369,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "default_cycle"
    },
    "tests": [
@@ -399,7 +405,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "max_consecutive"
    },
    "tests": [
@@ -434,7 +440,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "rest_frequency"
    },
    "tests": [
@@ -468,7 +474,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "sixty_cycles"
    },
    "tests": [
@@ -505,7 +511,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "week_without_authority"
    },
    "tests": [
@@ -544,7 +550,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "workday_allocation"
    },
    "tests": [
@@ -582,7 +588,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "recommended_layout"
    },
    "tests": [
@@ -615,7 +621,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "recovery_not_work"
    },
    "tests": [
@@ -645,13 +651,19 @@
     "recovery allocations",
     "compensation policies"
    ],
-   "gap": "The text does not define the complete set of practices that constitute monetization. No lab check implemented yet.",
+   "gap": "Clear part only: not work, not reduced, no justification; what 'monetized' covers stays open.",
    "hypotheses_needed": [
     "Declare which payment or exchange arrangements count as monetization."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "recovery_kept_unconditional"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -683,7 +695,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "recovery_untouchable"
    },
    "tests": [
@@ -715,7 +727,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "recovery_activities"
    },
    "tests": [
@@ -749,7 +761,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "cycle_accounting_days"
    },
    "tests": [
@@ -782,7 +794,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "cycle_accounting_hours"
    },
    "tests": [
@@ -816,7 +828,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "year_accounting"
    },
    "tests": [
@@ -848,7 +860,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "year_recovery_480"
    },
    "tests": [
@@ -888,7 +900,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "recovery_invariant"
    },
    "tests": [
@@ -927,7 +939,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "planning_failure"
    },
    "tests": [
@@ -967,7 +979,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "continuity_by_shifts"
    },
    "tests": [
@@ -1010,7 +1022,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_exhaustion"
    },
    "tests": [
@@ -1048,7 +1060,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "shift_allocation"
    },
    "tests": [
@@ -1085,7 +1097,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "high_intensity_recovery"
    },
    "tests": [
@@ -1160,13 +1172,19 @@
     "output and productive time records",
     "recovery compliance records"
    ],
-   "gap": "Metric operational definitions and monitoring cadence are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: the five categories are monitored; metric definitions and cadence stay open.",
    "hypotheses_needed": [
     "Declare metric definitions and a collection cadence for each required category."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "five_categories_monitored"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1238,7 +1256,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exception_only_in_crisis_scope"
    },
    "tests": [
@@ -1279,7 +1297,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exception_limited"
    },
    "tests": [
@@ -1314,13 +1332,19 @@
     "exception compensation obligations",
     "compensation delivery records"
    ],
-   "gap": "Compensation amount, form, timing, and its relationship to section 7 are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: a compensation record per exception; the amount stays open.",
    "hypotheses_needed": [
     "Declare the required compensation and delivery rules for exceptions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "work_cycle",
+    "version": "1.5.0",
+    "check": "exception_recovery_compensation"
+   },
+   "tests": [
+    "tests/lab/test_work_cycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1355,7 +1379,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exception_traceable"
    },
    "tests": [
@@ -1397,7 +1421,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exception_no_precedent"
    },
    "tests": [
@@ -1434,7 +1458,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "work_cycle",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "three_layers"
    },
    "tests": [

@@ -28,6 +28,7 @@ FAULT_CASES = {
     "ignore_inconsistency": ["LABOR-2-02"],
     "accept_stale": ["ORACLE-9-02"],
     "wrong_time_index": ["TIME-5.2-01"],
+    "labor_feeds_ptl": ["LABOR-2-01"],
 }
 STALE = {"num_days": 5, "arrival_delay_seconds": [0.1, 5.0], "ttl_reference": "decision"}
 

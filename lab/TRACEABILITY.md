@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1490 (85.8 %) | 951 | 1405 | 873 | 4 | 66 | 15 | 247 | 0 | 113 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1518 (87.4 %) | 979 | 1433 | 901 | 4 | 66 | 15 | 219 | 0 | 85 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 6 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 353 (83.3 %) | 183 | 331 | 164 | 1 | 20 | 1 | 71 | 0 | 32 | 254 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 243 (82.9 %) | 151 | 227 | 137 | 0 | 9 | 7 | 50 | 0 | 21 | 201 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 427 (83.6 %) | 284 | 405 | 262 | 0 | 18 | 4 | 84 | 0 | 42 | 368 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 370 (87.3 %) | 200 | 348 | 181 | 1 | 20 | 1 | 54 | 0 | 15 | 254 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 247 (84.3 %) | 155 | 231 | 141 | 0 | 9 | 7 | 46 | 0 | 17 | 201 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 434 (84.9 %) | 291 | 412 | 269 | 0 | 18 | 4 | 77 | 0 | 35 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1490 (85.8 %) | 951 | 1405 | 873 | 4 | 66 | 15 | 247 | 0 | 113 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1518 (87.4 %) | 979 | 1433 | 901 | 4 | 66 | 15 | 219 | 0 | 85 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -161,13 +161,14 @@ FAILs of noncompliant cases (the input breaks the provision on purpose):
 | ORACLE-3-01 | yes | code_synergy:human_testimony_as_ptl |
 | RESILIENCE-5.8-01 | yes | resilience_structure:concentrated_owner |
 | SCOPE-3-19 | yes | code_synergy:declared_discretionary_council |
+| WORKCYCLE-2-02 | **no** | work_cycle:three_in_a_row |
 | WORKCYCLE-4.2-01 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-4.2-02 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-7-01 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-8.1-01 | yes | work_cycle:shifts_every_8h, work_cycle:understaffed_16 |
 | WORKCYCLE-8.1-02 | yes | work_cycle:three_in_a_row |
 
-Unverified reference FAILs: none; unverified noncompliant FAILs: none.
+Unverified reference FAILs: none; unverified noncompliant FAILs: WORKCYCLE-2-02.
 
 ## Origin of open points (UNRESOLVED provisions)
 
@@ -266,11 +267,11 @@ Withdrawn after verification (not author decisions):
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 38 | 38 | 0 | 0 | 0 | 0 | 26 |
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
-| DKP-1-JUSTICE-001 | 41 | 29 | 26 | 0 | 3 | 0 | 12 | 25 |
+| DKP-1-JUSTICE-001 | 41 | 36 | 33 | 0 | 3 | 0 | 5 | 25 |
 | DKP-1-PREVENTION-001 | 43 | 27 | 26 | 0 | 1 | 0 | 16 | 31 |
 | DKP-2-ASSETS-001 | 43 | 40 | 39 | 0 | 1 | 0 | 3 | 30 |
 | DKP-2-FINANCE-001 | 44 | 35 | 33 | 0 | 2 | 0 | 9 | 32 |
-| DKP-2-LABOR-001 | 40 | 28 | 25 | 0 | 3 | 0 | 12 | 25 |
+| DKP-2-LABOR-001 | 40 | 39 | 36 | 0 | 3 | 0 | 1 | 25 |
 | DKP-3-ANTITERROR-001 | 41 | 30 | 30 | 0 | 0 | 0 | 11 | 29 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 37 | 36 | 0 | 0 | 1 | 12 | 44 |
@@ -278,7 +279,7 @@ Withdrawn after verification (not author decisions):
 | DKP-4-CRISIS-001 | 53 | 37 | 33 | 1 | 3 | 0 | 16 | 32 |
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 27 | 27 | 0 | 0 | 0 | 2 | 20 |
-| DKP-4-ERROR-001 | 52 | 40 | 36 | 0 | 3 | 1 | 12 | 32 |
+| DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 32 |
 | DKP-4-UPGRADE-001 | 48 | 40 | 36 | 0 | 4 | 0 | 8 | 31 |
 | DKP-5-CULTURE-001 | 43 | 34 | 34 | 0 | 0 | 0 | 9 | 30 |
 | DKP-5-EDU-001 | 64 | 54 | 50 | 0 | 1 | 3 | 10 | 37 |
@@ -286,7 +287,7 @@ Withdrawn after verification (not author decisions):
 | DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 34 |
 | DKP-5-TRANSPORT-001 | 35 | 25 | 20 | 0 | 5 | 0 | 10 | 28 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 7 |
-| DKP-5-WORK-CYCLE-001 | 39 | 31 | 30 | 0 | 0 | 1 | 8 | 16 |
+| DKP-5-WORK-CYCLE-001 | 39 | 35 | 34 | 0 | 0 | 1 | 4 | 16 |
 | DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 30 |
 | DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
@@ -628,7 +629,9 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-1-01 | PARTIAL | dispute_correction · consequences_not_punishment | PASS | yes | — |
 | JUSTICE-10-01 | IMPLEMENTED | dispute_correction · proportional_distribution | PASS | — | — |
 | JUSTICE-10-02 | PARTIAL | dispute_correction · individual_accountability_kept | PASS | — | — |
+| JUSTICE-11-01 | PARTIAL | dispute_correction · trigger_reevaluated | PASS | — | — |
 | JUSTICE-11-02 | IMPLEMENTED | dispute_correction · periodic_not_faster_than_ttl | PASS | — | — |
+| JUSTICE-11-03 | PARTIAL | dispute_correction · weak_data_keeps_outcome | PASS | — | — |
 | JUSTICE-12-01 | IMPLEMENTED | dispute_correction · no_exemption | PASS | yes | — |
 | JUSTICE-13-01 | PARTIAL | dispute_correction · cross_layer_isolation | PASS | yes | — |
 | JUSTICE-13-02 | PARTIAL | dispute_correction · isolation_breach_critical | PASS | — | — |
@@ -637,19 +640,24 @@ Withdrawn after verification (not author decisions):
 | JUSTICE-15-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | JUSTICE-15-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | yes | Q-062 |
 | JUSTICE-15-04 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
+| JUSTICE-2-01 | PARTIAL | dispute_correction · justice_downstream_of_impact_identity | PASS | — | — |
 | JUSTICE-2-02 | IMPLEMENTED | dispute_correction · justice_inputs | PASS | — | — |
 | JUSTICE-2-03 | IMPLEMENTED | dispute_correction · justice_inputs | PASS | — | — |
 | JUSTICE-3.1-01 | PARTIAL | dispute_correction · flag_contract | PASS | — | — |
 | JUSTICE-3.2-01 | PARTIAL | dispute_correction · binding_contents | PASS | yes | — |
+| JUSTICE-4-01 | PARTIAL | dispute_correction · same_inputs_same_vector | PASS | — | — |
 | JUSTICE-4-02 | PARTIAL | dispute_correction · output_vector_clean | PASS | yes | — |
 | JUSTICE-5-01 | IMPLEMENTED | dispute_correction · domains_independent | PASS | yes | — |
 | JUSTICE-5-02 | IMPLEMENTED | dispute_correction · all_domains_evaluated | PASS | — | — |
 | JUSTICE-6-01 | PARTIAL | dispute_correction · restitution_trigger | PASS | — | Q-022 |
 | JUSTICE-6-02 | PARTIAL | dispute_correction · restitution_outputs | UNKNOWN | — | — |
 | JUSTICE-7-01 | PARTIAL | dispute_correction · restriction_trigger | UNKNOWN | yes | — |
+| JUSTICE-7-03 | PARTIAL | dispute_correction · restriction_against_declared_risk | PASS | yes | — |
 | JUSTICE-8-01 | PARTIAL | dispute_correction · isolation_trigger | PASS | — | Q-022 |
+| JUSTICE-8-03 | PARTIAL | dispute_correction · functional_before_physical | PASS | — | — |
 | JUSTICE-9-01 | PARTIAL | dispute_correction · exclusion_trigger | PASS | — | — |
 | JUSTICE-9-02 | IMPLEMENTED | dispute_correction · exclusion_consequences | PASS | yes | — |
+| JUSTICE-9-03 | PARTIAL | dispute_correction · exclusion_keeps_survival | PASS | — | — |
 | JUSTICE-9-04 | PARTIAL | dispute_correction · exclusion_scope | PASS | yes | — |
 | JUSTICE-DisputeExceptionClause-01 | PARTIAL | dispute_correction · dispute_not_blocked_by_ttl | PASS | — | Q-020 |
 | JUSTICE-DisputeExceptionClause-02 | PARTIAL | dispute_correction · dispute_exception_conditions | UNKNOWN | — | Q-020 |
@@ -757,6 +765,8 @@ Withdrawn after verification (not author decisions):
 | FINANCE-ExplicitTimePreferenceProhibition-02 | PARTIAL | finance_mechanics · discount_only_from_impact | PASS | — | — |
 | FINANCE-ExplicitTimePreferenceProhibition-03 | PARTIAL | finance_mechanics · no_subjective_preference | PASS | — | — |
 | LABOR-1-01 | PARTIAL | code_economy · no_forced_labor_for_life | PASS | yes | — |
+| LABOR-10-01 | PARTIAL | work_cycle · restricted_not_barred | PASS | — | — |
+| LABOR-10-02 | PARTIAL | work_cycle · restricted_keep_recovery_pathway | PASS | — | — |
 | LABOR-10-03 | PARTIAL | work_cycle · restricted_not_coerced | PASS | — | — |
 | LABOR-11-01 | IMPLEMENTED | contribution · identity_bound_traceable | PASS | — | — |
 | LABOR-11-02 | IMPLEMENTED | contribution · no_proxy_or_fictitious_participation | PASS | — | — |
@@ -766,23 +776,32 @@ Withdrawn after verification (not author decisions):
 | LABOR-13-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | LABOR-13-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | LABOR-13-04 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| LABOR-2-01 | PARTIAL | contribution · labor_downstream_of_ptl | PASS | — | — |
 | LABOR-2-02 | PARTIAL | contribution · no_participation_rules_under_inconsistency | PASS | — | — |
 | LABOR-3.1-01 | PARTIAL | contribution · only_measured_attributed_contribution | PASS | yes | — |
+| LABOR-3.2-01 | PARTIAL | work_cycle · participation_has_consent | PASS | yes | — |
 | LABOR-3.2-02 | PARTIAL | contribution · impact_only_evaluation | PASS | yes | — |
 | LABOR-3.3-01 | IMPLEMENTED | contribution · record_immutable_time_indexed | PASS | — | — |
 | LABOR-3.3-02 | PARTIAL | contribution · record_links | PASS | — | — |
+| LABOR-4.1-01 | PARTIAL | work_cycle · access_not_conditioned | PASS | — | — |
 | LABOR-4.1-02 | PARTIAL | code_economy · baseline_not_contingent | PASS | yes | — |
 | LABOR-4.2-01 | PARTIAL | code_economy · baseline_keeps_responsibility | PASS | — | — |
+| LABOR-4.2-02 | PARTIAL | work_cycle · restoration_needs_contribution | PASS | — | — |
+| LABOR-5.1-01 | PARTIAL | work_cycle · voluntary_pathway_offered | PASS | — | — |
+| LABOR-5.1-02 | PARTIAL | work_cycle · plural_opportunities | PASS | — | — |
 | LABOR-5.2-01 | PARTIAL | contribution · justice_recovery_function | UNKNOWN | — | — |
 | LABOR-5.2-02 | IMPLEMENTED | contribution · no_declarative_recognition | PASS | yes | — |
 | LABOR-6-01 | PARTIAL | work_cycle · no_prohibited_conditions | PASS | yes | — |
 | LABOR-6-02 | PARTIAL | work_cycle · forced_labor_critical | PASS | yes | — |
+| LABOR-7-01 | PARTIAL | work_cycle · assignment_with_consent | PASS | yes | — |
 | LABOR-7-03 | PARTIAL | work_cycle · allocation_rule_based | PASS | — | — |
 | LABOR-8.1-01 | PARTIAL | contribution · compensation_forms | PASS | — | — |
 | LABOR-8.1-02 | PARTIAL | contribution · compensation_proportional | UNKNOWN | — | — |
 | LABOR-8.2-01 | PARTIAL | contribution · nonmarket_prevention_recognised | PASS | — | — |
 | LABOR-9.1-01 | PARTIAL | work_cycle · no_compulsion | PASS | yes | — |
 | LABOR-9.1-02 | IMPLEMENTED | code_economy · refusal_not_punished | UNKNOWN | yes | Q-052 |
+| LABOR-9.2-01 | PARTIAL | work_cycle · refusal_constrained_only_in_crisis | PASS | yes | — |
+| LABOR-9.2-02 | PARTIAL | work_cycle · constraint_ends_and_keeps_a1 | PASS | yes | — |
 | LABOR-9.2-03 | PARTIAL | work_cycle · no_lasting_crisis_obligation | PASS | yes | — |
 | ANTITERROR-0-02 | IMPLEMENTED | police_antiterror · defensive_containment | PASS | yes | — |
 | ANTITERROR-1-01 | PARTIAL | police_antiterror · not_punitive_not_justice | PASS | yes | — |
@@ -1028,8 +1047,10 @@ Withdrawn after verification (not author decisions):
 | ERROR-1-01 | PARTIAL | dispute_correction · procedural_non_punitive | PASS | yes | — |
 | ERROR-10-01 | IMPLEMENTED | dispute_correction · case_logged | PASS | — | — |
 | ERROR-10-02 | PARTIAL | dispute_correction · case_reviewable | PASS | — | — |
+| ERROR-10-03 | PARTIAL | dispute_correction · case_in_reliability_count | PASS | — | — |
 | ERROR-11-01 | IMPLEMENTED | dispute_correction · valid_appeal_not_suppressed | PASS | — | — |
 | ERROR-11-02 | IMPLEMENTED | dispute_correction · no_retaliation | PASS | yes | — |
+| ERROR-11-03 | PARTIAL | dispute_correction · statistics_omit_no_case | PASS | — | — |
 | ERROR-11-04 | IMPLEMENTED | dispute_correction · no_discretionary_override | PASS | yes | — |
 | ERROR-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | ERROR-12-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
@@ -1040,6 +1061,7 @@ Withdrawn after verification (not author decisions):
 | ERROR-2-04 | PARTIAL | dispute_correction · no_ptl_reinterpretation | PASS | yes | — |
 | ERROR-2-05 | IMPLEMENTED | dispute_correction · request_not_override | PASS | yes | Q-021 |
 | ERROR-3.2-01 | PARTIAL | dispute_correction · appealable_definition | PASS | — | — |
+| ERROR-3.3-01 | PARTIAL | dispute_correction · appellant_named_by_decision | PASS | — | — |
 | ERROR-4-02 | PARTIAL | dispute_correction · category_e2 | PASS | — | — |
 | ERROR-4-03 | PARTIAL | dispute_correction · category_e3 | PASS | — | — |
 | ERROR-4-04 | PARTIAL | dispute_correction · category_e4 | PASS | — | — |
@@ -1048,6 +1070,8 @@ Withdrawn after verification (not author decisions):
 | ERROR-5-03 | PARTIAL | dispute_correction · r2_validated | PASS | — | — |
 | ERROR-5-04 | IMPLEMENTED | dispute_correction · r3_requires_correction | PASS | — | — |
 | ERROR-5-05 | IMPLEMENTED | dispute_correction · r4_after_r3 | NOT_APPLICABLE | — | — |
+| ERROR-5-06 | PARTIAL | dispute_correction · state_dti_indexed | PASS | — | — |
+| ERROR-6-01 | PARTIAL | dispute_correction · appeal_with_bond | PASS | — | — |
 | ERROR-6-02 | IMPLEMENTED | dispute_correction · bond_returned | PASS | yes | — |
 | ERROR-6-03 | IMPLEMENTED | dispute_correction · bond_to_audit | PASS | — | — |
 | ERROR-6-04 | PARTIAL | dispute_correction · no_prediction_or_intent | PASS | yes | — |
@@ -1063,6 +1087,7 @@ Withdrawn after verification (not author decisions):
 | ERROR-8-05 | PARTIAL | dispute_correction · no_new_penalties | UNKNOWN | yes | Q-021 |
 | ERROR-9-02 | PARTIAL | dispute_correction · ptl_consistency_preserved | PASS | yes | — |
 | ERROR-9-03 | IMPLEMENTED | dispute_correction · reversibility_preferred | PASS | — | — |
+| ERROR-9-04 | PARTIAL | dispute_correction · correction_within_scope | PASS | — | — |
 | ERROR-9-05 | PARTIAL | crisis_recovery · systemic_error_escalates | PASS | — | — |
 | UPGRADE-0-01 | PARTIAL | upgrade_lifecycle · only_lawful_mechanism | PASS | — | — |
 | UPGRADE-10-01 | PARTIAL | upgrade_lifecycle · artifacts_archived | PASS | — | — |
@@ -1318,9 +1343,11 @@ Withdrawn after verification (not author decisions):
 | TRANSPORTA-A.5-06 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | WORKCYCLE-10-01 | PARTIAL | work_cycle · exception_only_in_crisis_scope | PASS | yes | — |
 | WORKCYCLE-10-02 | PARTIAL | work_cycle · exception_limited | PASS | yes | — |
+| WORKCYCLE-10-03 | PARTIAL | work_cycle · exception_recovery_compensation | PASS | — | — |
 | WORKCYCLE-10-04 | PARTIAL | work_cycle · exception_traceable | PASS | — | — |
 | WORKCYCLE-10-05 | PARTIAL | work_cycle · exception_no_precedent | PASS | — | — |
 | WORKCYCLE-11-01 | IMPLEMENTED | work_cycle · three_layers | PASS | yes | — |
+| WORKCYCLE-2-02 | PARTIAL | work_cycle · adaptation_keeps_invariant | PASS | — | — |
 | WORKCYCLE-3-01 | IMPLEMENTED | work_cycle · days_indexed_by_time | PASS | — | — |
 | WORKCYCLE-3-02 | IMPLEMENTED | work_cycle · cycle_day | PASS | — | Q-012 |
 | WORKCYCLE-3-03 | IMPLEMENTED | work_cycle · workday_has_work | PASS | — | — |
@@ -1335,6 +1362,7 @@ Withdrawn after verification (not author decisions):
 | WORKCYCLE-5.1-01 | IMPLEMENTED | work_cycle · workday_allocation | PASS | — | Q-013 |
 | WORKCYCLE-5.2-01 | IMPLEMENTED | work_cycle · recommended_layout | PASS | — | — |
 | WORKCYCLE-5.3-01 | IMPLEMENTED | work_cycle · recovery_not_work | PASS | yes | — |
+| WORKCYCLE-5.3-02 | PARTIAL | work_cycle · recovery_kept_unconditional | PASS | yes | — |
 | WORKCYCLE-5.3-03 | PARTIAL | work_cycle · recovery_untouchable | PASS | yes | — |
 | WORKCYCLE-5.3-04 | PARTIAL | work_cycle · recovery_activities | PASS | yes | — |
 | WORKCYCLE-6-01 | IMPLEMENTED | work_cycle · cycle_accounting_days | PASS | — | — |
@@ -1347,6 +1375,7 @@ Withdrawn after verification (not author decisions):
 | WORKCYCLE-8.1-02 | IMPLEMENTED | work_cycle · no_exhaustion | PASS | — | — |
 | WORKCYCLE-8.2-01 | IMPLEMENTED | work_cycle · shift_allocation | PASS | — | — |
 | WORKCYCLE-8.2-02 | IMPLEMENTED | work_cycle · high_intensity_recovery | NOT_APPLICABLE | — | Q-013 |
+| WORKCYCLE-9-01 | PARTIAL | work_cycle · five_categories_monitored | PASS | — | — |
 | EXIT-0-01 | PARTIAL | exit_integration · exit_unconditional | PASS | yes | — |
 | EXIT-0-02 | IMPLEMENTED | exit_integration · exit_not_denied | PASS | yes | — |
 | EXIT-0-03 | PARTIAL | exit_integration · exit_not_framed_as_failure | PASS | yes | — |
