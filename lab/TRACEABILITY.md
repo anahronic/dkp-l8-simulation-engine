@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 147 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1490 (85.8 %) | 951 | 1405 | 873 | 4 | 66 | 15 | 247 | 0 | 113 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 6 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 319 (75.2 %) | 149 | 299 | 132 | 1 | 18 | 1 | 105 | 0 | 66 | 254 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 353 (83.3 %) | 183 | 331 | 164 | 1 | 20 | 1 | 71 | 0 | 32 | 254 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 243 (82.9 %) | 151 | 227 | 137 | 0 | 9 | 7 | 50 | 0 | 21 | 201 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 427 (83.6 %) | 284 | 405 | 262 | 0 | 18 | 4 | 84 | 0 | 42 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 147 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1490 (85.8 %) | 951 | 1405 | 873 | 4 | 66 | 15 | 247 | 0 | 113 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -268,8 +268,8 @@ Withdrawn after verification (not author decisions):
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 29 | 26 | 0 | 3 | 0 | 12 | 25 |
 | DKP-1-PREVENTION-001 | 43 | 27 | 26 | 0 | 1 | 0 | 16 | 31 |
-| DKP-2-ASSETS-001 | 43 | 33 | 32 | 0 | 1 | 0 | 10 | 30 |
-| DKP-2-FINANCE-001 | 44 | 27 | 25 | 0 | 2 | 0 | 17 | 32 |
+| DKP-2-ASSETS-001 | 43 | 40 | 39 | 0 | 1 | 0 | 3 | 30 |
+| DKP-2-FINANCE-001 | 44 | 35 | 33 | 0 | 2 | 0 | 9 | 32 |
 | DKP-2-LABOR-001 | 40 | 28 | 25 | 0 | 3 | 0 | 12 | 25 |
 | DKP-3-ANTITERROR-001 | 41 | 30 | 30 | 0 | 0 | 0 | 11 | 29 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
@@ -287,8 +287,8 @@ Withdrawn after verification (not author decisions):
 | DKP-5-TRANSPORT-001 | 35 | 25 | 20 | 0 | 5 | 0 | 10 | 28 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 7 |
 | DKP-5-WORK-CYCLE-001 | 39 | 31 | 30 | 0 | 0 | 1 | 8 | 16 |
-| DKP-6-EXIT-001 | 62 | 50 | 49 | 0 | 1 | 0 | 12 | 30 |
-| DKP-6-INTEGRATION-001 | 51 | 34 | 34 | 0 | 0 | 0 | 17 | 25 |
+| DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 30 |
+| DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
 | DKP-7-AI-SUBJECT-001 | 39 | 32 | 32 | 0 | 0 | 0 | 7 | 34 |
 | DKP-7-PRIVACY-001 | 39 | 34 | 31 | 0 | 3 | 0 | 5 | 28 |
@@ -682,6 +682,7 @@ Withdrawn after verification (not author decisions):
 | PREV-9.1-01 | PARTIAL | contribution · no_recognition_for_own_threat | PASS | yes | — |
 | PREV-9.4-02 | IMPLEMENTED | prevention · no_data_zero | PASS | — | — |
 | ASSETS-1-01 | PARTIAL | property_rights · property_is_conditional_allocation | PASS | yes | — |
+| ASSETS-1-02 | PARTIAL | property_rights · no_axiom_bypass_or_override | PASS | — | — |
 | ASSETS-10-01 | IMPLEMENTED | economic_access · transfer_with_obligations | PASS | — | — |
 | ASSETS-10-02 | IMPLEMENTED | economic_access · attribution_kept | PASS | — | — |
 | ASSETS-11-01 | IMPLEMENTED | economic_access · non_essential_suspended | PASS | — | — |
@@ -694,11 +695,16 @@ Withdrawn after verification (not author decisions):
 | ASSETS-14-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | ASSETS-14-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | ASSETS-14-04 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| ASSETS-2-01 | PARTIAL | property_rights · downstream_of_ptl | PASS | — | — |
 | ASSETS-2-02 | IMPLEMENTED | economic_access · no_decision_during_halt | PASS | yes | — |
 | ASSETS-3.2-01 | PARTIAL | property_rights · property_right_conditional | PASS | yes | — |
+| ASSETS-4-01 | PARTIAL | property_rights · grant_on_all_four_conditions | PASS | — | — |
 | ASSETS-4-02 | IMPLEMENTED | property_rights · no_grant_on_sole_basis | PASS | yes | — |
+| ASSETS-5-01 | PARTIAL | property_rights · justice_condition_persists | PASS | yes | — |
 | ASSETS-5-02 | PARTIAL | property_rights · failure_triggers_degradation | PASS | yes | — |
+| ASSETS-6-01 | PARTIAL | property_rights · transfer_keeps_attribution | PASS | — | — |
 | ASSETS-7-01 | PARTIAL | property_rights · concentration_response | PASS | yes | — |
+| ASSETS-7-02 | PARTIAL | property_rights · threshold_from_impact | PASS | — | — |
 | ASSETS-8.1-01 | PARTIAL | economic_access · revocation_on_justice | PASS | — | — |
 | ASSETS-8.2-01 | PARTIAL | economic_access · reallocation_disposition | PASS | — | — |
 | ASSETS-8.3-01 | PARTIAL | economic_access · dispute_window | UNKNOWN | — | Q-038 |
@@ -710,11 +716,13 @@ Withdrawn after verification (not author decisions):
 | ASSETS-8.3-07 | IMPLEMENTED | economic_access · missing_metadata_non_operational | PASS | yes | — |
 | ASSETS-8.3-08 | IMPLEMENTED | economic_access · missing_metadata_non_operational | PASS | — | — |
 | ASSETS-9-01 | PARTIAL | property_rights · critical_assets_designated | PASS | yes | — |
+| ASSETS-9-02 | PARTIAL | property_rights · commons_always_revocable | PASS | yes | — |
 | ASSETS-IdentityBindingRequirement-01 | PARTIAL | economic_access · shell_invalid | PASS | — | — |
 | ASSETS-ReallocationTransparencyConstraint-01 | PARTIAL | economic_access · rule_based_reallocation | PASS | — | — |
 | ASSETS-ReallocationTransparencyConstraint-02 | IMPLEMENTED | economic_access · no_discretionary_body | PASS | yes | — |
 | ASSETS-ReallocationTransparencyConstraint-03 | PARTIAL | economic_access · algorithmic_stewardship | PASS | — | — |
 | FINANCE-1-01 | PARTIAL | finance_mechanics · finance_exclusions | PASS | yes | — |
+| FINANCE-10-02 | PARTIAL | finance_mechanics · internalized_before_deployment | PASS | — | — |
 | FINANCE-10-03 | PARTIAL | exit_integration · tail_before_release | PASS | — | — |
 | FINANCE-11.1-01 | IMPLEMENTED | economic_access · auto_suspension | PASS | — | — |
 | FINANCE-11.1-02 | PARTIAL | economic_access · no_alternative_pathway | PASS | yes | — |
@@ -724,6 +732,7 @@ Withdrawn after verification (not author decisions):
 | FINANCE-11.2-03 | PARTIAL | economic_access · no_accrual_status_quo | PASS | yes | Q-009 |
 | FINANCE-11.2-04 | PARTIAL | economic_access · poll_interval | UNKNOWN | — | — |
 | FINANCE-12-01 | PARTIAL | economic_access · traceable_mechanisms | PASS | — | — |
+| FINANCE-12-02 | PARTIAL | finance_mechanics · logic_published_no_discretion | PASS | yes | — |
 | FINANCE-13-01 | PARTIAL | finance_mechanics · cross_layer_isolation | PASS | yes | — |
 | FINANCE-14-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | FINANCE-14-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
@@ -732,15 +741,21 @@ Withdrawn after verification (not author decisions):
 | FINANCE-2-01 | PARTIAL | economic_access · traceable_to_l1 | UNKNOWN | yes | — |
 | FINANCE-3.1-01 | PARTIAL | finance_mechanics · cu_unitless_fungible | PASS | yes | — |
 | FINANCE-3.1-03 | IMPLEMENTED | economic_access · deterministic_ledger | PASS | — | — |
+| FINANCE-3.2-01 | PARTIAL | finance_mechanics · rate_from_three_inputs | PASS | — | — |
 | FINANCE-3.2-02 | PARTIAL | finance_mechanics · cost_direction | PASS | yes | — |
 | FINANCE-3.2-03 | IMPLEMENTED | economic_access · no_discretionary_risk_pricing | PASS | — | — |
+| FINANCE-5.1-01 | PARTIAL | finance_mechanics · credit_only_on_conditions | PASS | yes | — |
 | FINANCE-5.1-02 | PARTIAL | finance_mechanics · credit_temporary_conditional | PASS | yes | — |
+| FINANCE-5.2-01 | PARTIAL | finance_mechanics · limit_from_three_bases | PASS | — | — |
 | FINANCE-6.1-02 | PARTIAL | finance_mechanics · savings_deterministic_auditable | PASS | yes | — |
 | FINANCE-6.2-01 | PARTIAL | finance_mechanics · reserve_impact_based | PASS | yes | — |
+| FINANCE-7-02 | PARTIAL | finance_mechanics · not_price_driven | PASS | — | — |
 | FINANCE-8.1-02 | PARTIAL | finance_mechanics · default_routed_to_justice | PASS | — | — |
+| FINANCE-8.2-02 | PARTIAL | finance_mechanics · restitution_within_outcome | PASS | — | — |
 | FINANCE-9-02 | PARTIAL | finance_mechanics · leverage_impact_based | PASS | yes | — |
 | FINANCE-ExplicitTimePreferenceProhibition-01 | PARTIAL | economic_access · no_time_preference | PASS | yes | — |
 | FINANCE-ExplicitTimePreferenceProhibition-02 | PARTIAL | finance_mechanics · discount_only_from_impact | PASS | — | — |
+| FINANCE-ExplicitTimePreferenceProhibition-03 | PARTIAL | finance_mechanics · no_subjective_preference | PASS | — | — |
 | LABOR-1-01 | PARTIAL | code_economy · no_forced_labor_for_life | PASS | yes | — |
 | LABOR-10-03 | PARTIAL | work_cycle · restricted_not_coerced | PASS | — | — |
 | LABOR-11-01 | IMPLEMENTED | contribution · identity_bound_traceable | PASS | — | — |
@@ -1332,18 +1347,22 @@ Withdrawn after verification (not author decisions):
 | WORKCYCLE-8.1-02 | IMPLEMENTED | work_cycle · no_exhaustion | PASS | — | — |
 | WORKCYCLE-8.2-01 | IMPLEMENTED | work_cycle · shift_allocation | PASS | — | — |
 | WORKCYCLE-8.2-02 | IMPLEMENTED | work_cycle · high_intensity_recovery | NOT_APPLICABLE | — | Q-013 |
+| EXIT-0-01 | PARTIAL | exit_integration · exit_unconditional | PASS | yes | — |
 | EXIT-0-02 | IMPLEMENTED | exit_integration · exit_not_denied | PASS | yes | — |
 | EXIT-0-03 | PARTIAL | exit_integration · exit_not_framed_as_failure | PASS | yes | — |
 | EXIT-1-01 | IMPLEMENTED | exit_integration · not_sanction_or_failure | PASS | yes | — |
+| EXIT-10-01 | PARTIAL | exit_integration · delay_only_for_critical | PASS | yes | — |
 | EXIT-10-02 | PARTIAL | exit_integration · delayed_settlement_bounded | PASS | — | — |
 | EXIT-10-03 | PARTIAL | exit_integration · delayed_settlement_non_punitive_logged | PASS | — | — |
 | EXIT-10-04 | PARTIAL | exit_integration · delayed_settlement_no_authority | PASS | — | — |
+| EXIT-10-05 | PARTIAL | exit_integration · no_obligation_in_settlement | PASS | — | — |
 | EXIT-11-01 | IMPLEMENTED | exit_integration · valid_during_crisis | PASS | — | — |
 | EXIT-11-03 | PARTIAL | exit_integration · no_crisis_precedent | PASS | — | — |
 | EXIT-11-04 | PARTIAL | exit_integration · crisis_scoped | PASS | yes | — |
 | EXIT-12-01 | PARTIAL | exit_integration · finance_settlement | PASS | — | — |
 | EXIT-12-02 | IMPLEMENTED | exit_integration · data_frozen | PASS | yes | — |
 | EXIT-12-03 | IMPLEMENTED | exit_integration · retention_purposes | PASS | yes | — |
+| EXIT-12-04 | PARTIAL | exit_integration · no_post_exit_data_use | PASS | — | — |
 | EXIT-13-01 | IMPLEMENTED | exit_integration · may_reapply | PASS | — | — |
 | EXIT-13-02 | PARTIAL | exit_integration · reentry_not_penalized | PASS | yes | — |
 | EXIT-13-03 | IMPLEMENTED | exit_integration · reentry_not_delayed | PASS | yes | — |
@@ -1352,6 +1371,7 @@ Withdrawn after verification (not author decisions):
 | EXIT-14-02 | PARTIAL | exit_integration · no_collective_or_retaliatory_sanction | PASS | yes | — |
 | EXIT-14-03 | PARTIAL | exit_integration · no_hostile_framing_or_deprivation | PASS | yes | — |
 | EXIT-15-01 | PARTIAL | exit_integration · no_post_exit_regulation | PASS | — | — |
+| EXIT-15-02 | PARTIAL | exit_integration · no_jurisdiction_after_exit | PASS | — | — |
 | EXIT-15-03 | IMPLEMENTED | exit_integration · authority_terminates | PASS | — | — |
 | EXIT-16-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | EXIT-16-02 | IMPLEMENTED | edition_finality · new_identifier | PASS | — | — |
@@ -1359,6 +1379,8 @@ Withdrawn after verification (not author decisions):
 | EXIT-16-04 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | EXIT-16-05 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
 | EXIT-2-01 | IMPLEMENTED | exit_integration · not_prohibited_or_criminalized | PASS | yes | — |
+| EXIT-2-02 | PARTIAL | exit_integration · no_indefinite_suspension | PASS | — | — |
+| EXIT-3-01 | PARTIAL | exit_integration · participation_terminated | PASS | yes | — |
 | EXIT-3-02 | IMPLEMENTED | exit_integration · exiting_entity | PASS | — | — |
 | EXIT-3-03 | IMPLEMENTED | exit_integration · exit_event_procedure | PASS | — | — |
 | EXIT-3-04 | PARTIAL | exit_integration · cooling_bounded_non_punitive | PASS | — | — |
@@ -1374,6 +1396,7 @@ Withdrawn after verification (not author decisions):
 | EXIT-6-04 | PARTIAL | exit_integration · cooling_parameters_declared | UNKNOWN | — | — |
 | EXIT-7-01 | IMPLEMENTED | exit_integration · phased_disengagement | PASS | — | — |
 | EXIT-7-02 | IMPLEMENTED | exit_integration · phases_declared | PASS | — | — |
+| EXIT-7-03 | PARTIAL | exit_integration · phase_audit_continuity | UNKNOWN | — | — |
 | EXIT-8-01 | PARTIAL | exit_integration · future_obligations_and_benefits_cease | PASS | — | — |
 | EXIT-8-02 | IMPLEMENTED | exit_integration · mechanisms_disengage | PASS | — | — |
 | EXIT-8-03 | PARTIAL | exit_integration · historical_responsibility_kept | PASS | — | — |
@@ -1385,6 +1408,7 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-0-01 | PARTIAL | exit_integration · voluntary_phased_reversible | PASS | yes | — |
 | INTEGRATION-10-01 | IMPLEMENTED | exit_integration · steps_documented | PASS | — | — |
 | INTEGRATION-10-02 | PARTIAL | exit_integration · audit_process_only | PASS | — | — |
+| INTEGRATION-11-01 | PARTIAL | exit_integration · no_forced_or_accelerated | PASS | yes | — |
 | INTEGRATION-11-02 | PARTIAL | exit_integration · no_conditional_aid | PASS | yes | — |
 | INTEGRATION-11-03 | IMPLEMENTED | exit_integration · no_retroactive_enforcement | PASS | yes | — |
 | INTEGRATION-11-04 | PARTIAL | exit_integration · no_scope_bypass | PASS | yes | — |
@@ -1399,22 +1423,32 @@ Withdrawn after verification (not author decisions):
 | INTEGRATION-2-04 | IMPLEMENTED | exit_integration · no_authority_beyond_phase | PASS | yes | — |
 | INTEGRATION-3-01 | IMPLEMENTED | exit_integration · integrating_entity | PASS | — | — |
 | INTEGRATION-3-02 | IMPLEMENTED | exit_integration · phase_terms_defined | PASS | yes | — |
+| INTEGRATION-3-03 | PARTIAL | exit_integration · shadow_without_effects | PASS | yes | — |
 | INTEGRATION-3-06 | IMPLEMENTED | exit_integration · rollback_definition | PASS | — | — |
 | INTEGRATION-4.1-01 | PARTIAL | exit_integration · explicit_consent | PASS | — | — |
 | INTEGRATION-4.2-01 | IMPLEMENTED | exit_integration · sequential_phases | PASS | yes | — |
 | INTEGRATION-4.2-02 | IMPLEMENTED | exit_integration · explicit_validation | PASS | yes | — |
+| INTEGRATION-4.3-01 | PARTIAL | exit_integration · reversal_without_penalty | PASS | — | — |
 | INTEGRATION-4.4-01 | PARTIAL | exit_integration · scope_containment | PASS | yes | — |
 | INTEGRATION-5.1-01 | IMPLEMENTED | exit_integration · shadow_mode_no_effects | PASS | yes | — |
 | INTEGRATION-5.1-02 | PARTIAL | exit_integration · phase0_entry_records | PASS | — | — |
+| INTEGRATION-5.1-03 | PARTIAL | exit_integration · phase0_exit_validated | PASS | yes | — |
 | INTEGRATION-5.1-04 | IMPLEMENTED | exit_integration · shadow_not_proof | PASS | yes | — |
 | INTEGRATION-5.2-01 | PARTIAL | code_synergy · no_kill_switch_in_phase_1 | PASS | — | Q-050 |
+| INTEGRATION-5.2-02 | PARTIAL | exit_integration · phase2_scope_declared | UNKNOWN | — | — |
 | INTEGRATION-5.3-01 | IMPLEMENTED | exit_integration · phase2_domains_only | PASS | yes | — |
 | INTEGRATION-5.3-02 | PARTIAL | exit_integration · phase3_clearance | PASS | yes | — |
+| INTEGRATION-5.3-03 | PARTIAL | exit_integration · phase2_exit_without_penalty | PASS | — | — |
 | INTEGRATION-5.4-01 | PARTIAL | exit_integration · exit_by_standard_rules | PASS | — | — |
+| INTEGRATION-5.4-02 | PARTIAL | exit_integration · final_consent_reaffirmed | PASS | yes | — |
+| INTEGRATION-6-01 | PARTIAL | exit_integration · verifications_recorded | PASS | yes | — |
 | INTEGRATION-6-02 | PARTIAL | exit_integration · assessment_evidence_exclusive | PASS | — | — |
 | INTEGRATION-7-01 | PARTIAL | exit_integration · shock_halts_and_suspends | PASS | — | — |
 | INTEGRATION-7-03 | IMPLEMENTED | exit_integration · rollback_logged | PASS | — | — |
 | INTEGRATION-7-04 | PARTIAL | exit_integration · rollback_preserves_records | PASS | — | — |
+| INTEGRATION-8-01 | PARTIAL | exit_integration · no_retroactive_risk | PASS | — | — |
+| INTEGRATION-8-02 | PARTIAL | exit_integration · isolated_before_full | PASS | — | — |
+| INTEGRATION-9-02 | PARTIAL | exit_integration · cultures_untouched | PASS | — | — |
 | INTEGRATION-9-03 | PARTIAL | exit_integration · divergence_not_failure | PASS | yes | — |
 | RESILIENCE-0-01 | PARTIAL | edition_finality · override_not_permitted | PASS | — | — |
 | RESILIENCE-1-01 | PARTIAL | resilience_structure · continuity_under_pressure | PASS | yes | — |

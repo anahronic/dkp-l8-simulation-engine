@@ -44,6 +44,10 @@ FAULTS = {
     "anonymous_holding": "a granted right is registered without its Subject and kept out of public audit",
     "assets_overrides": "ASSETS waives failed conditions and grants the right at its board's discretion",
     "only_requesting_right": "a negative Justice result of a Subject suspends only the right whose request scheduled it",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "assets_feed_ptl": "an ASSETS decision is fed back into a PTL observation",
+    "transfer_drops_attribution": "a transferred right no longer names the Subject responsible for it",
+    "price_threshold": "the concentration threshold follows the market value of the holding",
 }
 
 REQUEST = {"type": "object", "fields": {
@@ -63,7 +67,18 @@ HOLDING = {"type": "object", "fields": {
     "subject": {"type": "str"},
     "assets": {"type": "int", "min": 1, "max": 10 ** 6, "default": 1},
     "increases_fragility": {"type": "bool", "default": False},
-    "response": {"type": "enum", "values": list(RESPONSES), "default": "graduated_restriction"}}}
+    "response": {"type": "enum", "values": list(RESPONSES), "default": "graduated_restriction"},
+    "impact_exposure": {"type": "number", "min": 0, "max": 10 ** 6, "default": 1.0},
+    "market_value": {"type": "number", "min": 0, "max": 10 ** 12, "default": 1000.0}}}
+TRANSFER = {"type": "object", "fields": {"request": {"type": "str"}, "to": {"type": "str"},
+                                         "day": {"type": "int", "min": 0, "max": 3650}}}
+
+
+def threshold_of(impact_exposure: float, market_value: float, faults) -> float:
+    """Lab stand-in for the §7 concentration threshold, derived from impact metrics (no value in the corpus, H-PR-2)."""
+    if "price_threshold" in faults:
+        return round(market_value / 100.0, 9)
+    return round(10.0 / (1.0 + impact_exposure), 9)
 REQUESTS_DEFAULT = [
     {"id": "q1", "subject": "coop_a", "asset": "workshop", "condition_fails_day": 6},
     {"id": "q2", "subject": "estate_b", "asset": "farmland", "basis": "prior_possession"},
@@ -147,9 +162,22 @@ def run(r: Dict[str, Any]) -> EventLog:
                     suspended.add(x["id"])
                     put("action", "ASSETS", k, {"right": rights[x["id"]].event_id, "status": "suspended",
                                                 "reason": "a §5 condition failed"}, [f.event_id, rights[x["id"]].event_id])
+    for t in r["transfers"]:
+        if t["request"] in rights and t["day"] < r["horizon_days"]:
+            g = rights[t["request"]]
+            frm = g.value["subject"]
+            put("action", "ASSETS", t["day"], {"transfer": g.event_id, "from": frm, "to": t["to"],
+                                               "responsible_subject": None if "transfer_drops_attribution" in faults else frm},
+                [g.event_id])
+    if "assets_feed_ptl" in faults and rights:
+        g = next(iter(rights.values()))
+        put("observation", "PTL", 0, {"reading": "asset-derived adjustment"}, [g.event_id])
     for hd in r["holdings"]:
         h = put("observation", "IMPACT", 0, {"holder": hd["subject"], "assets": hd["assets"],
                                              "increases_fragility": hd["increases_fragility"]})
+        put("evaluation", "ASSETS", 0, {"holder": hd["subject"], "concentration_threshold":
+                                        threshold_of(hd["impact_exposure"], hd["market_value"], faults),
+                                        "basis": "impact exposure (stand-in, H-PR-2)"}, [h.event_id])
         if hd["increases_fragility"] and "ignore_concentration" not in faults:
             put("action", "ASSETS", 0, {"holder": hd["subject"], "response": hd["response"],
                                         "basis": "impact-based concentration (§7; thresholds not given, H-PR-2)"}, [h.event_id])
@@ -185,6 +213,66 @@ def failure_days(r: Dict[str, Any], msgs, granted, req) -> Dict[str, List[int]]:
 def responded(msgs, right_id: str, k: int) -> bool:
     return any(x.source == "ASSETS" and x.value.get("right") == right_id and x.arrived_at <= k
                and x.value.get("status") in ("suspended", "restricted", "degraded") for x in msgs)
+
+
+def core_checks(r, log, msgs, req, granted, fdays, v, na) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out = []
+    if req:
+        cond_fail = {q: [c for c, ok in conditions(x).items() if not ok] for q, x in req.items()}
+        bad = [f"{q}: granted although {', '.join(cond_fail[q])} failed" for q in granted if cond_fail[q]]
+        out.append(v("ASSETS-4-01", "grant_on_all_four_conditions", bad,
+                     f"{len(granted)} right(s), each granted with all four §4 conditions true",
+                     "{n} rights granted with a failed §4 condition"))
+        bypass = [f"{q}: granted although the axiomatic condition failed" for q in granted if "c_axioms" in cond_fail[q]]
+        bypass += [f"{m.event_id}: {k}" for m in msgs if m.source == "ASSETS" for k in ("exemption", "justice_override")
+                   if k in m.value]
+        out.append(v("ASSETS-1-02", "no_axiom_bypass_or_override", bypass,
+                     "no asset decision passed an axiomatic limit or overrode an impact or Justice input",
+                     "{n} bypasses of axiomatic limits or overrides of upstream outputs"))
+    else:
+        for rid, chk in (("ASSETS-4-01", "grant_on_all_four_conditions"), ("ASSETS-1-02", "no_axiom_bypass_or_override")):
+            out.append(na(rid, chk, "ASSETS decisions", "no request to decide"))
+    assets_ids = {m.event_id for m in msgs if m.source == "ASSETS"}
+    back = [m.event_id for m in msgs if m.source in ("PTL", "JUSTICE", "IMPACT", "IMPACT/USE") and set(m.provenance) & assets_ids]
+    out.append(v("ASSETS-2-01", "downstream_of_ptl", back,
+                 "inputs flow from PTL, IMPACT and JUSTICE into ASSETS; no upstream record is derived from an ASSETS record",
+                 "{n} upstream records derived from ASSETS") if assets_ids else
+               na("ASSETS-2-01", "downstream_of_ptl", "ASSETS records", "no ASSETS record in this experiment"))
+    if granted:
+        jus = [(q, k) for q in granted for k in fdays[q]
+               if any(m.source == "JUSTICE" and m.arrived_at == k and m.value.get("subject") == granted[q].value["subject"]
+                      for m in msgs) or (req[q]["condition_fails_day"] == k and req[q].get("failure_kind") == "justice_contribution")]
+        bad = [f"{q}: kept after a negative Justice contribution on day {k}" for q, k in jus if not responded(msgs, granted[q].event_id, k)]
+        out.append(v("ASSETS-5-01", "justice_condition_persists", bad,
+                     f"{len(jus)} negative Justice contribution(s), each followed by a response on every right of the Subject",
+                     "{n} rights kept after the Justice condition failed") if jus else
+                   na("ASSETS-5-01", "justice_condition_persists", "Justice condition", "no negative Justice contribution"))
+    else:
+        out.append(na("ASSETS-5-01", "justice_condition_persists", "Justice condition", "no right granted"))
+    tr = [m for m in msgs if m.source == "ASSETS" and m.value.get("transfer")]
+    out.append(v("ASSETS-6-01", "transfer_keeps_attribution",
+                 [m.event_id for m in tr if m.value.get("responsible_subject") != m.value.get("from")],
+                 f"{len(tr)} transfer(s), each still naming the Subject responsible for the asset",
+                 "{n} transfers that drop the responsible Subject") if tr else
+               na("ASSETS-6-01", "transfer_keeps_attribution", "transfers", "no transfer in this experiment"))
+    th = [m for m in msgs if m.source == "ASSETS" and "concentration_threshold" in m.value]
+    if th:
+        moved = dict(r, holdings=[dict(h, market_value=h["market_value"] * 3 + 1) for h in r["holdings"]])
+        again = {m.value["holder"]: m.value["concentration_threshold"] for m in run(moved).messages()
+                 if m.source == "ASSETS" and "concentration_threshold" in m.value}
+        bad = [f"{m.value['holder']}: {m.value['concentration_threshold']} -> {again.get(m.value['holder'])}" for m in th
+               if again.get(m.value["holder"]) != m.value["concentration_threshold"]]
+        out.append(v("ASSETS-7-02", "threshold_from_impact", bad,
+                     f"{len(th)} concentration threshold(s) unchanged when only market value changes (metamorphic)",
+                     "{n} thresholds that follow market value"))
+    else:
+        out.append(na("ASSETS-7-02", "threshold_from_impact", "concentration thresholds", "no holding"))
+    crit = [q for q in granted if req[q]["category"] in CRITICAL]
+    out.append(v("ASSETS-9-02", "commons_always_revocable", [q for q in crit if not granted[q].value.get("revocable")],
+                 f"{len(crit)} §9 asset(s) held under stewardship and always revocable", "{n} §9 assets made irrevocable")
+               if crit else na("ASSETS-9-02", "commons_always_revocable", "§9 assets", "none granted"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -263,6 +351,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                  "ASSETS applied Justice and impact inputs as given: no waiver, exemption, override or discretionary grant",
                  "{n} cross-layer overrides by ASSETS") if req else
                na("ASSETS-13-01", "no_cross_layer_override", "ASSETS decisions", "no request to decide"))
+    out += core_checks(r, log, msgs, req, granted, fdays, v, na)
     flagged = [m for m in msgs if m.source == "IMPACT" and m.value["increases_fragility"]]
     resp = {m.value["holder"] for m in msgs if m.source == "ASSETS" and m.value.get("response") in RESPONSES}
     out.append(v("ASSETS-7-01", "concentration_response", [m.value["holder"] for m in flagged if m.value["holder"] not in resp],
@@ -280,6 +369,14 @@ IMPLEMENTS = {
     "ASSETS-9-01": ("critical_assets_designated", "PARTIAL", "Non-Privatizable vs Conditionally Privatizable per category is declared "
                     "(H-PR-1)."),
     # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "ASSETS-4-01": ("grant_on_all_four_conditions", "PARTIAL", "Clear part only: all four conditions as declared values; projections and capacity tests stay open."),
+    "ASSETS-1-02": ("no_axiom_bypass_or_override", "PARTIAL", "Clear part only: no axiomatic bypass or upstream override; externalized harm (system boundary) stays open."),
+    "ASSETS-2-01": ("downstream_of_ptl", "PARTIAL", "Clear part only: data flow from upstream layers into ASSETS; 'above' and 'alongside' stay open."),
+    "ASSETS-5-01": ("justice_condition_persists", "PARTIAL", "Clear part only: the non-negative Justice condition; 'restitution satisfied' stays open."),
+    "ASSETS-6-01": ("transfer_keeps_attribution", "PARTIAL", "Clear part only: transfers keep the responsible Subject; the system boundary stays open."),
+    "ASSETS-7-02": ("threshold_from_impact", "PARTIAL", "Clear part only: metamorphic basis of a stand-in threshold; the derivation stays open (H-PR-2)."),
+    "ASSETS-9-02": ("commons_always_revocable", "PARTIAL", "Clear part only: always revocable; 'strict stewardship conditions' stay open."),
     "ASSETS-1-01": ("property_is_conditional_allocation", "PARTIAL", "Contribution and bounds are the declared §4 conditions."),
     "ASSETS-5-02": ("failure_triggers_degradation", "PARTIAL", "Failures are declared events; any of the three responses counts."),
     "ASSETS-12-01": ("ownership_registered_auditable_bound", "PARTIAL", "Registration and public audit are register entries; binding = an identified Subject."),
@@ -289,7 +386,7 @@ IMPLEMENTS = {
 
 class PropertyRightsModule(LabModule):
     id = "property_rights"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Property rights: granting, conditions, critical assets", "ru": "Права собственности: выдача, условия, критические активы"}
     summary = {"en": "Subjects ask for property rights. Are rights granted only under the ASSETS conditions, never on possession "
                      "alone, kept only while the conditions hold, and are water, air and commons held only in revocable stewardship?",
@@ -317,6 +414,8 @@ class PropertyRightsModule(LabModule):
                      "label": {"en": "Requests for Property Rights (§4 conditions declared)", "ru": "Запросы прав собственности (условия §4 объявлены)"}},
         "holdings": {"type": "list", "min_items": 0, "max_items": 30, "items": HOLDING, "default": HOLDINGS_DEFAULT, "source": "user",
                      "label": {"en": "Accumulations (§7 trigger declared, H-PR-2)", "ru": "Накопления (срабатывание §7 объявлено, H-PR-2)"}},
+        "transfers": {"type": "list", "min_items": 0, "max_items": 30, "items": TRANSFER, "default": [], "source": "user",
+                      "label": {"en": "Transfers of granted rights {request, to, day}", "ru": "Передачи выданных прав {request, to, day}"}},
         "critical_designation": {"type": "object", "source": "hypothesis",
                                  "fields": {c: {"type": "enum", "values": ["non_privatizable", "conditionally_privatizable"],
                                                 "default": "conditionally_privatizable"} for c in CRITICAL},
@@ -361,6 +460,7 @@ class PropertyRightsModule(LabModule):
         return {
             "five_requests": {},
             "all_critical_non_privatizable": {"critical_designation": {c: "non_privatizable" for c in CRITICAL}},
+            "transfer_of_a_right": {"transfers": [{"request": "q1", "to": "coop_b", "day": 2}]},
             "faulty_property": {"faults": ["absolute_right", "grant_by_possession", "privatize_commons", "ignore_concentration"]},
         }
 

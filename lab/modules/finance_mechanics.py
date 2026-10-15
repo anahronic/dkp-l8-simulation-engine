@@ -53,6 +53,12 @@ FAULTS = {
     "inject_judgment": "a moral label is written into a cost-of-capital record",
     "default_penalty": "FINANCE adds a default surcharge of its own instead of leaving the outcome to JUSTICE",
     "time_preference": "credit is discounted by a time-preference factor that does not depend on projected impact",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "rate_uses_volatility": "the cost of capital also reads market price volatility",
+    "limit_uses_savings": "the credit limit also reads the Subject's savings",
+    "price_allocation": "capital is allocated on market price alone",
+    "deploy_before_internalization": "external capital is deployed before its risk is internalized",
+    "excess_restitution": "restitution after a default exceeds the obligation it implements",
 }
 
 SUBJECT = {"type": "object", "fields": {
@@ -83,6 +89,12 @@ SUBJECTS_DEFAULT = [
     {"id": "D", "justice": "negative", "impact_exposure": 12.0, "volatility": 0.5, "credit_request": 300.0,
      "credit_term_days": 10, "projected_output": 500.0},
 ]
+
+
+def credit_limit_of(sp: Dict[str, Any], justice: str, exposure: float, stress: float, savings: float, faults) -> float:
+    """Lab stand-in for the §5.2 credit limit: Justice history, impact correlation, systemic stress (no function given)."""
+    base = 1000.0 * (1.0 + 0.5 * SIGN[justice]) / (1.0 + exposure) * (1.0 - min(stress, 0.9))
+    return round(base + (savings / 10.0 if "limit_uses_savings" in faults else 0.0), 6)
 
 
 def rate_of(sp: Dict[str, Any], justice: str, exposure: float, faults) -> float:
@@ -143,7 +155,13 @@ def run(r: Dict[str, Any]) -> EventLog:
         rv = {"subject": sid, "justice": used, "exposure": s["impact_exposure"], "rate": rate, "formula": "stand-in JWCoC/1"}
         if "inject_judgment" in faults and s["justice"] == "negative":
             rv["judgment"] = "irresponsible borrower"
+        if "rate_uses_volatility" in faults:
+            rv["rate"] = round(rv["rate"] + 0.01 * s["volatility"], 10)
         price = put("evaluation", "FINANCE", 0, rv, [jus.event_id, imp.event_id])
+        stress = round(sum(x["credit_request"] for x in r["subjects"]) / r["safety_margin"], 9) if r["safety_margin"] > 0 else 0.0
+        put("evaluation", "FINANCE", 0, {"credit_limit": credit_limit_of(sp, used, s["impact_exposure"], stress, s["savings"], faults),
+                                         "subject": sid, "bases": {"justice": used, "exposure": s["impact_exposure"], "stress": stress},
+                                         "limit_formula": "stand-in 1000(1+0.5j)/(1+e)(1-stress)"}, [jus.event_id, imp.event_id])
         lev = leverage_of(sp, r["impact_bound"], s["impact_exposure"], s["volatility"], faults)
         put("evaluation", "FINANCE", 0, {"leverage_limit": lev, "subject": sid, "exposure": s["impact_exposure"],
                                          "bound": r["impact_bound"], "formula": "stand-in headroom/1"}, [imp.event_id, mkt.event_id])
@@ -162,6 +180,8 @@ def run(r: Dict[str, Any]) -> EventLog:
                 prov = [price.event_id] if "credit_as_right" in faults else [ev.event_id]
                 act = put("decision", "FINANCE", 0, {"credit_issue": sid, "cu": cu, "rate": rate, "term_days": due, "due_day": due,
                                                      "basis": "entitlement" if "credit_as_right" in faults else "FINANCE §5.1 a-c"}, prov)
+                put("decision", "FINANCE", 0, {"allocation": sid, "basis": ["market price"] if "price_allocation" in faults
+                                               else ["impact exposure", "Justice history", "projected output"]}, [act.event_id])
                 to = "holding:" + sid if "override_attribution" in faults else sid
                 book(0, to, cu, "credit", [act.event_id, ident.event_id], of=sid)
                 credits[sid] = {"outstanding": cu, "daily": cu / term, "due": due, "exposure": s["impact_exposure"], "issue": act.event_id}
@@ -193,6 +213,14 @@ def run(r: Dict[str, Any]) -> EventLog:
                 if "default_penalty" in faults:
                     put("action", "FINANCE", k, {"penalty": "default surcharge", "subject": dflt["subject"], "rate_add": 0.1},
                         [dn.event_id])
+                owed = c["outstanding"]                            # the obligation the Justice-defined outcome implements
+                put("action", "FINANCE", k, {"restitution": dflt["subject"], "amount": round(owed * (1.5 if "excess_restitution" in faults else 1.0), 6),
+                                             "outcome_bound": owed}, [dn.event_id])
+        for x in r["external_deployments"]:
+            if x["risk_internalized_day"] == k:
+                put("notice", "FINANCE", k, {"internalized": x["id"], "external_risk": "priced into the deployment"})
+            if (0 if "deploy_before_internalization" in faults else x["day"]) == k:
+                put("action", "FINANCE", k, {"deploy": x["id"], "source": "external capital"})
         if k > 0:
             for sid in sorted(credits):
                 c = credits[sid]
@@ -364,6 +392,73 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     return out
 
 
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    other = dict(r, subjects=[dict(x, volatility=round(x["volatility"] * 2 + 0.1, 6), savings=x["savings"] * 2 + 100)
+                              for x in r["subjects"]])
+    alt = run(other).messages()
+    rate = {m.value["subject"]: m.value["rate"] for m in msgs if m.source == "FINANCE" and "rate" in m.value and "formula" in m.value}
+    rate2 = {m.value["subject"]: m.value["rate"] for m in alt if m.source == "FINANCE" and "rate" in m.value and "formula" in m.value}
+    out.append(v("FINANCE-3.2-01", "rate_from_three_inputs", [f"{k}: {rate[k]} -> {rate2.get(k)}" for k in rate if rate2.get(k) != rate[k]],
+                 f"{len(rate)} costs of capital unchanged when only volatility and savings change: a function of Justice history, "
+                 "impact exposure and the bounds only", "{n} costs of capital that read other inputs") if rate else
+               na("FINANCE-3.2-01", "rate_from_three_inputs", "cost of capital", "no Subject"))
+    lim = {m.value["subject"]: m.value["credit_limit"] for m in msgs if m.source == "FINANCE" and "credit_limit" in m.value}
+    lim2 = {m.value["subject"]: m.value["credit_limit"] for m in alt if m.source == "FINANCE" and "credit_limit" in m.value}
+    out.append(v("FINANCE-5.2-01", "limit_from_three_bases", [f"{k}: {lim[k]} -> {lim2.get(k)}" for k in lim if lim2.get(k) != lim[k]],
+                 f"{len(lim)} credit limits unchanged when only volatility and savings change: Justice history, impact and "
+                 "systemic stress only (stand-in function)", "{n} credit limits that read other inputs") if lim else
+               na("FINANCE-5.2-01", "limit_from_three_bases", "credit limits", "no Subject"))
+    get = {m.event_id: m for m in msgs}
+    issues = [m for m in msgs if m.source == "FINANCE" and m.value.get("credit_issue")]
+    bad = [m.value["credit_issue"] for m in issues
+           if not any((get[e].value.get("credit_conditions") or {}) and all(get[e].value["credit_conditions"].values())
+                      for e in m.provenance if e in get)]
+    out.append(v("FINANCE-5.1-01", "credit_only_on_conditions", bad,
+                 f"{len(issues)} credits issued, each on its three §5.1 conditions (declared values)",
+                 "{n} credits issued without the §5.1 conditions") if issues else
+               na("FINANCE-5.1-01", "credit_only_on_conditions", "credit", "no credit issued"))
+    calc = [m for m in msgs if m.source == "FINANCE" and m.kind == "evaluation" and any(
+        k in m.value for k in ("rate", "leverage_limit", "reserve", "savings_return", "credit_limit", "discount_factor"))]
+    unpub = [m.event_id for m in calc if not any(k.endswith("formula") for k in m.value)]
+    disc = [m.value["savings_return"] for m in calc if "savings_return" in m.value
+            and abs(m.value["return"] - m.value["balance"] * m.value["rate_per_day"] * m.value["days"]) > 1e-9]
+    out.append(v("FINANCE-12-02", "logic_published_no_discretion", unpub + disc,
+                 f"{len(calc)} financial computations, each naming its published formula and recomputing from its inputs",
+                 "{n} computations unpublished or with a discretionary step"))
+    al = [m for m in msgs if m.source == "FINANCE" and m.value.get("allocation")]
+    out.append(v("FINANCE-7-02", "not_price_driven", [m.value["allocation"] for m in al if set(m.value["basis"]) <= {"market price"}],
+                 f"{len(al)} allocations, none driven by price alone", "{n} purely price-driven allocations") if al else
+               na("FINANCE-7-02", "not_price_driven", "allocation", "no capital allocated"))
+    dep = [m for m in msgs if m.source == "FINANCE" and m.value.get("deploy")]
+    intern = {m.value["internalized"]: m.arrived_at for m in msgs if m.source == "FINANCE" and m.value.get("internalized")}
+    out.append(v("FINANCE-10-02", "internalized_before_deployment",
+                 [m.value["deploy"] for m in dep if m.value["deploy"] not in intern or intern[m.value["deploy"]] > m.arrived_at],
+                 f"{len(dep)} external deployment(s), each after its risk was internalized",
+                 "{n} deployments before internalization") if dep else
+               na("FINANCE-10-02", "internalized_before_deployment", "external capital", "none deployed"))
+    rs = [m for m in msgs if m.source == "FINANCE" and m.value.get("restitution")]
+    out.append(v("FINANCE-8.2-02", "restitution_within_outcome", [m.value["restitution"] for m in rs if m.value["amount"] > m.value["outcome_bound"] + 1e-9],
+                 f"{len(rs)} restitution(s), none above the obligation they implement", "{n} restitutions above their bound")
+               if rs else na("FINANCE-8.2-02", "restitution_within_outcome", "restitution", "no default"))
+    pref = [f"{m.event_id}: {k}" for m in msgs for k in (m.value or {}) if k in ("time_preference", "utility", "impatience", "preference")]
+    flat = dict(r, subjects=[dict(x, impact_trend=0.0) for x in r["subjects"]])
+    pref += [f"{m.value['subject']}: discount without impact change" for m in run(flat).messages()
+             if m.source == "FINANCE" and "discount_factor" in m.value and abs(m.value["discount_factor"] - 1.0) > 1e-12]
+    out.append(v("FINANCE-ExplicitTimePreferenceProhibition-03", "no_subjective_preference", pref,
+                 "time enters only through projected impact: no preference or utility function in any evaluation",
+                 "{n} subjective time-preference elements"))
+    return out
+
+
 def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
     """Provisions returned to work after the reading of the Codex-draft open points (review of checkpoint 6)."""
     out: List[CheckResult] = []
@@ -397,6 +492,15 @@ def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "FINANCE-3.2-01": ("rate_from_three_inputs", "PARTIAL", "Clear part only: metamorphic dependence on the three inputs; the pricing function stays open."),
+    "FINANCE-5.2-01": ("limit_from_three_bases", "PARTIAL", "Clear part only: metamorphic dependence on the three bases of a stand-in; the limit function stays open."),
+    "FINANCE-5.1-01": ("credit_only_on_conditions", "PARTIAL", "Clear part only: the three conditions as declared values; sufficiency and margins stay open."),
+    "FINANCE-12-02": ("logic_published_no_discretion", "PARTIAL", "Clear part only: published formula and recomputation; 'proprietary' stays open."),
+    "FINANCE-7-02": ("not_price_driven", "PARTIAL", "Clear part only: no allocation on price alone; 'speculative' stays open."),
+    "FINANCE-10-02": ("internalized_before_deployment", "PARTIAL", "Clear part only: order of internalization and deployment; completeness stays open."),
+    "FINANCE-8.2-02": ("restitution_within_outcome", "PARTIAL", "Clear part only: restitution within the obligation it implements; a common damage measure stays open."),
+    "FINANCE-ExplicitTimePreferenceProhibition-03": ("no_subjective_preference", "PARTIAL", "Clear part only: no preference function; models of the four temporal effects stay open."),
     # returned to work after the reading of the Codex-draft open points (review of checkpoint 6)
     "FINANCE-8.1-02": ("default_routed_to_justice", "PARTIAL", "Defaults are declared events; the outcome itself is JUSTICE's."),
     "FINANCE-ExplicitTimePreferenceProhibition-02": ("discount_only_from_impact", "PARTIAL", "Metamorphic: with no projected "
@@ -420,7 +524,7 @@ IMPLEMENTS = {
 
 class FinanceMechanicsModule(LabModule):
     id = "finance_mechanics"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Finance mechanics: cost of capital, credit, reserves, leverage",
              "ru": "Финансовая механика: цена капитала, кредит, резервы, плечо"}
     summary = {"en": "Several Subjects borrow and save. Does the cost of capital move in the direction FINANCE fixes, is credit "
@@ -471,6 +575,11 @@ class FinanceMechanicsModule(LabModule):
         "requests": {"type": "list", "min_items": 0, "max_items": len(REQUESTS), "items": {"type": "enum", "values": list(REQUESTS)},
                      "default": list(REQUESTS), "source": "user",
                      "label": {"en": "Requests for functions FINANCE excludes (§1, §13)", "ru": "Запросы функций, исключённых FINANCE (§1, §13)"}},
+        "external_deployments": {"type": "list", "min_items": 0, "max_items": 20, "source": "user", "default": [],
+                                 "items": {"type": "object", "fields": {"id": {"type": "str"}, "day": {"type": "int", "min": 0, "max": 3650},
+                                                                        "risk_internalized_day": {"type": "int", "min": 0, "max": 3650}}},
+                                 "label": {"en": "External capital deployments {id, day, risk_internalized_day} (FINANCE §10)",
+                                           "ru": "Внешний капитал {id, day, risk_internalized_day} (FINANCE §10)"}},
         "defaults": {"type": "list", "min_items": 0, "max_items": 20, "source": "user", "default": [],
                      "items": {"type": "object", "fields": {"subject": {"type": "str"}, "day": {"type": "int", "min": 0, "max": 3650}}},
                      "label": {"en": "Defaults {subject, day} (FINANCE §8.1)", "ru": "Дефолты {subject, day} (FINANCE §8.1)"}},
@@ -496,7 +605,7 @@ class FinanceMechanicsModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log) + returned_checks(r, log.messages())
+        res = checks(r, log) + returned_checks(r, log.messages()) + core_checks(r, log.messages())
         msgs = log.messages()
         rates = {m.value["subject"]: m.value["rate"] for m in msgs if m.source == "FINANCE" and "formula" in m.value
                  and m.value.get("formula", "").startswith("stand-in JWCoC")}
@@ -523,6 +632,7 @@ class FinanceMechanicsModule(LabModule):
     def examples(self) -> Dict[str, Dict[str, Any]]:
         return {
             "four_subjects": {},
+            "external_capital": {"external_deployments": [{"id": "x1", "day": 5, "risk_internalized_day": 3}]},
             "default_and_trend": {"defaults": [{"subject": "C", "day": 5}],
                                   "subjects": [dict(x, impact_trend=0.5 if x["id"] == "C" else 0.0) for x in SUBJECTS_DEFAULT]},
             "faulty_pricing": {"faults": ["jwcoc_inverted", "override_justice", "inject_judgment"]},

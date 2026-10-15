@@ -26,9 +26,9 @@ FAULT_CASES = {
     "exposure_ignored": ["FINANCE-3.2-02"],
     "denominated_cu": ["FINANCE-3.1-01"],
     "earmarked_cu": ["FINANCE-3.1-01"],
-    "credit_as_right": ["FINANCE-5.1-02"],
+    "credit_as_right": ["FINANCE-5.1-02", "FINANCE-5.1-01"],
     "perpetual_credit": ["FINANCE-5.1-02"],
-    "discretionary_return": ["FINANCE-6.1-02"],
+    "discretionary_return": ["FINANCE-6.1-02", "FINANCE-12-02"],
     "percentage_reserve": ["FINANCE-6.2-01"],
     "volatility_leverage": ["FINANCE-9-02"],
     "finance_overreach": ["FINANCE-1-01", "FINANCE-13-01"],
@@ -36,9 +36,17 @@ FAULT_CASES = {
     "override_attribution": ["FINANCE-13-01"],
     "inject_judgment": ["FINANCE-13-01"],
     "default_penalty": ["FINANCE-8.1-02"],
-    "time_preference": ["FINANCE-ExplicitTimePreferenceProhibition-02"],
+    "time_preference": ["FINANCE-ExplicitTimePreferenceProhibition-02", "FINANCE-ExplicitTimePreferenceProhibition-03"],
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "rate_uses_volatility": ["FINANCE-3.2-01"],
+    "limit_uses_savings": ["FINANCE-5.2-01"],
+    "price_allocation": ["FINANCE-7-02"],
+    "deploy_before_internalization": ["FINANCE-10-02"],
+    "excess_restitution": ["FINANCE-8.2-02"],
 }
-EXTRA = {"default_penalty": {"defaults": [{"subject": "C", "day": 5}]}}
+EXTRA = {"default_penalty": {"defaults": [{"subject": "C", "day": 5}]},
+         "excess_restitution": {"defaults": [{"subject": "C", "day": 5}]},
+         "deploy_before_internalization": {"external_deployments": [{"id": "x1", "day": 5, "risk_internalized_day": 3}]}}
 
 
 def test_every_fault_has_a_case():
@@ -113,3 +121,19 @@ def test_discounting_only_from_projected_impact_change():
     st = statuses(run(**M.examples()["default_and_trend"]))
     assert st["FINANCE-ExplicitTimePreferenceProhibition-02"] == "PASS" and st["FINANCE-8.1-02"] == "PASS"
     assert statuses(run(faults=["time_preference"]))["FINANCE-ExplicitTimePreferenceProhibition-02"] == "FAIL"
+
+
+def test_core_checks_are_not_applicable_without_their_records():
+    """Review КТ7-GPT-01: a clear part with nothing to judge is N/A, not PASS (no deployment, no default)."""
+    st = statuses(run())
+    assert st["FINANCE-10-02"] == "NOT_APPLICABLE" and st["FINANCE-8.2-02"] == "NOT_APPLICABLE"
+    st = statuses(run(defaults=[{"subject": "C", "day": 5}],
+                      external_deployments=[{"id": "x1", "day": 5, "risk_internalized_day": 3}]))
+    assert st["FINANCE-10-02"] == "PASS" and st["FINANCE-8.2-02"] == "PASS"
+
+
+def test_deployment_on_the_day_of_internalization_is_in_order_late_internalization_is_not():
+    """FINANCE §10 clear part: internalization precedes or coincides with deployment; later internalization fails."""
+    ok = statuses(run(external_deployments=[{"id": "x1", "day": 4, "risk_internalized_day": 4}]))
+    late = statuses(run(external_deployments=[{"id": "x1", "day": 4, "risk_internalized_day": 6}]))
+    assert ok["FINANCE-10-02"] == "PASS" and late["FINANCE-10-02"] == "FAIL"

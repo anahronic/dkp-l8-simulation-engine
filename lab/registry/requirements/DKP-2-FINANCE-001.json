@@ -38,7 +38,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "finance_exclusions"
    },
    "tests": [
@@ -119,7 +119,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "cu_unitless_fungible"
    },
    "tests": [
@@ -234,13 +234,19 @@
     "projected channel risks",
     "axiomatic reference bounds and safety margins"
    ],
-   "gap": "The pricing function and numerical bounds are not specified. No lab check implemented yet.",
+   "gap": "Clear part only: metamorphic dependence on the three inputs; the pricing function stays open.",
    "hypotheses_needed": [
     "Declare a deterministic pricing function and the applicable bounds and margins."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "rate_from_three_inputs"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -278,7 +284,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "cost_direction"
    },
    "tests": [
@@ -435,7 +441,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "discount_only_from_impact"
    },
    "tests": [
@@ -475,13 +481,19 @@
    "data_dependencies": [
     "physical impact-channel measurements and projections"
    ],
-   "gap": "Measurement methods and temporal dynamics are not specified. No lab check implemented yet.",
+   "gap": "Clear part only: no preference function; models of the four temporal effects stay open.",
    "hypotheses_needed": [
     "Declare physical channel mappings and models for the four temporal effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "no_subjective_preference"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -516,13 +528,19 @@
     "axiomatic bounds",
     "systemic exposure and margins"
    ],
-   "gap": "Repayment sufficiency, axiomatic bounds and systemic safety margins lack operational values or tests. No lab check implemented yet.",
+   "gap": "Clear part only: the three conditions as declared values; sufficiency and margins stay open.",
    "hypotheses_needed": [
     "Declare repayment sufficiency criteria, applicable bounds and systemic safety margins."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "credit_only_on_conditions"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -555,7 +573,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "credit_temporary_conditional"
    },
    "tests": [
@@ -592,13 +610,19 @@
     "projected impact correlations",
     "systemic stress indicators"
    ],
-   "gap": "The limit function and update policy are missing. No lab check implemented yet.",
+   "gap": "Clear part only: metamorphic dependence on the three bases of a stand-in; the limit function stays open.",
    "hypotheses_needed": [
     "Declare a credit-limit function and its update triggers or cadence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "limit_from_three_bases"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -710,7 +734,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "savings_deterministic_auditable"
    },
    "tests": [
@@ -751,7 +775,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "reserve_impact_based"
    },
    "tests": [
@@ -821,13 +845,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "An operational definition of speculative allocation is missing. No lab check implemented yet.",
+   "gap": "Clear part only: no allocation on price alone; 'speculative' stays open.",
    "hypotheses_needed": [
     "Declare a classifier for speculative allocation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "not_price_driven"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -902,7 +932,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "default_routed_to_justice"
    },
    "tests": [
@@ -974,13 +1004,19 @@
     "measured damage",
     "justice outcomes"
    ],
-   "gap": "The mapping from damage and justice outcomes to restitution bounds is missing. No lab check implemented yet.",
+   "gap": "Clear part only: restitution within the obligation it implements; a common damage measure stays open.",
    "hypotheses_needed": [
     "Declare compatible measures and a bounding rule for restitution."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "restitution_within_outcome"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1055,7 +1091,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "leverage_impact_based"
    },
    "tests": [
@@ -1126,13 +1162,19 @@
     "external risk assessments",
     "internalization evidence"
    ],
-   "gap": "The scope of external risk and the completion criterion for full internalization are missing. No lab check implemented yet.",
+   "gap": "Clear part only: order of internalization and deployment; completeness stays open.",
    "hypotheses_needed": [
     "Declare a complete risk inventory and a test for completed internalization."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "internalized_before_deployment"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1168,7 +1210,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "tail_before_release"
    },
    "tests": [
@@ -1549,13 +1591,19 @@
    "numeric_source": "none",
    "normative_dependencies": [],
    "data_dependencies": [],
-   "gap": "Operational definitions of opaque and proprietary logic are missing. No lab check implemented yet.",
+   "gap": "Clear part only: published formula and recomputation; 'proprietary' stays open.",
    "hypotheses_needed": [
     "Declare the opacity test and the intended meaning of proprietary."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "finance_mechanics",
+    "version": "1.3.0",
+    "check": "logic_published_no_discretion"
+   },
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1594,7 +1642,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "finance_mechanics",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "cross_layer_isolation"
    },
    "tests": [

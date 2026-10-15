@@ -30,13 +30,19 @@
    "data_dependencies": [
     "entity classification"
    ],
-   "gap": "An authoritative classification of Subjects, regions, and jurisdictions is needed. No lab check implemented yet.",
+   "gap": "Clear part only: no condition on initiation; the classification of regions and jurisdictions stays open.",
    "hypotheses_needed": [
     "Declare how entities are classified for exit eligibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "exit_unconditional"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -69,7 +75,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "exit_not_denied"
    },
    "tests": [
@@ -104,7 +110,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "exit_not_framed_as_failure"
    },
    "tests": [
@@ -142,7 +148,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "not_sanction_or_failure"
    },
    "tests": [
@@ -175,7 +181,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "not_prohibited_or_criminalized"
    },
    "tests": [
@@ -204,13 +210,19 @@
    "data_dependencies": [
     "exit measures and suspension records"
    ],
-   "gap": "The document does not define a test for coercive use. No lab check implemented yet.",
+   "gap": "Clear part only: no suspension beyond a declared crisis; 'coercive tool' stays open.",
    "hypotheses_needed": [
     "Declare which actions or dependencies constitute coercive use of exit."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "no_indefinite_suspension"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -239,13 +251,19 @@
    "data_dependencies": [
     "participation states across DKP modules"
    ],
-   "gap": "The evidence constituting formal termination is unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no participation records after execution; the record map stays open.",
    "hypotheses_needed": [
     "Declare the records and state changes that establish formal termination."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "participation_terminated"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -277,7 +295,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "exiting_entity"
    },
    "tests": [
@@ -314,7 +332,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "exit_event_procedure"
    },
    "tests": [
@@ -356,7 +374,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "cooling_bounded_non_punitive"
    },
    "tests": [
@@ -398,7 +416,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "tail_from_verified_past"
    },
    "tests": [
@@ -475,7 +493,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "initiation_unconditional"
    },
    "tests": [
@@ -513,7 +531,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_approval_needed"
    },
    "tests": [
@@ -548,7 +566,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "never_suspended"
    },
    "tests": [
@@ -591,7 +609,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "valid_on_compliant_declaration"
    },
    "tests": [
@@ -634,7 +652,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "signed_scoped_declaration"
    },
    "tests": [
@@ -703,7 +721,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_additional_authorization"
    },
    "tests": [
@@ -775,7 +793,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "cooling_bounded"
    },
    "tests": [
@@ -818,7 +836,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "cooling_no_escalation"
    },
    "tests": [
@@ -863,7 +881,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "cooling_parameters_declared"
    },
    "tests": [
@@ -903,7 +921,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "phased_disengagement"
    },
    "tests": [
@@ -943,7 +961,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "phases_declared"
    },
    "tests": [
@@ -973,14 +991,20 @@
    "data_dependencies": [
     "L8 simulation evidence and audit history"
    ],
-   "gap": "L8 simulation requirements and the meaning of audit continuity are not defined. No lab check implemented yet.",
+   "gap": "Audit continuity checked; the L8 stability simulation is UNKNOWN (none presented).",
    "hypotheses_needed": [
     "Declare what constitutes L8 simulation for stability.",
     "Declare the audit continuity test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "phase_audit_continuity"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1016,7 +1040,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "future_obligations_and_benefits_cease"
    },
    "tests": [
@@ -1058,7 +1082,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "mechanisms_disengage"
    },
    "tests": [
@@ -1098,7 +1122,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "historical_responsibility_kept"
    },
    "tests": [
@@ -1139,7 +1163,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "records_and_tail_kept"
    },
    "tests": [
@@ -1176,7 +1200,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "only_prior_verified"
    },
    "tests": [
@@ -1218,7 +1242,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "tail_categories"
    },
    "tests": [
@@ -1259,7 +1283,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_punitive_tail"
    },
    "tests": [
@@ -1299,7 +1323,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_new_obligations"
    },
    "tests": [
@@ -1333,13 +1357,19 @@
    "data_dependencies": [
     "asset criticality assessments and delay records"
    ],
-   "gap": "System-critical classification depends on an unspecified instability model. No lab check implemented yet.",
+   "gap": "Clear part only: no delay without a declared system-critical asset; the instability model stays open.",
    "hypotheses_needed": [
     "Declare the model used to classify system-critical assets."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "delay_only_for_critical"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1375,7 +1405,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "delayed_settlement_bounded"
    },
    "tests": [
@@ -1415,7 +1445,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "delayed_settlement_non_punitive_logged"
    },
    "tests": [
@@ -1456,7 +1486,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "delayed_settlement_no_authority"
    },
    "tests": [
@@ -1491,13 +1521,19 @@
    "data_dependencies": [
     "settlement measures, obligation history, and participation requirements"
    ],
-   "gap": "Forced participation and the distinction between permitted disengagement delay and compelled membership are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: no new obligation; 'forced participation' stays open.",
    "hypotheses_needed": [
     "Declare how permitted settlement delay is distinguished from forced participation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "no_obligation_in_settlement"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1530,7 +1566,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "valid_during_crisis"
    },
    "tests": [
@@ -1604,7 +1640,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_crisis_precedent"
    },
    "tests": [
@@ -1646,7 +1682,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "crisis_scoped"
    },
    "tests": [
@@ -1684,7 +1720,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "finance_settlement"
    },
    "tests": [
@@ -1728,7 +1764,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "data_frozen"
    },
    "tests": [
@@ -1765,7 +1801,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "retention_purposes"
    },
    "tests": [
@@ -1794,14 +1830,20 @@
    "data_dependencies": [
     "data access logs and use-purpose records"
    ],
-   "gap": "The exit milestone and the boundary between permitted restitution validation and prohibited enforcement use are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no use beyond the §12 retention purposes; the restitution-validation boundary stays open.",
    "hypotheses_needed": [
     "Declare the post-exit starting event.",
     "Declare how restitution validation is distinguished from enforcement data use."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "no_post_exit_data_use"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1836,7 +1878,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "may_reapply"
    },
    "tests": [
@@ -1872,7 +1914,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "reentry_not_penalized"
    },
    "tests": [
@@ -1911,7 +1953,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "reentry_not_delayed"
    },
    "tests": [
@@ -1948,7 +1990,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "restitution_before_reentry"
    },
    "tests": [
@@ -1988,7 +2030,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "exit_not_obstructed"
    },
    "tests": [
@@ -2031,7 +2073,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_collective_or_retaliatory_sanction"
    },
    "tests": [
@@ -2072,7 +2114,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_hostile_framing_or_deprivation"
    },
    "tests": [
@@ -2114,7 +2156,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_post_exit_regulation"
    },
    "tests": [
@@ -2149,13 +2191,19 @@
    "data_dependencies": [
     "jurisdiction boundaries and sovereignty impact assessments"
    ],
-   "gap": "The exit boundary and sovereignty-interference criteria are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: no rule or enforcement after execution; the sovereignty test stays open.",
    "hypotheses_needed": [
     "Declare the exit boundary and a test for interference with sovereignty."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "no_jurisdiction_after_exit"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -2191,7 +2239,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "authority_terminates"
    },
    "tests": [

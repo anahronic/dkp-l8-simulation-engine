@@ -40,7 +40,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "property_is_conditional_allocation"
    },
    "tests": [
@@ -80,13 +80,19 @@
     "axiomatic limits",
     "physical truth records"
    ],
-   "gap": "The text does not operationalize reflection of contribution, externalized harm, or subordination to impact, causality, and truth. No lab check implemented yet.",
+   "gap": "Clear part only: no axiomatic bypass or upstream override; externalized harm (system boundary) stays open.",
    "hypotheses_needed": [
     "Declare tests for these outcome relationships and the boundary across which harm is externalized."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "no_axiom_bypass_or_override"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -117,13 +123,19 @@
    "data_dependencies": [
     "system architecture and protocol dependency graph"
    ],
-   "gap": "The text does not define how its spatial layer terminology maps to dependency or precedence relations. No lab check implemented yet.",
+   "gap": "Clear part only: data flow from upstream layers into ASSETS; 'above' and 'alongside' stay open.",
    "hypotheses_needed": [
     "Declare the meanings of above, below, alongside, and downstream without overriding explicit justice subordination."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "downstream_of_ptl"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -164,7 +176,7 @@
     "also": [
      {
       "module": "exit_integration",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "check": "no_asset_decision_in_halt"
      },
      {
@@ -255,7 +267,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "property_right_conditional"
    },
    "tests": [
@@ -296,13 +308,19 @@
     "axiomatic compliance",
     "mitigation and restitution capacity"
    ],
-   "gap": "The non-negative threshold is explicit, but impact bounds, projection methods, and capacity sufficiency tests are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: all four conditions as declared values; projections and capacity tests stay open.",
    "hypotheses_needed": [
     "Declare impact bounds, a use projection model, and sufficiency tests for mitigation and restitution capacity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "grant_on_all_four_conditions"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -340,7 +358,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_grant_on_sole_basis"
    },
    "tests": [
@@ -380,13 +398,19 @@
     "impact compliance",
     "restitution obligation status"
    ],
-   "gap": "Monitoring semantics, impact compliance rules, and the meaning of satisfied restitution obligations are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: the non-negative Justice condition; 'restitution satisfied' stays open.",
    "hypotheses_needed": [
     "Declare monitoring semantics and whether satisfaction means complete discharge or compliance with currently due obligations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "justice_condition_persists"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -422,7 +446,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "failure_triggers_degradation"
    },
    "tests": [
@@ -461,13 +485,19 @@
     "justice and identity attribution",
     "axiomatic priorities"
    ],
-   "gap": "The text does not define the system boundary or operational tests for the prohibited outcomes. No lab check implemented yet.",
+   "gap": "Clear part only: transfers keep the responsible Subject; the system boundary stays open.",
    "hypotheses_needed": [
     "Declare system boundaries and classifiers for irreversible harm, attribution bypass, and axiomatic violations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "transfer_keeps_attribution"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -544,7 +574,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "concentration_response"
    },
    "tests": [
@@ -579,13 +609,19 @@
     "impact metrics",
     "threshold derivation records"
    ],
-   "gap": "The impact-to-threshold derivation and threshold values are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: metamorphic basis of a stand-in threshold; the derivation stays open (H-PR-2).",
    "hypotheses_needed": [
     "Declare a threshold derivation using impact metrics and excluding nominal valuation and market price."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "threshold_from_impact"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1254,7 +1290,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "critical_assets_designated"
    },
    "tests": [
@@ -1291,13 +1327,19 @@
     "stewardship terms",
     "right status history"
    ],
-   "gap": "The text does not specify what constitutes strict stewardship conditions. No lab check implemented yet.",
+   "gap": "Clear part only: always revocable; 'strict stewardship conditions' stay open.",
    "hypotheses_needed": [
     "Declare qualifying stewardship conditions and how continuing revocability is represented."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "property_rights",
+    "version": "1.4.0",
+    "check": "commons_always_revocable"
+   },
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1554,7 +1596,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "ownership_registered_auditable_bound"
    },
    "tests": [
@@ -1691,7 +1733,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "property_rights",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_cross_layer_override"
    },
    "tests": [

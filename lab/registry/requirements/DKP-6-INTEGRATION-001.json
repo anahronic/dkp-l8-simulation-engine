@@ -39,7 +39,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "voluntary_phased_reversible"
    },
    "tests": [
@@ -80,7 +80,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "adoption_not_forced"
    },
    "tests": [
@@ -157,7 +157,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_alignment_imposed"
    },
    "tests": [
@@ -197,7 +197,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_authority_beyond_phase"
    },
    "tests": [
@@ -230,7 +230,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "integrating_entity"
    },
    "tests": [
@@ -266,7 +266,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "phase_terms_defined"
    },
    "tests": [
@@ -296,13 +296,19 @@
     "system action logs",
     "legal, economic, and administrative effect records"
    ],
-   "gap": "The scope and attribution of prohibited effects are not defined. No lab check implemented yet.",
+   "gap": "Clear part only: no act with effects in Shadow Mode; indirect consequences stay open.",
    "hypotheses_needed": [
     "Declare whether effects include indirect consequences and how effects are attributed to DKP."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "shadow_without_effects"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -411,7 +417,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "rollback_definition"
    },
    "tests": [
@@ -456,7 +462,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "explicit_consent"
    },
    "tests": [
@@ -496,7 +502,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "sequential_phases"
    },
    "tests": [
@@ -532,7 +538,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "explicit_validation"
    },
    "tests": [
@@ -563,15 +569,21 @@
     "rollback capabilities",
     "restoration and consequence assessments"
    ],
-   "gap": "The required extent of full reversal and the classification of punitive consequences are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no penalty after a rollback; the extent of restoration stays open.",
    "hypotheses_needed": [
     "Define which state and effects must be restored.",
     "Define punitive consequences and how reversal feasibility is demonstrated."
    ],
    "section_label": "4.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "reversal_without_penalty"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -608,7 +620,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "scope_containment"
    },
    "tests": [
@@ -649,7 +661,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "shadow_mode_no_effects"
    },
    "tests": [
@@ -692,7 +704,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "phase0_entry_records"
    },
    "tests": [
@@ -728,14 +740,20 @@
     "withdrawal records",
     "PTL integrity and coverage check results"
    ],
-   "gap": "Integrity and coverage acceptance criteria and the test of voluntary withdrawal are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: Phase 1 only on a Phase 0 exit validation; pass criteria stay open.",
    "hypotheses_needed": [
     "Define integrity and coverage pass criteria and evidence of voluntary withdrawal."
    ],
    "section_label": "5.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "phase0_exit_validated"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -769,7 +787,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "shadow_not_proof"
    },
    "tests": [
@@ -848,14 +866,20 @@
     "L8 interface simulation results",
     "application scope declaration"
    ],
-   "gap": "The L8 simulation model and interface stability acceptance criteria are absent. No lab check implemented yet.",
+   "gap": "Declared scope checked; the L8 interface-stability simulation is UNKNOWN (none presented).",
    "hypotheses_needed": [
     "Identify the L8 simulation procedure and its stability acceptance rule."
    ],
    "section_label": "5.2",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "phase2_scope_declared"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -932,7 +956,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "phase2_domains_only"
    },
    "tests": [
@@ -973,7 +997,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "phase3_clearance"
    },
    "tests": [
@@ -1015,15 +1039,21 @@
     "shock detections",
     "rollback records"
    ],
-   "gap": "Exit rules and punitive-consequence criteria are absent, and the mandatory versus discretionary status of shock rollback is ambiguous. No lab check implemented yet.",
+   "gap": "Clear part only: exit from Phase 2 without punitive consequence; mandatory rollback stays open.",
    "hypotheses_needed": [
     "Supply the referenced exit rules and define punitive consequences.",
     "Declare whether Phase 2 shock rollback is mandatory or discretionary under sections 5.3 and 7."
    ],
    "section_label": "5.3",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "phase2_exit_without_penalty"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1067,7 +1097,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "exit_by_standard_rules"
    },
    "tests": [
@@ -1105,15 +1135,21 @@
     "systemic risk assessments",
     "final consent records"
    ],
-   "gap": "The long-term observation period, stability criteria, and systemic risk resolution standard are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: reaffirmation before Full Integration; stability criteria stay open.",
    "hypotheses_needed": [
     "Define long-term duration, stability acceptance criteria, and when systemic risk is resolved.",
     "Define valid final consent reaffirmation."
    ],
    "section_label": "5.4",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "final_consent_reaffirmed"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1149,14 +1185,20 @@
     "biosphere and safety measurements",
     "capacity assessments"
    ],
-   "gap": "Threshold values and verification standards for the listed assessment dimensions are missing. No lab check implemented yet.",
+   "gap": "Clear part only: the four §6 verifications are recorded; their thresholds stay open (L8).",
    "hypotheses_needed": [
     "Declare biosphere and safety thresholds.",
     "Define integrity, coverage, manipulation, and capacity acceptance criteria."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "verifications_recorded"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1197,7 +1239,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "assessment_evidence_exclusive"
    },
    "tests": [
@@ -1241,7 +1283,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "shock_halts_and_suspends"
    },
    "tests": [
@@ -1318,7 +1360,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "rollback_logged"
    },
    "tests": [
@@ -1357,7 +1399,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "rollback_preserves_records"
    },
    "tests": [
@@ -1395,14 +1437,20 @@
     "historical risk allocations",
     "member exposure and instability assessments"
    ],
-   "gap": "Guarantee dilution, retroactive risk redistribution, and imported instability exposure lack operational assessment rules. No lab check implemented yet.",
+   "gap": "Clear part only: no retroactive risk redistribution; dilution and imported instability stay open.",
    "hypotheses_needed": [
     "Define the guarantee and risk baselines.",
     "Define how integration changes guarantees, risk allocations, and member exposure."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "no_retroactive_risk"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1432,13 +1480,19 @@
     "isolation and sandbox configurations",
     "containment verification"
    ],
-   "gap": "The required isolation and sandboxing properties are not defined. No lab check implemented yet.",
+   "gap": "Clear part only: no shared-reserve exposure before Full Integration; sandbox properties stay open.",
    "hypotheses_needed": [
     "Define the containment properties and verification method for risk isolation and sandboxing."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "isolated_before_full"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1505,13 +1559,19 @@
     "cultural and linguistic impact records",
     "harmonization and interface requirements"
    ],
-   "gap": "The meanings of untouched systems and harmonization necessary for interface compatibility are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no cultural or linguistic requirement; interface compatibility stays open.",
    "hypotheses_needed": [
     "Define prohibited cultural and linguistic changes and the requirements necessary for interface compatibility."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "cultures_untouched"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1545,7 +1605,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "divergence_not_failure"
    },
    "tests": [
@@ -1584,7 +1644,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "steps_documented"
    },
    "tests": [
@@ -1625,7 +1685,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "audit_process_only"
    },
    "tests": [
@@ -1661,13 +1721,19 @@
     "integration process and timeline",
     "coercion evidence"
    ],
-   "gap": "Force and acceleration are undefined, with no reference pace or timing limit. No lab check implemented yet.",
+   "gap": "Clear part only: no skipped or unvalidated phase; 'accelerated' otherwise stays open.",
    "hypotheses_needed": [
     "Define forced integration and the baseline or procedural test for accelerated integration."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "exit_integration",
+    "version": "1.7.0",
+    "check": "no_forced_or_accelerated"
+   },
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1700,7 +1766,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_conditional_aid"
    },
    "tests": [
@@ -1740,7 +1806,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_retroactive_enforcement"
    },
    "tests": [
@@ -1784,7 +1850,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_scope_bypass"
    },
    "tests": [
@@ -1827,7 +1893,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "exit_integration",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "check": "no_hidden_dependency"
    },
    "tests": [

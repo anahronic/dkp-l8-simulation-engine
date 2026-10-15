@@ -462,6 +462,11 @@
   },
   {
    "module": "exit_integration",
+   "example": "exit_from_phase_2",
+   "kind": "reference"
+  },
+  {
+   "module": "exit_integration",
    "example": "exit_in_crisis_scope_reading",
    "kind": "alternative"
   },
@@ -1487,6 +1492,11 @@
   },
   {
    "module": "finance_mechanics",
+   "example": "external_capital",
+   "kind": "reference"
+  },
+  {
+   "module": "finance_mechanics",
    "example": "faulty_basis",
    "kind": "counterexample"
   },
@@ -1519,6 +1529,11 @@
    "module": "property_rights",
    "example": "five_requests",
    "kind": "reference"
+  },
+  {
+   "module": "property_rights",
+   "example": "transfer_of_a_right",
+   "kind": "reference"
   }
  ],
  "totals": {
@@ -1526,25 +1541,25 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1456,
-  "covered_percent": 83.8,
+  "covered": 1490,
+  "covered_percent": 85.8,
   "statuses": {
-   "PASS": 1373,
+   "PASS": 1405,
    "FAIL": 4,
-   "UNKNOWN": 64,
+   "UNKNOWN": 66,
    "NOT_APPLICABLE": 15,
-   "UNCOVERED": 281
+   "UNCOVERED": 247
   },
   "resolvable": 745,
   "resolvable_uncovered": 0,
   "resolvable_uncovered_implementation_only": 0,
   "unresolved_decisions": 1198,
-  "covered_with_open_point": 917,
-  "pass_with_open_point": 841,
+  "covered_with_open_point": 951,
+  "pass_with_open_point": 873,
   "covered_without_open_point": 539,
   "closed_by_agent_reading": 216,
   "human_accepted": 0,
-  "uncovered_checkable_core": 147
+  "uncovered_checkable_core": 113
  },
  "stages": [
   {
@@ -1594,25 +1609,25 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1456,
-    "covered_percent": 83.8,
+    "covered": 1490,
+    "covered_percent": 85.8,
     "statuses": {
-     "PASS": 1373,
+     "PASS": 1405,
      "FAIL": 4,
-     "UNKNOWN": 64,
+     "UNKNOWN": 66,
      "NOT_APPLICABLE": 15,
-     "UNCOVERED": 281
+     "UNCOVERED": 247
     },
     "resolvable": 745,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 1198,
-    "covered_with_open_point": 917,
-    "pass_with_open_point": 841,
+    "covered_with_open_point": 951,
+    "pass_with_open_point": 873,
     "covered_without_open_point": 539,
     "closed_by_agent_reading": 216,
     "human_accepted": 0,
-    "uncovered_checkable_core": 147
+    "uncovered_checkable_core": 113
    }
   },
   {
@@ -1727,25 +1742,25 @@
     "registered": 9,
     "not_registered": [],
     "provisions": 424,
-    "covered": 319,
-    "covered_percent": 75.2,
+    "covered": 353,
+    "covered_percent": 83.3,
     "statuses": {
-     "PASS": 299,
+     "PASS": 331,
      "FAIL": 1,
-     "UNKNOWN": 18,
+     "UNKNOWN": 20,
      "NOT_APPLICABLE": 1,
-     "UNCOVERED": 105
+     "UNCOVERED": 71
     },
     "resolvable": 204,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 254,
-    "covered_with_open_point": 149,
-    "pass_with_open_point": 132,
+    "covered_with_open_point": 183,
+    "pass_with_open_point": 164,
     "covered_without_open_point": 170,
     "closed_by_agent_reading": 83,
     "human_accepted": 0,
-    "uncovered_checkable_core": 66
+    "uncovered_checkable_core": 32
    }
   },
   {
@@ -22200,7 +22215,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -22226,23 +22241,28 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not operationalize reflection of contribution, externalized harm, or subordination to impact, causality, and truth. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "no_axiom_bypass_or_override",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: no axiomatic bypass or upstream override; externalized harm (system boundary) stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -22501,7 +22521,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -22586,7 +22606,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -22785,23 +22805,28 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define how its spatial layer terminology maps to dependency or precedence relations. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "downstream_of_ptl",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: data flow from upstream layers into ASSETS; 'above' and 'alongside' stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -22859,7 +22884,7 @@
     "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 18
+    "NOT_APPLICABLE": 19
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -22933,7 +22958,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -22959,23 +22984,28 @@
    "section": "4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The non-negative threshold is explicit, but impact bounds, projection methods, and capacity sufficiency tests are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "grant_on_all_four_conditions",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: all four conditions as declared values; projections and capacity tests stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -23009,7 +23039,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -23035,24 +23065,31 @@
    "section": "5",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Monitoring semantics, impact compliance rules, and the meaning of satisfied restitution obligations are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "justice_condition_persists",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: the non-negative Justice condition; 'restitution satisfied' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "property_rights:faulty_property"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -23085,7 +23122,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -23111,23 +23148,28 @@
    "section": "6",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not define the system boundary or operational tests for the prohibited outcomes. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "transfer_keeps_attribution",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: transfers keep the responsible Subject; the system boundary stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -23195,7 +23237,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -23220,23 +23262,28 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The impact-to-threshold derivation and threshold values are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "threshold_from_impact",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: metamorphic basis of a stand-in threshold; the derivation stays open (H-PR-2).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -23787,7 +23834,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -23813,24 +23860,31 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The text does not specify what constitutes strict stewardship conditions. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "property_rights",
+   "check": "commons_always_revocable",
+   "tests": [
+    "tests/lab/test_property_rights_module.py"
+   ],
+   "gap": "Clear part only: always revocable; 'strict stewardship conditions' stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-PR-1",
+    "H-PR-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "property_rights:faulty_property"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -24047,7 +24101,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -24108,23 +24162,29 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope of external risk and the completion criterion for full internalization are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "internalized_before_deployment",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: order of internalization and deployment; completeness stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -24160,7 +24220,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -24571,24 +24631,32 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational definitions of opaque and proprietary logic are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "logic_published_no_discretion",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: published formula and recomputation; 'proprietary' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_basis"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -24622,7 +24690,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -24885,7 +24953,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -24990,23 +25058,29 @@
    "section": "3.2",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The pricing function and numerical bounds are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "rate_from_three_inputs",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: metamorphic dependence on the three inputs; the pricing function stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -25041,7 +25115,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25143,24 +25217,32 @@
    "section": "5.1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Repayment sufficiency, axiomatic bounds and systemic safety margins lack operational values or tests. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "credit_only_on_conditions",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: the three conditions as declared values; sufficiency and margins stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "finance_mechanics:faulty_scope"
+   ],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
    "text_verification": [],
@@ -25194,7 +25276,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25220,23 +25302,29 @@
    "section": "5.2",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The limit function and update policy are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "limit_from_three_bases",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: metamorphic dependence on the three bases of a stand-in; the limit function stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -25339,7 +25427,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25382,7 +25470,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25442,23 +25530,29 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An operational definition of speculative allocation is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "not_price_driven",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: no allocation on price alone; 'speculative' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -25530,7 +25624,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -25585,23 +25679,29 @@
    "section": "8.2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The mapping from damage and justice outcomes to restitution bounds is missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "restitution_within_outcome",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: restitution within the obligation it implements; a common damage measure stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -25670,7 +25770,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25760,7 +25860,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 2,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -25784,23 +25884,29 @@
    "section": "Explicit Time Preference Prohibition",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Measurement methods and temporal dynamics are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "finance_mechanics",
+   "check": "no_subjective_preference",
+   "tests": [
+    "tests/lab/test_finance_mechanics_module.py"
+   ],
+   "gap": "Clear part only: no preference function; models of the four temporal effects stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-FM-1",
+    "H-FM-2",
+    "H-FM-3"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -55997,25 +56103,37 @@
    "section": "0",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "An authoritative classification of Subjects, regions, and jurisdictions is needed. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "exit_unconditional",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no condition on initiation; the classification of regions and jurisdictions stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit",
+    "exit_integration:faulty_exit_rights"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -56049,7 +56167,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56091,7 +56209,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56137,7 +56255,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56161,25 +56279,36 @@
    "section": "10",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "System-critical classification depends on an unspecified instability model. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "delay_only_for_critical",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no delay without a declared system-critical asset; the instability model stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -56216,7 +56345,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56259,7 +56388,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56303,7 +56432,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56326,25 +56455,34 @@
    "section": "10",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Forced participation and the distinction between permitted disengagement delay and compelled membership are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_obligation_in_settlement",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no new obligation; 'forced participation' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -56381,7 +56519,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56458,7 +56596,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56503,7 +56641,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -56543,7 +56681,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56586,7 +56724,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56631,7 +56769,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56655,25 +56793,34 @@
    "section": "12",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The exit milestone and the boundary between permitted restitution validation and prohibited enforcement use are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_post_exit_data_use",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no use beyond the §12 retention purposes; the restitution-validation boundary stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -56710,7 +56857,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56750,7 +56897,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -56796,7 +56943,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -56838,7 +56985,7 @@
     "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -56878,7 +57025,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56925,7 +57072,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -56972,7 +57119,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57018,7 +57165,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57044,25 +57191,34 @@
    "section": "15",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The exit boundary and sovereignty-interference criteria are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_jurisdiction_after_exit",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no rule or enforcement after execution; the sovereignty test stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -57096,7 +57252,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57361,7 +57517,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57385,25 +57541,34 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The document does not define a test for coercive use. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_indefinite_suspension",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no suspension beyond a declared crisis; 'coercive tool' stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -57419,25 +57584,36 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The evidence constituting formal termination is unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "participation_terminated",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no participation records after execution; the record map stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_exit"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -57471,7 +57647,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57511,7 +57687,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57555,7 +57731,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57599,7 +57775,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57679,7 +57855,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57726,7 +57902,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57772,7 +57948,7 @@
     "Q-032"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57818,7 +57994,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57865,7 +58041,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -57942,7 +58118,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58024,7 +58200,7 @@
     "Q-031"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58067,7 +58243,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58111,9 +58287,9 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
-    "UNKNOWN": 6,
+    "UNKNOWN": 7,
     "NOT_APPLICABLE": 0
    },
    "status": "UNKNOWN",
@@ -58156,7 +58332,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58200,7 +58376,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58222,25 +58398,35 @@
    "section": "7",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "L8 simulation requirements and the meaning of audit continuity are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "phase_audit_continuity",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Audit continuity checked; the L8 stability simulation is UNKNOWN (none presented).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 7,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2,
+    "UNKNOWN": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -58274,7 +58460,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58318,7 +58504,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58361,7 +58547,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58405,7 +58591,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58447,7 +58633,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58492,7 +58678,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58538,7 +58724,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58583,7 +58769,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58628,7 +58814,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58675,7 +58861,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58715,7 +58901,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58741,25 +58927,36 @@
    "section": "11",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Force and acceleration are undefined, with no reference pace or timing limit. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_forced_or_accelerated",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no skipped or unvalidated phase; 'accelerated' otherwise stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -58793,7 +58990,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58835,7 +59032,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58880,7 +59077,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -58927,7 +59124,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59192,7 +59389,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59272,7 +59469,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59318,7 +59515,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59361,7 +59558,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59403,7 +59600,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59427,25 +59624,36 @@
    "section": "3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The scope and attribution of prohibited effects are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "shadow_without_effects",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no act with effects in Shadow Mode; indirect consequences stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -59550,7 +59758,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -59591,7 +59799,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59634,7 +59842,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59676,7 +59884,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59700,25 +59908,34 @@
    "section": "4",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required extent of full reversal and the classification of punitive consequences are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "reversal_without_penalty",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no penalty after a rollback; the extent of restoration stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -59752,7 +59969,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59795,7 +60012,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59840,7 +60057,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59866,25 +60083,37 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Integrity and coverage acceptance criteria and the test of voluntary withdrawal are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "phase0_exit_validated",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: Phase 1 only on a Phase 0 exit validation; pass criteria stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration",
+    "exit_integration:faulty_integration_scope"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -59918,7 +60147,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -59998,25 +60227,35 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The L8 simulation model and interface stability acceptance criteria are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "phase2_scope_declared",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Declared scope checked; the L8 interface-stability simulation is UNKNOWN (none presented).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
-    "UNKNOWN": 0,
+    "UNKNOWN": 7,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "UNKNOWN",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2,
+    "UNKNOWN": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60084,7 +60323,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -60131,7 +60370,7 @@
     "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -60156,25 +60395,34 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Exit rules and punitive-consequence criteria are absent, and the mandatory versus discretionary status of shock rollback is ambiguous. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "phase2_exit_without_penalty",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: exit from Phase 2 without punitive consequence; mandatory rollback stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60211,7 +60459,7 @@
     "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 1
+    "NOT_APPLICABLE": 2
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -60234,25 +60482,36 @@
    "section": "5",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The long-term observation period, stability criteria, and systemic risk resolution standard are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "final_consent_reaffirmed",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: reaffirmation before Full Integration; stability criteria stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 2
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60268,25 +60527,36 @@
    "section": "6",
    "kind": "state_transition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Threshold values and verification standards for the listed assessment dimensions are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "verifications_recorded",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: the four §6 verifications are recorded; their thresholds stay open (L8).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "exit_integration:faulty_integration"
+   ],
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60320,7 +60590,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -60367,7 +60637,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -60441,7 +60711,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -60481,7 +60751,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -60504,25 +60774,34 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Guarantee dilution, retroactive risk redistribution, and imported instability exposure lack operational assessment rules. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "no_retroactive_risk",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no retroactive risk redistribution; dilution and imported instability stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60538,25 +60817,34 @@
    "section": "8",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The required isolation and sandboxing properties are not defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "isolated_before_full",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no shared-reserve exposure before Full Integration; sandbox properties stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60606,25 +60894,34 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meanings of untouched systems and harmonization necessary for interface compatibility are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "exit_integration",
+   "check": "cultures_untouched",
+   "tests": [
+    "tests/lab/test_exit_integration_module.py"
+   ],
+   "gap": "Clear part only: no cultural or linguistic requirement; interface compatibility stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-EI-1",
+    "H-EI-2",
+    "H-EI-3",
+    "H-EI-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -60658,7 +60955,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -68187,7 +68484,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -68233,7 +68530,7 @@
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 6,
+    "UNKNOWN": 7,
     "NOT_APPLICABLE": 0
    },
    "status": "UNKNOWN",
@@ -68280,7 +68577,7 @@
     "Q-032"
    ],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -68326,7 +68623,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -68446,7 +68743,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 6,
+    "PASS": 7,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0

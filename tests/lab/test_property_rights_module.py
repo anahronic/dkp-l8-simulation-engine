@@ -22,19 +22,22 @@ def test_reference_breaks_no_rule(name):
 
 
 FAULT_CASES = {
-    "absolute_right": ["ASSETS-3.2-01", "ASSETS-1-01", "ASSETS-5-02"],
+    "absolute_right": ["ASSETS-3.2-01", "ASSETS-1-01", "ASSETS-5-02", "ASSETS-5-01", "ASSETS-9-02"],
     "grant_by_possession": ["ASSETS-4-02", "ASSETS-1-01"],
     "privatize_commons": ["ASSETS-9-01"],
     "ignore_concentration": ["ASSETS-7-01"],
-    "no_suspension_on_failure": ["ASSETS-3.2-01", "ASSETS-5-02"],
+    "no_suspension_on_failure": ["ASSETS-3.2-01", "ASSETS-5-02", "ASSETS-5-01"],
     "anonymous_holding": ["ASSETS-12-01"],
-    "assets_overrides": ["ASSETS-13-01", "ASSETS-1-01"],
-    "only_requesting_right": ["ASSETS-3.2-01", "ASSETS-5-02"],
+    "assets_overrides": ["ASSETS-13-01", "ASSETS-1-01", "ASSETS-1-02", "ASSETS-4-01"],
+    "only_requesting_right": ["ASSETS-3.2-01", "ASSETS-5-02", "ASSETS-5-01"],
+    "assets_feed_ptl": ["ASSETS-2-01"],
+    "transfer_drops_attribution": ["ASSETS-6-01"],
+    "price_threshold": ["ASSETS-7-02"],
 }
 TWO_RIGHTS = {"horizon_days": 3, "holdings": [],
               "requests": [{"id": "q1", "subject": "s", "asset": "a1", "condition_fails_day": 0},
                            {"id": "q2", "subject": "s", "asset": "a2", "condition_fails_day": -1}]}
-EXTRA = {"only_requesting_right": TWO_RIGHTS}
+EXTRA = {"only_requesting_right": TWO_RIGHTS, "transfer_drops_attribution": {"transfers": [{"request": "q1", "to": "coop_b", "day": 2}]}}
 
 
 def test_every_fault_has_a_case():
