@@ -38,7 +38,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "opinions_not_regulated"
    },
    "tests": [
@@ -78,7 +78,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "descriptive_non_coercive"
    },
    "tests": [
@@ -125,7 +125,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_belief_evaluation"
    },
    "tests": [
@@ -167,7 +167,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_enforcement_without_l8"
    },
    "tests": [
@@ -277,7 +277,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "opinion_is_i0"
    },
    "tests": [
@@ -312,13 +312,19 @@
     "claim dissemination records",
     "PTL-confirmed reality and inconsistency evidence"
    ],
-   "gap": "The evidentiary standard for demonstrable PTL inconsistency is unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: a PTL-confirmed inconsistency is cited; the §9 confidence bound stays open.",
    "hypotheses_needed": [
     "A declared evidentiary test for inconsistency with PTL-confirmed reality."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.1.0",
+    "check": "disinformation_cites_ptl"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -399,7 +405,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "classes_i3_i4"
    },
    "tests": [
@@ -437,7 +443,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "systemic_only_i2_i4"
    },
    "tests": [
@@ -478,7 +484,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "truth_by_ptl"
    },
    "tests": [
@@ -518,7 +524,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "not_by_popularity"
    },
    "tests": [
@@ -554,14 +560,20 @@
     "PTL resolution events",
     "claim TTL metadata"
    ],
-   "gap": "TTL assignment, the post-expiry state, and precedence relative to T₁ transitions are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no exit from I1 before resolution except annotation after a declared T1; TTL assignment stays open.",
    "hypotheses_needed": [
     "A declared TTL policy.",
     "A declared precedence rule between dispute retention and temporal downgrade."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.1.0",
+    "check": "disputed_stays_i1"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -593,15 +605,21 @@
     "claim timing and classification history",
     "L8-calibrated T₁"
    ],
-   "gap": "T₁, the time origin, and precedence relative to PTL resolution are not supplied. No lab check implemented yet.",
+   "gap": "Clear part only under a declared T1; the claim clock and T1 stay L8.",
    "hypotheses_needed": [
     "A declared claim clock origin and time unit.",
     "A declared precedence rule for PTL resolution during the retention interval."
    ],
    "section_label": "6.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.1.0",
+    "check": "i1_until_t1"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -645,7 +663,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "t1_annotation"
    },
    "tests": [
@@ -684,15 +702,21 @@
     "PTL inconsistency events",
     "L8-calibrated T₂"
    ],
-   "gap": "T₂, the claim clock, threshold ordering, and eligibility after annotation downgrade are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only under declared T1/T2; their order and values stay L8.",
    "hypotheses_needed": [
     "A declared claim clock.",
     "A declared interpretation of I1 eligibility after downgrade without assuming an unstated T₁/T₂ ordering."
    ],
    "section_label": "6.1",
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "info_truth",
+    "version": "1.1.0",
+    "check": "inconsistency_after_t2_reclassifies"
+   },
+   "tests": [
+    "tests/lab/test_info_truth_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -731,7 +755,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "t_values_calibrated"
    },
    "tests": [
@@ -777,7 +801,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "i1_non_blocking"
    },
    "tests": [
@@ -821,7 +845,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "i1_informational"
    },
    "tests": [
@@ -946,7 +970,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "permitted_responses"
    },
    "tests": [
@@ -993,7 +1017,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_removal"
    },
    "tests": [
@@ -1042,7 +1066,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "annotation_fields"
    },
    "tests": [
@@ -1088,7 +1112,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "annotation_not_enforcement"
    },
    "tests": [
@@ -1136,7 +1160,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_penalty_isolated_i3"
    },
    "tests": [
@@ -1181,7 +1205,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "activation_gate"
    },
    "tests": [
@@ -1226,7 +1250,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "informational_without_bundle"
    },
    "tests": [
@@ -1267,7 +1291,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_manual_truth"
    },
    "tests": [
@@ -1314,7 +1338,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_coercive_annotation"
    },
    "tests": [
@@ -1363,7 +1387,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "abuse_to_audit"
    },
    "tests": [
@@ -1409,7 +1433,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "verification_paths"
    },
    "tests": [
@@ -1453,7 +1477,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "reproducible"
    },
    "tests": [
@@ -1493,7 +1517,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "info_truth",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "factual_jurisdiction"
    },
    "tests": [

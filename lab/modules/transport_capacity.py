@@ -56,6 +56,8 @@ FAULTS = {
     "unsupported_modulation": "RED is modulated without PTL-confirmed evidence of risk reduction",
     "self_measured_impact": "TRANSPORT records its own impact on B(t) instead of taking it from ORACLE",
     "redesign_for_attack": "a redesign measure is taken in response to an attack",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "flat_red": "RED ignores the declared impact profile of the vehicle",
 }
 OWNERSHIP = ("private", "shared", "public", "cooperative")
 AUTONOMY = ("manual", "assisted", "autonomous")
@@ -207,10 +209,66 @@ def run(r: Dict[str, Any]):
         for v_ in r["fleet"]:
             f = 0.5 if "ownership_discount" in faults and (v_["ownership"] == "public" or v_["autonomy"] == "autonomous") else 1.0
             f = 0.5 if "autonomy_discount" in faults and v_["autonomy"] == "autonomous" else f
+            prof = 1.0 if "flat_red" in faults else v_["impact_profile"]          # §7.3: stand-in, RED proportional to the profile
             put("evaluation", "TRANSPORT/FLEET", 0, {"vehicle": v_["id"], "ownership": v_["ownership"], "autonomy": v_["autonomy"],
-                                                     "km": v_["km"], "red": round(v_["km"] * r["red_per_km"] * f, 9),
+                                                     "km": v_["km"], "impact_profile": v_["impact_profile"],
+                                                     "red": round(v_["km"] * r["red_per_km"] * f * prof, 9),
                                                      "criterion": "physical impact (kilometres)"})
     return log, days, hours, seats
+
+
+def core_checks(r, msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    a = r["ppdi_annual"]
+    if len(a) >= 2:
+        strict = all(y > x for x, y in zip(a, a[1:]))
+        trend = a[-1] > a[0]
+        if strict == trend:
+            out.append(v("TRANSPORT-10-03", "ppdi_trend_both_readings", [] if strict else [f"annual PPDI {a}"],
+                         f"declared annual PPDI {a} rises year over year and overall: both readings agree",
+                         "{n}: PPDI does not trend upward under either reading"))
+        else:
+            out.append(CheckResult("TRANSPORT-10-03", "ppdi_trend_both_readings", UNKNOWN,
+                                   f"declared annual PPDI {a}: {'overall upward' if trend else 'not upward overall'} but "
+                                   f"{'rising' if strict else 'not rising'} every year; strict yearly increase or overall trend is open",
+                                   evidence={"strict": strict, "overall": trend}))
+    else:
+        out.append(na("TRANSPORT-10-03", "ppdi_trend_both_readings", "PPDI trend", "fewer than two annual scores declared"))
+    out.append(v("TRANSPORT-11-03", "no_mode_ban", [f"{m.event_id}: {m.value['ban']}" for m in msgs if m.kind == "action" and "ban" in m.value],
+                 "no transport mode was banned (as TRANSPORT-8-01)", "{n} bans of a transport mode"))
+    fleet = {m.value["vehicle"]: m.value for m in msgs if m.source == "TRANSPORT/FLEET"}
+    if fleet and r["red_per_km"] > 0:
+        bad = []
+        for i, x in enumerate(r["fleet"]):
+            if x["impact_profile"] <= 0:
+                continue
+            lower = dict(r, fleet=[dict(y, impact_profile=y["impact_profile"] / 2) if j == i else y for j, y in enumerate(r["fleet"])])
+            again = {m.value["vehicle"]: m.value["red"] for m in run(lower)[0].messages() if m.source == "TRANSPORT/FLEET"}
+            if not again[x["id"]] < fleet[x["id"]]["red"]:
+                bad.append(f"{x['id']}: RED {fleet[x['id']]['red']} -> {again[x['id']]} with half the impact profile")
+            bad += [f"{k}: RED changed with another vehicle's profile" for k in fleet if k != x["id"] and again[k] != fleet[k]["red"]]
+        out.append(v("TRANSPORT-7.3-02", "lower_profile_lower_red", bad,
+                     f"{len(fleet)} vehicles: halving one declared impact profile, all else equal, lowers its RED and no other "
+                     "(stand-in modulation; the function stays open)", "{n} profiles that do not lower RED"))
+    else:
+        out.append(na("TRANSPORT-7.3-02", "lower_profile_lower_red", "RED modulation", "no RED coefficient or no fleet declared"))
+    bio = {m.event_id for m in msgs if "transport_impact_on_B" in (m.value or {})}
+    uses = [m for m in msgs if m.source in ("LEDGER",) or (m.source == "TRANSPORT" and m.kind == "action" and "response" in m.value)]
+    if uses:
+        out.append(v("TRANSPORT-9-01", "evaluation_has_b_term", [m.event_id for m in uses if not set(m.provenance) & bio],
+                     f"{len(uses)} system evaluations (externality ledger, capacity responses), each citing the day's transport term on B(t)",
+                     "{n} evaluations without the transport term on B(t)"))
+    else:
+        out.append(na("TRANSPORT-9-01", "evaluation_has_b_term", "system evaluation", "no ledger entry or capacity response"))
+    return out
 
 
 def design_checks(r, msgs, days) -> List[CheckResult]:
@@ -373,7 +431,7 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
                            "so this experiment cannot test it; it needs observed data"))
     fleet = [m.value for m in msgs if m.source == "TRANSPORT/FLEET"]
     out.append(v("TRANSPORTA-A.3-03", "ownership_irrelevant",
-                 [x["vehicle"] for x in fleet if abs(x["red"] - x["km"] * r["red_per_km"]) > 1e-9],
+                 [x["vehicle"] for x in fleet if abs(x["red"] - x["km"] * r["red_per_km"] * x.get("impact_profile", 1.0)) > 1e-9],
                  f"{len(fleet)} vehicles of {len({x['ownership'] for x in fleet})} ownership forms and "
                  f"{len({x['autonomy'] for x in fleet})} autonomy levels evaluated by kilometres alone",
                  "{n} vehicles evaluated by ownership or autonomy") if fleet else
@@ -438,7 +496,7 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
                  "no consequence for a Subject arose from transport metrics outside DKP-1-JUSTICE-001",
                  "{n} consequences imposed outside JUSTICE"))
     out.append(v("TRANSPORTA-A.3-04", "physical_impact_sole_criterion",
-                 [x["vehicle"] for x in fleet if abs(x["red"] - x["km"] * r["red_per_km"]) > 1e-9
+                 [x["vehicle"] for x in fleet if abs(x["red"] - x["km"] * r["red_per_km"] * x.get("impact_profile", 1.0)) > 1e-9
                   or x["criterion"] != "physical impact (kilometres)"],
                  f"{len(fleet)} vehicles evaluated by physical impact alone, whatever their ownership or autonomy",
                  "{n} vehicles evaluated on another criterion") if fleet else
@@ -451,6 +509,11 @@ def checks(r, log: EventLog, days, hours) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "TRANSPORT-10-03": ("ppdi_trend_both_readings", "PARTIAL", "Clear part only: both readings on declared annual scores; a disagreement gives UNKNOWN."),
+    "TRANSPORT-11-03": ("no_mode_ban", "PARTIAL", "Clear part only (as TRANSPORT-8-01): no ban of a mode; the protected freedoms stay open."),
+    "TRANSPORT-7.3-02": ("lower_profile_lower_red", "PARTIAL", "Clear part only: metamorphic, a lower declared profile lowers RED; the modulation function stays open."),
+    "TRANSPORT-9-01": ("evaluation_has_b_term", "PARTIAL", "Clear part only: the evaluation cites a transport term on B(t); attribution of impacts to transport stays open."),
     "TRANSPORT-4-01": ("ppdi_published", "PARTIAL", "Components published; the composite has no formula: UNKNOWN."),
     "TRANSPORT-4.1-01": ("ppdi_components", "PARTIAL", "Vibration, noise and thermal comfort are declared inputs."),
     "TRANSPORT-4.1-02": ("no_forced_contact", "PARTIAL", "Forced contact = standing density above a declared threshold."),
@@ -500,7 +563,7 @@ IMPLEMENTS = {
 
 class TransportCapacityModule(LabModule):
     id = "transport_capacity"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "Transport capacity (S-LAB-09)", "ru": "Транспортная вместимость (S-LAB-09)"}
     summary = {"en": "A corridor at rush hour: queues, seats and external harm side by side — is standing an exception, "
                      "is under-provisioning met by more capacity, and does RED fund better transport without punishing anyone?",
@@ -576,12 +639,17 @@ class TransportCapacityModule(LabModule):
         "fleet": {"type": "list", "min_items": 0, "max_items": 20, "source": "user",
                   "items": {"type": "object", "fields": {"id": {"type": "str"}, "ownership": {"type": "enum", "values": list(OWNERSHIP)},
                                                          "autonomy": {"type": "enum", "values": list(AUTONOMY)},
-                                                         "km": {"type": "number", "min": 0, "max": 10 ** 6}}},
-                  "default": [{"id": "car_private", "ownership": "private", "autonomy": "manual", "km": 100},
-                              {"id": "car_shared_auto", "ownership": "shared", "autonomy": "autonomous", "km": 100},
-                              {"id": "car_public_assist", "ownership": "public", "autonomy": "assisted", "km": 100},
-                              {"id": "car_coop", "ownership": "cooperative", "autonomy": "manual", "km": 60}],
+                                                         "km": {"type": "number", "min": 0, "max": 10 ** 6},
+                                                         "impact_profile": {"type": "number", "min": 0, "max": 10, "default": 1.0}}},
+                  "default": [{"id": "car_private", "ownership": "private", "autonomy": "manual", "km": 100, "impact_profile": 1.0},
+                              {"id": "car_shared_auto", "ownership": "shared", "autonomy": "autonomous", "km": 100, "impact_profile": 1.0},
+                              {"id": "car_public_assist", "ownership": "public", "autonomy": "assisted", "km": 100, "impact_profile": 1.0},
+                              {"id": "car_coop", "ownership": "cooperative", "autonomy": "manual", "km": 60, "impact_profile": 1.0}],
                   "label": {"en": "Vehicles evaluated by Appendix A.3", "ru": "Транспортные средства по Приложению A.3"}},
+        "ppdi_annual": {"type": "list", "min_items": 0, "max_items": 50, "items": {"type": "number", "min": 0, "max": 10 ** 6},
+                        "default": [0.62, 0.66, 0.69], "source": "user",
+                        "label": {"en": "Declared annual PPDI scores (§10; no composite formula in the corpus)",
+                                  "ru": "Объявленные годовые оценки PPDI (§10; формулы в корпусе нет)"}},
         "hostile_event_hour": {"type": "int", "min": -1, "max": 10 ** 6, "default": -1, "unit": "h", "source": "user",
                                "label": {"en": "An attack on a line at hour (-1: none)", "ru": "Нападение на линию в час (-1: нет)"}},
         "b_impact_per_km": {"type": "number", "min": 0, "max": 1, "default": 1e-7, "source": "missing",
@@ -611,7 +679,7 @@ class TransportCapacityModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, days, hours, seats = run(r)
-        res = checks(r, log, days, hours)
+        res = checks(r, log, days, hours) + core_checks(r, log.messages())
         reds = [m.value for m in log.messages() if m.source == "TRANSPORT/RED"]
         outputs = {"days": days, "hours": hours[:72], "seats_per_vehicle_effective": seats,
                    "queues": {"max_queue": max(x["queue_end"] for x in hours), "mean_wait_h_last_day": days[-1]["mean_wait_h"]},

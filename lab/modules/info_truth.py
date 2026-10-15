@@ -43,6 +43,9 @@ FAULTS = {
     "no_audit_escalation": "systemic abuse is not escalated to AUDIT",
     "suspend_account": "an I3/I4 author's account is suspended",
     "info_overreach": "INFO adjudicates a question of moral truth",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "early_annotation": "an unverified claim is downgraded to annotation the day after it is posted, before T1",
+    "late_inconsistency_ignored": "a PTL inconsistency emerging after T2 does not reclassify the claim",
 }
 OUT_OF_SCOPE = ("optimize_narrative", "enforce_social_harmony", "resolve_philosophical_dispute", "adjudicate_moral_truth")   # §13
 PERMITTED = ("annotation", "reduce_amplification", "remediation_channel", "systemic_risk_pattern")                         # §8
@@ -127,6 +130,11 @@ def run(r: Dict[str, Any]):
                 new, basis = "I2", "widely repeated"
             if "manual_truth" in faults and c["kind"] == "factual" and new == "I1" and k == c["day"] + 1:
                 new, basis = "I3", "operator decision"
+            if "early_annotation" in faults and c["kind"] == "factual" and new == "I1" and k == c["day"] + 1 and b["present"]:
+                new, basis = "annotation", "downgraded early"
+            if "late_inconsistency_ignored" in faults and new in ("I3", "I4") and b["present"] and b["t2_days"] >= 0 \
+                    and c["verdict_day"] - c["day"] > b["t2_days"]:
+                new, basis = cls.get(cid, "I1"), "unchanged after T2"
             if cls.get(cid) != new:
                 prov = [posts[cid].event_id] + ([verdicts[cid].event_id] if cid in verdicts else [])
                 informational = not b["present"] and new in ("I2", "I3", "I4")
@@ -181,6 +189,80 @@ def response_kind(v: Dict[str, Any]) -> str:
     if v.get("suspend_account"):
         return "account suspension"
     return "other"
+
+
+def class_by_day(msgs, claim, horizon) -> Dict[int, str]:
+    """The class of a claim on each day, from the logged class changes."""
+    ch = sorted((m.arrived_at, m.event_id, m.value["class"]) for m in msgs
+                if m.source == "INFO" and m.kind == "evaluation" and m.value.get("claim") == claim)
+    out, cur = {}, None
+    for k in range(horizon):
+        for d, _, c in ch:
+            if d == k:
+                cur = c
+        if cur is not None:
+            out[k] = cur
+    return out
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+    get = {m.event_id: m for m in msgs}
+    b = r["bundle"]
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    dis = [m for m in msgs if m.source == "INFO" and m.kind == "evaluation" and m.value.get("class") in ("I3", "I4")]
+    out.append(v("INFO-3-04", "disinformation_cites_ptl", [f"{m.value['claim']}: {m.value['class']} ({m.value['basis']})" for m in dis
+                                                            if not any(get[x].source == "PTL" and get[x].value.get("verdict") == "inconsistent"
+                                                                       for x in m.provenance)],
+                 f"{len(dis)} disinformation classification(s), each citing a PTL-confirmed inconsistency",
+                 "{n} disinformation classifications without a PTL-confirmed inconsistency") if dis else
+               na("INFO-3-04", "disinformation_cites_ptl", "disinformation", "no claim classified I3 or I4"))
+    fact = [c for c in r["claims"] if c["kind"] == "factual"]
+    T1 = b["t1_days"] if b["present"] else -1
+    bad = []
+    for c in fact:
+        days = class_by_day(msgs, c["id"], r["horizon_days"])
+        until = c["verdict_day"] if c["verdict_day"] >= 0 and c["ptl_verdict"] != "none" else r["horizon_days"]
+        for k, x in days.items():
+            if k < until and x != "I1" and not (x == "annotation" and T1 >= 0 and k - c["day"] > T1):
+                bad.append(f"{c['id']} day {k}: {x} before PTL resolution")
+    out.append(v("INFO-5-03", "disputed_stays_i1", bad,
+                 f"{len(fact)} factual claim(s): none left I1 before its PTL verdict except into annotation after the declared T1",
+                 "{n} days a disputed claim left I1 before resolution or expiry") if fact else
+               na("INFO-5-03", "disputed_stays_i1", "disputed claims", "no factual claim"))
+    if T1 >= 0:
+        bad = []
+        for c in fact:
+            days = class_by_day(msgs, c["id"], r["horizon_days"])
+            until = c["verdict_day"] if c["verdict_day"] >= 0 and c["ptl_verdict"] != "none" else r["horizon_days"]
+            bad += [f"{c['id']} day {k}: {x}" for k, x in days.items() if k - c["day"] <= T1 and k < until and x != "I1"]
+        out.append(v("INFO-6.1-01", "i1_until_t1", bad, f"every unresolved factual claim stayed I1 up to the declared T1 = {T1} days",
+                     "{n} claim-days off I1 within T1"))
+    else:
+        out.append(na("INFO-6.1-01", "i1_until_t1", "T1", "no declared T1 (L8 bundle)"))
+    T2 = b["t2_days"] if b["present"] else -1
+    late = [c for c in fact if T2 >= 0 and c["ptl_verdict"] == "inconsistent" and c["verdict_day"] >= 0
+            and c["verdict_day"] - c["day"] > T2 and c["verdict_day"] < r["horizon_days"]]
+    if late:
+        bad = []
+        for c in late:
+            x = class_by_day(msgs, c["id"], r["horizon_days"]).get(c["verdict_day"])
+            if x not in ("I3", "I4"):
+                bad.append(f"{c['id']}: {x} after the inconsistency of day {c['verdict_day']}")
+        out.append(v("INFO-6.1-03", "inconsistency_after_t2_reclassifies", bad,
+                     f"{len(late)} claim(s) with a PTL inconsistency after the declared T2 = {T2} days, each reclassified (I3, or I4 "
+                     "when systemic)", "{n} claims not reclassified"))
+    else:
+        out.append(na("INFO-6.1-03", "inconsistency_after_t2_reclassifies", "inconsistency after T2",
+                      "no declared T2" if T2 < 0 else "no inconsistency emerging after T2"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -326,6 +408,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "INFO-3-04": ("disinformation_cites_ptl", "PARTIAL", "Clear part only: a PTL-confirmed inconsistency is cited; the §9 confidence bound stays open."),
+    "INFO-5-03": ("disputed_stays_i1", "PARTIAL", "Clear part only: no exit from I1 before resolution except annotation after a declared T1; TTL assignment stays open."),
+    "INFO-6.1-01": ("i1_until_t1", "PARTIAL", "Clear part only under a declared T1; the claim clock and T1 stay L8."),
+    "INFO-6.1-03": ("inconsistency_after_t2_reclassifies", "PARTIAL", "Clear part only under declared T1/T2; their order and values stay L8."),
     "INFO-0-01": ("opinions_not_regulated", "IMPLEMENTED", None),
     "INFO-2-01": ("no_belief_evaluation", "IMPLEMENTED", None),
     "INFO-3-03": ("opinion_is_i0", "IMPLEMENTED", None),
@@ -357,7 +444,7 @@ IMPLEMENTS = {
 
 class InfoTruthModule(LabModule):
     id = "info_truth"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Information and truth (INFO)", "ru": "Информация и истина (INFO)"}
     summary = {"en": "Claims and opinions circulate: is truth set only by PTL, are false claims annotated rather than removed, "
                      "and does anything beyond annotation happen while no L8 calibration exists?",
@@ -434,7 +521,7 @@ class InfoTruthModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, cls, records = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log.messages())
         msgs = log.messages()
         outputs = {"classes": cls, "records_preserved": records,
                    "annotations": [m.value for m in msgs if m.value.get("annotation")],
@@ -463,6 +550,8 @@ class InfoTruthModule(LabModule):
             "systemic_disinformation": {"claims": sysd},
             "hypothetical_bundle": {"claims": sysd + [{**base, "id": "c5", "day": 1, "ptl_verdict": "inconclusive", "verdict_day": 2}],
                                     "bundle": {"present": True, "t1_days": 7, "t2_days": 14, "propagation_threshold": 1000}},
+            "late_inconsistency": {"bundle": {"present": True, "t1_days": 7, "t2_days": 14, "propagation_threshold": 1000},
+                                   "claims": [{**base, "id": "c6", "day": 1, "ptl_verdict": "inconsistent", "verdict_day": 20}]},
             "faulty_information": {"faults": ["evaluate_opinion", "popularity_truth", "annotation_penalty", "penalize_isolated_i3"]},
             "faulty_responses": {"claims": sysd, "faults": ["suspend_account", "info_overreach"]},
         }

@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1577 (90.8 %) | 1038 | 1488 | 956 | 4 | 67 | 18 | 160 | 0 | 18 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1585 (91.2 %) | 1046 | 1496 | 964 | 4 | 67 | 18 | 152 | 0 | 10 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 18 | 29 | 17 | 0 | 1 | 0 | 13 | 0 | 0 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 3 | 258 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 382 (90.1 %) | 212 | 359 | 192 | 1 | 21 | 1 | 42 | 0 | 1 | 254 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 8 | 201 |
+| E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 171 | 246 | 156 | 0 | 9 | 8 | 30 | 0 | 0 | 201 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 462 (90.4 %) | 319 | 438 | 295 | 0 | 18 | 6 | 49 | 0 | 6 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1577 (90.8 %) | 1038 | 1488 | 956 | 4 | 67 | 18 | 160 | 0 | 18 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1585 (91.2 %) | 1046 | 1496 | 964 | 4 | 67 | 18 | 152 | 0 | 10 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -47,7 +47,7 @@ Covered without an open point: 539; of all provisions, an open point closed by t
 - B / B4 met: PREVENTION results of v2.1.1 preserved
 - C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
 - D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
+- E / E1 met: real checks, declared models and their limits; gaps exact by section
 - F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
 - G / G1 **not met**: all parts implementable without unresolved decisions are checked, including the clear parts of provisions whose open point remains
 - G / G2 **not met**: integrated application, documentation, examples, report
@@ -285,8 +285,8 @@ Withdrawn after verification (not author decisions):
 | DKP-5-CULTURE-001 | 43 | 38 | 38 | 0 | 0 | 0 | 5 | 30 |
 | DKP-5-EDU-001 | 64 | 58 | 53 | 0 | 1 | 4 | 6 | 37 |
 | DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 49 |
-| DKP-5-INFO-001 | 39 | 30 | 28 | 0 | 2 | 0 | 9 | 34 |
-| DKP-5-TRANSPORT-001 | 35 | 25 | 20 | 0 | 5 | 0 | 10 | 28 |
+| DKP-5-INFO-001 | 39 | 34 | 32 | 0 | 2 | 0 | 5 | 34 |
+| DKP-5-TRANSPORT-001 | 35 | 29 | 24 | 0 | 5 | 0 | 6 | 28 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 7 |
 | DKP-5-WORK-CYCLE-001 | 39 | 35 | 34 | 0 | 0 | 1 | 4 | 16 |
 | DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 30 |
@@ -1340,11 +1340,15 @@ Withdrawn after verification (not author decisions):
 | INFO-2-01 | IMPLEMENTED | info_truth · no_belief_evaluation | PASS | yes | — |
 | INFO-2-02 | IMPLEMENTED | info_truth · no_enforcement_without_l8 | PASS | — | — |
 | INFO-3-03 | IMPLEMENTED | info_truth · opinion_is_i0 | PASS | yes | — |
+| INFO-3-04 | PARTIAL | info_truth · disinformation_cites_ptl | PASS | yes | — |
 | INFO-4-01 | PARTIAL | info_truth · classes_i3_i4 | PASS | yes | — |
 | INFO-4-02 | IMPLEMENTED | info_truth · systemic_only_i2_i4 | PASS | — | — |
 | INFO-5-01 | IMPLEMENTED | info_truth · truth_by_ptl | PASS | yes | — |
 | INFO-5-02 | IMPLEMENTED | info_truth · not_by_popularity | PASS | yes | — |
+| INFO-5-03 | PARTIAL | info_truth · disputed_stays_i1 | PASS | yes | — |
+| INFO-6.1-01 | PARTIAL | info_truth · i1_until_t1 | PASS | — | — |
 | INFO-6.1-02 | PARTIAL | info_truth · t1_annotation | UNKNOWN | — | — |
+| INFO-6.1-03 | PARTIAL | info_truth · inconsistency_after_t2_reclassifies | PASS | — | — |
 | INFO-6.1-04 | PARTIAL | info_truth · t_values_calibrated | UNKNOWN | — | — |
 | INFO-6.2-01 | IMPLEMENTED | info_truth · i1_non_blocking | PASS | — | — |
 | INFO-6.2-02 | IMPLEMENTED | info_truth · i1_informational | PASS | — | — |
@@ -1358,7 +1362,9 @@ Withdrawn after verification (not author decisions):
 | INFO-InformationalArbitration_Non-RemovalPrinciple_-04 | IMPLEMENTED | info_truth · no_penalty_isolated_i3 | PASS | yes | — |
 | TRANSPORT-1-01 | PARTIAL | transport_capacity · environment_not_behaviour | PASS | yes | — |
 | TRANSPORT-10-01 | PARTIAL | transport_capacity · decrease_without_prohibition | PASS | yes | — |
+| TRANSPORT-10-03 | PARTIAL | transport_capacity · ppdi_trend_both_readings | PASS | — | — |
 | TRANSPORT-11-02 | IMPLEMENTED | transport_capacity · no_justice_outcomes | PASS | yes | — |
+| TRANSPORT-11-03 | PARTIAL | transport_capacity · no_mode_ban | PASS | yes | — |
 | TRANSPORT-11-04 | PARTIAL | transport_capacity · no_defense_crisis_override | PASS | — | — |
 | TRANSPORT-3-02 | PARTIAL | transport_capacity · no_dignity_tradeoff_equilibrium | PASS | — | — |
 | TRANSPORT-4-01 | PARTIAL | transport_capacity · ppdi_published | UNKNOWN | — | — |
@@ -1375,10 +1381,12 @@ Withdrawn after verification (not author decisions):
 | TRANSPORT-7.2-01 | IMPLEMENTED | transport_capacity · red_redirected | UNKNOWN | yes | Q-036 |
 | TRANSPORT-7.2-02 | IMPLEMENTED | transport_capacity · red_not_a_tax | PASS | yes | — |
 | TRANSPORT-7.3-01 | PARTIAL | transport_capacity · modulation_ptl_supported | PASS | — | — |
+| TRANSPORT-7.3-02 | PARTIAL | transport_capacity · lower_profile_lower_red | PASS | — | — |
 | TRANSPORT-7.3-03 | IMPLEMENTED | transport_capacity · no_moral_weighting | PASS | — | — |
 | TRANSPORT-7.3-04 | PARTIAL | transport_capacity · incentive_without_enforcement | PASS | yes | — |
 | TRANSPORT-8-01 | IMPLEMENTED | transport_capacity · no_bans_or_punishment | PASS | yes | — |
 | TRANSPORT-8-02 | PARTIAL | transport_capacity · comfort_driven_shift | UNKNOWN | — | — |
+| TRANSPORT-9-01 | PARTIAL | transport_capacity · evaluation_has_b_term | PASS | yes | — |
 | TRANSPORT-9-02 | PARTIAL | transport_capacity · impact_measured_via_oracle | PASS | — | — |
 | TRANSPORT-9-03 | PARTIAL | transport_capacity · biosphere_informs_decisions | PASS | yes | — |
 | TRANSPORTA-A.1-01 | IMPLEMENTED | transport_capacity · no_justice_trigger | PASS | yes | — |

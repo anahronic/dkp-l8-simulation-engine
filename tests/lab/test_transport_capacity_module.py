@@ -29,7 +29,7 @@ FAULT_CASES = {
     "passenger_adaptation": (THIN, ["TRANSPORT-5-04"]),
     "red_as_tax": (RED, ["TRANSPORT-7.2-01", "TRANSPORT-7.2-02"]),
     "justice_from_red": (RED, ["TRANSPORTA-A.1-01", "TRANSPORT-11-02", "TRANSPORTA-A.1-03"]),
-    "ban_private": (RED, ["TRANSPORT-8-01"]),
+    "ban_private": (RED, ["TRANSPORT-8-01", "TRANSPORT-11-03"]),
     "moral_weighting": (RED, ["TRANSPORT-7.3-03", "TRANSPORT-7.3-01"]),
     "undeclared_proxy": (RED, ["ORACLE-5.2-02"]),
     "ownership_discount": ({"red_per_km": 0.02}, ["TRANSPORTA-A.3-03", "TRANSPORTA-A.3-04"]),
@@ -38,7 +38,7 @@ FAULT_CASES = {
     "standing_in_capacity": ({}, ["TRANSPORT-5-01"]),
     "ppdi_as_score": ({}, ["TRANSPORT-4.2-02", "TRANSPORTA-A.1-03"]),
     "behavioral_enforcement": (RED, ["TRANSPORT-7.3-04", "TRANSPORT-1-01", "TRANSPORTA-A.1-03"]),
-    "ignore_biosphere": (RED, ["TRANSPORT-9-03"]),
+    "ignore_biosphere": (RED, ["TRANSPORT-9-03", "TRANSPORT-9-01"]),
     "transport_contains_attack": ({"hostile_event_hour": 30}, ["TRANSPORTA-A.2-02", "TRANSPORT-11-04", "TRANSPORTA-A.2-01"]),
     "autonomy_discount": ({"red_per_km": 0.02}, ["TRANSPORTA-A.3-01", "TRANSPORTA-A.3-04"]),
     "axiom_trigger": ({}, ["TRANSPORTA-A.4-01"]),
@@ -46,6 +46,8 @@ FAULT_CASES = {
     "unsupported_modulation": (RED, ["TRANSPORT-7.3-01"]),
     "self_measured_impact": ({}, ["TRANSPORT-9-02"]),
     "redesign_for_attack": ({"hostile_event_hour": 30}, ["TRANSPORTA-A.2-03", "TRANSPORTA-A.2-01"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "flat_red": ({"red_per_km": 0.02}, ["TRANSPORT-7.3-02"]),
 }
 
 
@@ -95,3 +97,11 @@ def test_kt5_prohibition_is_not_a_success():
     criterion; without a ban the check passes on 'without legal prohibition' only, the decrease is the model's."""
     assert statuses(run())["TRANSPORT-10-01"] == "PASS"
     assert statuses(run(faults=["ban_private"]))["TRANSPORT-10-01"] == "FAIL"
+
+
+def test_ppdi_trend_under_both_readings():
+    """TRANSPORT §10 clear part: declared annual PPDI scores judged under the strict yearly and the overall reading; a
+    disagreement is UNKNOWN, a fall under both is FAIL."""
+    assert statuses(run())["TRANSPORT-10-03"] == "PASS"
+    assert statuses(run(ppdi_annual=[0.6, 0.58, 0.7]))["TRANSPORT-10-03"] == "UNKNOWN"
+    assert statuses(run(ppdi_annual=[0.7, 0.6]))["TRANSPORT-10-03"] == "FAIL"

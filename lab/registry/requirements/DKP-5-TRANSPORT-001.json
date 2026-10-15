@@ -36,7 +36,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "environment_not_behaviour"
    },
    "tests": [
@@ -113,7 +113,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_dignity_tradeoff_equilibrium"
    },
    "tests": [
@@ -157,7 +157,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "ppdi_published"
    },
    "tests": [
@@ -206,7 +206,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "ppdi_components"
    },
    "tests": [
@@ -249,7 +249,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_forced_contact"
    },
    "tests": [
@@ -289,7 +289,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "degrading_mode_classification"
    },
    "tests": [
@@ -328,7 +328,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "ppdi_quality_only"
    },
    "tests": [
@@ -369,7 +369,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "standing_not_standard"
    },
    "tests": [
@@ -411,7 +411,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "standing_only_exceptional"
    },
    "tests": [
@@ -450,7 +450,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "regular_standing_classified"
    },
    "tests": [
@@ -490,7 +490,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "capacity_expansion"
    },
    "tests": [
@@ -533,7 +533,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "individual_seating"
    },
    "tests": [
@@ -621,7 +621,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "red_quantified"
    },
    "tests": [
@@ -671,7 +671,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "red_redirected"
    },
    "tests": [
@@ -715,7 +715,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "red_not_a_tax"
    },
    "tests": [
@@ -760,7 +760,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "modulation_ptl_supported"
    },
    "tests": [
@@ -798,15 +798,21 @@
     "verified Subject impact profiles",
     "Subject RED computations"
    ],
-   "gap": "Impact profile ordering, comparison conditions, and the modulation function are missing. No lab check implemented yet.",
+   "gap": "Clear part only: metamorphic, a lower declared profile lowers RED; the modulation function stays open.",
    "hypotheses_needed": [
     "A rule ordering impact profiles.",
     "Comparable travel and exposure conditions.",
     "A modulation function preserving the required lower-impact, lower-RED relation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.5.0",
+    "check": "lower_profile_lower_red"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -843,7 +849,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_moral_weighting"
    },
    "tests": [
@@ -884,7 +890,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "incentive_without_enforcement"
    },
    "tests": [
@@ -925,7 +931,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_bans_or_punishment"
    },
    "tests": [
@@ -969,7 +975,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "comfort_driven_shift"
    },
    "tests": [
@@ -1003,14 +1009,20 @@
     "biosphere indicator observations",
     "transport impact attribution"
    ],
-   "gap": "B(t), transport attribution, and the required evaluation coverage are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: the evaluation cites a transport term on B(t); attribution of impacts to transport stays open.",
    "hypotheses_needed": [
     "A biosphere indicator set and transport attribution method.",
     "A definition of sufficient inclusion in system evaluation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.5.0",
+    "check": "evaluation_has_b_term"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1046,7 +1058,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "impact_measured_via_oracle"
    },
    "tests": [
@@ -1090,7 +1102,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "biosphere_informs_decisions"
    },
    "tests": [
@@ -1132,7 +1144,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "decrease_without_prohibition"
    },
    "tests": [
@@ -1198,14 +1210,20 @@
    "data_dependencies": [
     "annual PPDI score series"
    ],
-   "gap": "The score aggregation scope, assessment span, and strict-increase versus overall-trend interpretation are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: both readings on declared annual scores; a disagreement gives UNKNOWN.",
    "hypotheses_needed": [
     "A consistent annual score aggregation scope.",
     "A choice between strict annual increases and a positive trend over annual observations."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.5.0",
+    "check": "ppdi_trend_both_readings"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1351,7 +1369,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_justice_outcomes"
    },
    "tests": [
@@ -1384,14 +1402,20 @@
    "data_dependencies": [
     "implemented measures and their effects on Subjects"
    ],
-   "gap": "The protected freedoms and the test for a restriction are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only (as TRANSPORT-8-01): no ban of a mode; the protected freedoms stay open.",
    "hypotheses_needed": [
     "A defined set of individual freedoms.",
     "A rule for determining whether a measure restricts a freedom."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "transport_capacity",
+    "version": "1.5.0",
+    "check": "no_mode_ban"
+   },
+   "tests": [
+    "tests/lab/test_transport_capacity_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1429,7 +1453,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "transport_capacity",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_defense_crisis_override"
    },
    "tests": [
