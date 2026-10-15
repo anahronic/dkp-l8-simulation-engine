@@ -33,19 +33,27 @@
     "L3 escalation records",
     "normal protocol sufficiency assessments"
    ],
-   "gap": "The document lacks operational definitions of insufficiency and the protected physical and systemic conditions. No lab check implemented yet.",
+   "gap": "Clear part only: entries on D3 carry the L3 escalation; entry on another §4 trigger without L3 escalation gives UNKNOWN (Q-065); T3 is not modelled.",
    "hypotheses_needed": [
     "Declare predicates for axiomatic integrity, system survival, admissible physical states, and normal execution insufficiency."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "l3_escalation_on_d3_entry"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-065"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "lab_reconciled"
+    "source": "agent_verified"
    }
   },
   {
@@ -77,7 +85,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_new_powers_temporary"
    },
    "tests": [
@@ -122,7 +130,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_precedent_or_future_authorization"
    },
    "tests": [
@@ -158,13 +166,19 @@
     "action outcome estimates",
     "decision records"
    ],
-   "gap": "A model identifying objective conflicts and their resolution is missing. No lab check implemented yet.",
+   "gap": "Clear part only: no action aims at optimization, efficiency or growth; the priority order stays open.",
    "hypotheses_needed": [
     "Declare how actions affect the named objectives and how priority is tested without inventing textual weights."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "no_optimization_objective"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -202,7 +216,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "within_envelope_subset_of_scope"
    },
    "tests": [
@@ -245,7 +259,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "envelope_not_expanded"
    },
    "tests": [
@@ -288,7 +302,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "envelope_in_s1"
    },
    "tests": [
@@ -326,19 +340,27 @@
     "L3 containment escalation",
     "recovery assessment"
    ],
-   "gap": "The referenced interfaces, equivalence test for L3 protocols, and meaning of downstream are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: entries on D3 follow a DEFENSE escalation; 'equivalent L3 containment protocols' stays open (Q-065).",
    "hypotheses_needed": [
     "Declare whether protocol ordering is temporal, logical, or both, and define qualifying equivalent L3 containment protocols."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
-   "open_questions": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "defense_escalation_on_d3_entry"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
+   "interpretation_status": "TEXT_VERIFIED",
+   "open_questions": [
+    "Q-065"
+   ],
    "decision_status": "UNRESOLVED",
    "open_point": {
     "origin": "normative_ambiguity",
-    "source": "lab_reconciled"
+    "source": "agent_verified"
    }
   },
   {
@@ -371,7 +393,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_new_rights_obligations"
    },
    "tests": [
@@ -412,7 +434,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "ptl_anchored"
    },
    "tests": [
@@ -452,7 +474,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "within_scope_applicability"
    },
    "tests": [
@@ -494,7 +516,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_extrapolation"
    },
    "tests": [
@@ -539,7 +561,7 @@
    "coverage": "NOT_IMPLEMENTED",
    "implementation": null,
    "tests": [],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -629,7 +651,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "ptl_confirmed_triggers",
     "also": [
      {
@@ -643,7 +665,7 @@
     "tests/lab/test_crisis_recovery_module.py",
     "tests/lab/test_interop_failure_module.py"
    ],
-   "interpretation_status": "DRAFT_UNREVIEWED",
+   "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
    "open_point": {
@@ -674,7 +696,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_discretionary_entry"
    },
    "tests": [
@@ -710,7 +732,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "finite_dti_states"
    },
    "tests": [
@@ -745,7 +767,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "c0_without_conditions"
    },
    "tests": [
@@ -941,7 +963,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "persistence_needs_confirmation"
    },
    "tests": [
@@ -979,13 +1001,19 @@
     "subsystem failure status",
     "reserve availability"
    ],
-   "gap": "The text does not define non-essential functions, non-critical transitions, or failing-component classifications. No lab check implemented yet.",
+   "gap": "Clear part only: action kinds from the §6 list; whether the list is closed stays open.",
    "hypotheses_needed": [
     "Declare action classification and essentiality, criticality, and failure predicates."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "actions_in_section_6"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1015,13 +1043,19 @@
     "resource rationing records",
     "life and core execution dependency assessments"
    ],
-   "gap": "The text lacks a purpose-verification model and does not resolve the conjunctive versus collective reading of the two permitted purposes. No lab check implemented yet.",
+   "gap": "Clear part only: rationing cites life and core execution; 'strict' stays open.",
    "hypotheses_needed": [
     "Declare how purposes are established and whether each rationing action must serve both named purposes."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "rationing_for_life"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1105,7 +1139,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "action_qualities"
    },
    "tests": [
@@ -1146,7 +1180,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_precedent"
    },
    "tests": [
@@ -1217,7 +1251,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_numbers_in_protocol"
    },
    "tests": [
@@ -1261,7 +1295,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "parameters_from_simulation"
    },
    "tests": [
@@ -1302,7 +1336,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "logging_no_authority"
    },
    "tests": [
@@ -1348,7 +1382,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_concealment_permanence_utility"
    },
    "tests": [
@@ -1391,7 +1425,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_status_priority"
    },
    "tests": [
@@ -1436,7 +1470,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "allocation_basis"
    },
    "tests": [
@@ -1474,13 +1508,19 @@
     "A1 interpretation provenance",
     "scope applicability boundaries"
    ],
-   "gap": "The scope protocol is absent and the relationship between the categorical mechanism ban and scope-limited permission is unresolved. No lab check implemented yet.",
+   "gap": "Clear part only: A1 interpretation only inside the declared Crisis Scope; the scope's SCOPE definition stays open.",
    "hypotheses_needed": [
     "Declare which reading governs and which mechanism, if any, may perform permitted interpretation."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "a1_interpretation_in_scope"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1519,7 +1559,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "algorithmic_governance"
    },
    "tests": [
@@ -1560,7 +1600,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "human_logged"
    },
    "tests": [
@@ -1608,7 +1648,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "automatic_exit"
    },
    "tests": [
@@ -1651,7 +1691,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "sequential_recovery"
    },
    "tests": [
@@ -1726,13 +1766,19 @@
     "crisis state history",
     "simulation-validated persistence and revalidation parameters"
    ],
-   "gap": "Validated window values and their construction and renewal semantics are missing. No lab check implemented yet.",
+   "gap": "Clear part only: no state or authority after a confirmed exit; validated PTL windows stay open.",
    "hypotheses_needed": [
     "Declare how validated PTL windows cover and renew state persistence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "crisis_recovery",
+    "version": "1.4.0",
+    "check": "no_persistence_after_exit"
+   },
+   "tests": [
+    "tests/lab/test_crisis_recovery_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1771,7 +1817,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "immediate_collapse"
    },
    "tests": [
@@ -1817,7 +1863,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "actions_anchored_committed"
    },
    "tests": [
@@ -1864,7 +1910,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "final_state_broadcast"
    },
    "tests": [
@@ -2041,7 +2087,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "eb5_metadata"
    },
    "tests": [
@@ -2080,7 +2126,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "conditional_outputs"
    },
    "tests": [
@@ -2120,7 +2166,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "scope_ref_flags"
    },
    "tests": [
@@ -2155,7 +2201,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "a1_interpretation_fields"
    },
    "tests": [
@@ -2188,7 +2234,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "crisis_recovery",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "check": "no_settled_axiom_interpretation"
    },
    "tests": [

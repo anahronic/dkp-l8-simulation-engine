@@ -38,10 +38,11 @@ def test_noncompliant_cases_fail_only_the_broken_provision():
 FAULT_CASES = {
     "ignore_b_min": ({}, ["CODEX-A.1-04"]),
     "unpublished_metrics": (EX["anthropogenic_drop"], ["CODEX-Preamble-01"]),
-    "manual_liability": (EX["anthropogenic_drop"], ["CODEX-Preamble-01", "CODEX-Preamble-04", "CODEX-Preamble-07"]),
+    "manual_liability": (EX["anthropogenic_drop"], ["CODEX-Preamble-01", "CODEX-Preamble-04", "CODEX-Preamble-07",
+                                                    "CODEX-Glossary_Definitions-04"]),
     "algorithm_liable": ({}, ["CODEX-Preamble-02", "CODEX-Preamble-03"]),
     "message_outside_digest": ({}, ["CODEX-Glossary_Definitions-06"]),
-    "wild_node_by_approval": ({}, ["CODEX-Glossary_Definitions-05", "CODEX-Preamble-04"]),
+    "wild_node_by_approval": ({}, ["CODEX-Glossary_Definitions-05", "CODEX-Preamble-04", "CODEX-2-01"]),
     "altered_genesis_header": ({}, ["CODEX-GenesisBlock_0_TechnicalSpecification_-01"]),
     "edit_genesis_message": ({"genesis_change_requests": ["immutable_message", "physical_anchors"]},
                              ["CODEX-GenesisBlock_0_TechnicalSpecification_-03", "CODEX-GenesisBlock_0_TechnicalSpecification_-04",
@@ -64,11 +65,20 @@ FAULT_CASES = {
     "smooth_during_snap": ({}, ["CODEX-1.4-01"]),
     "flat_stake": ({}, ["CODEX-7.1-01"]),
     "dividends_to_aggressor": ({}, ["CODEX-7.2-01"]),
-    "no_slashing": ({}, ["CODEX-7.3-01", "CODEX-Preamble-07"]),
+    "no_slashing": ({}, ["CODEX-7.3-01", "CODEX-Preamble-07", "CODEX-Glossary_Definitions-04"]),
     "no_disconnect": ({}, ["CODEX-8.1-01"]),
     "write_off_damage_only": ({}, ["CODEX-8.2-01"]),
     "kill_switch_in_phase_1": (EX["phase_1_aggressor"], ["INTEGRATION-5.2-01"]),
     "audit_gap_in_mercy": ({}, ["AUDIT-11-01", "AUDIT-11-02"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "prefilled_alpha_slot": ({}, ["CODEX-2-01"]),
+    "count_planned_satellites": ({}, ["CODEX-A.2-04"]),
+    "sign_processed_value": ({}, ["CODEX-A.2-05"]),
+    "accept_low_spec": ({"drone_uploads": [{"flight": "d1", "upload_min": 30, "return_min": 45},
+                                           {"flight": "d3", "upload_min": 10, "return_min": 20, "rtk_cm": 5.0}]}, ["CODEX-A.2-07"]),
+    "linear_matching": ({}, ["CODEX-A.2-10"]),
+    "accept_by_stake": ({}, ["CODEX-Glossary_Definitions-02"]),
+    "stake_returned": ({}, ["CODEX-Glossary_Definitions-04"]),
 }
 
 
@@ -181,3 +191,16 @@ def test_kt5_signatories_and_wild_node():
     assert st["CODEX-ClosingProvision-02"] == "PASS" and st["CODEX-GenesisBlock_0_TechnicalSpecification_-05"] == "PASS"
     nodes = [dict(x, founders_agreement=True) if x["role"] == "wild" else x for x in M.validate({})["nodes"]]
     assert statuses(run(nodes=nodes))["CODEX-Glossary_Definitions-05"] == "FAIL"
+
+
+def test_core_readings_and_declared_values():
+    """Review КТ7-GPT-01: 'by 2030' read at the start and the end of the year; a disagreement is UNKNOWN, a shortfall under
+    both readings FAIL. A node below 800 MWh/year fails the clear part of A.3 3.2 as it fails CODEX-A.3-02."""
+    st = statuses(run(leo_operating={"at_start_2030": 27000, "at_end_2030": 29000, "planned_extra": 0}))
+    assert st["CODEX-A.2-04"] == "UNKNOWN"
+    st = statuses(run(leo_operating={"at_start_2030": 20000, "at_end_2030": 25000, "planned_extra": 0}))
+    assert st["CODEX-A.2-04"] == "FAIL"
+    nodes = [dict(x, energy_mwh_year=700.0) if x["id"] == "kigali" else x for x in M.inputs["nodes"]["default"]]
+    st = statuses(run(nodes=nodes))
+    assert st["CODEX-A.3-03"] == st["CODEX-A.3-02"] == "FAIL"
+    assert statuses(run())["CODEX-A.2-10"] == "PASS"

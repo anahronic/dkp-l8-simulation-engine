@@ -1012,7 +1012,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:alpha_slot_until_qualifying_node"
   },
   {
    "id": "CODEX-3-01",
@@ -1048,7 +1049,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:leo_count_both_readings"
   },
   {
    "id": "CODEX-A.2-05",
@@ -1062,7 +1064,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:onboard_signature_verifies"
   },
   {
    "id": "CODEX-A.2-07",
@@ -1076,7 +1079,8 @@
     "human_accepted": false
    },
    "origin_after": "empirical_model_data",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:sensor_spec_declared"
   },
   {
    "id": "CODEX-A.2-10",
@@ -1090,7 +1094,8 @@
     "human_accepted": false
    },
    "origin_after": "external_dependency",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:quadratic_funding_formula"
   },
   {
    "id": "CODEX-A.3-03",
@@ -1104,7 +1109,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:autonomous_source_800"
   },
   {
    "id": "CODEX-A.5-02",
@@ -1174,7 +1180,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:acceptance_not_work_or_stake"
   },
   {
    "id": "CODEX-Glossary_Definitions-03",
@@ -1202,7 +1209,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "code_synergy:stake_burned_never_returned"
   },
   {
    "id": "CODEX-Glossary_Definitions-05",
@@ -1438,13 +1446,17 @@
    "quote": "Crisis mode is invoked exclusively when normal protocol execution is insufficient to preserve axiomatic integrity, system survival, or admissible physical states, as confirmed by Physical Truth Layer (PTL) evidence and downstream L3 escalation.",
    "draft_origin": "empirical_model_data",
    "verdict": "reclassified",
-   "reason": "§0 says crisis mode is invoked exclusively 'as confirmed by PTL evidence and downstream L3 escalation' and §2 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols', while §4 makes entry mandatory ('SHALL be entered') on triggers that no L3 protocol escalates: a cascading failure escalated from DKP-4-ERROR-001 (L4), a verified loss or divergence of PTL outputs, simultaneous multi-domain harm. Whether those triggers also need an L3 escalation is a contested reading, found when the check was being written (the first reading had returned the provision as resolvable); a candidate author question, not yet verified. Core: entries on D3 and T3 carry an L3 escalation record.",
+   "reason": "§0 says crisis mode is invoked exclusively 'as confirmed by PTL evidence and downstream L3 escalation' and §2 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols', while §4 makes entry mandatory ('SHALL be entered') on triggers such as a cascading failure escalated from DKP-4-ERROR-001. Semantic verification (review of checkpoint 7, §7): for an execution-error cascade or a PTL divergence no L3 protocol has a trigger; reading 1 (§4 suffices) does not meet §0 and §2, reading 2 (L3 escalation for every entry) meets every provision but leaves those §4 triggers and the ERROR §9 escalation without effect; the corpus does not choose, so this is author question Q-065, not a proven contradiction. Core: entries on D3 and T3 carry an L3 escalation record.",
    "acceptance": {
     "agent_reading": true,
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:l3_escalation_on_d3_entry",
+   "questions": [
+    "Q-065"
+   ]
   },
   {
    "id": "CRISIS-0-02",
@@ -1502,7 +1514,8 @@
     "human_accepted": false
    },
    "origin_after": "empirical_model_data",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:no_optimization_objective"
   },
   {
    "id": "CRISIS-1-02",
@@ -1554,13 +1567,17 @@
    "quote": "- only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols,\n- upstream of DKP-4-UPGRADE-001 (when recovery is possible).",
    "draft_origin": "architecture_definition",
    "verdict": "reclassified",
-   "reason": "Not only the undefined ordering with UPGRADE: 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols' meets §4 triggers that no L3 protocol escalates (ERROR cascade, PTL loss or divergence, multi-domain harm); the same contested reading as CRISIS-0-01 (candidate author question, not yet verified). Core: entries on D3 carry a DEFENSE escalation record.",
+   "reason": "Not only the undefined ordering with UPGRADE: 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols' meets §4 triggers that no L3 protocol escalates (an execution-error cascade, a PTL divergence); verified as author question Q-065, the same reading question as CRISIS-0-01. Core: entries on D3 carry a DEFENSE escalation record.",
    "acceptance": {
     "agent_reading": true,
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:defense_escalation_on_d3_entry",
+   "questions": [
+    "Q-065"
+   ]
   },
   {
    "id": "CRISIS-2-02",
@@ -1746,7 +1763,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:actions_in_section_6"
   },
   {
    "id": "CRISIS-6-02",
@@ -1760,7 +1778,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:rationing_for_life"
   },
   {
    "id": "CRISIS-6-03",
@@ -1849,7 +1868,8 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:no_persistence_after_exit"
   },
   {
    "id": "CRISIS-AxiomA1InterpretationConstraint-01",
@@ -1863,7 +1883,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "crisis_recovery:a1_interpretation_in_scope"
   },
   {
    "id": "CRISIS-Non-PrecedentRule_-02",

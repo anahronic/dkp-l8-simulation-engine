@@ -2088,7 +2088,7 @@
    "author_question_candidate": false,
    "rationale": "Establishing that normal execution is 'insufficient to preserve' the listed conditions requires evidence and a model of its protective effectiveness.",
    "reconciled": "lab/registry/reconciliations.json",
-   "rationale_reconciled": "§0 says crisis mode is invoked exclusively 'as confirmed by PTL evidence and downstream L3 escalation' and §2 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols', while §4 makes entry mandatory ('SHALL be entered') on triggers that no L3 protocol escalates: a cascading failure escalated from DKP-4-ERROR-001 (L4), a verified loss or divergence of PTL outputs, simultaneous multi-domain harm. Whether those triggers also need an L3 escalation is a contested reading, found when the check was being written (the first reading had returned the provision as resolvable); a candidate author question, not yet verified. Core: entries on D3 and T3 carry an L3 escalation record."
+   "rationale_reconciled": "§0 says crisis mode is invoked exclusively 'as confirmed by PTL evidence and downstream L3 escalation' and §2 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols', while §4 makes entry mandatory ('SHALL be entered') on triggers such as a cascading failure escalated from DKP-4-ERROR-001. Semantic verification (review of checkpoint 7, §7): for an execution-error cascade or a PTL divergence no L3 protocol has a trigger; reading 1 (§4 suffices) does not meet §0 and §2, reading 2 (L3 escalation for every entry) meets every provision but leaves those §4 triggers and the ERROR §9 escalation without effect; the corpus does not choose, so this is author question Q-065, not a proven contradiction. Core: entries on D3 and T3 carry an L3 escalation record."
   },
   "CRISIS-0-02": {
    "document": "DKP-4-CRISIS-001",
@@ -2167,7 +2167,7 @@
    "author_question_candidate": true,
    "rationale": "'Equivalent L3 containment protocols' and 'upstream of DKP-4-UPGRADE-001' require an unspecified protocol-equivalence mapping and dependency interface.",
    "reconciled": "lab/registry/reconciliations.json",
-   "rationale_reconciled": "Not only the undefined ordering with UPGRADE: 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols' meets §4 triggers that no L3 protocol escalates (ERROR cascade, PTL loss or divergence, multi-domain harm); the same contested reading as CRISIS-0-01 (candidate author question, not yet verified). Core: entries on D3 carry a DEFENSE escalation record."
+   "rationale_reconciled": "Not only the undefined ordering with UPGRADE: 'only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols' meets §4 triggers that no L3 protocol escalates (an execution-error cascade, a PTL divergence); verified as author question Q-065, the same reading question as CRISIS-0-01. Core: entries on D3 carry a DEFENSE escalation record."
   },
   "CRISIS-2-02": {
    "document": "DKP-4-CRISIS-001",

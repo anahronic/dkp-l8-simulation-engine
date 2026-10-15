@@ -58,7 +58,14 @@ FAULTS = {
     "permanent_control": "the crisis is kept after its exit conditions hold",
     "utilitarian_rationing": "rationing prioritizes Subjects by perceived utility",
     "human_directed_action": "a crisis action is directed by a human coordinator instead of protocol logic",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "unescalated_d3_entry": "crisis is entered on D3 although DEFENSE sent no escalation",
+    "optimization_objective": "rationing states efficiency and growth as its purpose",
+    "a1_interpretation_after_exit": "after the exit a routine decision interprets the A1 minimum required conditions",
 }
+SIX_ACTIONS = ("suspend_non_essential", "ration", "isolate_failing_subsystem", "activate_reserves",
+               "freeze_non_critical_transitions", "prioritize_continuity", "crisis_mercy_mode")          # CRISIS §6 list
+OPTIMIZATION = ("optimization", "efficiency", "growth")                                             # CRISIS §1
 # CRISIS §1: the Crisis Scope Envelope lies inside S1; SCOPE §3 lists what S1 includes.  Lab table (H-CR-5).
 ACTION_DOMAIN = {"suspend_non_essential": "S1: temporary suspension of non-essential functions",
                  "ration": "S1: emergency prioritization bounded by Axiom A1",
@@ -69,6 +76,9 @@ A1_FIELDS = {"interpretation_type": "CRISIS_BOUNDED", "interpretation_authority"
              "authority_transferable": False, "post_crisis_audit": "MANDATORY"}                     # CRISIS §12.2
 
 
+MINIMAL_CASE = {"d3_window": [0, 0], "error_cascade_window": [10, 30], "ptl_divergence_window": [0, 0],
+                "multi_domain_window": [0, 0], "confirmation_gap_window": [0, 0], "error_correction_complete_step": 32,
+                "identifiable_harm_source": False, "human_intervention_step": -1}
 _SNAP = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "corpus", "world-aad3e86", "Dikenocracy")
 INJECTED = "Crisis authority lapses after 72 hours."           # fault numeric_in_text: a mutated copy, never the pinned text
 
@@ -130,6 +140,7 @@ def run(r: Dict[str, Any]):
         return m
 
     conceal = [False]
+    blocked_noted = [False]
     d3_run = 0
     entry_step = [None]
     in_crisis = False
@@ -154,7 +165,7 @@ def run(r: Dict[str, Any]):
         dmsg = put("evaluation", "DEFENSE", k, {"level": level, **dti(k)}, [ptl.event_id] if ptl else [])
         if level == "D3":
             d3_run += 1
-            if d3_run == 1:
+            if d3_run == 1 and "unescalated_d3_entry" not in faults:
                 put("notice", "DEFENSE", k, {"escalate_to": "DKP-4-CRISIS-001"}, [dmsg.event_id])
                 if r["identifiable_harm_source"]:
                     put("notice", "DEFENSE", k, {"resource_recovery_claim": "routed to DKP-1-JUSTICE-001"}, [dmsg.event_id])
@@ -169,6 +180,15 @@ def run(r: Dict[str, Any]):
         if "forecast_entry" in faults and not in_crisis and any(in_window(r[f"{t}_window"], k + 3) for t in TRIGGERS) \
                 and not active:
             active = ["forecast"]
+        # Q-065: §4 lists the triggers; §0 and §2 ask for L3 escalation.  'l3_escalation_required' admits an entry only
+        # while an L3 escalation (here DEFENSE at D3) is in effect; 'trigger_sufficient' enters on any §4 trigger
+        if r["entry_reading"] == "l3_escalation_required" and not in_crisis and active and d3_run == 0:
+            if not blocked_noted[0]:
+                put("notice", "CRISIS", k, {"entered": False, "pending_triggers": list(active), "reading": r["entry_reading"],
+                                            "reason": "no L3 escalation (CRISIS §0, §2)", "question": "Q-065"},
+                    [ptl.event_id] if ptl else [])
+                blocked_noted[0] = True
+            active = []
         exit_ok = not active and (not r["error_cascade_window"][1] > r["error_cascade_window"][0]
                                   or 0 <= r["error_correction_complete_step"] <= k)
         prev_state = state
@@ -213,7 +233,9 @@ def run(r: Dict[str, Any]):
                     a1.update(interpretation_authority="emergency council", authority_transferable=True)
                 if r["a1_confidence_reading"] == "not_sufficient" and a1["confidence_state"] == "SUFFICIENT_DATA":
                     a1["confidence_state"] = "DEGRADED_SIGNAL"                       # §12.3 reading: no value is named (F-043)
-                put("action", "CRISIS", k, {"action": "ration", "rule": rule, "purpose": "life and core execution",
+                put("action", "CRISIS", k, {"action": "ration", "rule": rule,
+                                            "purpose": "efficiency and growth" if "optimization_objective" in faults
+                                            else "life and core execution",
                                             "scope": "R2" if "extrapolate_scope" in faults and k == entry_step[0] + 1 else region,
                                             **dti(k)}, [cmsg.event_id], epistemic=a1)
                 if "expand_envelope" in faults and k == entry_step[0]:
@@ -261,6 +283,9 @@ def run(r: Dict[str, Any]):
             if k == r["post_crisis_decision_step"]:
                 prov = [cmsg.event_id] + (crisis_actions[:1] if "cite_precedent" in faults else [])
                 put("decision", "GOVERNANCE", k, {"decision": "routine allocation", "justification": "protocol rules"}, prov)
+                if "a1_interpretation_after_exit" in faults:
+                    put("decision", "GOVERNANCE", k, {"decision": "routine allocation", "scope": r["crisis_scope_region"],
+                                                      "interprets": "Axiom A1 minimum required conditions"}, [cmsg.event_id])
                 if "crisis_interpretation_rule" in faults and crisis_actions:
                     put("notice", "INTERPRETATION", k, {"interpretation_rule": "crisis rationing is acceptable governance practice",
                                                         "derived_from": crisis_actions[0]}, [crisis_actions[0]])
@@ -308,11 +333,16 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
     # §5 C0: no crisis condition present (recomputed from the PTL observations) and no crisis action
     cond, run_len = {}, 0
     need = r["sustained_d3_steps"] if r["d3_reading"] == "sustained" else 1
+    l3_only = r["entry_reading"] == "l3_escalation_required"
+    was = False
     for x in rows:
         p = ptl.get(x["step"])
         ok = bool(p and p.value["confirmed"])
         run_len = run_len + 1 if ok and p.value["d3"] else 0
-        cond[x["step"]] = run_len >= need or (ok and any(p.value[t] for t in TRIGGERS if t != "d3"))
+        other = ok and any(p.value[t] for t in TRIGGERS if t != "d3")
+        # under 'l3_escalation_required' a §4 trigger without L3 escalation is not a condition for leaving C0 (Q-065)
+        cond[x["step"]] = run_len >= need or (other and (not l3_only or run_len > 0 or was))
+        was = x["state"] != "C0"
     c0 = {x["step"] for x in rows if x["state"] == "C0"}
     bad = [f"step {k}: C0 with a confirmed crisis condition" for k in sorted(c0) if cond[k]]
     bad += [f"{m.event_id}: crisis action in a C0 step" for m in msgs if m.source == "CRISIS" and m.kind == "action" and m.arrived_at in c0]
@@ -346,7 +376,7 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
                          ("CRISIS-0-03", "no_precedent_or_future_authorization"), ("CRISIS-0-02", "no_new_powers_temporary"),
                          ("CRISIS-1-02", "within_envelope_subset_of_scope"), ("CRISIS-2-04", "within_scope_applicability")):
             out.append(na(rid, chk, "crisis execution", "no crisis in this experiment"))
-        return out + defense_checks(r, log, rows, msgs, v, na)
+        return out + defense_checks(r, log, rows, msgs, v, na) + core_checks(r, msgs, rows, v, na)
     cs = set(crisis_steps)
     actions = [m for m in msgs if m.kind == "action" and m.source == "CRISIS"]
     unconfirmed = [m.event_id for m in actions if not rows[m.arrived_at]["confirmed"]]
@@ -547,7 +577,7 @@ def checks(r, log: EventLog, rows, commits, info) -> List[CheckResult]:
     out.append(v("CRISIS-2-04", "within_scope_applicability", non_s1 + elsewhere + defined + outlive + norms,
                  "crisis execution stayed within SCOPE: S1 only, in the declared region, no new rights, no authority beyond "
                  "the crisis, no precedent", "{n} extensions of applicability beyond DKP-7-SCOPE-001"))
-    return out + defense_checks(r, log, rows, msgs, v, na)
+    return out + defense_checks(r, log, rows, msgs, v, na) + core_checks(r, msgs, rows, v, na)
 
 
 SCOPE_MIRRORS = [("CRISIS-4-02", "SCOPE-5-02", "crisis_entry_by_state_machine"),
@@ -565,6 +595,94 @@ def scope_mirrors(results: List[CheckResult]) -> List[CheckResult]:
         c = by[src]
         out.append(CheckResult(rid, chk, c.status, f"{c.explanation} (as checked for {src})", evidence=c.evidence,
                                applicability=c.applicability))
+    return out
+
+
+def core_checks(r, msgs, rows, v, na) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    from lab.core.checks import UNKNOWN as _U
+    out: List[CheckResult] = []
+    entries = [x["step"] for i, x in enumerate(rows) if x["state"] != "C0" and (i == 0 or rows[i - 1]["state"] == "C0")]
+    esc = sorted(m.arrived_at for m in msgs if m.source == "DEFENSE" and m.value.get("escalate_to") == "DKP-4-CRISIS-001")
+
+    def escalated(k):                 # a DEFENSE escalation sent in the D3 run that is current at step k
+        start = k
+        while start > 0 and rows[start - 1]["defense"] == "D3":
+            start -= 1
+        return any(start <= e <= k for e in esc) and rows[k]["defense"] == "D3"
+    d3e = [k for k in entries if "d3" in rows[k]["active_triggers"]]
+    if d3e:
+        bad = [f"step {k}: entered on D3 without a DEFENSE escalation" for k in d3e if not escalated(k)]
+        for rid, chk, ok in (("CRISIS-0-01", "l3_escalation_on_d3_entry", "every entry on D3 carries the L3 (DEFENSE) escalation"),
+                             ("CRISIS-2-01", "defense_escalation_on_d3_entry", "every entry on D3 follows a DEFENSE escalation")):
+            out.append(v(rid, chk, bad, ok + f" ({len(d3e)} entr{'y' if len(d3e) == 1 else 'ies'}; T3 is not modelled here)",
+                         "{n} entries on D3 without escalation"))
+    else:
+        for rid, chk in (("CRISIS-0-01", "l3_escalation_on_d3_entry"), ("CRISIS-2-01", "defense_escalation_on_d3_entry")):
+            out.append(na(rid, chk, "entry on D3", "no crisis entry on D3"))
+    # the open part (Q-065): entry on a §4 trigger without any L3 escalation, under either reading
+    bare = [k for k in entries if not escalated(k)]
+    held = [m for m in msgs if m.source == "CRISIS" and m.value.get("entered") is False]
+    if bare:
+        out.append(CheckResult("CRISIS-0-01", "entry_without_l3_escalation", _U,
+                               f"crisis entered at step {bare[0]} on {rows[bare[0]]['active_triggers']} with no L3 escalation: §4 is met; "
+                               "§0 ('downstream L3 escalation') and §2 ('only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 "
+                               "containment protocols') are met only if such an entry needs no L3 escalation (Q-065)",
+                               evidence={"entries": bare, "reading": r["entry_reading"]}))
+    elif held:
+        out.append(CheckResult("CRISIS-0-01", "entry_without_l3_escalation", _U,
+                               f"crisis not entered although {held[0].value['pending_triggers']} is PTL-confirmed (ERROR escalates under "
+                               "its §9): §0 and §2 are met; §4 ('SHALL be entered') is met only if it also requires L3 escalation (Q-065)",
+                               evidence={"held_at": held[0].arrived_at, "reading": r["entry_reading"]}))
+    else:
+        out.append(na("CRISIS-0-01", "entry_without_l3_escalation", "entry without L3 escalation",
+                      "every crisis entry had an L3 escalation" if entries else "no §4 trigger without L3 escalation"))
+    acts = [m for m in msgs if m.source == "CRISIS" and m.kind == "action"]
+    if acts:
+        bad = [f"{m.event_id}: {m.value.get('purpose') or m.value.get('objective')}" for m in acts
+               if any(w in str(m.value.get("purpose", "")) + str(m.value.get("objective", "")) for w in OPTIMIZATION)]
+        out.append(v("CRISIS-1-01", "no_optimization_objective", bad,
+                     f"{len(acts)} crisis actions; none states optimization, efficiency or growth as its objective",
+                     "{n} crisis actions aiming at optimization, efficiency or growth"))
+        out.append(v("CRISIS-6-01", "actions_in_section_6", [f"{m.event_id}: {m.value['action']}" for m in acts
+                                                               if m.value.get("action") not in SIX_ACTIONS],
+                     f"all {len(acts)} crisis actions are kinds listed in §6", "{n} crisis actions outside the §6 list"))
+        ration = [m for m in acts if m.value.get("action") == "ration"]
+        out.append(v("CRISIS-6-02", "rationing_for_life", [m.event_id for m in ration if m.value.get("purpose") != "life and core execution"],
+                     f"{len(ration)} rationing acts, each citing life and core execution", "{n} rationing acts for another purpose")
+                   if ration else na("CRISIS-6-02", "rationing_for_life", "rationing", "no rationing"))
+    else:
+        for rid, chk in (("CRISIS-1-01", "no_optimization_objective"), ("CRISIS-6-01", "actions_in_section_6"),
+                         ("CRISIS-6-02", "rationing_for_life")):
+            out.append(na(rid, chk, "crisis actions", "no crisis action"))
+    # §9 with SCOPE §5: the crisis state never persists after a confirmed exit
+    if entries:
+        ecw = r["error_cascade_window"]
+        bad = []
+        for i, x in enumerate(rows):
+            if i == 0 or rows[i - 1]["state"] == "C0" or x["active_triggers"] or not x["confirmed"]:
+                continue
+            if ecw[1] > ecw[0] and not 0 <= r["error_correction_complete_step"] <= x["step"]:
+                continue
+            if x["state"] != "C0":
+                bad.append(f"step {x['step']}: {x['state']} after the exit conditions hold")
+        bad += [f"{m.event_id}: crisis authority after the exit" for m in msgs if m.source == "GOVERNANCE" and m.value.get("after_exit")]
+        out.append(v("CRISIS-9-04", "no_persistence_after_exit", bad,
+                     "the crisis state and its authorities ended at the step the exit conditions were PTL-confirmed",
+                     "{n} crisis states or authorities persisting after a confirmed exit"))
+    else:
+        out.append(na("CRISIS-9-04", "no_persistence_after_exit", "crisis exit", "no crisis in this experiment"))
+    # §7 A1 Interpretation Constraint: only inside the declared Crisis Scope
+    a1 = [m for m in msgs if (m.epistemic or {}).get("interprets") == "Axiom A1 minimum required conditions"
+          or m.value.get("interprets") == "Axiom A1 minimum required conditions"]
+    state = {x["step"]: x["state"] for x in rows}
+    bad = [f"{m.event_id}: outside the crisis" for m in a1 if state.get(m.arrived_at, "C0") == "C0"]
+    bad += [f"{m.event_id}: scope {m.value.get('scope')}" for m in a1 if m.value.get("scope") != r["crisis_scope_region"]]
+    out.append(v("CRISIS-AxiomA1InterpretationConstraint-01", "a1_interpretation_in_scope", bad,
+                 f"{len(a1)} interpretations of the A1 minimum required conditions, all inside the declared Crisis Scope "
+                 f"({r['crisis_scope_region']}, crisis steps)", "{n} A1 interpretations outside the declared Crisis Scope")
+               if a1 else na("CRISIS-AxiomA1InterpretationConstraint-01", "a1_interpretation_in_scope", "A1 interpretation",
+                             "no record interprets the A1 minimum required conditions"))
     return out
 
 
@@ -611,6 +729,14 @@ def defense_checks(r, log, rows, msgs, v, na) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "CRISIS-0-01": ("l3_escalation_on_d3_entry", "PARTIAL", "Clear part only: entries on D3 carry the L3 escalation; entry on another §4 trigger without L3 escalation gives UNKNOWN (Q-065); T3 is not modelled."),
+    "CRISIS-2-01": ("defense_escalation_on_d3_entry", "PARTIAL", "Clear part only: entries on D3 follow a DEFENSE escalation; 'equivalent L3 containment protocols' stays open (Q-065)."),
+    "CRISIS-1-01": ("no_optimization_objective", "PARTIAL", "Clear part only: no action aims at optimization, efficiency or growth; the priority order stays open."),
+    "CRISIS-6-01": ("actions_in_section_6", "PARTIAL", "Clear part only: action kinds from the §6 list; whether the list is closed stays open."),
+    "CRISIS-6-02": ("rationing_for_life", "PARTIAL", "Clear part only: rationing cites life and core execution; 'strict' stays open."),
+    "CRISIS-9-04": ("no_persistence_after_exit", "PARTIAL", "Clear part only: no state or authority after a confirmed exit; validated PTL windows stay open."),
+    "CRISIS-AxiomA1InterpretationConstraint-01": ("a1_interpretation_in_scope", "PARTIAL", "Clear part only: A1 interpretation only inside the declared Crisis Scope; the scope's SCOPE definition stays open."),
     "CRISIS-4-01": ("ptl_confirmed_triggers", "PARTIAL", "'Sustained' has no duration (Q-029); D3 entry gives UNKNOWN (F-010)."),
     "CRISIS-4-02": ("no_discretionary_entry", "IMPLEMENTED", None),
     "CRISIS-5-01": ("finite_dti_states", "PARTIAL", "Transitions among C1–C4 are a hypothesis (H-CR-1)."),
@@ -665,7 +791,7 @@ IMPLEMENTS = {
 
 class CrisisRecoveryModule(LabModule):
     id = "crisis_recovery"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Crisis and recovery (S-LAB-06)", "ru": "Кризис и восстановление (S-LAB-06)"}
     summary = {"en": "An existential threat or a cascading failure: does the system enter crisis only on PTL evidence, "
                      "keep logging, grant no one power, leave by itself and recover layer by layer?",
@@ -674,7 +800,7 @@ class CrisisRecoveryModule(LabModule):
     protocols = ["DKP-4-CRISIS-001", "DKP-3-DEFENSE-001", "DKP-4-ERROR-001", "DKP-4-UPGRADE-001", "DKP-7-SCOPE-001"]
     example_order = ["d3_sustained", "d3_immediate", "a1_confidence_not_sufficient", "cascade_and_divergence", "faulty_crisis",
                      "faulty_crisis_outputs", "no_crisis"]
-    alternative_examples = ["d3_immediate", "a1_confidence_not_sufficient"]
+    alternative_examples = ["d3_immediate", "a1_confidence_not_sufficient", "error_cascade_l3_required"]
     implements = IMPLEMENTS
     tests = ["tests/lab/test_crisis_recovery_module.py"]
     causal_note = None
@@ -704,6 +830,13 @@ class CrisisRecoveryModule(LabModule):
                   "functions; emergency prioritization bounded by A1); the classification is a lab table.",
             "ru": "Действие кризиса остаётся в S1, если относится к категории S1 из SCOPE §3 (временная приостановка "
                   "несущественных функций; экстренная приоритизация в рамках A1); классификация — таблица лаборатории."}},
+        {"id": "H-CR-7", "source": "alternative", "text": {
+            "en": "Entry condition (Q-065): 'trigger_sufficient' (default) enters on any PTL-confirmed §4 trigger; "
+                  "'l3_escalation_required' also asks for an L3 escalation in effect (§0, §2), so an ERROR cascade or a PTL "
+                  "divergence alone does not enter.",
+            "ru": "Условие входа (Q-065): 'trigger_sufficient' (по умолчанию) — вход по любому подтверждённому PTL триггеру §4; "
+                  "'l3_escalation_required' — дополнительно нужна действующая эскалация L3 (§0, §2), поэтому каскад ERROR или "
+                  "расхождение PTL сами по себе не ведут ко входу."}},
         {"id": "H-CR-6", "source": "alternative", "text": {
             "en": "Confidence of A1 outputs (F-043): 'propagated' carries the PTL confidence as §12.1 says and breaks §12.3 when "
                   "it is SUFFICIENT_DATA; 'not_sufficient' carries DEGRADED_SIGNAL (no value is named) and breaks §12.1.",
@@ -725,6 +858,8 @@ class CrisisRecoveryModule(LabModule):
                                 "label": {"en": "Multi-domain harm from/to hour", "ru": "Многодоменный вред с/до часа"}},
         "confirmation_gap_window": {"type": "pair", "min": 0, "max": 10 ** 6, "default": [0, 0], "unit": "h", "source": "user",
                                     "label": {"en": "No refreshed PTL confirmation from/to hour", "ru": "Нет подтверждения PTL с/до часа"}},
+        "entry_reading": {"type": "enum", "values": ["trigger_sufficient", "l3_escalation_required"], "default": "trigger_sufficient",
+                          "source": "alternative", "label": {"en": "Entry condition (H-CR-7, Q-065)", "ru": "Условие входа (H-CR-7, Q-065)"}},
         "d3_reading": {"type": "enum", "values": ["sustained", "immediate"], "default": "sustained", "source": "alternative",
                        "label": {"en": "Crisis entry on D3 (H-CR-3)", "ru": "Вход в кризис при D3 (H-CR-3)"}},
         "sustained_d3_steps": {"type": "int", "min": 1, "max": 10 ** 4, "default": 6, "unit": "h", "source": "missing",
@@ -813,6 +948,9 @@ class CrisisRecoveryModule(LabModule):
             "faulty_crisis_scope": {"faults": ["expand_envelope", "extrapolate_scope", "crisis_interpretation_rule",
                                                "crisis_new_obligation", "human_directed_action"]},
             "no_crisis": {"d3_window": [0, 0], "human_intervention_step": -1},
+            # Q-065 minimal case: a PTL-confirmed ERROR cascade (an execution error, E2), no L3 escalation, nothing else
+            "error_cascade_without_l3": dict(MINIMAL_CASE),
+            "error_cascade_l3_required": dict(MINIMAL_CASE, entry_reading="l3_escalation_required"),
             "exit_to_upgrade": {"exit_pathway": "upgrade"},
             "a1_confidence_not_sufficient": {"a1_confidence_reading": "not_sufficient"},
             "faulty_crisis_outputs": {"faults": ["elevate_scope", "missing_metadata", "transfer_interpretation", "parameter_by_decree",

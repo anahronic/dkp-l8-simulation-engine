@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1535 (88.4 %) | 996 | 1449 | 917 | 4 | 66 | 16 | 202 | 0 | 68 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1550 (89.2 %) | 1011 | 1463 | 931 | 4 | 67 | 16 | 187 | 0 | 53 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 6 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 370 (87.3 %) | 200 | 348 | 181 | 1 | 20 | 1 | 54 | 0 | 15 | 254 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 377 (88.9 %) | 207 | 354 | 187 | 1 | 21 | 1 | 47 | 0 | 8 | 254 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 9 | 201 |
 | F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 443 (86.7 %) | 300 | 421 | 278 | 0 | 18 | 4 | 68 | 0 | 26 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1535 (88.4 %) | 996 | 1449 | 917 | 4 | 66 | 16 | 202 | 0 | 68 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1550 (89.2 %) | 1011 | 1463 | 931 | 4 | 67 | 16 | 187 | 0 | 53 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -144,7 +144,7 @@ FAILs of reference examples and their verified origin:
 
 | Requirement | Origin | Finding | Runs |
 |---|---|---|---|
-| CRISIS-12.3-01 | CONFIRMED_FINDING | F-043 | crisis_recovery:cascade_and_divergence, crisis_recovery:d3_sustained, crisis_recovery:exit_to_upgrade |
+| CRISIS-12.3-01 | CONFIRMED_FINDING | F-043 | crisis_recovery:cascade_and_divergence, crisis_recovery:d3_sustained, crisis_recovery:error_cascade_without_l3, crisis_recovery:exit_to_upgrade |
 | ORACLE-1-02 | CONFIRMED_FINDING | F-015 | transport_capacity:attack_on_line, transport_capacity:red_single_delta |
 | ORACLE-12-06 | CONFIRMED_FINDING | F-036 | code_synergy:anthropogenic_drop, code_synergy:b_recovers, code_synergy:connection_by_legislative_act, code_synergy:expired_bundle, code_synergy:human_weight_zero, code_synergy:insufficient_assets, code_synergy:mercy_shorter_crisis_scope, code_synergy:mercy_without_crisis_scope, code_synergy:natural_drop_with_mercy, code_synergy:node_seized, code_synergy:nuclear_equivalent, code_synergy:phase_1_aggressor, code_synergy:provenance_validators, code_synergy:tuning_attempts, code_synergy:unconfirmed_spare_node, code_synergy:unidentified_aggressor |
 | TIME-9-04 | CONFIRMED_FINDING | F-017 | time:normative_vectors, time:year_boundary |
@@ -176,7 +176,7 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
-| normative_ambiguity | 106 | 67 | 78 | 0 | 251 |
+| normative_ambiguity | 108 | 65 | 78 | 0 | 251 |
 | architecture_definition | 37 | 89 | 130 | 0 | 256 |
 | l8_parameter | 0 | 61 | 78 | 0 | 139 |
 | empirical_model_data | 0 | 76 | 124 | 0 | 200 |
@@ -239,6 +239,7 @@ Draft author-question candidates (unverified, not questions): 208.
 - Q-062 [UNRESOLVED, normative_ambiguity] 'Recorded only by the Last updated date': the document's own record, or every record (then no SHA256SUMS entry)
 - Q-063 [UNRESOLVED, normative_ambiguity] CRISIS §12.1 vs §12.3: which confidence_state does an A1 (axiom-interpreting) output carry when PTL data are sufficient
 - Q-064 [UNRESOLVED, normative_ambiguity] CRISIS-PATCH §11 'DKP does not degrade': within the null-output patch, or for DKP as a whole (CRISIS §1 'safe degradation', §5 C2 'System Degradation Mode', INTEROP §9 'degrade gracefully')
+- Q-065 [UNRESOLVED, normative_ambiguity] CRISIS entry on a §4 trigger without L3 escalation (an ERROR cascade, a PTL divergence): does §4 suffice, or do §0 and §2 require an L3 escalation for every entry?
 
 Withdrawn after verification (not author decisions):
 
@@ -260,7 +261,7 @@ Withdrawn after verification (not author decisions):
 
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CODE-OF-PLANETARY-SYNERGY | 101 | 85 | 74 | 0 | 10 | 1 | 16 | 86 |
+| CODE-OF-PLANETARY-SYNERGY | 101 | 93 | 82 | 0 | 10 | 1 | 8 | 86 |
 | DKP-0-ORACLE-001 | 58 | 56 | 51 | 2 | 2 | 1 | 2 | 48 |
 | DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 3 |
 | DKP-1-AXIOMS-001 | 44 | 39 | 33 | 0 | 4 | 2 | 5 | 22 |
@@ -276,7 +277,7 @@ Withdrawn after verification (not author decisions):
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 37 | 36 | 0 | 0 | 1 | 12 | 44 |
 | DKP-3-POLICE-001 | 45 | 42 | 42 | 0 | 0 | 0 | 3 | 29 |
-| DKP-4-CRISIS-001 | 53 | 37 | 33 | 1 | 3 | 0 | 16 | 32 |
+| DKP-4-CRISIS-001 | 53 | 44 | 39 | 1 | 4 | 0 | 9 | 32 |
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 27 | 27 | 0 | 0 | 0 | 2 | 20 |
 | DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 32 |
@@ -323,6 +324,7 @@ Withdrawn after verification (not author decisions):
 | CODEX-17.1-01 | PARTIAL | code_economy · ubr_by_birth | PASS | yes | — |
 | CODEX-18.1-01 | PARTIAL | code_economy · contribution_obligation | PASS | — | — |
 | CODEX-18.1-02 | PARTIAL | code_economy · passivity_rating | PASS | — | Q-052 |
+| CODEX-2-01 | PARTIAL | code_synergy · alpha_slot_until_qualifying_node | PASS | — | — |
 | CODEX-2.1-01 | PARTIAL | code_economy · targeted_smart_contracts | PASS | — | — |
 | CODEX-2.2-01 | PARTIAL | code_economy · tranche_on_verified_kpi | PASS | yes | — |
 | CODEX-3-01 | PARTIAL | code_synergy · manifesto_embedded | PASS | — | — |
@@ -353,13 +355,18 @@ Withdrawn after verification (not author decisions):
 | CODEX-A.2-01 | PARTIAL | code_synergy · stack_only | PASS | — | — |
 | CODEX-A.2-02 | IMPLEMENTED | code_synergy · level0_weight | PASS | — | — |
 | CODEX-A.2-03 | PARTIAL | code_synergy · level0_coverage | PASS | — | — |
+| CODEX-A.2-04 | PARTIAL | code_synergy · leo_count_both_readings | PASS | — | — |
+| CODEX-A.2-05 | PARTIAL | code_synergy · onboard_signature_verifies | PASS | — | — |
 | CODEX-A.2-06 | IMPLEMENTED | code_synergy · level1_weight | PASS | — | — |
+| CODEX-A.2-07 | PARTIAL | code_synergy · sensor_spec_declared | PASS | — | — |
 | CODEX-A.2-08 | IMPLEMENTED | code_synergy · hash_before_return | PASS | yes | — |
 | CODEX-A.2-09 | IMPLEMENTED | code_synergy · level2_weight | PASS | — | Q-047 |
+| CODEX-A.2-10 | PARTIAL | code_synergy · quadratic_funding_formula | PASS | — | — |
 | CODEX-A.2-11 | PARTIAL | code_synergy · validator_stake | PASS | — | — |
 | CODEX-A.2-12 | PARTIAL | code_synergy · divergence_arbitration | UNKNOWN | — | — |
 | CODEX-A.3-01 | PARTIAL | code_synergy · nuclear_bloc_distribution | UNKNOWN | — | — |
 | CODEX-A.3-02 | PARTIAL | code_synergy · node_energy | PASS | — | — |
+| CODEX-A.3-03 | PARTIAL | code_synergy · autonomous_source_800 | PASS | — | — |
 | CODEX-A.3-04 | IMPLEMENTED | code_synergy · ptl_confirmed_nodes | PASS | — | — |
 | CODEX-A.3-05 | PARTIAL | code_synergy · dead_man_switch | PASS | — | — |
 | CODEX-A.4-01 | PARTIAL | code_synergy · mercy_suspension | UNKNOWN | — | Q-046 |
@@ -381,6 +388,8 @@ Withdrawn after verification (not author decisions):
 | CODEX-GenesisBlock_0_TechnicalSpecification_-04 | PARTIAL | code_synergy · immutable_message | PASS | — | — |
 | CODEX-GenesisBlock_0_TechnicalSpecification_-05 | PARTIAL | code_synergy · wild_slot_reserved | PASS | — | — |
 | CODEX-Glossary_Definitions-01 | PARTIAL | code_synergy · genesis_no_predecessor | PASS | — | — |
+| CODEX-Glossary_Definitions-02 | PARTIAL | code_synergy · acceptance_not_work_or_stake | PASS | — | — |
+| CODEX-Glossary_Definitions-04 | PARTIAL | code_synergy · stake_burned_never_returned | PASS | yes | — |
 | CODEX-Glossary_Definitions-05 | PARTIAL | code_synergy · wild_node_definition | PASS | — | — |
 | CODEX-Glossary_Definitions-06 | PARTIAL | code_synergy · message_cryptographically_embedded | PASS | — | — |
 | CODEX-Preamble-01 | PARTIAL | code_synergy · power_in_open_algorithms | PASS | — | — |
@@ -958,8 +967,10 @@ Withdrawn after verification (not author decisions):
 | POLICE-9-01 | IMPLEMENTED | police_antiterror · aggregated_statistics | PASS | — | — |
 | POLICE-9-02 | PARTIAL | police_antiterror · incident_reconstructable | PASS | — | — |
 | POLICE-9-03 | PARTIAL | police_antiterror · authority_registered | PASS | yes | — |
+| CRISIS-0-01 | PARTIAL | crisis_recovery · l3_escalation_on_d3_entry | UNKNOWN | — | Q-065 |
 | CRISIS-0-02 | PARTIAL | crisis_recovery · no_new_powers_temporary | PASS | yes | — |
 | CRISIS-0-03 | PARTIAL | crisis_recovery · no_precedent_or_future_authorization | PASS | yes | — |
+| CRISIS-1-01 | PARTIAL | crisis_recovery · no_optimization_objective | PASS | — | — |
 | CRISIS-1-02 | PARTIAL | crisis_recovery · within_envelope_subset_of_scope | PASS | yes | — |
 | CRISIS-1-03 | PARTIAL | crisis_recovery · envelope_not_expanded | PASS | yes | — |
 | CRISIS-1-04 | PARTIAL | crisis_recovery · envelope_in_s1 | PASS | yes | — |
@@ -973,6 +984,7 @@ Withdrawn after verification (not author decisions):
 | CRISIS-12.1-02 | IMPLEMENTED | crisis_recovery · scope_ref_flags | PASS | — | — |
 | CRISIS-12.2-01 | PARTIAL | crisis_recovery · a1_interpretation_fields | PASS | yes | — |
 | CRISIS-12.3-01 | PARTIAL | crisis_recovery · no_settled_axiom_interpretation | FAIL | yes | Q-063 |
+| CRISIS-2-01 | PARTIAL | crisis_recovery · defense_escalation_on_d3_entry | PASS | — | Q-065 |
 | CRISIS-2-02 | PARTIAL | crisis_recovery · no_new_rights_obligations | PASS | yes | — |
 | CRISIS-2-03 | IMPLEMENTED | crisis_recovery · ptl_anchored | PASS | yes | — |
 | CRISIS-2-04 | PARTIAL | crisis_recovery · within_scope_applicability | PASS | yes | — |
@@ -982,6 +994,8 @@ Withdrawn after verification (not author decisions):
 | CRISIS-5-01 | PARTIAL | crisis_recovery · finite_dti_states | PASS | — | — |
 | CRISIS-5-02 | IMPLEMENTED | crisis_recovery · c0_without_conditions | PASS | — | — |
 | CRISIS-5-07 | PARTIAL | crisis_recovery · persistence_needs_confirmation | PASS | — | — |
+| CRISIS-6-01 | PARTIAL | crisis_recovery · actions_in_section_6 | PASS | yes | — |
+| CRISIS-6-02 | PARTIAL | crisis_recovery · rationing_for_life | PASS | — | — |
 | CRISIS-6-04 | PARTIAL | crisis_recovery · action_qualities | PASS | — | — |
 | CRISIS-7-01 | IMPLEMENTED | crisis_recovery · logging_no_authority | PASS | yes | — |
 | CRISIS-7-02 | PARTIAL | crisis_recovery · no_concealment_permanence_utility | PASS | — | — |
@@ -991,7 +1005,9 @@ Withdrawn after verification (not author decisions):
 | CRISIS-8-02 | IMPLEMENTED | crisis_recovery · human_logged | PASS | yes | — |
 | CRISIS-9-01 | PARTIAL | crisis_recovery · automatic_exit | PASS | — | — |
 | CRISIS-9-02 | IMPLEMENTED | crisis_recovery · sequential_recovery | PASS | yes | — |
+| CRISIS-9-04 | PARTIAL | crisis_recovery · no_persistence_after_exit | PASS | yes | — |
 | CRISIS-9-05 | IMPLEMENTED | crisis_recovery · immediate_collapse | PASS | yes | — |
+| CRISIS-AxiomA1InterpretationConstraint-01 | PARTIAL | crisis_recovery · a1_interpretation_in_scope | PASS | yes | — |
 | CRISIS-Non-PrecedentRule_-01 | PARTIAL | crisis_recovery · no_precedent | PASS | yes | — |
 | CRISIS-Non-PrecedentRule_-03 | IMPLEMENTED | crisis_recovery · no_numbers_in_protocol | PASS | — | — |
 | CRISIS-Non-PrecedentRule_-04 | PARTIAL | crisis_recovery · parameters_from_simulation | UNKNOWN | yes | — |

@@ -3811,6 +3811,99 @@
     "quote_check": "automatic",
     "human_accepted": false
    }
+  },
+  {
+   "id": "Q-065",
+   "category": "normative_ambiguity",
+   "status": "UNRESOLVED",
+   "quotes": [
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§0",
+     "text": "as confirmed by Physical Truth Layer (PTL) evidence and downstream L3 escalation"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§2",
+     "text": "only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§2",
+     "text": "downstream of DKP-4-ERROR-001"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§3",
+     "text": "L3 containment and correction mechanisms are insufficient"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§3",
+     "text": "cascading errors exceeding local and regional correction capacity"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§4",
+     "text": "Crisis mode SHALL be entered when one or more of the following conditions are PTL-confirmed:"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§4",
+     "text": "cascading systemic failure escalated from DKP-4-ERROR-001"
+    },
+    {
+     "doc": "DKP-4-CRISIS-001",
+     "at": "§4",
+     "text": "verified loss or divergence of PTL outputs beyond correction tolerance"
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§9",
+     "text": "DKP-4-ERROR-001 SHALL automatically escalate to DKP-4-CRISIS-001 for Systemic Rollback and coordinated recovery."
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§2",
+     "text": "downstream of all L3 protocols (INTERNAL-SEC, DEFENSE, ANTITERROR)"
+    },
+    {
+     "doc": "DKP-4-ERROR-001",
+     "at": "§4",
+     "text": "Protocol logic executed incorrectly or out of order."
+    },
+    {
+     "doc": "DKP-3-DEFENSE-001",
+     "at": "§1",
+     "text": "external physical, technical, or infrastructure violence"
+    },
+    {
+     "doc": "DKP-3-ANTITERROR-001",
+     "at": "§8",
+     "text": "ANTITERROR is a specialization of Defense for asymmetric civilian-targeted harm."
+    },
+    {
+     "doc": "DKP-3-INTERNAL-SEC-001",
+     "at": "§6",
+     "text": "Integrity response MAY be triggered only by:"
+    },
+    {
+     "doc": "DKP-3-INTERNAL-SEC-001",
+     "at": "§6",
+     "text": "Identity Integrity Trigger: PTL-confirmed mismatch in attribution or credential binding"
+    },
+    {
+     "doc": "DKP-3-INTERNAL-SEC-001",
+     "at": "§6",
+     "text": "Any Physical Truth Layer divergence or oracle inconsistency SHALL be handled exclusively by DKP-0-ORACLE-001."
+    }
+   ],
+   "reason": "Minimal case (examples error_cascade_without_l3 and error_cascade_l3_required): PTL confirms a cascading E2 execution error (protocol logic executed incorrectly or out of order) and ERROR §9 escalates it to CRISIS. No L3 protocol escalates, and none has a trigger for it: DEFENSE covers external violence (§1), ANTITERROR asymmetric civilian-targeted harm (§8), INTERNAL-SEC responds only to its four §6 triggers and leaves PTL divergence exclusively to ORACLE. There is no D3, T3, PTL divergence or multi-domain harm. Reading 1 (§4 suffices): crisis is entered; §4 and ERROR §9 take effect, but §0 ('downstream L3 escalation') and §2 ('only upon escalation from DKP-3-DEFENSE-001 or equivalent L3 containment protocols') are met only if ERROR counts as an equivalent L3 containment protocol, which ERROR §2 (downstream of all L3 protocols) argues against. Reading 2 (§0 and §2 apply to every entry): crisis is not entered; every provision can be met, but the §4 triggers 'cascading systemic failure escalated from DKP-4-ERROR-001' and 'verified loss or divergence of PTL outputs' and the automatic escalation of ERROR §9 never take effect, because no L3 protocol escalates these cases. §3 does not decide: it lists cascading errors as a crisis condition and defines a crisis by the insufficiency of L3 containment, which an error outside every L3 trigger meets only if 'insufficient' includes 'not applicable'. Since reading 2 lets all provisions hold together, this is not a proven contradiction, and the corpus does not choose a reading. An E3 attribution cascade would reach INTERNAL-SEC through its Identity Integrity Trigger, so the case is specific to errors outside the four §6 triggers. Question to the author: does a §4 trigger without L3 escalation enter Crisis by itself, or must an L3 protocol escalate every entry, and if so which one escalates an execution-error cascade or a PTL divergence? The lab runs both readings (input entry_reading, H-CR-7); the default enters on §4 alone and reports the open part as UNKNOWN under CRISIS-0-01.",
+   "acceptance": {
+    "agent_reading": true,
+    "quote_check": "automatic",
+    "human_accepted": false
+   }
   }
  ],
  "acceptance": {

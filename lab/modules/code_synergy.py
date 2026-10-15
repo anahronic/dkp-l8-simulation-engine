@@ -17,7 +17,10 @@ UNKNOWN (F-018, F-027 … F-032).
 
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
+import math
 import os
 import random
 import re
@@ -111,7 +114,34 @@ FAULTS = {
     "algorithm_liable": "the Kill Switch disconnection is attributed to the Equation as the responsible party",
     "message_outside_digest": "the digest of block #0 covers the header and anchors but not the immutable message",
     "wild_node_by_approval": "a Wild Node is admitted on the founders' approval instead of protocol compliance",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "prefilled_alpha_slot": "the Wild Node Alpha slot is filled at genesis by a startup node",
+    "count_planned_satellites": "the Level 0 satellite count includes satellites that are only planned",
+    "sign_processed_value": "the on-board signature covers the processed index instead of the raw observation",
+    "accept_low_spec": "drone data without the declared sensor specification are accepted",
+    "linear_matching": "funding is matched in proportion to the sum of contributions",
+    "accept_by_stake": "a block is accepted on the size of its proposer's stake",
+    "stake_returned": "a slashed Peace Stake is returned at the end of the run",
 }
+
+
+LEO_MIN = 28000                   # A.2 "≥ 28,000 LEO satellites by 2030"
+RTK_CM = 2.0                      # A.2 "RTK-GPS (±2 cm)"
+DRONE_SPEC = {"video": "4K", "thermal": True, "lidar": True, "rtk_cm": 2.0}
+LAB_KEY = b"lab signing key (stand-in for the on-board key; not a real key)"
+
+
+def onboard_signature(payload: Dict[str, Any]) -> str:
+    """A.2 Level 0: signature over the raw observation; an HMAC on a lab key stands in for the on-board scheme."""
+    return hmac.new(LAB_KEY, canonical_json(payload).encode("utf-8"), hashlib.sha256).hexdigest()
+
+
+def qf_allocation(projects: List[Dict[str, Any]], pool: float) -> Dict[str, float]:
+    """Standard quadratic funding: subsidy_j = (Σ√c)² − Σc, scaled down proportionally when it exceeds the pool."""
+    sub = {p["id"]: sum(math.sqrt(c) for c in p["contributions"]) ** 2 - sum(p["contributions"]) for p in projects}
+    total = sum(sub.values())
+    k = min(1.0, pool / total) if total > 0 else 0.0
+    return {j: round(x * k, 9) for j, x in sub.items()}
 
 
 def _seg(segs: List[Dict[str, Any]], d: int) -> Dict[str, Any]:
@@ -155,13 +185,29 @@ def run(r: Dict[str, Any]):
                                  "digest": sha256_text(canonical_json({k: rec[k] for k in covered}))})
     # A.2 stack: weights, sources, drones, validators
     put("evaluation", "PTL", 0, {"weights": dict(w), "coverage_l0": r["l0_coverage"]})
+    leo, extra = r["leo_operating"], (r["leo_operating"]["planned_extra"] if "count_planned_satellites" in faults else 0)
+    put("evaluation", "PTL", 0, {"leo_operating": {"start_2030": leo["at_start_2030"] + extra, "end_2030": leo["at_end_2030"] + extra}})
     for f in r["external_feeds"]:
         put("decision", "PTL", 0, {"feed": f, "accepted": "accept_external_feed" in faults,
                                    "reason": "outside the four-layer stack (A.2)"})
     for fl in r["drone_uploads"]:
-        ok = fl["upload_min"] < fl["return_min"] or "accept_late_hash" in faults
+        spec = {"video": fl["video"], "thermal": fl["thermal"], "lidar": fl["lidar"], "rtk_cm": fl["rtk_cm"]}
+        spec_ok = fl["video"] == "4K" and fl["thermal"] and fl["lidar"] and fl["rtk_cm"] <= RTK_CM
+        ok = (fl["upload_min"] < fl["return_min"] or "accept_late_hash" in faults) and (spec_ok or "accept_low_spec" in faults)
         put("decision", "PTL", 0, {"drone": fl["flight"], "accepted": ok, "upload_min": fl["upload_min"],
-                                   "return_min": fl["return_min"]})
+                                   "return_min": fl["return_min"], "sensor_spec": spec})
+    # A.2 Level 2: quadratic funding (stand-in projects and pool; how it joins EigenTrust is open)
+    if r["qf_projects"]:
+        alloc = qf_allocation(r["qf_projects"], r["qf_pool"])
+        if "linear_matching" in faults:
+            tot = sum(sum(p_["contributions"]) for p_ in r["qf_projects"])
+            alloc = {p_["id"]: round(r["qf_pool"] * sum(p_["contributions"]) / tot, 9) if tot else 0.0 for p_ in r["qf_projects"]}
+        put("decision", "FUNDING", 0, {"allocation": alloc, "pool": r["qf_pool"], "formula": "quadratic funding"})
+    # Glossary: block validation by proven contribution, not by work or capital (the acceptance rule is a stand-in)
+    for bk in r["blocks"]:
+        acc = bk["contribution_proof"] or ("accept_by_stake" in faults and bk["stake"] >= 1e8)
+        put("decision", "CONSENSUS", 0, {"block": bk["height"], "accepted": acc,
+                                         "basis": "PTL-confirmed contribution proof (lab stand-in rule)"})
     for i, s in enumerate(r["validator_stakes"]):
         put("decision", "PTL", 0, {"validator": i, "stake": s,
                                    "admitted": VALIDATOR_STAKE[0] <= s <= VALIDATOR_STAKE[1]})
@@ -199,12 +245,17 @@ def run(r: Dict[str, Any]):
         "blocs_equivalent": sorted({x["bloc"] for x in counted if x["nuclear"] == "equivalent"}),
         "energy_ok": {x["id"]: x["energy_mwh_year"] >= NODE_ENERGY and x["energy_type"] in ENERGY_TYPES for x in nodes}}})
     # admission of nodes at their online day (Glossary: a Wild Node joins on protocol compliance alone)
+    put("notice", "GENESIS", 0, {"wild_alpha_slot": STARTUP[0] if "prefilled_alpha_slot" in faults else None})
+    slot_filled = "prefilled_alpha_slot" in faults
     for x in sorted(nodes, key=lambda y: (y["online_day"], y["id"])):
         if x["online_day"] >= 0:
             by_approval = x["role"] == "wild" and "wild_node_by_approval" in faults
-            put("decision", "NETWORK", x["online_day"], {"admit": x["id"], "role": x["role"],
-                                                         "founders_agreement": x["founders_agreement"],
-                                                         "basis": "founders' approval" if by_approval else "protocol compliance"})
+            adm = put("decision", "NETWORK", x["online_day"], {"admit": x["id"], "role": x["role"],
+                                                               "founders_agreement": x["founders_agreement"],
+                                                               "basis": "founders' approval" if by_approval else "protocol compliance"})
+            if x["role"] == "wild" and not slot_filled:                     # §2: the first Wild Node takes the Alpha slot
+                put("notice", "GENESIS", x["online_day"], {"wild_alpha_slot": x["id"]}, [adm.event_id])
+                slot_filled = True
     # A.5 launch day
     launch = None
     for d in range(days):
@@ -325,8 +376,9 @@ def run(r: Dict[str, Any]):
         b = bval(s)
         p = params_at[d]
         if s is not prev_seg:
+            raw = {"day": d, "B": round(b, 6)} if "sign_processed_value" in faults else {"day": d, "l0": s["l0"]}
             obs = put("observation", "PTL", d, {"levels": {k: s[k] for k in ("l0", "l1", "l2")}, "B": round(b, 6),
-                                                "cause": s["cause"]})
+                                                "cause": s["cause"], "l0_signature": onboard_signature(raw)})
             if not ("unpublished_metrics" in faults and d > 0):
                 put("notice", "PUBLIC", d, {"published": {"B": round(b, 6), "levels": {k: s[k] for k in ("l0", "l1", "l2")}}},
                     [obs.event_id])
@@ -450,6 +502,12 @@ def run(r: Dict[str, Any]):
             ok = c["stake_deposited"]
         put("decision", "NETWORK", c["day"], {"territory": c["territory"], "connected": ok, "mechanism": c["mechanism"],
                                               "yes_share": c["yes_share"], "stake_deposited": c["stake_deposited"]})
+    if "stake_returned" in faults:
+        for g in regions.values():
+            if g["aggressor_since"] is not None:
+                back = g["stake0"] - g["stake"]
+                g["stake"] += back
+                put("action", "ESCROW", days - 1, {"stake_returned": g["id"], "amount": back})
     put("evaluation", "NETWORK", days - 1, {"regions": {g["id"]: {k: round(g[k], 6) if isinstance(g[k], float) else g[k]
                                                                   for k in ("stake", "dividends", "written_off",
                                                                             "aggressor_since", "disconnected")}
@@ -532,6 +590,109 @@ def preamble_checks(r: Dict[str, Any], log: EventLog, v) -> List[CheckResult]:
                  "{n} damages without automatic liability") if est else
                CheckResult("CODEX-Preamble-07", "damage_generates_liability", NOT_APPLICABLE, "damage",
                            applicability="no recorded damage subject to liability in this run"))
+    return out
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    # §2: the Wild Node Alpha slot stays empty until a qualifying node is declared
+    adm = {m.value["admit"]: m for m in msgs if m.source == "NETWORK" and "admit" in m.value}
+    slot = [m for m in msgs if m.source == "GENESIS" and "wild_alpha_slot" in m.value and m.value["wild_alpha_slot"]]
+    bad = [f"day {m.arrived_at}: {m.value['wild_alpha_slot']}" for m in slot
+           if not (m.value["wild_alpha_slot"] in adm and adm[m.value["wild_alpha_slot"]].arrived_at <= m.arrived_at
+                   and adm[m.value["wild_alpha_slot"]].value["role"] == "wild"
+                   and adm[m.value["wild_alpha_slot"]].value["basis"] == "protocol compliance"
+                   and not adm[m.value["wild_alpha_slot"]].value["founders_agreement"])]
+    out.append(v("CODEX-2-01", "alpha_slot_until_qualifying_node", bad,
+                 ("the Alpha slot stayed empty until " + ", ".join(f"{m.value['wild_alpha_slot']} (day {m.arrived_at})" for m in slot)
+                  + " was admitted as a Wild Node on protocol compliance") if slot else "the Alpha slot stayed empty: no Wild Node admitted",
+                 "{n} fillings of the Alpha slot by a node that does not qualify"))
+    # A.2 Level 0: >= 28,000 operating LEO satellites at the deadline, both readings of 'by 2030'
+    leo = r["leo_operating"]
+    rec = next((m.value["leo_operating"] for m in msgs if m.source == "PTL" and "leo_operating" in m.value), None)
+    if rec != {"start_2030": leo["at_start_2030"], "end_2030": leo["at_end_2030"]}:
+        out.append(CheckResult("CODEX-A.2-04", "leo_count_both_readings", FAIL,
+                               f"the stack counts {rec}, the declared operating satellites are {leo['at_start_2030']} / {leo['at_end_2030']}",
+                               evidence={"violations": ["count differs from the declared operating satellites"]}))
+    else:
+        ok = [leo["at_start_2030"] >= LEO_MIN, leo["at_end_2030"] >= LEO_MIN]
+        if all(ok) or not any(ok):
+            out.append(v("CODEX-A.2-04", "leo_count_both_readings", [] if all(ok) else ["below 28,000 under both readings"],
+                         f"{leo['at_start_2030']} operating at the start and {leo['at_end_2030']} at the end of 2030: >= 28,000 "
+                         "under both readings", "{n}: too few operating LEO satellites"))
+        else:
+            out.append(CheckResult("CODEX-A.2-04", "leo_count_both_readings", UNKNOWN,
+                                   f"{leo['at_start_2030']} at the start and {leo['at_end_2030']} at the end of 2030: the readings of "
+                                   "'by 2030' disagree", evidence={"start_2030": ok[0], "end_2030": ok[1]}))
+    # A.2 Level 0: on-board signature over the raw observation (lab key)
+    obs = [m for m in msgs if m.source == "PTL" and m.kind == "observation" and "levels" in m.value]
+    out.append(v("CODEX-A.2-05", "onboard_signature_verifies",
+                 [m.event_id for m in obs if m.value.get("l0_signature") != onboard_signature({"day": m.arrived_at, "l0": m.value["levels"]["l0"]})],
+                 f"{len(obs)} Level 0 observations, each signed over its raw reading; every signature verifies on the lab key "
+                 "(the zk-proof and the named stacks are external)", "{n} signatures that do not verify over the raw observation")
+               if obs else na("CODEX-A.2-05", "onboard_signature_verifies", "Level 0 observations", "none"))
+    # A.2 Level 1: declared sensor specification of accepted drone data
+    dr = [m.value for m in msgs if m.source == "PTL" and "drone" in m.value and m.value["accepted"]]
+    out.append(v("CODEX-A.2-07", "sensor_spec_declared",
+                 [x["drone"] for x in dr if not (x["sensor_spec"]["video"] == "4K" and x["sensor_spec"]["thermal"]
+                                                 and x["sensor_spec"]["lidar"] and x["sensor_spec"]["rtk_cm"] <= RTK_CM)],
+                 f"{len(dr)} accepted drone records, each declaring 4K video, thermal, LiDAR and RTK <= 2 cm "
+                 "(the accuracy statistic stays open)", "{n} accepted drone records without the declared specification")
+               if dr else na("CODEX-A.2-07", "sensor_spec_declared", "drone data", "none accepted"))
+    # A.2 Level 2: quadratic funding
+    fund = [m.value for m in msgs if m.source == "FUNDING" and "allocation" in m.value]
+    if fund:
+        want = qf_allocation(r["qf_projects"], r["qf_pool"])
+        bad = [f"{j}: {fund[0]['allocation'].get(j)} != {x}" for j, x in want.items() if abs(fund[0]["allocation"].get(j, -1) - x) > 1e-6]
+        out.append(v("CODEX-A.2-10", "quadratic_funding_formula", bad,
+                     f"the allocation over {len(want)} projects equals the standard quadratic-funding formula "
+                     "((Σ√c)² − Σc, scaled to the pool); its link to EigenTrust stays open", "{n} allocations off the formula"))
+    else:
+        out.append(na("CODEX-A.2-10", "quadratic_funding_formula", "quadratic funding", "no project declared"))
+    # A.3 3.2: as CODEX-A.3-02 (declared capacity and listed type)
+    low = [x["id"] for x in r["nodes"] if x["online_day"] >= 0 and not (x["energy_mwh_year"] >= NODE_ENERGY and x["energy_type"] in ENERGY_TYPES)]
+    out.append(v("CODEX-A.3-03", "autonomous_source_800", low,
+                 "every node declares an autonomous source of a listed type (or combination) of >= 800 MWh/year; whether earlier "
+                 "types are mandatory when feasible stays open", "{n} nodes below 800 MWh/year or of an unlisted type"))
+    # Glossary: block acceptance does not depend on work or stake (metamorphic)
+    bl = {m.value["block"]: m.value["accepted"] for m in msgs if m.source == "CONSENSUS"}
+    if bl:
+        bad = []
+        for alt in ({"work": 0.0, "stake": 0.0}, {"work": 1e9, "stake": 1e12}):
+            got = {m.value["block"]: m.value["accepted"] for m in run(dict(r, blocks=[dict(b, **alt) for b in r["blocks"]])).messages()
+                   if m.source == "CONSENSUS"}
+            bad += [f"block {h}: {bl[h]} -> {got.get(h)} with {alt}" for h in bl if got.get(h) != bl[h]]
+        out.append(v("CODEX-Glossary_Definitions-02", "acceptance_not_work_or_stake", bad,
+                     f"acceptance of {len(bl)} blocks unchanged when only work and stake change (stand-in rule; the contribution "
+                     "proof stays open)", "{n} acceptances that follow work or stake"))
+    else:
+        out.append(na("CODEX-Glossary_Definitions-02", "acceptance_not_work_or_stake", "blocks", "no block proposed"))
+    # Glossary: Peace Staking, aggression -> stake burned automatically, never returned
+    sl = [m.value for m in msgs if m.source == "ESCROW" and "slashing" in m.value]
+    est = [m for m in msgs if m.source == "NETWORK" and "aggression" in m.value]
+    applied = [a for a in r["aggressions"] if a["recorded"]
+               and next(g for g in r["regions"] if g["id"] == a["region"])["phase"] not in EARLY_PHASES]
+    if applied:
+        dep = {m.value["region"]: m.value["stake_deposited"] for m in msgs if m.source == "ESCROW" and "stake_deposited" in m.value}
+        bad = [f"{a['region']}: no slashing" for a in applied if not any(x["slashing"] == a["region"] for x in sl)]
+        bad += [f"{x['slashing']}: burned {x['burned']} of {x['burned'] + x['stake_left']}" for x in sl
+                if x["burned"] <= 0 or x["stake_left"] > 1e-9]
+        bad += [f"{x['slashing']}: decided by {x['decided_by']}" for x in sl if x.get("decided_by")]
+        bad += [f"{m.value['stake_returned']}: stake returned" for m in msgs if m.source == "ESCROW" and "stake_returned" in m.value]
+        out.append(v("CODEX-Glossary_Definitions-04", "stake_burned_never_returned", bad,
+                     f"{len(applied)} confirmed aggression(s): the Peace Stake burned in full and automatically, never returned "
+                     f"(deposits {sorted(dep)}; 'ecocide' stays open)", "{n} stakes not burned automatically or returned"))
+    else:
+        out.append(na("CODEX-Glossary_Definitions-04", "stake_burned_never_returned", "confirmed violations",
+                      "no recorded aggression outside Phase 0-1" if not est else "aggressions not established in a later phase"))
     return out
 
 
@@ -1159,6 +1320,15 @@ IMPLEMENTS = {
     "CODEX-A.4-03": ("mercy_within_scope", "PARTIAL", "Checked as: inside a Mercy period, severity only."),
     "CODEX-A.4-04": ("no_applicability_expansion", "IMPLEMENTED", None),
     "CODEX-A.4-05": ("no_s2_s3_override", "IMPLEMENTED", None),
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "CODEX-2-01": ("alpha_slot_until_qualifying_node", "PARTIAL", "Clear part only: empty until a Wild Node admitted on protocol compliance; who may take it stays open."),
+    "CODEX-A.2-04": ("leo_count_both_readings", "PARTIAL", "Clear part only: >= 28,000 operating under both readings of 'by 2030'; readings that disagree give UNKNOWN."),
+    "CODEX-A.2-05": ("onboard_signature_verifies", "PARTIAL", "Clear part only: a signature over the raw reading on a lab key; payload, zk-proof and stacks stay open."),
+    "CODEX-A.2-07": ("sensor_spec_declared", "PARTIAL", "Clear part only: declared 4K, thermal, LiDAR, RTK <= 2 cm; the accuracy statistic stays open."),
+    "CODEX-A.2-10": ("quadratic_funding_formula", "PARTIAL", "Clear part only: the standard quadratic-funding formula; the link to EigenTrust stays open."),
+    "CODEX-A.3-03": ("autonomous_source_800", "PARTIAL", "Clear part only (as CODEX-A.3-02): declared capacity and listed type; the priority order stays open."),
+    "CODEX-Glossary_Definitions-02": ("acceptance_not_work_or_stake", "PARTIAL", "Clear part only: metamorphic independence from work and stake under a stand-in rule; the contribution proof stays open."),
+    "CODEX-Glossary_Definitions-04": ("stake_burned_never_returned", "PARTIAL", "Clear part only: aggression burns the stake automatically, never returned; 'ecocide' stays open."),
     "CODEX-A.4-06": ("no_new_authority", "IMPLEMENTED", None),
     "CODEX-A.4-07": ("mercy_ends_with_crisis_scope", "IMPLEMENTED", None),
     "CODEX-A.4-08": ("severity_only", "IMPLEMENTED", None),
@@ -1203,7 +1373,7 @@ MERCY0 = {"day": 120, "kind": "natural_b_drop", "magnitude": 0.05, "ptl_verified
 
 class CodeSynergyModule(LabModule):
     id = "code_synergy"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Code of Planetary Synergy: safeguards (Appendix A, §7-§8)",
              "ru": "Кодекс планетарной синергии: защитные механизмы (Приложение A, §7-§8)"}
     summary = {"en": "B(t) falls below 0.68, a state attacks, a node is seized, a volcano erupts: do the Kill Switches, Peace Stakes, "
@@ -1318,9 +1488,38 @@ class CodeSynergyModule(LabModule):
                           "label": {"en": "Drone flights (hash upload vs return, minutes)", "ru": "Полёты дронов (загрузка хэша и возврат, мин)"},
                           "items": {"type": "object", "fields": {"flight": {"type": "str"},
                                                                  "upload_min": {"type": "int", "min": 0, "max": 10 ** 5},
-                                                                 "return_min": {"type": "int", "min": 0, "max": 10 ** 5}}},
-                          "default": [{"flight": "d1", "upload_min": 30, "return_min": 45},
-                                      {"flight": "d2", "upload_min": 50, "return_min": 40}]},
+                                                                 "return_min": {"type": "int", "min": 0, "max": 10 ** 5},
+                                                                 "video": {"type": "enum", "values": ["4K", "1080p"], "default": "4K"},
+                                                                 "thermal": {"type": "bool", "default": True},
+                                                                 "lidar": {"type": "bool", "default": True},
+                                                                 "rtk_cm": {"type": "number", "min": 0, "max": 1000, "default": 2.0}}},
+                          "default": [{"flight": "d1", "upload_min": 30, "return_min": 45, **DRONE_SPEC},
+                                      {"flight": "d2", "upload_min": 50, "return_min": 40, **DRONE_SPEC}]},
+        "leo_operating": {"type": "object", "source": "user",
+                          "fields": {"at_start_2030": {"type": "int", "min": 0, "max": 10 ** 6, "default": 29000},
+                                     "at_end_2030": {"type": "int", "min": 0, "max": 10 ** 6, "default": 31000},
+                                     "planned_extra": {"type": "int", "min": 0, "max": 10 ** 6, "default": 2000}},
+                          "default": {"at_start_2030": 29000, "at_end_2030": 31000, "planned_extra": 2000},
+                          "label": {"en": "Operating LEO satellites at the start and end of 2030, and planned ones (A.2)",
+                                    "ru": "Работающие спутники LEO на начало и конец 2030 года и планируемые (A.2)"}},
+        "qf_projects": {"type": "list", "min_items": 0, "max_items": 20, "source": "user",
+                        "items": {"type": "object", "fields": {"id": {"type": "str"},
+                                                               "contributions": {"type": "list", "min_items": 0, "max_items": 50,
+                                                                                 "items": {"type": "number", "min": 0, "max": 10 ** 9}}}},
+                        "default": [{"id": "reef", "contributions": [1.0, 4.0, 9.0]}, {"id": "grid", "contributions": [16.0]}],
+                        "label": {"en": "Level 2 projects and contributions (quadratic funding)", "ru": "Проекты уровня 2 и взносы (квадратичное финансирование)"}},
+        "qf_pool": {"type": "number", "min": 0, "max": 10 ** 12, "default": 30.0, "source": "user",
+                    "label": {"en": "Matching pool", "ru": "Фонд софинансирования"}},
+        "blocks": {"type": "list", "min_items": 0, "max_items": 20, "source": "user",
+                   "items": {"type": "object", "fields": {"height": {"type": "int", "min": 1, "max": 10 ** 9},
+                                                          "contribution_proof": {"type": "bool", "default": True},
+                                                          "work": {"type": "number", "min": 0, "max": 10 ** 12, "default": 0},
+                                                          "stake": {"type": "number", "min": 0, "max": 10 ** 15, "default": 0}}},
+                   "default": [{"height": 1, "contribution_proof": True, "work": 0, "stake": 0},
+                               {"height": 2, "contribution_proof": False, "work": 1e6, "stake": 1e9},
+                               {"height": 3, "contribution_proof": True, "work": 5, "stake": 10}],
+                   "label": {"en": "Proposed blocks {height, contribution_proof, work, stake} (stand-in acceptance)",
+                             "ru": "Предложенные блоки (условное правило принятия)"}},
         "validator_stakes": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "number", "min": 0, "max": 10 ** 12},
                              "default": [10e6, 50e6, 100e6, 5e6], "unit": "USD", "source": "user",
                              "label": {"en": "Level 2 validator stakes", "ru": "Залоги валидаторов уровня 2"}},
@@ -1506,7 +1705,7 @@ class CodeSynergyModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log.messages())
         msgs = log.messages()
         ks = [{"day": m.arrived_at, **m.value} for m in msgs if m.source == "KILLSWITCH"]
         outputs = {"kill_switches": ks,
