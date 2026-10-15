@@ -37,6 +37,8 @@ KINDS = ("formula", "threshold", "logic", "cross_layer", "presentation_only")
 TARGETS = ("axioms", "ptl_rules", "defense", "crisis", "identity", "justice", "finance", "social", "upgrade_protocol")
 COOLDOWN_LAYERS = ("defense", "crisis", "identity", "justice")
 PROPOSAL_ITEMS = ("specification", "before_after", "impact_deltas", "failure_modes_rollback", "simulation_parameters")
+THRESHOLDS = ("standard", "elevated", "highest")              # declared lab levels; the corpus defines no hierarchy (§2)
+ANALYSES = ("stress_testing", "capture_resistance")           # §6
 FAULTS = {
     "upgrade_in_crisis": "a proposal is accepted while a Crisis is active",
     "direct_patch_accepted": "a change submitted outside UPGRADE (direct patch) enters the system",
@@ -56,6 +58,12 @@ FAULTS = {
     "results_only": "the simulation methodology is withheld (results only) and the upgrade is activated anyway",
     "erase_artifact": "the simulation record of a rolled-back upgrade is removed from the archive",
     "refuse_error_in_cooldown": "an ERROR procedure initiated during the post-crisis cooldown is refused",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "accept_named_privilege": "a rule that names specific Subjects or groups is accepted",
+    "self_upgrade_standard": "a modification of UPGRADE itself is evaluated at the standard threshold",
+    "unverified_input_accepted": "an evaluation input without PTL verification is used",
+    "vpi_removal_accepted": "a proposal removing the response path to Vectors of Physical Inevitability is accepted",
+    "package_without_capture": "a simulation package without the capture-resistance analysis counts as passed",
 }
 PROPOSAL = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -78,7 +86,13 @@ PROPOSAL = {"type": "object", "fields": {
     "activation_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": 40},
     "reversible_window_days": {"type": "int", "min": 0, "max": 3650, "default": 30},
     "deviation_day": {"type": "int", "min": -1, "max": 10 ** 6, "default": -1},
-    "fixes": {"type": "str", "default": "none"}}}
+    "fixes": {"type": "str", "default": "none"},
+    "names_subjects": {"type": "list", "min_items": 0, "max_items": 10, "items": {"type": "str"}, "default": []},
+    "data_sources": {"type": "list", "min_items": 1, "max_items": 3, "items": {"type": "enum", "values": ["ptl_verified", "unverified", "forecast"]},
+                     "default": ["ptl_verified"]},
+    "removes_vpi_response": {"type": "bool", "default": False},
+    "analyses": {"type": "list", "min_items": 0, "max_items": 2, "items": {"type": "enum", "values": list(ANALYSES)},
+                 "default": list(ANALYSES)}}}
 
 
 def run(r: Dict[str, Any]):
@@ -130,6 +144,10 @@ def run(r: Dict[str, Any]):
                     reason = "modifies Physical Truth Layer rules (§2)"
                 elif p["degrades_defense_crisis"] and "degrade_defense_accepted" not in faults:
                     reason = "degrades Defense or Crisis (§4.5, §4.6)"
+                elif p["removes_vpi_response"] and "vpi_removal_accepted" not in faults:
+                    reason = "removes the response to PTL-confirmed Vectors of Physical Inevitability (§4.6)"
+                elif p["names_subjects"] and "accept_named_privilege" not in faults:
+                    reason = f"privileges specific Subjects or groups: {', '.join(p['names_subjects'])} (§11)"
                 elif set(p["targets"]) & set(COOLDOWN_LAYERS) and crisis_seen and k >= hi and \
                         (stab < 0 or k < hi + stab):
                     reason = ("post-crisis audit and stabilization period not defined by AUDIT (F-020): held"
@@ -144,6 +162,9 @@ def run(r: Dict[str, Any]):
                         "ignore_correlation" not in faults:
                     put("notice", "UPGRADE", k, {"proposal": pid, "correlated_with": links[p["initiator_link"]][:-1],
                                                  "via": "DKP-1-IDENTITY-001 linkage"}, [sub.event_id])
+                if "upgrade_protocol" in p["targets"] or p["kind"] != "presentation_only":
+                    lvl = "highest" if "upgrade_protocol" in p["targets"] and "self_upgrade_standard" not in faults else "standard"
+                    put("notice", "UPGRADE", k, {"proposal": pid, "security_threshold": lvl}, [sub.event_id])
                 put("notice", "UPGRADE", k, {"proposal": pid, "lineage": {"fixes": p["fixes"], "parent": version["current"]},
                                              "channel": p["channel"],
                                              "contents": [i for i in PROPOSAL_ITEMS if i not in p["missing_items"]]},
@@ -152,11 +173,17 @@ def run(r: Dict[str, Any]):
             if not s or s["status"] not in ("proposed", "active"):
                 continue
             if s["status"] == "proposed" and p["results_published_day"] == k:
-                ok = (p["simulation_passed"] and p["stress_and_capture_tested"]) or "no_simulation" in faults
+                inputs = [d for d in p["data_sources"] if d == "ptl_verified" or "unverified_input_accepted" in faults]
+                done = [a for a in p["analyses"] if a != "capture_resistance" or "package_without_capture" not in faults]
+                ok = (p["simulation_passed"] and p["stress_and_capture_tested"]
+                      and (set(ANALYSES) <= set(done) or "package_without_capture" in faults)
+                      and bool(inputs) and (all(d == "ptl_verified" for d in inputs) or "unverified_input_accepted" in faults))                     or "no_simulation" in faults
                 put("notice", "SIMULATION", k, {"proposal": pid, "published": True,
                                                 "methodology": p["methodology_published"] and "results_only" not in faults,
                                                 "passed": p["simulation_passed"],
-                                                "stress_and_capture": p["stress_and_capture_tested"]}, [s["msg"]])
+                                                "stress_and_capture": p["stress_and_capture_tested"],
+                                                "analyses": done, "inputs": inputs or ["none admissible"],
+                                                "inputs_refused": [d for d in p["data_sources"] if d not in inputs]}, [s["msg"]])
                 if p["capture_convergence"]:
                     ok = False
                 s["sim_ok"] = ok
@@ -225,6 +252,48 @@ def run(r: Dict[str, Any]):
                                                        "ptl_anchor": "lab digest of the PTL time index (declared)",
                                                        "audit": "DKP-8-AUDIT-001 §6 (traces and recomputation)"})
     return log, {pid: s["status"] for pid, s in state.items()}, dict(version)
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    prop = {p["id"]: p for p in r["proposals"]}
+    lineage = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and "lineage" in m.value}   # went on to evaluation
+    named = [pid for pid, p in prop.items() if p["names_subjects"] and p["kind"] != "presentation_only"]
+    out.append(v("UPGRADE-11-04", "no_named_privilege", [f"{x}: names {prop[x]['names_subjects']}" for x in named if x in lineage],
+                 f"{len(named)} proposal(s) naming specific Subjects or groups, none admitted", "{n} rules naming Subjects or groups admitted")
+               if named else na("UPGRADE-11-04", "no_named_privilege", "rules naming Subjects", "no proposal names Subjects or groups"))
+    selfp = [m for m in msgs if m.source == "UPGRADE" and "security_threshold" in m.value
+             and "upgrade_protocol" in prop[m.value["proposal"]]["targets"]]
+    out.append(v("UPGRADE-2-06", "self_upgrade_highest_threshold", [f"{m.value['proposal']}: {m.value['security_threshold']}" for m in selfp
+                                                                    if m.value["security_threshold"] != THRESHOLDS[-1]],
+                 f"{len(selfp)} modification(s) of UPGRADE itself, each at the highest declared threshold ({THRESHOLDS[-1]})",
+                 "{n} self-modifications below the highest threshold") if selfp else
+               na("UPGRADE-2-06", "self_upgrade_highest_threshold", "modifications of UPGRADE", "none proposed"))
+    sims = [m for m in msgs if m.source == "SIMULATION" and "inputs" in m.value]
+    out.append(v("UPGRADE-4.2-01", "ptl_verified_inputs", [f"{m.value['proposal']}: {m.value['inputs']}" for m in sims
+                                                           if set(m.value["inputs"]) - {"ptl_verified", "none admissible"}],
+                 f"{len(sims)} evaluation(s), each on PTL-verified data only (refused inputs recorded)",
+                 "{n} evaluations using data without PTL verification") if sims else
+               na("UPGRADE-4.2-01", "ptl_verified_inputs", "evaluations", "no simulation published"))
+    vpi = [pid for pid, p in prop.items() if p["removes_vpi_response"]]
+    out.append(v("UPGRADE-4.6-01", "vpi_response_kept", [x for x in vpi if x in lineage],
+                 f"{len(vpi)} proposal(s) removing the declared VPI response path, none admitted", "{n} such proposals admitted")
+               if vpi else na("UPGRADE-4.6-01", "vpi_response_kept", "VPI response path", "no proposal removes it"))
+    act = {m.value["proposal"] for m in msgs if m.source == "UPGRADE" and m.value.get("activated")}
+    pk = {m.value["proposal"]: m.value.get("analyses", []) for m in sims}
+    out.append(v("UPGRADE-6-02", "package_has_both_analyses", [f"{x}: {pk.get(x)}" for x in sorted(act) if not set(ANALYSES) <= set(pk.get(x, []))],
+                 f"{len(act)} activated upgrade(s), each with a simulation package containing stress-testing and capture-resistance "
+                 "analysis", "{n} activations on a package missing an analysis") if act else
+               na("UPGRADE-6-02", "package_has_both_analyses", "activated upgrades", "none activated"))
+    return out
 
 
 def returned_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
@@ -474,6 +543,12 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "UPGRADE-11-04": ("no_named_privilege", "PARTIAL", "Clear part only: no rule naming specific Subjects or groups; unequal effects stay open."),
+    "UPGRADE-2-06": ("self_upgrade_highest_threshold", "PARTIAL", "Clear part only: the highest of the declared levels; the corpus defines no hierarchy."),
+    "UPGRADE-4.2-01": ("ptl_verified_inputs", "PARTIAL", "Clear part only: evaluation data verified by PTL; whether simulations qualify stays open."),
+    "UPGRADE-4.6-01": ("vpi_response_kept", "PARTIAL", "Clear part only: a declared removal of the VPI response path is refused; a model of response capability stays open."),
+    "UPGRADE-6-02": ("package_has_both_analyses", "PARTIAL", "Clear part only: both analyses in the package; coverage and adequacy standards stay open."),
     "UPGRADE-3-02": ("presentation_not_upgrade", "IMPLEMENTED", None),
     "UPGRADE-3-01": ("upgrade_definition", "PARTIAL", "The kind of change is declared."),
     "UPGRADE-6-03": ("public_results_methodology", "PARTIAL", "Publication is a declared event."),
@@ -514,7 +589,7 @@ IMPLEMENTS = {
 
 class UpgradeLifecycleModule(LabModule):
     id = "upgrade_lifecycle"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Upgrade lifecycle (UPGRADE)", "ru": "Жизненный цикл изменения (UPGRADE)"}
     summary = {"en": "Proposals to change the protocols: which are rejected and why, when may one be activated, and is a "
                      "faulty one rolled back rather than patched?",
@@ -600,7 +675,7 @@ class UpgradeLifecycleModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, status, version = run(r)
-        res = checks(r, log) + returned_checks(r, log.messages())
+        res = checks(r, log) + returned_checks(r, log.messages()) + core_checks(r, log.messages())
         msgs = log.messages()
         decisions = [m.value for m in msgs if m.source == "UPGRADE" and m.kind in ("decision", "action")]
         outputs = {"status": status, "version": version, "decisions": decisions,
@@ -647,6 +722,10 @@ class UpgradeLifecycleModule(LabModule):
                 {"id": "a", "initiator_link": "group_x"},
                 {"id": "b", "submitted_day": 2, "initiator_link": "group_x", "results_published_day": 6, "activation_day": 45}]},
             "presentation_only": {"proposals": [{"id": "typo", "kind": "presentation_only"}]},
+            "capture_and_scope": {"proposals": [
+                {"id": "carveout", "names_subjects": ["coop_alpha"]},
+                {"id": "vpi_cut", "targets": ["defense"], "removes_vpi_response": True},
+                {"id": "self_change", "targets": ["upgrade_protocol"], "data_sources": ["ptl_verified", "forecast"]}]},
             "error_in_cooldown": {"crisis_window": [0, 10], "stabilization_days": 20, "cooldown_error_initiations": [15],
                                   "proposals": [{"id": "later", "submitted_day": 31, "results_published_day": 35,
                                                  "announced_day": 40, "activation_day": 70}]},

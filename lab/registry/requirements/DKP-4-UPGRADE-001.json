@@ -41,7 +41,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "only_lawful_mechanism"
    },
    "tests": [
@@ -157,7 +157,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "axioms_untouched"
    },
    "tests": [
@@ -200,7 +200,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "ptl_rules_untouched"
    },
    "tests": [
@@ -274,14 +274,20 @@
     "security assessment",
     "current and proposed anti-capture evidence"
    ],
-   "gap": "The security threshold hierarchy and formal comparison of anti-capture guarantees are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: the highest of the declared levels; the corpus defines no hierarchy.",
    "hypotheses_needed": [
     "Declare the security threshold hierarchy and highest threshold.",
     "Declare the model and evidence standard for preserving or strengthening anti-capture guarantees."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.3.0",
+    "check": "self_upgrade_highest_threshold"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -312,7 +318,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "upgrade_definition"
    },
    "tests": [
@@ -349,7 +355,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "presentation_not_upgrade"
    },
    "tests": [
@@ -390,7 +396,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "axioms_untouched"
    },
    "tests": [
@@ -426,14 +432,20 @@
     "PTL verification records",
     "simulation provenance"
    ],
-   "gap": "PTL verification criteria and the precise verification requirement for simulations are not defined. No lab check implemented yet.",
+   "gap": "Clear part only: evaluation data verified by PTL; whether simulations qualify stays open.",
    "hypotheses_needed": [
     "Declare whether PTL-verifiable modifies both data and simulations.",
     "Declare acceptable PTL verification evidence."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.3.0",
+    "check": "ptl_verified_inputs"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -470,7 +482,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_crisis_upgrade"
    },
    "tests": [
@@ -512,7 +524,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "visible_specified_auditable"
    },
    "tests": [
@@ -561,7 +573,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_degradation"
    },
    "tests": [
@@ -634,13 +646,19 @@
     "threat and response models",
     "component impact analysis"
    ],
-   "gap": "Vectors of Physical Inevitability and sufficient response capability are not defined. No lab check implemented yet.",
+   "gap": "Clear part only: a declared removal of the VPI response path is refused; a model of response capability stays open.",
    "hypotheses_needed": [
     "Declare vector membership and a response-capability preservation test."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.3.0",
+    "check": "vpi_response_kept"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -678,7 +696,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_degradation"
    },
    "tests": [
@@ -726,7 +744,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "proposal_contents"
    },
    "tests": [
@@ -766,7 +784,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "incomplete_rejected"
    },
    "tests": [
@@ -806,7 +824,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "simulation_before_approval"
    },
    "tests": [
@@ -844,13 +862,19 @@
     "adversarial scenario inventory",
     "capture-resistance analysis"
    ],
-   "gap": "The required scenario coverage and adequacy standards for capture and incremental takeover analysis are undefined. No lab check implemented yet.",
+   "gap": "Clear part only: both analyses in the package; coverage and adequacy standards stay open.",
    "hypotheses_needed": [
     "Declare adversarial and edge-case coverage and the capture model used for incremental takeover detection."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.3.0",
+    "check": "package_has_both_analyses"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -884,7 +908,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "public_results_methodology"
    },
    "tests": [
@@ -921,7 +945,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "influence_caps"
    },
    "tests": [
@@ -964,7 +988,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "correlation_detected"
    },
    "tests": [
@@ -1007,7 +1031,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "micro_upgrade_capture"
    },
    "tests": [
@@ -1047,7 +1071,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "lineage"
    },
    "tests": [
@@ -1097,7 +1121,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "activation_conditions"
    },
    "tests": [
@@ -1144,7 +1168,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "post_crisis_stabilization"
    },
    "tests": [
@@ -1185,7 +1209,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "cooling_off_30"
    },
    "tests": [
@@ -1227,7 +1251,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "error_open_in_cooldown"
    },
    "tests": [
@@ -1270,7 +1294,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deterministic_day"
    },
    "tests": [
@@ -1311,7 +1335,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "reversible_window"
    },
    "tests": [
@@ -1353,7 +1377,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "logged"
    },
    "tests": [
@@ -1398,7 +1422,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "automatic_rollback"
    },
    "tests": [
@@ -1440,7 +1464,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_stacking"
    },
    "tests": [
@@ -1472,7 +1496,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "rollback_priority"
    },
    "tests": [
@@ -1517,7 +1541,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "artifacts_archived"
    },
    "tests": [
@@ -1565,7 +1589,7 @@
     "also": [
      {
       "module": "upgrade_lifecycle",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "check": "no_crisis_upgrade"
      }
     ]
@@ -1611,7 +1635,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_opaque_tuning"
    },
    "tests": [
@@ -1653,7 +1677,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "upgrade_lifecycle",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_bypass"
    },
    "tests": [
@@ -1684,13 +1708,19 @@
     "Subject and group treatment records",
     "distributional effects analysis"
    ],
-   "gap": "A testable definition of privilege and the relevant comparison baseline are missing. No lab check implemented yet.",
+   "gap": "Clear part only: no rule naming specific Subjects or groups; unequal effects stay open.",
    "hypotheses_needed": [
     "Declare the privilege predicate, comparison groups, and treatment or outcome dimensions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "upgrade_lifecycle",
+    "version": "1.3.0",
+    "check": "no_named_privilege"
+   },
+   "tests": [
+    "tests/lab/test_upgrade_lifecycle_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1828,7 +1858,7 @@
     "also": [
      {
       "module": "upgrade_lifecycle",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "check": "presentation_not_upgrade"
      }
     ]
@@ -1878,7 +1908,7 @@
     "also": [
      {
       "module": "upgrade_lifecycle",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "check": "edition_dated"
      }
     ]

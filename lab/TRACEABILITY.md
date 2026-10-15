@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1568 (90.3 %) | 1029 | 1479 | 947 | 4 | 67 | 18 | 169 | 0 | 27 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1577 (90.8 %) | 1038 | 1488 | 956 | 4 | 67 | 18 | 160 | 0 | 18 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 18 | 29 | 17 | 0 | 1 | 0 | 13 | 0 | 0 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 3 | 258 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 377 (88.9 %) | 207 | 354 | 187 | 1 | 21 | 1 | 47 | 0 | 6 | 254 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 382 (90.1 %) | 212 | 359 | 192 | 1 | 21 | 1 | 42 | 0 | 1 | 254 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 8 | 201 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 458 (89.6 %) | 315 | 434 | 291 | 0 | 18 | 6 | 53 | 0 | 10 | 368 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 462 (90.4 %) | 319 | 438 | 295 | 0 | 18 | 6 | 49 | 0 | 6 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1568 (90.3 %) | 1029 | 1479 | 947 | 4 | 67 | 18 | 169 | 0 | 27 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1577 (90.8 %) | 1038 | 1488 | 956 | 4 | 67 | 18 | 160 | 0 | 18 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -281,7 +281,7 @@ Withdrawn after verification (not author decisions):
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 27 | 27 | 0 | 0 | 0 | 2 | 20 |
 | DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 32 |
-| DKP-4-UPGRADE-001 | 48 | 40 | 36 | 0 | 4 | 0 | 8 | 31 |
+| DKP-4-UPGRADE-001 | 48 | 45 | 41 | 0 | 4 | 0 | 3 | 31 |
 | DKP-5-CULTURE-001 | 43 | 38 | 38 | 0 | 0 | 0 | 5 | 30 |
 | DKP-5-EDU-001 | 64 | 58 | 53 | 0 | 1 | 4 | 6 | 37 |
 | DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 49 |
@@ -292,7 +292,7 @@ Withdrawn after verification (not author decisions):
 | DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 30 |
 | DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
-| DKP-7-AI-SUBJECT-001 | 39 | 32 | 32 | 0 | 0 | 0 | 7 | 34 |
+| DKP-7-AI-SUBJECT-001 | 39 | 36 | 36 | 0 | 0 | 0 | 3 | 34 |
 | DKP-7-PRIVACY-001 | 39 | 34 | 31 | 0 | 3 | 0 | 5 | 28 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
 | DKP-7-TRANSPARENCY-001 | 44 | 35 | 35 | 0 | 0 | 0 | 9 | 32 |
@@ -1137,6 +1137,7 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-11-01 | IMPLEMENTED | crisis_recovery · no_emergency_upgrade | PASS | yes | — |
 | UPGRADE-11-02 | PARTIAL | upgrade_lifecycle · no_opaque_tuning | PASS | — | — |
 | UPGRADE-11-03 | PARTIAL | upgrade_lifecycle · no_bypass | PASS | — | — |
+| UPGRADE-11-04 | PARTIAL | upgrade_lifecycle · no_named_privilege | PASS | — | — |
 | UPGRADE-12-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | UPGRADE-12-02 | PARTIAL | edition_finality · modification_requirements | UNKNOWN | — | Q-060 |
 | UPGRADE-12-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
@@ -1147,16 +1148,20 @@ Withdrawn after verification (not author decisions):
 | UPGRADE-2-03 | PARTIAL | upgrade_lifecycle · axioms_untouched | PASS | — | — |
 | UPGRADE-2-04 | PARTIAL | upgrade_lifecycle · ptl_rules_untouched | PASS | — | — |
 | UPGRADE-2-05 | IMPLEMENTED | crisis_recovery · no_upgrade_in_crisis | PASS | — | — |
+| UPGRADE-2-06 | PARTIAL | upgrade_lifecycle · self_upgrade_highest_threshold | PASS | — | — |
 | UPGRADE-3-01 | PARTIAL | upgrade_lifecycle · upgrade_definition | PASS | — | — |
 | UPGRADE-3-02 | IMPLEMENTED | upgrade_lifecycle · presentation_not_upgrade | PASS | — | — |
 | UPGRADE-4.1-01 | PARTIAL | upgrade_lifecycle · axioms_untouched | PASS | — | — |
+| UPGRADE-4.2-01 | PARTIAL | upgrade_lifecycle · ptl_verified_inputs | PASS | — | — |
 | UPGRADE-4.3-01 | PARTIAL | upgrade_lifecycle · no_crisis_upgrade | PASS | yes | — |
 | UPGRADE-4.4-01 | PARTIAL | upgrade_lifecycle · visible_specified_auditable | PASS | — | — |
 | UPGRADE-4.5-01 | PARTIAL | upgrade_lifecycle · no_degradation | PASS | — | — |
+| UPGRADE-4.6-01 | PARTIAL | upgrade_lifecycle · vpi_response_kept | PASS | — | — |
 | UPGRADE-4.6-02 | PARTIAL | upgrade_lifecycle · no_degradation | PASS | — | — |
 | UPGRADE-5-01 | PARTIAL | upgrade_lifecycle · proposal_contents | PASS | — | — |
 | UPGRADE-5-02 | IMPLEMENTED | upgrade_lifecycle · incomplete_rejected | PASS | — | — |
 | UPGRADE-6-01 | PARTIAL | upgrade_lifecycle · simulation_before_approval | PASS | — | — |
+| UPGRADE-6-02 | PARTIAL | upgrade_lifecycle · package_has_both_analyses | PASS | — | — |
 | UPGRADE-6-03 | PARTIAL | upgrade_lifecycle · public_results_methodology | PASS | — | — |
 | UPGRADE-7-01 | PARTIAL | upgrade_lifecycle · influence_caps | UNKNOWN | — | — |
 | UPGRADE-7-02 | IMPLEMENTED | upgrade_lifecycle · correlation_detected | PASS | — | — |
@@ -1568,6 +1573,7 @@ Withdrawn after verification (not author decisions):
 | RESILIENCE-9-01 | PARTIAL | resilience_structure · resilience_mechanism | PASS | yes | — |
 | AISUBJECT-1-01 | IMPLEMENTED | ai_subject · subject_not_authority | PASS | — | — |
 | AISUBJECT-1-02 | PARTIAL | ai_subject · no_discretionary_power | PASS | — | — |
+| AISUBJECT-1-03 | PARTIAL | ai_subject · constraint_prevails | PASS | — | — |
 | AISUBJECT-1-04 | PARTIAL | ai_subject · executes_not_decides | PASS | — | — |
 | AISUBJECT-2-01 | IMPLEMENTED | ai_subject · selection_external | PASS | — | — |
 | AISUBJECT-2-02 | IMPLEMENTED | ai_subject · enumerate_without_ranking | PASS | yes | — |
@@ -1591,10 +1597,13 @@ Withdrawn after verification (not author decisions):
 | AISUBJECT-6-03 | IMPLEMENTED | ai_subject · no_technocratic_minimization | PASS | — | — |
 | AISUBJECT-7-01 | IMPLEMENTED | ai_subject · no_crisis_by_inference | PASS | — | — |
 | AISUBJECT-7-02 | IMPLEMENTED | ai_subject · crisis_via_state_machine | PASS | — | — |
+| AISUBJECT-7-06 | PARTIAL | ai_subject · crisis_action_has_end | PASS | — | — |
 | AISUBJECT-7-07 | PARTIAL | ai_subject · crisis_actions_auditable | PASS | — | — |
 | AISUBJECT-7-08 | PARTIAL | ai_subject · crisis_no_precedent | PASS | — | — |
+| AISUBJECT-7-09 | PARTIAL | ai_subject · ttl_extension_only_with_mercy | PASS | — | — |
 | AISUBJECT-7-10 | IMPLEMENTED | ai_subject · audit_continuity | PASS | — | — |
 | AISUBJECT-8-01 | IMPLEMENTED | ai_subject · no_self_modification | PASS | — | — |
+| AISUBJECT-8-02 | PARTIAL | ai_subject · no_authority_from_learning | PASS | — | — |
 | AISUBJECT-8-03 | IMPLEMENTED | ai_subject · halt_on_ambiguity | PASS | yes | — |
 | AISUBJECT-8-04 | IMPLEMENTED | ai_subject · no_help_under_uncertainty | PASS | yes | — |
 | AISUBJECT-9-01 | IMPLEMENTED | ai_subject · absolute_invalidity | PASS | yes | — |

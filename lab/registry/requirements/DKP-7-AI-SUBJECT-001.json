@@ -35,7 +35,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "subject_not_authority"
    },
    "tests": [
@@ -72,7 +72,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_discretionary_power"
    },
    "tests": [
@@ -108,13 +108,19 @@
     "reward and optimization specifications",
     "conflict resolution records"
    ],
-   "gap": "A conflict detection model covering explicit and emergent objectives is missing. No lab check implemented yet.",
+   "gap": "Clear part only: in a declared conflict the constraint prevails; learned preferences stay open.",
    "hypotheses_needed": [
     "Declare how conflicts with each constitutional constraint are identified."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.2.0",
+    "check": "constraint_prevails"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -151,7 +157,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "executes_not_decides"
    },
    "tests": [
@@ -195,7 +201,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "selection_external"
    },
    "tests": [
@@ -238,7 +244,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "enumerate_without_ranking"
    },
    "tests": [
@@ -277,7 +283,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "recommendation"
    },
    "tests": [
@@ -317,7 +323,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "justification"
    },
    "tests": [
@@ -358,7 +364,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_value_resolution"
    },
    "tests": [
@@ -399,7 +405,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_algorithmic_preference"
    },
    "tests": [
@@ -441,7 +447,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "neutral_framing"
    },
    "tests": [
@@ -484,7 +490,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "responsibility_mapped"
    },
    "tests": [
@@ -526,7 +532,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_dilution"
    },
    "tests": [
@@ -569,7 +575,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "identity_continuity"
    },
    "tests": [
@@ -611,7 +617,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_fragmentation"
    },
    "tests": [
@@ -653,7 +659,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_exit_delay"
    },
    "tests": [
@@ -695,7 +701,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_exit_friction"
    },
    "tests": [
@@ -737,7 +743,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_retention_nudge"
    },
    "tests": [
@@ -779,7 +785,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "ptl_authoritative"
    },
    "tests": [
@@ -821,7 +827,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_smoothing"
    },
    "tests": [
@@ -863,7 +869,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "permitted_operations"
    },
    "tests": [
@@ -905,7 +911,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_optimization"
    },
    "tests": [
@@ -946,7 +952,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "metrics_for_verification"
    },
    "tests": [
@@ -987,7 +993,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_technocratic_minimization"
    },
    "tests": [
@@ -1028,7 +1034,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_crisis_by_inference"
    },
    "tests": [
@@ -1073,7 +1079,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_via_state_machine"
    },
    "tests": [
@@ -1214,13 +1220,19 @@
     "crisis action timing records",
     "applicable time limits"
    ],
-   "gap": "Applicable durations and the temporal scope of each limit are missing. No lab check implemented yet.",
+   "gap": "Clear part only: a declared end; durations stay open.",
    "hypotheses_needed": [
     "Declare finite time limits and whether they constrain execution, authorization, or effects."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.2.0",
+    "check": "crisis_action_has_end"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1257,7 +1269,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_actions_auditable"
    },
    "tests": [
@@ -1302,7 +1314,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "crisis_no_precedent"
    },
    "tests": [
@@ -1341,13 +1353,19 @@
     "oracle TTL records",
     "extension authorizations"
    ],
-   "gap": "The referenced Crisis/Mercy logic, permitted TTL extensions, and meaning of narrow authorization are absent. No lab check implemented yet.",
+   "gap": "Clear part only: no TTL extension without an explicit Crisis/Mercy authorization; the conflict with ORACLE §14 stays open (Q-027).",
    "hypotheses_needed": [
     "Declare any provisional mercy rules and authorization limits, and whether the explicit-definition condition applies to both permissions."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.2.0",
+    "check": "ttl_extension_only_with_mercy"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1386,7 +1404,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "audit_continuity"
    },
    "tests": [
@@ -1430,7 +1448,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_self_modification"
    },
    "tests": [
@@ -1467,13 +1485,19 @@
     "constraint specifications",
     "capability assessments"
    ],
-   "gap": "The complete fixed constraints and a model detecting implicit authority or discretionary power are missing. No lab check implemented yet.",
+   "gap": "Clear part only: the permitted set does not grow; implicit authority needs a capability model.",
    "hypotheses_needed": [
     "Declare the applicable fixed constraints and how capability changes establish implicit authority or discretion."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "ai_subject",
+    "version": "1.2.0",
+    "check": "no_authority_from_learning"
+   },
+   "tests": [
+    "tests/lab/test_ai_subject_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1512,7 +1536,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "halt_on_ambiguity"
    },
    "tests": [
@@ -1555,7 +1579,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "no_help_under_uncertainty"
    },
    "tests": [
@@ -1597,7 +1621,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "ai_subject",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "check": "absolute_invalidity"
    },
    "tests": [

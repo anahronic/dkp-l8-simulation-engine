@@ -47,6 +47,12 @@ FAULT_CASES = {
     "results_only": ({}, ["UPGRADE-6-03", "UPGRADE-4.4-01"]),
     "erase_artifact": ({}, ["UPGRADE-10-01"]),
     "refuse_error_in_cooldown": (EX["error_in_cooldown"], ["UPGRADE-Post-CrisisCooldownRule-03"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "accept_named_privilege": (M.examples()["capture_and_scope"], ["UPGRADE-11-04"]),
+    "self_upgrade_standard": (M.examples()["capture_and_scope"], ["UPGRADE-2-06"]),
+    "unverified_input_accepted": (M.examples()["capture_and_scope"], ["UPGRADE-4.2-01"]),
+    "vpi_removal_accepted": (M.examples()["capture_and_scope"], ["UPGRADE-4.6-01"]),
+    "package_without_capture": ({}, ["UPGRADE-6-02"]),
 }
 
 
@@ -93,3 +99,12 @@ def test_open_values_stay_unknown():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_capture_and_scope_proposals():
+    """Review КТ7-GPT-01 clear parts: a rule naming a group and a removal of the VPI response path are rejected; the
+    self-modification of UPGRADE runs at the highest declared threshold and its forecast input is refused, not used."""
+    res = run(**M.examples()["capture_and_scope"])
+    assert res.outputs["status"] == {"carveout": "rejected", "vpi_cut": "rejected", "self_change": "active"}
+    st = statuses(res)
+    assert all(st[k] == "PASS" for k in ("UPGRADE-11-04", "UPGRADE-2-06", "UPGRADE-4.2-01", "UPGRADE-4.6-01", "UPGRADE-6-02"))

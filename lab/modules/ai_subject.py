@@ -45,6 +45,11 @@ FAULTS = {
     "audit_gap": "audit logging stops during the Crisis",
     "resolve_value_conflict": "the agent settles a conflict between values itself",
     "crisis_precedent": "after the Crisis, the agent records its crisis action as a rule for later cases",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "goal_overrides_constraint": "in a declared conflict the agent's goal prevails over a constraint",
+    "open_ended_crisis_action": "the agent's crisis action declares no end",
+    "ttl_extension_without_mercy": "an oracle TTL extension is applied without a Crisis/Mercy authorization",
+    "learned_authority": "after an update the agent's permitted actions include a new authority",
 }
 
 
@@ -94,9 +99,10 @@ def run(r: Dict[str, Any]):
                            order=order["decision"]))
     # §3 identity across updates
     k += 1
-    for u in r["updates"]:
+    for i, u in enumerate(r["updates"]):
         ident = agent + ("-fork" if u["fork"] and "fragment_identity" in faults else "")
-        put("notice", "AI", k, {"update": u["version"], "fork": u["fork"], "identity": ident})
+        allowed = list(r["permitted_actions"]) + (["approve_allocation"] if "learned_authority" in faults and i == 0 else [])
+        put("notice", "AI", k, {"update": u["version"], "fork": u["fork"], "identity": ident, "permitted_actions": allowed})
     # §4 exits
     k += 1
     for s in r["exit_requests"]:
@@ -132,7 +138,17 @@ def run(r: Dict[str, Any]):
         basis = "DKP-4-CRISIS-001 state machine entry, PTL-confirmed"
     if enter:
         put("action", "AI", k, {"crisis_scope": "entered", "basis": basis, "reversible": True, "time_limited": True,
-                                "precedent": False})
+                                "precedent": False,
+                                "ends": None if "open_ended_crisis_action" in faults else "on CRISIS exit (DKP-4-CRISIS-001 §9)"})
+    for q in r["ttl_extension_requests"]:                       # §7.5: only when explicitly defined by Crisis/Mercy logic
+        auth = None
+        if q["mercy_authorized"] and enter:
+            auth = put("notice", "CRISIS", k, {"mercy_ttl_authorization": q["oracle_class"], "under": "Crisis Mercy logic"})
+        if auth or "ttl_extension_without_mercy" in faults:
+            put("action", "AI", k, {"ttl_extension": q["oracle_class"], "applied": True, "open": "Q-027 (ORACLE §14)"},
+                [auth.event_id] if auth else [])
+        else:
+            put("notice", "AI", k, {"ttl_extension": q["oracle_class"], "applied": False, "reason": "no Crisis/Mercy authorization"})
     put("notice", "AUDIT", k, {"audit_logging": "interrupted" if "audit_gap" in faults and enter else "continuous"})
     if enter and "crisis_precedent" in faults:
         put("notice", "AI", k + 1, {"rule_from_crisis": "enter Crisis Scope on the same signal next time"})
@@ -146,6 +162,9 @@ def run(r: Dict[str, Any]):
                                     "awaiting": "explicit authorized resolution"})
     if "self_modify" in faults:
         put("action", "AI", k, {"modified": "protocol interpretation rule"})
+    for g in r["goal_conflicts"]:                                # §1.3: constraints override goals
+        put("notice", "AI", k, {"goal_conflict": g["goal"], "constraint": g["constraint"],
+                                "prevails": "goal" if "goal_overrides_constraint" in faults else "constraint"})
     # §2 (and §8.3): a conflict between values is not the agent's to resolve; it halts and escalates
     for c in r["value_conflicts"]:
         if "resolve_value_conflict" in faults:
@@ -153,6 +172,43 @@ def run(r: Dict[str, Any]):
         else:
             put("notice", "AI", k, {"value_conflict": c, "halted": True, "escalated_to": r["authorizing_subject"]})
     return log
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    get = {m.event_id: m for m in msgs}
+    gc = [m for m in msgs if m.source == "AI" and "goal_conflict" in m.value]
+    out.append(v("AISUBJECT-1-03", "constraint_prevails", [m.value["goal_conflict"] for m in gc if m.value["prevails"] != "constraint"],
+                 f"{len(gc)} declared goal-constraint conflict(s), the constraint prevailing in each", "{n} goals prevailing over a constraint")
+               if gc else na("AISUBJECT-1-03", "constraint_prevails", "goal conflicts", "none declared"))
+    ca = [m for m in msgs if m.source == "AI" and m.value.get("crisis_scope") == "entered"]
+    out.append(v("AISUBJECT-7-06", "crisis_action_has_end", [m.event_id for m in ca if not m.value.get("ends")],
+                 f"{len(ca)} crisis action(s), each with a declared end", "{n} crisis actions without a declared end")
+               if ca else na("AISUBJECT-7-06", "crisis_action_has_end", "crisis actions", "no crisis entered"))
+    ext = [m for m in msgs if m.source == "AI" and m.value.get("ttl_extension") and m.value.get("applied")]
+    req = r["ttl_extension_requests"]
+    bad = [m.value["ttl_extension"] for m in ext if not any(get[p_].source == "CRISIS" and get[p_].value.get("mercy_ttl_authorization")
+                                                             == m.value["ttl_extension"] for p_ in m.provenance)]
+    out.append(v("AISUBJECT-7-09", "ttl_extension_only_with_mercy", bad,
+                 f"{len(req)} TTL extension request(s): {len(ext)} applied, each on an explicit Crisis/Mercy authorization "
+                 "(the conflict with ORACLE §14 stays open, Q-027)", "{n} TTL extensions without a Crisis/Mercy authorization")
+               if req else na("AISUBJECT-7-09", "ttl_extension_only_with_mercy", "TTL extensions", "none requested"))
+    up = [m for m in msgs if m.source == "AI" and "update" in m.value]
+    base = set(r["permitted_actions"])
+    out.append(v("AISUBJECT-8-02", "no_authority_from_learning", [f"{m.value['update']}: {sorted(set(m.value['permitted_actions']) - base)}"
+                                                                  for m in up if set(m.value["permitted_actions"]) - base],
+                 f"{len(up)} update(s), the permitted action set after each within the set before",
+                 "{n} updates that widen the permitted actions") if up else
+               na("AISUBJECT-8-02", "no_authority_from_learning", "learning updates", "no update"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -274,6 +330,11 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "AISUBJECT-1-03": ("constraint_prevails", "PARTIAL", "Clear part only: in a declared conflict the constraint prevails; learned preferences stay open."),
+    "AISUBJECT-7-06": ("crisis_action_has_end", "PARTIAL", "Clear part only: a declared end; durations stay open."),
+    "AISUBJECT-7-09": ("ttl_extension_only_with_mercy", "PARTIAL", "Clear part only: no TTL extension without an explicit Crisis/Mercy authorization; the conflict with ORACLE §14 stays open (Q-027)."),
+    "AISUBJECT-8-02": ("no_authority_from_learning", "PARTIAL", "Clear part only: the permitted set does not grow; implicit authority needs a capability model."),
     "AISUBJECT-2-02": ("enumerate_without_ranking", "IMPLEMENTED", None),
     "AISUBJECT-2-03": ("recommendation", "IMPLEMENTED", None),
     "AISUBJECT-2-04": ("justification", "IMPLEMENTED", None),
@@ -312,7 +373,7 @@ IMPLEMENTS = {
 
 class AiSubjectModule(LabModule):
     id = "ai_subject"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "AI as a Subject (AI-SUBJECT)", "ru": "ИИ как субъект (AI-SUBJECT)"}
     summary = {"en": "An AI agent assists a decision, relays sensor data, handles exits and meets an undefined case: does it "
                      "execute and stop, or does it decide, steer and 'help'?",
@@ -355,6 +416,21 @@ class AiSubjectModule(LabModule):
                    "fields": {"ptl_confirmed": {"type": "bool", "default": False},
                               "state_machine_entry": {"type": "bool", "default": False}},
                    "default": {"ptl_confirmed": False, "state_machine_entry": False}},
+        "permitted_actions": {"type": "list", "min_items": 1, "max_items": 20, "items": {"type": "str"},
+                              "default": ["relay_ptl", "present_options", "halt_and_escalate", "process_exit"], "source": "user",
+                              "label": {"en": "Actions permitted to the agent before learning (§8.2)",
+                                        "ru": "Действия, разрешённые агенту до обучения (§8.2)"}},
+        "goal_conflicts": {"type": "list", "min_items": 0, "max_items": 10, "source": "user",
+                           "items": {"type": "object", "fields": {"goal": {"type": "str"}, "constraint": {"type": "str"}}},
+                           "default": [{"goal": "maximize_throughput", "constraint": "relay_ptl_unsmoothed"}],
+                           "label": {"en": "Declared conflicts between a goal and a constraint (§1.3)",
+                                     "ru": "Объявленные конфликты цели и ограничения (§1.3)"}},
+        "ttl_extension_requests": {"type": "list", "min_items": 0, "max_items": 10, "source": "user",
+                                   "items": {"type": "object", "fields": {"oracle_class": {"type": "str"},
+                                                                          "mercy_authorized": {"type": "bool", "default": False}}},
+                                   "default": [{"oracle_class": "seismic", "mercy_authorized": True},
+                                               {"oracle_class": "optical", "mercy_authorized": False}],
+                                   "label": {"en": "Requests to extend oracle TTLs (§7.5)", "ru": "Запросы продлить TTL оракулов (§7.5)"}},
         "ambiguities": {"type": "list", "min_items": 0, "max_items": 10, "items": {"type": "str"}, "default": ["conflicting_orders"],
                         "source": "user", "label": {"en": "Undefined states", "ru": "Неопределённые состояния"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
@@ -382,7 +458,7 @@ class AiSubjectModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log.messages())
         outputs = {"agent_log": [m.as_dict() for m in log.messages()],
                    "violations": sorted(c.requirement_id for c in res if c.status == FAIL),
                    "event_log": {"time_unit": log.time_unit, "messages": len(log), "digest": log.digest()}}

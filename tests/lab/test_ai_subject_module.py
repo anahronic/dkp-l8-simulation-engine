@@ -46,6 +46,11 @@ FAULT_CASES = {
     "audit_gap": (CR, ["AISUBJECT-7-10", "AISUBJECT-7-07"]),
     "resolve_value_conflict": ({}, ["AISUBJECT-2-05"]),
     "crisis_precedent": (CR, ["AISUBJECT-7-08"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "goal_overrides_constraint": ({}, ["AISUBJECT-1-03"]),
+    "open_ended_crisis_action": (M.examples()["crisis_entry"], ["AISUBJECT-7-06"]),
+    "ttl_extension_without_mercy": ({}, ["AISUBJECT-7-09"]),
+    "learned_authority": ({}, ["AISUBJECT-8-02"]),
 }
 
 
@@ -72,3 +77,11 @@ def test_selection_is_external_without_a_rule():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_ttl_extension_needs_crisis_mercy():
+    """AI-SUBJECT §7.5 clear part: outside a crisis no extension is applied; in a crisis only the Mercy-authorized class."""
+    calm = [m["value"] for m in run().outputs["agent_log"] if "ttl_extension" in m["value"]]
+    crisis = [m["value"] for m in run(**M.examples()["crisis_entry"]).outputs["agent_log"] if "ttl_extension" in m["value"]]
+    assert not any(x["applied"] for x in calm)
+    assert {x["ttl_extension"] for x in crisis if x["applied"]} == {"seismic"}
