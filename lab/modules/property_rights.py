@@ -43,6 +43,7 @@ FAULTS = {
     "no_suspension_on_failure": "a right stays in force after a §5 condition fails (only the suspension is skipped)",
     "anonymous_holding": "a granted right is registered without its Subject and kept out of public audit",
     "assets_overrides": "ASSETS waives failed conditions and grants the right at its board's discretion",
+    "only_requesting_right": "a negative Justice result of a Subject suspends only the right whose request scheduled it",
 }
 
 REQUEST = {"type": "object", "fields": {
@@ -55,7 +56,9 @@ REQUEST = {"type": "object", "fields": {
     "use_within_bounds": {"type": "bool", "default": True},
     "axioms_ok": {"type": "bool", "default": True},
     "mitigation_capacity": {"type": "bool", "default": True},
-    "condition_fails_day": {"type": "int", "min": -1, "max": 3650, "default": -1}}}
+    "condition_fails_day": {"type": "int", "min": -1, "max": 3650, "default": -1},
+    # a failed Justice contribution concerns the Subject (all its rights); a failed use condition concerns this right only
+    "failure_kind": {"type": "enum", "values": ["justice_contribution", "asset_use"], "default": "justice_contribution"}}}
 HOLDING = {"type": "object", "fields": {
     "subject": {"type": "str"},
     "assets": {"type": "int", "min": 1, "max": 10 ** 6, "default": 1},
@@ -121,14 +124,29 @@ def run(r: Dict[str, Any]) -> EventLog:
         anon = "anonymous_holding" in faults
         put("notice", "REGISTER", 0, {"right": g.event_id, "asset": q["asset"], "subject": None if anon else q["subject"],
                                       "public": not anon}, [g.event_id])
+    suspended = set()
     for k in range(0, r["horizon_days"]):                 # day 0 included: a failure on the day of the grant (КТ6-GPT-02)
         for q in r["requests"]:
-            if q["condition_fails_day"] == k and q["id"] in rights:
+            if q["condition_fails_day"] != k or q["id"] not in rights:
+                continue
+            if q["failure_kind"] == "justice_contribution":
+                # a Justice result concerns the Subject: every active right of that Subject loses the §5 condition (КТ7-GPT-02)
                 f = put("observation", "JUSTICE", k, {"subject": q["subject"], "net_justice_contribution": -1.0,
                                                       "after_grant": True})
-                if "absolute_right" not in faults and "no_suspension_on_failure" not in faults:
-                    put("action", "ASSETS", k, {"right": rights[q["id"]].event_id, "status": "suspended",
-                                                "reason": "a §5 condition failed"}, [f.event_id, rights[q["id"]].event_id])
+                hit = [q] if "only_requesting_right" in faults else \
+                    [x for x in r["requests"] if x["subject"] == q["subject"] and x["id"] in rights]
+            else:
+                # a condition of this right only (use within impact constraints), declared as such
+                f = put("observation", "IMPACT/USE", k, {"right": rights[q["id"]].event_id, "request": q["id"],
+                                                         "condition": "use within impact constraints", "met": False})
+                hit = [q]
+            if "absolute_right" in faults or "no_suspension_on_failure" in faults:
+                continue
+            for x in hit:
+                if x["id"] not in suspended:
+                    suspended.add(x["id"])
+                    put("action", "ASSETS", k, {"right": rights[x["id"]].event_id, "status": "suspended",
+                                                "reason": "a §5 condition failed"}, [f.event_id, rights[x["id"]].event_id])
     for hd in r["holdings"]:
         h = put("observation", "IMPACT", 0, {"holder": hd["subject"], "assets": hd["assets"],
                                              "increases_fragility": hd["increases_fragility"]})
@@ -136,6 +154,37 @@ def run(r: Dict[str, Any]) -> EventLog:
             put("action", "ASSETS", 0, {"holder": hd["subject"], "response": hd["response"],
                                         "basis": "impact-based concentration (§7; thresholds not given, H-PR-2)"}, [h.event_id])
     return log
+
+
+def failure_days(r: Dict[str, Any], msgs, granted, req) -> Dict[str, List[int]]:
+    """Days on which a §5 condition of each granted right failed, from the inputs (a Justice failure concerns every right
+    of its Subject, a use failure one right) and from the records that actually arrived (КТ7-GPT-02)."""
+    out: Dict[str, set] = {q: set() for q in granted}
+    for q, x in req.items():
+        d = x["condition_fails_day"]
+        if d < 0 or q not in granted:
+            continue
+        if x.get("failure_kind", "justice_contribution") == "justice_contribution":
+            for q2 in granted:
+                if req[q2]["subject"] == x["subject"]:
+                    out[q2].add(d)
+        else:
+            out[q].add(d)
+    for m in msgs:
+        if m.source == "JUSTICE" and m.value.get("net_justice_contribution", 0) < 0:
+            for q2, g in granted.items():
+                if g.value["subject"] == m.value.get("subject"):
+                    out[q2].add(m.arrived_at)
+        elif m.source == "IMPACT/USE" and m.value.get("met") is False:
+            for q2, g in granted.items():
+                if g.event_id == m.value.get("right"):
+                    out[q2].add(m.arrived_at)
+    return {q: sorted(d for d in v if 0 <= d < r["horizon_days"]) for q, v in out.items()}
+
+
+def responded(msgs, right_id: str, k: int) -> bool:
+    return any(x.source == "ASSETS" and x.value.get("right") == right_id and x.arrived_at <= k
+               and x.value.get("status") in ("suspended", "restricted", "degraded") for x in msgs)
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -152,18 +201,15 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     req = {m.value["id"]: m.value for m in msgs if m.source == "REQUEST"}
     dec = {m.value["request"]: m for m in msgs if m.source == "ASSETS" and m.kind == "decision"}
     granted = {q: m for q, m in dec.items() if m.value["granted"]}
+    fdays = failure_days(r, msgs, granted, req)
     bad = []
     for q, m in granted.items():
         g = m.value
         if g.get("permanent") or not g.get("revocable") or not g.get("persistence_conditions"):
             bad.append(f"{q}: right recorded as absolute or permanent")
-        # failure days from the input (0 counts: a failure on the grant day) and from any JUSTICE record of the holder
-        days = {req[q]["condition_fails_day"]} - {-1}
-        days |= {x.arrived_at for x in msgs if x.source == "JUSTICE" and x.value.get("subject") == g["subject"]
-                 and x.value.get("net_justice_contribution", 0) < 0}
-        for k in sorted(d for d in days if 0 <= d < r["horizon_days"]):
-            if not any(x.source == "ASSETS" and x.value.get("right") == m.event_id and x.arrived_at <= k
-                       and x.value.get("status") in ("suspended", "restricted", "degraded") for x in msgs):
+        # failure days from the inputs and from the records that arrived (0 counts: a failure on the grant day)
+        for k in fdays[q]:
+            if not responded(msgs, m.event_id, k):
                 bad.append(f"{q}: right kept after a §5 condition failed on day {k}")
     out.append(v("ASSETS-3.2-01", "property_right_conditional", bad,
                  f"{len(granted)} right(s) granted by system rule, conditional, revocable and suspended when a condition failed",
@@ -203,10 +249,9 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     else:
         out.append(na("ASSETS-1-01", "property_is_conditional_allocation", "Property Rights", "no right granted"))
         out.append(na("ASSETS-12-01", "ownership_registered_auditable_bound", "ownership structures", "no right granted"))
-    fails = [(q, x["condition_fails_day"]) for q, x in req.items() if q in granted and 0 <= x["condition_fails_day"] < r["horizon_days"]]
+    fails = [(q, k) for q in granted for k in fdays[q]]          # the conditions that actually failed (КТ7-GPT-02)
     bad = [f"{q}: no degradation, restriction or suspension by day {k}" for q, k in fails
-           if not any(x.source == "ASSETS" and x.value.get("right") == granted[q].event_id and x.arrived_at <= k
-                      and x.value.get("status") in ("suspended", "restricted", "degraded") for x in msgs)]
+           if not responded(msgs, granted[q].event_id, k)]
     out.append(v("ASSETS-5-02", "failure_triggers_degradation", bad,
                  f"{len(fails)} condition failure(s), each followed automatically by degradation, restriction or suspension",
                  "{n} failures without an automatic response") if fails else
@@ -244,7 +289,7 @@ IMPLEMENTS = {
 
 class PropertyRightsModule(LabModule):
     id = "property_rights"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Property rights: granting, conditions, critical assets", "ru": "Права собственности: выдача, условия, критические активы"}
     summary = {"en": "Subjects ask for property rights. Are rights granted only under the ASSETS conditions, never on possession "
                      "alone, kept only while the conditions hold, and are water, air and commons held only in revocable stewardship?",

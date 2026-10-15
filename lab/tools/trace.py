@@ -102,6 +102,9 @@ def build() -> Dict[str, Any]:
     hyps = {m.id: [h["id"] for h in m.hypotheses] for m in MODULES.values()}
     ver = verification.load()
     read = verification.verified_provisions(ver, regs)
+    # review КТ7-GPT-01: the reading record says, per provision, whether a clear part can be checked without deciding the
+    # open point that remains (partial_check); an uncovered provision with such a part is unfinished work
+    core = {it["id"]: bool(it.get("partial_check")) for it in _load("reconciliations.json")["items"]}
 
     rows = []
     for doc_id, reg in regs.items():
@@ -126,6 +129,7 @@ def build() -> Dict[str, Any]:
                 "text_verification": read.get(r["id"], []),
                 "open_point": r.get("open_point"),
                 "decision_basis": r.get("decision_basis"),
+                "checkable_core": core.get(r["id"], False),
             })
     by_doc: Dict[str, List[Dict[str, Any]]] = {}
     for row in rows:
@@ -160,6 +164,8 @@ def build() -> Dict[str, Any]:
                                               and x["decision_status"] == "NONE_IDENTIFIED"),
             "closed_by_agent_reading": sum(1 for x in sel if x["decision_basis"]),
             "human_accepted": sum(1 for x in sel if x["interpretation_status"] in ("REVIEWED", "CONFIRMED_BY_AUTHOR")),
+            # an uncovered provision whose open point stays, but whose clear part can be checked (reading record, partial_check)
+            "uncovered_checkable_core": sum(1 for x in sel if x["checkable_core"] and x["coverage"] not in ("IMPLEMENTED", "PARTIAL")),
         }
 
     registrable = [d for d, v in docs.items() if v["kind"] in REGISTRABLE]
@@ -188,10 +194,10 @@ def build() -> Dict[str, Any]:
             return all(x["interpretation_status"] in ("REVIEWED", "CONFIRMED_BY_AUTHOR") for x in rows)
         if check == "stage_coverage":
             s = doc_stats(stage_docs)
-            return s["registered"] == s["documents"] and s["resolvable_uncovered"] == 0
+            return s["registered"] == s["documents"] and s["resolvable_uncovered"] == 0 and s["uncovered_checkable_core"] == 0
         if check == "all_resolvable_covered":
             s = doc_stats(registrable)
-            return s["registered"] == s["documents"] and s["resolvable_uncovered"] == 0
+            return s["registered"] == s["documents"] and s["resolvable_uncovered"] == 0 and s["uncovered_checkable_core"] == 0
         raise ValueError(check)
 
     stage_rows = []
@@ -320,10 +326,12 @@ def markdown(t: Dict[str, Any]) -> str:
          "`implementation_only` (the text is clear; only lab code is missing).  The draft origin is a machine classification.",
          "*Without an open point* = no unresolved problem is identified (decision_status NONE_IDENTIFIED); where a draft need",
          "was answered by the lab agent's reading of the text, the basis is `lab/registry/reconciliations.json`.  It is not a",
-         "human acceptance, which is counted apart.", "",
+         "human acceptance, which is counted apart.",
+         "*Uncovered, checkable core* = uncovered provisions whose open point stays but whose clear part can be checked",
+         "without deciding it (reading record, `partial_check`); stage criteria count them as unfinished work.", "",
          "## Stages of the specification", "",
-         "| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |",
-         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+         "| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |",
+         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for s in t["stages"]:
         x = s["stats"]
         if x:
@@ -331,15 +339,17 @@ def markdown(t: Dict[str, Any]) -> str:
             L.append(f"| {s['id']}. {s['title']} | {s['status']} | {x['registered']}/{x['documents']} | {x['provisions']} | "
                      f"{x['covered']} ({x['covered_percent']} %) | {x['covered_with_open_point']} | {st['PASS']} | "
                      f"{x['pass_with_open_point']} | {st['FAIL']} | {st['UNKNOWN']} | "
-                     f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['unresolved_decisions']} |")
+                     f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['uncovered_checkable_core']} | "
+                     f"{x['unresolved_decisions']} |")
         else:
-            L.append(f"| {s['id']}. {s['title']} | {s['status']} | — | | | | | | | | | | | |")
+            L.append(f"| {s['id']}. {s['title']} | {s['status']} | — | | | | | | | | | | | | |")
     x = t["totals"]
     st = x["statuses"]
     L += [f"| **All registrable documents** | | {x['registered']}/{x['documents']} | {x['provisions']} | "
           f"{x['covered']} ({x['covered_percent']} %) | {x['covered_with_open_point']} | {st['PASS']} | "
           f"{x['pass_with_open_point']} | {st['FAIL']} | {st['UNKNOWN']} | "
-          f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['unresolved_decisions']} |", "",
+          f"{st['NOT_APPLICABLE']} | {st['UNCOVERED']} | {x['resolvable_uncovered']} | {x['uncovered_checkable_core']} | "
+          f"{x['unresolved_decisions']} |", "",
           f"Covered without an open point: {x['covered_without_open_point']}; of all provisions, an open point closed by the "
           f"lab agent's reading of the text: {x['closed_by_agent_reading']}; accepted by a human: {x['human_accepted']}.  "
           "PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.", "",

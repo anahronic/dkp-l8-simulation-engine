@@ -29,7 +29,12 @@ FAULT_CASES = {
     "no_suspension_on_failure": ["ASSETS-3.2-01", "ASSETS-5-02"],
     "anonymous_holding": ["ASSETS-12-01"],
     "assets_overrides": ["ASSETS-13-01", "ASSETS-1-01"],
+    "only_requesting_right": ["ASSETS-3.2-01", "ASSETS-5-02"],
 }
+TWO_RIGHTS = {"horizon_days": 3, "holdings": [],
+              "requests": [{"id": "q1", "subject": "s", "asset": "a1", "condition_fails_day": 0},
+                           {"id": "q2", "subject": "s", "asset": "a2", "condition_fails_day": -1}]}
+EXTRA = {"only_requesting_right": TWO_RIGHTS}
 
 
 def test_every_fault_has_a_case():
@@ -38,7 +43,8 @@ def test_every_fault_has_a_case():
 
 @pytest.mark.parametrize("fault", sorted(FAULT_CASES))
 def test_fault_is_detected(fault):
-    clean, broken = statuses(run()), statuses(run(faults=[fault]))
+    extra = EXTRA.get(fault, {})
+    clean, broken = statuses(run(**extra)), statuses(run(**extra, faults=[fault]))
     for rid in FAULT_CASES[fault]:
         assert clean[rid] == "PASS", (rid, clean[rid])
         assert broken[rid] == "FAIL", (fault, rid, broken[rid])
@@ -72,3 +78,43 @@ def test_kt6_02_condition_failure_on_every_day_including_the_grant_day(day, susp
     assert len(susp) == suspended and statuses(res)["ASSETS-3.2-01"] == "PASS"
     broken = statuses(run(**inp, faults=["no_suspension_on_failure"]))["ASSETS-3.2-01"]
     assert broken == ("PASS" if day == -1 else "FAIL")                          # only the suspension is missing
+
+
+@pytest.mark.parametrize("same_subject", [True, False])
+@pytest.mark.parametrize("day", [0, 1])
+def test_kt7_02_justice_result_reaches_every_right_of_the_subject(same_subject, day):
+    """Review КТ7-GPT-02: a negative Justice result of a Subject degrades all its active rights; another Subject's right
+    is untouched.  Both checks of the condition (ASSETS-3.2-01, -5-02) agree."""
+    inp = {"horizon_days": 3, "holdings": [],
+           "requests": [{"id": "q1", "subject": "s", "asset": "a1", "condition_fails_day": day},
+                        {"id": "q2", "subject": "s" if same_subject else "t", "asset": "a2", "condition_fails_day": -1}]}
+    res = run(**inp)
+    st = statuses(res)
+    assert st["ASSETS-3.2-01"] == st["ASSETS-5-02"] == "PASS"
+    suspended = [m for m in res.outputs["messages"] if m["value"].get("status") == "suspended"]
+    assert len(suspended) == (2 if same_subject else 1) and all(m["arrived_at"] == day for m in suspended)
+
+
+def test_kt7_02_removed_reaction_is_found_by_both_checks():
+    """Negative journal mutation: drop the suspension of the second right of the same Subject."""
+    from lab.core.bus import EventLog
+    from lab.modules import property_rights as pr
+    r = M.validate(TWO_RIGHTS)
+    log = pr.run(r)
+    g2 = next(m.event_id for m in log.messages() if m.source == "ASSETS" and m.kind == "decision" and m.value.get("request") == "q2")
+    bad = EventLog(log.time_unit, tie_rule=log.tie_rule)
+    for m in log.messages():
+        if not (m.value.get("status") == "suspended" and m.value.get("right") == g2):
+            bad.append(m)
+    st = {c.requirement_id: c.status for c in pr.checks(r, bad)}
+    assert st["ASSETS-3.2-01"] == st["ASSETS-5-02"] == "FAIL"
+
+
+def test_kt7_02_use_condition_concerns_one_right():
+    """A failed use condition is declared for one right; the Subject's other right stays in force."""
+    res = run(horizon_days=3, holdings=[], requests=[
+        {"id": "q1", "subject": "s", "asset": "a1", "condition_fails_day": 0, "failure_kind": "asset_use"},
+        {"id": "q2", "subject": "s", "asset": "a2"}])
+    st = statuses(res)
+    assert st["ASSETS-3.2-01"] == st["ASSETS-5-02"] == "PASS"
+    assert len([m for m in res.outputs["messages"] if m["value"].get("status") == "suspended"]) == 1

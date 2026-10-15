@@ -15,19 +15,21 @@ text by the lab (not a human review).  Author questions: `lab/registry/open_ques
 *Without an open point* = no unresolved problem is identified (decision_status NONE_IDENTIFIED); where a draft need
 was answered by the lab agent's reading of the text, the basis is `lab/registry/reconciliations.json`.  It is not a
 human acceptance, which is counted apart.
+*Uncovered, checkable core* = uncovered provisions whose open point stays but whose clear part can be checked
+without deciding it (reading record, `partial_check`); stage criteria count them as unfinished work.
 
 ## Stages of the specification
 
-| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Unresolved decisions |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 1198 |
-| B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 31 |
-| C. Common checks | DONE | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 258 |
-| D. Transitions and rights | DONE | 9/9 | 424 | 319 (75.2 %) | 149 | 299 | 132 | 1 | 18 | 1 | 105 | 0 | 254 |
-| E. Applied modules | DONE | 7/7 | 293 | 243 (82.9 %) | 151 | 227 | 137 | 0 | 9 | 7 | 50 | 0 | 201 |
-| F. Remaining constraints and stress | DONE | 12/12 | 511 | 427 (83.6 %) | 284 | 405 | 262 | 0 | 18 | 4 | 84 | 0 | 368 |
-| G. General release | PARTIAL | — | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 1198 |
+| Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 147 | 1198 |
+| B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 6 | 31 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 319 (75.2 %) | 149 | 299 | 132 | 1 | 18 | 1 | 105 | 0 | 66 | 254 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 243 (82.9 %) | 151 | 227 | 137 | 0 | 9 | 7 | 50 | 0 | 21 | 201 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 427 (83.6 %) | 284 | 405 | 262 | 0 | 18 | 4 | 84 | 0 | 42 | 368 |
+| G. General release | NOT STARTED | — | | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1456 (83.8 %) | 917 | 1373 | 841 | 4 | 64 | 15 | 281 | 0 | 147 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -43,11 +45,11 @@ Covered without an open point: 539; of all provisions, an open point closed by t
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
-- E / E1 met: real checks, declared models and their limits; gaps exact by section
-- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 met: all parts implementable without unresolved decisions are checked
+- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
+- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- E / E1 **not met**: real checks, declared models and their limits; gaps exact by section
+- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 **not met**: all parts implementable without unresolved decisions are checked, including the clear parts of provisions whose open point remains
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 

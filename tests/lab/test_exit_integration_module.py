@@ -116,11 +116,19 @@ def test_invalid_inputs_are_refused(name):
         M.validate(M.failure_examples()[name])
 
 
-def test_cooling_parameters_are_declared_but_not_simulated():
-    """EXIT §6 asks for declared, simulated and auditable cooling parameters; SIMULATION gives no calibration, so the
-    simulation part stays UNKNOWN unless a reference is declared (returned provision EXIT-6-04)."""
-    assert statuses(run())["EXIT-6-04"] == "UNKNOWN"
-    assert statuses(run(cooling_simulation="declared_reference"))["EXIT-6-04"] == "PASS"
+def test_kt7_03_cooling_simulation_needs_a_bound_record_not_a_flag():
+    """Review КТ7-GPT-03: EXIT §6 'declared, simulated, auditable'.  Declaration may PASS; the simulation part is UNKNOWN
+    without a record, FAIL for a record bound to another duration or scope, and still UNKNOWN for a matching record whose
+    content the lab cannot verify.  The UNKNOWN never disappears behind the declaration PASS."""
+    def parts(**kw):
+        return {c.check: c.status for c in run(**kw).checks if c.requirement_id == "EXIT-6-04"}
+    assert parts() == {"cooling_parameters_declared": "PASS", "cooling_parameters_simulated": "UNKNOWN"}
+    ok = {"simulation_id": "sim-cooling-1", "cooling_days": 14, "exit_scope": "regional"}
+    assert parts(cooling_simulation_record=ok)["cooling_parameters_simulated"] == "UNKNOWN"
+    assert parts(cooling_simulation_record=dict(ok, cooling_days=30))["cooling_parameters_simulated"] == "FAIL"
+    assert parts(cooling_simulation_record=dict(ok, exit_scope="individual"))["cooling_parameters_simulated"] == "FAIL"
+    with pytest.raises(LabInputError):                            # an empty reference is refused, not read as a record
+        M.validate({"cooling_simulation_record": dict(ok, simulation_id="")})
 
 
 def test_exit_obstruction_is_measured_against_the_declared_delays():

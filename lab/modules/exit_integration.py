@@ -528,16 +528,32 @@ def returned_checks(r, msgs, rows) -> List[CheckResult]:
     out.append(v("EXIT-9-02", "tail_categories", bad,
                  "every tail item is verified harm, an accepted contract or an impact cost measured before the declaration",
                  "{n} tail items outside the permitted categories"))
-    if "cooling_days" not in d.value:
-        out.append(v("EXIT-6-04", "cooling_parameters_declared", ["cooling parameters not declared"], "", "{n}"))
-    elif r["cooling_simulation"] == "declared_reference":
-        out.append(CheckResult("EXIT-6-04", "cooling_parameters_declared", PASS,
-                               f"cooling parameters declared ({r['cooling_days']} DTI-Days) with a declared simulation reference "
-                               "(not verified by the lab) and recorded in the event log"))
+    # EXIT §6 (review КТ7-GPT-03): declared, simulated, auditable are three claims.  Declaration is checked here; a
+    # simulation record is evidence only when it is presented and bound to the declared parameters, and even then the lab
+    # cannot verify its content, so that part stays UNKNOWN: a flag on the input is not a simulation.
+    declared = d.value.get("cooling_days")
+    out.append(v("EXIT-6-04", "cooling_parameters_declared", [] if declared is not None else ["cooling parameters not declared"],
+                 f"cooling parameters declared at initiation ({declared} DTI-Days) and recorded in the event log",
+                 "cooling parameters not declared"))
+    rec = r["cooling_simulation_record"]
+    if rec["simulation_id"] == "none":
+        out.append(CheckResult("EXIT-6-04", "cooling_parameters_simulated", UNKNOWN,
+                               "no simulation record of the cooling parameters is presented in this delivery (the corpus gives no "
+                               "calibration for the cooling period, H-EI-1)"))
     else:
-        out.append(CheckResult("EXIT-6-04", "cooling_parameters_declared", UNKNOWN,
-                               f"cooling parameters are declared ({r['cooling_days']} DTI-Days) and recorded, but no simulation "
-                               "record exists: DKP-8-SIMULATION-001 gives no calibration for them (H-EI-1)"))
+        mismatch = ([f"record binds {rec['cooling_days']} DTI-Days, the exit declares {declared}"]
+                    if rec["cooling_days"] != declared else []) + \
+                   ([f"record covers exit scope {rec['exit_scope']}, the exit is {r['exit_scope']}"]
+                    if rec["exit_scope"] != r["exit_scope"] else [])
+        if mismatch:
+            out.append(v("EXIT-6-04", "cooling_parameters_simulated", mismatch, "", "{n} mismatches between the presented "
+                         f"simulation record {rec['simulation_id']} and the declared parameters"))
+        else:
+            out.append(CheckResult("EXIT-6-04", "cooling_parameters_simulated", UNKNOWN,
+                                   f"simulation record {rec['simulation_id']} is presented and bound to the declared parameters "
+                                   f"({declared} DTI-Days, scope {r['exit_scope']}); its content is not verified by the lab",
+                                   evidence={"simulation_id": rec["simulation_id"], "cooling_days": rec["cooling_days"],
+                                             "exit_scope": rec["exit_scope"]}))
     if r["system_critical_asset"]:
         ds = [m for m in exm if m.value.get("delayed_settlement")]
         bad = [m.event_id for m in ds if not m.value.get("logged") or m.value.get("penalty")] + ([] if ds else ["no record"])
@@ -947,7 +963,9 @@ IMPLEMENTS = {
     "EXIT-3-04": ("cooling_bounded_non_punitive", "PARTIAL", "The cooling length is declared (H-EI-1)."),
     "EXIT-3-05": ("tail_from_verified_past", "IMPLEMENTED", None),
     "EXIT-9-02": ("tail_categories", "PARTIAL", "Evidence standards of each category are not computed."),
-    "EXIT-6-04": ("cooling_parameters_declared", "PARTIAL", "No simulation record exists for the cooling parameters (SIMULATION gives no calibration): UNKNOWN unless a reference is declared."),
+    "EXIT-6-04": ("cooling_parameters_declared", "PARTIAL", "Declaration is checked; a presented simulation record is checked for "
+                  "its binding to the declared parameters and otherwise UNKNOWN (cooling_parameters_simulated): the lab does not "
+                  "verify its content."),
     "EXIT-10-03": ("delayed_settlement_non_punitive_logged", "PARTIAL", "Logging and penalty are recorded fields."),
     "EXIT-10-04": ("delayed_settlement_no_authority", "PARTIAL", "Authority is observed as enforcement addressed to the exiting entity during the delayed settlement."),
     "EXIT-13-02": ("reentry_not_penalized", "PARTIAL", "A penalty is observed as a delay or condition for the earlier exit."),
@@ -957,7 +975,7 @@ IMPLEMENTS = {
 
 class ExitIntegrationModule(LabModule):
     id = "exit_integration"
-    version = "1.5.0"
+    version = "1.6.0"
     title = {"en": "Exit and integration (S-LAB-07)", "ru": "Выход и интеграция (S-LAB-07)"}
     summary = {"en": "A region joins phase by phase and later leaves: is every step consented and validated, does "
                      "exit need no one's permission, and does only verified past liability follow it out?",
@@ -1058,9 +1076,15 @@ class ExitIntegrationModule(LabModule):
                        "label": {"en": "Aid offered on days", "ru": "Помощь предложена в дни"}},
         "stability_objection": {"type": "bool", "default": True, "source": "user",
                                 "label": {"en": "A stability objection is raised against the exit", "ru": "Против выхода выдвинуто возражение о стабильности"}},
-        "cooling_simulation": {"type": "enum", "values": ["none", "declared_reference"], "default": "none", "source": "missing",
-                               "label": {"en": "Simulation record for the cooling parameters (none in the corpus)",
-                                         "ru": "Запись моделирования параметров охлаждения (в корпусе нет)"}},
+        "cooling_simulation_record": {"type": "object", "source": "missing",
+                                      "fields": {"simulation_id": {"type": "str", "default": "none"},
+                                                 "cooling_days": {"type": "int", "min": -1, "max": 3650, "default": -1},
+                                                 "exit_scope": {"type": "enum", "values": ["none", "individual", "organizational",
+                                                                                           "regional", "jurisdictional"],
+                                                                "default": "none"}},
+                                      "default": {"simulation_id": "none", "cooling_days": -1, "exit_scope": "none"},
+                                      "label": {"en": "Simulation record of the cooling parameters (none presented)",
+                                                "ru": "Запись моделирования параметров охлаждения (не предъявлена)"}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS), "items": {"type": "enum", "values": list(FAULTS)},
                    "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
