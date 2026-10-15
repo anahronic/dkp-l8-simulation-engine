@@ -161,14 +161,14 @@ FAILs of noncompliant cases (the input breaks the provision on purpose):
 | ORACLE-3-01 | yes | code_synergy:human_testimony_as_ptl |
 | RESILIENCE-5.8-01 | yes | resilience_structure:concentrated_owner |
 | SCOPE-3-19 | yes | code_synergy:declared_discretionary_council |
-| WORKCYCLE-2-02 | **no** | work_cycle:three_in_a_row |
+| WORKCYCLE-2-02 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-4.2-01 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-4.2-02 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-7-01 | yes | work_cycle:three_in_a_row |
 | WORKCYCLE-8.1-01 | yes | work_cycle:shifts_every_8h, work_cycle:understaffed_16 |
 | WORKCYCLE-8.1-02 | yes | work_cycle:three_in_a_row |
 
-Unverified reference FAILs: none; unverified noncompliant FAILs: WORKCYCLE-2-02.
+Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
