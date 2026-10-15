@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1559 (89.8 %) | 1020 | 1470 | 938 | 4 | 67 | 18 | 178 | 0 | 37 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1568 (90.3 %) | 1029 | 1479 | 947 | 4 | 67 | 18 | 169 | 0 | 27 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 18 | 29 | 17 | 0 | 1 | 0 | 13 | 0 | 0 | 31 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
+| C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 3 | 258 |
 | D. Transitions and rights | PARTIAL | 9/9 | 424 | 377 (88.9 %) | 207 | 354 | 187 | 1 | 21 | 1 | 47 | 0 | 6 | 254 |
 | E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 8 | 201 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 449 (87.9 %) | 306 | 425 | 282 | 0 | 18 | 6 | 62 | 0 | 19 | 368 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 458 (89.6 %) | 315 | 434 | 291 | 0 | 18 | 6 | 53 | 0 | 10 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1559 (89.8 %) | 1020 | 1470 | 938 | 4 | 67 | 18 | 178 | 0 | 37 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1568 (90.3 %) | 1029 | 1479 | 947 | 4 | 67 | 18 | 169 | 0 | 27 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -264,9 +264,9 @@ Withdrawn after verification (not author decisions):
 | CODE-OF-PLANETARY-SYNERGY | 101 | 93 | 82 | 0 | 10 | 1 | 8 | 86 |
 | DKP-0-ORACLE-001 | 58 | 56 | 51 | 2 | 2 | 1 | 2 | 48 |
 | DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 3 |
-| DKP-1-AXIOMS-001 | 44 | 39 | 33 | 0 | 4 | 2 | 5 | 22 |
+| DKP-1-AXIOMS-001 | 44 | 44 | 38 | 0 | 4 | 2 | 0 | 22 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 38 | 38 | 0 | 0 | 0 | 0 | 26 |
-| DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
+| DKP-1-IDENTITY-001 | 39 | 37 | 34 | 0 | 2 | 1 | 2 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 36 | 33 | 0 | 3 | 0 | 5 | 25 |
 | DKP-1-PREVENTION-001 | 43 | 30 | 29 | 0 | 1 | 0 | 13 | 31 |
@@ -488,6 +488,8 @@ Withdrawn after verification (not author decisions):
 | TIME-9-03 | IMPLEMENTED | time · normative_vector | PASS | — | — |
 | TIME-9-04 | IMPLEMENTED | time · normative_vector | FAIL | yes | Q-002 |
 | AXIOMS-1-01 | PARTIAL | axiom_constraints · no_violation_for_benefit | UNKNOWN | yes | — |
+| AXIOMS-2-01 | PARTIAL | axiom_constraints · axioms_between_ptl_and_economy | PASS | — | — |
+| AXIOMS-2-02 | PARTIAL | axiom_constraints · no_equation_change | PASS | — | — |
 | AXIOMS-2-03 | PARTIAL | axiom_constraints · axioms_constrain_only | PASS | — | — |
 | AXIOMS-3-01 | PARTIAL | axiom_constraints · axiom_forms | PASS | — | — |
 | AXIOMS-3-02 | IMPLEMENTED | axiom_constraints · constraints_not_terms | PASS | yes | — |
@@ -513,14 +515,17 @@ Withdrawn after verification (not author decisions):
 | AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-04 | IMPLEMENTED | axiom_constraints · symmetry_without_punishment | PASS | yes | — |
 | AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-05 | IMPLEMENTED | axiom_constraints · refusal_not_a_fault | PASS | yes | — |
 | AXIOMS-AxiomA2-SystemicSustainability-01 | PARTIAL | axiom_constraints · a2_enforced | NOT_APPLICABLE | — | — |
+| AXIOMS-AxiomA2-SystemicSustainability-02 | PARTIAL | axiom_constraints · sustained_b_drop_flagged | PASS | — | — |
 | AXIOMS-AxiomA3-PhysicalRealitySupremacy-01 | PARTIAL | axiom_constraints · a3_enforced | NOT_APPLICABLE | — | — |
 | AXIOMS-AxiomA3-PhysicalRealitySupremacy-02 | PARTIAL | axiom_constraints · no_narrative_override | PASS | — | — |
 | AXIOMS-AxiomA4-IrreversibilityAversion-01 | PARTIAL | axiom_constraints · a4_irreversibility | PASS | — | Q-044 |
 | AXIOMS-AxiomA4-IrreversibilityAversion-02 | PARTIAL | axiom_constraints · necessity_by_impact_model | PASS | — | — |
+| AXIOMS-AxiomA5-ExternalityAccountability-01 | PARTIAL | axiom_constraints · unmeasured_shift_violates | PASS | — | — |
 | AXIOMS-AxiomA5-ExternalityAccountability-02 | IMPLEMENTED | axiom_constraints · a5_enforced | PASS | — | — |
 | AXIOMS-AxiomA5-ExternalityAccountability-03 | PARTIAL | code_economy · externalities_in_cost | PASS | — | — |
 | AXIOMS-AxiomA6-TruthPriority-01 | PARTIAL | axiom_constraints · a6_enforced | PASS | — | — |
 | AXIOMS-AxiomA7-MinimumSufferingConstraint-01 | PARTIAL | axiom_constraints · non_amplification | PASS | — | — |
+| AXIOMS-AxiomA7-MinimumSufferingConstraint-02 | PARTIAL | axiom_constraints · suffering_not_an_objective | PASS | — | — |
 | AXIOMS-AxiomA7-MinimumSufferingConstraint-03 | IMPLEMENTED | axiom_constraints · suffering_not_primary | PASS | yes | — |
 | AXIOMS-EpistemicClarification-01 | IMPLEMENTED | axiom_constraints · definitions_not_outputs | PASS | — | — |
 | AXIOMS-EpistemicClarification-02 | IMPLEMENTED | axiom_constraints · application_output_metadata | PASS | yes | — |
@@ -567,6 +572,7 @@ Withdrawn after verification (not author decisions):
 | IDENTITY-1-01 | PARTIAL | impact_attribution · attribution_not_punishment | PASS | yes | — |
 | IDENTITY-10-01 | PARTIAL | impact_attribution · higher_order_definition | PASS | — | — |
 | IDENTITY-10-02 | PARTIAL | impact_attribution · higher_order_conditions | PASS | — | — |
+| IDENTITY-10-03 | PARTIAL | impact_attribution · no_decay_above_threshold | PASS | — | — |
 | IDENTITY-11-01 | PARTIAL | impact_attribution · cultural_harm_attribution | UNKNOWN | — | Q-056 |
 | IDENTITY-11-02 | PARTIAL | impact_attribution · cultural_harm_systemic | PASS | — | — |
 | IDENTITY-12-01 | IMPLEMENTED | impact_attribution · no_exemption | PASS | yes | — |
@@ -576,6 +582,7 @@ Withdrawn after verification (not author decisions):
 | IDENTITY-14-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | IDENTITY-14-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | IDENTITY-14-04 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| IDENTITY-2-01 | PARTIAL | impact_attribution · identity_before_downstream | PASS | — | — |
 | IDENTITY-2-02 | IMPLEMENTED | impact_attribution · from_impact_outputs | PASS | — | — |
 | IDENTITY-3.1-01 | PARTIAL | impact_attribution · functional_subjects | PASS | — | — |
 | IDENTITY-3.2-01 | PARTIAL | impact_attribution · action_definition | PASS | yes | — |
@@ -594,9 +601,11 @@ Withdrawn after verification (not author decisions):
 | IDENTITY-5-04 | PARTIAL | dispute_correction · proxy_actions_to_originator | PASS | yes | — |
 | IDENTITY-6-01 | PARTIAL | dispute_correction · proportional_weights | PASS | yes | — |
 | IDENTITY-6-02 | PARTIAL | code_economy · coalition_subject_status | PASS | — | — |
+| IDENTITY-7-01 | PARTIAL | impact_attribution · persists_while_condition_holds | PASS | — | — |
 | IDENTITY-7-02 | IMPLEMENTED | impact_attribution · dissolution_keeps_history | PASS | yes | — |
 | IDENTITY-8-01 | PARTIAL | impact_attribution · cascade_conditions | PASS | — | — |
 | IDENTITY-8-02 | IMPLEMENTED | impact_attribution · foresight_irrelevant | PASS | — | — |
+| IDENTITY-9-02 | PARTIAL | impact_attribution · no_rarity_exemption | PASS | — | — |
 | IMPACT-1-01 | PARTIAL | impact_attribution · measurement_only | PASS | yes | — |
 | IMPACT-10-01 | IMPLEMENTED | dispute_correction · impact_fields | PASS | — | — |
 | IMPACT-10-02 | PARTIAL | transport_capacity · no_aggregated_score | UNKNOWN | — | Q-036 |

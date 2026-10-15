@@ -936,6 +936,11 @@
    "kind": "reference"
   },
   {
+   "module": "axiom_constraints",
+   "example": "sustained_b_degradation",
+   "kind": "reference"
+  },
+  {
    "module": "info_truth",
    "example": "claims_without_bundle",
    "kind": "reference"
@@ -1342,6 +1347,11 @@
   },
   {
    "module": "impact_attribution",
+   "example": "rare_cascade",
+   "kind": "reference"
+  },
+  {
+   "module": "impact_attribution",
    "example": "untraceable_impact",
    "kind": "noncompliant"
   },
@@ -1571,25 +1581,25 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1559,
-  "covered_percent": 89.8,
+  "covered": 1568,
+  "covered_percent": 90.3,
   "statuses": {
-   "PASS": 1470,
+   "PASS": 1479,
    "FAIL": 4,
    "UNKNOWN": 67,
    "NOT_APPLICABLE": 18,
-   "UNCOVERED": 178
+   "UNCOVERED": 169
   },
   "resolvable": 745,
   "resolvable_uncovered": 0,
   "resolvable_uncovered_implementation_only": 0,
   "unresolved_decisions": 1198,
-  "covered_with_open_point": 1020,
-  "pass_with_open_point": 938,
+  "covered_with_open_point": 1029,
+  "pass_with_open_point": 947,
   "covered_without_open_point": 539,
   "closed_by_agent_reading": 216,
   "human_accepted": 0,
-  "uncovered_checkable_core": 37
+  "uncovered_checkable_core": 27
  },
  "stages": [
   {
@@ -1639,25 +1649,25 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1559,
-    "covered_percent": 89.8,
+    "covered": 1568,
+    "covered_percent": 90.3,
     "statuses": {
-     "PASS": 1470,
+     "PASS": 1479,
      "FAIL": 4,
      "UNKNOWN": 67,
      "NOT_APPLICABLE": 18,
-     "UNCOVERED": 178
+     "UNCOVERED": 169
     },
     "resolvable": 745,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 1198,
-    "covered_with_open_point": 1020,
-    "pass_with_open_point": 938,
+    "covered_with_open_point": 1029,
+    "pass_with_open_point": 947,
     "covered_without_open_point": 539,
     "closed_by_agent_reading": 216,
     "human_accepted": 0,
-    "uncovered_checkable_core": 37
+    "uncovered_checkable_core": 27
    }
   },
   {
@@ -1752,7 +1762,7 @@
     "covered_without_open_point": 107,
     "closed_by_agent_reading": 8,
     "human_accepted": 0,
-    "uncovered_checkable_core": 4
+    "uncovered_checkable_core": 3
    }
   },
   {
@@ -1848,25 +1858,25 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 449,
-    "covered_percent": 87.9,
+    "covered": 458,
+    "covered_percent": 89.6,
     "statuses": {
-     "PASS": 425,
+     "PASS": 434,
      "FAIL": 0,
      "UNKNOWN": 18,
      "NOT_APPLICABLE": 6,
-     "UNCOVERED": 62
+     "UNCOVERED": 53
     },
     "resolvable": 203,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 368,
-    "covered_with_open_point": 306,
-    "pass_with_open_point": 282,
+    "covered_with_open_point": 315,
+    "pass_with_open_point": 291,
     "covered_without_open_point": 143,
     "closed_by_agent_reading": 64,
     "human_accepted": 0,
-    "uncovered_checkable_core": 19
+    "uncovered_checkable_core": 10
    }
   },
   {
@@ -12235,7 +12245,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
@@ -12263,25 +12273,35 @@
    "section": "2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The anchoring artifacts and the operational meaning of binding are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "axioms_between_ptl_and_economy",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Clear part only: the layer order as data flow; Genesis Block #0 is not in the corpus.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4",
+    "H-AX-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -12297,25 +12317,35 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The referenced equation and the meaning of compatibility are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "no_equation_change",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Clear part only: no AXIOMS output changes Equation parameters; what 'compatible' requires stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4",
+    "H-AX-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -12350,7 +12380,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12395,7 +12425,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12442,7 +12472,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12485,7 +12515,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12528,7 +12558,7 @@
     "Q-043"
    ],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 0
@@ -12577,7 +12607,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12625,7 +12655,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -12670,7 +12700,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12713,7 +12743,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12756,7 +12786,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12799,7 +12829,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12840,7 +12870,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12881,7 +12911,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -12928,7 +12958,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -12974,7 +13004,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
@@ -13021,7 +13051,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 6
+    "NOT_APPLICABLE": 7
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -13070,7 +13100,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 1,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "UNKNOWN",
    "counterexample_detected_by": [],
@@ -13114,7 +13144,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13160,7 +13190,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13198,7 +13228,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13244,7 +13274,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13287,7 +13317,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13333,7 +13363,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13379,7 +13409,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13425,7 +13455,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -13447,25 +13477,35 @@
    "section": "Axiom A2 — Systemic Sustainability",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "B(t), degradation baselines, the duration of sustained degradation, and causal attribution are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "sustained_b_drop_flagged",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Clear part only: under a declared window and start baseline; duration and baseline stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4",
+    "H-AX-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 8
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -13503,7 +13543,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -13547,7 +13587,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 6
+    "NOT_APPLICABLE": 7
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13594,7 +13634,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13642,7 +13682,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13664,25 +13704,36 @@
    "section": "Axiom A5 — Externality Accountability",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Externality measurement requirements and the meaning and source of acceptable bounds are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "unmeasured_shift_violates",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Clear part only: a shift without any measurement violates A5; whether a documented bound suffices stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4",
+    "H-AX-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1,
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -13720,7 +13771,7 @@
     "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13809,7 +13860,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 6
+    "NOT_APPLICABLE": 7
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13854,7 +13905,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -13877,25 +13928,35 @@
    "section": "Axiom A7 — Minimum Suffering Constraint",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The definition of S(t), physical proxies, and suffering quantification mapping are missing. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "axiom_constraints",
+   "check": "suffering_not_an_objective",
+   "tests": [
+    "tests/lab/test_axiom_constraints_module.py"
+   ],
+   "gap": "Clear part only: never an objective or optimization target; the proxy mapping from S(t) stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-AX-1",
+    "H-AX-2",
+    "H-AX-3",
+    "H-AX-4",
+    "H-AX-5"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 2
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -13930,7 +13991,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -13973,7 +14034,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -14014,7 +14075,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -14057,7 +14118,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -14098,7 +14159,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 8,
+    "PASS": 9,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -15761,7 +15822,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -15804,7 +15865,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -15845,7 +15906,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -15868,23 +15929,30 @@
    "section": "10",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The thresholds, their aggregation rule, and the meaning and dynamics of responsibility decay are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "no_decay_above_threshold",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Clear part only: no decay at or above a declared threshold; the PTL thresholds stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 4
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -15924,7 +15992,7 @@
    "observed": {
     "PASS": 0,
     "FAIL": 0,
-    "UNKNOWN": 4,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 3
    },
    "status": "UNKNOWN",
@@ -15968,7 +16036,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 6
+    "NOT_APPLICABLE": 7
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -16037,7 +16105,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16077,7 +16145,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16120,7 +16188,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16315,23 +16383,30 @@
    "section": "2",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The meaning of prior and the mapping of protocols to the listed categories are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "identity_before_downstream",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Clear part only (logical priority): no downstream act on an unresolved Subject; temporal priority stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -16367,7 +16442,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16407,7 +16482,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16448,7 +16523,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16494,7 +16569,7 @@
     "PASS": 1,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 6
+    "NOT_APPLICABLE": 7
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -16534,7 +16609,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16575,7 +16650,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -16625,7 +16700,7 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 7
+    "NOT_APPLICABLE": 8
    },
    "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
@@ -16674,7 +16749,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 1,
     "NOT_APPLICABLE": 22
@@ -16721,7 +16796,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 24
@@ -16768,7 +16843,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 9,
+    "PASS": 10,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 23
@@ -16822,7 +16897,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 5,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 23
@@ -16865,7 +16940,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -16909,7 +16984,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -16952,7 +17027,7 @@
     "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 5
+    "NOT_APPLICABLE": 6
    },
    "status": "PASS",
    "counterexample_detected_by": [],
@@ -16995,7 +17070,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 24
+    "NOT_APPLICABLE": 25
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -17042,7 +17117,7 @@
     "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 24
+    "NOT_APPLICABLE": 25
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -17096,7 +17171,7 @@
     "PASS": 20,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 8
+    "NOT_APPLICABLE": 9
    },
    "status": "PASS",
    "counterexample_detected_by": [
@@ -17167,23 +17242,30 @@
    "section": "7",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Benefit and mitigation-capacity tests, observation timing, and interaction with confidence-based decay are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "persists_while_condition_holds",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Clear part only: persistence while a declared condition holds; the benefit and capacity tests stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 3,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 5
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -17219,7 +17301,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -17259,7 +17341,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -17300,7 +17382,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 1,
+    "PASS": 2,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 6
@@ -17354,23 +17436,30 @@
    "section": "9",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Full causal linkage is undefined and depends on an unspecified causal model. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "impact_attribution",
+   "check": "no_rarity_exemption",
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
+   "gap": "Clear part only: no exemption for rarity, novelty or improbability; full causal linkage stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IA-1",
+    "H-IA-2",
+    "H-IA-3",
+    "H-IA-4"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -17406,7 +17495,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -17548,7 +17637,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 26,
+    "PASS": 27,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -17591,7 +17680,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -17804,7 +17893,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -17844,7 +17933,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -17890,7 +17979,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "IMPACT-3-01",
@@ -17916,7 +18005,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18009,7 +18098,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18056,7 +18145,7 @@
     "Q-023"
    ],
    "observed": {
-    "PASS": 27,
+    "PASS": 28,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 1
@@ -18103,7 +18192,7 @@
     "Q-036"
    ],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18146,7 +18235,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18184,7 +18273,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18225,7 +18314,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18263,7 +18352,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18304,7 +18393,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18345,7 +18434,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18386,7 +18475,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18469,7 +18558,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 4,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 3
@@ -18510,7 +18599,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18551,7 +18640,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18637,7 +18726,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18675,7 +18764,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18717,7 +18806,7 @@
    "observed": {
     "PASS": 3,
     "FAIL": 0,
-    "UNKNOWN": 4,
+    "UNKNOWN": 5,
     "NOT_APPLICABLE": 0
    },
    "status": "UNKNOWN",
@@ -18756,7 +18845,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18794,7 +18883,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18835,7 +18924,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18873,7 +18962,7 @@
    "decision_status": "NONE_IDENTIFIED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -18913,7 +19002,7 @@
     "Q-023"
    ],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
@@ -19007,7 +19096,7 @@
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 7,
+    "PASS": 8,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0

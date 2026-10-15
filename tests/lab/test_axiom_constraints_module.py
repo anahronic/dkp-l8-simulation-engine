@@ -25,16 +25,17 @@ def test_reference_breaks_no_rule(name):
 LIFE = EX["benefit_against_life"]
 FAULT_CASES = {
     "axiom_computes_metric": ({}, ["AXIOMS-2-03"]),
-    "axiom_as_weight": ({}, ["AXIOMS-3-01"]),
+    "axiom_as_weight": ({}, ["AXIOMS-3-01", "AXIOMS-AxiomA7-MinimumSufferingConstraint-02"]),
     "narrative_override": ({}, ["AXIOMS-AxiomA3-PhysicalRealitySupremacy-02"]),
     "axioms_as_truth": ({}, ["AXIOMS-EpistemicClarification-04"]),
     "utility_override": (LIFE, ["AXIOMS-5-02", "AXIOMS-1-01", "AXIOMS-AxiomA1-PreservationofLife-03",
                                 "AXIOMS-AxiomA1-PreservationofLife-01"]),
     "weighted_axioms": (LIFE, ["AXIOMS-5-03", "AXIOMS-7-02"]),
-    "suspend_for_efficiency": ({}, ["AXIOMS-5-01", "AXIOMS-7-03"]),
+    "suspend_for_efficiency": ({}, ["AXIOMS-5-01", "AXIOMS-7-03", "AXIOMS-2-01"]),
     "human_override": (LIFE, ["AXIOMS-7-04"]),
     "lower_overrides_higher": (EX["dilemma_lexicographic"], ["AXIOMS-6-01", "AXIOMS-5-04"]),
-    "suffering_primary": (EX["suffering_tiebreak"], ["AXIOMS-AxiomA7-MinimumSufferingConstraint-03", "AXIOMS-5-02"]),
+    "suffering_primary": (EX["suffering_tiebreak"], ["AXIOMS-AxiomA7-MinimumSufferingConstraint-03", "AXIOMS-5-02",
+                                                     "AXIOMS-AxiomA7-MinimumSufferingConstraint-02"]),
     "context_reinterpretation": (EX["suffering_tiebreak"], ["AXIOMS-7-05"]),
     "infer_minimum_required": (EX["minimum_required_claim"], ["AXIOMS-AxiomA1-PreservationofLife-04"]),
     "compel_service": ({}, ["AXIOMS-AxiomA1a-RiskSymmetryandVoluntaryLethalRisk-01",
@@ -47,6 +48,10 @@ FAULT_CASES = {
     "axiom_shield": ({}, ["AXIOMS-EpistemicClarification-03"]),
     "unmodelled_necessity": ({"candidates": [{"id": "levee", "utility": 7, "irreversible": True, "necessity_verified": True}]},
                              ["AXIOMS-AxiomA4-IrreversibilityAversion-02"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "axiom_reads_optimizer": ({}, ["AXIOMS-2-01"]),
+    "axiom_tunes_equation": ({}, ["AXIOMS-2-02"]),
+    "ignore_b_degradation": (EX["sustained_b_degradation"], ["AXIOMS-AxiomA2-SystemicSustainability-02"]),
 }
 
 
@@ -91,3 +96,15 @@ def test_undefined_references_stay_unknown():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_unmeasured_externality_violates_a5_and_the_window_decides_a2():
+    """Review КТ7-GPT-01: an unmeasured shift of harm is flagged A5 and the context excuse is caught; a B(t) drop shorter
+    than the declared window is not 'sustained' (N/A), a drop over the window is flagged A2."""
+    st = statuses(run())
+    assert st["AXIOMS-AxiomA5-ExternalityAccountability-01"] == "PASS"
+    assert statuses(run(faults=["context_reinterpretation"]))["AXIOMS-AxiomA5-ExternalityAccountability-01"] == "FAIL"
+    ex = EX["sustained_b_degradation"]
+    assert statuses(run(**ex))["AXIOMS-AxiomA2-SystemicSustainability-02"] == "PASS"
+    assert statuses(run(**ex, a2_window=6))["AXIOMS-AxiomA2-SystemicSustainability-02"] == "NOT_APPLICABLE"
+    assert run(**ex).outputs["chosen"] == "restore"

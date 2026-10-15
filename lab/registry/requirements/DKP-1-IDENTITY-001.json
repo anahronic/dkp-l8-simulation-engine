@@ -37,7 +37,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "attribution_not_punishment"
    },
    "tests": [
@@ -71,14 +71,20 @@
     "protocol category registry",
     "cross-protocol execution or dependency records"
    ],
-   "gap": "The meaning of prior and the mapping of protocols to the listed categories are not specified. No lab check implemented yet.",
+   "gap": "Clear part only (logical priority): no downstream act on an unresolved Subject; temporal priority stays open.",
    "hypotheses_needed": [
     "Whether priority is temporal, logical, or both.",
     "A classification of downstream protocols."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.1.0",
+    "check": "identity_before_downstream"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -113,7 +119,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "from_impact_outputs"
    },
    "tests": [
@@ -153,7 +159,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "functional_subjects"
    },
    "tests": [
@@ -196,7 +202,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "action_definition"
    },
    "tests": [
@@ -239,7 +245,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "omission_is_action"
    },
    "tests": [
@@ -282,7 +288,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "intent_independent"
    },
    "tests": [
@@ -329,7 +335,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "binding_invariant"
    },
    "tests": [
@@ -371,7 +377,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "unattributed_is_critical"
    },
    "tests": [
@@ -422,7 +428,7 @@
     "also": [
      {
       "module": "impact_attribution",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "check": "no_attribution_state"
      }
     ]
@@ -562,7 +568,7 @@
     "also": [
      {
       "module": "impact_attribution",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "check": "investigation_priority"
      }
     ]
@@ -610,7 +616,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_output_priority"
    },
    "tests": [
@@ -655,7 +661,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "delegation_keeps_responsibility"
    },
    "tests": [
@@ -699,7 +705,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "ai_no_exemption"
    },
    "tests": [
@@ -840,7 +846,7 @@
     "also": [
      {
       "module": "impact_attribution",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "check": "proportional_distribution"
      }
     ]
@@ -919,15 +925,21 @@
     "Subject benefit observations",
     "mitigation, reversal, and harm-limitation capacity assessments"
    ],
-   "gap": "Benefit and mitigation-capacity tests, observation timing, and interaction with confidence-based decay are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: persistence while a declared condition holds; the benefit and capacity tests stay open.",
    "hypotheses_needed": [
     "Operational benefit and mitigation-capacity tests.",
     "A temporal observation model.",
     "A reconciliation of persistence with Section 10 confidence-based decay."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.1.0",
+    "check": "persists_while_condition_holds"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -960,7 +972,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "dissolution_keeps_history"
    },
    "tests": [
@@ -1007,7 +1019,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "cascade_conditions"
    },
    "tests": [
@@ -1044,7 +1056,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "foresight_irrelevant"
    },
    "tests": [
@@ -1117,13 +1129,19 @@
     "initiating-action evidence",
     "responsibility and exemption records"
    ],
-   "gap": "Full causal linkage is undefined and depends on an unspecified causal model. No lab check implemented yet.",
+   "gap": "Clear part only: no exemption for rarity, novelty or improbability; full causal linkage stays open.",
    "hypotheses_needed": [
     "A test for full linkage to a cascade origin."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.1.0",
+    "check": "no_rarity_exemption"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1159,7 +1177,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "higher_order_definition"
    },
    "tests": [
@@ -1203,7 +1221,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "higher_order_conditions"
    },
    "tests": [
@@ -1238,14 +1256,20 @@
     "causal-link confidence histories",
     "responsibility histories"
    ],
-   "gap": "The thresholds, their aggregation rule, and the meaning and dynamics of responsibility decay are absent. No lab check implemented yet.",
+   "gap": "Clear part only: no decay at or above a declared threshold; the PTL thresholds stay open.",
    "hypotheses_needed": [
     "The applicable Physical Truth Layer thresholds and comparison rule.",
     "A responsibility-decay model consistent with Section 7."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "impact_attribution",
+    "version": "1.1.0",
+    "check": "no_decay_above_threshold"
+   },
+   "tests": [
+    "tests/lab/test_impact_attribution_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1286,7 +1310,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "cultural_harm_attribution"
    },
    "tests": [
@@ -1327,7 +1351,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "cultural_harm_systemic"
    },
    "tests": [
@@ -1397,7 +1421,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "no_exemption"
    },
    "tests": [
@@ -1440,7 +1464,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "attribution_only"
    },
    "tests": [
@@ -1477,7 +1501,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "impact_attribution",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "check": "isolation_breach_critical"
    },
    "tests": [

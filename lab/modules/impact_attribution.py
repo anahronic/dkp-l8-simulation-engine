@@ -55,6 +55,11 @@ FAULTS = {
     "identity_measures_magnitude": "the attribution record carries a sanction and a magnitude",
     "require_physical_damage": "cultural or cognitive harm is not treated as a systemic externality without physical damage",
     "breach_unflagged": "a cross-layer act of IDENTITY is not recorded as a critical architectural breach",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "rarity_exemption": "a statistically rare cascade is exempted from attribution",
+    "enforce_before_identity": "an enforcement decision is taken before IDENTITY has resolved the Subject",
+    "time_decay": "responsibility decays with elapsed time although the causal linkage stays above the threshold",
+    "release_after_time": "responsibility ends after a time although a §7 condition still holds",
 }
 IDENTITY_REQUESTS = ("measure_magnitude", "evaluate_justice", "assign_sanction", "override_impact")        # IDENTITY §13
 
@@ -115,6 +120,9 @@ def run(r: Dict[str, Any]):
         put("decision", "IMPACT", 1, {"layer_request": q["action"], "by": q["protocol"], "executed": ok})
         if not ok:
             put("notice", "AUDIT", 1, {"critical_architectural_breach": q["protocol"], "action": q["action"]})
+    if "enforce_before_identity" in faults and r["enforcement_requests"]:
+        put("decision", "JUSTICE", 1, {"enforcement_on": r["enforcement_requests"][0]["impact"], "executed": True,
+                                       "reason": "fast track before attribution"})
     # IDENTITY: attribution per impact channel, from IMPACT outputs only
     subj = {s["id"]: s for s in r["subjects"]}
     for ch, o in m.items():
@@ -132,6 +140,9 @@ def run(r: Dict[str, Any]):
         chain = []
         for a in acts:
             if a["kind"] == "omission" and "omission_ignored" in faults:
+                continue
+            if a["rare"] and "rarity_exemption" in faults:
+                chain.append({"action": a["id"], "excluded": "statistically improbable cascade"})
                 continue
             if not a["intended"] and "intent_exemption" in faults:
                 continue
@@ -182,6 +193,16 @@ def run(r: Dict[str, Any]):
         put("decision", "IDENTITY", 2, {"cross_layer_request": q, "executed": False})
         if "breach_unflagged" not in faults:
             put("notice", "AUDIT", 2, {"critical_architectural_breach": "DKP-1-IDENTITY-001", "attempt": q})
+    # IDENTITY §7, §10: persistence and decay of responsibility over a declared timeline
+    attributed = {mm.value["impact"] for mm in log.messages() if mm.source == "IDENTITY" and mm.value.get("attribution") == "ATTRIBUTED"}
+    for t in sorted(r["responsibility_timeline"], key=lambda x: (x["step"], x["impact"])):
+        if t["impact"] not in attributed:
+            continue
+        conds = {"a_measurable": t["measurable"], "b_benefits": t["benefits"], "c_can_mitigate": t["can_mitigate"]}
+        late = t["step"] >= 8
+        put("evaluation", "IDENTITY", t["step"], {"responsibility_of": t["impact"], "linkage": t["linkage"], "conditions": conds,
+                                                  "decays": t["linkage"] < r["decay_linkage_threshold"] or ("time_decay" in faults and late),
+                                                  "persists": any(conds.values()) and not ("release_after_time" in faults and late)})
     for q in r["enforcement_requests"]:
         rec = [mm.value for mm in log.messages() if mm.source == "IDENTITY" and mm.value.get("impact") == q["impact"]]
         no_attr = bool(rec) and rec[-1]["attribution"] == "NO_ATTRIBUTION"
@@ -189,6 +210,50 @@ def run(r: Dict[str, Any]):
         put("decision", "JUSTICE", 3, {"enforcement_on": q["impact"], "executed": ok,
                                        "reason": "deferred pending attribution resolution" if not ok else "attribution available"})
     return log
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    ex = [m for m in msgs if m.source == "JUSTICE" and m.value.get("executed")]
+    res = {}
+    for m in msgs:
+        if m.source == "IDENTITY" and m.value.get("attribution") == "ATTRIBUTED":
+            res.setdefault(m.value["impact"], m.arrived_at)
+    out.append(v("IDENTITY-2-01", "identity_before_downstream",
+                 [f"{m.event_id}: {m.value['enforcement_on']}" for m in ex if not res.get(m.value["enforcement_on"], 10 ** 9) <= m.arrived_at],
+                 f"{len(ex)} downstream decision(s), each on Subjects IDENTITY had already resolved",
+                 "{n} downstream decisions on unresolved Subjects") if ex else
+               na("IDENTITY-2-01", "identity_before_downstream", "downstream decisions", "no enforcement executed"))
+    tl = [m for m in msgs if m.source == "IDENTITY" and "responsibility_of" in m.value]
+    thr = r["decay_linkage_threshold"]
+    hi = [m for m in tl if m.value["linkage"] >= thr]
+    out.append(v("IDENTITY-10-03", "no_decay_above_threshold", [f"step {m.arrived_at}: {m.value['responsibility_of']}" for m in hi
+                                                                if m.value["decays"]],
+                 f"{len(hi)} point(s) with causal linkage >= {thr:g} (declared threshold), none with decay",
+                 "{n} decays while the linkage is at or above the threshold") if hi else
+               na("IDENTITY-10-03", "no_decay_above_threshold", "decay", "no timeline point at or above the threshold"))
+    held = [m for m in tl if any(m.value["conditions"].values())]
+    out.append(v("IDENTITY-7-01", "persists_while_condition_holds", [f"step {m.arrived_at}: {m.value['responsibility_of']}" for m in held
+                                                                    if not m.value["persists"]],
+                 f"{len(held)} point(s) with a §7 condition a)-c) declared, responsibility persisting at each",
+                 "{n} releases while a §7 condition holds") if held else
+               na("IDENTITY-7-01", "persists_while_condition_holds", "persistence", "no timeline point with a §7 condition"))
+    dec = [m for m in msgs if m.source == "IDENTITY" and "chain" in m.value]
+    bad = [f"{m.value['impact']}: {x['action']} ({x['excluded']})" for m in dec for x in m.value["chain"]
+           if any(w in str(x.get("excluded", "")) for w in ("rare", "improbab", "novel", "statistic"))]
+    rare = [a["id"] for a in r["actions"] if a["rare"]]
+    out.append(v("IDENTITY-9-02", "no_rarity_exemption", bad,
+                 f"no attribution excluded for rarity, novelty or improbability ({len(rare)} rare action(s) declared)",
+                 "{n} exemptions for rarity, novelty or improbability"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -439,6 +504,11 @@ def _expect_attribution(r, emitted):
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "IDENTITY-2-01": ("identity_before_downstream", "PARTIAL", "Clear part only (logical priority): no downstream act on an unresolved Subject; temporal priority stays open."),
+    "IDENTITY-10-03": ("no_decay_above_threshold", "PARTIAL", "Clear part only: no decay at or above a declared threshold; the PTL thresholds stay open."),
+    "IDENTITY-7-01": ("persists_while_condition_holds", "PARTIAL", "Clear part only: persistence while a declared condition holds; the benefit and capacity tests stay open."),
+    "IDENTITY-9-02": ("no_rarity_exemption", "PARTIAL", "Clear part only: no exemption for rarity, novelty or improbability; full causal linkage stays open."),
     "IMPACT-1-01": ("measurement_only", "PARTIAL", "Checked as: no score produced."),
     "IMPACT-2-01": ("inputs_from_ptl", "IMPLEMENTED", None),
     "IMPACT-2-02": ("bound_sources", "IMPLEMENTED", None),
@@ -520,12 +590,16 @@ AC = {"id": {"type": "str"}, "subject": {"type": "str"}, "channel": {"type": "st
       "counter_binding_validated": {"type": "bool", "default": False},
       "order": {"type": "int", "min": 1, "max": 3, "default": 1}, "within_horizon": {"type": "bool", "default": True},
       "traceable": {"type": "bool", "default": True}, "speculative": {"type": "bool", "default": False},
-      "foreseeable": {"type": "bool", "default": True}, "confidence": {"type": "number", "min": 0, "max": 1, "default": 0.95}}
+      "foreseeable": {"type": "bool", "default": True}, "confidence": {"type": "number", "min": 0, "max": 1, "default": 0.95},
+      "rare": {"type": "bool", "default": False}}
+TL = {"impact": {"type": "str"}, "step": {"type": "int", "min": 3, "max": 10 ** 6}, "linkage": {"type": "number", "min": 0, "max": 1},
+      "measurable": {"type": "bool", "default": False}, "benefits": {"type": "bool", "default": False},
+      "can_mitigate": {"type": "bool", "default": False}}
 
 
 class ImpactAttributionModule(LabModule):
     id = "impact_attribution"
-    version = "1.0.0"
+    version = "1.1.0"
     title = {"en": "Impact and attribution (IMPACT, IDENTITY)", "ru": "Воздействие и атрибуция (IMPACT, IDENTITY)"}
     summary = {"en": "A plant emits, a contractor dumps through a smart contract, a regulator fails to act, a coalition pumps "
                      "groundwater: does IMPACT measure each channel apart, and does IDENTITY bind every impact to the right Subjects?",
@@ -587,6 +661,15 @@ class ImpactAttributionModule(LabModule):
         "layer_requests": _lst({"protocol": {"type": "str"}, "action": {"type": "enum", "values": list(LAYER_ACTIONS)}},
                                [{"protocol": "finance", "action": "inject_weighting"}, {"protocol": "justice", "action": "override_flag"}],
                                {"en": "Higher-layer requests to IMPACT", "ru": "Запросы верхних слоёв к IMPACT"}),
+        "responsibility_timeline": _lst(TL, [
+            {"impact": "river_pollutant", "step": 5, "linkage": 0.9, "measurable": True},
+            {"impact": "river_pollutant", "step": 10, "linkage": 0.3, "can_mitigate": True},
+            {"impact": "co2_air", "step": 10, "linkage": 0.8}],
+            {"en": "Responsibility timeline {impact, step, linkage, measurable, benefits, can_mitigate} (IDENTITY §7, §10)",
+             "ru": "Ход ответственности во времени (IDENTITY §7, §10)"}),
+        "decay_linkage_threshold": {"type": "number", "min": 0, "max": 1, "default": 0.5, "source": "missing",
+                                    "label": {"en": "PTL confidence threshold for decay (IDENTITY §10; a parameter)",
+                                              "ru": "Порог уверенности PTL для угасания (IDENTITY §10; параметр)"}},
         "enforcement_requests": _lst({"impact": {"type": "str"}}, [{"impact": "co2_air"}],
                                      {"en": "Enforcement requests (JUSTICE consumer)", "ru": "Запросы на принуждение (потребитель JUSTICE)"}),
         "identity_requests": {"type": "list", "min_items": 0, "max_items": 4, "items": {"type": "enum", "values": list(IDENTITY_REQUESTS)},
@@ -629,10 +712,12 @@ class ImpactAttributionModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log.messages())
         msgs = log.messages()
         outputs = {"impact": [m.value for m in msgs if m.source == "IMPACT" and "channel" in m.value],
                    "attribution": [m.value for m in msgs if m.source == "IDENTITY" and "impact" in m.value],
+                   "responsibility_timeline": [{"step": m.arrived_at, **m.value} for m in msgs if m.source == "IDENTITY"
+                                               and "responsibility_of" in m.value],
                    "refused_requests": [m.value for m in msgs if m.source == "IDENTITY" and "cross_layer_request" in m.value],
                    "enforcement": [m.value for m in msgs if m.source == "JUSTICE"],
                    "audit": [m.value for m in msgs if m.source == "AUDIT"],
@@ -665,6 +750,8 @@ class ImpactAttributionModule(LabModule):
                                    "enforcement_requests": []},
             "counter_bound_delegation": {"actions": [{"id": "a6", "subject": "router_ai", "channel": "aquifer", "delegated_by": "farm_a",
                                                       "counter_binding_validated": True}]},
+            "rare_cascade": {"actions": [{"id": "a1", "subject": "plant_co", "channel": "co2_air"},
+                                         {"id": "r1", "subject": "plant_co", "channel": "river_pollutant", "order": 2, "rare": True}]},
             "faulty_chain": {"faults": ["aggregate_score", "delegate_shift", "contract_as_subject", "status_exemption", "identity_measures_magnitude"]},
         }
 

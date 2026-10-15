@@ -59,6 +59,10 @@ FAULTS = {
     "axiom_as_weight": "A7 is recorded as a weighted objective instead of a constraint",
     "narrative_override": "a candidate whose declared goal contradicts the PTL measurement is not counted as violating A3",
     "axioms_as_truth": "the axiom definitions are published as absolute truth",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "axiom_reads_optimizer": "the axiom evaluation takes a utility preview of the optimizer as input",
+    "axiom_tunes_equation": "the axiom stage adjusts a parameter of the Main Equation",
+    "ignore_b_degradation": "sustained B(t) degradation over the declared window is not flagged as A2",
 }
 IMPACT_MODEL = "DKP-1-IMPACT irreversible impact model"
 CANDIDATE = {"type": "object", "fields": {
@@ -76,7 +80,8 @@ CANDIDATE = {"type": "object", "fields": {
     "withholds_truth": {"type": "bool", "default": False},
     "basis": {"type": "enum", "values": ["ptl", "declared_goal", "narrative", "belief"], "default": "ptl"},
     "contradicts_ptl": {"type": "bool", "default": False},
-    "suffering": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0}}}
+    "suffering": {"type": "number", "min": 0, "max": 10 ** 9, "default": 0},
+    "b_series": {"type": "list", "min_items": 0, "max_items": 200, "items": {"type": "number", "min": 0, "max": 1}, "default": []}}}
 MODIFICATION = {"axiom": {"type": "enum", "values": ["none"] + list(PRIORITY), "default": "none"},
                 "new_identifier": {"type": "bool", "default": True},
                 "incompatibility_declared": {"type": "bool", "default": True},
@@ -87,12 +92,22 @@ RISK = {"participants": {"type": "int", "min": 0, "max": 10 ** 6, "default": 20}
         "risk_benefit": {"type": "number", "min": 0, "max": 10 ** 6, "default": 10}}
 
 
-def violations(c: Dict[str, Any], a4_reading: str) -> List[str]:
+def sustained_drop(series: List[float], window: int) -> bool:
+    """A2 (lab reading of 'sustained'): B(t) stays below its starting value for at least ``window`` consecutive steps."""
+    run_ = 0
+    for b in series[1:]:
+        run_ = run_ + 1 if b < series[0] else 0
+        if window > 0 and run_ >= window:
+            return True
+    return False
+
+
+def violations(c: Dict[str, Any], a4_reading: str, a2_window: int = 0) -> List[str]:
     """Axioms a candidate violates, from its declared properties (no interpretation)."""
     v = []
     if c["increases_life_loss"] or c["claims_minimum_required"]:
         v.append("A1")                         # the minimum required conditions are undefined (F-023)
-    if c["degrades_long_term"]:
+    if c["degrades_long_term"] or sustained_drop(c.get("b_series") or [], a2_window):
         v.append("A2")
     if not c["grounded_in_ptl"] or (c.get("contradicts_ptl") and c.get("basis", "ptl") != "ptl"):
         v.append("A3")                         # §A3: a declared goal or narrative SHALL NOT override measured reality
@@ -111,9 +126,9 @@ def profile(v: List[str]) -> Tuple[int, ...]:
     return tuple(pr + [8] * (7 - len(pr)))
 
 
-def choose(cands: List[Dict[str, Any]], a4: str, dilemma: str) -> Tuple[Optional[str], str, List[str]]:
+def choose(cands: List[Dict[str, Any]], a4: str, dilemma: str, a2_window: int = 0) -> Tuple[Optional[str], str, List[str]]:
     """Reference decision: (chosen id or None, basis, the ids that passed the axiom stage)."""
-    V = {c["id"]: violations(c, a4) for c in cands}
+    V = {c["id"]: violations(c, a4, a2_window) for c in cands}
     clean = [c for c in cands if not V[c["id"]]]
     if clean:
         pool, basis = clean, "axiom-clean"
@@ -155,7 +170,15 @@ def run(r: Dict[str, Any]):
         epistemic=md("DKP-1-AXIOMS-001") if "classify_axioms" in faults else None)
     obs = [put("observation", "CANDIDATES", 0, {"candidate": c["id"], "declared": {k: v for k, v in c.items() if k != "id"}})
            for c in cands]
-    V = {c["id"]: violations(c, a4) for c in cands}
+    w2 = r["a2_window"]
+    V = {c["id"]: violations(c, a4, w2) for c in cands}
+    if "ignore_b_degradation" in faults:
+        V = {k: ([a for a in v if a != "A2"] if not next(c for c in cands if c["id"] == k)["degrades_long_term"] else v)
+             for k, v in V.items()}
+    preview = []
+    if "axiom_reads_optimizer" in faults:
+        preview = [put("evaluation", "OPTIMIZER", 0, {"step": "utility_preview",
+                                                      "best": sorted(cands, key=lambda c: (-c["utility"], c["id"]))[0]["id"]}).event_id]
     if "narrative_override" in faults:
         V = {k: ([a for a in v if a != "A3"] if next(c for c in cands if c["id"] == k)["grounded_in_ptl"] else v)
              for k, v in V.items()}
@@ -168,13 +191,13 @@ def run(r: Dict[str, Any]):
     if "suspend_for_efficiency" not in faults:
         ev = put("evaluation", "AXIOMS", 1, {"step": "axiom_evaluation", "violations": V,
                                              **({"sustainability_index": round(sum(c["utility"] for c in cands) / len(cands), 6)}
-                                                if "axiom_computes_metric" in faults else {})}, [o.event_id for o in obs])
+                                                if "axiom_computes_metric" in faults else {})}, [o.event_id for o in obs] + preview)
         steps.append(ev.event_id)
     rank = put("evaluation", "OPTIMIZER", 2, {"step": "utility_ranking",
                                                "ranking": [c["id"] for c in sorted(cands, key=lambda c: (-c["utility"], c["id"]))]},
                steps)
-    chosen, basis, passed = choose([{**c} for c in cands], a4, dil)
-    if V != {c["id"]: violations(c, a4) for c in cands}:
+    chosen, basis, passed = choose([{**c} for c in cands], a4, dil, w2)
+    if V != {c["id"]: violations(c, a4, w2) for c in cands}:
         clean = [c for c in cands if not V[c["id"]]]
         if clean:
             chosen = sorted(clean, key=lambda c: (c["suffering"], -c["utility"], c["id"]))[0]["id"]
@@ -219,11 +242,74 @@ def run(r: Dict[str, Any]):
         put("action", "A1A", 4, {"risk_benefit_to": "refusers", "count": rk["refusers"], "amount": rk["risk_benefit"]})
     put("action", "A1A", 4, {"refusal": "recorded as a right", "fault": "punish_refusal" in faults,
                              "standard_access_for_refusers": True})
+    if "axiom_tunes_equation" in faults:
+        put("notice", "AXIOMS", 5, {"equation_parameter": "k", "value": 1.02, "reason": "axiom-consistent recalibration"})
     # §8 modification
     mod = r["modification"]
     if mod["axiom"] != "none":
         put("notice", "AXIOMS", 5, {"modification": mod["axiom"], **{k: v for k, v in mod.items() if k != "axiom"}})
     return log, chosen, basis, V
+
+
+def core_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    msgs = log.messages()
+    get = {m.event_id: m for m in msgs}
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+    ev = [m for m in msgs if m.source == "AXIOMS" and m.value.get("step") == "axiom_evaluation"]
+    rank = [m for m in msgs if m.source == "OPTIMIZER" and m.value.get("step") == "utility_ranking"]
+    bad = [f"{m.event_id}: reads {get[p].source}" for m in ev for p in m.provenance if get[p].source not in ("CANDIDATES", "PTL")]
+    bad += [f"{m.event_id}: does not consume the axiom evaluation" for m in rank if not set(m.provenance) & {e.event_id for e in ev}]
+    out.append(v("AXIOMS-2-01", "axioms_between_ptl_and_economy", bad,
+                 "the axiom evaluation reads only the measured candidate states (standing for PTL outputs); the economic stage "
+                 "(utility ranking) consumes the axiom output, never the reverse", "{n} reversed or skipped data flows"))
+    eq = [f"{m.event_id}: {m.value.get('equation_parameter') or m.value.get('parameter')}" for m in msgs if m.source == "AXIOMS"
+          and (m.value.get("equation_parameter") or m.value.get("parameter")) in ("k", "alpha", "B_min")]
+    out.append(v("AXIOMS-2-02", "no_equation_change", eq,
+                 "no AXIOMS output changes a parameter of the Main Equation (k, α, B_min; Code A.1a)",
+                 "{n} AXIOMS outputs changing an Equation parameter"))
+    w = r["a2_window"]
+    deg = []
+    for c in r["candidates"]:
+        b = c.get("b_series") or []
+        k = 0
+        for x in b[1:]:
+            k = k + 1 if x < b[0] else 0
+            if w > 0 and k >= w:
+                deg.append(c["id"])
+                break
+    if deg and ev:
+        out.append(v("AXIOMS-AxiomA2-SystemicSustainability-02", "sustained_b_drop_flagged",
+                     [x for x in deg if "A2" not in ev[0].value["violations"].get(x, [])],
+                     f"{len(deg)} candidate(s) with B(t) below its start for >= {w} steps (declared window), each flagged A2",
+                     "{n} sustained B(t) degradations not flagged"))
+    else:
+        out.append(CheckResult("AXIOMS-AxiomA2-SystemicSustainability-02", "sustained_b_drop_flagged", NOT_APPLICABLE,
+                               "sustained B(t) degradation", applicability="no declared window or no candidate whose B(t) stays "
+                               "below its start for the window" if ev else "no axiom evaluation"))
+    ext = [c["id"] for c in r["candidates"] if c["unmeasured_externality"]]
+    if ext and ev:
+        out.append(v("AXIOMS-AxiomA5-ExternalityAccountability-01", "unmeasured_shift_violates",
+                     [x for x in ext if "A5" not in ev[0].value["violations"].get(x, [])],
+                     f"{len(ext)} action(s) shifting harm without any measurement of the externality, each flagged A5",
+                     "{n} unmeasured shifts not flagged"))
+    else:
+        out.append(CheckResult("AXIOMS-AxiomA5-ExternalityAccountability-01", "unmeasured_shift_violates", NOT_APPLICABLE,
+                               "externality shifts", applicability="no candidate shifts harm without measurement" if ev
+                               else "no axiom evaluation"))
+    defs = [m for m in msgs if m.source == "AXIOM-DEFINITIONS"]
+    bad = [f"{m.event_id}: A7 as {m.value['forms'].get('A7')}" for m in defs if m.value["forms"].get("A7") != FORM["A7"]]
+    bad += [f"{m.event_id}: basis '{m.value['basis']}'" for m in msgs if m.source == "AXIOMS" and m.kind == "decision"
+            and "suffering" in str(m.value.get("basis", ""))]
+    bad += [f"{m.event_id}: objective {m.value.get('objective')}" for m in msgs if "suffering" in str(m.value.get("objective", ""))]
+    out.append(v("AXIOMS-AxiomA7-MinimumSufferingConstraint-02", "suffering_not_an_objective", bad,
+                 "suffering is a constraint among axiom-equivalent actions only: never an objective, a weight or the basis of "
+                 "a decision", "{n} uses of suffering as an objective or optimization target"))
+    return out
 
 
 def structure_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -255,7 +341,7 @@ def structure_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     if narr:
         bad = [f"{k}: declared goal against PTL not counted as an A3 violation" for k in narr if ev and "A3" not in ev[0].get(k, [])]
         chosen = dec[0]["chosen"] if dec else None
-        if chosen in narr and any(not violations(dict(c, id=k), r["a4_reading"]) for k, c in cand.items()):
+        if chosen in narr and any(not violations(dict(c, id=k), r["a4_reading"], r["a2_window"]) for k, c in cand.items()):
             bad.append(f"{chosen}: chosen on its declared goal while an axiom-clean candidate existed")
         out.append(v("AXIOMS-AxiomA3-PhysicalRealitySupremacy-02", "no_narrative_override", bad,
                      f"{len(narr)} candidate(s) resting on a declared goal or narrative against the PTL measurement counted as "
@@ -285,12 +371,12 @@ def checks(r: Dict[str, Any], log: EventLog, V_gen: Dict[str, List[str]]) -> Lis
 
     cands = r["candidates"]
     by = {c["id"]: c for c in cands}
-    V = {c["id"]: violations(c, r["a4_reading"]) for c in cands}            # the checker's own reading
+    V = {c["id"]: violations(c, r["a4_reading"], r["a2_window"]) for c in cands}            # the checker's own reading
     dec = [m for m in msgs if m.source == "AXIOMS" and m.kind == "decision"][0]
     chosen = dec.value["chosen"]
     clean = [c["id"] for c in cands if not V[c["id"]]]
     dilemma = not clean
-    exp, _, _ = choose(cands, r["a4_reading"], r["dilemma_reading"])
+    exp, _, _ = choose(cands, r["a4_reading"], r["dilemma_reading"], r["a2_window"])
     steps = [m for m in msgs if m.kind == "evaluation"]
     ax_first = steps and steps[0].value.get("step") == "axiom_evaluation" and \
         any(m.value.get("step") == "utility_ranking" for m in steps[1:])
@@ -447,6 +533,12 @@ def checks(r: Dict[str, Any], log: EventLog, V_gen: Dict[str, List[str]]) -> Lis
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "AXIOMS-2-01": ("axioms_between_ptl_and_economy", "PARTIAL", "Clear part only: the layer order as data flow; Genesis Block #0 is not in the corpus."),
+    "AXIOMS-2-02": ("no_equation_change", "PARTIAL", "Clear part only: no AXIOMS output changes Equation parameters; what 'compatible' requires stays open."),
+    "AXIOMS-AxiomA2-SystemicSustainability-02": ("sustained_b_drop_flagged", "PARTIAL", "Clear part only: under a declared window and start baseline; duration and baseline stay open."),
+    "AXIOMS-AxiomA5-ExternalityAccountability-01": ("unmeasured_shift_violates", "PARTIAL", "Clear part only: a shift without any measurement violates A5; whether a documented bound suffices stays open."),
+    "AXIOMS-AxiomA7-MinimumSufferingConstraint-02": ("suffering_not_an_objective", "PARTIAL", "Clear part only: never an objective or optimization target; the proxy mapping from S(t) stays open."),
     "AXIOMS-5-01": ("axioms_before_optimization", "IMPLEMENTED", None),
     "AXIOMS-5-02": ("violation_invalidates", "PARTIAL", "When every candidate violates an axiom, §5.2 and §5.4 disagree (F-024): UNKNOWN."),
     "AXIOMS-1-01": ("no_violation_for_benefit", "PARTIAL", "Violations are declared properties of the candidates."),
@@ -491,7 +583,7 @@ IMPLEMENTS = {
 
 class AxiomConstraintsModule(LabModule):
     id = "axiom_constraints"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Axioms as constraints (AXIOMS)", "ru": "Аксиомы как ограничения (AXIOMS)"}
     summary = {"en": "Several possible actions with different benefits and side effects: which may be chosen, and does any "
                      "benefit ever buy a violated axiom?",
@@ -544,6 +636,9 @@ class AxiomConstraintsModule(LabModule):
                                    {**{k: f["default"] for k, f in CANDIDATE["fields"].items() if "default" in f}, "id": "c",
                                     "utility": 12, "basis": "declared_goal", "contradicts_ptl": True}],
                        "label": {"en": "Candidate actions (H-AX-1)", "ru": "Возможные действия (H-AX-1)"}},
+        "a2_window": {"type": "int", "min": 0, "max": 10 ** 4, "default": 3, "unit": "step", "source": "missing",
+                      "label": {"en": "Window for 'sustained' B(t) degradation (A2; no value in the corpus)",
+                                "ru": "Окно 'устойчивой' деградации B(t) (A2; в корпусе нет значения)"}},
         "dilemma_reading": {"type": "enum", "values": ["lexicographic", "no_admissible_action"], "default": "lexicographic",
                             "source": "alternative", "label": {"en": "No axiom-clean action (H-AX-2)", "ru": "Нет чистого действия (H-AX-2)"}},
         "a4_reading": {"type": "enum", "values": ["constraint", "recommendation"], "default": "constraint", "source": "alternative",
@@ -578,9 +673,9 @@ class AxiomConstraintsModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log, chosen, basis, V = run(r)
-        res = checks(r, log, V) + structure_checks(r, log)
+        res = checks(r, log, V) + structure_checks(r, log) + core_checks(r, log)
         outputs = {"chosen": chosen, "basis": basis,
-                   "violations": {c["id"]: violations(c, r["a4_reading"]) for c in r["candidates"]},
+                   "violations": {c["id"]: violations(c, r["a4_reading"], r["a2_window"]) for c in r["candidates"]},
                    "messages": [m.as_dict() for m in log.messages()],
                    "event_log": {"time_unit": log.time_unit, "messages": len(log), "digest": log.digest()}}
         viol = "; ".join(f"{k}: {', '.join(x) or 'none'}" for k, x in outputs["violations"].items())
@@ -614,6 +709,8 @@ class AxiomConstraintsModule(LabModule):
                                                     c("weir", utility=6)]},
             "minimum_required_claim": {"candidates": [c("triage", utility=7, claims_minimum_required=True), c("wait", utility=2)]},
             "axiom_modification": {"modification": {"axiom": "A5", "ratification_share": 70}},
+            "sustained_b_degradation": {"candidates": [c("dredge", utility=9, b_series=[0.71, 0.70, 0.69, 0.69, 0.68]),
+                                                       c("restore", utility=4, b_series=[0.71, 0.71, 0.72, 0.72])]},
             "faulty_evaluation": {"candidates": [c("growth", utility=100, increases_life_loss=True), c("safe", utility=10)],
                                   "faults": ["utility_override", "compel_service", "punish_refusal", "benefit_free_riders",
                                              "missing_metadata"]},

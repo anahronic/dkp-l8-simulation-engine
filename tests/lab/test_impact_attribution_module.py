@@ -49,6 +49,11 @@ FAULT_CASES = {
     "identity_measures_magnitude": ({}, ["IDENTITY-13-01"]),
     "require_physical_damage": ({}, ["IDENTITY-11-02"]),
     "breach_unflagged": ({}, ["IDENTITY-13-02"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "rarity_exemption": (M.examples()["rare_cascade"], ["IDENTITY-9-02"]),
+    "enforce_before_identity": ({}, ["IDENTITY-2-01"]),
+    "time_decay": ({}, ["IDENTITY-10-03"]),
+    "release_after_time": ({}, ["IDENTITY-7-01"]),
 }
 
 
@@ -83,3 +88,13 @@ def test_impact_flags():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_decay_and_persistence_follow_the_declared_timeline():
+    """IDENTITY §7, §10 clear parts: no decay while linkage is at or above the declared threshold; responsibility persists
+    while a §7 condition holds, and below the threshold decay is allowed (the decay function stays open)."""
+    tl = run().outputs["responsibility_timeline"]
+    by = {(x["responsibility_of"], x["linkage"]): x for x in tl}
+    assert not by[("river_pollutant", 0.9)]["decays"] and by[("river_pollutant", 0.9)]["persists"]
+    assert by[("river_pollutant", 0.3)]["decays"] and by[("river_pollutant", 0.3)]["persists"]
+    assert not by[("co2_air", 0.8)]["decays"] and not by[("co2_air", 0.8)]["persists"]

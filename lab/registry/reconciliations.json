@@ -13,8 +13,8 @@
   "closure_closed": 216,
   "closure_open": 22,
   "human_accepted": 0,
-  "partial_check": 140,
-  "partial_check_revised": 7
+  "partial_check": 139,
+  "partial_check_revised": 8
  },
  "items": [
   {
@@ -857,7 +857,8 @@
     "human_accepted": false
    },
    "origin_after": "external_dependency",
-   "partial_check": true
+   "partial_check": true,
+   "check": "axiom_constraints:axioms_between_ptl_and_economy"
   },
   {
    "id": "AXIOMS-2-02",
@@ -871,7 +872,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "axiom_constraints:no_equation_change"
   },
   {
    "id": "AXIOMS-2-03",
@@ -929,7 +931,8 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": true,
+   "check": "axiom_constraints:sustained_b_drop_flagged"
   },
   {
    "id": "AXIOMS-AxiomA3-PhysicalRealitySupremacy-02",
@@ -965,7 +968,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "axiom_constraints:unmeasured_shift_violates"
   },
   {
    "id": "AXIOMS-AxiomA7-MinimumSufferingConstraint-02",
@@ -979,7 +983,8 @@
     "human_accepted": false
    },
    "origin_after": "empirical_model_data",
-   "partial_check": true
+   "partial_check": true,
+   "check": "axiom_constraints:suffering_not_an_objective"
   },
   {
    "id": "AXIOMS-EpistemicClarification-04",
@@ -4829,7 +4834,8 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": true,
+   "check": "impact_attribution:no_decay_above_threshold"
   },
   {
    "id": "IDENTITY-11-03",
@@ -4857,7 +4863,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "impact_attribution:identity_before_downstream"
   },
   {
    "id": "IDENTITY-7-01",
@@ -4871,7 +4878,8 @@
     "human_accepted": false
    },
    "origin_after": "empirical_model_data",
-   "partial_check": true
+   "partial_check": true,
+   "check": "impact_attribution:persists_while_condition_holds"
   },
   {
    "id": "IDENTITY-9-01",
@@ -4899,7 +4907,8 @@
     "human_accepted": false
    },
    "origin_after": "empirical_model_data",
-   "partial_check": true
+   "partial_check": true,
+   "check": "impact_attribution:no_rarity_exemption"
   },
   {
    "id": "IMPACT-2-03",
@@ -4913,7 +4922,13 @@
     "human_accepted": false
    },
    "origin_after": "external_dependency",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "Genesis Block #0 is not in the corpus, so a binding of IMPACT to it could only be checked against a lab digest that the lab itself defines; the one checkable binding, the digest over the immutable message of block #0, is already checked under CODEX-Glossary_Definitions-06.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "INFO-0-02",
