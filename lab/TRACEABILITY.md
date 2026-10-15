@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1550 (89.2 %) | 1011 | 1463 | 931 | 4 | 67 | 16 | 187 | 0 | 53 | 1198 |
-| B. First working site | PARTIAL | 1/1 | 43 | 27 (62.8 %) | 15 | 26 | 14 | 0 | 1 | 0 | 16 | 0 | 6 | 31 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1559 (89.8 %) | 1020 | 1470 | 938 | 4 | 67 | 18 | 178 | 0 | 37 | 1198 |
+| B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 18 | 29 | 17 | 0 | 1 | 0 | 13 | 0 | 0 | 31 |
 | C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 4 | 258 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 377 (88.9 %) | 207 | 354 | 187 | 1 | 21 | 1 | 47 | 0 | 8 | 254 |
-| E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 9 | 201 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 443 (86.7 %) | 300 | 421 | 278 | 0 | 18 | 4 | 68 | 0 | 26 | 368 |
+| D. Transitions and rights | PARTIAL | 9/9 | 424 | 377 (88.9 %) | 207 | 354 | 187 | 1 | 21 | 1 | 47 | 0 | 6 | 254 |
+| E. Applied modules | PARTIAL | 7/7 | 293 | 255 (87.0 %) | 163 | 238 | 148 | 0 | 9 | 8 | 38 | 0 | 8 | 201 |
+| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 449 (87.9 %) | 306 | 425 | 282 | 0 | 18 | 6 | 62 | 0 | 19 | 368 |
 | G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1550 (89.2 %) | 1011 | 1463 | 931 | 4 | 67 | 16 | 187 | 0 | 53 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1559 (89.8 %) | 1020 | 1470 | 938 | 4 | 67 | 18 | 178 | 0 | 37 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -269,13 +269,13 @@ Withdrawn after verification (not author decisions):
 | DKP-1-IDENTITY-001 | 39 | 33 | 30 | 0 | 2 | 1 | 6 | 31 |
 | DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
 | DKP-1-JUSTICE-001 | 41 | 36 | 33 | 0 | 3 | 0 | 5 | 25 |
-| DKP-1-PREVENTION-001 | 43 | 27 | 26 | 0 | 1 | 0 | 16 | 31 |
+| DKP-1-PREVENTION-001 | 43 | 30 | 29 | 0 | 1 | 0 | 13 | 31 |
 | DKP-2-ASSETS-001 | 43 | 40 | 39 | 0 | 1 | 0 | 3 | 30 |
 | DKP-2-FINANCE-001 | 44 | 35 | 33 | 0 | 2 | 0 | 9 | 32 |
 | DKP-2-LABOR-001 | 40 | 39 | 36 | 0 | 3 | 0 | 1 | 25 |
 | DKP-3-ANTITERROR-001 | 41 | 34 | 34 | 0 | 0 | 0 | 7 | 29 |
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
-| DKP-3-INTERNAL-SEC-001 | 49 | 37 | 36 | 0 | 0 | 1 | 12 | 44 |
+| DKP-3-INTERNAL-SEC-001 | 49 | 43 | 40 | 0 | 0 | 3 | 6 | 44 |
 | DKP-3-POLICE-001 | 45 | 42 | 42 | 0 | 0 | 0 | 3 | 29 |
 | DKP-4-CRISIS-001 | 53 | 44 | 39 | 1 | 4 | 0 | 9 | 32 |
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
@@ -677,12 +677,15 @@ Withdrawn after verification (not author decisions):
 | PREV-11-02 | IMPLEMENTED | prevention · output_flags | PASS | — | — |
 | PREV-11-03 | IMPLEMENTED | prevention · deterministic_auditable | PASS | — | — |
 | PREV-12-01 | PARTIAL | prevention · ambiguity_zero | PASS | — | — |
+| PREV-12-02 | PARTIAL | prevention · degradation_never_raises_c | PASS | — | — |
 | PREV-13-01 | PARTIAL | prevention · no_hypothetical_states | PASS | — | — |
 | PREV-15-01 | PARTIAL | edition_finality · upgrade_procedure | PASS | — | — |
 | PREV-15-02 | PARTIAL | edition_finality · modification_requirements | PASS | — | — |
 | PREV-15-03 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | PREV-3.11-01 | IMPLEMENTED | prevention · cbf_audit_only | PASS | — | — |
 | PREV-3.3-01 | IMPLEMENTED | prevention · ta_two_classes | PASS | — | — |
+| PREV-3.3-02 | PARTIAL | prevention · spread_is_max_minus_min | PASS | — | — |
+| PREV-3.3.1-01 | PARTIAL | prevention · ta_is_min_of_valid | PASS | — | — |
 | PREV-3.3.2-01 | IMPLEMENTED | prevention · informational_no_reward | PASS | — | — |
 | PREV-3.6-01 | IMPLEMENTED | prevention · temporal_alignment | PASS | — | Q-015 |
 | PREV-3.6-02 | IMPLEMENTED | prevention · suppression_formula | PASS | — | Q-015 |
@@ -888,6 +891,7 @@ Withdrawn after verification (not author decisions):
 | DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-02 | IMPLEMENTED | defense_envelope · vpi_revalidation | PASS | — | — |
 | DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-03 | IMPLEMENTED | defense_envelope · vpi_termination | PASS | — | — |
 | DEFENSE-EpistemicClassificationofTrajectory-BasedAuthorization-04 | PARTIAL | defense_envelope · vpi_not_projection | PASS | yes | — |
+| INTSEC-1-01 | PARTIAL | internal_security · no_prediction_profile_or_ideology | PASS | yes | — |
 | INTSEC-11-01 | IMPLEMENTED | internal_security · no_evidence_no_action | PASS | — | — |
 | INTSEC-11-03 | IMPLEMENTED | internal_security · complete_audit_trail | PASS | — | — |
 | INTSEC-11-05 | PARTIAL | internal_security · no_overreach | PASS | — | — |
@@ -897,12 +901,17 @@ Withdrawn after verification (not author decisions):
 | INTSEC-12-04 | PARTIAL | edition_finality · full_system_simulation | PASS | — | — |
 | INTSEC-12-05 | IMPLEMENTED | edition_finality · presentation_not_upgrade | PASS | — | Q-062 |
 | INTSEC-12-06 | PARTIAL | edition_finality · edition_integrity | PASS | — | — |
+| INTSEC-2-01 | PARTIAL | internal_security · intsec_downstream_of_ptl | PASS | — | — |
 | INTSEC-2-02 | IMPLEMENTED | internal_security · no_autonomous_revocation | PASS | — | — |
 | INTSEC-2-03 | IMPLEMENTED | internal_security · effects_via_triggers | PASS | — | — |
 | INTSEC-3.2-02 | IMPLEMENTED | internal_security · motivation_not_considered | PASS | — | — |
+| INTSEC-3.3-01 | PARTIAL | internal_security · evidence_chained_to_anchor | PASS | — | — |
+| INTSEC-3.3-02 | PARTIAL | internal_security · evidence_dti_indexed | PASS | — | — |
 | INTSEC-4.1-01 | IMPLEMENTED | internal_security · responds_to_ptl | PASS | — | — |
 | INTSEC-4.2-01 | IMPLEMENTED | internal_security · non_preemptive | PASS | — | — |
+| INTSEC-4.3-02 | PARTIAL | internal_security · permanent_needs_escalation | NOT_APPLICABLE | — | — |
 | INTSEC-4.4-01 | PARTIAL | internal_security · logged_traceable | PASS | — | — |
+| INTSEC-4.4-02 | PARTIAL | internal_security · irreversible_needs_authorization | NOT_APPLICABLE | — | — |
 | INTSEC-5-01 | PARTIAL | internal_security · finite_state_machine | PASS | — | — |
 | INTSEC-5-02 | IMPLEMENTED | internal_security · max_duration_S1 | PASS | — | — |
 | INTSEC-5-03 | IMPLEMENTED | internal_security · max_duration_S2 | PASS | — | — |

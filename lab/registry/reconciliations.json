@@ -3,6 +3,7 @@
  "rule": "Review КТ5: every provision whose draft open point is implementation_only is read against the pinned text before it is counted as resolvable or covered. 'confirmed': the text fixes what is required and no author choice is needed; the lab adds a check. 'reclassified': an author decision or a missing definition blocks it; origin_after names it. A checkable correction is recorded with the decision.",
  "closure_rule": "Review of checkpoint 6: for each confirmed provision the draft open point (implementation_only) is closed once the missing lab check exists, unless something else remains. 'closed': the agent's reading answers the draft need from the text (answer); decision_status becomes NONE_IDENTIFIED by agent reading, the open point is removed, and the draft classification and reason stay in this record. 'open': a missing formula, an undefined criterion, an external artifact or a contested reading remains; the open point stays with that origin and reason. A partial check (coverage PARTIAL) is a limit of coverage, not an open point. Nothing here is a human acceptance (A6).",
  "reading_rule": "Review of checkpoint 6: the remaining open points of uncovered provisions, whose origin was a Codex draft, are read one by one against the pinned corpus (all 38 documents), as the implementation_only drafts were. 'kept': the draft origin holds; the open point stays, now as the lab's reading; partial_check says whether a clear core could be checked without deciding the open point. 'reclassified': another origin blocks it (origin_after). 'returned': the corpus settles what the draft said was missing (most often a reference to a corpus document read as external); the provision is resolvable (implementation_only) and needs a lab check; once the check exists it carries a closure like a confirmed decision. Nothing here is a human acceptance (A6).",
+ "core_revision_rule": "Review КТ7-GPT-01: a provision marked partial_check: true is unfinished work while it is uncovered. Each such clear part is checked, or, when the check cannot confirm it (the part would be checked only as a label, needs the open point itself, or needs a change to the published bench), the flag is set to false with an individual reason; the earlier value and the reason stay in partial_check_revised. No flag is dropped to regain a stage status.",
  "counts": {
   "confirmed": 143,
   "reclassified": 33,
@@ -11,7 +12,9 @@
   "returned_awaiting_check": 0,
   "closure_closed": 216,
   "closure_open": 22,
-  "human_accepted": 0
+  "human_accepted": 0,
+  "partial_check": 140,
+  "partial_check_revised": 7
  },
  "items": [
   {
@@ -2074,7 +2077,13 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "A 'bias-detection hook' has no interface in the corpus; a check could only test that a declared process carries a field named 'hooks', which proves nothing about exposure, and what a hook must expose is the open point itself.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "CULTURE-10-02",
@@ -4119,7 +4128,13 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "The only clear part would be the presence of a timestamp field, already checked under EXIT-4-04 and EXIT-5-01; what makes a timestamp PTL-anchored is the open point itself, so no further part can be checked without deciding it.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "EXIT-6-03",
@@ -5285,7 +5300,13 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "Compatibility metrics are not records with provenance in any run; checking that a declared label says 'PTL outputs' would prove nothing, and the provenance rule that would make the check meaningful is the open point.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "INTEGRATION-3-05",
@@ -6152,7 +6173,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "internal_security:no_prediction_profile_or_ideology"
   },
   {
    "id": "INTSEC-10-01",
@@ -6208,7 +6230,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "internal_security:intsec_downstream_of_ptl"
   },
   {
    "id": "INTSEC-3.1-01",
@@ -6272,7 +6295,8 @@
     "human_accepted": false
    },
    "origin_after": "external_dependency",
-   "partial_check": true
+   "partial_check": true,
+   "check": "internal_security:evidence_chained_to_anchor"
   },
   {
    "id": "INTSEC-3.3-02",
@@ -6286,7 +6310,8 @@
     "human_accepted": false
    },
    "origin_after": "external_dependency",
-   "partial_check": true
+   "partial_check": true,
+   "check": "internal_security:evidence_dti_indexed"
   },
   {
    "id": "INTSEC-4.3-01",
@@ -6314,7 +6339,8 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": true,
+   "check": "internal_security:permanent_needs_escalation"
   },
   {
    "id": "INTSEC-4.4-02",
@@ -6328,7 +6354,8 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": true,
+   "check": "internal_security:irreversible_needs_authorization"
   },
   {
    "id": "INTSEC-6-01",
@@ -6651,7 +6678,13 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "The lab computes no restitution amount (JUSTICE §6 gives no amount function, and the module does not invent one), so there is no restitution value in any run to compare with the measured impact of its channel; a per-channel bound on a value that does not exist would be checked vacuously.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "JUSTICE-7-02",
@@ -7417,7 +7450,13 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "The PREVENTION bench (published v2.1.1, which the lab does not change) has no input or record for a peer signal, and no other module produces one; a check that a lab-made 'peer' label changes no reward would test only the label. What a peer signal is, the open point, is needed before anything can be checked.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "PREV-10-02",
@@ -7467,7 +7506,8 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": true,
+   "check": "prevention:degradation_never_raises_c"
   },
   {
    "id": "PREV-13-01",
@@ -7576,7 +7616,8 @@
     "human_accepted": false
    },
    "origin_after": "normative_ambiguity",
-   "partial_check": true
+   "partial_check": true,
+   "check": "prevention:spread_is_max_minus_min"
   },
   {
    "id": "PREV-3.3.1-01",
@@ -7590,7 +7631,8 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": true,
+   "check": "prevention:ta_is_min_of_valid"
   },
   {
    "id": "PREV-3.4-01",
@@ -7654,7 +7696,13 @@
     "human_accepted": false
    },
    "origin_after": "architecture_definition",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "The bench keeps no raw-data store and records no access to raw data; an access log added by the lab would only check itself, and the access rules and the audit gate are the open point.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "PREV-9.4-01",
@@ -7668,7 +7716,13 @@
     "human_accepted": false
    },
    "origin_after": "l8_parameter",
-   "partial_check": true
+   "partial_check": false,
+   "partial_check_revised": {
+    "from": true,
+    "to": false,
+    "reason": "Review of checkpoint 7: 'low coverage → Cₖ ↓' is not to be turned into a general monotonicity law. The only coverage that is low under every reading is no admissible coverage, where PREV-9.4-02 already checks Cₖ = 0; any comparison of two partial coverages needs the L8 threshold 'low' and would be that general law.",
+    "review": "КТ7-GPT-01"
+   }
   },
   {
    "id": "PRIVACY-12-02",

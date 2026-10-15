@@ -93,3 +93,16 @@ def test_no_uncovered_open_point_is_left_as_a_machine_draft():
     left = sorted(rid for rid, r in reconcile.registry().items()
                   if r["coverage"] not in ("IMPLEMENTED", "PARTIAL") and (r.get("open_point") or {}).get("source") == "codex_draft")
     assert left == []
+
+
+def test_revised_core_flags_keep_their_history():
+    """Review КТ7-GPT-01: a clear-part flag the check cannot confirm is set to false with an individual reason; the earlier
+    value stays in the record and the count matches."""
+    rec = _load("reconciliations.json")
+    rev = [it for it in rec["items"] if it.get("partial_check_revised")]
+    assert rec["counts"]["partial_check_revised"] == len(rev)
+    for it in rev:
+        h = it["partial_check_revised"]
+        assert it["partial_check"] is False and h["from"] is True and h["to"] is False, it["id"]
+        assert len(h["reason"]) > 80 and h["review"] == "КТ7-GPT-01", it["id"]
+    assert rec["counts"]["partial_check"] == sum(1 for it in rec["items"] if it.get("partial_check"))

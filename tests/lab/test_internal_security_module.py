@@ -24,10 +24,10 @@ def test_reference_breaks_no_rule(name):
 
 FAULT_CASES = {
     "intsec_arbitrates_divergence": ({"ptl_divergence_day": 4}, ["INTSEC-6-02"]),
-    "consider_motivation": ({}, ["INTSEC-3.2-02"]),
+    "consider_motivation": ({}, ["INTSEC-3.2-02", "INTSEC-1-01"]),
     "extra_trigger": ({}, ["INTSEC-6-01"]),
     "cap_breach_downgraded": ({"node_shares": EX["concentrated_nodes"]["node_shares"]}, ["INTSEC-8-07"]),
-    "predictive_trigger": (EX["unconfirmed_prediction"], ["INTSEC-4.2-01", "INTSEC-11-01", "INTSEC-4.1-01"]),
+    "predictive_trigger": (EX["unconfirmed_prediction"], ["INTSEC-4.2-01", "INTSEC-11-01", "INTSEC-4.1-01", "INTSEC-1-01"]),
     "throttle_in_s1": ({}, ["INTSEC-7.1-02", "INTSEC-7.1-01"]),
     "overstay": (EX["persisting_compromise"], ["INTSEC-5-04", "INTSEC-5-06"]),
     "direct_execution": ({}, ["INTSEC-2-03", "INTSEC-2-02", "INTSEC-11-05", "INTSEC-7.2-01"]),
@@ -38,7 +38,12 @@ FAULT_CASES = {
     "secret_rule": ({}, ["INTSEC-8-04"]),
     "missing_due_process": ({}, ["INTSEC-9-01"]),
     "permanent_exclusion": ({}, ["INTSEC-8-03"]),
-    "ideological_justification": ({}, ["INTSEC-8-05"]),
+    "ideological_justification": ({}, ["INTSEC-8-05", "INTSEC-1-01"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "risk_profile": ({}, ["INTSEC-1-01"]),
+    "intsec_feeds_ptl": ({}, ["INTSEC-2-01"]),
+    "unanchored_evidence": ({}, ["INTSEC-3.3-01"]),
+    "stale_evidence_index": ({}, ["INTSEC-3.3-02"]),
 }
 
 
@@ -92,3 +97,11 @@ def test_kt5_node_cap_breach_is_critical():
     assert statuses(run(**shares, faults=["cap_breach_downgraded"]))["INTSEC-8-07"] == "FAIL"
     assert statuses(run())["INTSEC-8-07"] == "NOT_APPLICABLE"
     assert statuses(run(**EX["unconfirmed_prediction"], faults=["predictive_trigger"]))["INTSEC-6-01"] == "FAIL"
+
+
+def test_permanent_action_needs_escalation_and_authorization():
+    """INTERNAL-SEC §4.3, §4.4 clear parts: no permanent or irreversible action in the reference (N/A); the permanent
+    exclusion of the fault has neither an escalation nor a justification with elevated authorization."""
+    clean, broken = statuses(run()), statuses(run(faults=["permanent_exclusion"]))
+    for rid in ("INTSEC-4.3-02", "INTSEC-4.4-02"):
+        assert clean[rid] == "NOT_APPLICABLE" and broken[rid] == "FAIL", rid

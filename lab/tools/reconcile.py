@@ -75,6 +75,8 @@ def build() -> Dict[str, Any]:
             item["origin_after"] = d.get("origin_after", draft)
             if "partial_check" in d:
                 item["partial_check"] = d["partial_check"]
+            if "partial_check_revised" in d:          # review КТ7-GPT-01: the earlier flag and the individual reason
+                item["partial_check_revised"] = d["partial_check_revised"]
             if impl:                               # a check under a named reading may exist while the open point stays
                 item["check"] = f"{impl['module']}:{impl['check']}"
             if r.get("open_questions"):
@@ -99,9 +101,14 @@ def build() -> Dict[str, Any]:
               "returned_awaiting_check": sum(1 for x in items if x["verdict"] == "returned" and not x["closure"]),
               "closure_closed": sum(1 for x in items if (x.get("closure") or {}).get("state") == "closed"),
               "closure_open": sum(1 for x in items if (x.get("closure") or {}).get("state") == "open"),
-              "human_accepted": sum(1 for x in items if x["acceptance"]["human_accepted"])}
-    return {"schema": "dkp-lab-reconciliation/3", "rule": inp["rule"], "closure_rule": inp["closure_rule"],
-            "reading_rule": inp["reading_rule"], "counts": counts, "items": items}
+              "human_accepted": sum(1 for x in items if x["acceptance"]["human_accepted"]),
+              "partial_check": sum(1 for x in items if x.get("partial_check")),
+              "partial_check_revised": sum(1 for x in items if x.get("partial_check_revised"))}
+    out = {"schema": "dkp-lab-reconciliation/3", "rule": inp["rule"], "closure_rule": inp["closure_rule"],
+           "reading_rule": inp["reading_rule"]}
+    if "core_revision_rule" in inp:
+        out["core_revision_rule"] = inp["core_revision_rule"]
+    return {**out, "counts": counts, "items": items}
 
 
 def apply_side_effects() -> None:

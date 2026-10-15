@@ -1571,25 +1571,25 @@
   "registered": 38,
   "not_registered": [],
   "provisions": 1737,
-  "covered": 1550,
-  "covered_percent": 89.2,
+  "covered": 1559,
+  "covered_percent": 89.8,
   "statuses": {
-   "PASS": 1463,
+   "PASS": 1470,
    "FAIL": 4,
    "UNKNOWN": 67,
-   "NOT_APPLICABLE": 16,
-   "UNCOVERED": 187
+   "NOT_APPLICABLE": 18,
+   "UNCOVERED": 178
   },
   "resolvable": 745,
   "resolvable_uncovered": 0,
   "resolvable_uncovered_implementation_only": 0,
   "unresolved_decisions": 1198,
-  "covered_with_open_point": 1011,
-  "pass_with_open_point": 931,
+  "covered_with_open_point": 1020,
+  "pass_with_open_point": 938,
   "covered_without_open_point": 539,
   "closed_by_agent_reading": 216,
   "human_accepted": 0,
-  "uncovered_checkable_core": 53
+  "uncovered_checkable_core": 37
  },
  "stages": [
   {
@@ -1639,25 +1639,25 @@
     "registered": 38,
     "not_registered": [],
     "provisions": 1737,
-    "covered": 1550,
-    "covered_percent": 89.2,
+    "covered": 1559,
+    "covered_percent": 89.8,
     "statuses": {
-     "PASS": 1463,
+     "PASS": 1470,
      "FAIL": 4,
      "UNKNOWN": 67,
-     "NOT_APPLICABLE": 16,
-     "UNCOVERED": 187
+     "NOT_APPLICABLE": 18,
+     "UNCOVERED": 178
     },
     "resolvable": 745,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 1198,
-    "covered_with_open_point": 1011,
-    "pass_with_open_point": 931,
+    "covered_with_open_point": 1020,
+    "pass_with_open_point": 938,
     "covered_without_open_point": 539,
     "closed_by_agent_reading": 216,
     "human_accepted": 0,
-    "uncovered_checkable_core": 53
+    "uncovered_checkable_core": 37
    }
   },
   {
@@ -1696,25 +1696,25 @@
     "registered": 1,
     "not_registered": [],
     "provisions": 43,
-    "covered": 27,
-    "covered_percent": 62.8,
+    "covered": 30,
+    "covered_percent": 69.8,
     "statuses": {
-     "PASS": 26,
+     "PASS": 29,
      "FAIL": 0,
      "UNKNOWN": 1,
      "NOT_APPLICABLE": 0,
-     "UNCOVERED": 16
+     "UNCOVERED": 13
     },
     "resolvable": 14,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 31,
-    "covered_with_open_point": 15,
-    "pass_with_open_point": 14,
+    "covered_with_open_point": 18,
+    "pass_with_open_point": 17,
     "covered_without_open_point": 12,
     "closed_by_agent_reading": 5,
     "human_accepted": 0,
-    "uncovered_checkable_core": 6
+    "uncovered_checkable_core": 0
    }
   },
   {
@@ -1790,7 +1790,7 @@
     "covered_without_open_point": 170,
     "closed_by_agent_reading": 83,
     "human_accepted": 0,
-    "uncovered_checkable_core": 8
+    "uncovered_checkable_core": 6
    }
   },
   {
@@ -1828,7 +1828,7 @@
     "covered_without_open_point": 92,
     "closed_by_agent_reading": 50,
     "human_accepted": 0,
-    "uncovered_checkable_core": 9
+    "uncovered_checkable_core": 8
    }
   },
   {
@@ -1848,25 +1848,25 @@
     "registered": 12,
     "not_registered": [],
     "provisions": 511,
-    "covered": 443,
-    "covered_percent": 86.7,
+    "covered": 449,
+    "covered_percent": 87.9,
     "statuses": {
-     "PASS": 421,
+     "PASS": 425,
      "FAIL": 0,
      "UNKNOWN": 18,
-     "NOT_APPLICABLE": 4,
-     "UNCOVERED": 68
+     "NOT_APPLICABLE": 6,
+     "UNCOVERED": 62
     },
     "resolvable": 203,
     "resolvable_uncovered": 0,
     "resolvable_uncovered_implementation_only": 0,
     "unresolved_decisions": 368,
-    "covered_with_open_point": 300,
-    "pass_with_open_point": 278,
+    "covered_with_open_point": 306,
+    "pass_with_open_point": 282,
     "covered_without_open_point": 143,
     "closed_by_agent_reading": 64,
     "human_accepted": 0,
-    "uncovered_checkable_core": 26
+    "uncovered_checkable_core": 19
    }
   },
   {
@@ -20266,7 +20266,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "JUSTICE-7-01",
@@ -20967,7 +20967,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "PREV-10-02",
@@ -21156,23 +21156,27 @@
    "section": "12",
    "kind": "dynamic_model",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Sensor degradation, the comparison reference and the confidence reduction rule are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "prevention",
+   "check": "degradation_never_raises_c",
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
+   "gap": "Clear part only: a degraded sensor (lower confidence, or dropped out) never raises Cₖ; the degradation measure and response stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -21606,23 +21610,27 @@
    "section": "3.3",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The included oracle population and behavior for an empty intensity set are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "prevention",
+   "check": "spread_is_max_minus_min",
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
+   "gap": "Clear part only: the spread is max - min of the readings used; whether all or only valid readings count stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -21640,23 +21648,27 @@
    "section": "3.3.1",
    "kind": "formula",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The calibrated threshold and the rule selecting valid oracle intensities are not supplied. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "prevention",
+   "check": "ta_is_min_of_valid",
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
+   "gap": "Clear part only: TA intensity is the minimum of the valid readings; the consistency threshold stays L8 (§14).",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "PREVENTION-H-*"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 4,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
    "under_alternative_readings": {},
    "violated_by_noncompliant_case": [],
@@ -22301,7 +22313,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "PREV-9.1-01",
@@ -22415,7 +22427,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "PREV-9.4-02",
@@ -31419,25 +31431,34 @@
    "section": "1",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "The boundary between the permitted integrity functions and excluded surveillance or profiling functions is not operationally defined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "internal_security",
+   "check": "no_prediction_profile_or_ideology",
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "gap": "Clear part only: no prediction, profile or ideological criterion; where collection becomes surveillance stays open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IS-1",
+    "H-IS-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
-   "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "status": "PASS",
+   "counterexample_detected_by": [
+    "internal_security:faulty_security"
+   ],
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -31941,25 +31962,32 @@
    "section": "2",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Operational meanings of downstream, upstream, and coordination are absent. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "internal_security",
+   "check": "intsec_downstream_of_ptl",
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "gap": "Clear part only: data flow from PTL into INTERNAL-SEC; the layer terms stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IS-1",
+    "H-IS-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 6,
     "FAIL": 0,
     "UNKNOWN": 0,
     "NOT_APPLICABLE": 0
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -32167,25 +32195,32 @@
    "section": "3.3",
    "kind": "definition",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Commitment formats, cryptographic verification rules, and trusted anchoring data are not specified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "internal_security",
+   "check": "evidence_chained_to_anchor",
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "gap": "Clear part only: commitments chained to a stand-in anchor; Genesis Block #0 is not in the corpus.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IS-1",
+    "H-IS-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -32201,25 +32236,32 @@
    "section": "3.3",
    "kind": "contract",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Time and consensus rules, reproducibility criteria, and a model of discretionary suppression are unavailable. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "internal_security",
+   "check": "evidence_dti_indexed",
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "gap": "Clear part only: the DTI-Day index; Proof-of-Synergy rules are given nowhere.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IS-1",
+    "H-IS-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
    "observed": {
-    "PASS": 0,
+    "PASS": 5,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 1
    },
-   "status": "UNCOVERED",
+   "status": "PASS",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "PASS": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -32351,13 +32393,18 @@
    "section": "4.3",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Expansiveness, the required higher layer, and escalation timing are unspecified. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "internal_security",
+   "check": "permanent_needs_escalation",
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "gap": "Clear part only: a permanent action after an escalation record; 'expansive' and the receiving layer stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IS-1",
+    "H-IS-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -32365,11 +32412,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -32426,13 +32475,18 @@
    "section": "4.4",
    "kind": "constraint",
    "checkable": "partial",
-   "coverage": "NOT_IMPLEMENTED",
-   "module": null,
-   "check": null,
-   "tests": [],
-   "gap": "Ordinary and elevated authorization thresholds and justification sufficiency are undefined. No lab check implemented yet.",
+   "coverage": "PARTIAL",
+   "module": "internal_security",
+   "check": "irreversible_needs_authorization",
+   "tests": [
+    "tests/lab/test_internal_security_module.py"
+   ],
+   "gap": "Clear part only: justification and an elevated authorization; the authorization levels stay open.",
    "also_checked_by": [],
-   "hypotheses": [],
+   "hypotheses": [
+    "H-IS-1",
+    "H-IS-2"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -32440,11 +32494,13 @@
     "PASS": 0,
     "FAIL": 0,
     "UNKNOWN": 0,
-    "NOT_APPLICABLE": 0
+    "NOT_APPLICABLE": 6
    },
-   "status": "UNCOVERED",
+   "status": "NOT_APPLICABLE",
    "counterexample_detected_by": [],
-   "under_alternative_readings": {},
+   "under_alternative_readings": {
+    "NOT_APPLICABLE": 1
+   },
    "violated_by_noncompliant_case": [],
    "text_verification": [],
    "open_point": {
@@ -44818,7 +44874,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "CULTURE-10-02",
@@ -58885,7 +58941,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "EXIT-5-03",
@@ -60488,7 +60544,7 @@
     "source": "lab_reconciled"
    },
    "decision_basis": null,
-   "checkable_core": true
+   "checkable_core": false
   },
   {
    "id": "INTEGRATION-3-05",

@@ -24,6 +24,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from lab.core.bus import EventLog, Message
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
+from lab.core.run import canonical_json, sha256_text
 from lab.core.schema import LabInputError
 from lab.modules.time import canonical, dy_doy
 
@@ -57,6 +58,11 @@ FAULTS = {
     "extra_trigger": "an anonymous tip outside the four §6 triggers opens a security state",
     "cap_breach_downgraded": "a node concentration above 4 % is recorded as a policy deviation",
     "intsec_arbitrates_divergence": "INTERNAL-SEC arbitrates a PTL divergence itself by choosing a source",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "risk_profile": "INTERNAL-SEC publishes a risk profile of the Subjects in an episode",
+    "intsec_feeds_ptl": "a PTL observation is derived from an INTERNAL-SEC action",
+    "unanchored_evidence": "an evidence item carries a commitment that is not chained to the PTL anchor",
+    "stale_evidence_index": "an evidence item is indexed by the previous DTI-Day",
 }
 EPISODE = {"type": "object", "fields": {
     "from_day": {"type": "int", "min": 0, "max": 10 ** 6},
@@ -67,6 +73,14 @@ EPISODE = {"type": "object", "fields": {
     "subjects": {"type": "list", "min_items": 1, "max_items": 20, "items": {"type": "str"}, "default": ["s1"]}}}
 NODE = {"type": "object", "fields": {"holder": {"type": "str"}, "group": {"type": "str", "default": "none"},
                                      "share": {"type": "number", "min": 0, "max": 100}}}
+
+
+ANCHOR = sha256_text("lab stand-in for the Genesis Block #0 anchor")          # §3.3: Genesis Block #0 is not in the corpus
+
+
+def commitment(prev: str, payload: Dict[str, Any]) -> str:
+    """§3.3: a commitment chained to the previous one, starting at the (stand-in) PTL anchor."""
+    return sha256_text(prev + canonical_json(payload))
 
 
 def md(scope):
@@ -95,13 +109,15 @@ def run(r: Dict[str, Any]):
     order = {"observation": 0, "evaluation": 1, "decision": 2, "action": 3, "notice": 4}
     n = {"i": 0}
 
-    def put(kind, source, k, value, prov=(), epistemic=None):
+    def put(kind, source, k, value, prov=(), epistemic=None, index_day=None):
         n["i"] += 1
+        d = k if index_day is None else index_day
         return log.append(Message(event_id=f"{source.lower()}-{k:05d}-{n['i']:05d}", kind=kind, source=source,
                                   arrived_at=k, decided_at=k if kind in ("decision", "action") else None,
-                                  value={**value, "day": k, "dti": canonical(*dy_doy(r["start_dti_day"] + k))},
+                                  value={**value, "day": k, "dti": canonical(*dy_doy(r["start_dti_day"] + d))},
                                   epistemic=epistemic, provenance=tuple(prov), order=order[kind]))
 
+    chain = [ANCHOR]
     state, since = "S0", 0
     deferred: Optional[Tuple[str, List[str], List[str], List[int]]] = None      # actions held during a PTL halt
     blocked_level: Optional[str] = None
@@ -119,9 +135,18 @@ def run(r: Dict[str, Any]):
                 put("notice", "INTSEC", k, {"divergence_handed_to": "DKP-0-ORACLE-001", "own_action": None}, [dv.event_id])
         for i, e in enumerate(r["evidence"]):
             if e["from_day"] == k:
-                ev_msgs[i] = put("observation", "PTL" if e["ptl_confirmed"] else "PREDICTION", k,
-                                 {"episode": i, "level": e["level"], "trigger": e["trigger"], "subjects": e["subjects"],
-                                  "ptl_confirmed": e["ptl_confirmed"]})
+                body = {"episode": i, "level": e["level"], "trigger": e["trigger"], "subjects": e["subjects"],
+                        "ptl_confirmed": e["ptl_confirmed"]}
+                extra = {}
+                if e["ptl_confirmed"]:
+                    c = sha256_text(canonical_json(body)) if "unanchored_evidence" in faults else commitment(chain[-1], body)
+                    chain.append(c)
+                    extra = {"commitment": c}
+                ev_msgs[i] = put("observation", "PTL" if e["ptl_confirmed"] else "PREDICTION", k, {**body, **extra},
+                                 index_day=k - 1 if "stale_evidence_index" in faults and k > 0 else None)
+                if "risk_profile" in faults:
+                    put("notice", "INTSEC", k, {"profile": {x: "elevated risk" for x in e["subjects"]}, "basis": "episode history"},
+                        [ev_msgs[i].event_id])
         lvl, idx = level_on(r, k, faults)
         if blocked_level and lvl != blocked_level:
             blocked_level = None
@@ -148,8 +173,10 @@ def run(r: Dict[str, Any]):
             if stays and stays[-1].get("end") is None:
                 stays[-1]["end"] = k
                 stays[-1]["ended_by"] = "escalation" if RANK[target] > RANK[state] else "evidence"
-            put("notice", "INTSEC", k, {"state": target, "from": state, "evidence": idx,
-                                        **({"considered": considered} if considered else {})}, prov)
+            tr = put("notice", "INTSEC", k, {"state": target, "from": state, "evidence": idx,
+                                             **({"considered": considered} if considered else {})}, prov)
+            if "intsec_feeds_ptl" in faults and state == "S0":
+                put("observation", "PTL", k, {"reading": "reclassified after the INTERNAL-SEC review"}, [tr.event_id])
             state, since = target, k
             if state != "S0":
                 stays.append({"state": state, "start": k, "end": None, "ended_by": None})
@@ -239,6 +266,65 @@ def emit(put, r, faults, state, k, subjects, prov, idx):
 
 
 MOTIVES = ("intent", "ideology", "affiliation", "declared motivation")
+
+
+def core_checks(r: Dict[str, Any], msgs, v, na) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+    get = {m.event_id: m for m in msgs}
+    mine = [m for m in msgs if m.source == "INTSEC"]
+    bad = [f"{m.event_id}: {k}" for m in mine for k in ("profile", "prediction", "risk_score") if k in m.value]
+    bad += [f"{m.event_id}: opened on a prediction" for m in mine if "state" in m.value and m.value["state"] != "S0"
+            and any(get[p].source == "PREDICTION" for p in m.provenance)]
+    bad += [f"{m.event_id}: {m.value['justification']}" for m in mine if "narrative" in str(m.value.get("justification", ""))]
+    bad += [f"{m.event_id}: considered {m.value['considered']}" for m in mine if m.value.get("considered")]
+    out.append(v("INTSEC-1-01", "no_prediction_profile_or_ideology", bad,
+                 f"{len(mine)} INTERNAL-SEC records: no prediction, no profile, no ideological criterion",
+                 "{n} predictive, profiling or ideological records"))
+    sec = {m.event_id for m in mine}
+    back = [m.event_id for m in msgs if m.source == "PTL" and set(m.provenance) & sec]
+    out.append(v("INTSEC-2-01", "intsec_downstream_of_ptl", back,
+                 "data flow from PTL into INTERNAL-SEC; no PTL record derives from an INTERNAL-SEC record or its evidence",
+                 "{n} PTL records derived from INTERNAL-SEC"))
+    ev = [m for m in msgs if m.source == "PTL" and "episode" in m.value]
+    used = {p for m in mine for p in m.provenance} | {p for m in msgs if m.kind == "action" for p in m.provenance}
+    evid = [m for m in msgs if m.event_id in used and m.source in ("PTL", "PREDICTION") and "episode" in m.value]
+    if evid:
+        prev, want = ANCHOR, {}
+        for m in ev:
+            body = {k: m.value[k] for k in ("episode", "level", "trigger", "subjects", "ptl_confirmed")}
+            prev = commitment(prev, body)
+            want[m.event_id] = prev
+        bad = [f"{m.event_id}: {'no commitment' if 'commitment' not in m.value else 'commitment off the chain'}" for m in evid
+               if m.value.get("commitment") != want.get(m.event_id)]
+        out.append(v("INTSEC-3.3-01", "evidence_chained_to_anchor", bad,
+                     f"{len(evid)} evidence item(s), each with a commitment chained to the PTL anchor (a lab stand-in for "
+                     "Genesis Block #0, which is not in the corpus)", "{n} evidence items without a verifiable chained commitment"))
+        bad = [f"{m.event_id}: {m.value.get('dti')}" for m in evid
+               if m.value.get("dti") != canonical(*dy_doy(r["start_dti_day"] + m.arrived_at))]
+        out.append(v("INTSEC-3.3-02", "evidence_dti_indexed", bad,
+                     f"{len(evid)} evidence item(s), each indexed by the DTI-Day it was recorded",
+                     "{n} evidence items with a wrong or missing DTI-Day"))
+    else:
+        for rid, chk in (("INTSEC-3.3-01", "evidence_chained_to_anchor"), ("INTSEC-3.3-02", "evidence_dti_indexed")):
+            out.append(na(rid, chk, "evidence", "no evidence used in this run"))
+    acts = [m for m in msgs if m.kind == "action" and m.source in ("INTSEC", "IDENTITY", "ASSETS", "JUSTICE")]
+    perm = [m for m in acts if m.value.get("reversible") is False or str(m.value.get("action", "")).startswith("permanent")]
+    if perm:
+        esc = [m for m in msgs if m.source in ("CRISIS", "JUSTICE") and m.kind == "notice" and m.value.get("escalation")]
+        out.append(v("INTSEC-4.3-02", "permanent_needs_escalation",
+                     [m.event_id for m in perm if not any(e.arrived_at <= m.arrived_at for e in esc)],
+                     f"{len(perm)} permanent action(s), each after an escalation to a higher layer",
+                     "{n} permanent actions without escalation"))
+        out.append(v("INTSEC-4.4-02", "irreversible_needs_authorization",
+                     [m.event_id for m in perm if not (m.value.get("justification") and "narrative" not in str(m.value["justification"])
+                                                       and m.value.get("authorization") in ("multiparty", "higher layer"))],
+                     f"{len(perm)} irreversible action(s), each with a justification and an elevated authorization",
+                     "{n} irreversible actions without justification or elevated authorization"))
+    else:
+        for rid, chk in (("INTSEC-4.3-02", "permanent_needs_escalation"), ("INTSEC-4.4-02", "irreversible_needs_authorization")):
+            out.append(na(rid, chk, "permanent or irreversible actions", "none taken"))
+    return out
 
 
 def trigger_checks(r: Dict[str, Any], log: EventLog, v) -> List[CheckResult]:
@@ -428,6 +514,7 @@ def checks(r: Dict[str, Any], log: EventLog, stays: List[Dict[str, Any]]) -> Lis
     else:
         out.append(na("INTSEC-8-06", "node_cap", "node concentration", "no node distribution declared"))
     out += trigger_checks(r, log, v)
+    out += core_checks(r, msgs, v, na)
     again, _ = run(r)
     out.append(v("INTSEC-11-03", "complete_audit_trail", [] if again.digest() == log.digest() else ["digest"],
                  "complete, reproducible audit trail (re-execution gives a byte-identical log)", "re-execution differs"))
@@ -435,6 +522,13 @@ def checks(r: Dict[str, Any], log: EventLog, stays: List[Dict[str, Any]]) -> Lis
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "INTSEC-1-01": ("no_prediction_profile_or_ideology", "PARTIAL", "Clear part only: no prediction, profile or ideological criterion; where collection becomes surveillance stays open."),
+    "INTSEC-2-01": ("intsec_downstream_of_ptl", "PARTIAL", "Clear part only: data flow from PTL into INTERNAL-SEC; the layer terms stay open."),
+    "INTSEC-3.3-01": ("evidence_chained_to_anchor", "PARTIAL", "Clear part only: commitments chained to a stand-in anchor; Genesis Block #0 is not in the corpus."),
+    "INTSEC-3.3-02": ("evidence_dti_indexed", "PARTIAL", "Clear part only: the DTI-Day index; Proof-of-Synergy rules are given nowhere."),
+    "INTSEC-4.3-02": ("permanent_needs_escalation", "PARTIAL", "Clear part only: a permanent action after an escalation record; 'expansive' and the receiving layer stay open."),
+    "INTSEC-4.4-02": ("irreversible_needs_authorization", "PARTIAL", "Clear part only: justification and an elevated authorization; the authorization levels stay open."),
     "INTSEC-5-01": ("finite_state_machine", "PARTIAL", "The state machine is modelled on declared evidence episodes."),
     "INTSEC-5-02": ("max_duration_S1", "IMPLEMENTED", None),
     "INTSEC-5-03": ("max_duration_S2", "IMPLEMENTED", None),
@@ -471,7 +565,7 @@ IMPLEMENTS = {
 
 class InternalSecurityModule(LabModule):
     id = "internal_security"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Internal security states (INTERNAL-SEC)", "ru": "Состояния внутренней безопасности (INTERNAL-SEC)"}
     summary = {"en": "Integrity evidence arrives: does the system step through S1–S4 within the time limits, act only on "
                      "PTL evidence, route every effect on a person through Justice or Identity, and never punish by association?",

@@ -80,7 +80,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "recognition_basis"
    },
    "tests": [
@@ -189,7 +189,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "ta_two_classes"
    },
    "tests": [
@@ -217,13 +217,19 @@
    "data_dependencies": [
     "oracle intensity readings"
    ],
-   "gap": "The included oracle population and behavior for an empty intensity set are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: the spread is max - min of the readings used; whether all or only valid readings count stays open.",
    "hypotheses_needed": [
     "Declare which readings enter the spread calculation and how an empty set is handled."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.3.0",
+    "check": "spread_is_max_minus_min"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -253,13 +259,19 @@
     "validated oracle intensities",
     "L8 consistency threshold"
    ],
-   "gap": "The calibrated threshold and the rule selecting valid oracle intensities are not supplied. No lab check implemented yet.",
+   "gap": "Clear part only: TA intensity is the minimum of the valid readings; the consistency threshold stays L8 (§14).",
    "hypotheses_needed": [
     "Declare the valid-reading selection rule and behavior when no valid intensity exists."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.3.0",
+    "check": "ta_is_min_of_valid"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -295,7 +307,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "informational_no_reward"
    },
    "tests": [
@@ -411,7 +423,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "temporal_alignment"
    },
    "tests": [
@@ -454,7 +466,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "suppression_formula"
    },
    "tests": [
@@ -496,7 +508,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_reduction_zero"
    },
    "tests": [
@@ -534,7 +546,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "weights_nonnegative"
    },
    "tests": [
@@ -566,7 +578,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "attribution_unit_interval"
    },
    "tests": [
@@ -673,7 +685,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "cbf_audit_only"
    },
    "tests": [
@@ -715,7 +727,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "recognition_rule"
    },
    "tests": [
@@ -756,7 +768,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "spd_product"
    },
    "tests": [
@@ -793,7 +805,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "subject_aggregate"
    },
    "tests": [
@@ -834,7 +846,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "causal_linkage_formalized"
    },
    "tests": [
@@ -876,7 +888,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "attribution_budget"
    },
    "tests": [
@@ -921,7 +933,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "attribution_no_obligation"
    },
    "tests": [
@@ -967,7 +979,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "zkp_proof"
    },
    "tests": [
@@ -1052,7 +1064,7 @@
     "also": [
      {
       "module": "prevention",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "check": "self_induced_zero"
      }
     ]
@@ -1166,7 +1178,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_data_zero"
    },
    "tests": [
@@ -1274,7 +1286,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "output_fields"
    },
    "tests": [
@@ -1307,7 +1319,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "output_flags"
    },
    "tests": [
@@ -1345,7 +1357,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "deterministic_auditable"
    },
    "tests": [
@@ -1386,7 +1398,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "ambiguity_zero"
    },
    "tests": [
@@ -1421,13 +1433,19 @@
     "sensor health assessments",
     "confidence values"
    ],
-   "gap": "Sensor degradation, the comparison reference and the confidence reduction rule are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: a degraded sensor (lower confidence, or dropped out) never raises Cₖ; the degradation measure and response stay open.",
    "hypotheses_needed": [
     "Declare a sensor degradation model and the reference and rule for confidence reduction."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "prevention",
+    "version": "1.3.0",
+    "check": "degradation_never_raises_c"
+   },
+   "tests": [
+    "tests/lab/test_prevention_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -1463,7 +1481,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "prevention",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "check": "no_hypothetical_states"
    },
    "tests": [

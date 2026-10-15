@@ -92,3 +92,31 @@ def test_kt5_deterministic_auditable_and_no_hypothetical_states():
     recs2 = copy.deepcopy(res.records)
     recs2[0]["factors"]["counterfactual_baseline"] = 1.0                       # a hypothetical factor
     assert {c.requirement_id: c.status for c in recheck(recs2, cfg, res.outputs["summary"])}["PREV-13-01"] == "FAIL"
+
+
+def test_probes_of_the_bench_functions_catch_faulty_rules():
+    """Review КТ7-GPT-01 (PREV §3.3, §3.3.1, §12 clear parts): the probes pass on the published functions and fail on a
+    TA rule that averages instead of taking the minimum, and on a confidence rule that rises when classes drop out."""
+    import dataclasses
+
+    from lab.modules.prevention import PreventionModule, probe_checks
+    from simulation.modules.prevention.protocol_adapter import assess_signal
+
+    m = PreventionModule()
+    cfg = m.build_config(m.validate({}))
+
+    def mean_assess(rs, p, kind):
+        a = assess_signal(rs, p, kind)
+        if not a.valid:
+            return a
+        fi = [r.intensity for r in a.readings_used]
+        return dataclasses.replace(a, intensity=sum(fi) / len(fi), delta_oracle=(max(fi) - min(fi)) / 2)
+
+    def inverse_conf(a, p):
+        return 1.0 / len(a.fresh_classes) if a.readings_used else 0.0
+
+    st = lambda res: {c.requirement_id: c.status for c in res}
+    assert set(st(probe_checks(cfg)).values()) == {PASS}
+    assert st(probe_checks(cfg, assess=mean_assess))["PREV-3.3.1-01"] == FAIL
+    assert st(probe_checks(cfg, assess=mean_assess))["PREV-3.3-02"] == FAIL
+    assert st(probe_checks(cfg, conf=inverse_conf))["PREV-12-02"] == FAIL

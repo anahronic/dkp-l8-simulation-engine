@@ -23,6 +23,8 @@ from typing import Any, Dict, List
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN, CheckResult
 from lab.core.module import LabModule, ModuleResult
 from simulation.core.config import deep_merge, load_config
+from simulation.core.oracles import OracleReading
+from simulation.modules.prevention.protocol_adapter import ProtocolParams, assess_signal, confidence_factor
 from simulation.run_prevention_simulation import run_simulation
 
 CONFIGS = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
@@ -64,6 +66,11 @@ FACTORS = {"W", "S", "A", "C", "T"}                       # §5: SPD = W · S ·
 
 #: coverage this module provides (synced into the registry by lab.tools.sync_coverage)
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01): probes of the
+    # bench's own functions on seeded readings, expectations computed by the lab
+    "PREV-3.3-02": ("spread_is_max_minus_min", "PARTIAL", "Clear part only: the spread is max - min of the readings used; whether all or only valid readings count stays open."),
+    "PREV-3.3.1-01": ("ta_is_min_of_valid", "PARTIAL", "Clear part only: TA intensity is the minimum of the valid readings; the consistency threshold stays L8 (§14)."),
+    "PREV-12-02": ("degradation_never_raises_c", "PARTIAL", "Clear part only: a degraded sensor (lower confidence, or dropped out) never raises Cₖ; the degradation measure and response stay open."),
     "PREV-3.3-01": ("ta_two_classes", "IMPLEMENTED", None),
     "PREV-3.3.2-01": ("informational_no_reward", "IMPLEMENTED", None),
     "PREV-3.6-01": ("temporal_alignment", "IMPLEMENTED", None),
@@ -105,7 +112,7 @@ def _close(a: float, b: float) -> bool:
 
 class PreventionModule(LabModule):
     id = "prevention"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Preventive contribution (PREVENTION)", "ru": "Вклад в предотвращение (PREVENTION)"}
     summary = {
         "en": "Synthetic childcare perimeter: threats, sensors, responders. How sensor delays, data "
@@ -191,6 +198,7 @@ class PreventionModule(LabModule):
         checks = recheck(res.records, cfg, res.summary)
         again = run_simulation(copy.deepcopy(cfg), write=False)
         checks.append(determinism(res.records, res.manifest["result_id"], again.manifest["result_id"]))
+        checks += probe_checks(cfg)
         s = res.summary
         outputs = {
             "bench_manifest": {"input_id": res.manifest["input_id"], "result_id": res.manifest["result_id"],
@@ -245,6 +253,64 @@ class PreventionModule(LabModule):
     def failure_examples(self) -> Dict[str, Dict[str, Any]]:
         return {"nan_delta": {"delta_t_int_seconds": float("nan")},
                 "adversary_in_smoke": {"include_adversarial": True}}
+
+
+def probe_checks(cfg: Dict[str, Any], assess=assess_signal, conf=confidence_factor, cases: int = 200) -> List[CheckResult]:
+    """PREV §3.3, §3.3.1, §12 on the bench's own functions: seeded reading sets, expectations computed here.
+    ``assess`` and ``conf`` can be replaced by a faulty function to show that the probe catches it."""
+    import random
+    params = ProtocolParams.from_config(cfg)
+    rng = random.Random(cfg["simulation"]["seed"] * 7919 + 1)
+    classes = list(params.oracle_classes)
+    spread_bad, min_bad, deg_bad, n_valid, n_deg = [], [], [], 0, 0
+    alt = []
+    for i in range(cases):
+        rs = []
+        for j in range(rng.randint(2, 6)):
+            c = rng.choice(classes)
+            m = round(100.0 - rng.uniform(0, 40), 6)
+            rs.append(OracleReading(f"o{j}", c, round(rng.uniform(0.05, 1.0), 6), m, round(m + rng.uniform(0, 3), 6),
+                                    round(rng.uniform(0.3, 1.0), 6)))
+        ref = max(r.received_at for r in rs)
+        fresh = [r for r in rs if r.received_at <= ref and ref - r.measured_at <= params.ttl_seconds[r.oracle_class]]
+        if len({r.oracle_class for r in fresh}) < 2:
+            continue
+        a = assess(rs, params, "TA")
+        if not a.valid:
+            continue
+        n_valid += 1
+        fi = [r.intensity for r in fresh]
+        if abs(a.delta_oracle - (max(fi) - min(fi))) > 1e-12:
+            spread_bad.append(f"case {i}: {a.delta_oracle} != {max(fi) - min(fi)}")
+        alt.append(round(max(r.intensity for r in rs) - min(r.intensity for r in rs), 6))
+        if abs(a.intensity - min(fi)) > 1e-12:
+            min_bad.append(f"case {i}: {a.intensity} != {min(fi)}")
+        c0 = conf(a, params)
+        if len({r.oracle_class for r in fresh}) >= 3:
+            n_deg += 1
+            low = fresh[0]
+            lowered = [OracleReading(r.oracle_id, r.oracle_class, r.intensity, r.measured_at, r.received_at,
+                                     r.confidence / 2 if r is low else r.confidence) for r in rs]
+            gone = [r for r in rs if r.oracle_class != low.oracle_class]
+            for what, rr in (("lower confidence", lowered), ("drop-out", gone)):
+                b = assess(rr, params, "TA")
+                c1 = conf(b, params) if b.valid else 0.0
+                if c1 > c0 + 1e-12:
+                    deg_bad.append(f"case {i}: {what} of {low.oracle_class} raises Cₖ {c0} -> {c1}")
+    out = []
+    for rid, chk, bad, ok, no in (
+            ("PREV-3.3-02", "spread_is_max_minus_min", spread_bad,
+             f"on {n_valid} seeded TA reading sets the bench's Δ_oracle is max - min of the valid readings (the all-readings "
+             "reading gives max - min of a larger set; which set counts stays open)", "{n} spreads that are not max - min"),
+            ("PREV-3.3.1-01", "ta_is_min_of_valid", min_bad,
+             f"on {n_valid} seeded TA reading sets the bench's TA intensity is the minimum of the valid readings",
+             "{n} TA intensities other than the minimum of the valid readings"),
+            ("PREV-12-02", "degradation_never_raises_c", deg_bad,
+             f"on {n_deg} seeded sets with three or more classes, lowering one sensor's confidence or dropping it never "
+             f"raises Cₖ (rule '{params.confidence_rule}')", "{n} degradations that raise Cₖ")):
+        out.append(CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                               evidence={"violations": bad[:10]} if bad else {"cases": n_valid, "all_readings_spreads": alt[:5]}))
+    return out
 
 
 def _result(key: str, ok: bool, n: int, bad: List[Any], what: Dict[str, str]) -> CheckResult:
