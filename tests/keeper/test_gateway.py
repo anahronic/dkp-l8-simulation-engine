@@ -309,7 +309,8 @@ def test_catalog_and_healthy_model(setup):
     assert health["ok"] and health["model"]["loaded"] and health["model"]["digest"] == "sha256:fake"
 
 
-@pytest.mark.parametrize("url", ["/pages/protocols/a.html", "pages/protocols/a.html", "https://dikenocracy.com/pages/a.html"])
+@pytest.mark.parametrize("url", ["/pages/protocols/a.html", "pages/protocols/a.html", "https://dikenocracy.com/pages/a.html",
+                                 "https://www.dikenocracy.com/pages/a.html"])
 def test_valid_page_urls(setup, url):
     client, _, _ = setup()
     assert ask(client, page={"url": url}).status_code == 200
@@ -433,3 +434,10 @@ def test_open_author_question_is_stated_by_the_server(setup):
     result = ask(client, question="Is crisis entered on an execution error cascade without L3 escalation?").json()
     assert "open_author_question" in codes(result) and "[Q-065]" in result["answer"]
     assert "Q-065" in [c["cite"] for c in result["citations"]]
+
+
+def test_widget_nulls_are_absent_values(setup):
+    """The widget sends selection null and doc_id null on pages without a document; both mean "absent"."""
+    client, _, _ = setup()
+    response = ask(client, selection=None, page={"url": "https://www.dikenocracy.com/index.html", "doc_id": None})
+    assert response.status_code == 200 and response.json()["state"] == "answer"

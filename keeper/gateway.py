@@ -176,6 +176,11 @@ TOOLS = [tool("search_sources", "Search the pinned archive; at most twice.",
               ["module", "params"])]
 
 
+# Pages the context may come from: the site with and without www; KEEPER_EXTRA_PAGE_ORIGINS adds origins for local tests.
+PAGE_ORIGINS = {("https", "dikenocracy.com"), ("https", "www.dikenocracy.com")} | {
+    (o.split("://")[0], o.split("://")[1]) for o in os.environ.get("KEEPER_EXTRA_PAGE_ORIGINS", "").split(",") if "://" in o}
+
+
 def valid_page(url):
     if not isinstance(url, str) or not url or len(url) > 2048:
         return False
@@ -185,8 +190,7 @@ def valid_page(url):
     try:
         parsed = urlsplit(decoded)
         if parsed.scheme or parsed.netloc:
-            return (parsed.scheme == "https" and parsed.netloc == "dikenocracy.com"
-                    and parsed.path.startswith("/"))
+            return (parsed.scheme, parsed.netloc) in PAGE_ORIGINS and parsed.path.startswith("/")
         return not decoded.startswith("//") and bool(parsed.path) and ":" not in parsed.path
     except ValueError:
         return False
@@ -201,6 +205,11 @@ def validate_body(raw, explain):
     except (ValueError, UnicodeError, RecursionError):
         raise APIError(400, "bad_json", "Request body must be valid JSON")
     allowed = {"job_id", "token", "lang"} if explain else {"question", "lang", "page", "selection", "stream"}
+    if isinstance(body, dict):                       # the widget sends null for "no selection" and "no document id"
+        if body.get("selection", "") is None:
+            body.pop("selection")
+        if isinstance(body.get("page"), dict) and body["page"].get("doc_id", "") is None:
+            body["page"].pop("doc_id")
     valid = isinstance(body, dict) and not body.keys() - allowed
     if valid:
         lang = body.get("lang", "en")
