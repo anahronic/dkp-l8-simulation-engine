@@ -22,16 +22,16 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1595 (91.8 %) | 1056 | 1506 | 974 | 4 | 67 | 18 | 142 | 0 | 0 | 1198 |
-| B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 18 | 29 | 17 | 0 | 1 | 0 | 13 | 0 | 0 | 31 |
-| C. Common checks | DONE | 8/8 | 365 | 358 (98.1 %) | 251 | 345 | 239 | 3 | 8 | 2 | 7 | 0 | 0 | 258 |
-| D. Transitions and rights | DONE | 9/9 | 424 | 383 (90.3 %) | 213 | 360 | 193 | 1 | 21 | 1 | 41 | 0 | 0 | 254 |
-| E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 171 | 246 | 156 | 0 | 9 | 8 | 30 | 0 | 0 | 201 |
-| F. Remaining constraints and stress | DONE | 12/12 | 511 | 468 (91.6 %) | 325 | 444 | 301 | 0 | 18 | 6 | 43 | 0 | 0 | 368 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1506 | 789 | 4 | 67 | 18 | 142 | 0 | 0 | 1008 |
+| B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 16 | 29 | 15 | 0 | 1 | 0 | 13 | 0 | 0 | 29 |
+| C. Common checks | DONE | 8/8 | 365 | 358 (98.1 %) | 200 | 345 | 190 | 3 | 8 | 2 | 7 | 0 | 0 | 207 |
+| D. Transitions and rights | DONE | 9/9 | 424 | 383 (90.3 %) | 181 | 360 | 161 | 1 | 21 | 1 | 41 | 0 | 0 | 222 |
+| E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 130 | 246 | 115 | 0 | 9 | 8 | 30 | 0 | 0 | 160 |
+| F. Remaining constraints and stress | DONE | 12/12 | 511 | 468 (91.6 %) | 268 | 444 | 246 | 0 | 18 | 6 | 43 | 0 | 0 | 311 |
 | G. General release | PARTIAL | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1595 (91.8 %) | 1056 | 1506 | 974 | 4 | 67 | 18 | 142 | 0 | 0 | 1198 |
+| **All registrable documents** | | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1506 | 789 | 4 | 67 | 18 | 142 | 0 | 0 | 1008 |
 
-Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
+Covered without an open point: 729; of all provisions, an open point closed by the lab agent's reading of the text: 406; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
 ### Stage criteria
 
@@ -172,16 +172,16 @@ Unverified reference FAILs: none; unverified noncompliant FAILs: none.
 
 ## Origin of open points (UNRESOLVED provisions)
 
-1198 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
+1008 provisions have an open point.  Origin: agent-verified where an author question was read against the literal text by the lab agent (quotes checked automatically, no human acceptance); otherwise a Codex draft (gpt-6-astra via OpenAI Codex CLI 0.160.1 (reasoning effort high, read-only sandbox), 2026-10-07; DRAFT_UNREVIEWED; not in the draft (opened later): AXIOMS-5-02, ERROR-7-02, POLICE-5.2-04).  Only normative_ambiguity and architecture_definition can become author questions, and only after verification.
 
 | Origin | Agent-verified (quotes checked automatically) | Corrected by the lab's reading (reconciliations.json) | Codex draft | Accepted by a human | Total |
 |---|---:|---:|---:|---:|---:|
-| normative_ambiguity | 108 | 65 | 78 | 0 | 251 |
-| architecture_definition | 37 | 89 | 130 | 0 | 256 |
-| l8_parameter | 0 | 61 | 78 | 0 | 139 |
-| empirical_model_data | 0 | 76 | 124 | 0 | 200 |
+| normative_ambiguity | 108 | 67 | 78 | 0 | 253 |
+| architecture_definition | 37 | 99 | 130 | 0 | 266 |
+| l8_parameter | 0 | 64 | 78 | 0 | 142 |
+| empirical_model_data | 0 | 79 | 124 | 0 | 203 |
 | external_dependency | 0 | 9 | 135 | 0 | 144 |
-| implementation_only | 0 | 0 | 208 | 0 | 208 |
+| implementation_only | 0 | 0 | 0 | 0 | 0 |
 | pending | 0 | 0 | 0 | 0 | 0 |
 
 Draft author-question candidates (unverified, not questions): 208.
@@ -261,44 +261,44 @@ Withdrawn after verification (not author decisions):
 
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| CODE-OF-PLANETARY-SYNERGY | 101 | 93 | 82 | 0 | 10 | 1 | 8 | 86 |
-| DKP-0-ORACLE-001 | 58 | 58 | 53 | 2 | 2 | 1 | 0 | 48 |
+| CODE-OF-PLANETARY-SYNERGY | 101 | 93 | 82 | 0 | 10 | 1 | 8 | 79 |
+| DKP-0-ORACLE-001 | 58 | 58 | 53 | 2 | 2 | 1 | 0 | 44 |
 | DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 3 |
-| DKP-1-AXIOMS-001 | 44 | 44 | 38 | 0 | 4 | 2 | 0 | 22 |
-| DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 38 | 38 | 0 | 0 | 0 | 0 | 26 |
-| DKP-1-IDENTITY-001 | 39 | 37 | 34 | 0 | 2 | 1 | 2 | 31 |
-| DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 26 |
+| DKP-1-AXIOMS-001 | 44 | 44 | 38 | 0 | 4 | 2 | 0 | 19 |
+| DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 38 | 38 | 0 | 0 | 0 | 0 | 20 |
+| DKP-1-IDENTITY-001 | 39 | 37 | 34 | 0 | 2 | 1 | 2 | 26 |
+| DKP-1-IMPACT-001 | 39 | 38 | 35 | 0 | 2 | 1 | 1 | 19 |
 | DKP-1-JUSTICE-001 | 41 | 36 | 33 | 0 | 3 | 0 | 5 | 25 |
-| DKP-1-PREVENTION-001 | 43 | 30 | 29 | 0 | 1 | 0 | 13 | 31 |
-| DKP-2-ASSETS-001 | 43 | 40 | 39 | 0 | 1 | 0 | 3 | 30 |
-| DKP-2-FINANCE-001 | 44 | 35 | 33 | 0 | 2 | 0 | 9 | 32 |
-| DKP-2-LABOR-001 | 40 | 39 | 36 | 0 | 3 | 0 | 1 | 25 |
-| DKP-3-ANTITERROR-001 | 41 | 34 | 34 | 0 | 0 | 0 | 7 | 29 |
-| DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
-| DKP-3-INTERNAL-SEC-001 | 49 | 43 | 40 | 0 | 0 | 3 | 6 | 44 |
-| DKP-3-POLICE-001 | 45 | 42 | 42 | 0 | 0 | 0 | 3 | 29 |
-| DKP-4-CRISIS-001 | 53 | 45 | 40 | 1 | 4 | 0 | 8 | 32 |
-| DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
+| DKP-1-PREVENTION-001 | 43 | 30 | 29 | 0 | 1 | 0 | 13 | 29 |
+| DKP-2-ASSETS-001 | 43 | 40 | 39 | 0 | 1 | 0 | 3 | 26 |
+| DKP-2-FINANCE-001 | 44 | 35 | 33 | 0 | 2 | 0 | 9 | 27 |
+| DKP-2-LABOR-001 | 40 | 39 | 36 | 0 | 3 | 0 | 1 | 22 |
+| DKP-3-ANTITERROR-001 | 41 | 34 | 34 | 0 | 0 | 0 | 7 | 25 |
+| DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 31 |
+| DKP-3-INTERNAL-SEC-001 | 49 | 43 | 40 | 0 | 0 | 3 | 6 | 35 |
+| DKP-3-POLICE-001 | 45 | 42 | 42 | 0 | 0 | 0 | 3 | 24 |
+| DKP-4-CRISIS-001 | 53 | 45 | 40 | 1 | 4 | 0 | 8 | 28 |
+| DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 9 |
 | DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 28 | 28 | 0 | 0 | 0 | 1 | 20 |
-| DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 32 |
-| DKP-4-UPGRADE-001 | 48 | 45 | 41 | 0 | 4 | 0 | 3 | 31 |
-| DKP-5-CULTURE-001 | 43 | 38 | 38 | 0 | 0 | 0 | 5 | 30 |
-| DKP-5-EDU-001 | 64 | 58 | 53 | 0 | 1 | 4 | 6 | 37 |
-| DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 49 |
-| DKP-5-INFO-001 | 39 | 34 | 32 | 0 | 2 | 0 | 5 | 34 |
-| DKP-5-TRANSPORT-001 | 35 | 29 | 24 | 0 | 5 | 0 | 6 | 28 |
-| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 7 |
-| DKP-5-WORK-CYCLE-001 | 39 | 35 | 34 | 0 | 0 | 1 | 4 | 16 |
-| DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 30 |
-| DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 25 |
-| DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
-| DKP-7-AI-SUBJECT-001 | 39 | 36 | 36 | 0 | 0 | 0 | 3 | 34 |
-| DKP-7-PRIVACY-001 | 39 | 35 | 32 | 0 | 3 | 0 | 4 | 28 |
-| DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
-| DKP-7-TRANSPARENCY-001 | 44 | 37 | 37 | 0 | 0 | 0 | 7 | 32 |
-| DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
-| DKP-8-INTEROP-001 | 49 | 46 | 45 | 0 | 1 | 0 | 3 | 22 |
-| DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
+| DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 29 |
+| DKP-4-UPGRADE-001 | 48 | 45 | 41 | 0 | 4 | 0 | 3 | 29 |
+| DKP-5-CULTURE-001 | 43 | 38 | 38 | 0 | 0 | 0 | 5 | 26 |
+| DKP-5-EDU-001 | 64 | 58 | 53 | 0 | 1 | 4 | 6 | 26 |
+| DKP-5-HABITAT-001 | 56 | 53 | 49 | 0 | 1 | 3 | 3 | 36 |
+| DKP-5-INFO-001 | 39 | 34 | 32 | 0 | 2 | 0 | 5 | 27 |
+| DKP-5-TRANSPORT-001 | 35 | 29 | 24 | 0 | 5 | 0 | 6 | 25 |
+| DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 5 |
+| DKP-5-WORK-CYCLE-001 | 39 | 35 | 34 | 0 | 0 | 1 | 4 | 15 |
+| DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 28 |
+| DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 24 |
+| DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 30 |
+| DKP-7-AI-SUBJECT-001 | 39 | 36 | 36 | 0 | 0 | 0 | 3 | 29 |
+| DKP-7-PRIVACY-001 | 39 | 35 | 32 | 0 | 3 | 0 | 4 | 24 |
+| DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 50 |
+| DKP-7-TRANSPARENCY-001 | 44 | 37 | 37 | 0 | 0 | 0 | 7 | 27 |
+| DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 22 |
+| DKP-8-INTEROP-001 | 49 | 46 | 45 | 0 | 1 | 0 | 3 | 16 |
+| DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 29 |
 
 ## Covered provisions
 

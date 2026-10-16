@@ -106,3 +106,16 @@ def test_revised_core_flags_keep_their_history():
         assert it["partial_check"] is False and h["from"] is True and h["to"] is False, it["id"]
         assert len(h["reason"]) > 80 and h["review"] == "КТ7-GPT-01", it["id"]
     assert rec["counts"]["partial_check"] == sum(1 for it in rec["items"] if it.get("partial_check"))
+
+
+def test_no_covered_provision_keeps_an_unread_draft_label():
+    """Review of checkpoint 7, step 4: a check of a provision does not remove its open point; every covered provision whose
+    draft label was implementation_only has been read and carries a closure (closed with an answer, or open with a reason)."""
+    reg = reconcile.registry()
+    left = [rid for rid, r in reg.items() if r["coverage"] in ("IMPLEMENTED", "PARTIAL")
+            and (r.get("open_point") or {}).get("origin") == "implementation_only"
+            and (r.get("open_point") or {}).get("source") == "codex_draft"]
+    assert left == [], left[:10]
+    rec = _load("reconciliations.json")
+    covered = [it for it in rec["items"] if it.get("reading") == "covered (review КТ7, step 4)"]
+    assert len(covered) == 208 and all(it["closure"] and it["closure"]["state"] in ("closed", "open") for it in covered)

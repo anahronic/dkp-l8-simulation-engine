@@ -92,6 +92,8 @@ def build() -> Dict[str, Any]:
                     item["closure"].update(answer=c["answer"], decision_status_after="NONE_IDENTIFIED")
                 else:
                     item["closure"].update(origin=c["origin"], reason=c["reason"], decision_status_after="UNRESOLVED")
+        if "reading" in d:                         # review КТ7 step 4: which reading produced the decision
+            item["reading"] = d["reading"]
         if "checkable" in d:
             item["checkable"] = d["checkable"]
         items.append(item)
@@ -108,6 +110,8 @@ def build() -> Dict[str, Any]:
            "reading_rule": inp["reading_rule"]}
     if "core_revision_rule" in inp:
         out["core_revision_rule"] = inp["core_revision_rule"]
+    if "covered_reading_rule" in inp:
+        out["covered_reading_rule"] = inp["covered_reading_rule"]
     return {**out, "counts": counts, "items": items}
 
 
