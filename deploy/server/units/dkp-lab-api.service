@@ -1,0 +1,27 @@
+[Unit]
+Description=DKP Lab API
+After=network.target
+
+[Service]
+Type=simple
+User=dkplab
+Group=dkplab
+WorkingDirectory=/opt/dkp-lab/current
+ExecStart=/opt/dkp-lab/current/venv/bin/python -m uvicorn lab_server.app:app --host 127.0.0.1 --port 8720 --workers 1 --proxy-headers --forwarded-allow-ips 127.0.0.1
+Environment=LAB_SERVER_DB=/var/lib/dkp-lab/lab/jobs.sqlite3
+Environment=LAB_SERVER_STORE=/var/lib/dkp-lab/lab/store
+Environment=PYTHONDONTWRITEBYTECODE=1
+MemoryMax=300M
+CPUQuota=50%
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/dkp-lab
+ProtectHome=true
+PrivateTmp=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+UMask=0077
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
