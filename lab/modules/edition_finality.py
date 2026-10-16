@@ -409,7 +409,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
                                    f"{len(bad)} corrections handled as Upgrades or not dated" if bad else
                                    f"{len(pr)} presentation-only corrections kept the identifier, bypassed the gate and changed only the date",
                                    evidence={"violations": bad} if bad else {"corrections": [d["change"] for d in pr]}))
-        if integ:
+        if integ and integ != "UPGRADE-12-07":            # UPGRADE §12 covers every document: one record, below
             out.append(integrity(integ, [doc], docs, pinned, rels))
     # UPGRADE §12: all documents
     out.append(integrity("UPGRADE-12-07", sorted(docs), docs, pinned, rels, replace=True))
@@ -527,7 +527,7 @@ CHANGES = [
 
 class EditionFinalityModule(LabModule):
     id = "edition_finality"
-    version = "1.2.0"
+    version = "1.3.0"
     title = {"en": "Editions and finality clauses (all documents)", "ru": "Редакции и заключительные положения (все документы)"}
     summary = {"en": "Changes to thirty documents go through a gate that applies each document's own finality clause; editions are "
                      "published in releases, dated and listed in SHA256SUMS.txt.  Is a quiet edit refused, a typo fix kept out of "

@@ -117,3 +117,15 @@ def test_hypothesis_references_are_declared():
         ids = [h["id"] for h in m.hypotheses]
         assert len(ids) == len(set(ids)), (mid, ids)
         assert set(re.findall(r"\bH-[A-Z]{2}-\d+\b", src)) <= set(ids), (mid, sorted(set(re.findall(r"\bH-[A-Z]{2}-\d+\b", src)) - set(ids)))
+
+
+def test_each_check_record_is_unique():
+    """Review КТ7, step 6: statuses are compared per check record, so a variant emits each (requirement, check) once."""
+    import collections
+
+    from lab.modules import MODULES
+    for mid, m in sorted(MODULES.items()):
+        name = m.ordered_examples()[0]
+        res = m.evaluate(m.validate(m.examples()[name]))
+        dup = [k for k, n in collections.Counter((c.requirement_id, c.check) for c in res.checks).items() if n > 1]
+        assert not dup, (mid, dup)
