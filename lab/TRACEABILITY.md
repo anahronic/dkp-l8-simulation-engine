@@ -43,7 +43,7 @@ Covered without an open point: 729; of all provisions, an open point closed by t
 - A / A6 **not met**: interpretations reviewed by a human (not listed in §12; required before the registry may be cited as a reading of the texts)
 - B / B1 met: interface runs smoke and a visitor's admissible variant; comparison; reports
 - B / B2 met: export repeats (replay packages)
-- B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
+- B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — implemented in lab_server/ (routes, queue with lease and recovery, cancellation, idempotency, job tokens) and tested locally (tests/server, live API checks of checkpoint 9); not deployed: done only after the routes run on the server with the post-deployment check; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
 - C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
 - D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
