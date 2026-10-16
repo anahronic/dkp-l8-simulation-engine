@@ -172,3 +172,14 @@ def test_cancel_queued_and_discovery(service, request_input):
     assert client.get(PREFIX + "/scenarios/work_cycle").json() == api.example_request("work_cycle")
     assert client.get(PREFIX + "/scenarios/unknown").status_code == 404
     assert client.get(PREFIX + "/unknown").json()["error"]["code"] == "not_found"
+
+
+def test_cors_for_the_sandboxed_keeper_panel(service):
+    """The Keeper panel runs in a sandboxed iframe (Origin: null); other origins get no CORS grant."""
+    client, *_ = service
+    pre = client.options("/api/lab/v1/jobs", headers={"Origin": "null", "Access-Control-Request-Method": "POST",
+                                                      "Access-Control-Request-Headers": "content-type,idempotency-key"})
+    assert pre.status_code == 200 and pre.headers["access-control-allow-origin"] == "null"
+    assert "access-control-allow-credentials" not in pre.headers
+    other = client.get("/api/lab/v1/health", headers={"Origin": "https://evil.example"})
+    assert "access-control-allow-origin" not in other.headers

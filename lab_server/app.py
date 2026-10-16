@@ -16,6 +16,7 @@ import uuid
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from starlette.exceptions import HTTPException
 
@@ -114,6 +115,11 @@ def create_app(db_path, store_dir, settings=None):
         request.state.body = bytes(body)
 
     app = FastAPI(dependencies=[Depends(post_guard)])
+    # The Keeper panel runs in a sandboxed iframe (opaque origin "null"); access is by bearer token, never cookies.
+    app.add_middleware(CORSMiddleware, allow_origins=list(config.CORS_ORIGINS), allow_credentials=False,
+                       allow_methods=["GET", "POST", "OPTIONS"],
+                       allow_headers=["Content-Type", "Authorization", "X-Job-Token", "Idempotency-Key"],
+                       expose_headers=["Retry-After", "Content-Disposition"], max_age=600)
     app.state.queue, app.state.settings, app.state.limiter = queue, config, limiter
 
     @app.exception_handler(APIError)

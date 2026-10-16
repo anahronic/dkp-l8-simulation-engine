@@ -56,9 +56,24 @@ Response (`stream: false`):
 | `proposal` | a lab run is prepared: `proposal` holds the request for confirmation (below) |
 | `refused` | outside the Keeper's role (e.g. asked to decide a value conflict or set a norm): the answer lists the options and who decides |
 
+`citations` lists only the trusted fragments the answer actually cites, in order of first use; every retrieved fragment
+is listed in `provenance.retrieved`.
+
 Flags (deterministic post-checks of the model output): `unknown_citation` (removed), `unverified_quote` (quotation
 marks removed, shown as paraphrase), `number_not_in_result` (explain only), `tool_rejected` (the model asked for a tool or
-arguments outside the contract), `truncated`.
+arguments outside the contract), `truncated`, `uncited_answer` (no statement is tied to a source),
+`empty_model_answer` (the model gave nothing; a fixed message is shown), `open_author_question` (an UNRESOLVED
+author question is among the sources: the server appends that neither the lab nor the Keeper chooses a reading and
+the author decides, with its citation).
+
+### Published intake rule for S-LAB-08
+
+A question with a calculation verb (посчитай, рассчитай, calculate, compute, simulate ...) and a roster term (смены,
+круглосуточно, 24/7, график, покрытие, shift, roster, coverage, staff ...) is handled without the model: the number of
+workers ("12 работников", "20 workers"), the staff needed every hour ("3 человека на смене каждый час", "4 people on duty
+every hour") and the horizon ("14 дней", "7 days") are read literally from the question (`keeper/guardrails.py`,
+`INTAKE`).  All three found: state `proposal` (origin `user` for them); otherwise `needs_parameters` with `missing`.
+The model may still call `propose_run` for other phrasings; its numbers must occur in the question.
 
 With `"stream": true` the response is `text/event-stream`: `event: status` (`{"state": "retrieving"|"generating"|"checking"}`),
 `event: delta` (`{"text": "..."}`; raw model text, may still be corrected), `event: final` (the full JSON above; the
