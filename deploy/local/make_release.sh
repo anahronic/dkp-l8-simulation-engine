@@ -46,6 +46,9 @@ version=$short-$corpus_version
 mkdir "$stage/widget"
 cp -R -- "$site/website/keeper/." "$stage/widget/"
 cp -- "$site/tools/keeper_inject.py" "$stage/widget/keeper_inject.py"
+# The lab page (research alpha) ships with the widget: the panel links to it and its route is in ROUTES.json.
+[[ -f $site/website/projects/protocol-lab/index.html && -f $site/website/projects/protocol-lab/dist/lab-bundle.zip ]] || die 'Lab page or its bundle missing'
+cp -R -- "$site/website/projects/protocol-lab" "$stage/widget/protocol-lab"
 tar --create --gzip --file "$out/widget-$version.tar.gz" --directory "$stage/widget" .
 "$python" "$kit/kit_helpers.py" archive "$out/widget-$version.tar.gz"
 mv -- "$stage/engine.tar.gz" "$out/engine-$version.tar.gz"

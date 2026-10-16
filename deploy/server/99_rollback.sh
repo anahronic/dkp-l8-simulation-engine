@@ -11,10 +11,10 @@ site() {
     backup=$(latest_backup site)
     [[ -f $backup.tar.gz && ! -L /var/www/html/keeper ]] || die 'Missing archive or unexpected keeper symlink'
     tar -tzf "$backup.tar.gz" >/dev/null
-    rm -rf -- /var/www/html/keeper
+    rm -rf -- /var/www/html/keeper /var/www/html/projects/protocol-lab
     tar --extract --gzip --file "$backup.tar.gz" --directory /var/www/html --no-same-owner
     touch "$backup/ROLLED_BACK"
-    change "Removed deployed keeper directory and restored HTML/prior keeper from $backup.tar.gz"
+    change "Removed deployed keeper and lab-page directories and restored HTML/prior keeper from $backup.tar.gz"
 }
 nginx() {
     local backup rescue
