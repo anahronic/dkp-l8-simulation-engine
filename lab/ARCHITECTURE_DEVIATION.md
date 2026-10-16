@@ -1,6 +1,16 @@
 # Deviation: browser-only execution instead of the server API
 
-**Status:** OPEN DEVIATION from the lab specification §6.4–§6.5.  The specification is not
+**Status (2026-10-16, review КТ8 TZ §9):** the server path is **implemented in code and tested, not deployed**.
+Package `lab_server/` (outside `lab/`, so the HTTP wrapper and the queue do not enter `lab_code_digest`):
+FastAPI routes under `/api/lab/v1` (`lab_server/API.md`), a separate worker process, a durable SQLite queue
+with atomic take, lease, recovery after a lost lease, no publication by a stale worker, cancellation,
+idempotency keys and per-job tokens; packages are stored per job, never in the browser bridge's
+`_last_package`.  Tests: `tests/server/` (identity with CLI ids, job isolation, queue races, lease expiry,
+timeout, cancellation).  The browser path is kept; both call the same `lab.api` code.  B3 is closed only
+after the routes run on the server with the post-deployment check; until then this document stays the
+record of what the browser-only path lacks.  The text below is the state before `lab_server/`.
+
+**Earlier status:** OPEN DEVIATION from the lab specification §6.4–§6.5.  The specification is not
 changed; the server API counts as **not implemented** until a separate decision.
 
 ## What the specification asks

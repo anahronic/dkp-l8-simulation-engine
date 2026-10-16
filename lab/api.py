@@ -18,6 +18,7 @@ from lab.core.registry import catalog, coverage_table, requirements
 from lab.core.run import identity, run_request, validate_request
 from lab.core.schema import LabInputError
 
+# Single-user browser bridge only. The server must never use this global cache.
 _last_package: Optional[bytes] = None
 
 
@@ -66,13 +67,19 @@ def validate_payload(request: Dict[str, Any]) -> Dict[str, Any]:
     return {"ok": True, "problems": [], "resolved": checked["variants"]}
 
 
-def run_payload(request: Dict[str, Any], progress: Optional[Callable[[float, str], None]] = None,
-                provenance: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Run and package.  Raises LabInputError for invalid requests (checked before any work)."""
-    global _last_package
+def run_package(request: Dict[str, Any], progress: Optional[Callable[[float, str], None]] = None,
+                provenance: Optional[Dict[str, Any]] = None) -> tuple[Dict[str, Any], bytes]:
+    """Run and package without caching state. Raises LabInputError before any work."""
     records: Dict[str, list] = {}
     doc = run_request(request, progress=progress, records_out=records)
-    _last_package = build_package(doc, records, provenance)
+    return doc, build_package(doc, records, provenance)
+
+
+def run_payload(request: Dict[str, Any], progress: Optional[Callable[[float, str], None]] = None,
+                provenance: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Run and cache the package for the single-user browser bridge."""
+    global _last_package
+    doc, _last_package = run_package(request, progress, provenance)
     return doc
 
 
