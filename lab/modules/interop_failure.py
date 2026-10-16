@@ -53,6 +53,10 @@ FAULTS = {
     "accept_axiom_override": "an external reinterpretation of a DKP axiom is accepted and drives an internal decision",
     "untraced_boundary": "a boundary record carries no reference to the external input it answers",
     "interop_audits": "INTEROP issues an audit verdict on an internal decision",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "irrevocable_delegation": "a DKP function is delegated to an external party without the right to revoke it",
+    "hidden_translation": "the translation logic of the finance interface is not published to audit",
+    "unverifiable_artifact": "a mirrored artifact carries a digest that does not cover its content",
 }
 
 
@@ -102,6 +106,15 @@ def run(r: Dict[str, Any], failure: bool = True):
 
     lo, hi = r["external_failure_window"]
     registered = r["mirror_role"] == "registered_ptl_source"
+    if "hidden_translation" not in faults:                        # §11: translation logic exposed to audit
+        put("notice", "INTEROP/REGISTRY", 0, {"translation_logic": {"IB-FIN-1/v1": "external value copied unchanged and flagged "
+                                                           "externally_sourced; no CU or Justice weighting computed"},
+                                     "available_to": ["DKP-8-AUDIT-001"]})
+    for dl in r["delegations"]:                                   # §10: no permanent delegation of DKP functions
+        q = put("observation", "EXTERNAL/DELEGATION", 0, {"delegation_request": dl["function"], "from": dl["to"]})
+        put("notice", "INTEROP", 0, {"delegation": dl["function"], "to": dl["to"],
+                                     "revocable": dl["revocable"] and "irrevocable_delegation" not in faults,
+                                     "until_step": dl["until_step"], "interface": INTERFACES["legal"]}, [q.event_id])
     feeds_ptl = registered or "mirror_feeds_ptl" in faults
     entry_valid = True
     crisis = False
@@ -218,7 +231,8 @@ def run(r: Dict[str, Any], failure: bool = True):
             if "alter_mirror" in faults:
                 mirrored["decision"] = "allocate (adjusted by reviewer)"
             put("notice", "MIRROR", k, {"mirror_of": dec.event_id, "content": mirrored,
-                                        "digest": sha256_text(canonical_json(mirrored))}, [dec.event_id])
+                                        "digest": sha256_text("mirror" if "unverifiable_artifact" in faults else canonical_json(mirrored))},
+                [dec.event_id])
         # entry point exposing DKP state
         if k >= r["stripping_entry_step"] >= 0 and dec is not None:
             stripped = None if entry_valid else None
@@ -237,6 +251,48 @@ def run(r: Dict[str, Any], failure: bool = True):
         if "audit_modifies" in faults and k == 5:
             put("action", "AUDIT", k, {"inject": "corrective rerouting"}, [ptl.event_id])
     return log
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+    get = {m.event_id: m for m in msgs}
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    dl = [m.value for m in msgs if m.source == "INTEROP" and "delegation" in m.value]
+    irr = [d["delegation"] for d in dl if not d["revocable"]]
+    open_ = [d["delegation"] for d in dl if d["revocable"] and d["until_step"] < 0]
+    if irr or not open_:
+        out.append(v("INTEROP-10-05", "no_irrevocable_delegation", irr,
+                     f"{len(dl)} delegation(s), each revocable and bounded in time", "{n} irrevocable delegations")
+                   if dl else na("INTEROP-10-05", "no_irrevocable_delegation", "delegations", "none declared"))
+    else:
+        out.append(CheckResult("INTEROP-10-05", "no_irrevocable_delegation", UNKNOWN,
+                               f"{len(open_)} revocable delegation(s) without an end: whether an indefinite revocable delegation is "
+                               "'permanent' is open", evidence={"indefinite": open_}))
+    logic = {k for m in msgs if m.source == "INTEROP/REGISTRY" and "translation_logic" in m.value
+             and "DKP-8-AUDIT-001" in m.value.get("available_to", []) for k in m.value["translation_logic"]}
+    used = [m.value["translation"]["mapping"] for m in msgs if m.source == "INTEROP" and "translation" in m.value]
+    out.append(v("INTEROP-11-02", "translation_logic_exposed", [x for x in used if x not in logic],
+                 f"{len(used)} translation(s), each by a mapping whose logic is published to audit",
+                 "{n} translations by an unpublished mapping") if used else
+               na("INTEROP-11-02", "translation_logic_exposed", "translations", "no external value translated"))
+    arts = [m for m in msgs if m.source == "MIRROR" or (m.source == "INTEROP" and "export" in m.value)]
+    bad = []
+    for m in arts:
+        body = m.value["content"] if m.source == "MIRROR" else get[m.value["export"]].value
+        if m.value.get("digest") != sha256_text(canonical_json(body)):
+            bad.append(m.event_id)
+    out.append(v("INTEROP-7-02", "artifact_digest_verifies", bad,
+                 f"{len(arts)} artifact(s) leaving DKP (exports, mirrors), each with a digest that recomputes over its content",
+                 "{n} artifacts whose digest does not verify") if arts else
+               na("INTEROP-7-02", "artifact_digest_verifies", "artifacts", "nothing exported or mirrored"))
+    return out
 
 
 def internal(log: EventLog) -> List[Tuple[int, str]]:
@@ -528,6 +584,10 @@ def checks(r, log: EventLog, baseline: EventLog) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "INTEROP-10-05": ("no_irrevocable_delegation", "PARTIAL", "Clear part only: an irrevocable delegation fails; an indefinite revocable one gives UNKNOWN."),
+    "INTEROP-11-02": ("translation_logic_exposed", "PARTIAL", "Clear part only: the logic is published to audit; the wider audience stays open."),
+    "INTEROP-7-02": ("artifact_digest_verifies", "PARTIAL", "Clear part only: digests that recompute; targets and trust model stay open."),
     "INTEROP-5-02": ("external_rulings_not_binding", "IMPLEMENTED", None),
     "INTEROP-3-01": ("external_not_governed", "PARTIAL", "'Governed' is observed as a directive addressed to the external system."),
     "INTEROP-5-01": ("exports_as_evidence", "IMPLEMENTED", None),
@@ -582,7 +642,7 @@ IMPLEMENTS = {
 
 class InteropFailureModule(LabModule):
     id = "interop_failure"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "Failure of an external interface (S-LAB-10)", "ru": "Отказ внешнего интерфейса (S-LAB-10)"}
     summary = {"en": "An external court, market, data provider or API fails or pushes in: does the inside keep running "
                      "unchanged, with nothing external becoming binding?",
@@ -629,6 +689,13 @@ class InteropFailureModule(LabModule):
                           "label": {"en": "Black-box input at hour", "ru": "Вход 'чёрного ящика' в час"}},
         "external_info_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 12, "unit": "h", "source": "user",
                                "label": {"en": "External consensus claim at hour", "ru": "Внешний 'консенсус' в час"}},
+        "delegations": {"type": "list", "min_items": 0, "max_items": 10, "source": "user",
+                        "items": {"type": "object", "fields": {"function": {"type": "str"}, "to": {"type": "str"},
+                                                               "revocable": {"type": "bool", "default": True},
+                                                               "until_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": -1}}},
+                        "default": [{"function": "settlement_mirroring", "to": "external_bank", "revocable": True, "until_step": 30}],
+                        "label": {"en": "Delegations of DKP functions to external parties (§10)",
+                                  "ru": "Передача функций DKP внешним сторонам (§10)"}},
         "export_step": {"type": "int", "min": -1, "max": 10 ** 6, "default": 5, "unit": "h", "source": "user",
                         "label": {"en": "A DKP output is exported to an external court at hour (INTEROP §5)",
                                   "ru": "Выход DKP передаётся во внешний суд в час (INTEROP §5)"}},
@@ -669,7 +736,7 @@ class InteropFailureModule(LabModule):
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r, failure=True)
         base = run(r, failure=False)
-        res = checks(r, log, base)
+        res = checks(r, log, base) + core_checks(r, log.messages())
         msgs = log.messages()
         outputs = {"internal_decisions": sum(1 for m in msgs if m.source == "DKP"),
                    "internal_decisions_without_failure": sum(1 for m in base.messages() if m.source == "DKP"),

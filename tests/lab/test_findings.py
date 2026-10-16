@@ -29,7 +29,7 @@ def test_f001_was_a_lab_error_now_caught_by_etrans_4_2():
     ('declared_events') is now detected as a violation of ETRANS §4.2."""
     assert totals("F-001") == {
         "new_admissible_data": (2, 6, "INACTIVE", 0, 0, 0, 0),
-        "declared_events_former_lab_reading": (1, 24, "ACTIVE", 0, 0, 18, 2),     # ETRANS-4.2-01 and ETRANS-3-03 (F-001.md)
+        "declared_events_former_lab_reading": (1, 24, "ACTIVE", 0, 0, 18, 3),     # ETRANS-4.2-01, ETRANS-3-03, ETRANS-3-04 (F-001.md)
         "material_change_5pct": (2, 6, "INACTIVE", 3, 0, 0, 0),
     }
 

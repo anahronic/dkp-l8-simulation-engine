@@ -112,7 +112,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "operational_within_validity"
    },
    "tests": [
@@ -156,7 +156,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "downgrade_propagates"
    },
    "tests": [
@@ -197,7 +197,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_persistent_authority"
    },
    "tests": [
@@ -232,13 +232,19 @@
     "enforcement state dependencies",
     "re-evaluation records"
    ],
-   "gap": "The re-evaluation trigger and its required relationship to individual enforcement actions are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: no act on a state changed since its evaluation; per action or per change stays open.",
    "hypotheses_needed": [
     "Declare whether re-evaluation is required per action or per relevant state change."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "failure_chain",
+    "version": "1.5.0",
+    "check": "reevaluated_before_enforcement"
+   },
+   "tests": [
+    "tests/lab/test_failure_chain_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "open_questions": [],
    "decision_status": "UNRESOLVED",
@@ -279,7 +285,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "check": "revalidation_flag"
      }
     ]
@@ -326,7 +332,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "suspension_on_downgrade"
    },
    "tests": [
@@ -372,7 +378,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_escalation_after_downgrade"
    },
    "tests": [
@@ -419,7 +425,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_persistence_on_past_valid"
    },
    "tests": [
@@ -462,7 +468,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "status_quo_preserved"
    },
    "tests": [
@@ -504,7 +510,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_escalation_in_uncertainty"
    },
    "tests": [
@@ -547,7 +553,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_penalty_accumulation"
    },
    "tests": [
@@ -590,7 +596,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "awaits_recomputation"
    },
    "tests": [
@@ -636,7 +642,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "reentry_new_output"
    },
    "tests": [
@@ -679,7 +685,7 @@
     "also": [
      {
       "module": "failure_chain",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "check": "no_auto_reactivation"
      },
      {
@@ -730,7 +736,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_retroactive_truth"
    },
    "tests": [
@@ -769,7 +775,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "open_to_reclassification"
    },
    "tests": [
@@ -805,7 +811,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "downgrade_propagation_tested"
    },
    "tests": [
@@ -846,7 +852,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "enforcement_suspension_tested"
    },
    "tests": [
@@ -887,7 +893,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "revalidation_triggers_tested"
    },
    "tests": [
@@ -929,7 +935,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "failure_chain",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "state_persistence_tested"
    },
    "tests": [

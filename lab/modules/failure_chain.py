@@ -807,6 +807,22 @@ def run_checks(r: Dict[str, Any], ttl: int, readings, rows, events, store) -> Li
     else:
         for rid, chk in (("ETRANS-4.2-01", "no_persistence_on_past_valid"), ("ETRANS-3-03", "no_persistent_authority")):
             out.append(na(rid, chk, "persistence on past VALID state", "no degradation, dispute or loss of consistency occurred"))
+    # ETRANS §3 (review КТ7-GPT-01, clear part under both readings): state-dependent enforcement on a state that changed
+    # since its evaluation (an admissible reading changed S(t)) without a re-evaluation in between
+    if arrivals and actions:
+        bad = []
+        for a in actions:
+            c = created_at.get(a["evaluation"], -1)
+            hit = [t for t in sorted(arrivals) if c < t <= a["step"]]
+            if hit:
+                bad.append({"step": a["step"], "evaluation": a["evaluation"], "created": c, "state_changed": hit[0]})
+        out.append(verdict("ETRANS-3-04", "reevaluated_before_enforcement", bad,
+                           f"{len(actions)} enforcement acts, none on a state that changed since its evaluation without a "
+                           "re-evaluation (per action or per change: the same here)",
+                           "{n} enforcement acts on a state that changed since its evaluation"))
+    else:
+        out.append(na("ETRANS-3-04", "reevaluated_before_enforcement", "state-dependent enforcement after a state change",
+                      "no enforcement act" if arrivals else "no admissible reading changed S(t)"))
     # ETRANS §4.5 (returned after the reading of checkpoint 6): after a conflict or an invalidation a past VALID output is
     # no evidence of correctness; scope violation is not modelled here
     t45 = sorted(set(downgrade_steps) | set(disputes) |
@@ -909,6 +925,8 @@ IMPLEMENTS = {
     "EB-7.2-03": ("dispute_recomputes", "PARTIAL", "Admissibility of the new inputs is the TTL rule only."),
     "EB-7.2-04": ("dispute_delta", "IMPLEMENTED", None),
     "ETRANS-3-01": ("operational_within_validity", "PARTIAL", "Validity of the upstream output under H-FC-1."),
+    # clear part of a provision whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "ETRANS-3-04": ("reevaluated_before_enforcement", "PARTIAL", "Clear part only: no act on a state changed since its evaluation; per action or per change stays open."),
     "ETRANS-3-02": ("downgrade_propagates", "PARTIAL", "One chain: PTL output → evaluation → asset control and transactions."),
     "ETRANS-4.1-01": ("revalidation_flag", "IMPLEMENTED", None),
     "ETRANS-4.1-02": ("suspension_on_downgrade", "IMPLEMENTED", None),
@@ -944,7 +962,7 @@ def _window(default=None):
 
 class FailureChainModule(LabModule):
     id = "failure_chain"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "Stale and contradictory data (failure chain)",
              "ru": "Устаревшие и противоречивые данные (цепочка отказа)"}
     summary = {"en": "Sensors go silent or disagree: do dependent asset restrictions and penalties stop, wait "

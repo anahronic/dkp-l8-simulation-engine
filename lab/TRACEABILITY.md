@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1585 (91.2 %) | 1046 | 1496 | 964 | 4 | 67 | 18 | 152 | 0 | 10 | 1198 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1595 (91.8 %) | 1056 | 1506 | 974 | 4 | 67 | 18 | 142 | 0 | 0 | 1198 |
 | B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 18 | 29 | 17 | 0 | 1 | 0 | 13 | 0 | 0 | 31 |
-| C. Common checks | PARTIAL | 8/8 | 365 | 355 (97.3 %) | 248 | 342 | 236 | 3 | 8 | 2 | 10 | 0 | 3 | 258 |
-| D. Transitions and rights | PARTIAL | 9/9 | 424 | 382 (90.1 %) | 212 | 359 | 192 | 1 | 21 | 1 | 42 | 0 | 1 | 254 |
+| C. Common checks | DONE | 8/8 | 365 | 358 (98.1 %) | 251 | 345 | 239 | 3 | 8 | 2 | 7 | 0 | 0 | 258 |
+| D. Transitions and rights | DONE | 9/9 | 424 | 383 (90.3 %) | 213 | 360 | 193 | 1 | 21 | 1 | 41 | 0 | 0 | 254 |
 | E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 171 | 246 | 156 | 0 | 9 | 8 | 30 | 0 | 0 | 201 |
-| F. Remaining constraints and stress | PARTIAL | 12/12 | 511 | 462 (90.4 %) | 319 | 438 | 295 | 0 | 18 | 6 | 49 | 0 | 6 | 368 |
-| G. General release | NOT STARTED | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1585 (91.2 %) | 1046 | 1496 | 964 | 4 | 67 | 18 | 152 | 0 | 10 | 1198 |
+| F. Remaining constraints and stress | DONE | 12/12 | 511 | 468 (91.6 %) | 325 | 444 | 301 | 0 | 18 | 6 | 43 | 0 | 0 | 368 |
+| G. General release | PARTIAL | — | | | | | | | | | | | | |
+| **All registrable documents** | | 38/38 | 1737 | 1595 (91.8 %) | 1056 | 1506 | 974 | 4 | 67 | 18 | 142 | 0 | 0 | 1198 |
 
 Covered without an open point: 539; of all provisions, an open point closed by the lab agent's reading of the text: 216; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -45,11 +45,11 @@ Covered without an open point: 539; of all provisions, an open point closed by t
 - B / B2 met: export repeats (replay packages)
 - B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — browser-only execution; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
-- C / C1 **not met**: boundary cases, unconfirmed models and cascading degradation visible and checked
-- D / D1 **not met**: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
+- C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
+- D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient
 - E / E1 met: real checks, declared models and their limits; gaps exact by section
-- F / F1 **not met**: declared limits, failure chains and metadata checked; coverage maps of all 35 current
-- G / G1 **not met**: all parts implementable without unresolved decisions are checked, including the clear parts of provisions whose open point remains
+- F / F1 met: declared limits, failure chains and metadata checked; coverage maps of all 35 current
+- G / G1 met: all parts implementable without unresolved decisions are checked, including the clear parts of provisions whose open point remains
 - G / G2 **not met**: integrated application, documentation, examples, report
 - G / G3 **not met**: deployment and independent replay of selected packages
 
@@ -262,7 +262,7 @@ Withdrawn after verification (not author decisions):
 | Document | Provisions | Covered | PASS | FAIL | UNKNOWN | N/A | UNCOVERED | Unresolved |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | CODE-OF-PLANETARY-SYNERGY | 101 | 93 | 82 | 0 | 10 | 1 | 8 | 86 |
-| DKP-0-ORACLE-001 | 58 | 56 | 51 | 2 | 2 | 1 | 2 | 48 |
+| DKP-0-ORACLE-001 | 58 | 58 | 53 | 2 | 2 | 1 | 0 | 48 |
 | DKP-0-TIME-001 | 35 | 34 | 33 | 1 | 0 | 0 | 1 | 3 |
 | DKP-1-AXIOMS-001 | 44 | 44 | 38 | 0 | 4 | 2 | 0 | 22 |
 | DKP-1-EPISTEMIC-BOUNDARIES-001 | 38 | 38 | 38 | 0 | 0 | 0 | 0 | 26 |
@@ -277,9 +277,9 @@ Withdrawn after verification (not author decisions):
 | DKP-3-DEFENSE-001 | 44 | 42 | 41 | 0 | 1 | 0 | 2 | 36 |
 | DKP-3-INTERNAL-SEC-001 | 49 | 43 | 40 | 0 | 0 | 3 | 6 | 44 |
 | DKP-3-POLICE-001 | 45 | 42 | 42 | 0 | 0 | 0 | 3 | 29 |
-| DKP-4-CRISIS-001 | 53 | 44 | 39 | 1 | 4 | 0 | 9 | 32 |
+| DKP-4-CRISIS-001 | 53 | 45 | 40 | 1 | 4 | 0 | 8 | 32 |
 | DKP-4-CRISIS-001-PATCH | 31 | 30 | 29 | 0 | 1 | 0 | 1 | 17 |
-| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 27 | 27 | 0 | 0 | 0 | 2 | 20 |
+| DKP-4-EPISTEMIC-TRANSITIONS-001 | 29 | 28 | 28 | 0 | 0 | 0 | 1 | 20 |
 | DKP-4-ERROR-001 | 52 | 46 | 42 | 0 | 3 | 1 | 6 | 32 |
 | DKP-4-UPGRADE-001 | 48 | 45 | 41 | 0 | 4 | 0 | 3 | 31 |
 | DKP-5-CULTURE-001 | 43 | 38 | 38 | 0 | 0 | 0 | 5 | 30 |
@@ -293,11 +293,11 @@ Withdrawn after verification (not author decisions):
 | DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 25 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 36 |
 | DKP-7-AI-SUBJECT-001 | 39 | 36 | 36 | 0 | 0 | 0 | 3 | 34 |
-| DKP-7-PRIVACY-001 | 39 | 34 | 31 | 0 | 3 | 0 | 5 | 28 |
+| DKP-7-PRIVACY-001 | 39 | 35 | 32 | 0 | 3 | 0 | 4 | 28 |
 | DKP-7-SCOPE-001 | 75 | 72 | 69 | 0 | 3 | 0 | 3 | 63 |
-| DKP-7-TRANSPARENCY-001 | 44 | 35 | 35 | 0 | 0 | 0 | 9 | 32 |
+| DKP-7-TRANSPARENCY-001 | 44 | 37 | 37 | 0 | 0 | 0 | 7 | 32 |
 | DKP-8-AUDIT-001 | 43 | 42 | 42 | 0 | 0 | 0 | 1 | 35 |
-| DKP-8-INTEROP-001 | 49 | 43 | 42 | 0 | 1 | 0 | 6 | 22 |
+| DKP-8-INTEROP-001 | 49 | 46 | 45 | 0 | 1 | 0 | 3 | 22 |
 | DKP-8-SIMULATION-001 | 48 | 48 | 47 | 0 | 1 | 0 | 0 | 37 |
 
 ## Covered provisions
@@ -401,6 +401,7 @@ Withdrawn after verification (not author decisions):
 | ORACLE-1-02 | PARTIAL | transport_capacity · ptl_physical_state_only | FAIL | yes | — |
 | ORACLE-10-01 | PARTIAL | oracle_ingestion · likelihood_updates | PASS | yes | — |
 | ORACLE-10-02 | IMPLEMENTED | oracle_ingestion · reproducible | PASS | — | — |
+| ORACLE-10-03 | PARTIAL | oracle_ingestion · aggregation_trace_recomputes | PASS | — | — |
 | ORACLE-11-01 | PARTIAL | failure_chain · divergence_threshold | PASS | yes | Q-004 |
 | ORACLE-11-02 | IMPLEMENTED | failure_chain · divergence_freeze | PASS | yes | Q-010 |
 | ORACLE-11-03 | IMPLEMENTED | failure_chain · arbitration_window | PASS | — | Q-005 |
@@ -437,6 +438,7 @@ Withdrawn after verification (not author decisions):
 | ORACLE-4.8-01 | PARTIAL | oracle_ingestion · divergence_definition | PASS | — | Q-004 |
 | ORACLE-5-01 | IMPLEMENTED | oracle_ingestion · classified_outputs | PASS | — | — |
 | ORACLE-5.1-01 | PARTIAL | oracle_ingestion · direct_measurement | PASS | — | — |
+| ORACLE-5.2-01 | PARTIAL | oracle_ingestion · proxy_not_a_state | PASS | — | — |
 | ORACLE-5.2-02 | IMPLEMENTED | transport_capacity · red_proxy_declared | PASS | — | — |
 | ORACLE-5.3-01 | PARTIAL | oracle_ingestion · non_measurable_excluded | PASS | — | Q-056 |
 | ORACLE-6-01 | IMPLEMENTED | oracle_ingestion · three_classes | PASS | — | — |
@@ -1014,6 +1016,7 @@ Withdrawn after verification (not author decisions):
 | CRISIS-5-07 | PARTIAL | crisis_recovery · persistence_needs_confirmation | PASS | — | — |
 | CRISIS-6-01 | PARTIAL | crisis_recovery · actions_in_section_6 | PASS | yes | — |
 | CRISIS-6-02 | PARTIAL | crisis_recovery · rationing_for_life | PASS | — | — |
+| CRISIS-6-03 | PARTIAL | oracle_ingestion · mercy_only_non_anthropogenic | PASS | — | Q-027 |
 | CRISIS-6-04 | PARTIAL | crisis_recovery · action_qualities | PASS | — | — |
 | CRISIS-7-01 | IMPLEMENTED | crisis_recovery · logging_no_authority | PASS | yes | — |
 | CRISIS-7-02 | PARTIAL | crisis_recovery · no_concealment_permanence_utility | PASS | — | — |
@@ -1062,6 +1065,7 @@ Withdrawn after verification (not author decisions):
 | ETRANS-3-01 | PARTIAL | failure_chain · operational_within_validity | PASS | yes | Q-003 |
 | ETRANS-3-02 | PARTIAL | failure_chain · downgrade_propagates | PASS | yes | — |
 | ETRANS-3-03 | PARTIAL | failure_chain · no_persistent_authority | PASS | yes | — |
+| ETRANS-3-04 | PARTIAL | failure_chain · reevaluated_before_enforcement | PASS | yes | — |
 | ETRANS-4.1-01 | IMPLEMENTED | calibration_expiry · expiry_downgrade_flags | PASS | yes | Q-003, Q-007 |
 | ETRANS-4.1-02 | IMPLEMENTED | failure_chain · suspension_on_downgrade | PASS | yes | Q-003, Q-007 |
 | ETRANS-4.1-03 | IMPLEMENTED | failure_chain · no_escalation_after_downgrade | PASS | yes | Q-007 |
@@ -1635,6 +1639,7 @@ Withdrawn after verification (not author decisions):
 | PRIVACY-14-05 | PARTIAL | edition_finality · edition_integrity | PASS | yes | — |
 | PRIVACY-3-01 | IMPLEMENTED | privacy_transparency · no_override_of_privacy | PASS | yes | — |
 | PRIVACY-4-05 | PARTIAL | privacy_transparency · breach_threshold | UNKNOWN | — | — |
+| PRIVACY-4.1-01 | PARTIAL | privacy_transparency · no_total_observer | PASS | — | — |
 | PRIVACY-4.1-02 | PARTIAL | privacy_transparency · no_cross_domain_linkage | PASS | yes | — |
 | PRIVACY-4.2-01 | PARTIAL | privacy_transparency · no_convenience_erosion | PASS | yes | — |
 | PRIVACY-4.3-01 | PARTIAL | privacy_transparency · no_cross_domain_linkage | PASS | yes | — |
@@ -1727,6 +1732,7 @@ Withdrawn after verification (not author decisions):
 | TRANSPARENCY-10-04 | IMPLEMENTED | privacy_transparency · crisis_reduction_bounded | PASS | — | — |
 | TRANSPARENCY-11-01 | IMPLEMENTED | privacy_transparency · explained_decisions | PASS | — | — |
 | TRANSPARENCY-12-01 | IMPLEMENTED | privacy_transparency · audit_hooks | PASS | — | — |
+| TRANSPARENCY-12-02 | PARTIAL | privacy_transparency · no_deletion_without_representation | PASS | — | — |
 | TRANSPARENCY-12-03 | PARTIAL | privacy_transparency · aggregation_protects | PASS | — | — |
 | TRANSPARENCY-12-04 | IMPLEMENTED | privacy_transparency · audit_without_personal_data | PASS | — | — |
 | TRANSPARENCY-13-01 | PARTIAL | privacy_transparency · no_moral_accountability | PASS | — | — |
@@ -1746,6 +1752,7 @@ Withdrawn after verification (not author decisions):
 | TRANSPARENCY-4-05 | IMPLEMENTED | privacy_transparency · transparency_without_visibility | PASS | — | — |
 | TRANSPARENCY-5-01 | IMPLEMENTED | privacy_transparency · public_by_default | PASS | — | — |
 | TRANSPARENCY-5-02 | IMPLEMENTED | privacy_transparency · public_by_default | PASS | — | — |
+| TRANSPARENCY-6-01 | PARTIAL | privacy_transparency · protected_domains_anonymous | PASS | yes | — |
 | TRANSPARENCY-6-02 | PARTIAL | privacy_transparency · deanonymization_conditions | PASS | — | — |
 | TRANSPARENCY-7-02 | PARTIAL | privacy_transparency · deanonymization_conditions | PASS | — | — |
 | TRANSPARENCY-8-01 | IMPLEMENTED | privacy_transparency · deanonymization_conditions | PASS | — | — |
@@ -1803,7 +1810,9 @@ Withdrawn after verification (not author decisions):
 | INTEROP-10-02 | IMPLEMENTED | interop_failure · no_external_decision_dependency | PASS | — | — |
 | INTEROP-10-03 | IMPLEMENTED | interop_failure · no_governance_by_api | PASS | — | — |
 | INTEROP-10-04 | PARTIAL | interop_failure · no_silent_norm_import | PASS | yes | — |
+| INTEROP-10-05 | PARTIAL | interop_failure · no_irrevocable_delegation | PASS | — | — |
 | INTEROP-11-01 | PARTIAL | interop_failure · interop_auditable | PASS | — | — |
+| INTEROP-11-02 | PARTIAL | interop_failure · translation_logic_exposed | PASS | — | — |
 | INTEROP-11-03 | IMPLEMENTED | interop_failure · boundary_events_recorded | PASS | — | — |
 | INTEROP-11-04 | PARTIAL | interop_failure · no_interop_audit_authority | PASS | — | — |
 | INTEROP-12-01 | PARTIAL | interop_failure · no_geopolitical_resolution | PASS | yes | — |
@@ -1834,6 +1843,7 @@ Withdrawn after verification (not author decisions):
 | INTEROP-6-02 | PARTIAL | interop_failure · justice_weighted_translation | UNKNOWN | — | — |
 | INTEROP-6-04 | IMPLEMENTED | interop_failure · external_values_flagged | PASS | — | — |
 | INTEROP-6-05 | PARTIAL | interop_failure · finance_constraints_not_bypassed | PASS | yes | — |
+| INTEROP-7-02 | PARTIAL | interop_failure · artifact_digest_verifies | PASS | — | — |
 | INTEROP-7-03 | PARTIAL | interop_failure · audit_hooks | PASS | yes | — |
 | INTEROP-7-04 | IMPLEMENTED | interop_failure · blackbox_not_authoritative | PASS | yes | — |
 | INTEROP-8-01 | PARTIAL | interop_failure · external_info_as_i1 | PASS | yes | — |

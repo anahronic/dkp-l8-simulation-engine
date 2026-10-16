@@ -56,6 +56,9 @@ FAULTS = {
     "accept_layer_override": "a higher-layer protocol changes oracle weights",
     "emit_intent": "the PTL emits an output about intent",
     "in_place_change": "ORACLE is modified in place",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "untraced_aggregation": "the aggregation publishes its result without the trace of inputs and weights",
+    "proxy_as_state": "a derived indicator is published as a subjective state of the population",
 }
 
 
@@ -177,10 +180,12 @@ def run(r: Dict[str, Any]):
         agg = round(tw, 9)
         reasons = [x for x, bad in (("aggregate confidence < 60%", agg < CONF_HALT), ("coverage < 80%", cov < COVERAGE_MIN)) if bad]
         b_raw = None if S is None else (S / r["true_value"] if "normalize_b" in faults else S)
+        trace = None if "untraced_aggregation" in faults else {
+            "rule": "weighted mean of live sources (§10)", "inputs": [[i, round(vals[i], 9), round(live[i], 12)] for i in sorted(live)]}
         put("observation", "PTL", t, {
             "S": None if S is None else round(S, 9), "aggregate_confidence": agg, "coverage": round(cov, 9),
             "envelope": round(min(1.0, max(0.0, agg)), 9), "divergence_flag": div, "class_posteriors": {k: round(x, 9) for k, x in cls_post.items()},
-            "classification": "direct", "signed": True, "silent_sources": len(silent),
+            "classification": "direct", "signed": True, "silent_sources": len(silent), "trace": trace,
             "signal": ("degradation: " + f"{len(silent)} sources silent or stale") if silent else None,
             "B_raw": None if b_raw is None else round(b_raw, 9), "B_model": "not defined in PTL (DKP-8-SIMULATION-001; no bundle attached)",
             "B_informational_only": r["calibration_bundle"] != "valid", "measured_at": t,
@@ -210,6 +215,10 @@ def run(r: Dict[str, Any]):
         put("decision", "PTL", q["min"], {"layer_request": q["action"], "by": q["protocol"], "executed": ok})
         if not ok:
             put("notice", "AUDIT", q["min"], {"critical_integrity_breach": q["protocol"], "action": q["action"]})
+    for d in r["derived_indicators"]:                       # §5.2: proxy-based, never a subjective, semantic or normative state
+        put("observation", "PTL", 0, {"derived_indicator": d["name"], "correlates_with": d["proxy_for"],
+                                      "classification": "proxy-based measurement (§5.2)",
+                                      "state_label": "population wellbeing" if "proxy_as_state" in faults else None})
     for q in r["output_requests"]:
         ok = q["domain"] == "physical" or "emit_intent" in faults
         put("decision", "PTL", 0, {"output": q["name"], "domain": q["domain"], "emitted": ok})
@@ -219,6 +228,50 @@ def run(r: Dict[str, Any]):
         put("decision", "PTL", 0, {"change": c["id"], "channel": c["channel"], "accepted": ok})
     put("evaluation", "PTL", 0, {"genesis_co2": r["genesis_co2"]})
     return log
+
+
+def core_checks(r: Dict[str, Any], msgs) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    obs = [m for m in msgs if m.source == "PTL" and m.kind == "observation" and "aggregate_confidence" in m.value]
+    agg = [m for m in obs if m.value["S"] is not None]
+    bad = []
+    for m in agg:
+        tr = m.value.get("trace")
+        if not tr:
+            bad.append(f"minute {m.arrived_at}: no trace")
+            continue
+        tw = sum(x[2] for x in tr["inputs"])
+        s_ = sum(x[1] * x[2] for x in tr["inputs"]) / tw if tw > 0 else None
+        if s_ is None or abs(round(s_, 9) - m.value["S"]) > 1e-8:
+            bad.append(f"minute {m.arrived_at}: trace gives {s_}, published {m.value['S']}")
+    out.append(v("ORACLE-10-03", "aggregation_trace_recomputes", bad,
+                 f"{len(agg)} aggregations, each published with the inputs and weights that recompute it",
+                 "{n} aggregations without a trace that recomputes") if agg else
+               na("ORACLE-10-03", "aggregation_trace_recomputes", "aggregation", "no aggregated value"))
+    di = [m.value for m in msgs if m.source == "PTL" and "derived_indicator" in m.value]
+    out.append(v("ORACLE-5.2-01", "proxy_not_a_state", [f"{x['derived_indicator']}: {x['state_label']}" for x in di
+                                                        if x.get("state_label") or x["classification"] != "proxy-based measurement (§5.2)"],
+                 f"{len(di)} derived indicator(s), each published as a proxy correlating with a physical process, none as a "
+                 "subjective, semantic or normative state", "{n} derived indicators labelled as a state") if di else
+               na("ORACLE-5.2-01", "proxy_not_a_state", "derived indicators", "none declared"))
+    mer = r["mercy"]
+    if mer["active"]:
+        dfr = [m for m in msgs if m.source == "PTL" and m.value.get("halt") == "deferred"]
+        out.append(v("CRISIS-6-03", "mercy_only_non_anthropogenic", [f"minute {m.arrived_at}: cause {mer['cause']}" for m in dfr
+                                                                     if mer["cause"] != "natural"],
+                     f"Mercy acted ({len(dfr)} deferrals) only for a declared non-anthropogenic event (as ORACLE-14-02); the TTL "
+                     "extension it allows stays open against ORACLE §14 (Q-027)", "{n} Mercy acts for a human-caused event"))
+    else:
+        out.append(na("CRISIS-6-03", "mercy_only_non_anthropogenic", "Mercy Mode", "not active"))
+    return out
 
 
 def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
@@ -489,6 +542,10 @@ def _cross_div(post):
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "ORACLE-10-03": ("aggregation_trace_recomputes", "PARTIAL", "Clear part only (auditable, AUDIT §6): a trace that recomputes; 'explainable' has no criterion."),
+    "ORACLE-5.2-01": ("proxy_not_a_state", "PARTIAL", "Clear part only: never labelled a subjective, semantic or normative state; proxy validation stays open."),
+    "CRISIS-6-03": ("mercy_only_non_anthropogenic", "PARTIAL", "Clear part only (as ORACLE-14-02): Mercy only for declared non-anthropogenic events; the TTL extension is Q-027."),
     "ORACLE-1-01": ("sole_interface", "PARTIAL", "Admission rules applied to declared sources."),
     "ORACLE-2-01": ("genesis_anchor", "PARTIAL", "Only the CO2 anchor is compared."),
     "ORACLE-2-02": ("non_normative_outputs", "PARTIAL", "Consumption of B(t) for enforcement only."),
@@ -546,7 +603,7 @@ def _lst(fields, default, label, mx=20):
 
 class OracleIngestionModule(LabModule):
     id = "oracle_ingestion"
-    version = "1.1.0"
+    version = "1.2.0"
     title = {"en": "Physical Truth Layer pipeline (ORACLE §1-§18)", "ru": "Конвейер слоя физической истины (ORACLE §1-§18)"}
     summary = {"en": "Thirty sensors, a human panel, a proprietary feed, one class going silent, a request to enforce on B(t): does the PTL "
                      "admit, weight, aggregate, halt and refuse exactly as ORACLE says?",
@@ -625,6 +682,9 @@ class OracleIngestionModule(LabModule):
                                       [{"min": 700, "protocol": "finance", "action": "influence_weights"},
                                        {"min": 710, "protocol": "crisis", "action": "modify_ttl"}],
                                       {"en": "Higher-layer requests", "ru": "Запросы верхних слоёв"}),
+        "derived_indicators": _lst({"name": {"type": "str"}, "proxy_for": {"type": "str"}},
+                                   [{"name": "night_light_index", "proxy_for": "electricity use"}],
+                                   {"en": "Derived indicators {name, proxy_for} (§5.2)", "ru": "Производные индикаторы (§5.2)"}),
         "output_requests": _lst({"name": {"type": "str"}, "domain": {"type": "enum", "values": ["physical"] + list(NON_MEASURABLE)}},
                                 [{"name": "co2_level", "domain": "physical"}, {"name": "protest_intent", "domain": "intent"}],
                                 {"en": "Requested outputs", "ru": "Запрошенные выходы"}),
@@ -664,7 +724,7 @@ class OracleIngestionModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log.messages())
         msgs = log.messages()
         obs = [{"min": m.arrived_at, **{k: m.value[k] for k in ("S", "aggregate_confidence", "coverage", "divergence_flag", "signal")}}
                for m in msgs if m.source == "PTL" and "aggregate_confidence" in m.value]

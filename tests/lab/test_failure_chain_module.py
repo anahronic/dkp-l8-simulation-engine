@@ -149,3 +149,15 @@ def test_kt5_l8_tests_catch_their_counterexamples():
     _, res = run(**M.examples()["stale_ground"])
     st = statuses(res)
     assert st["ETRANS-3-03"] == st["ETRANS-4.2-01"] == "PASS"
+
+
+def test_etrans_3_04_no_enforcement_on_a_changed_state():
+    """Review КТ7-GPT-01 (ETRANS §3 clear part): after an admissible reading changes S(t), no enforcement act relies on
+    the earlier evaluation; reactivating it, or the former 'declared_events' reading, does (F-001)."""
+    ex = M.examples()["value_drop"]
+    st = lambda **kw: {c.requirement_id: c.status for c in M.evaluate(M.validate({**ex, **kw})).checks}
+    assert st()["ETRANS-3-04"] == "PASS"
+    assert st(faults=["auto_reactivate"])["ETRANS-3-04"] == "FAIL"
+    f001 = {"horizon_steps": 24, "orbital_interval_minutes": 60, "autonomous_interval_minutes": 60, "value_change_at_step": 6}
+    run_ = lambda **kw: {c.requirement_id: c.status for c in M.evaluate(M.validate({**f001, **kw})).checks}
+    assert run_()["ETRANS-3-04"] == "PASS" and run_(reevaluation_policy="declared_events")["ETRANS-3-04"] == "FAIL"

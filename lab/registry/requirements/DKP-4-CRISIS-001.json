@@ -656,7 +656,7 @@
     "also": [
      {
       "module": "interop_failure",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "check": "ptl_loss_triggers_crisis"
      }
     ]
@@ -1090,13 +1090,19 @@
     "life-support continuity measurements",
     "halt assessments"
    ],
-   "gap": "The TTL extension bound, event-origin classifier, and false-halt and continuity tests are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only (as ORACLE-14-02): Mercy only for declared non-anthropogenic events; the TTL extension is Q-027.",
    "hypotheses_needed": [
     "Declare TTL extension limits and predicates for non-anthropogenic origin, false halt, and life-support continuity."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "oracle_ingestion",
+    "version": "1.2.0",
+    "check": "mercy_only_non_anthropogenic"
+   },
+   "tests": [
+    "tests/lab/test_oracle_ingestion_module.py"
+   ],
    "interpretation_status": "TEXT_VERIFIED",
    "open_questions": [
     "Q-027"

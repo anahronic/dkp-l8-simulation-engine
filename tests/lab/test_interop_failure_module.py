@@ -49,6 +49,10 @@ FAULT_CASES = {
     "accept_axiom_override": ({}, ["INTEROP-4.1-01"]),
     "untraced_boundary": ({}, ["INTEROP-11-01"]),
     "interop_audits": ({}, ["INTEROP-11-04"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "irrevocable_delegation": ({}, ["INTEROP-10-05"]),
+    "hidden_translation": ({}, ["INTEROP-11-02"]),
+    "unverifiable_artifact": ({}, ["INTEROP-7-02"]),
 }
 
 
@@ -107,3 +111,9 @@ def test_kt5_compatibility_not_convergence():
     assert statuses(run(out_of_scope_requests=["unify_legal_systems"], faults=["interop_overreach"]))["INTEROP-12-05"] == "FAIL"
     # a refused unification request is not convergence
     assert statuses(run(out_of_scope_requests=["unify_legal_systems"]))["INTEROP-12-05"] == "PASS"
+
+
+def test_indefinite_revocable_delegation_is_reading_dependent():
+    """INTEROP §10 clear part: an irrevocable delegation fails; a revocable one without an end is UNKNOWN (open reading)."""
+    st = statuses(run(delegations=[{"function": "settlement_mirroring", "to": "external_bank", "revocable": True, "until_step": -1}]))
+    assert st["INTEROP-10-05"] == "UNKNOWN"

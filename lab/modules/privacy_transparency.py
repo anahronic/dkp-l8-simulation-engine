@@ -46,6 +46,8 @@ TRANSPARENCY_FIELDS = ("request", "grant", "reason", "protocol_refs", "audit_hoo
                        "time_bound_until", "case_bound", "temporary", "logged", "reversible", "ends_with_crisis",
                        "verification", "classification", "raw_personal_data")                          # no identity field
 FORBIDDEN_PURPOSES = ("profiling", "scoring", "punishment")
+LAYERS = ("identity", "economic", "mobility", "platform")                          # declared lab layers (PRIVACY §4.1)
+PROTECTED_6 = ("identity", "beliefs", "private_comms", "economic", "mobility", "platform")   # TRANSPARENCY §6 (behavioural histories: lab list)
 FAULTS = {
     "release_absolute_individual": "individual medical or belief data is released",
     "audit_raw_data": "an audit reads raw personal data",
@@ -73,6 +75,9 @@ FAULTS = {
     "transparency_attributes": "a published decision names a responsible Subject",
     "transparency_overrides_info": "a transparency release removes an information act that INFO protects",
     "transparency_scope_creep": "TRANSPARENCY adds a personal domain to the public domains",
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "full_observer": "an observer is granted linked records of one Subject across every declared layer",
+    "delete_history": "a historical record is deleted without any preserved representation",
 }
 REQUEST = {"type": "object", "fields": {
     "id": {"type": "str"},
@@ -198,6 +203,20 @@ def run(r: Dict[str, Any]):
             v["classification"] = "policy deviation" if "breach_downgraded" in faults else                 "critical system integrity breach" + ("" if v["grant"] else " (attempted)")
         put("decision", "PRIVACY", k, v, [] if "unverifiable_decision" in faults and k == 0 else [o.event_id])
     k = len(r["requests"])
+    for ob in r["observers"]:                                # PRIVACY §4.1: no Subject fully observable across all layers
+        total = set(LAYERS) <= set(ob["layers"])
+        put("decision", "PRIVACY/ACCESS", k, {"observer": ob["observer"], "subject": "s1", "layers": list(ob["layers"]),
+                                       "granted": not total or "full_observer" in faults,
+                                       "reason": "full observability across all layers (PRIVACY §4.1)" if total else "layer-limited access"})
+    for ra in r["retention_actions"]:                        # TRANSPARENCY §12: historical records preserved
+        if ra["action"] == "aggregate":
+            v = {"record": ra["record"], "original_removed": True, "preserved_as": f"aggregate:{ra['record']}"}
+        elif ra["action"] == "delete" and "delete_history" in faults:
+            v = {"record": ra["record"], "original_removed": True, "preserved_as": None}
+        else:
+            v = {"record": ra["record"], "original_removed": False, "preserved_as": "original",
+                 **({"refused": "deletion of a historical record (TRANSPARENCY §12)"} if ra["action"] == "delete" else {})}
+        put("action", "ARCHIVE", k, v)
     if r["crisis_scope_active"]:
         put("notice", "TRANSPARENCY", k, {"crisis_scope": True, "action_transparency": "increased",
                                           "identity_exposure": "increased" if "crisis_identity_by_default" in faults else "unchanged",
@@ -213,6 +232,42 @@ def run(r: Dict[str, Any]):
     if "transparency_scope_creep" in faults:
         put("notice", "TRANSPARENCY", k, {"public_domains_added": ["mobility"]})
     return log
+
+
+def core_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
+    """Clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)."""
+    msgs = log.messages()
+    out: List[CheckResult] = []
+
+    def v(rid, chk, bad, ok, no):
+        return CheckResult(rid, chk, FAIL if bad else PASS, no.format(n=len(bad)) if bad else ok,
+                           evidence={"violations": bad[:10]} if bad else {})
+
+    def na(rid, chk, what, why):
+        return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
+    obs = [m.value for m in msgs if m.source == "PRIVACY/ACCESS"]
+    out.append(v("PRIVACY-4.1-01", "no_total_observer", [x["observer"] for x in obs if x["granted"] and set(LAYERS) <= set(x["layers"])],
+                 f"{len(obs)} observer(s); none holds linked records of one Subject across all declared layers ({', '.join(LAYERS)})",
+                 "{n} observers seeing one Subject across every layer") if obs else
+               na("PRIVACY-4.1-01", "no_total_observer", "observers", "none declared"))
+    ar = [m.value for m in msgs if m.source == "ARCHIVE"]
+    agg = [x["record"] for x in ar if x["preserved_as"] and x["preserved_as"].startswith("aggregate")]
+    out.append(v("TRANSPARENCY-12-02", "no_deletion_without_representation", [x["record"] for x in ar if x["original_removed"] and not x["preserved_as"]],
+                 f"{len(ar)} retention action(s); no record removed without a preserved representation"
+                 + (f" ({', '.join(agg)} kept as aggregates: whether that suffices stays open)" if agg else ""),
+                 "{n} records deleted without any preserved representation") if ar else
+               na("TRANSPARENCY-12-02", "no_deletion_without_representation", "retention", "no retention action"))
+    req = {m.value["request"]: m.value for m in msgs if m.source == "REQUEST"}
+    dec = [m.value for m in msgs if m.source == "PRIVACY" and m.kind == "decision" and "request" in m.value]
+    prot = [d for d in dec if d["domain"] in PROTECTED_6 and d["grant"]]
+    bad = [f"{d['request']}: {d['domain']} identified without verified harm" for d in prot if d["level"] == "individual"
+           and not req[d["request"]]["harm_verified"] and not req[d["request"]]["in_crisis_scope"]]
+    bad += [f"{d['request']}: names the requester" for d in prot if "requester_identity" in d]
+    out.append(v("TRANSPARENCY-6-01", "protected_domains_anonymous", bad,
+                 f"{len(prot)} release(s) in the §6 domains, none carrying an identity without verified harm (or the Crisis Scope)",
+                 "{n} identities in protected domains without verified harm") if prot else
+               na("TRANSPARENCY-6-01", "protected_domains_anonymous", "releases in the §6 domains", "none granted"))
+    return out
 
 
 def override_check(r: Dict[str, Any], log: EventLog) -> CheckResult:
@@ -453,6 +508,10 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 
 IMPLEMENTS = {
+    # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
+    "PRIVACY-4.1-01": ("no_total_observer", "PARTIAL", "Clear part only: no observer across all declared layers; layers and observers are lab declarations."),
+    "TRANSPARENCY-12-02": ("no_deletion_without_representation", "PARTIAL", "Clear part only: no deletion without any representation; whether aggregates may replace originals stays open."),
+    "TRANSPARENCY-6-01": ("protected_domains_anonymous", "PARTIAL", "Clear part only: no identity in the §6 domains absent verified harm; protection adequacy stays open."),
     "PRIVACY-6-01": ("absolute_domains", "PARTIAL", "Aggregates of an absolute domain are not settled (F-026): UNKNOWN."),
     "PRIVACY-6-02": ("absolute_domains", "IMPLEMENTED", None),
     "TRANSPARENCY-3-03": ("absolute_domains", "PARTIAL", "Private life as the absolute privacy domains."),
@@ -521,7 +580,7 @@ IMPLEMENTS = {
 
 class PrivacyTransparencyModule(LabModule):
     id = "privacy_transparency"
-    version = "1.3.0"
+    version = "1.4.0"
     title = {"en": "Privacy and transparency (PRIVACY, TRANSPARENCY)", "ru": "Приватность и прозрачность (PRIVACY, TRANSPARENCY)"}
     summary = {"en": "Requests to publish or process data: is the system verifiable without exposing people, and is a "
                      "person's identity revealed only when harm is verified and nothing anonymous would do?",
@@ -564,6 +623,21 @@ class PrivacyTransparencyModule(LabModule):
         "absolute_aggregate_reading": {"type": "enum", "values": ["aggregate_allowed", "never"], "default": "aggregate_allowed",
                                        "source": "alternative", "label": {"en": "Aggregates of absolute domains (H-PT-2)",
                                                                          "ru": "Агрегаты абсолютных доменов (H-PT-2)"}},
+        "observers": {"type": "list", "min_items": 0, "max_items": 10, "source": "user",
+                      "items": {"type": "object", "fields": {"observer": {"type": "str"},
+                                                             "layers": {"type": "list", "min_items": 1, "max_items": len(LAYERS),
+                                                                        "items": {"type": "enum", "values": list(LAYERS)}}}},
+                      "default": [{"observer": "finance_node", "layers": ["economic"]},
+                                  {"observer": "transport_node", "layers": ["mobility", "platform"]},
+                                  {"observer": "data_broker", "layers": list(LAYERS)}],
+                      "label": {"en": "Observers and the layers they ask to see for one Subject (PRIVACY §4.1)",
+                                "ru": "Наблюдатели и слои, которые они хотят видеть по одному субъекту (PRIVACY §4.1)"}},
+        "retention_actions": {"type": "list", "min_items": 0, "max_items": 20, "source": "user",
+                              "items": {"type": "object", "fields": {"record": {"type": "str"},
+                                                                     "action": {"type": "enum", "values": ["keep", "aggregate", "delete"]}}},
+                              "default": [{"record": "r1", "action": "aggregate"}, {"record": "r2", "action": "delete"}],
+                              "label": {"en": "Retention actions on historical records (TRANSPARENCY §12)",
+                                        "ru": "Действия с историческими записями (TRANSPARENCY §12)"}},
         "crisis_scope_active": {"type": "bool", "default": False, "source": "user",
                                 "label": {"en": "Crisis Scope active", "ru": "Действует Crisis Scope"}},
         "participants": {"type": "object", "source": "user", "label": {"en": "Participants", "ru": "Участники"},
@@ -596,7 +670,7 @@ class PrivacyTransparencyModule(LabModule):
 
     def evaluate(self, r: Dict[str, Any]) -> ModuleResult:
         log = run(r)
-        res = checks(r, log)
+        res = checks(r, log) + core_checks(r, log)
         decs = [m.value for m in log.messages() if m.source == "PRIVACY" and m.kind == "decision"]
         outputs = {"decisions": decs, "granted": sum(1 for d in decs if d["grant"]),
                    "refused": sum(1 for d in decs if not d["grant"]),

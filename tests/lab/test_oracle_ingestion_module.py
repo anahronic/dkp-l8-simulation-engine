@@ -44,6 +44,9 @@ FAULT_CASES = {
     "accept_layer_override": ({}, ["ORACLE-15-01", "ORACLE-EpistemicInterpretationNote-02"]),
     "emit_intent": ({}, ["ORACLE-5.3-01"]),
     "in_place_change": ({}, ["ORACLE-18-01"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "untraced_aggregation": ({}, ["ORACLE-10-03"]),
+    "proxy_as_state": ({}, ["ORACLE-5.2-01"]),
 }
 
 
@@ -90,3 +93,14 @@ def test_b_never_enforces_without_bundle():
 def test_invalid_inputs_are_refused(name):
     with pytest.raises(LabInputError):
         M.validate(M.failure_examples()[name])
+
+
+def test_core_checks_on_existing_faults():
+    """Review КТ7-GPT-01: a median vote or a random tie-break does not recompute from the published trace (ORACLE §10);
+    a deferral for a human-caused event breaks the non-anthropogenic condition of Mercy Mode (CRISIS §6, as ORACLE-14-02)."""
+    m = M.examples()
+    for f in ("vote_aggregation", "nondeterministic"):
+        assert statuses(run(**m["orbital_bias"]))["ORACLE-10-03"] == "PASS"
+        assert statuses(run(**m["orbital_bias"], faults=[f]))["ORACLE-10-03"] == "FAIL", f
+    assert statuses(run(**m["mercy_human_cause"]))["CRISIS-6-03"] == "PASS"
+    assert statuses(run(**m["mercy_human_cause"], faults=["mercy_without_confirmation"]))["CRISIS-6-03"] == "FAIL"

@@ -50,6 +50,9 @@ FAULT_CASES = {
     "transparency_attributes": ({}, ["TRANSPARENCY-13-02"]),
     "transparency_overrides_info": ({}, ["TRANSPARENCY-13-03"]),
     "transparency_scope_creep": ({}, ["TRANSPARENCY-13-04"]),
+    # checkable cores of provisions whose open point remains (review КТ7-GPT-01)
+    "full_observer": ({}, ["PRIVACY-4.1-01"]),
+    "delete_history": ({}, ["TRANSPARENCY-12-02"]),
 }
 
 
@@ -102,3 +105,12 @@ def test_deanonymization_must_stay_auditable():
     assert statuses(run(**HC))["TRANSPARENCY-8-04"] == "PASS"
     for f in ("no_audit_hook", "unverifiable_decision", "unexplained_decision"):
         assert statuses(run(**HC, faults=[f]))["TRANSPARENCY-8-04"] == "FAIL", f
+
+
+def test_protected_domains_and_retention():
+    """Review КТ7-GPT-01 clear parts: an identity in a TRANSPARENCY §6 domain without verified harm fails (de-anonymization,
+    a named requester); a record replaced by an aggregate keeps a representation (whether that suffices stays open)."""
+    for f in ("deanonymize_without_harm", "transparency_exposes_identity"):
+        assert statuses(run())["TRANSPARENCY-6-01"] == "PASS"
+        assert statuses(run(faults=[f]))["TRANSPARENCY-6-01"] == "FAIL", f
+    assert statuses(run(retention_actions=[{"record": "r1", "action": "aggregate"}]))["TRANSPARENCY-12-02"] == "PASS"

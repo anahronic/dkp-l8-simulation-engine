@@ -36,7 +36,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "excluded_functions_refused"
    },
    "tests": [
@@ -77,7 +77,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "purely_translational"
    },
    "tests": [
@@ -115,7 +115,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "external_not_governed"
    },
    "tests": [
@@ -152,7 +152,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "defined_interfaces"
    },
    "tests": [
@@ -195,7 +195,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "deterministic_translation"
    },
    "tests": [
@@ -237,7 +237,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_normative_leakage"
    },
    "tests": [
@@ -280,7 +280,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "axioms_not_overridden"
    },
    "tests": [
@@ -324,7 +324,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_jurisdiction_expansion"
    },
    "tests": [
@@ -367,7 +367,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "compatibility_not_consent"
    },
    "tests": [
@@ -411,7 +411,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "explicit_translation_rules"
    },
    "tests": [
@@ -450,7 +450,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "exports_as_evidence"
    },
    "tests": [
@@ -484,7 +484,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "external_rulings_not_binding"
    },
    "tests": [
@@ -517,7 +517,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "compliance_by_subjects"
    },
    "tests": [
@@ -554,7 +554,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_regime_adjudication"
    },
    "tests": [
@@ -592,7 +592,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "economic_channels"
    },
    "tests": [
@@ -630,7 +630,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "justice_weighted_translation"
    },
    "tests": [
@@ -702,7 +702,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "external_values_flagged"
    },
    "tests": [
@@ -741,7 +741,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "finance_constraints_not_bypassed"
    },
    "tests": [
@@ -811,13 +811,19 @@
     "cryptographic proofs or signatures",
     "verification keys and trust configuration"
    ],
-   "gap": "The verification target, cryptographic scheme, and trust model are unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: digests that recompute; targets and trust model stay open.",
    "hypotheses_needed": [
     "Declare which properties and artifacts must be verifiable and under which cryptographic trust model."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.5.0",
+    "check": "artifact_digest_verifies"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -854,7 +860,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "audit_hooks"
    },
    "tests": [
@@ -895,7 +901,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "blackbox_not_authoritative"
    },
    "tests": [
@@ -939,7 +945,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "external_info_as_i1"
    },
    "tests": [
@@ -980,7 +986,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_external_validation_for_ptl"
    },
    "tests": [
@@ -1057,7 +1063,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "internal_execution_unaffected"
    },
    "tests": [
@@ -1099,7 +1105,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_rollback"
    },
    "tests": [
@@ -1136,7 +1142,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_crisis_from_interop"
    },
    "tests": [
@@ -1172,7 +1178,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_automatic_harmonization"
    },
    "tests": [
@@ -1213,7 +1219,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_external_decision_dependency"
    },
    "tests": [
@@ -1254,7 +1260,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_governance_by_api"
    },
    "tests": [
@@ -1295,7 +1301,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_silent_norm_import"
    },
    "tests": [
@@ -1328,13 +1334,19 @@
    "data_dependencies": [
     "function delegation records and termination terms"
    ],
-   "gap": "The treatment of indefinite or revocable delegations under the term permanent is unspecified. No lab check implemented yet.",
+   "gap": "Clear part only: an irrevocable delegation fails; an indefinite revocable one gives UNKNOWN.",
    "hypotheses_needed": [
     "Declare a permanence test for delegation terms without inventing a normative duration threshold."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.5.0",
+    "check": "no_irrevocable_delegation"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1370,7 +1382,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "interop_auditable"
    },
    "tests": [
@@ -1405,13 +1417,19 @@
     "translation implementations or specifications",
     "access interfaces"
    ],
-   "gap": "The intended audience and sufficient form of exposure are not defined. No lab check implemented yet.",
+   "gap": "Clear part only: the logic is published to audit; the wider audience stays open.",
    "hypotheses_needed": [
     "Declare who must be able to access the logic and what representation counts as exposure."
    ],
-   "coverage": "NOT_IMPLEMENTED",
-   "implementation": null,
-   "tests": [],
+   "coverage": "PARTIAL",
+   "implementation": {
+    "module": "interop_failure",
+    "version": "1.5.0",
+    "check": "translation_logic_exposed"
+   },
+   "tests": [
+    "tests/lab/test_interop_failure_module.py"
+   ],
    "interpretation_status": "DRAFT_UNREVIEWED",
    "decision_status": "UNRESOLVED",
    "open_questions": [],
@@ -1447,7 +1465,7 @@
    "coverage": "IMPLEMENTED",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "boundary_events_recorded"
    },
    "tests": [
@@ -1490,7 +1508,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_interop_audit_authority"
    },
    "tests": [
@@ -1532,7 +1550,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_geopolitical_resolution"
    },
    "tests": [
@@ -1572,7 +1590,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_legal_unification"
    },
    "tests": [
@@ -1612,7 +1630,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_compliance_guarantee"
    },
    "tests": [
@@ -1653,7 +1671,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "no_enforcement_bridge"
    },
    "tests": [
@@ -1694,7 +1712,7 @@
    "coverage": "PARTIAL",
    "implementation": {
     "module": "interop_failure",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "check": "compatibility_not_convergence"
    },
    "tests": [
