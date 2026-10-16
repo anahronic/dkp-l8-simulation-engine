@@ -114,3 +114,40 @@ def test_protected_domains_and_retention():
         assert statuses(run())["TRANSPARENCY-6-01"] == "PASS"
         assert statuses(run(faults=[f]))["TRANSPARENCY-6-01"] == "FAIL", f
     assert statuses(run(retention_actions=[{"record": "r1", "action": "aggregate"}]))["TRANSPARENCY-12-02"] == "PASS"
+
+
+def test_split_access_requests_add_up_per_observer():
+    """Review КТ8-GPT-01: grants add up per observer and Subject, so splitting a full request into partial ones neither
+    passes the planner nor the check; observers are counted by identity, apart from requests."""
+    from dataclasses import replace
+    from lab.core.bus import EventLog
+    from lab.modules.privacy_transparency import LAYERS, core_checks, run as plan
+
+    def access(*rows):
+        res = run(observers=[{"observer": o, "layers": ls} for o, ls in rows])
+        return res, res.outputs["access"], [c for c in res.checks if c.requirement_id == "PRIVACY-4.1-01"]
+
+    half, rest = ["identity", "economic"], ["mobility", "platform"]
+    for rows in ([("broker", half), ("broker", rest)], [("broker", rest), ("broker", half)]):      # given and permuted
+        res, acc, (chk,) = access(*rows)
+        assert [a["granted"] for a in acc] == [True, False] and acc[1]["held_before"] == sorted(rows[0][1])
+        assert chk.status == "PASS" and "1 observer(s) (broker), 2 access request(s), 1 granted" in chk.explanation
+    _, acc, (chk,) = access(("broker", ["identity"]), ("broker", ["economic", "mobility"]))      # union short of the full set
+    assert all(a["granted"] for a in acc) and chk.status == "PASS"
+    _, acc, (chk,) = access(("a", half), ("b", rest), ("c", half))                              # separate identities
+    assert all(a["granted"] for a in acc) and chk.status == "PASS" and "3 observer(s)" in chk.explanation
+    _, acc, (chk,) = access(("broker", list(LAYERS)))                                          # direct full request
+    assert [a["granted"] for a in acc] == [False] and chk.status == "PASS"
+    res = run(observers=[{"observer": "broker", "layers": half}, {"observer": "broker", "layers": rest}], faults=["full_observer"])
+    assert {c.requirement_id: c.status for c in res.checks}["PRIVACY-4.1-01"] == "FAIL"
+    one = M.validate({"observers": [{"observer": "broker", "layers": list(LAYERS)}]})              # log mutation: one refused
+    original = plan(one)                                                                        # full grant replaced by two
+    mutated = EventLog(original.time_unit, tie_rule=original.tie_rule)                         # granted partial ones
+    for msg in original.messages():
+        if msg.source != "PRIVACY/ACCESS":
+            mutated.append(msg)
+            continue
+        for i, ls in enumerate([half, rest]):
+            mutated.append(replace(msg, event_id=msg.event_id + "-split" + str(i), value=dict(msg.value, layers=ls, granted=True)))
+    (chk,) = [c for c in core_checks(one, mutated) if c.requirement_id == "PRIVACY-4.1-01"]
+    assert chk.status == "FAIL" and chk.evidence["violations"] == ["broker on s1"]

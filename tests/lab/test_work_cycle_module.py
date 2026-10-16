@@ -4,7 +4,7 @@ import pytest
 
 from lab.core.checks import FAIL, NOT_APPLICABLE, PASS, UNKNOWN
 from lab.core.schema import LabInputError
-from lab.modules.work_cycle import WorkCycleModule
+from lab.modules.work_cycle import MONITORED, WorkCycleModule
 
 M = WorkCycleModule()
 
@@ -12,6 +12,10 @@ M = WorkCycleModule()
 def run(**inp):
     r = M.evaluate(M.validate(inp))
     return {c.requirement_id: c.status for c in r.checks}, r.outputs
+
+
+def checks(**inp):
+    return {(c.requirement_id, c.check): c for c in M.evaluate(M.validate(inp)).checks}
 
 
 def test_staffed_default_covers_every_hour():
@@ -82,9 +86,8 @@ def test_fault_is_detected(fault):
         {"refusing_workers": 6, "crisis_window": [3, 7]} if fault in ("permanent_obligation", "post_crisis_penalty", "exception_precedent",
                                                                       "untraced_exception", "crisis_withdraws_access",
                                                                       "no_recovery_compensation") else {}
-    clean = {c.requirement_id: c.status for c in M.evaluate(M.validate(base)).checks}
-    broken = {c.requirement_id: c.status for c in M.evaluate(M.validate(dict(base, faults=[fault]))).checks}
-    assert any(broken[k] == "FAIL" and clean[k] == "PASS" for k in broken), fault
+    clean, broken = checks(**base), checks(**base, faults=[fault])
+    assert any(broken[k].status == FAIL and clean[k].status == PASS for k in broken), fault
 
 
 def test_one_year_recovery_and_cycles():
@@ -164,16 +167,16 @@ CORE_FAULTS = {          # checkable cores of provisions whose open point remain
     "work_in_recovery": ({}, ["WORKCYCLE-5.3-02"]),
     "justify_recovery": ({}, ["WORKCYCLE-5.3-02"]),
     "unmonitored_category": ({}, ["WORKCYCLE-9-01"]),
+    "wrong_recovery_compliance": ({}, ["WORKCYCLE-9-01"]),
 }
 
 
 @pytest.mark.parametrize("fault", sorted(CORE_FAULTS))
 def test_core_fault_hits_its_provision(fault):
     base, rids = CORE_FAULTS[fault]
-    clean, _ = run(**base)
-    broken, _ = run(**base, faults=[fault])
+    clean, broken = checks(**base), checks(**base, faults=[fault])
     for rid in rids:
-        assert clean[rid] == PASS and broken[rid] == FAIL, (fault, rid, clean[rid], broken[rid])
+        assert any(clean[k].status == PASS and broken[k].status == FAIL for k in clean if k[0] == rid), (fault, rid)
 
 
 def test_restricted_subjects_keep_access_pathways_and_consent():
@@ -187,3 +190,95 @@ def test_restricted_subjects_keep_access_pathways_and_consent():
     assert st["WORKCYCLE-2-02"] == PASS and st["LABOR-9.2-01"] == NOT_APPLICABLE
     st, _ = run(pattern=["W", "W", "W", "R", "W", "R"], compensation_declared=True)
     assert st["WORKCYCLE-2-02"] == UNKNOWN
+
+
+def monitoring_series(value=1):
+    return {c: [{"period": 0, "value": value, "source": f"operational log {i}"}] for i, c in enumerate(MONITORED[:-1])}
+
+
+def test_monitoring_default_separates_declaration_data_and_recomputation():
+    result = checks()
+    declared = result["WORKCYCLE-9-01", "five_categories_declared"]
+    records = result["WORKCYCLE-9-01", "monitoring_records_present"]
+    assert declared.status == PASS and "not evidence that monitoring runs" in declared.explanation
+    assert records.status == UNKNOWN
+    assert all(c in records.explanation for c in MONITORED[:-1])
+    assert records.evidence == {c: "no data" for c in MONITORED[:-1]}
+    assert result["WORKCYCLE-9-01", "recovery_compliance_recomputed"].status == PASS
+
+
+@pytest.mark.parametrize("series", [{}, {c: [] for c in MONITORED[:-1]}, monitoring_series(None)])
+def test_monitoring_without_measurements_is_unknown(series):
+    check = checks(monitoring_series=series)["WORKCYCLE-9-01", "monitoring_records_present"]
+    assert check.status == UNKNOWN
+    assert all(c in check.explanation for c in MONITORED[:-1])
+    assert check.evidence == {c: "no data" for c in MONITORED[:-1]}
+
+
+@pytest.mark.parametrize("value", [0, 1.5])
+def test_monitoring_present_records_leave_metric_rules_open(value):
+    series = monitoring_series(value)
+    for records in series.values():
+        records.append({"period": 11, "value": None, "source": "missing measurement log"})
+    check = checks(monitoring_series=series)["WORKCYCLE-9-01", "monitoring_records_present"]
+    assert check.status == PASS
+    assert check.evidence == {c: "1 measurements" for c in MONITORED[:-1]}
+    assert "2 records" in check.explanation
+    assert all(record["source"] in check.explanation for records in series.values() for record in records)
+    assert all(word in check.explanation for word in ("definitions", "cadence", "sustained degradation", "stay open", "not checked"))
+
+
+def test_monitoring_one_category_without_data_is_named():
+    series = monitoring_series()
+    del series[MONITORED[0]]
+    check = checks(monitoring_series=series)["WORKCYCLE-9-01", "monitoring_records_present"]
+    assert check.status == UNKNOWN and MONITORED[0] in check.explanation
+    assert "no operational data presented; the lab does not measure it" in check.explanation
+    assert all(c not in check.explanation for c in MONITORED[1:-1])
+
+
+@pytest.mark.parametrize("change, reason", [({"value": -1}, "value"), ({"period": 12}, "period"),
+    ({"period": -1}, "period"), ({"period": 1.5}, "period"), ({"period": True}, "period"),
+    ({"value": "1"}, "value"), ({"value": True}, "value"), ({"value": float("nan")}, "value"),
+    ({"value": float("inf")}, "value"), ({"source": " "}, "source"), ({"source": None}, "source")])
+def test_malformed_monitoring_record_fails(change, reason):
+    series = monitoring_series()
+    series[MONITORED[0]][0].update(change)
+    check = checks(monitoring_series=series)["WORKCYCLE-9-01", "monitoring_records_present"]
+    assert check.status == FAIL and reason in check.explanation and MONITORED[0] in check.explanation
+
+
+@pytest.mark.parametrize("record", [None, [], {}, {"period": 0, "source": "log"}])
+def test_missing_monitoring_record_fields_fail(record):
+    check = checks(monitoring_series={MONITORED[0]: [record]})["WORKCYCLE-9-01", "monitoring_records_present"]
+    assert check.status == FAIL
+
+
+@pytest.mark.parametrize("series", [None, [], {"unknown": []}, {MONITORED[-1]: []}, {MONITORED[0]: {}}])
+def test_invalid_monitoring_series_container_or_category_is_rejected(series):
+    with pytest.raises(LabInputError, match="monitoring_series"):
+        M.validate({"monitoring_series": series})
+
+
+@pytest.mark.parametrize("fault, check", [("unmonitored_category", "five_categories_declared"),
+                                        ("wrong_recovery_compliance", "recovery_compliance_recomputed")])
+def test_monitoring_fault_hits_its_check(fault, check):
+    result = checks(faults=[fault])["WORKCYCLE-9-01", check]
+    assert result.status == FAIL
+    if fault == "unmonitored_category":
+        assert "sick leave frequency" in result.explanation
+
+
+def test_recovery_recomputation_without_workdays_is_not_applicable():
+    assert checks(pattern=["R"])["WORKCYCLE-9-01", "recovery_compliance_recomputed"].status == NOT_APPLICABLE
+
+
+@pytest.mark.parametrize("inp, rate", [({"faults": ["work_in_recovery"]}, 0),
+                                     ({"work_hours": 7, "recovery_hours": 2.1}, 0),
+                                     ({"refusing_workers": 6}, 1)])
+def test_recovery_recomputation_uses_workdays_and_ceil_recovery(inp, rate):
+    result = M.evaluate(M.validate(inp))
+    assert result.outputs["monitoring"]["recovery compliance rate"] == rate
+    check = next(c for c in result.checks if (c.requirement_id, c.check) ==
+                 ("WORKCYCLE-9-01", "recovery_compliance_recomputed"))
+    assert check.status == PASS

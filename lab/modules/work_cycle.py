@@ -20,6 +20,7 @@ Nothing here measures fatigue, error rates or the KPIs of §9: those need real d
 
 from __future__ import annotations
 
+import copy
 import math
 from typing import Any, Dict, List
 
@@ -57,6 +58,7 @@ FAULTS = {
     "restore_without_contribution": "full participation is restored without a contribution or restitution record",
     "no_recovery_compensation": "a crisis exception carries no recovery-compensation record",
     "unmonitored_category": "sick leave frequency is not monitored",
+    "wrong_recovery_compliance": "the stored recovery compliance rate differs from the shift log",
 }
 OPPORTUNITIES = ("supervised maintenance", "ecological restoration", "care support")                 # LABOR §5.1 (lab examples)
 MONITORED = ("error and incident rates", "sick leave frequency", "staff attrition", "output per productive hour",
@@ -133,13 +135,15 @@ IMPLEMENTS = {
     "WORKCYCLE-10-03": ("exception_recovery_compensation", "PARTIAL", "Clear part only: a compensation record per exception; the amount stays open."),
     "WORKCYCLE-2-02": ("adaptation_keeps_invariant", "PARTIAL", "Clear part only: the §7 invariant under any adaptation; whether all allocations are invariants stays open."),
     "WORKCYCLE-5.3-02": ("recovery_kept_unconditional", "PARTIAL", "Clear part only: not work, not reduced, no justification; what 'monetized' covers stays open."),
-    "WORKCYCLE-9-01": ("five_categories_monitored", "PARTIAL", "Clear part only: the five categories are monitored; metric definitions and cadence stay open."),
+    "WORKCYCLE-9-01": ("five_categories_declared", "PARTIAL", "Clear part only: the five categories are declared, monitoring "
+                       "records are checked when presented, the recovery compliance rate is recomputed from the shift log; "
+                       "metric definitions, cadence and the sustained-degradation criterion stay open."),
 }
 
 
 class WorkCycleModule(LabModule):
     id = "work_cycle"
-    version = "1.5.0"
+    version = "1.6.0"
     title = {"en": "24/7 service rosters (WORK-CYCLE)", "ru": "Круглосуточные смены (WORK-CYCLE)"}
     summary = {"en": "Is there enough staff for round-the-clock service without breaking the 6-day "
                      "cycle and the daily recovery block?",
@@ -220,6 +224,16 @@ class WorkCycleModule(LabModule):
         "recovery_requests": {"type": "list", "min_items": 0, "max_items": 20, "items": {"type": "enum", "values": list(RECOVERY_REQUESTS)},
                               "default": ["monetize", "meal", "personal", "work_task"], "source": "user",
                               "label": {"en": "Requests concerning the recovery block (§5.3)", "ru": "Запросы о блоке восстановления (§5.3)"}},
+        "monitoring_series": {"type": "object", "default": {}, "source": "user",
+                              "fields": {c: {"type": "list", "default": [], "items": {"type": "object", "fields": {
+                                  "period": {"type": "int"}, "value": {"type": "number", "default": None},
+                                  "source": {"type": "str"}}}} for c in MONITORED[:-1]},
+                              "label": {"en": "Presented monitoring records (WORK-CYCLE §9)",
+                                        "ru": "Представленные записи мониторинга (WORK-CYCLE §9)"},
+                              "help": {"en": "Per category: period (DTI-Day index within the horizon), value (number or null "
+                                             "for not measured), source. Record validity is checked by WORKCYCLE-9-01.",
+                                       "ru": "По каждой категории: период (номер DTI-Day в горизонте), значение (число или null, "
+                                             "если не измерялось), источник. Корректность записей проверяет WORKCYCLE-9-01."}},
         "faults": {"type": "list", "min_items": 0, "max_items": len(FAULTS),
                    "items": {"type": "enum", "values": list(FAULTS)}, "default": [], "source": "user",
                    "label": {"en": "Deliberate faults (counterexamples)", "ru": "Намеренные ошибки (контрпримеры)"},
@@ -231,8 +245,18 @@ class WorkCycleModule(LabModule):
     }
 
     def validate(self, value: Dict[str, Any]) -> Dict[str, Any]:
-        r = super().validate(value)
+        # WORK-CYCLE §9: validate the container here; nullable and malformed records are evaluated as evidence below.
+        series = value.get("monitoring_series", {}) if isinstance(value, dict) else {}
+        r = super().validate(dict(value, monitoring_series={}) if isinstance(value, dict) else value)
         p = []
+        if not isinstance(series, dict):
+            p.append("input.monitoring_series: expected mapping")
+        else:
+            for c, records in series.items():
+                if c not in MONITORED[:-1]:
+                    p.append(f"input.monitoring_series.{c}: unknown category")
+                if not isinstance(records, list):
+                    p.append(f"input.monitoring_series.{c}: expected list")
         if r["work_hours"] + r["recovery_hours"] > r["presence_hours"]:
             p.append("input: work_hours + recovery_hours exceed presence_hours")
         if r["work_before_recovery"] > r["work_hours"]:
@@ -241,6 +265,7 @@ class WorkCycleModule(LabModule):
             p.append("input.shift_starts: duplicate start hours")
         if p:
             raise LabInputError(p)
+        r["monitoring_series"] = copy.deepcopy(series)
         return r
 
     # roster -------------------------------------------------------------
@@ -395,6 +420,9 @@ class WorkCycleModule(LabModule):
                                  if not (c == "sick leave frequency" and "unmonitored_category" in faults)}
         outputs["monitoring"]["recovery compliance rate"] = (
             round(sum(1 for x in wdays if x["recovery"] >= int(math.ceil(rec))) / len(wdays), 6) if wdays else None)
+        if "wrong_recovery_compliance" in faults and wdays:
+            rate = outputs["monitoring"]["recovery compliance rate"]
+            outputs["monitoring"]["recovery compliance rate"] = round(min(1.0, rate + 0.1) if rate < 1 else rate - 0.1, 6)
         checks = [c for c in self.checks(r, roster, runs, deficit_hours) if c.requirement_id != "WORKCYCLE-5.3-01"] + \
             self.labor_time_checks(r, roster) + self.day_checks(r, day_hours, decisions) + \
             exception_checks(r, roster, day_hours, outputs) + restricted_checks(r, outputs) + returned_checks(r, roster, outputs) + \
@@ -772,11 +800,62 @@ def core_checks(r, roster, day_hours, outputs) -> List[CheckResult]:
     out.append(v("WORKCYCLE-5.3-02", "recovery_kept_unconditional", bad,
                  f"every workday keeps {need} h of recovery outside work and coverage; no justification is demanded",
                  "{n} reduced recovery blocks or demands for justification"))
-    # WORK-CYCLE §9: the five categories are monitored
+    # WORK-CYCLE §9: declaration, presented records and recomputation are separate claims.
     mon = outputs["monitoring"]
-    out.append(v("WORKCYCLE-9-01", "five_categories_monitored", [c for c in MONITORED if c not in mon],
-                 "the five §9 categories are monitored (recovery compliance computed; the other four need operational data)",
-                 "{n} §9 categories not monitored"))
+    missing = [c for c in MONITORED if c not in mon]
+    out.append(v("WORKCYCLE-9-01", "five_categories_declared", missing,
+                 "the five §9 categories are declared as what is to be monitored; this is not evidence that monitoring runs",
+                 "missing declarations: " + ", ".join(missing) + "; declaration is not evidence that monitoring runs"))
+    counts, sources, bad = {}, {}, []
+    for c in MONITORED[:-1]:
+        counts[c], sources[c] = 0, set()
+        for i, record in enumerate(r.get("monitoring_series", {}).get(c, [])):
+            at = f"{c} record {i}"
+            if not isinstance(record, dict):
+                bad.append(f"{at}: expected record mapping")
+                continue
+            problems = []
+            period, value, source = record.get("period"), record.get("value"), record.get("source")
+            if type(period) is not int or not 0 <= period < r["horizon_days"]:
+                problems.append(f"period must be an integer within 0..{r['horizon_days'] - 1}")
+            if "value" not in record or (value is not None and
+                    (type(value) not in (int, float) or not math.isfinite(value) or value < 0)):
+                problems.append("value must be a finite non-negative number or null")
+            if not isinstance(source, str) or not source.strip():
+                problems.append("source must be a non-empty string")
+            if problems:
+                bad.append(f"{at}: " + "; ".join(problems))
+            else:
+                sources[c].add(source)
+                counts[c] += value is not None
+    evidence = {c: f"{n} measurements" if n else "no data" for c, n in counts.items()}
+    missing = [c for c, n in counts.items() if not n]
+    if bad:
+        check = v("WORKCYCLE-9-01", "monitoring_records_present", bad, "", "{n} malformed monitoring records")
+        check.explanation += ": " + "; ".join(bad)
+    elif missing:
+        check = CheckResult("WORKCYCLE-9-01", "monitoring_records_present", UNKNOWN,
+                            "; ".join(f"{c}: no operational data presented; the lab does not measure it" for c in missing))
+    else:
+        details = "; ".join(f"{c}: {counts[c]} measurements in {len(r['monitoring_series'][c])} records, sources: "
+                            + ", ".join(sorted(sources[c])) for c in counts)
+        check = v("WORKCYCLE-9-01", "monitoring_records_present", [],
+                  "records are present and well-formed for each category; " + details +
+                  "; metric definitions, cadence and the criterion of sustained degradation are not given by the text, "
+                  "stay open and are not checked", "")
+    check.evidence.update(evidence)
+    out.append(check)
+    wdays = [x for rows in day_hours.values() for x in rows if x["kind"] == "W"]
+    if wdays:
+        rate = round(sum(x["recovery"] >= need for x in wdays) / len(wdays), 6)
+        stored = mon.get("recovery compliance rate")
+        same = type(stored) in (int, float) and round(stored, 6) == rate
+        out.append(v("WORKCYCLE-9-01", "recovery_compliance_recomputed",
+                     [] if same else [f"stored {stored}, recomputed {rate}"],
+                     f"recovery compliance rate {rate} agrees with the shift log ({len(wdays)} workdays, recovery >= {need} h)",
+                     f"stored recovery compliance rate {stored} differs from shift log rate {rate}"))
+    else:
+        out.append(na("WORKCYCLE-9-01", "recovery_compliance_recomputed", "recovery compliance rate", "no workdays in the shift log"))
     return out
 
 

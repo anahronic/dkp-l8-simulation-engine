@@ -22,14 +22,14 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A. Registry and base | PARTIAL | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1506 | 789 | 4 | 67 | 18 | 142 | 0 | 0 | 1008 |
+| A. Registry and base | PARTIAL | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1505 | 788 | 4 | 68 | 18 | 142 | 0 | 0 | 1008 |
 | B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 16 | 29 | 15 | 0 | 1 | 0 | 13 | 0 | 0 | 29 |
 | C. Common checks | DONE | 8/8 | 365 | 358 (98.1 %) | 200 | 345 | 190 | 3 | 8 | 2 | 7 | 0 | 0 | 207 |
 | D. Transitions and rights | DONE | 9/9 | 424 | 383 (90.3 %) | 181 | 360 | 161 | 1 | 21 | 1 | 41 | 0 | 0 | 222 |
-| E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 130 | 246 | 115 | 0 | 9 | 8 | 30 | 0 | 0 | 160 |
+| E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 130 | 245 | 114 | 0 | 10 | 8 | 30 | 0 | 0 | 160 |
 | F. Remaining constraints and stress | DONE | 12/12 | 511 | 468 (91.6 %) | 268 | 444 | 246 | 0 | 18 | 6 | 43 | 0 | 0 | 311 |
 | G. General release | PARTIAL | — | | | | | | | | | | | | |
-| **All registrable documents** | | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1506 | 789 | 4 | 67 | 18 | 142 | 0 | 0 | 1008 |
+| **All registrable documents** | | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1505 | 788 | 4 | 68 | 18 | 142 | 0 | 0 | 1008 |
 
 Covered without an open point: 729; of all provisions, an open point closed by the lab agent's reading of the text: 406; accepted by a human: 0.  PARTIAL coverage (a check of part of a provision) is a limit of the check, not an open point.
 
@@ -288,7 +288,7 @@ Withdrawn after verification (not author decisions):
 | DKP-5-INFO-001 | 39 | 34 | 32 | 0 | 2 | 0 | 5 | 27 |
 | DKP-5-TRANSPORT-001 | 35 | 29 | 24 | 0 | 5 | 0 | 6 | 25 |
 | DKP-5-TRANSPORT-001-APPENDIX-A | 17 | 16 | 16 | 0 | 0 | 0 | 1 | 5 |
-| DKP-5-WORK-CYCLE-001 | 39 | 35 | 34 | 0 | 0 | 1 | 4 | 15 |
+| DKP-5-WORK-CYCLE-001 | 39 | 35 | 33 | 0 | 1 | 1 | 4 | 15 |
 | DKP-6-EXIT-001 | 62 | 58 | 56 | 0 | 2 | 0 | 4 | 28 |
 | DKP-6-INTEGRATION-001 | 51 | 45 | 44 | 0 | 1 | 0 | 6 | 24 |
 | DKP-6-RESILIENCE-001 | 37 | 36 | 32 | 0 | 4 | 0 | 1 | 30 |
@@ -1443,7 +1443,7 @@ Withdrawn after verification (not author decisions):
 | WORKCYCLE-8.1-02 | IMPLEMENTED | work_cycle · no_exhaustion | PASS | — | — |
 | WORKCYCLE-8.2-01 | IMPLEMENTED | work_cycle · shift_allocation | PASS | — | — |
 | WORKCYCLE-8.2-02 | IMPLEMENTED | work_cycle · high_intensity_recovery | NOT_APPLICABLE | — | Q-013 |
-| WORKCYCLE-9-01 | PARTIAL | work_cycle · five_categories_monitored | PASS | — | — |
+| WORKCYCLE-9-01 | PARTIAL | work_cycle · five_categories_declared | UNKNOWN | — | — |
 | EXIT-0-01 | PARTIAL | exit_integration · exit_unconditional | PASS | yes | — |
 | EXIT-0-02 | IMPLEMENTED | exit_integration · exit_not_denied | PASS | yes | — |
 | EXIT-0-03 | PARTIAL | exit_integration · exit_not_framed_as_failure | PASS | yes | — |

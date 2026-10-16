@@ -203,11 +203,20 @@ def run(r: Dict[str, Any]):
             v["classification"] = "policy deviation" if "breach_downgraded" in faults else                 "critical system integrity breach" + ("" if v["grant"] else " (attempted)")
         put("decision", "PRIVACY", k, v, [] if "unverifiable_decision" in faults and k == 0 else [o.event_id])
     k = len(r["requests"])
-    for ob in r["observers"]:                                # PRIVACY §4.1: no Subject fully observable across all layers
-        total = set(LAYERS) <= set(ob["layers"])
-        put("decision", "PRIVACY/ACCESS", k, {"observer": ob["observer"], "subject": "s1", "layers": list(ob["layers"]),
-                                       "granted": not total or "full_observer" in faults,
-                                       "reason": "full observability across all layers (PRIVACY §4.1)" if total else "layer-limited access"})
+    held: Dict[Any, set] = {}                                # PRIVACY §4.1: no Subject fully observable across all layers.
+    for i, ob in enumerate(r["observers"]):                  # Rows are requests in input order; access adds up per observer
+        key = (ob["observer"], "s1")                         # and Subject, so a split request cannot assemble every layer
+        before = held.get(key, set())                        # (review КТ8-GPT-01); a refused request grants nothing
+        total = set(LAYERS) <= before | set(ob["layers"])
+        grant = not total or "full_observer" in faults
+        if grant:
+            held[key] = before | set(ob["layers"])
+        put("decision", "PRIVACY/ACCESS", k, {"observer": ob["observer"], "subject": "s1", "request": i, "layers": list(ob["layers"]),
+                                       "held_before": sorted(before), "granted": grant,
+                                       "reason": "layer-limited access" if not total else
+                                       "full observability across all layers (PRIVACY §4.1)" if not before else
+                                       f"together with layers already granted ({', '.join(sorted(before))}) it would give "
+                                       "full observability across all layers (PRIVACY §4.1)"})
     for ra in r["retention_actions"]:                        # TRANSPARENCY §12: historical records preserved
         if ra["action"] == "aggregate":
             v = {"record": ra["record"], "original_removed": True, "preserved_as": f"aggregate:{ra['record']}"}
@@ -246,9 +255,17 @@ def core_checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
     def na(rid, chk, what, why):
         return CheckResult(rid, chk, NOT_APPLICABLE, what, applicability=why)
     obs = [m.value for m in msgs if m.source == "PRIVACY/ACCESS"]
-    out.append(v("PRIVACY-4.1-01", "no_total_observer", [x["observer"] for x in obs if x["granted"] and set(LAYERS) <= set(x["layers"])],
-                 f"{len(obs)} observer(s); none holds linked records of one Subject across all declared layers ({', '.join(LAYERS)})",
-                 "{n} observers seeing one Subject across every layer") if obs else
+    held: Dict[Any, set] = {}                                # granted records taken together per observer and Subject,
+    for x in obs:                                            # whatever the number of records (review КТ8-GPT-01)
+        if x["granted"]:
+            held.setdefault((x["observer"], x["subject"]), set()).update(x["layers"])
+    ids = sorted({x["observer"] for x in obs})
+    out.append(v("PRIVACY-4.1-01", "no_total_observer", [f"{o} on {s}" for (o, s), ls in sorted(held.items()) if set(LAYERS) <= ls],
+                 f"{len(ids)} observer(s) ({', '.join(ids)}), {len(obs)} access request(s), "
+                 f"{sum(1 for x in obs if x['granted'])} granted; no observer's granted records, taken together, cover one "
+                 f"Subject across all declared layers ({', '.join(LAYERS)}); observers are separate identities that do not "
+                 "share records in this model",
+                 "{n} observers whose granted records, taken together, cover one Subject across every layer") if obs else
                na("PRIVACY-4.1-01", "no_total_observer", "observers", "none declared"))
     ar = [m.value for m in msgs if m.source == "ARCHIVE"]
     agg = [x["record"] for x in ar if x["preserved_as"] and x["preserved_as"].startswith("aggregate")]
@@ -509,7 +526,7 @@ def checks(r: Dict[str, Any], log: EventLog) -> List[CheckResult]:
 
 IMPLEMENTS = {
     # clear parts of provisions whose open point remains (reading record, partial_check; review КТ7-GPT-01)
-    "PRIVACY-4.1-01": ("no_total_observer", "PARTIAL", "Clear part only: no observer across all declared layers; layers and observers are lab declarations."),
+    "PRIVACY-4.1-01": ("no_total_observer", "PARTIAL", "Clear part only: no observer whose granted records, taken together, cover all declared layers; layers, observers and linking across observers are lab declarations."),
     "TRANSPARENCY-12-02": ("no_deletion_without_representation", "PARTIAL", "Clear part only: no deletion without any representation; whether aggregates may replace originals stays open."),
     "TRANSPARENCY-6-01": ("protected_domains_anonymous", "PARTIAL", "Clear part only: no identity in the §6 domains absent verified harm; protection adequacy stays open."),
     "PRIVACY-6-01": ("absolute_domains", "PARTIAL", "Aggregates of an absolute domain are not settled (F-026): UNKNOWN."),
@@ -580,7 +597,7 @@ IMPLEMENTS = {
 
 class PrivacyTransparencyModule(LabModule):
     id = "privacy_transparency"
-    version = "1.4.0"
+    version = "1.5.0"
     title = {"en": "Privacy and transparency (PRIVACY, TRANSPARENCY)", "ru": "Приватность и прозрачность (PRIVACY, TRANSPARENCY)"}
     summary = {"en": "Requests to publish or process data: is the system verifiable without exposing people, and is a "
                      "person's identity revealed only when harm is verified and nothing anonymous would do?",
@@ -630,8 +647,10 @@ class PrivacyTransparencyModule(LabModule):
                       "default": [{"observer": "finance_node", "layers": ["economic"]},
                                   {"observer": "transport_node", "layers": ["mobility", "platform"]},
                                   {"observer": "data_broker", "layers": list(LAYERS)}],
-                      "label": {"en": "Observers and the layers they ask to see for one Subject (PRIVACY §4.1)",
-                                "ru": "Наблюдатели и слои, которые они хотят видеть по одному субъекту (PRIVACY §4.1)"}},
+                      "label": {"en": "Access requests in order: observer and the layers it asks to see for one Subject; "
+                                      "grants add up per observer (PRIVACY §4.1)",
+                                "ru": "Запросы доступа по порядку: наблюдатель и слои, которые он хочет видеть по одному "
+                                      "субъекту; выдачи одному наблюдателю суммируются (PRIVACY §4.1)"}},
         "retention_actions": {"type": "list", "min_items": 0, "max_items": 20, "source": "user",
                               "items": {"type": "object", "fields": {"record": {"type": "str"},
                                                                      "action": {"type": "enum", "values": ["keep", "aggregate", "delete"]}}},
@@ -672,7 +691,8 @@ class PrivacyTransparencyModule(LabModule):
         log = run(r)
         res = checks(r, log) + core_checks(r, log)
         decs = [m.value for m in log.messages() if m.source == "PRIVACY" and m.kind == "decision"]
-        outputs = {"decisions": decs, "granted": sum(1 for d in decs if d["grant"]),
+        outputs = {"decisions": decs, "access": [m.value for m in log.messages() if m.source == "PRIVACY/ACCESS"],
+                   "granted": sum(1 for d in decs if d["grant"]),
                    "refused": sum(1 for d in decs if not d["grant"]),
                    "event_log": {"time_unit": log.time_unit, "messages": len(log), "digest": log.digest()}}
         e = [{"en": f"{d['request']} ({d['domain']}, {d['level']}): {'granted' if d['grant'] else 'refused'} — "
@@ -696,6 +716,8 @@ class PrivacyTransparencyModule(LabModule):
             "mixed_requests": {},
             "harm_and_crisis": {"requests": harm, "crisis_scope_active": True},
             "absolute_aggregates_forbidden": {"absolute_aggregate_reading": "never"},
+            "split_access_request": {"observers": [{"observer": "broker", "layers": ["identity", "economic"]},
+                                                   {"observer": "broker", "layers": ["mobility", "platform"]}]},
             "faulty_disclosure": {"faults": ["release_absolute_individual", "profiling_granted", "correlate_domains",
                                              "convenience_override", "identity_required"]},
         }
