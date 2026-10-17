@@ -449,13 +449,13 @@ def create_app(settings=None):
         result["answer"] = postcheck(result["answer"], fragments, result["flags"], summary)
         if (result.get("proposal") or {}).get("module") == "work_cycle":
             remember(fragments, work_cycle_questions(index))
-        finish(result, fragments, body["lang"])
+        finish(result, fragments, body["lang"], question)
         if result["state"] == "answer" and result["answer"].strip():
             result["answer_kind"] = "unverified_explanation"
             result["answer"] = ("Объяснение ИИ; поддержка утверждений источниками не проверена.\n\n" if body["lang"] == "ru"
                                 else "AI explanation; source support for its claims is unverified.\n\n") + result["answer"]
 
-    def finish(result, fragments, lang):
+    def finish(result, fragments, lang, question=""):
         # An open author question among the sources is stated by the server, not left to the model (AI-SUBJECT §§1-2):
         # the lab does not choose a reading and neither does the Keeper.
         open_qs = [f for f in fragments if f["source_type"] == "question" and f["status"] == "UNRESOLVED"
@@ -482,6 +482,23 @@ def create_app(settings=None):
                                 "The Keeper could not compose an answer from the sources found. Open the sections or rephrase.")
         elif result["state"] == "answer" and not result["citations"] and result.get("answer_kind") != "deterministic_summary":
             flag(result["flags"], "uncited_answer", "No statement of this answer is tied to a source.")
+            if fragments:
+                # Promote explicitly named sections, keeping retrieval order for all other fragments.
+                normalized = re.sub(r"§\s*", "§", " ".join(question.split()))
+
+                def named(fragment):
+                    cite = re.sub(r"§\s*", "§", " ".join(fragment["cite"].split()))
+                    return bool(re.search(r"(?<![\w-])" + re.escape(cite) + r"(?![\w-]|\.\d)", normalized, re.I))
+
+                found = sorted(fragments, key=lambda f: not named(f))[:3]
+                result["found_sources"] = [{k: f[k] for k in
+                                            ("cite", "fid", "url", "heading", "source_type", "status", "revision")}
+                                           for f in found]
+                # These links are a hand-off, not citations supporting the model's statements.
+                result["answer"] = result["answer"].rstrip() + "\n\n" + (
+                    "Ответ не привязан к источникам. Найденные разделы для проверки: " if lang.split("-")[0] == "ru" else
+                    "The answer is not tied to sources. Found sections to check: "
+                ) + "; ".join(f"[{f['cite']}]" for f in found)
 
     async def dispatch(request, explain=False):
         body = validate_body(request.state.raw_body, explain)

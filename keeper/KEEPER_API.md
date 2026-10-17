@@ -59,6 +59,23 @@ Response (`stream: false`):
 `citations` lists only the trusted fragments the answer actually cites, in order of first use; every retrieved fragment
 is listed in `provenance.retrieved`.
 
+When the final answer is flagged `uncited_answer` and fragments were retrieved, the optional
+`found_sources` array contains at most three trusted fragment records with the same fields as
+`citations`: `cite`, `fid`, `url`, `heading`, `source_type`, `status`, `revision`. Retrieval order
+is preserved except that fragments explicitly named in the question (e.g. `F-001`, `Q-065`,
+`WORK-CYCLE §7`) come first. The field is absent for cited answers or when no fragments were retrieved.
+The panel should show these links as **found sections** chips, separate from citations. They
+are a hand-off for checking the sources, not evidence for the model's statements: `citations`
+is unchanged and `uncited_answer` remains. The gateway appends one deterministic line:
+
+- Russian (`ru`, including regional variants): `Ответ не привязан к источникам. Найденные разделы для проверки: [F-001]; [...]`
+- English (also the fallback for other languages): `The answer is not tied to sources. Found sections to check: [F-001]; [...]`
+
+The same field and line appear in the SSE `final` response. `keeper.eval_answers.check()` accepts
+an expected cite in either array and records `cite_via: "citation"` or `"found_source"`, preferring
+a citation if both match (`null` when neither matches or no citation is required). This source
+availability check does not verify the model's claims.
+
 Flags (deterministic post-checks of the model output): `unknown_citation` (removed), `unverified_quote` (quotation
 marks removed; this does not verify the resulting paraphrase), `number_not_in_result` (diagnostic helper only; `/explain` now uses a trusted template), `tool_rejected` (the model asked for a tool or
 arguments outside the contract), `truncated`, `uncited_answer` (no statement is tied to a source),

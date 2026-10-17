@@ -90,6 +90,7 @@ def test_grounded_and_provenance(setup, corpus_path):
     assert "[WORK-CYCLE §7]" in result["answer"] and result["state"] == "answer"
     trusted = app.state.index.search(QUESTION, k=5)
     assert [c["cite"] for c in result["citations"]] == ["WORK-CYCLE §7"]          # only what the answer cites
+    assert "found_sources" not in result and "Found sections to check:" not in result["answer"]
     assert {c["fid"] for c in result["citations"]} <= {f["fid"] for f in trusted}
     assert result["provenance"]["retrieved"] == [f["fid"] for f in trusted]
     assert result["provenance"]["model_digest"] == "sha256:fake"
@@ -428,6 +429,71 @@ def test_empty_and_uncited_answers_are_flagged(setup):
     assert "empty_model_answer" in codes(result) and result["answer"]
     client, _, _ = setup([message("Recovery is protected.")])
     assert "uncited_answer" in codes(ask(client).json())
+
+
+@pytest.mark.parametrize("lang,prefix", [
+    ("en", "The answer is not tied to sources. Found sections to check: "),
+    ("ru", "Ответ не привязан к источникам. Найденные разделы для проверки: "),
+    ("ru-RU", "Ответ не привязан к источникам. Найденные разделы для проверки: "),
+])
+@pytest.mark.parametrize("stream", [False, True])
+def test_uncited_answer_hands_off_to_trusted_fragments(setup, lang, prefix, stream):
+    client, _, app = setup([message("Recovery is protected. [MADE-UP §999]")])
+    question = "Explain the recovery invariant"
+    trusted = app.state.index.search(QUESTION, k=5)
+    app.state.index.search = lambda *args, **kwargs: trusted
+    response = ask(client, question=question, lang=lang, stream=stream,
+                   selection="[FAKE] https://evil.example")
+    assert response.status_code == 200
+    result = json.loads(response.text.split("event: final\ndata: ", 1)[1]) if stream else response.json()
+    keys = ("cite", "fid", "url", "heading", "source_type", "status", "revision")
+    assert result["found_sources"] == [{k: f[k] for k in keys} for f in trusted[:3]]
+    assert len(result["found_sources"]) == 3
+    assert result["citations"] == []
+    assert {"uncited_answer", "unknown_citation"} <= codes(result)
+    line = prefix + "; ".join(f"[{f['cite']}]" for f in trusted[:3])
+    assert result["answer"].endswith("\n\n" + line)
+    assert result["answer"].count(prefix) == 1
+    assert "MADE-UP" not in result["answer"]
+    assert result["provenance"]["retrieved"] == [f["fid"] for f in trusted]
+
+
+@pytest.mark.parametrize("cite,question", [
+    ("F-001", "What did finding F-001 show?"),
+    ("Q-065", "Explain q-065."),
+    ("WORK-CYCLE §7", "Explain WORK-CYCLE § 7."),
+])
+def test_uncited_answer_promotes_named_fragment_before_limit(setup, cite, question):
+    client, _, app = setup([message("Please check the source.")])
+    target = next(f for f in app.state.index.frags if f["cite"] == cite)
+    # A withdrawn question does not trigger the separate open-author-question notice.
+    if target["source_type"] == "question":
+        target = {**target, "status": "WITHDRAWN"}
+    others = [f for f in app.state.index.frags if f["source_type"] == "protocol" and f["cite"] != cite][:4]
+    trusted = [dict(f, score=100) for f in [*others, target]]
+    app.state.index.search = lambda *args, **kwargs: trusted
+    result = ask(client, question=question).json()
+    assert [f["fid"] for f in result["found_sources"]] == [target["fid"], others[0]["fid"], others[1]["fid"]]
+    assert result["answer"].split("Found sections to check: ")[1].startswith(f"[{cite}]; ")
+    assert result["citations"] == [] and "uncited_answer" in codes(result)
+
+
+@pytest.mark.parametrize("question", ["Explain F-0010", "Explain WORK-CYCLE §7.1", "Explain WORK-CYCLE §70"])
+def test_uncited_answer_does_not_promote_partial_identifiers(setup, question):
+    client, _, app = setup([message("Please check the source.")])
+    cites = ["TIME §3", "WORK-CYCLE §7", "F-001"]
+    trusted = [dict(next(f for f in app.state.index.frags if f["cite"] == c), score=100) for c in cites]
+    app.state.index.search = lambda *args, **kwargs: trusted
+    result = ask(client, question=question).json()
+    assert [f["cite"] for f in result["found_sources"]] == cites
+
+
+def test_uncited_answer_without_fragments_has_no_handoff(setup):
+    client, _, app = setup([message("No sources available.")])
+    app.state.index.search = lambda *args, **kwargs: []
+    result = ask(client, question="Compute something").json()
+    assert result["citations"] == [] and "uncited_answer" in codes(result)
+    assert "found_sources" not in result and "Found sections to check:" not in result["answer"]
 
 
 def test_open_author_question_is_stated_by_the_server(setup):

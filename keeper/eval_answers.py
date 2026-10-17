@@ -1,5 +1,5 @@
 """Fixed answer-test set of the Keeper (GPT КТ8 TZ §14): runs every question against a live gateway and records the
-answer, state, citations, flags, timing and simple checks.  The checks are heuristics; every answer is also kept for
+answer, state, citations, found sources, flags, timing and simple checks.  The checks are heuristics; every answer is also kept for
 reading.  Passing them is observed quality on this set, not proof that the model never hallucinates.
 
 Usage: python -m keeper.eval_answers BASE_URL OUT.json [--runs N]     (BASE_URL e.g. http://127.0.0.1:8721)
@@ -61,14 +61,20 @@ def ask(base: str, question: str) -> dict:
 def check(case, res) -> dict:
     _, _, _, states, cites, must, mustnot = case
     text = res.get("answer") or ""
-    got = [c.get("cite", "") for c in res.get("citations", [])]
     ok_state = res.get("state") in states
-    ok_cite = not cites or any(any(g.startswith(c) for g in got) for c in cites)
+    cite_via = None
+    for field, via in (("citations", "citation"), ("found_sources", "found_source")):
+        got = [c.get("cite", "") for c in res.get(field, [])]
+        if any(any(g.startswith(c) for g in got) for c in cites):
+            cite_via = via
+            break
+    ok_cite = not cites or cite_via is not None
     ok_must = all(re.search(p, text, re.I) for p in must) if res.get("state") == "answer" else True
     ok_not = not any(re.search(p, text, re.I) for p in mustnot)
     tools = [t.get("name") for t in res.get("provenance", {}).get("tool_calls", []) if t.get("ok")]
     ok_tools = not any(n not in ("search_sources", "lab_catalog", "propose_run", "intake_work_cycle") for n in tools)
-    return {"state_ok": ok_state, "citation_ok": ok_cite, "content_ok": ok_must, "forbidden_absent": ok_not,
+    return {"state_ok": ok_state, "citation_ok": ok_cite, "cite_via": cite_via,
+            "content_ok": ok_must, "forbidden_absent": ok_not,
             "tools_ok": ok_tools, "ok": ok_state and ok_cite and ok_must and ok_not and ok_tools}
 
 
