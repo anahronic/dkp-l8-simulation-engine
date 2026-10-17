@@ -95,7 +95,11 @@ Example kinds are `reference`, `counterexample`, `alternative`, or `noncompliant
 ## Jobs and tokens
 
 `POST /jobs` takes the lab request above, validates it on the server, then enqueues it.
-An optional `Idempotency-Key` header must match `[A-Za-z0-9_-]{1,64}`. Success is 202:
+An optional `Idempotency-Key` header must match `[A-Za-z0-9_-]{1,64}`. When present,
+`X-Idempotency-Token` is required: 32..128 base64url characters, generated from at least
+32 cryptographically random bytes (e.g. `secrets.token_urlsafe(32)`). Generate and persist
+this private replay proof **before the first POST**, separately from the key; reuse both
+on retries. Missing/malformed proof returns 422. Keyless submission is unchanged. Success is 202:
 
 ```json
 {
@@ -111,14 +115,23 @@ An optional `Idempotency-Key` header must match `[A-Za-z0-9_-]{1,64}`. Success i
 }
 ```
 
-A replay of the same key and normalized request returns 200 with the same job ID and token,
+A replay of the same key, private replay proof and normalized request returns 200 with the same job ID and token,
 and its current state. This also works when the queue is full and across server restarts.
 The digest is SHA-256 of canonical JSON of the validated, default-resolved request;
 JSON key ordering and omitted-versus-explicit defaults do not change it. Variant ordering
-is retained. A different normalized request with the same key returns 409. Keys are global
-to the server and live until the job is purged. Use an unpredictable key and treat it as a
-credential: a holder of the key and matching request can retrieve the token by replaying.
-Without a key, repeated submissions create independent jobs.
+is retained. With the correct proof, a different normalized request returns 409. A different
+proof returns a generic 409 without job id, token or state, regardless of the body. Keys
+remain global until the job is purged; a visitor whose key collides must choose another key.
+The key alone grants no access. IP addresses play no role in ownership (including shared IPs).
+Only the proof's SHA-256 hash is stored; comparisons and insertion run under the same SQLite
+writer transaction. Treat the proof as a credential, keep it out of logs and URLs, and send
+it only over HTTPS. CORS permits the new header. Clients using keyed submissions must add it.
+Lost responses can be recovered with the retained proof after a restart, including completed
+jobs and a full queue. Without a key, repeated submissions create independent jobs.
+
+Existing databases gain a nullable `replay_hash` column. Legacy jobs without a proof cannot
+be replayed through POST /jobs (409); their previously issued job tokens still authorize all
+four job routes. No proof can be attached to a legacy job by guessing its key/body.
 
 Every `/jobs/{id}` route, including cancellation and artifacts, requires either:
 
@@ -210,7 +223,7 @@ Errors use a single envelope; `problems` is optional:
 | 404 | `not_found` | Unknown route/module/job, wrong token, or unavailable artifact |
 | 409 | `conflict` | Idempotency conflict, final-job cancellation, or artifact before completion |
 | 413 | `too_large` | Body exceeds limit, checked against both Content-Length and received bytes |
-| 422 | `invalid_input` | Invalid request/module input, variant limit, or malformed idempotency key |
+| 422 | `invalid_input` | Invalid request/module input, variant limit, or missing/malformed idempotency key/proof |
 | 429 | `rate_limited` | Per-IP POST token bucket exhausted; `Retry-After: 6` |
 | 503 | `queue_full` | Queued-job limit reached; `Retry-After: 5` |
 | 405 | `method_not_allowed` | Unsupported HTTP method |

@@ -212,7 +212,7 @@ def test_sse_final_matches_nonstream(setup):
     assert response.headers["content-type"].startswith("text/event-stream")
     events = [(block.splitlines()[0][7:], json.loads(block.splitlines()[1][6:]))
               for block in response.text.strip().split("\n\n")]
-    assert events[-1][0] == "final" and any(e[0] == "delta" for e in events)
+    assert events[-1][0] == "final" and not any(e[0] == "delta" for e in events)
     final = events[-1][1]
     assert final["provenance"].pop("request_id") != regular["provenance"].pop("request_id")
     assert final == regular
@@ -234,10 +234,10 @@ def test_explain_summary_and_numbers(setup):
     response = client.post(PREFIX + "/explain", json={"job_id": "b" * 32, "token": "secret-token", "lang": "en"})
     assert response.status_code == 200
     result = response.json()
-    assert result["result_id"] == "a" * 64 and "number_not_in_result" in codes(result)
-    detail = next(f["detail"] for f in result["flags"] if f["code"] == "number_not_in_result")
-    assert detail.endswith("9876")
-    summary = json.loads(fake.chats[0]["messages"][-1]["content"].split("\n", 1)[1])
+    assert result["result_id"] == "a" * 64 and result["answer_kind"] == "deterministic_summary"
+    assert "9876" not in result["answer"] and not fake.requests
+    assert "workers: 36" in result["answer"] and "nested.gap: 12.5" in result["answer"]
+    summary = result["summary"]
     assert summary["variants"]["visitor"]["counts"] == {"PASS": 0, "FAIL": 1, "UNKNOWN": 1, "N/A": 0}
     assert any(c["cite"] == "WORK-CYCLE §7" for c in result["citations"])
     assert "secret-token" not in json.dumps(fake.chats)
@@ -338,9 +338,10 @@ def test_stream_error_after_headers(setup):
 
 def test_stream_disconnect_closes_ollama(corpus_path, tmp_path):
     async def scenario():
-        closed, delta = asyncio.Event(), asyncio.Event()
+        closed, delta, streaming = asyncio.Event(), asyncio.Event(), asyncio.Event()
         class HeldStream(httpx.AsyncByteStream):
             async def __aiter__(self):
+                delta.set()
                 yield b'{"message":{"content":"draft"},"done":false}\n'
                 await asyncio.Event().wait()
             async def aclose(self):
@@ -359,10 +360,12 @@ def test_stream_disconnect_closes_ollama(corpus_path, tmp_path):
                 sent_body = True
                 return {"type": "http.request", "body": json.dumps({"question": QUESTION, "stream": True}).encode()}
             await delta.wait()
+            await streaming.wait()
             return {"type": "http.disconnect"}
         async def send(event):
-            if event["type"] == "http.response.body" and b"event: delta" in event.get("body", b""):
-                delta.set()
+            assert b"event: delta" not in event.get("body", b"")
+            if event["type"] == "http.response.body":
+                streaming.set()
         scope = {"type": "http", "asgi": {"version": "3.0", "spec_version": "2.0"}, "http_version": "1.1",
                  "method": "POST", "scheme": "http", "path": PREFIX + "/ask", "raw_path": (PREFIX + "/ask").encode(),
                  "query_string": b"", "headers": [], "client": ("127.0.0.1", 1), "server": ("test", 80)}
@@ -441,3 +444,56 @@ def test_widget_nulls_are_absent_values(setup):
     client, _, _ = setup()
     response = ask(client, selection=None, page={"url": "https://www.dikenocracy.com/index.html", "doc_id": None})
     assert response.status_code == 200 and response.json()["state"] == "answer"
+
+
+@pytest.mark.parametrize("bad", [
+    "The report shows a deficit of 999999 workers.",
+    "The report shows a deficit of 999999 workers. [WORK-CYCLE §8.1]",
+    "coverage.hours: 210; coverage.deficit_hours: 336. [WORK-CYCLE §8.1]",
+    "Coverage is 37.5%.", "I refuse to explain.", "down", "interrupted",
+])
+def test_kt9_explain_uses_only_report_fields(setup, bad):
+    from lab.core.run import run_request
+    report = run_request({"schema": "dkp-lab-input/1", "module": "work_cycle", "variants": [
+        {"name": "visitor", "input": {"workers": 12, "horizon_days": 14, "demand": [3] * 24}}]})
+    async def lab(request):
+        return httpx.Response(200, json=report)
+    async def interrupted(request):
+        raise httpx.ReadError("model stream interrupted", request=request)
+    settings = {"LAB_TRANSPORT": httpx.MockTransport(lab)}
+    if bad == "interrupted":
+        settings["OLLAMA_TRANSPORT"] = httpx.MockTransport(interrupted)
+    client, fake, app = setup([message(bad)], down=bad == "down", **settings)
+    # Neither model output nor retrieval rank controls the report summary or known questions.
+    app.state.index.search = lambda *args, **kwargs: []
+    result = client.post(PREFIX + "/explain", json={"job_id": "b" * 32, "token": "secret"}).json()
+    assert result["state"] == "answer" and result["answer_kind"] == "deterministic_summary"
+    assert result["result_id"] == report["result_id"] and result["provenance"]["model_digest"] is None
+    assert "999999" not in result["answer"] and "I refuse" not in result["answer"]
+    assert "coverage.hours: 336" in result["answer"] and "coverage.deficit_hours: 210" in result["answer"]
+    assert "coverage.max_deficit: 1.0" in result["answer"]
+    assert "37.500% (coverage.covered_fraction × 100)" in result["answer"]
+    for status in ("FAIL", "UNKNOWN"):
+        issues = [i for i in result["summary"]["variants"]["visitor"]["issues"] if i["status"] == status]
+        assert issues and all(i["requirement_id"] in result["answer"] for i in issues)
+    assert {"Q-012", "Q-013"} <= {c["cite"] for c in result["citations"]}
+    assert not fake.requests
+
+
+def test_kt9_proposal_notices_do_not_need_retrieval(setup):
+    client, fake, app = setup(down=True)
+    app.state.index.search = lambda *args, **kwargs: []
+    result = ask(client, question="Calculate roster: 12 workers, 3 people on duty every hour, 14 days").json()
+    assert result["state"] == "proposal" and "open_author_question" in codes(result)
+    assert {c["cite"] for c in result["citations"]} == {"Q-012", "Q-013"}
+    assert "Q-011" not in result["answer"] and not fake.requests
+
+
+def test_kt9_stream_never_emits_unchecked_text(setup):
+    client, _, _ = setup([message("Fictional text [MADE-UP §999].")])
+    response = ask(client, stream=True)
+    assert "event: delta" not in response.text and "MADE-UP" not in response.text
+    final = json.loads(response.text.split("event: final\ndata: ", 1)[1])
+    assert final["answer_kind"] == "unverified_explanation"
+    assert "source support for its claims is unverified" in final["answer"]
+    assert "uncited_answer" in codes(final)

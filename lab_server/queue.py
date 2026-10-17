@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 import hashlib
+import hmac
 import json
 from pathlib import Path
 import shutil
@@ -53,6 +54,9 @@ class Queue:
                 CREATE INDEX IF NOT EXISTS jobs_state_created ON jobs(state, created_at);
                 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value REAL NOT NULL);
             """)
+        with self.connection(write=True) as con:
+            if "replay_hash" not in {r[1] for r in con.execute("PRAGMA table_info(jobs)")}:
+                con.execute("ALTER TABLE jobs ADD COLUMN replay_hash TEXT")
 
     @contextmanager
     def connection(self, *, write=False):
@@ -79,7 +83,10 @@ class Queue:
         result["input_ids"] = json.loads(result["input_ids"]) if result["input_ids"] else None
         return result
 
-    def enqueue(self, request, idem_key=None):
+    def enqueue(self, request, idem_key=None, *, replay_token=None):
+        if idem_key is not None and not replay_token:
+            raise Conflict("Idempotent requests require a replay token")
+        replay_hash = hashlib.sha256(replay_token.encode()).hexdigest() if replay_token else None
         checked = validate_request(request)
         normalized = {"schema": "dkp-lab-input/1", "module": checked["module"].id,
                       "variants": [{"name": n, "input": v} for n, v in checked["variants"].items()]}
@@ -89,6 +96,9 @@ class Queue:
             if idem_key is not None:
                 existing = con.execute("SELECT * FROM jobs WHERE idem_key=?", (idem_key,)).fetchone()
                 if existing:
+                    # Legacy rows have no proof and cannot be recovered through this route.
+                    if not hmac.compare_digest(existing["replay_hash"] or "", replay_hash):
+                        raise Conflict("Idempotency-Key unavailable")
                     if existing["request_digest"] != digest:
                         raise Conflict("Idempotency-Key already belongs to a different request")
                     return self._row(existing), False
@@ -98,9 +108,9 @@ class Queue:
             token_hash = (hashlib.sha256(self.token_factory(job_id).encode()).hexdigest()
                           if self.token_factory else None)
             con.execute("""INSERT INTO jobs
-                (id, token_hash, idem_key, request_digest, module, request_json, state, created_at, message)
-                VALUES (?, ?, ?, ?, ?, ?, 'queued', ?, 'queued')""",
-                        (job_id, token_hash, idem_key, digest, normalized["module"], encoded, self.now()))
+                (id, token_hash, idem_key, replay_hash, request_digest, module, request_json, state, created_at, message)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 'queued', ?, 'queued')""",
+                        (job_id, token_hash, idem_key, replay_hash, digest, normalized["module"], encoded, self.now()))
             return self._row(con.execute("SELECT * FROM jobs WHERE id=?", (job_id,)).fetchone()), True
 
     def claim(self, worker_id, lease_seconds):

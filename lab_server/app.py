@@ -118,7 +118,8 @@ def create_app(db_path, store_dir, settings=None):
     # The Keeper panel runs in a sandboxed iframe (opaque origin "null"); access is by bearer token, never cookies.
     app.add_middleware(CORSMiddleware, allow_origins=list(config.CORS_ORIGINS), allow_credentials=False,
                        allow_methods=["GET", "POST", "OPTIONS"],
-                       allow_headers=["Content-Type", "Authorization", "X-Job-Token", "Idempotency-Key"],
+                       allow_headers=["Content-Type", "Authorization", "X-Job-Token", "Idempotency-Key",
+                                      "X-Idempotency-Token"],
                        expose_headers=["Retry-After", "Content-Disposition"], max_age=600)
     app.state.queue, app.state.settings, app.state.limiter = queue, config, limiter
 
@@ -222,7 +223,11 @@ def create_app(db_path, store_dir, settings=None):
         if key is not None and re.fullmatch(r"[A-Za-z0-9_-]{1,64}", key) is None:
             raise APIError(422, "invalid_input", "Invalid Idempotency-Key",
                            ["Idempotency-Key: expected 1..64 letters, digits, '_' or '-'"])
-        job, created = queue.enqueue(body, key)
+        replay_token = request.headers.get("x-idempotency-token")
+        if key is not None and re.fullmatch(r"[A-Za-z0-9_-]{32,128}", replay_token or "") is None:
+            raise APIError(422, "invalid_input", "Idempotency-Key requires X-Idempotency-Token",
+                           ["X-Idempotency-Token: expected 32..128 base64url characters; generate a random secret"])
+        job, created = queue.enqueue(body, key, replay_token=replay_token if key else None)
         base = f"{PREFIX}/jobs/{job['id']}"
         return JSONResponse({"job_id": job["id"], "token": token(job["id"]), "state": job["state"],
                              "links": {"status": base, "cancel": base + "/cancel", "report": base + "/report",

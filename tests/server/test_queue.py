@@ -12,6 +12,31 @@ from lab.core.run import canonical_json
 from lab_server.queue import Conflict, Queue, QueueFull
 
 
+def test_kt9_legacy_rows_cannot_disclose_tokens(tmp_path, request_input):
+    queue = Queue(tmp_path / "jobs.db", token_factory=lambda job_id: "private-token")
+    first, _ = queue.enqueue(request_input, "legacy", replay_token="old-owner")
+    with queue.connection(write=True) as con:
+        con.execute("ALTER TABLE jobs DROP COLUMN replay_hash")
+    migrated = Queue(queue.db)
+    for proof in (None, "old-owner", "stranger"):
+        with pytest.raises(Conflict):
+            migrated.enqueue(request_input, "legacy", replay_token=proof)
+    assert migrated.get(first["id"])["token_hash"] == hashlib.sha256(b"private-token").hexdigest()
+
+
+def test_kt9_competing_owners_do_not_share_a_job(tmp_path, request_input):
+    queue = Queue(tmp_path / "jobs.db")
+    def enqueue(proof):
+        try:
+            return queue.enqueue(request_input, "shared", replay_token=proof)
+        except Conflict:
+            return None
+    with ThreadPoolExecutor(2) as pool:
+        results = list(pool.map(enqueue, ("owner-a", "owner-b")))
+    assert sum(r is not None for r in results) == 1
+    assert queue.counts()["queued"] == 1
+
+
 def test_two_workers_never_claim_the_same_job(tmp_path, request_input):
     db = tmp_path / "jobs.db"
     queue = Queue(db, max_queued=100)
@@ -122,15 +147,15 @@ def test_cancellation_wins_completion_and_crash_recovery(tmp_path, request_input
 
 def test_idempotency_normalization_and_full(tmp_path, request_input):
     queue = Queue(tmp_path / "jobs.db", max_queued=1)
-    first, created = queue.enqueue(request_input, "key")
+    first, created = queue.enqueue(request_input, "key", replay_token="owner-secret")
     assert created
-    replay, created = Queue(queue.db).enqueue(json.loads(first["request_json"]), "key")
+    replay, created = Queue(queue.db).enqueue(json.loads(first["request_json"]), "key", replay_token="owner-secret")
     assert not created and replay["id"] == first["id"]
     assert first["request_digest"] == hashlib.sha256(canonical_json(json.loads(first["request_json"])).encode()).hexdigest()
     other = copy.deepcopy(request_input)
     other["variants"][0]["name"] = "different"
     with pytest.raises(Conflict):
-        queue.enqueue(other, "key")
+        queue.enqueue(other, "key", replay_token="owner-secret")
     with pytest.raises(QueueFull):
         queue.enqueue(request_input)
 
@@ -138,7 +163,7 @@ def test_idempotency_normalization_and_full(tmp_path, request_input):
 def test_simultaneous_idempotent_enqueue(tmp_path, request_input):
     queue = Queue(tmp_path / "jobs.db")
     with ThreadPoolExecutor(2) as pool:
-        results = list(pool.map(lambda _: queue.enqueue(request_input, "shared"), range(2)))
+        results = list(pool.map(lambda _: queue.enqueue(request_input, "shared", replay_token="owner-secret"), range(2)))
     assert results[0][0]["id"] == results[1][0]["id"]
     assert sum(created for _, created in results) == 1
 
@@ -146,7 +171,7 @@ def test_simultaneous_idempotent_enqueue(tmp_path, request_input):
 def test_purge_removes_files_but_preserves_unfinished(tmp_path, request_input, clock):
     store = tmp_path / "store"
     queue = Queue(tmp_path / "jobs.db", now=clock, store=store)
-    queue.enqueue(request_input, "retained-key")
+    queue.enqueue(request_input, "retained-key", replay_token="owner-secret")
     job = queue.claim("a", 10)
     report, package = tmp_path / "r", tmp_path / "p"
     report.write_text("{}")
@@ -162,4 +187,4 @@ def test_purge_removes_files_but_preserves_unfinished(tmp_path, request_input, c
     assert queue.get(job["id"]) is None
     assert not (store / job["id"]).exists() and not orphan.exists()
     assert queue.get(pending["id"])["state"] == "queued"
-    assert queue.enqueue(request_input, "retained-key")[1]
+    assert queue.enqueue(request_input, "retained-key", replay_token="owner-secret")[1]

@@ -135,14 +135,14 @@ def test_replay_restart_conflict_and_queue_full(tmp_path, request_input, monkeyp
     db, store = tmp_path / "jobs.db", tmp_path / "store"
     config = {"MAX_QUEUED": 1, "RATE_BURST": 100}
     with TestClient(create_app(db, store, config)) as client:
-        first = submit(client, request_input, headers={"Idempotency-Key": "test-key"})
+        first = submit(client, request_input, headers={"Idempotency-Key": "test-key", "X-Idempotency-Token": "a" * 43})
         assert (store / ".secret").is_file()
     with TestClient(create_app(db, store, config)) as client:
-        replay = client.post(PREFIX + "/jobs", json=request_input, headers={"Idempotency-Key": "test-key"})
+        replay = client.post(PREFIX + "/jobs", json=request_input, headers={"Idempotency-Key": "test-key", "X-Idempotency-Token": "a" * 43})
         assert replay.status_code == 200 and replay.json() == first
         different = copy.deepcopy(request_input)
         different["variants"][0]["name"] = "other"
-        assert client.post(PREFIX + "/jobs", json=different, headers={"Idempotency-Key": "test-key"}).status_code == 409
+        assert client.post(PREFIX + "/jobs", json=different, headers={"Idempotency-Key": "test-key", "X-Idempotency-Token": "a" * 43}).status_code == 409
         full = client.post(PREFIX + "/jobs", json=request_input)
         assert full.status_code == 503 and full.json()["error"]["code"] == "queue_full"
         assert "Retry-After" in full.headers
@@ -178,8 +178,44 @@ def test_cors_for_the_sandboxed_keeper_panel(service):
     """The Keeper panel runs in a sandboxed iframe (Origin: null); other origins get no CORS grant."""
     client, *_ = service
     pre = client.options("/api/lab/v1/jobs", headers={"Origin": "null", "Access-Control-Request-Method": "POST",
-                                                      "Access-Control-Request-Headers": "content-type,idempotency-key"})
+                                                      "Access-Control-Request-Headers": "content-type,idempotency-key,x-idempotency-token"})
     assert pre.status_code == 200 and pre.headers["access-control-allow-origin"] == "null"
     assert "access-control-allow-credentials" not in pre.headers
     other = client.get("/api/lab/v1/health", headers={"Origin": "https://evil.example"})
     assert "access-control-allow-origin" not in other.headers
+
+
+@pytest.mark.parametrize("host", ["198.51.100.10", "198.51.100.20"])
+def test_kt9_replay_proof_is_required_on_every_route(tmp_path, request_input, host):
+    db, store = tmp_path / "jobs.db", tmp_path / "store"
+    config = {"RATE_BURST": 1000}
+    owner = {"Idempotency-Key": "run-1", "X-Idempotency-Token": "a" * 43}
+    stranger = {**owner, "X-Idempotency-Token": "b" * 43}
+    app = create_app(db, store, config)
+    with TestClient(app, client=("198.51.100.10", 4000)) as a, TestClient(app, client=(host, 5000)) as b:
+        first = submit(a, request_input, headers=owner)
+        own_b = submit(b, request_input)
+        other_body = copy.deepcopy(request_input)
+        other_body["variants"][0]["name"] = "other"
+        for body in (request_input, other_body):
+            denied = b.post(PREFIX + "/jobs", json=body, headers=stranger)
+            assert denied.status_code == 409 and set(denied.json()) == {"error"}
+            assert first["token"] not in denied.text and first["job_id"] not in denied.text
+        for headers in ({"Idempotency-Key": "run-1"}, {**owner, "X-Idempotency-Token": "short"}):
+            assert b.post(PREFIX + "/jobs", json=request_input, headers=headers).status_code == 422
+        for stage in ("queued", "completed"):
+            if stage == "completed":
+                process_one(db, store, "test", inline=True)
+            replay = a.post(PREFIX + "/jobs", json=request_input, headers=owner)
+            assert replay.status_code == 200 and replay.json()["job_id"] == first["job_id"]
+            assert replay.json()["token"] == first["token"] and replay.json()["state"] == stage
+            assert b.post(PREFIX + "/jobs", json=request_input, headers=stranger).status_code == 409
+            for key, method in (("status", "get"), ("cancel", "post"), ("report", "get"), ("export", "get")):
+                assert getattr(b, method)(first["links"][key], headers=auth(own_b)).status_code == 404
+        assert a.get(first["links"]["report"], headers=auth(first)).status_code == 200
+        assert a.get(first["links"]["export"], headers=auth(first)).status_code == 200
+    # The caller retained the proof before POST; recovery does not need the lost response or the same IP.
+    with TestClient(create_app(db, store, config), client=("203.0.113.1", 6000)) as restarted:
+        recovered = restarted.post(PREFIX + "/jobs", json=request_input, headers=owner)
+        assert recovered.status_code == 200 and recovered.json()["token"] == first["token"]
+        assert recovered.json()["state"] == "completed"

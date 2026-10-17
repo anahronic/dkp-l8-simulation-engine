@@ -50,7 +50,7 @@ Response (`stream: false`):
 
 | state | meaning |
 |---|---|
-| `answer` | an explanation grounded in the listed citations |
+| `answer` | an AI explanation labelled unverified, or a deterministic report summary (`answer_kind`) |
 | `no_sources` | the pinned corpus has nothing on the question (not the same as an UNKNOWN lab result, nor a failure) |
 | `needs_parameters` | a calculation is possible but parameters are missing; `missing: [...]` lists them |
 | `proposal` | a lab run is prepared: `proposal` holds the request for confirmation (below) |
@@ -60,7 +60,7 @@ Response (`stream: false`):
 is listed in `provenance.retrieved`.
 
 Flags (deterministic post-checks of the model output): `unknown_citation` (removed), `unverified_quote` (quotation
-marks removed, shown as paraphrase), `number_not_in_result` (explain only), `tool_rejected` (the model asked for a tool or
+marks removed; this does not verify the resulting paraphrase), `number_not_in_result` (diagnostic helper only; `/explain` now uses a trusted template), `tool_rejected` (the model asked for a tool or
 arguments outside the contract), `truncated`, `uncited_answer` (no statement is tied to a source),
 `empty_model_answer` (the model gave nothing; a fixed message is shown), `open_author_question` (an UNRESOLVED
 author question is among the sources: the server appends that neither the lab nor the Keeper chooses a reading and
@@ -73,28 +73,35 @@ A question with a calculation verb (посчитай, рассчитай, calcul
 workers ("12 работников", "20 workers"), the staff needed every hour ("3 человека на смене каждый час", "4 people on duty
 every hour") and the horizon ("14 дней", "7 days") are read literally from the question (`keeper/guardrails.py`,
 `INTAKE`).  All three found: state `proposal` (origin `user` for them); otherwise `needs_parameters` with `missing`.
-The model may still call `propose_run` for other phrasings; its numbers must occur in the question.
+The model may still call `propose_run` for other phrasings, but **the same field parser** must
+bind each proposed value to its role. Workers, days and constant hourly demand use `INTAKE`;
+a number elsewhere (including a protocol id) is not evidence. Repeated equal values for one
+role are allowed; distinct competing values require clarification. Negative/decimal/id tails
+are not parsed as positive integers. Known fields outside this grammar or mismatched values
+return `missing` and no executable proposal; unknown schema keys are rejected. No unparsed model suggestion is labelled `user`. Defaults and
+modelling hypotheses remain separate. The visitor may explicitly edit fields before submission.
 
 With `"stream": true` the response is `text/event-stream`: `event: status` (`{"state": "retrieving"|"generating"|"checking"}`),
-`event: delta` (`{"text": "..."}`; raw model text, may still be corrected), `event: final` (the full JSON above; the
-widget replaces the streamed text with `final.answer`).  Closing the connection cancels the generation.
+`event: final` (the full JSON above). Only statuses are sent before the post-checked final answer; raw model
+text is never emitted as a delta.  Closing the connection cancels the generation.
 
 ### Proposal (state `proposal`)
 
 ```json
 {"module": "work_cycle", "scenario": "S-LAB-08",
  "request": {"schema": "dkp-lab-input/1", "module": "work_cycle", "variants": [{"name": "visitor", "input": {...}}]},
- "fields": [{"key": "workers", "value": 12, "origin": "user", "label": "...", "type": "int", "min": 1, "max": 200},
-            {"key": "shift_hours", "value": 8, "origin": "default", "label": "..."},
-            {"key": "crisis_window", "value": null, "origin": "hypothesis", "label": "...", "note": "..."}],
+ "fields": [{"key": "workers", "value": 12, "origin": "user", "label": "...", "type": "int", "min": 1, "max": 1000},
+            {"key": "work_hours", "value": 8, "origin": "default", "label": "..."},
+            {"key": "phase_offsets", "value": "staggered", "origin": "hypothesis", "label": "...", "note": "..."}],
  "validation": {"ok": true, "problems": []},
  "note": "Research run of the lab (alpha). Not a calibrated model; not for real enforcement."}
 ```
 
-`origin` is `user` (taken from the question), `default` (module default) or `hypothesis` (a modelling assumption the
+`origin` is `user` (value bound to its field by the published parser), `default` (module default) or `hypothesis` (a modelling assumption the
 visitor may change).  The widget shows the fields editable, then — only after the visitor confirms — posts
 `request` (with edits) to `POST /api/lab/v1/jobs`, follows `GET /api/lab/v1/jobs/{id}`, and shows the result card built
-from the lab report itself (not from the model text).
+from the lab report itself (not from the model text). Keyed submissions require a private
+`X-Idempotency-Token` generated and retained before the first POST; see `lab_server/API.md`.
 
 ## POST /explain
 
@@ -102,10 +109,29 @@ from the lab report itself (not from the model text).
 {"job_id": "...", "token": "...", "lang": "ru"}
 ```
 
-The gateway reads the completed report from the lab with the visitor's token, builds a deterministic summary (statuses,
-key outputs, failed and UNKNOWN checks with their requirement ids) and asks the model to explain it with citations of the
-provisions involved.  Any number in the explanation that is not in the summary is flagged `number_not_in_result`; the
-widget shows the lab card as the authority.  Response: as `/ask` with `state: "answer"` and `result_id` echoed.
+The gateway reads the completed report with the visitor's token and returns a deterministic
+summary: labelled output paths, status counts, FAIL/UNKNOWN checks with requirement ids,
+check names, explanations and available provision citations. It does not call the model;
+added numbers, swapped values, refusal and model outages cannot alter this answer.
+`coverage.covered_percent` is computed with Decimal from `coverage.covered_fraction × 100`
+and labelled with that origin. No other derived model quantities are accepted.
+
+Response: as `/ask`, with `state: "answer"`, `answer_kind: "deterministic_summary"`,
+`result_id`, and structured `summary: {module, result_id, variants: {name: {outputs, counts, issues}}}`.
+`provenance.model` and `model_digest` are null. The report card and authorized report/export
+routes remain available independently. The old numeric-overlap postcheck is only a diagnostic
+helper, not permission to display generated numerical claims.
+
+Ordinary `/ask` answers have `answer_kind: "unverified_explanation"` and a visible label.
+Citations identify supplied fragments; even a real citation does not establish that a claim
+is supported. Removing quotation marks is not verification of a paraphrase.
+
+For S-LAB-08 proposals and work_cycle reports, Q-012 is bound to WORKCYCLE-3-02/8.1-01 and
+Q-013 to WORKCYCLE-5.1-01/8.2-02. Their UNRESOLVED notices use pinned corpus fragments,
+independently of retrieval rank (report binding considers all checks, including PASS).
+WITHDRAWN questions are excluded. These bindings do not resolve the questions. Other open
+question notices still depend on retrieval; this is not a guarantee of finding every relevant
+question. A corpus missing the known question fragments cannot supply their citations.
 
 ## GET /health
 

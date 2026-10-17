@@ -14,12 +14,12 @@ review that retained script and its printed checksum as part of operator review.
 
 ## Prerequisites and unresolved inputs
 
-- This checkout contains `keeper/KEEPER_API.md` and corpus code, but **no
-  `keeper/gateway.py` and no `keeper/README.md`**. Both packaging and app installation
-  reject a release missing the gateway. Supply a completed engine release implementing
-  `keeper.gateway:app` and the documented environment variables before deployment.
-  Its runtime dependencies must be in `requirements-server.txt`; this kit cannot
-  establish them from a missing implementation.
+- This checkout includes `keeper/gateway.py`, `keeper/README.md` and the API contract.
+  `keeper.gateway:app` implements the documented routes and settings; dependencies are
+  listed in `requirements-server.txt`. Packaging and installation reject a release
+  missing the gateway. The site widget and its route manifest are supplied from the
+  separate site repository. Keyed job submissions now require `X-Idempotency-Token`
+  retained before POST; update the site client to the server contract before release.
 - Full model-layer digest of `qwen3.5:2b` (2026-10-16, pulled from registry.ollama.ai on the author's machine,
   same layer as the registry manifest read the same day):
   `sha256:e8bf47d40c5ba68baf8f3e503ee36710da6e8641cb0a670a508cff5b3f0cfbf7`.
@@ -30,11 +30,11 @@ review that retained script and its printed checksum as part of operator review.
   `website/pages/protocols`. These site sources are not in this engine checkout. The
   injector must accept `--root`, `--routes`, and `--check` as requested, and add exactly
   one `<script src="/keeper/keeper-loader.js" defer></script>` before `</body>`.
-- Because the actual route manifest is unavailable, the kit explicitly accepts a
+- The supplied site kit includes its actual `ROUTES.json`; the helper accepts a
   nonempty JSON list, or `{"routes": [...]}`. Entries are paths (`"/index.html"`),
   `https://dikenocracy.com/...` URLs, or objects with exactly one of `path`, `route`,
   `url`. Queries/fragments, relative paths, and other hosts are rejected. Adapt the
-  helper after reviewing the real manifest if its schema differs; no routes are
+  helper if a later manifest changes schema; no routes are
   silently skipped. The site's injector must understand that same manifest.
 - Supply the server's public IP as `PUBLIC_IP` for step 90. Server-side public-IP
   probes cannot establish accessibility from every external network. Repeat the
@@ -48,9 +48,9 @@ review that retained script and its printed checksum as part of operator review.
 - Local packaging uses Bash, Git, tar/gzip, sha256sum, and Python with the engine's
   existing dependencies installed. Set `PYTHON` to the desired interpreter and
   optionally `KEEPER_RU_SOURCES` to a local Russian source directory. Packaging has
-  no network operations. Use a clean, committed engine checkout: this kit is intentionally
-  left uncommitted, so packaging this same worktree will refuse until its changes are
-  integrated or a separate clean release checkout is supplied. Do not build on the server.
+  no network operations. Use a clean, committed engine release checkout. The kit is
+  present in the supplied Git history; new local changes must be integrated into the
+  release checkout before packaging. Do not build on the server.
 
 ## Installed paths
 
@@ -81,7 +81,7 @@ Backups are retained until an operator removes them; there is no automated pruni
 
 ## Execution order and effects
 
-1. **Build locally**, once gateway and widget sources exist:
+1. **Build locally**, using the matching engine and site sources:
 
    ```bash
    bash deploy/local/make_release.sh /path/to/engine /path/to/site /path/to/empty-output
@@ -179,7 +179,7 @@ merely return an HTTP error. Confirm existing website, `/api/`, and
 
 Lab routes in `lab_server/app.py` explicitly contain `/api/lab/v1`; `proxy_pass` has
 **no trailing slash/URI** to preserve that prefix. Keeper uses the analogous documented
-prefix, pending verification against the missing implementation. The longer `^~`
+prefix in `keeper/gateway.py`. The longer `^~`
 locations take precedence over `/api/` and regex locations. Lab nginx requests are
 limited to 30/min/IP (burst 10), with the application's separate 10 POST/min limit.
 Keeper nginx requests are 12/min/IP, burst 4 nodelay, at most two active connections;
@@ -193,7 +193,7 @@ responses use `Cache-Control: no-cache`. Proxy IP headers are trusted only from
 
 | Process / reservation | Memory ceiling or planning allowance | CPU ceiling |
 | --- | --- | --- |
-| Ollama, Q4_K_M ~1.9 GB model, 8192 context | MemoryHigh 2500 MiB; MemoryMax 2700 MiB | 170% (1.7 cores) |
+| Ollama, Q8_0 model layer (2,012,012,448 bytes), 8192 context | MemoryHigh 2500 MiB; MemoryMax 2700 MiB | 170% (1.7 cores) |
 | Lab API, one uvicorn worker | 300 MiB | 50% |
 | Lab worker plus its spawned calculation | 600 MiB | 60%; Nice=10 |
 | Keeper gateway, one uvicorn worker | 400 MiB | 50% |
@@ -211,7 +211,8 @@ Watch existing production latency, memory pressure, swap use and journal OOM eve
 during the smoke test. If pressure appears, stop DKP/Ollama and have the author decide
 whether to change the budget/model/context or approve new resources.
 
-The venv/model/releases/backup growth needs disk space beyond the ~1.9 GB model and
+The venv/model/releases/backup growth needs disk space beyond the model
+(2,683,398,370 bytes of local manifest-referenced blobs, including the projector) and
 2 GiB swap; preflight's 12 GB floor is conservative initial headroom, not a retention
 policy. Ollama remains warm for 30 minutes; the gateway's model timeout is documented
 as 150 seconds. Successful CPU-only generation on this machine is not established.
@@ -257,6 +258,38 @@ fi
 ```
 
 All files use LF endings. Syntax checks do not validate nginx on the destination,
-systemd runtime behavior, remote dependencies, gateway implementation, model
-performance, actual site injector semantics, or connectivity. No commit is made by
-the kit authoring task.
+systemd runtime behavior, remote dependencies, model performance, site injector
+behavior on the deployed pages, or connectivity. Local packaging and syntax checks
+do not establish installation, load tolerance or rollback on the server; B3 and release
+remain incomplete until those runtime checks pass.
+
+
+## Model identity and validation limits (KT9 review)
+
+Local `ollama show qwen3.5:2b` on 2026-10-17 reports **Q8_0**. The exact command output,
+manifest, layer sizes and full manifest digest are retained in
+[`keeper/model-metadata.json`](../keeper/model-metadata.json). Manifest SHA-256:
+`ae1e257587aba65399b17e22000128fae7d5e9ae02ecc300cb9106c461eaf494`;
+model layer SHA-256: `e8bf47d40c5ba68baf8f3e503ee36710da6e8641cb0a670a508cff5b3f0cfbf7`.
+The local layer matches the KT9 pin. Before installation compare both actual model
+metadata and the retained evaluation identity; a tag alone is insufficient. Disk size
+is not inference RAM. About 20 seconds and a 1.3–1.5× Genoa speedup remain hypotheses;
+limiting the local CPU to two threads does not emulate the server's two vCPUs.
+
+The reported 29/36 and 31/36 are heuristic scores on a fixed eval set. Six 2b runs
+used deterministic intake and have `model_digest: null`; these are not 36 independent
+language-model quality checks. The selected 2b scored 0/3 on the definition and F-001
+questions: require a correct sourced answer or an honest handoff to the source.
+The current `/explain` is also deterministic and records a null model digest.
+
+Public corpus 839086c3df09 was reproduced without Russian search keys. Its Russian
+queries for the definition and DTI found no sources. The KT9 archive contained only
+the manifest for private-key configuration 9af06b7a5ce9; independent reconstruction
+requires that private input or reproducible keys from permitted sources. Verify Russian
+retrieval against the actual deployed corpus and retain its identity and permitted inputs.
+
+General open-author-question notices depend on retrieval. S-LAB-08/work_cycle adds
+explicit provision bindings for known UNRESOLVED Q-012 and Q-013 from the pinned
+corpus; this neither chooses an interpretation nor guarantees detection of every
+related question. See the Keeper API contract for the exact scope. Offline fault
+injection tests verify service behavior, not how often a real model makes an error.

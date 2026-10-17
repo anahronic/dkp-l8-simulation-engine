@@ -61,19 +61,10 @@ def proposal(module, params, question, lang):
     validation = api.validate_payload(req)
     if not validation["ok"]:
         raise ValueError("Invalid module input")
-    supplied = numbers(question)
-    given = [x for x in leaves(params) if type(x) in (int, float)]
-    # Literal numeric overlap is necessary, never infer a value from model confidence.
-    if not given or not any(Decimal(str(x)) in supplied for x in given):
-        return {"missing": sorted(params) or ["workers", "horizon_days", "demand"]}
-    missing = []
-    for key, value in params.items():
-        for item in leaves(value):
-            grounded = (Decimal(str(item)) in supplied if type(item) in (int, float)
-                        else json.dumps(item, ensure_ascii=False).strip('"').casefold() in question.casefold())
-            if not grounded:
-                missing.append(key)
-                break
+    bound = intake_values(question)
+    missing = [key for key, value in params.items() if key not in bound or value != bound[key]]
+    if not params:
+        missing = list(INTAKE)
     if missing:
         return {"missing": sorted(set(missing))}
     resolved = validation["resolved"]["visitor"]
@@ -103,18 +94,25 @@ INTAKE = {
                          r"on\s+duty|on\s+shift|per\s+hour|every\s+hour)|по\s+(\d{1,3})\s+человек\w*", re.I),
     "horizon_days": re.compile(r"(\d{1,3})\s*(?:дн|день|дня|сут|days?\b)", re.I),
 }
+# Do not accept the tail of a decimal, negative number or protocol identifier.
+INTAKE = {key: re.compile(r"(?<![\w.,+\-])(?:" + rx.pattern + ")", re.I) for key, rx in INTAKE.items()}
+
+
+def intake_values(question):
+    params = {}
+    for key, rx in INTAKE.items():
+        values = {int(next(g for g in m.groups() if g)) for m in rx.finditer(question)}
+        if len(values) == 1:
+            value = values.pop()
+            params[key] = [value] * 24 if key == "demand" else value
+    return params
 
 
 def intake_work_cycle(question, lang):
     """None when the question is not a S-LAB-08 calculation request; else a proposal or {"missing": [...]}."""
     if not (CALC.search(question) and ROSTER.search(question)):
         return None
-    params = {}
-    for key, rx in INTAKE.items():
-        m = rx.search(question)
-        if m:
-            value = int(next(g for g in m.groups() if g))
-            params[key] = [value] * 24 if key == "demand" else value
+    params = intake_values(question)
     missing = [k for k in INTAKE if k not in params]
     if missing:
         return {"missing": missing}
@@ -172,11 +170,11 @@ def report_summary(report):
         counts = dict.fromkeys(("PASS", "FAIL", "UNKNOWN", "N/A"), 0)
         issues = []
         for check in variant["checks"]:
+            rids.add(check["requirement_id"])
             status = "N/A" if check["status"] == "NOT_APPLICABLE" else check["status"]
             counts[status] += 1
             if status in {"FAIL", "UNKNOWN"}:
                 issues.append({k: check[k] for k in ("requirement_id", "check", "status", "explanation")})
-                rids.add(check["requirement_id"])
         result["variants"][name] = {"outputs": outputs(variant["outputs"]), "counts": counts, "issues": issues}
     return json.dumps(result, ensure_ascii=False, sort_keys=True, allow_nan=False), rids
 
@@ -190,3 +188,34 @@ def provisions(index, rids):
             if req["id"] in rids:
                 wanted.add((doc, "§" + req["section"]))
     return [f for f in index.frags if (f["document_id"], f["section"]) in wanted][:5]
+
+
+# Known UNRESOLVED questions for S-LAB-08, bound to registry requirements, not search rank.
+WORK_CYCLE_QUESTIONS = {"Q-012": {"WORKCYCLE-3-02", "WORKCYCLE-8.1-01"},
+                        "Q-013": {"WORKCYCLE-5.1-01", "WORKCYCLE-8.2-02"}}
+
+
+def work_cycle_questions(index, rids=None):
+    wanted = {qid for qid, linked in WORK_CYCLE_QUESTIONS.items() if rids is None or linked & rids}
+    return [f for f in index.frags if f["document_id"] in wanted and f["fid"].endswith("#0")
+            and f["source_type"] == "question" and f["status"] == "UNRESOLVED"]
+
+
+def summary_answer(summary, index, lang):
+    """Only trusted report fields; percentages have an explicit Decimal conversion."""
+    data = json.loads(summary)
+    lines = ["Сводка лаборатории (без генеративного объяснения)." if lang == "ru" else
+             "Lab summary (no generated explanation)."]
+    lines.append("result_id: " + data["result_id"])
+    for name, variant in data["variants"].items():
+        lines.extend(["", name + ":", "; ".join(f"{k}: {v}" for k, v in variant["counts"].items())])
+        for key, value in variant["outputs"].items():
+            lines.append(f"{key}: {json.dumps(value, ensure_ascii=False)}")
+            if key == "coverage.covered_fraction":
+                percent = Decimal(str(value)) * 100
+                lines.append(f"coverage.covered_percent: {percent}% (coverage.covered_fraction × 100)")
+        for issue in variant["issues"]:
+            refs = " ".join(f"[{f['cite']}]" for f in provisions(index, {issue["requirement_id"]}))
+            lines.append(f"{issue['status']} {issue['requirement_id']} / {issue['check']}: "
+                         f"{issue['explanation']} {refs}".rstrip())
+    return "\n".join(lines)

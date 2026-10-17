@@ -23,6 +23,7 @@ from starlette.exceptions import HTTPException
 from lab import api
 from lab.modules import MODULES
 from keeper.guardrails import flag, intake_work_cycle, postcheck, proposal, provisions, report_summary, safe_data
+from keeper.guardrails import summary_answer, work_cycle_questions
 from keeper.ollama import Ollama
 from keeper.search import Index
 
@@ -326,7 +327,17 @@ def create_app(settings=None):
         if explain:
             summary, rids = await lab_report(body)
             remember(fragments, provisions(index, rids))
-            result["result_id"] = json.loads(summary)["result_id"]
+            data = json.loads(summary)
+            for variant in data["variants"].values():
+                for issue in variant["issues"]:
+                    remember(fragments, provisions(index, {issue["requirement_id"]}))
+            if data["module"] == "work_cycle":
+                remember(fragments, work_cycle_questions(index, rids))
+            result.update(result_id=data["result_id"], summary=data, answer_kind="deterministic_summary",
+                          answer=summary_answer(summary, index, body["lang"]))
+            result["provenance"]["model"] = None
+            finish(result, fragments, body["lang"])
+            return
         else:
             intake = intake_work_cycle(question, body["lang"])          # published S-LAB-08 rule, no model involved
             if intake is not None:
@@ -343,6 +354,8 @@ def create_app(settings=None):
                         "Подготовлен исследовательский расчёт S-LAB-08. Проверьте значения, затем подтвердите запуск."
                         if body["lang"] == "ru" else
                         "A research run of S-LAB-08 is prepared. Check the values, then confirm the run."))
+                remember(fragments, work_cycle_questions(index))
+                finish(result, fragments, body["lang"])
                 return
             query = " ".join((question, body.get("selection", ""), body.get("page", {}).get("doc_id", "")))
             found = index.search(query, k=5)
@@ -375,8 +388,6 @@ def create_app(settings=None):
                         delta = part.get("content", "")
                         message["content"] += delta
                         message["tool_calls"].extend(part.get("tool_calls", []))
-                        if delta:
-                            emit("delta", {"text": delta})
                     response = {**chunk, "message": message}
                 else:
                     response = await model.chat(messages, registered, remaining)
@@ -436,17 +447,26 @@ def create_app(settings=None):
             result["answer"] = (("Уточните параметры: " if body["lang"] == "ru" else "Please supply parameters: ")
                                 + ", ".join(result["missing"]))
         result["answer"] = postcheck(result["answer"], fragments, result["flags"], summary)
+        if (result.get("proposal") or {}).get("module") == "work_cycle":
+            remember(fragments, work_cycle_questions(index))
+        finish(result, fragments, body["lang"])
+        if result["state"] == "answer" and result["answer"].strip():
+            result["answer_kind"] = "unverified_explanation"
+            result["answer"] = ("Объяснение ИИ; поддержка утверждений источниками не проверена.\n\n" if body["lang"] == "ru"
+                                else "AI explanation; source support for its claims is unverified.\n\n") + result["answer"]
+
+    def finish(result, fragments, lang):
         # An open author question among the sources is stated by the server, not left to the model (AI-SUBJECT §§1-2):
         # the lab does not choose a reading and neither does the Keeper.
         open_qs = [f for f in fragments if f["source_type"] == "question" and f["status"] == "UNRESOLVED"
                    and f["fid"].endswith("#0")]
-        if open_qs and result["state"] == "answer" and not explain:
-            ru = body["lang"] == "ru"
+        if open_qs:
+            ru = lang == "ru"
             result["answer"] = result["answer"].rstrip() + "\n\n" + (
                 "Открытый вопрос автору — прочтение не выбрано ни лабораторией, ни Хранителем, решение принадлежит автору: "
                 if ru else "Open question to the author — neither the lab nor the Keeper chooses a reading; the author decides: ") + \
-                "; ".join(f"[{f['cite']}] {f['heading']}" for f in open_qs[:2])
-            flag(result["flags"], "open_author_question", ", ".join(f["cite"] for f in open_qs[:2]))
+                "; ".join(f"[{f['cite']}] {f['heading']}" for f in open_qs)
+            flag(result["flags"], "open_author_question", ", ".join(f["cite"] for f in open_qs))
         # citations = the trusted fragments the answer actually cites, in order of first use; all retrieved stay in provenance
         used = [m.group(1) for m in re.finditer(r"\[([^\[\]\n]+)\]", result["answer"])]
         by_cite = {}
@@ -458,9 +478,9 @@ def create_app(settings=None):
         if result["state"] == "answer" and not result["answer"].strip():      # the model produced nothing usable
             flag(result["flags"], "empty_model_answer", "The model gave no answer; nothing is asserted.")
             result["answer"] = ("Хранитель не смог составить ответ по найденным источникам. Откройте найденные разделы "
-                                "или переформулируйте вопрос." if body["lang"] == "ru" else
+                                "или переформулируйте вопрос." if lang == "ru" else
                                 "The Keeper could not compose an answer from the sources found. Open the sections or rephrase.")
-        elif result["state"] == "answer" and not result["citations"] and not explain:
+        elif result["state"] == "answer" and not result["citations"] and result.get("answer_kind") != "deterministic_summary":
             flag(result["flags"], "uncited_answer", "No statement of this answer is tied to a source.")
 
     async def dispatch(request, explain=False):
