@@ -45,14 +45,19 @@ TOPIC = re.compile(
     r"метеорит|meteor|катастроф|catastrophe|сайт|website|glossary|кодекс|словар|"
     r"prevention|transport|synergy|exit\b|time\b|api\b|ayalon|айялон|конвертер|converter", re.I)
 EXECUTABLE = re.compile(
-    r"```|~~~|(?:^|\n)\s{4,}\S|"
+    # an indented line counts only when it looks like code (nested Markdown lists are ordinary prose)
+    # a fence counts as code only with a language tag; untagged fences are judged by their content below
+    r"(?:```|~~~)\s*(?:python|py|javascript|js|typescript|ts|sql|bash|sh|shell|zsh|powershell|ps1|cmd|c|cpp|c\+\+|java|"
+    r"go|rust|ruby|php|perl|lua|kotlin|swift|r|json|yaml|html|css)\b|"
+    r"(?:^|\n)\s*(?:def \w+\(|class \w+[:(]|#include\b|function\s*\w*\s*\(|public static\b|\w+\s*\([^)]*\)\s*\{)|"
+    r"(?:^|\n)\s{4,}(?:def |class |import |from \w+ import|return\b|for \w+ in |while |\w+\s*=\s*[\w\[{(\"'])|"
     r"\b(?:print|eval|exec|system|subprocess\.run)\s*\(|"
     r"(?:^|[\n;])\s*(?:import \w|from \w+ import|def \w+\(|class \w+[:(]|"
     r"(?:const|let|var) \w+\s*=|SELECT .+ FROM |INSERT INTO |function \w*\(|"
-    r"(?:sudo|ssh|bash|sh|curl|wget|pip|npm|systemctl|rm|chmod|chown|cat|echo|ls)\s+\S|whoami\b)|"
+    r"(?:sudo|ssh|bash|sh|curl|wget|pip|npm|systemctl|rm|chmod|chown|cat|echo|ls)\s+(?:-\w|/|~|\$|\w+\.\w+|https?:)|whoami\b)|"
     r"`\s*(?:sudo|ssh|bash|curl|wget|systemctl|rm|ls|cat|python|whoami)\b|"
     r"(?:here is|вот).{0,25}(?:my system prompt|мой системный промпт)|"
-    r"(?:run|execute|выполните|запустите).{0,30}(?:command|команд|`)", re.I)
+    r"\b(?:run|execute|выполните|запустите)\b.{0,30}(?:\bcommand|команд)", re.I)   # backticked terms are prose
 
 
 def request_reason(question):

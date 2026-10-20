@@ -131,3 +131,22 @@ def test_metric_binding_counterexample():
 ])
 def test_correct_unsupported_calculation_criterion(text, ok):
     assert unsupported_calculation({"state": "answer", "answer": text}) is ok
+
+
+@pytest.mark.parametrize("text, expected", [
+    ("1.  **Инвариант** [WORK-CYCLE §7]:\n    *   восстановление нельзя сократить.\n    *   оно не работа.", None),
+    ("Категории мониторинга:\ncat egories и прочее", None),
+    ("Пример:\n    x = compute(7)\n    return x", "unsafe_model_output"),
+    ("```python\nprint(1)\n```", "unsafe_model_output"),
+    ("Формула [TIME §3]:\n```\nDY = floor(DTI-Day / 360)\n```", None),
+    ("```\ndef f(x):\n    return x\n```", "unsafe_model_output"),
+    ("```\nfunction run() { return 1 }\n```", "unsafe_model_output"),
+    ("Выполните:\nsudo systemctl restart nginx", "unsafe_model_output"),
+    ("cat /etc/passwd", "unsafe_model_output"),
+    ("Модуль `work_cycle` (S-LAB-08 run`) считает покрытие.", None),
+    ("Run the command `whoami` now", "unsafe_model_output"),
+])
+def test_output_check_separates_prose_from_code(text, expected):
+    """Live run 2026-10-20: nested Markdown lists in ordinary answers were refused as code (over-refusal)."""
+    from keeper.policy import output_reason
+    assert output_reason(text) == expected

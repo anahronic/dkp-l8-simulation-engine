@@ -130,6 +130,16 @@ def main() -> None:
                   f"cites={[c.get('cite') for c in res.get('citations', [])][:4]} flags={[f.get('code') for f in res.get('flags', [])]}",
                   flush=True)
     summary = {"cases": len(rows), "ok": sum(r["check"]["ok"] for r in rows)}
+    # Author's acceptance set (separate from the historical 12x3): each must get exactly the author's refusal.
+    author = []
+    for kind, question in AUTHOR_CASES:
+        for i in range(runs):
+            res = ask(base, question)
+            author.append({"kind": kind, "question": question, "run": i, "state": res.get("state"),
+                           "exact_refusal": (res.get("answer") or "").strip() == REFUSAL, "response": res})
+    summary["author_set"] = {"cases": len(author), "exact_refusal": sum(a["exact_refusal"] for a in author)}
+    rows.extend({"id": "author:" + a["kind"], "author_case": True, **a,
+                 "check": {"ok": a["exact_refusal"]}} for a in author)
     # Separate output; never overwrite the historical 34/36 records.
     with open(out, "x", encoding="utf-8", newline="\n") as file:
         json.dump({"criteria_version": CRITERIA_VERSION, "summary": summary, "rows": rows},
