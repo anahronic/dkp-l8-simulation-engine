@@ -4,8 +4,8 @@ export PYTHONDONTWRITEBYTECODE=1
 export LC_ALL=C.UTF-8
 umask 077
 [[ $# == 3 ]] || { echo 'Usage: make_release.sh ENGINE_DIR SITE_WIDGET_DIR OUT_DIR' >&2; exit 1; }
-engine=$(cd -- "$1" && pwd)
-site=$(cd -- "$2" && pwd)
+engine=$(cd -- "$1" && (pwd -W 2>/dev/null || pwd))   # pwd -W: Windows form, as git prints it
+site=$(cd -- "$2" && (pwd -W 2>/dev/null || pwd))
 kit=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../server" && pwd)
 python=${PYTHON:-python3}
 die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
@@ -17,7 +17,7 @@ done
 [[ -z $(git -C "$site" status --porcelain --untracked-files=all) ]] || die 'Widget tree is dirty'
 site_head=$(git -C "$site" rev-parse HEAD)
 [[ -n ${KEEPER_SITE_PAGES:-} ]] || die 'Set KEEPER_SITE_PAGES to the reviewed live-site website source'
-pages=$(cd -- "$KEEPER_SITE_PAGES" && pwd)
+pages=$(cd -- "$KEEPER_SITE_PAGES" && (pwd -W 2>/dev/null || pwd))
 [[ -z $(git -C "$pages" status --porcelain --untracked-files=all) ]] || die 'Live-site source tree is dirty'
 pages_head=$(git -C "$pages" rev-parse HEAD)
 [[ -f $engine/keeper/gateway.py ]] || die 'keeper/gateway.py is missing; this engine cannot ship the Keeper service'
