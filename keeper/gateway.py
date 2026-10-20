@@ -27,7 +27,7 @@ from keeper.guardrails import summary_answer, work_cycle_questions
 from keeper.ollama import Ollama
 from keeper.search import Index
 from keeper.policy import (request_reason, output_reason, hostile_source, private_spans,
-                           contains_private, refuse, ROLE_QUESTION)
+                           contains_private, refuse, ROLE_QUESTION, REFUSAL)
 
 PREFIX = "/api/keeper/v1"
 INSTRUCTIONS = Path(__file__).with_name("instructions") / "v1.md"
@@ -409,7 +409,7 @@ def create_app(settings=None):
                 if not isinstance(content, str) or not isinstance(message.get("tool_calls", []), list):
                     raise ValueError("Malformed model message")
                 result["answer"] = content
-                reason = output_reason(content)
+                reason = output_reason(content, question + "\n" + "\n".join(f.get("text", "") for f in fragments))
                 if reason:
                     refuse(result, reason)
                     return
@@ -460,6 +460,13 @@ def create_app(settings=None):
                         flag(result["flags"], "tool_rejected", "Too many tool calls.")
                     break
         emit("status", {"state": "checking"})
+        # The 2b model sometimes opens an ordinary answer with the role refusal it was given (live F-001, 2026-10-20);
+        # the refusal belongs only to refused requests, and a bare refusal is the model declining.
+        if result["state"] == "answer" and REFUSAL in result["answer"]:
+            result["answer"] = result["answer"].replace(REFUSAL, "").strip()
+            if not result["answer"]:
+                refuse(result, "model_refusal")
+                return
         if result["state"] == "needs_parameters":
             result["answer"] = (("Уточните параметры: " if body["lang"] == "ru" else "Please supply parameters: ")
                                 + ", ".join(result["missing"]))

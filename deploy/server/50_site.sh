@@ -6,6 +6,7 @@ tarball=$(readlink -f -- "$1")
 check_archive "$tarball"
 init_changes
 [[ -O /var/www/html && -w /var/www/html && ! -L /var/www/html/keeper ]] || die 'Web root must belong to admin; keeper must not be a symlink'
+check_web_readable                                   # never back up (and later restore) a broken web root
 backup=$STATE/site-$(stamp)
 mkdir -m 0700 "$backup"
 stage=$(mktemp -d "$STATE/widget.XXXXXXXX")
@@ -30,7 +31,7 @@ recover() {
     local rc=$?
     if (( rc != 0 )); then
         rm -rf -- /var/www/html/keeper /var/www/html/projects/protocol-lab
-        if tar --extract --gzip --file "$backup.tar.gz" --directory /var/www/html --no-same-owner; then
+        if restore_site "$backup.tar.gz"; then
             touch "$backup/ROLLED_BACK"
             change "Restored site backup $backup.tar.gz after failure"
         else
@@ -52,4 +53,5 @@ change 'Installed widget in /var/www/html/keeper and the lab page in /var/www/ht
 mapfile -d '' routes < <(python3 -c 'import json,sys; [print(r["file"], end="\0") for r in json.load(open(sys.argv[1]))["routes"]]' /var/www/html/keeper/ROUTES.json)
 python3 /var/www/html/keeper/keeper_inject.py /var/www/html "${routes[@]}"
 python3 /var/www/html/keeper/keeper_inject.py --check --routes /var/www/html/keeper/ROUTES.json /var/www/html
+check_web_readable
 change 'Injected loader and passed injector --check (web-root operations used no sudo)'

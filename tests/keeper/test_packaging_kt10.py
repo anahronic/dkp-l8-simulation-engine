@@ -111,3 +111,16 @@ def test_runtime_and_rollback_configuration():
         assert "-o root -g dkplab -m 0640" in script
         assert "/var/lib/dkp-corpus/corpus.jsonl" in script
         assert ".dkp-units" in script
+
+
+def test_site_restore_keeps_file_modes_and_checks_nginx_can_read():
+    # LAB-ERR 2026-10-20: tar under the kit's umask 077 restored pages as 0600 and nginx answered 403.
+    root = Path("deploy/server")
+    common = (root / "common.sh").read_text()
+    assert "umask 077" in common
+    assert "--no-same-owner --preserve-permissions" in common and "! -perm -o=r" in common
+    site, rollback = (root / "50_site.sh").read_text(), (root / "99_rollback.sh").read_text()
+    assert site.count("check_web_readable") == 2 and 'restore_site "$backup.tar.gz"' in site
+    assert 'restore_site "$backup.tar.gz"\n    check_web_readable' in rollback
+    for script in (site, rollback):
+        assert "--directory /var/www/html --no-same-owner\n" not in script and "--directory /var/www/html --no-same-owner;" not in script

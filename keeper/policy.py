@@ -60,6 +60,18 @@ EXECUTABLE = re.compile(
     r"\b(?:run|execute|выполните|запустите)\b.{0,30}(?:\bcommand|команд)", re.I)   # backticked terms are prose
 
 
+# Output side: signs that the model followed an injected instruction or disclosed what it must not.  The visitor-side
+# ATTACK verbs are ordinary prose in an answer ("покажите в заключении", "удалите записи из файла", "propose_run для
+# запуска … команда") and refused ordinary answers live on 2026-10-20; the answer has no tool that could change anything.
+OUTPUT_ATTACK = re.compile(
+    r"ignore (?:all |the )?(?:previous|prior|above) (?:instructions|rules)|"
+    r"игнорируй(?:те)? (?:все )?(?:предыдущие|прежние) (?:инструкции|правила)|"
+    r"\b(?:i am now|you are now)\b|\bя теперь (?:администратор|админ|root|разработчик)|"
+    r"\b(?:my|мой|мои) (?:system prompt|системн\w* (?:промпт|инструкци))|"
+    r"-----begin [a-z ]*private key|\bssh-(?:rsa|ed25519)\b|\bsk-[a-z0-9_-]{16,}|"
+    r"run_shell|/etc/(?:passwd|shadow)|\bsudo\b|cmd\.exe|(?:password|пароль)\s*[:=]")
+
+
 def request_reason(question):
     text = normalized(question)
     if ATTACK.search(text):
@@ -73,10 +85,13 @@ def request_reason(question):
     return None
 
 
-def output_reason(text):
-    if EXECUTABLE.search(text) or ATTACK.search(normalized(text)):
+def output_reason(text, context=""):
+    """context = the question and the fragments the model was given."""
+    if EXECUTABLE.search(text) or OUTPUT_ATTACK.search(normalized(text)):
         return "unsafe_model_output"
-    if OFF_TOPIC.search(text):
+    # an off-topic word that the question or the sources themselves contain is on topic ("погодные условия" in CRISIS)
+    known = normalized(context)
+    if any(normalized(m.group(0)) not in known for m in OFF_TOPIC.finditer(text)):
         return "off_topic"
     return None
 

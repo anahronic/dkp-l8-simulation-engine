@@ -82,3 +82,13 @@ latest_backup() {
     done < <(find "$STATE" -maxdepth 1 -type d -name "$kind-*" | sort -r)
     die "No unconsumed $kind backup exists"
 }
+# nginx (www-data) reads the web root as "other"; the kit's umask 077 must never leak into served files.
+check_web_readable() {
+    local bad
+    bad=$(find /var/www/html -type f ! -perm -o=r -print -quit)
+    [[ -z $bad ]] || die "Web file not readable by nginx: $bad"
+}
+# Restore keeps the archived modes exactly (without -p, tar applies the kit's umask 077 and pages turn 0600 / HTTP 403).
+restore_site() {
+    tar --extract --gzip --file "$1" --directory /var/www/html --no-same-owner --preserve-permissions
+}

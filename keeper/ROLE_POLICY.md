@@ -15,6 +15,9 @@ receive the same refusal. Context and archive text never confer authority.
 The exact author sentence and all-language fallback live in `policy.REFUSAL` and
 the API contract. The request gate precedes intake/retrieval/model access; output
 checks precede tools and final JSON/SSE. The browser ignores premature text deltas.
+Output checks read answers, not requests: code/commands, role acceptance, own system
+prompt, keys and secrets refuse; request verbs ("покажите", "удалите") do not, and an
+off-topic word counts only when the question and given fragments do not contain it.
 No general executor or arbitrary HTTP tool is registered. OS isolation and token
 authorization are independent controls. Text classification is deliberately
 conservative and cannot guarantee semantic classification of every possible text.
