@@ -23,7 +23,7 @@ without deciding it (reading record, `partial_check`); stage criteria count them
 | Stage | Status | Documents registered | Provisions | Covered | of which with an open point | PASS | of which with an open point | FAIL | UNKNOWN | N/A | UNCOVERED | Resolvable, uncovered | Uncovered, checkable core | Unresolved decisions |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | A. Registry and base | PARTIAL | 38/38 | 1737 | 1595 (91.8 %) | 866 | 1505 | 788 | 4 | 68 | 18 | 142 | 0 | 0 | 1008 |
-| B. First working site | PARTIAL | 1/1 | 43 | 30 (69.8 %) | 16 | 29 | 15 | 0 | 1 | 0 | 13 | 0 | 0 | 29 |
+| B. First working site | DONE | 1/1 | 43 | 30 (69.8 %) | 16 | 29 | 15 | 0 | 1 | 0 | 13 | 0 | 0 | 29 |
 | C. Common checks | DONE | 8/8 | 365 | 358 (98.1 %) | 200 | 345 | 190 | 3 | 8 | 2 | 7 | 0 | 0 | 207 |
 | D. Transitions and rights | DONE | 9/9 | 424 | 383 (90.3 %) | 181 | 360 | 161 | 1 | 21 | 1 | 41 | 0 | 0 | 222 |
 | E. Applied modules | DONE | 7/7 | 293 | 263 (89.8 %) | 130 | 245 | 114 | 0 | 10 | 8 | 30 | 0 | 0 | 160 |
@@ -43,7 +43,7 @@ Covered without an open point: 729; of all provisions, an open point closed by t
 - A / A6 **not met**: interpretations reviewed by a human (not listed in §12; required before the registry may be cited as a reading of the texts)
 - B / B1 met: interface runs smoke and a visitor's admissible variant; comparison; reports
 - B / B2 met: export repeats (replay packages)
-- B / B3 **not met**: API, queue, progress, cancellation as specified in §6.4-§6.5 — implemented in lab_server/ (routes, queue with lease and recovery, cancellation, idempotency, job tokens) and tested locally (tests/server, live API checks of checkpoint 9); not deployed: done only after the routes run on the server with the post-deployment check; see lab/ARCHITECTURE_DEVIATION.md
+- B / B3 met: API, queue, progress, cancellation as specified in §6.4-§6.5 — deployed on dikenocracy.com 2026-10-20 (release de95bf0-62b47c0b35e3, author permission of 2026-10-20); deploy/server/90_postdeploy_check.sh passed; live contract checks over HTTPS: catalog (35 modules), scenarios, validate (valid 200, invalid 422, code field 422), jobs with queue position and progress, cancellation (queued -> cancelled, report 409), report and export with independent package replay, idempotent retry (same job and token; other body 409; other proof 409 without token or job id; key without proof 422), visitor isolation (other token 404, no token 401), service ports closed from outside; site and app rollback tested; see lab/ARCHITECTURE_DEVIATION.md
 - B / B4 met: PREVENTION results of v2.1.1 preserved
 - C / C1 met: boundary cases, unconfirmed models and cascading degradation visible and checked
 - D / D1 met: composite scenarios work; a missing amount function is not hidden by an artificial coefficient

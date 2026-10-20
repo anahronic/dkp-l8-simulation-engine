@@ -1,5 +1,12 @@
 # Deviation: browser-only execution instead of the server API
 
+**Status (2026-10-20): CLOSED.** The server API runs on dikenocracy.com under `/api/lab/v1/` (release
+`de95bf0-62b47c0b35e3`, services as unprivileged users `dkplab`/`dkpkeeper`, read-only corpus, loopback ports behind
+nginx).  The post-deployment check passed and the routes of §6.4–§6.5 were checked live over HTTPS (catalog,
+scenarios, validate, jobs with queue position and progress, cancellation, report, export with independent replay,
+idempotency with the private replay proof, job tokens and visitor isolation); the site and app rollbacks were tested.
+Evidence: `audit rt/отчёт_хранитель_развёртывание_2026-10-20.md`.  Closing B3 is not author acceptance (A6).
+
 **Status (2026-10-16, review КТ8 TZ §9):** the server path is **implemented in code and tested, not deployed**.
 Package `lab_server/` (outside `lab/`, so the HTTP wrapper and the queue do not enter `lab_code_digest`):
 FastAPI routes under `/api/lab/v1` (`lab_server/API.md`), a separate worker process, a durable SQLite queue

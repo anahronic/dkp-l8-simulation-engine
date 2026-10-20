@@ -17,8 +17,8 @@
    "criteria": [
     {"id": "B1", "text": "interface runs smoke and a visitor's admissible variant; comparison; reports", "check": "manual:done"},
     {"id": "B2", "text": "export repeats (replay packages)", "check": "manual:done"},
-    {"id": "B3", "text": "API, queue, progress, cancellation as specified in §6.4-§6.5", "check": "manual:not_done",
-     "note": "implemented in lab_server/ (routes, queue with lease and recovery, cancellation, idempotency, job tokens) and tested locally (tests/server, live API checks of checkpoint 9); not deployed: done only after the routes run on the server with the post-deployment check; see lab/ARCHITECTURE_DEVIATION.md"},
+    {"id": "B3", "text": "API, queue, progress, cancellation as specified in §6.4-§6.5", "check": "manual:done",
+     "note": "deployed on dikenocracy.com 2026-10-20 (release de95bf0-62b47c0b35e3, author permission of 2026-10-20); deploy/server/90_postdeploy_check.sh passed; live contract checks over HTTPS: catalog (35 modules), scenarios, validate (valid 200, invalid 422, code field 422), jobs with queue position and progress, cancellation (queued -> cancelled, report 409), report and export with independent package replay, idempotent retry (same job and token; other body 409; other proof 409 without token or job id; key without proof 422), visitor isolation (other token 404, no token 401), service ports closed from outside; site and app rollback tested; see lab/ARCHITECTURE_DEVIATION.md"},
     {"id": "B4", "text": "PREVENTION results of v2.1.1 preserved", "check": "manual:done"}]},
   {"id": "C", "title": "Common checks",
    "documents": ["DKP-0-TIME-001", "DKP-0-ORACLE-001", "DKP-1-IMPACT-001", "DKP-1-EPISTEMIC-BOUNDARIES-001",

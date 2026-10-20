@@ -273,6 +273,9 @@ behavior on the deployed pages, or connectivity. Local packaging and syntax chec
 do not establish installation, load tolerance or rollback on the server; B3 and release
 remain incomplete until those runtime checks pass.
 
+Runtime checks on the server passed on 2026-10-20 for release `de95bf0-62b47c0b35e3` (post-deployment check,
+live API contract, site and app rollback); load tolerance beyond one model request at a time is not measured.
+
 
 ## Model identity and validation limits (KT9 review)
 
