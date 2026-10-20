@@ -20,9 +20,14 @@ def private_passages(corpus=None, ru=None):
         text = " ".join(text.split()).casefold()
         if len(text) >= 80:
             spans.update(text[i:i + 80] for i in range(0, len(text) - 79, 40))
-    # Untranslated English passages (formulas, JSON, identifiers) are copies of the public canon, not translation:
-    # a span is a translation passage only if it is mostly Cyrillic text.
-    return {s for s in spans if sum("а" <= ch <= "я" or ch == "ё" for ch in s) >= 20}
+    # Private = in the translation AND in no public source.  Untranslated English (formulas, JSON, identifiers) and
+    # passages the published canon itself contains are public; only mostly-Cyrillic spans absent from the pinned
+    # public corpus and lab documents count.
+    spans = {s for s in spans if sum("а" <= ch <= "я" or ch == "ё" for ch in s) >= 20}
+    root = Path(__file__).resolve().parents[2]
+    public = " ".join(" ".join(p.read_text(encoding="utf-8", errors="ignore").split()).casefold()
+                      for p in list((root / "lab" / "corpus").rglob("*.md")) + list((root / "lab").glob("*.md")))
+    return {s for s in spans if s not in public}
 
 
 def check_blob(name, data, spans=(), depth=0):

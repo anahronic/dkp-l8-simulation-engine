@@ -161,3 +161,12 @@ def test_untranslated_english_in_the_translation_is_not_private():
     spans = private_spans([{"search_ru": english + " " + russian}])
     assert not contains_private({"answer": english}, spans)
     assert contains_private({"answer": russian}, spans)
+
+
+def test_passage_present_in_public_canon_is_not_private():
+    """Release check 2026-10-20: a Cyrillic passage that the published canon itself contains is public."""
+    from keeper.policy import contains_private, private_spans
+    shared = "Этот фрагмент на русском языке есть и в опубликованном каноне, и в переводе, поэтому он публичный текст."
+    only_ru = "Этот фрагмент на русском языке есть только в неопубликованном переводе автора и не должен уходить наружу."
+    spans = private_spans([{"text": "Canon. " + shared, "search_ru": shared + " " + only_ru}])
+    assert not contains_private({"answer": shared}, spans) and contains_private({"answer": only_ru}, spans)

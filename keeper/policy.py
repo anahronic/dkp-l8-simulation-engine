@@ -95,8 +95,11 @@ def private_spans(fragments):
         spans.add(text)
         if len(text) >= 80:
             spans.update(text[i:i + 80] for i in range(0, len(text) - 79, 40))
-    # English left untranslated (formulas, JSON, identifiers) is the public canon, not private translation
-    return {s for s in spans if sum("а" <= ch <= "я" or ch == "ё" for ch in s) >= 20}
+    # Private = in the translation AND in no public fragment: English left untranslated and passages the published
+    # canon itself contains are public, not private translation.
+    spans = {s for s in spans if sum("а" <= ch <= "я" or ch == "ё" for ch in s) >= 20}
+    public = " ".join(normalized(f.get("text", "")) for f in fragments)
+    return {s for s in spans if s not in public}
 
 
 def contains_private(value, spans):
