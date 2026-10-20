@@ -150,3 +150,14 @@ def test_output_check_separates_prose_from_code(text, expected):
     """Live run 2026-10-20: nested Markdown lists in ordinary answers were refused as code (over-refusal)."""
     from keeper.policy import output_reason
     assert output_reason(text) == expected
+
+
+def test_untranslated_english_in_the_translation_is_not_private():
+    """Release check 2026-10-20: an English JSON line left untranslated in the private translation matched the public
+    Code text and blocked the release; only mostly-Cyrillic spans count as translation passages."""
+    from keeper.policy import contains_private, private_spans
+    english = '"node_alpha_ed25519:0x????..." // reserved for the first decentralized sovereign node ], "merkle_root"'
+    russian = "Блок восстановления не может быть сокращён, перенесён или превращён в рабочее время ни при каких условиях."
+    spans = private_spans([{"search_ru": english + " " + russian}])
+    assert not contains_private({"answer": english}, spans)
+    assert contains_private({"answer": russian}, spans)
