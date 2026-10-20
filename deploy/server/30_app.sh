@@ -18,6 +18,18 @@ if ! getent passwd dkplab >/dev/null; then
     change 'Created system user/group dkplab with no login shell'
 fi
 [[ $(getent passwd dkplab | cut -d: -f7) == /usr/sbin/nologin ]] || die 'Existing dkplab account has an unexpected shell'
+if ! getent passwd dkpkeeper >/dev/null; then
+    sudo useradd --system --user-group --home-dir /var/lib/dkp-keeper --no-create-home --shell /usr/sbin/nologin dkpkeeper
+fi
+sudo usermod -a -G dkplab dkpkeeper
+for account in dkplab dkpkeeper; do
+    [[ $(getent passwd "$account" | cut -d: -f7) == /usr/sbin/nologin ]] || die 'Unexpected runtime login shell'
+    # Never grant installer privileges to runtime. Reject pre-existing sudo rules too.
+    for group in $(id -nG "$account"); do
+        case $group in "$account"|dkplab) ;; *) die "Unexpected runtime group: $account / $group" ;; esac
+    done
+    if sudo -l -U "$account" 2>/dev/null | grep -Eq '^[[:space:]]*\('; then die "Runtime account has sudo rules: $account"; fi
+done
 sudo install -d -m 0755 "$base" "$base/releases"
 if sudo test -e "$release/.dkp-ready"; then
     [[ $(sudo cat "$release/.dkp-ready") == "$release_hash $corpus_hash" ]] || die 'VERSION already exists with different artifacts'
@@ -40,8 +52,11 @@ else
     change "Created venv and installed requirements-server.txt in $release"
 fi
 # Save the corpus with its release so app rollback restores the matching corpus too.
-sudo install -o root -g root -m 0640 "$corpus" "$release/.dkp-corpus.jsonl"
-sudo install -d -m 0700 -o dkplab -g dkplab /var/lib/dkp-lab /var/lib/dkp-lab/lab /var/lib/dkp-lab/keeper
+sudo install -o root -g dkplab -m 0640 "$corpus" "$release/.dkp-corpus.jsonl"
+sudo install -d -m 0755 -o root -g root /var/lib/dkp-lab
+sudo install -d -m 0700 -o dkplab -g dkplab /var/lib/dkp-lab/lab
+sudo install -d -m 0750 -o root -g dkplab /var/lib/dkp-corpus
+sudo install -d -m 0700 -o dkpkeeper -g dkpkeeper /var/lib/dkp-keeper /var/lib/dkp-keeper/log
 old=''
 if sudo test -L "$base/current"; then
     old=$(readlink -f "$base/current")
@@ -54,8 +69,8 @@ for service in "${SERVICES[@]}"; do
     if systemctl cat "$service" >/dev/null 2>&1; then sudo systemctl stop "$service"; fi
 done
 change 'Stopped existing DKP services before switching corpus and code'
-sudo install -o dkplab -g dkplab -m 0640 "$corpus" /var/lib/dkp-lab/keeper/corpus.jsonl.new
-sudo mv -f /var/lib/dkp-lab/keeper/corpus.jsonl.new /var/lib/dkp-lab/keeper/corpus.jsonl
+sudo install -o root -g dkplab -m 0640 "$corpus" /var/lib/dkp-corpus/corpus.jsonl.new
+sudo mv -f /var/lib/dkp-corpus/corpus.jsonl.new /var/lib/dkp-corpus/corpus.jsonl
 if [[ -n $old && $old != "$release" ]]; then
     printf '%s\n' "$old" | sudo tee "$base/PREVIOUS.new" >/dev/null
     sudo mv -f "$base/PREVIOUS.new" "$base/PREVIOUS"
@@ -64,6 +79,7 @@ atomic_link "$release" "$base/current"
 change "Switched current to $version; previous=${old:-none}; installed private data directories and corpus"
 for service in "${SERVICES[@]}"; do
     sudo install -m 0644 "$KIT_DIR/units/$service" "/etc/systemd/system/$service"
+    sudo install -D -m 0644 "$KIT_DIR/units/$service" "$release/.dkp-units/$service"
 done
 sudo systemctl daemon-reload
 sudo systemctl enable "${SERVICES[@]}"

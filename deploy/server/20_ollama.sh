@@ -27,6 +27,17 @@ MemoryMax=2700M
 MemoryHigh=2500M
 CPUQuota=170%
 OOMScoreAdjust=500
+User=ollama
+Group=ollama
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+CapabilityBoundingSet=
+RestrictSUIDSGID=true
+InaccessiblePaths=-/var/lib/dkp-lab -/var/lib/dkp-corpus -/var/lib/dkp-keeper -/var/lib/dkp-deploy -/etc/ssh
+# Model installation needs this exception temporarily; revoked after verified pull.
+ReadWritePaths=/usr/share/ollama
 EOF
 sudo chmod 0644 /etc/systemd/system/ollama.service.d/dkp.conf
 change 'Wrote Ollama drop-in before any installer-triggered service start'
@@ -50,8 +61,23 @@ check_ports loopback 11434
 # Inspect Environment without printing unrelated, potentially secret variables.
 sudo systemctl show ollama -p Environment |
     python3 "$KIT_DIR/kit_helpers.py" ollama-env
+if sudo -l -U ollama 2>/dev/null | grep -Eq '^[[:space:]]*\('; then die 'Ollama account has sudo rules'; fi
+# Installer-only update window; the previous release made these files read-only.
+sudo install -d -o ollama -g ollama -m 0750 /usr/share/ollama/.ollama/models
+sudo chown -R ollama:ollama /usr/share/ollama/.ollama/models
 OLLAMA_HOST=127.0.0.1:11434 OLLAMA_NO_CLOUD=1 ollama pull qwen3.5:2b
 sudo python3 "$KIT_DIR/kit_helpers.py" model-digest \
     /usr/share/ollama/.ollama/models/manifests/registry.ollama.ai/library/qwen3.5/2b "$expected"
 check_ports loopback 11434
 change "Pulled qwen3.5:2b and verified model layer $expected and effective environment"
+sudo chown -R root:ollama /usr/share/ollama/.ollama/models
+sudo chmod -R u=rwX,g=rX,o= /usr/share/ollama/.ollama/models
+cat <<'EOF' | sudo tee -a /etc/systemd/system/ollama.service.d/dkp.conf >/dev/null
+ReadWritePaths=
+ReadOnlyPaths=/usr/share/ollama/.ollama/models
+IPAddressDeny=any
+IPAddressAllow=localhost
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart ollama.service
+change 'Revoked model-install write access and non-local network access from runtime Ollama'

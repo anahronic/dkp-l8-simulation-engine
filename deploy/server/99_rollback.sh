@@ -49,10 +49,20 @@ app() {
     target=$(sudo cat /opt/dkp-lab/PREVIOUS)
     [[ $target == "/opt/dkp-lab/releases/$version" ]] || die 'VERSION must match the release recorded in PREVIOUS'
     sudo test -f "$target/.dkp-ready" && sudo test -f "$target/.dkp-corpus.jsonl" || die 'Previous release is incomplete'
+    # Old shared-user units are not an acceptable rollback target after isolation.
+    for service in "${SERVICES[@]}"; do
+        sudo test -f "$target/.dkp-units/$service" || die 'Previous release lacks isolated units; stop services instead'
+    done
+    sudo grep -q '^User=dkpkeeper$' "$target/.dkp-units/dkp-keeper.service" || die 'Unsafe legacy Keeper unit'
     current=$(readlink -f /opt/dkp-lab/current)
     sudo systemctl stop "${SERVICES[@]}"
-    sudo install -o dkplab -g dkplab -m 0640 "$target/.dkp-corpus.jsonl" /var/lib/dkp-lab/keeper/corpus.jsonl.new
-    sudo mv -f /var/lib/dkp-lab/keeper/corpus.jsonl.new /var/lib/dkp-lab/keeper/corpus.jsonl
+    sudo install -d -o root -g dkplab -m 0750 /var/lib/dkp-corpus
+    sudo install -o root -g dkplab -m 0640 "$target/.dkp-corpus.jsonl" /var/lib/dkp-corpus/corpus.jsonl.new
+    sudo mv -f /var/lib/dkp-corpus/corpus.jsonl.new /var/lib/dkp-corpus/corpus.jsonl
+    for service in "${SERVICES[@]}"; do
+        sudo install -m 0644 "$target/.dkp-units/$service" "/etc/systemd/system/$service"
+    done
+    sudo systemctl daemon-reload
     atomic_link "$target" /opt/dkp-lab/current
     printf '%s\n' "$current" | sudo tee /opt/dkp-lab/PREVIOUS.new >/dev/null
     sudo mv -f /opt/dkp-lab/PREVIOUS.new /opt/dkp-lab/PREVIOUS

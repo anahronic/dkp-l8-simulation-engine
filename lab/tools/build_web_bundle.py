@@ -18,6 +18,8 @@ import json
 import os
 import sys
 import zipfile
+import platform
+import zlib
 
 ENGINE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 INCLUDE = ["lab", "simulation", "requirements.txt"]
@@ -51,9 +53,15 @@ def build(out_dir: str) -> dict:
             listing[rel] = hashlib.sha256(data).hexdigest()
             info = zipfile.ZipInfo(rel, date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
-            z.writestr(info, data)
+            info.create_system = 3
+            info.external_attr = 0o100644 << 16
+            info.internal_attr = 0
+            z.writestr(info, data, compresslevel=9)
     data = buf.getvalue()
-    meta = {"bundle_sha256": hashlib.sha256(data).hexdigest(), "files": len(listing), "listing": listing}
+    meta = {"bundle_sha256": hashlib.sha256(data).hexdigest(), "files": len(listing), "listing": listing,
+            "environment": {"python": platform.python_version(), "zlib": zlib.ZLIB_VERSION,
+                            "zlib_runtime": zlib.ZLIB_RUNTIME_VERSION, "compression_level": 9,
+                            "create_system": 3, "external_attr": 0o100644 << 16}}
     with open(os.path.join(out_dir, "lab-bundle.zip"), "wb") as f:
         f.write(data)
     with open(os.path.join(out_dir, "lab-bundle.json"), "w", encoding="utf-8", newline="\n") as f:

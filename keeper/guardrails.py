@@ -143,6 +143,21 @@ def postcheck(answer, fragments, flags, summary=None):
 
     answer = re.sub(r'«([^»]*)»|"([^"]*)"|“([^”]*)”', quote, answer)
     if summary is not None:
+        # A number appearing elsewhere in the report is not evidence for this metric.
+        data = json.loads(summary)
+        bindings = {
+            "coverage.deficit_hours": r"(?:coverage\.deficit_hours|дефицит\w*|deficit)"
+                                      r"[^\d\n.;]{0,50}(\d+(?:[.,]\d+)?)\s*(?:час|hours?)?",
+            "coverage.hours": r"(?:coverage\.hours|наблюдени\w*|observed|observation)"
+                              r"[^\d\n.;]{0,50}(\d+(?:[.,]\d+)?)\s*(?:час|hours?)?",
+        }
+        for metric, pattern in bindings.items():
+            expected = {Decimal(str(v["outputs"][metric])) for v in data["variants"].values()
+                        if metric in v["outputs"]}
+            for match in re.finditer(pattern, answer, re.I):
+                if len(expected) != 1 or Decimal(match[1].replace(",", ".")) not in expected:
+                    flag(flags, "metric_value_mismatch", "Rejected a value not bound to " + metric)
+                    return ""
         clean = BRACKET.sub("", answer)
         clean = re.sub(r"(?m)^\s*\d{1,2}[.)]\s+", "", clean)
         extra = numbers(clean) - numbers(summary)

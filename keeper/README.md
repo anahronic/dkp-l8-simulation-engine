@@ -1,4 +1,13 @@
 # Keeper gateway (Python 3.12)
+
+KT10 role/data policy: [ROLE_POLICY.md](ROLE_POLICY.md). Contract and source-link origins:
+[KEEPER_API.md](KEEPER_API.md). Historical 34/36 correction:
+[KT10_CORRECTION_2026-10-20.md](KT10_CORRECTION_2026-10-20.md).
+For the full site corpus, pass `--site /path/to/live-site/website` (the deployed
+redesign source, not the widget worktree); `--site-pages` may separately specify
+the main-page source. The manifest records exact revisions, file digests and route
+coverage/exclusions. Private search keys require `--ru` and never become public
+fragments. Corpus update is an installer build, not a visitor operation.
 Build the pinned corpus: `python -m keeper.corpus build simulation/outputs/keeper-corpus`.
 Set `KEEPER_CORPUS` to the resulting `corpus-<version>.jsonl` (no automatic rebuild or network retrieval).
 Run: `python -m uvicorn keeper.gateway:app --host 127.0.0.1 --port 8001`; routes are under `/api/keeper/v1`.

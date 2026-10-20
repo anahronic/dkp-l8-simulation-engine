@@ -54,10 +54,16 @@ Response (`stream: false`):
 | `no_sources` | the pinned corpus has nothing on the question (not the same as an UNKNOWN lab result, nor a failure) |
 | `needs_parameters` | a calculation is possible but parameters are missing; `missing: [...]` lists them |
 | `proposal` | a lab run is prepared: `proposal` holds the request for confirmation (below) |
-| `refused` | outside the Keeper's role (e.g. asked to decide a value conflict or set a norm): the answer lists the options and who decides |
+| `refused` | rejected by the deterministic role/privacy boundary; exact author sentence, `reason`, no proposal or links |
+| `no_answer` | empty model part: `answer_kind=empty_model_answer`, flag and explicit inability message, found sections and notices remain separate |
 
-`citations` lists only the trusted fragments the answer actually cites, in order of first use; every retrieved fragment
+`citations` lists only the trusted fragments the original model part actually cites, in order of first use; every retrieved fragment
 is listed in `provenance.retrieved`.
+Each citation has `origin=model`, or `origin=engine` for `/explain`.
+`found_sources` has `origin=retrieval`. `notices` is an array of `{code, text, links}`;
+its links have `origin=server_notice` and the same source metadata. Q notifications
+are rendered separately by the panel. They never supply model citations or erase
+`empty_model_answer`/`uncited_answer`. JSON and SSE final use the identical contract.
 
 When the final answer is flagged `uncited_answer` and fragments were retrieved, the optional
 `found_sources` array contains at most three trusted fragment records with the same fields as
@@ -80,8 +86,32 @@ Flags (deterministic post-checks of the model output): `unknown_citation` (remov
 marks removed; this does not verify the resulting paraphrase), `number_not_in_result` (diagnostic helper only; `/explain` now uses a trusted template), `tool_rejected` (the model asked for a tool or
 arguments outside the contract), `truncated`, `uncited_answer` (no statement is tied to a source),
 `empty_model_answer` (the model gave nothing; a fixed message is shown), `open_author_question` (an UNRESOLVED
-author question is among the sources: the server appends that neither the lab nor the Keeper chooses a reading and
-the author decides, with its citation).
+author question is among the sources: a separate server notice says that neither the lab nor the Keeper chooses a reading).
+
+### Role boundary (2026-10-20)
+
+`keeper/policy.py` checks the question before model access or intake. Page context,
+selection and retrieval scores cannot grant a new role. Code requests (including DKP),
+commands, administration, secret extraction, role changes and unrelated tasks return
+`state=refused`, `answer_kind=role_refusal`, and exactly:
+
+> Я Хранитель протоколов Дикенократии. Я отвечаю на вопросы о Дикенократии и помогаю разобраться в её вычислительной лаборатории. Написание программ и посторонние поручения в мои задачи не входят.
+
+This exact Russian sentence is the author's required fallback for **all** panel
+languages, including English. Reasons: `code_request`, `role_attack`, `off_topic`,
+`unsafe_model_output`, `private_material`. The gateway checks every generated
+message before tool processing and publication; code fences, recognizable programs
+and commands trigger refusal. It quarantines recognizable instructions in sources.
+Only the three registered tools exist; none executes jobs, commands, file writes,
+arbitrary HTTP or model installation. Visitor confirmation submits to the separate Lab API.
+Classification is conservative, bilingual and heuristic, not a claim to recognize
+every paraphrase or language. Runtime isolation does not depend on it.
+
+`GET /sources/{percent-encoded fid}` returns an allowlisted public fragment with
+revision, digest and text when a source has no separate page (e.g. glossary/lab docs).
+It never exposes private search keys, whole corpus files or hostile source instructions.
+There are no source mutation endpoints. A final privacy check covers the whole
+response object, not just `answer`.
 
 ### Published intake rule for S-LAB-08
 
@@ -119,6 +149,10 @@ visitor may change).  The widget shows the fields editable, then — only after 
 `request` (with edits) to `POST /api/lab/v1/jobs`, follows `GET /api/lab/v1/jobs/{id}`, and shows the result card built
 from the lab report itself (not from the model text). Keyed submissions require a private
 `X-Idempotency-Token` generated and retained before the first POST; see `lab_server/API.md`.
+The panel retains `{body, key, proof}` in memory for that proposal. An ambiguous
+network/503 result reuses all three; changing the body generates a new pair. A new
+proposal is a new run. Credentials do not survive closing/reloading the panel and
+are never placed in URLs, cookies, parent messages or shared storage.
 
 ## POST /explain
 
@@ -137,7 +171,9 @@ Response: as `/ask`, with `state: "answer"`, `answer_kind: "deterministic_summar
 `result_id`, and structured `summary: {module, result_id, variants: {name: {outputs, counts, issues}}}`.
 `provenance.model` and `model_digest` are null. The report card and authorized report/export
 routes remain available independently. The old numeric-overlap postcheck is only a diagnostic
-helper, not permission to display generated numerical claims.
+helper, not permission to display generated numerical claims. Its metric binding
+regression rejects “дефицит продолжался 336 часов” for 336 observed/210 deficit hours
+(`metric_value_mismatch`), while the deterministic endpoint remains unchanged.
 
 Ordinary `/ask` answers have `answer_kind: "unverified_explanation"` and a visible label.
 Citations identify supplied fragments; even a real citation does not establish that a claim

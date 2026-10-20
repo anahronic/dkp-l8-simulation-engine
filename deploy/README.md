@@ -47,7 +47,8 @@ review that retained script and its printed checksum as part of operator review.
   may have additional installer prerequisites; inspect installer errors before retry.
 - Local packaging uses Bash, Git, tar/gzip, sha256sum, and Python with the engine's
   existing dependencies installed. Set `PYTHON` to the desired interpreter and
-  optionally `KEEPER_RU_SOURCES` to a local Russian source directory. Packaging has
+  `KEEPER_SITE_PAGES` to the reviewed live-site `website` directory, and optionally
+  `KEEPER_RU_SOURCES` to a local Russian source directory. Packaging has
   no network operations. Use a clean, committed engine release checkout. The kit is
   present in the supplied Git history; new local changes must be integrated into the
   release checkout before packaging. Do not build on the server.
@@ -59,11 +60,14 @@ review that retained script and its printed checksum as part of operator review.
 | `/opt/dkp-lab/releases/VERSION/` | Root-owned code, venv, artifact hashes and matching corpus; no runtime writes |
 | `/opt/dkp-lab/current` | Atomically replaced symlink to the active release |
 | `/opt/dkp-lab/PREVIOUS` | Absolute previous release path, preserved when reinstalling the same version |
-| `/var/lib/dkp-lab/{lab,keeper}` | `dkplab:dkplab`, 0700; database/store/secret and corpus/logs |
-| `/var/lib/dkp-lab/keeper/corpus.jsonl` | `dkplab:dkplab`, 0640 |
+| `/var/lib/dkp-lab` | `root:root`, 0755; runtime cannot replace its children |
+| `/var/lib/dkp-lab/lab` | `dkplab:dkplab`, 0700; API/worker database/store/secret |
+| `/var/lib/dkp-corpus` | `root:dkplab`, 0750; no runtime directory writes |
+| `/var/lib/dkp-corpus/corpus.jsonl` | `root:dkplab`, 0640; Keeper reads via supplementary group |
+| `/var/lib/dkp-keeper` | `dkpkeeper:dkpkeeper`, 0700; Keeper logs/temporary state only |
 | `/etc/systemd/system/dkp-*.service` | API, serial worker and Keeper units |
 | `/etc/systemd/system/ollama.service.d/dkp.conf` | Local bind, cloud disable, concurrency/context and resource limits |
-| `/usr/share/ollama/.ollama/models/` | Upstream Ollama service user's downloaded model data |
+| `/usr/share/ollama/.ollama/models/` | `root:ollama`; group read-only after administrator installation |
 | `/etc/nginx/conf.d/dkp-limits.conf` | HTTP-context rate/connection zones |
 | `/etc/nginx/snippets/dkp-lab-keeper.conf` | HTTPS server locations for Lab, Keeper and widget |
 | `/var/www/html/keeper/` | Admin-owned widget assets, routes and injector; files readable by nginx |
@@ -84,13 +88,19 @@ Backups are retained until an operator removes them; there is no automated pruni
 1. **Build locally**, using the matching engine and site sources:
 
    ```bash
-   bash deploy/local/make_release.sh /path/to/engine /path/to/site /path/to/empty-output
+   KEEPER_SITE_PAGES=/path/to/live-site/website \
+     bash deploy/local/make_release.sh /path/to/engine /path/to/widget /path/to/empty-output
    # Optional: PYTHON=/path/to/venv/bin/python KEEPER_RU_SOURCES=/path/to/ru ...
    ```
 
-   Refuses dirty/untracked engine files. Creates a `git archive` of HEAD, the corpus
+   Refuses dirty/untracked engine, widget and live-site files. Creates a `git archive` of HEAD, the corpus
    plus manifest (with site-anchor comparison), a widget tarball with the injector
-   at its root, `VERSION` (`<engine short sha>-<corpus version>`), and `SHA256SUMS`.
+   at its root, a freshly rebuilt browser bundle, `VERSION` (`<engine short sha>-<corpus version>`),
+   full engine/widget/site-page HEADs in `REVISIONS`, and `SHA256SUMS`.
+   Corpus comparison uses the actual live-site revision, not the older widget branch.
+   Nested public tar/ZIP content is checked for private markers and translation passages;
+   failure removes the widget tarball. The private corpus is a separate server artifact,
+   never a static download. `KEEPER_RU_SOURCES` enables the full translation scan.
    Output must be empty and outside both source trees. Do not change sources during
    the build; review the corpus manifest's missing-page/anchor results. Archives with
    symlinks, hardlinks, devices, traversal, or duplicate paths are rejected. This is
@@ -181,7 +191,7 @@ Lab routes in `lab_server/app.py` explicitly contain `/api/lab/v1`; `proxy_pass`
 **no trailing slash/URI** to preserve that prefix. Keeper uses the analogous documented
 prefix in `keeper/gateway.py`. The longer `^~`
 locations take precedence over `/api/` and regex locations. Lab nginx requests are
-limited to 30/min/IP (burst 10), with the application's separate 10 POST/min limit.
+limited to 2 requests/second/IP (burst 20), with the application's separate 10 POST/min limit.
 Keeper nginx requests are 12/min/IP, burst 4 nodelay, at most two active connections;
 the gateway contract additionally limits asks to 6/min and one generation. Polling
 is spaced by three seconds. Keeper buffering, caching and gzip are disabled for SSE;
@@ -266,6 +276,8 @@ remain incomplete until those runtime checks pass.
 
 ## Model identity and validation limits (KT9 review)
 
+KT10 adds isolated users and read-only paths; see the implementation notes below.
+
 Local `ollama show qwen3.5:2b` on 2026-10-17 reports **Q8_0**. The exact command output,
 manifest, layer sizes and full manifest digest are retained in
 [`keeper/model-metadata.json`](../keeper/model-metadata.json). Manifest SHA-256:
@@ -293,3 +305,35 @@ explicit provision bindings for known UNRESOLVED Q-012 and Q-013 from the pinned
 corpus; this neither chooses an interpretation nor guarantees detection of every
 related question. See the Keeper API contract for the exact scope. Offline fault
 injection tests verify service behavior, not how often a real model makes an error.
+
+## KT10 isolation and rollback (2026-10-20)
+
+The installer remains `admin`; runtime accounts never receive sudo. Keeper runs as
+`dkpkeeper` (nologin, private primary group, supplementary `dkplab` for corpus reads).
+API/worker use `dkplab`; their state directory is mode 0700, so group membership does
+not disclose SQLite/store/secret. Corpus and code parents belong to root. All units
+mount code/corpus read-only and have empty capability sets and NoNewPrivileges.
+Keeper cannot access Lab state, web-root, SSH configuration or deployment backups;
+its network policy allows only loopback. Reports pass through the token-authorized API.
+
+Ollama has its own user, cloud disabled and loopback bind. Step 20 temporarily permits
+administrator-triggered model installation, then makes models root-owned/read-only
+and restricts networking to localhost. Verify systemd controls on the actual Ubuntu
+host, including IPAddressDeny enforcement; static tests are not runtime evidence.
+Step 90 checks private HTTPS paths, corpus reads, protected parents and Lab-state
+denial without printing secrets. Repeat inside the actual units; confirm log writes
+and continued report/calculation operation before acceptance.
+
+Each isolated release saves its units and corpus. Rollback restores both with root
+ownership and 0640 corpus permissions. Legacy shared-user releases are rejected as
+rollback targets; `99_rollback.sh app` stops new services while retaining data.
+Exercise rollback to a known isolated release on an operator test host before claiming
+deployed rollback readiness.
+
+This task forbids commits and network/SSH: the dirty worktree is a review candidate,
+not a clean release. The release builder must keep rejecting it. After owner review
+and commit, use the command above and numbered steps, retaining all seven SHA256SUMS
+entries. No model/server latency, systemd runtime or live 51-page result was measured.
+Historical browser evidence is `KEEPER/e2e_browser/e2e.json` in the checkpoint archive,
+not new evidence for this candidate. Local evidence is under `simulation/outputs/kt10-*`;
+see `keeper/KT10_IMPLEMENTATION.md` for the candidate results.

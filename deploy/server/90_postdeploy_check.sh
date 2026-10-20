@@ -20,6 +20,22 @@ finish() {
 }
 trap finish EXIT
 note "Checking $base"
+for path in /PRIVATE_DO_NOT_PUBLISH/ /PRIVATE_DO_NOT_PUBLISH/corpus.jsonl \
+    /search_ru /ru-sources/ /keeper/corpus.jsonl /corpus.jsonl \
+    /keeper/search_ru /keeper/PRIVATE_DO_NOT_PUBLISH/ /keeper/ru-sources/ \
+    /audit%20rt/ /keeper/corpus.json /var/lib/dkp-corpus/corpus.jsonl; do
+    status=$(curl --noproxy '*' -sS --connect-timeout 10 --max-time 30 \
+        "$base$path" -o "$work/private-probe" -w '%{http_code}')
+    case $status in 403|404) ;; *) die "Private path reachable or inconclusive: $path ($status)" ;; esac
+done
+sudo -u dkpkeeper test -r /var/lib/dkp-corpus/corpus.jsonl || die 'Keeper cannot read corpus'
+for path in /var/lib/dkp-corpus /var/lib/dkp-corpus/corpus.jsonl /opt/dkp-lab /opt/dkp-lab/current; do
+    if sudo -u dkpkeeper test -w "$path"; then die "Keeper can modify $path"; fi
+done
+for path in /var/lib/dkp-lab/lab /var/lib/dkp-lab/lab/jobs.sqlite3 /var/lib/dkp-lab/lab/store/.secret; do
+    if sudo -u dkpkeeper test -r "$path"; then die 'Keeper can read Lab private state'; fi
+done
+sudo -u dkpkeeper test -w /var/lib/dkp-keeper/log || die 'Keeper log directory is not writable'
 get() { curl --noproxy '*' -fsS --connect-timeout 10 --max-time 65 "$@"; }
 for component in lab keeper; do
     get "$base/api/$component/v1/health" -o "$work/health.json"
@@ -36,7 +52,7 @@ python3 -c 'import json,re,sys; x=json.load(open(sys.argv[1])); assert re.fullma
     "$work/job.json" "$work/auth.header" >"$work/job.id"
 job=$(cat "$work/job.id")
 completed=0
-# >=3 seconds per poll stays below nginx's 30/min all-methods Lab limit.
+# >=3 seconds per poll stays below nginx's 2r/s all-methods Lab limit.
 for ((i=0; i<100; i++)); do
     sleep 3
     get -H "@$work/auth.header" "$base/api/lab/v1/jobs/$job" -o "$work/status.json"

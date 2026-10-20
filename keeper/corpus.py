@@ -22,6 +22,9 @@ import re
 import subprocess
 import sys
 import unicodedata
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import quote
 from typing import Any, Dict, Iterator, List, Optional
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,6 +38,16 @@ NUM = re.compile(r"^(?:Section\s+)?((?:\d+|[A-Z])(?:\.\d+)*)\.?\s+(.*)$")
 
 def sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def site_commit(website):
+    # The supplied site is a read-only sibling worktree owned by the user.
+    root = Path(website).resolve().parent.as_posix()
+    result = subprocess.run(["git", "-c", "safe.directory=" + root, "-C", website, "rev-parse", "HEAD"],
+                            capture_output=True, text=True)
+    if result.returncode:
+        return None  # Synthetic fixture; file digests still identify its exact content.
+    return result.stdout.strip()
 
 
 def slug(heading: str, seen: Dict[str, int]) -> str:
@@ -203,19 +216,111 @@ def compare_site(frags: List[Dict[str, Any]], website: str) -> Dict[str, Any]:
     """The pinned corpus against the site's protocol pages: pages missing, corpus headings without an id on the page,
     site pages without a corpus document.  Text differences inside sections are not compared here."""
     pages = os.path.join(website, "pages", "protocols")
-    have = {f["url"].split("/pages/protocols/")[1].split("#")[0] for f in frags if f.get("url")}
-    commit = subprocess.run(["git", "-C", website, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    have = {f["url"].split("/pages/protocols/")[1].split("#")[0] for f in frags
+            if f.get("url") and "/pages/protocols/" in f["url"]}
+    commit = site_commit(website)
     return {"site_commit": commit, "pages_checked": len(have),
             "missing_pages": sorted(p for p in have if not os.path.exists(os.path.join(pages, p))),
             "headings_without_site_id": list(UNMATCHED),
             "site_pages_without_corpus_document": sorted(p for p in os.listdir(pages) if p.endswith(".html") and p not in have)}
 
 
-def build(out_dir: str, ru_dir: Optional[str] = None, website: Optional[str] = None) -> Dict[str, Any]:
+SITE_PAGES = ("index.html", "pages/about.html", "pages/protocols.html", "pages/projects.html",
+              "pages/projects/ayalon.html", "pages/converter.html", "converter/index.html")
+
+
+class PageText(HTMLParser):
+    """Only visible reference text; never scripts, forms or embedded applications."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.depth = 0
+        self.hidden = []
+        self.text = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"meta", "link", "img", "input", "br", "hr", "source", "wbr"}:
+            return
+        attrs = dict(attrs)
+        hide = (tag in {"script", "style", "form", "iframe", "nav", "footer", "template", "svg"}
+                or "hidden" in attrs or attrs.get("aria-hidden") == "true")
+        self.hidden.append((tag, hide))
+        self.depth += hide
+
+    def handle_endtag(self, tag):
+        matching = [i for i, (name, _) in enumerate(self.hidden) if name == tag]
+        if matching:
+            pos = matching[-1]
+            self.depth -= sum(hide for _, hide in self.hidden[pos:])
+            del self.hidden[pos:]
+        if not self.depth and tag in {"p", "h1", "h2", "h3", "li", "section", "div"}:
+            self.text.append("\n\n")
+
+    def handle_data(self, data):
+        if not self.depth:
+            self.text.append(data)
+
+
+def site_fragments(website):
+    root = Path(website)
+    commit = site_commit(website)
+    frags, routes = [], []
+    for rel in SITE_PAGES:
+        path = root / rel
+        route = "/" if rel == "index.html" else "/" + rel.removesuffix("index.html")
+        if not path.is_file():
+            routes.append({"route": route, "excluded": "Page absent from supplied source"})
+            continue
+        parser = PageText()
+        raw = path.read_text(encoding="utf-8")
+        parser.feed(raw)
+        text = "\n\n".join(" ".join(p.split()) for p in "".join(parser.text).split("\n\n") if p.strip())
+        revision = {"site_commit": commit, "file": rel,
+                    "file_sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+        ids = []
+        for i, piece in enumerate(parts(text)):
+            fid = f"SITE-{rel}#{i}"
+            ids.append(fid)
+            frags.append({"fid": fid, "cite": f"SITE {rel} {i}", "document_id": "SITE-" + rel,
+                          "section": str(i), "heading": rel, "source_type": "site_page",
+                          "status": "public explanation (not a norm)", "revision": revision,
+                          "url": SITE + route, "text": piece, "sha256": sha(piece)})
+        routes.append({"route": route, "fragments": ids, "revision": revision})
+    for route in ("/shadoo/", "/AA/Alienclimber/", "/survival/", "/survival/ru.html", "/404.html"):
+        routes.append({"route": route, "excluded": "Application/user data or error page; not reference knowledge"})
+    routes.append({"route": "/tools/*", "excluded": "Technical previews and development tools"})
+    return frags, routes
+
+
+def build(out_dir: str, ru_dir: Optional[str] = None, website: Optional[str] = None,
+          site_pages: Optional[str] = None) -> Dict[str, Any]:
     cman = json.load(open(os.path.join(LAB, "corpus", "CORPUS.json"), encoding="utf-8"))
     snapshot = os.path.join(LAB, "corpus", f"world-{cman['commit'][:7]}")
     UNMATCHED.clear()
     frags = protocol_fragments(snapshot, cman, ru_dir, website) + lab_fragments()
+    routes = []
+    if site_pages or website:
+        extra, routes = site_fragments(site_pages or website)
+        frags.extend(extra)
+    from keeper.policy import __doc__ as role_doc, REFUSAL
+    text = ("Keeper explains Dikenocracy, the site and laboratory. It searches sources and prepares S-LAB-08 "
+            "parameters; only visitor confirmation submits a job to the isolated Lab API. No code generation, "
+            "commands, administration, visitor edits to the archive or unrelated tasks. " + role_doc + "\n" + REFUSAL)
+    engine_commit = subprocess.run(["git", "-C", ROOT, "rev-parse", "HEAD"],
+                                  capture_output=True, text=True).stdout.strip()
+    frags.append({"fid": "KEEPER-ROLE#0", "cite": "KEEPER ROLE", "document_id": "KEEPER-ROLE",
+                  "section": "role", "heading": "Keeper role and supported actions", "source_type": "lab_doc",
+                  "status": "service policy", "revision": {"engine_commit": engine_commit},
+                  "url": None, "text": text, "sha256": sha(text)})
+    for f in frags:
+        if not f["url"]:
+            f["url"] = SITE + "/api/keeper/v1/sources/" + quote(f["fid"], safe="")
+    for route in sorted({f["url"].split("#")[0] for f in frags if f["source_type"] in {"protocol", "code"}}):
+        linked = [f for f in frags if f["url"].split("#")[0] == route]
+        routes.append({"route": route.removeprefix(SITE), "fragments": [f["fid"] for f in linked],
+                       "revision": linked[0]["revision"]})
+    routes.append({"route": "/projects/protocol-lab/", "fragments":
+                   [f["fid"] for f in frags if f["source_type"] in {"lab_doc", "module", "finding", "question"}],
+                   "revision": {"engine_commit": engine_commit}})
     body = "".join(json.dumps(f, ensure_ascii=False, sort_keys=True) + "\n" for f in frags)
     version = sha(body)[:12]
     os.makedirs(out_dir, exist_ok=True)
@@ -226,7 +331,9 @@ def build(out_dir: str, ru_dir: Optional[str] = None, website: Optional[str] = N
         counts[f["source_type"]] = counts.get(f["source_type"], 0) + 1
     manifest = {"schema": "dkp-keeper-corpus/1", "version": version, "fragments": len(frags), "by_type": counts,
                 "jsonl_sha256": sha(body), "world_commit": cman["commit"],
-                "engine_commit": frags[-1]["revision"]["engine_commit"],
+                "engine_commit": engine_commit, "site_routes": routes,
+                "engine_worktree_dirty": bool(subprocess.run(
+                    ["git", "-C", ROOT, "status", "--porcelain"], capture_output=True, text=True).stdout.strip()),
                 "ru_search_keys": sum(1 for f in frags if "search_ru" in f),
                 "site_comparison": compare_site(frags, website) if website else None}
     with open(os.path.join(out_dir, f"corpus-{version}.json"), "w", encoding="utf-8", newline="\n") as fh:
@@ -239,8 +346,8 @@ if __name__ == "__main__":
     if not a or a[0] != "build" or len(a) < 2:
         sys.exit(__doc__)
     opt = {a[i]: a[i + 1] for i in range(2, len(a) - 1, 2)}
-    man = build(a[1], opt.get("--ru"), opt.get("--site"))
-    print(json.dumps({k: v for k, v in man.items() if k != "site_comparison"}, ensure_ascii=False))
+    man = build(a[1], opt.get("--ru"), opt.get("--site"), opt.get("--site-pages"))
+    print(json.dumps({k: v for k, v in man.items() if k not in {"site_comparison", "site_routes"}}, ensure_ascii=False))
     if man["site_comparison"]:
         sc = man["site_comparison"]
         print(json.dumps({k: (v if isinstance(v, int) else (len(v), v[:6])) for k, v in sc.items()}, ensure_ascii=False))

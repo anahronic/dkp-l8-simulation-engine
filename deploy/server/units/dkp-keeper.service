@@ -4,21 +4,28 @@ After=network.target ollama.service dkp-lab-api.service
 
 [Service]
 Type=simple
-User=dkplab
-Group=dkplab
+User=dkpkeeper
+Group=dkpkeeper
+SupplementaryGroups=dkplab
 WorkingDirectory=/opt/dkp-lab/current
 ExecStart=/opt/dkp-lab/current/venv/bin/python -m uvicorn keeper.gateway:app --host 127.0.0.1 --port 8721 --workers 1 --proxy-headers --forwarded-allow-ips 127.0.0.1
-Environment=KEEPER_CORPUS=/var/lib/dkp-lab/keeper/corpus.jsonl
+Environment=KEEPER_CORPUS=/var/lib/dkp-corpus/corpus.jsonl
 Environment=KEEPER_OLLAMA=http://127.0.0.1:11434
 Environment=KEEPER_MODEL=qwen3.5:2b
 Environment=KEEPER_LAB_URL=http://127.0.0.1:8720
-Environment=KEEPER_LOG=/var/lib/dkp-lab/keeper/log
+Environment=KEEPER_LOG=/var/lib/dkp-keeper/log
 Environment=PYTHONDONTWRITEBYTECODE=1
 MemoryMax=400M
 CPUQuota=50%
 NoNewPrivileges=true
 ProtectSystem=strict
-ReadWritePaths=/var/lib/dkp-lab
+ReadWritePaths=/var/lib/dkp-keeper
+ReadOnlyPaths=/opt/dkp-lab /var/lib/dkp-corpus
+InaccessiblePaths=/var/lib/dkp-lab -/var/www -/etc/ssh -/var/lib/dkp-deploy
+IPAddressDeny=any
+IPAddressAllow=localhost
+CapabilityBoundingSet=
+RestrictSUIDSGID=true
 ProtectHome=true
 PrivateTmp=true
 RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
