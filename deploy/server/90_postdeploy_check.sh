@@ -86,7 +86,7 @@ python3 -c 'import json; print(json.dumps({"question":"Почему восста
 curl --noproxy '*' -fsS --connect-timeout 10 --max-time 180 -H 'Content-Type: application/json' \
     --data-binary "@$work/ask.json" -o "$work/answer.json" -w 'Keeper ask: HTTP %{http_code}, total %{time_total}s\n' \
     "$base/api/keeper/v1/ask"
-python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); assert x.get("state")=="answer", "Expected a grounded answer"; assert x.get("answer") and x.get("citations"); p=x["provenance"]; assert p.get("model_digest") and p.get("corpus_version"); print("Keeper Russian ask passed; state="+x["state"])' "$work/answer.json"
+python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); print("Keeper answer: state=%s reason=%s citations=%s found=%s flags=%s" % (x.get("state"), x.get("reason"), [c.get("cite") for c in x.get("citations",[])], [c.get("cite") for c in x.get("found_sources",[])], [f.get("code") for f in x.get("flags",[])])); assert x.get("state")=="answer", "Expected a grounded answer"; assert x.get("answer"); flags=[f.get("code") for f in x.get("flags",[])]; assert x.get("citations") or (x.get("found_sources") and "uncited_answer" in flags), "Answer neither cited nor handed off to found sources"; print("Model citations present" if x.get("citations") else "Uncited model answer, labelled and handed off to found sources (citation rate is measured by the answer set)"); p=x["provenance"]; assert p.get("model_digest") and p.get("corpus_version"); print("Keeper Russian ask passed; state="+x["state"])' "$work/answer.json"
 python3 "$KIT_DIR/kit_helpers.py" routes /var/www/html/keeper/ROUTES.json >"$work/routes"
 while IFS= read -r route; do
     get "$base$route" -o "$work/page.html"
