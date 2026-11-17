@@ -43,7 +43,11 @@ TOPIC = re.compile(
     r"восстановл|рабоч.{0,8}цикл|кризис|crisis|recovery|roster|"
     r"график|круглосуточ|staff|workers?|работник|сотрудник|"
     r"метеорит|meteor|катастроф|catastrophe|сайт|website|glossary|кодекс|словар|"
-    r"prevention|transport|synergy|exit\b|time\b|api\b|ayalon|айялон|конвертер|converter", re.I)
+    r"prevention|transport|synergy|exit\b|time\b|api\b|конвертер|converter|דיקנוקרט|"
+    # the remaining registered protocol names (website/build_release.py REGISTRY), added 2026-11-17
+    r"oracle|оракул|axiom|аксиом|identity|impact|justice|справедлив|assets?\b|financ|labou?r\b|antiterror|"
+    r"defen[cs]e|police|upgrade|culture|habitat|integration|resilience|ai[- ]subject|privacy|scope\b|"
+    r"transparen|audit|interop|epistemic|эпистем", re.I)
 EXECUTABLE = re.compile(
     # an indented line counts only when it looks like code (nested Markdown lists are ordinary prose)
     # a fence counts as code only with a language tag; untagged fences are judged by their content below
@@ -80,9 +84,37 @@ def request_reason(question):
         return "code_request"
     if OFF_TOPIC.search(text):
         return "off_topic"
-    if not TOPIC.search(text):
-        return "off_topic"
+    # A question without a listed topic word is not refused here (live 2026-11-17: "Explain the Justice Function",
+    # "Что такое ORACLE?" and every Hebrew question were refused). Unrelated questions still end as no_sources in
+    # the gateway when retrieval is weak as well; on_topic() is that routing signal.
     return None
+
+
+SCRIPT_LANGS = (("he", re.compile("[\u0590-\u05FF]")), ("ar", re.compile("[\u0600-\u06FF\u0750-\u077F]")),
+                ("zh", re.compile("[\u3400-\u9FFF]")))
+UPPER_ID = re.compile(r"\b[A-Z0-9][A-Z0-9§.-]+\b")          # DKP-0-ORACLE-001, ORACLE, F-001, DTI: identifiers, not language
+
+
+def answer_language(question, lang):
+    """The language of the answer follows the question's script; the widget sends the page language (2026-11-17:
+    every page is English, so Russian and Hebrew questions were answered in English or refused). A Latin-script
+    question keeps the page language."""
+    for code, pattern in SCRIPT_LANGS:
+        if pattern.search(question):
+            return code
+    text = UPPER_ID.sub(" ", question)
+    if len(re.findall("[\u0400-\u04FF]", text)) > len(re.findall("[A-Za-z]", text)):
+        return "ru"
+    return lang
+
+
+def on_topic(question):
+    """The question names Dikenocracy, the Keeper, the lab or a listed protocol term."""
+    return bool(TOPIC.search(normalized(question)))
+
+
+# Letters the BM25 tokenizer cannot read (it reads Latin and Cyrillic only): Hebrew, Arabic, kana, CJK, Hangul.
+FOREIGN_SCRIPT = re.compile("[֐-׿؀-ۿݐ-ݿ぀-ヿ㐀-鿿가-힯]")
 
 
 def output_reason(text, context=""):

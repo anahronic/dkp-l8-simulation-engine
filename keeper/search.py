@@ -10,7 +10,7 @@ import re
 from collections import Counter
 from typing import Any, Dict, List, Optional
 
-WORD = re.compile(r"[0-9a-zа-яё]+(?:[.-][0-9a-zа-яё]+)*", re.I)
+WORD = re.compile(r"[^\W_]+(?:[.-][^\W_]+)*")          # any letters/digits (Hebrew, Arabic, ...), was Latin+Cyrillic only
 STOP = set("""the a an of and or to in on for is are be by with as at from that this it its not no any all each
 и в во на не что как это для по из к ко о об от с со у же ли или а но да при до за так то его ее её их можно ли ли
 какой какая какие каков где кто когда чем""".split())
