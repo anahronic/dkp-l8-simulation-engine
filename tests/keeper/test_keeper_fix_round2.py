@@ -31,6 +31,7 @@ def test_hebrew_question_is_translated_into_an_english_query_first(setup):
     assert fake.chats[0]["tools"] == [] and fake.chats[0]["options"]["num_predict"] <= 40
     assert {"name": "query_translation", "ok": True} in data["provenance"]["tool_calls"]
     assert any("Answer language (lang): Hebrew" in m["content"] for m in fake.chats[1]["messages"])
+    assert fake.chats[1]["tools"] == []          # one answer round after the translation
     assert any(fid.startswith("DKP-1-JUSTICE-001") for fid in data["provenance"]["retrieved"])
 
 
