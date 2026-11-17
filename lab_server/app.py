@@ -115,7 +115,8 @@ def create_app(db_path, store_dir, settings=None):
         request.state.body = bytes(body)
 
     app = FastAPI(dependencies=[Depends(post_guard)])
-    # The Keeper panel runs in a sandboxed iframe (opaque origin "null"); access is by bearer token, never cookies.
+    # Only the site origins get a CORS grant (the sandboxed Keeper panel and its "null" origin were retired
+    # on 2026-11-17); access is by bearer token, never cookies.
     app.add_middleware(CORSMiddleware, allow_origins=list(config.CORS_ORIGINS), allow_credentials=False,
                        allow_methods=["GET", "POST", "OPTIONS"],
                        allow_headers=["Content-Type", "Authorization", "X-Job-Token", "Idempotency-Key",

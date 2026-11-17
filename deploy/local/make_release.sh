@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
+# Builds a Protocol Lab release: the engine source archive (Lab API + worker) and the Lab page with the browser
+# bundle built from the same engine revision. The Keeper of Knowledge (corpus, widget) was retired on 2026-11-17;
+# its last release is tag release-c9909c6-1d40ec7b8562 and its code stays in Git history.
 set -euo pipefail
 export PYTHONDONTWRITEBYTECODE=1
 export LC_ALL=C.UTF-8
 umask 077
-[[ $# == 3 ]] || { echo 'Usage: make_release.sh ENGINE_DIR SITE_WIDGET_DIR OUT_DIR' >&2; exit 1; }
+[[ $# == 3 ]] || { echo 'Usage: make_release.sh ENGINE_DIR SITE_DIR OUT_DIR' >&2; exit 1; }
 engine=$(cd -- "$1" && (pwd -W 2>/dev/null || pwd))   # pwd -W: Windows form, as git prints it
 site=$(cd -- "$2" && (pwd -W 2>/dev/null || pwd))
 kit=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../server" && pwd)
@@ -14,16 +17,12 @@ for command in git "$python" tar gzip sha256sum mktemp; do
 done
 [[ $(git -C "$engine" rev-parse --show-toplevel) == "$engine" ]] || die 'ENGINE_DIR must be the repository root'
 [[ -z $(git -C "$engine" status --porcelain --untracked-files=all) ]] || die 'Engine tree is dirty (including untracked files)'
-[[ -z $(git -C "$site" status --porcelain --untracked-files=all) ]] || die 'Widget tree is dirty'
+[[ -z $(git -C "$site" status --porcelain --untracked-files=all) ]] || die 'Site tree is dirty'
 site_head=$(git -C "$site" rev-parse HEAD)
-[[ -n ${KEEPER_SITE_PAGES:-} ]] || die 'Set KEEPER_SITE_PAGES to the reviewed live-site website source'
-pages=$(cd -- "$KEEPER_SITE_PAGES" && (pwd -W 2>/dev/null || pwd))
-[[ -z $(git -C "$pages" status --porcelain --untracked-files=all) ]] || die 'Live-site source tree is dirty'
-pages_head=$(git -C "$pages" rev-parse HEAD)
-[[ -f $engine/keeper/gateway.py ]] || die 'keeper/gateway.py is missing; this engine cannot ship the Keeper service'
-[[ -d $site/website/keeper && -d $site/website/pages/protocols && -f $site/tools/keeper_inject.py ]] || die 'SITE_WIDGET_DIR must contain website/keeper, website/pages/protocols and tools/keeper_inject.py'
-[[ -f $site/website/keeper/keeper-loader.js && -f $site/website/keeper/ROUTES.json ]] || die 'Widget lacks keeper-loader.js or ROUTES.json'
-"$python" "$kit/kit_helpers.py" routes "$site/website/keeper/ROUTES.json" >/dev/null
+[[ -f $engine/lab_server/app.py && -f $engine/lab_server/worker.py ]] || die 'ENGINE_DIR lacks lab_server'
+page=$site/website/projects/protocol-lab
+[[ -f $page/index.html ]] || die 'SITE_DIR must contain website/projects/protocol-lab/index.html'
+if grep -rlq 'keeper-loader' "$page"; then die 'The Lab page still references the retired Keeper loader'; fi
 mkdir -p -- "$3"
 out=$(cd -- "$3" && pwd)
 case $out/ in "$engine/"*|"$site/"*) die 'OUT_DIR must be outside both source trees' ;; esac
@@ -33,48 +32,30 @@ stage=$(mktemp -d "$out/.stage.XXXXXXXX")
 trap 'rc=$?; rm -rf -- "$stage"; if (( rc != 0 )); then log "Release build failed (exit $rc); inspect output and use a fresh OUT_DIR"; fi' EXIT
 head=$(git -C "$engine" rev-parse HEAD)
 short=$(git -C "$engine" rev-parse --short HEAD)
+version=$short-lab
 log "Building engine HEAD $head; no network or package installation is performed"
 git -C "$engine" archive --format=tar.gz --output="$stage/engine.tar.gz" "$head"
 "$python" "$kit/kit_helpers.py" archive "$stage/engine.tar.gz"
-args=(build "$stage/corpus" --site "$pages" --site-pages "$pages")
-if [[ -n ${KEEPER_RU_SOURCES:-} ]]; then
-    ru=$(cd -- "$KEEPER_RU_SOURCES" && pwd)
-    args+=(--ru "$ru")
+mkdir "$stage/labpage"
+cp -R -- "$page/." "$stage/labpage/"
+# Always ship the bundle built from this engine revision, not a stale site checkout copy.
+rm -rf -- "$stage/labpage/dist"
+(cd "$engine" && "$python" -m lab.tools.build_web_bundle "$stage/labpage/dist")
+[[ -f $stage/labpage/dist/lab-bundle.zip ]] || die 'Lab bundle was not built'
+tar --create --gzip --file "$out/labpage-$version.tar.gz" --directory "$stage/labpage" .
+"$python" "$kit/kit_helpers.py" archive "$out/labpage-$version.tar.gz"
+if ! "$python" "$engine/deploy/local/check_public.py" "$out/labpage-$version.tar.gz"; then
+    rm -f -- "$out/labpage-$version.tar.gz"
+    die 'Public Lab page archive contains private material'
 fi
-# Corpus builder uses git HEAD for engine provenance; build in the clean source tree.
-(cd "$engine" && "$python" -m keeper.corpus "${args[@]}")
-shopt -s nullglob
-manifests=("$stage"/corpus/corpus-*.json)
-[[ ${#manifests[@]} == 1 ]] || die 'Expected exactly one corpus manifest'
-corpus_version=$("$python" -c 'import json,re,sys; x=json.load(open(sys.argv[1])); assert re.fullmatch(r"[0-9a-f]{12}",x["version"]); assert x["engine_commit"]==sys.argv[2]; print(x["version"])' "${manifests[0]}" "$head")
-version=$short-$corpus_version
 [[ $(git -C "$engine" rev-parse HEAD) == "$head" && -z $(git -C "$engine" status --porcelain --untracked-files=all) ]] || die 'Engine changed during build'
-mkdir "$stage/widget"
-cp -R -- "$site/website/keeper/." "$stage/widget/"
-cp -- "$site/tools/keeper_inject.py" "$stage/widget/keeper_inject.py"
-# The lab page (research alpha) ships with the widget: the panel links to it and its route is in ROUTES.json.
-[[ -f $site/website/projects/protocol-lab/index.html && -f $site/website/projects/protocol-lab/dist/lab-bundle.zip ]] || die 'Lab page or its bundle missing'
-cp -R -- "$site/website/projects/protocol-lab" "$stage/widget/protocol-lab"
-# Always ship the bundle built from this engine revision, not a stale widget checkout copy.
-(cd "$engine" && "$python" -m lab.tools.build_web_bundle "$stage/widget/protocol-lab/dist")
-tar --create --gzip --file "$out/widget-$version.tar.gz" --directory "$stage/widget" .
-"$python" "$kit/kit_helpers.py" archive "$out/widget-$version.tar.gz"
-privacy_args=("$stage/corpus/corpus-$corpus_version.jsonl")
-if [[ -n ${KEEPER_RU_SOURCES:-} ]]; then privacy_args+=("$ru"); fi
-if ! "$python" "$engine/deploy/local/check_public.py" "$out/widget-$version.tar.gz" "${privacy_args[@]}"; then
-    rm -f -- "$out/widget-$version.tar.gz"
-    die 'Public widget/site archive contains private material'
-fi
-[[ $(git -C "$site" rev-parse HEAD) == "$site_head" && -z $(git -C "$site" status --porcelain --untracked-files=all) ]] || die 'Widget changed during build'
-[[ $(git -C "$pages" rev-parse HEAD) == "$pages_head" && -z $(git -C "$pages" status --porcelain --untracked-files=all) ]] || die 'Live-site source changed during build'
-printf 'engine=%s\nwidget=%s\nsite_pages=%s\ncorpus=%s\n' "$head" "$site_head" "$pages_head" "$corpus_version" >"$out/REVISIONS"
+[[ $(git -C "$site" rev-parse HEAD) == "$site_head" && -z $(git -C "$site" status --porcelain --untracked-files=all) ]] || die 'Site changed during build'
+printf 'engine=%s\nsite=%s\n' "$head" "$site_head" >"$out/REVISIONS"
 mv -- "$stage/engine.tar.gz" "$out/engine-$version.tar.gz"
-cp -- "$stage/corpus/corpus-$corpus_version.json" "$stage/corpus/corpus-$corpus_version.jsonl" "$out/"
 printf '%s\n' "$version" >"$out/VERSION"
-log "Created engine-$version.tar.gz, corpus-$corpus_version.json[l], widget-$version.tar.gz, VERSION"
+log "Created engine-$version.tar.gz, labpage-$version.tar.gz, VERSION"
 (
     cd "$out"
-    sha256sum "engine-$version.tar.gz" "corpus-$corpus_version.json" \
-        "corpus-$corpus_version.jsonl" "widget-$version.tar.gz" VERSION REVISIONS CHANGES.log >SHA256SUMS
+    sha256sum "engine-$version.tar.gz" "labpage-$version.tar.gz" VERSION REVISIONS CHANGES.log >SHA256SUMS
 )
 printf 'Release: %s\nArtifacts: %s\n' "$version" "$out"

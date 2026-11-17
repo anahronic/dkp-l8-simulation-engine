@@ -1,7 +1,7 @@
 """Portable offline check entry point; no author-specific paths, installs or network.
 
 python deploy/local/run_checks.py OUT [--skip-pytest]
-Use PW_DIR + the widget's tools/keeper_widget_test.mjs separately for browser checks.
+Browser checks of the Lab page: deploy/local/offline_browser_check.mjs (needs a local Playwright).
 """
 import argparse
 import os
@@ -20,7 +20,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "TEMP": str(out), "TMP": str(out)}
     commands = [] if args.skip_pytest else [
-        ("targeted", ["-m", "pytest", "tests/server", "tests/keeper", "-q", "--basetemp=" + str(out / "targeted-tmp")]),
+        ("targeted", ["-m", "pytest", "tests/server", "-q", "--basetemp=" + str(out / "targeted-tmp")]),
         ("full", ["-m", "pytest", "-q", "-x", "--basetemp=" + str(out / "full-tmp")])]
     commands += [(name, ["-m", "lab.tools." + name, *(["--check"] if name != "check_registry" else [])])
                  for name in ("check_registry", "sync_coverage", "reconcile", "trace", "calibration_map")]

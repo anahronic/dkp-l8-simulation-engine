@@ -6,7 +6,7 @@ export PYTHONDONTWRITEBYTECODE=1
 umask 077
 KIT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 STATE=/var/lib/dkp-deploy
-SERVICES=(dkp-lab-api.service dkp-lab-worker.service dkp-keeper.service)
+SERVICES=(dkp-lab-api.service dkp-lab-worker.service)   # Keeper retired 2026-11-17
 
 die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 note() { printf '%s %s\n' "$(date -u +%FT%TZ)" "$*"; }
@@ -67,10 +67,15 @@ restore_file() {
     fi
 }
 restore_nginx() {
-    local backup=$1
+    local backup=$1 name
     restore_file "$backup/default" /etc/nginx/sites-enabled/default
     restore_file "$backup/dkp-limits.conf" /etc/nginx/conf.d/dkp-limits.conf
-    restore_file "$backup/dkp-lab-keeper.conf" /etc/nginx/snippets/dkp-lab-keeper.conf
+    # dkp-lab.conf replaced dkp-lab-keeper.conf on 2026-11-17; restore whichever the backup recorded.
+    for name in dkp-lab.conf dkp-lab-keeper.conf; do
+        if [[ -e $backup/$name || -e $backup/$name.absent ]]; then
+            restore_file "$backup/$name" "/etc/nginx/snippets/$name"
+        fi
+    done
 }
 latest_backup() {
     local kind=$1 path

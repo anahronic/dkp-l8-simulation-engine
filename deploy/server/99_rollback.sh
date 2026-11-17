@@ -1,30 +1,41 @@
 #!/usr/bin/env bash
+# Rolls back one deployment step of the Protocol Lab kit. The Keeper of Knowledge (and its local model runtime)
+# was retired on 2026-11-17: no rollback target restarts it; its recovery material is outside the kit.
 set -euo pipefail
 source "$(dirname -- "${BASH_SOURCE[0]}")/common.sh"
-[[ $# -le 2 ]] || die 'Usage: 99_rollback.sh [site|nginx|app [VERSION]|ollama|swap|all]'
+[[ $# -le 2 ]] || die 'Usage: 99_rollback.sh [site|nginx|app [VERSION]|swap|all]'
 what=${1:-all}
-case $what in site|nginx|app|ollama|swap|all) ;; *) die 'Unknown rollback target' ;; esac
+case $what in site|nginx|app|swap|all) ;; *) die 'Unknown rollback target' ;; esac
 [[ $# -lt 2 || $what == app ]] || die 'VERSION is only valid with app'
 init_changes
 site() {
     local backup
     backup=$(latest_backup site)
-    [[ -f $backup.tar.gz && ! -L /var/www/html/keeper ]] || die 'Missing archive or unexpected keeper symlink'
-    tar -tzf "$backup.tar.gz" >/dev/null
-    rm -rf -- /var/www/html/keeper /var/www/html/projects/protocol-lab
+    [[ -f $backup.tar.gz && ! -L /var/www/html/projects/protocol-lab ]] || die 'Missing archive or unexpected lab page symlink'
+    local listing
+    listing=$(tar -tzf "$backup.tar.gz")             # also verifies the archive; no early-exit pipe under pipefail
+    if grep -Eq '^(\./)?keeper/' <<<"$listing"; then
+        die "$backup predates the Keeper retirement (2026-11-17); restoring it would bring back the widget"
+    fi
+    rm -rf -- /var/www/html/projects/protocol-lab
     restore_site "$backup.tar.gz"
     check_web_readable
     touch "$backup/ROLLED_BACK"
-    change "Removed deployed keeper and lab-page directories and restored HTML/prior keeper from $backup.tar.gz"
+    change "Removed the deployed lab page directory and restored the prior one from $backup.tar.gz"
 }
 nginx() {
-    local backup rescue
+    local backup rescue name
     backup=$(latest_backup nginx)
+    if grep -q 'dkp-lab-keeper\.conf' "$backup/default"; then
+        die "$backup predates the Keeper retirement (2026-11-17); restore it manually only if that is intended"
+    fi
     rescue=$STATE/nginx-rollback-rescue-$(stamp)
     mkdir -m 0700 "$rescue"
     backup_file /etc/nginx/sites-enabled/default "$rescue/default"
     backup_file /etc/nginx/conf.d/dkp-limits.conf "$rescue/dkp-limits.conf"
-    backup_file /etc/nginx/snippets/dkp-lab-keeper.conf "$rescue/dkp-lab-keeper.conf"
+    for name in dkp-lab.conf dkp-lab-keeper.conf; do
+        backup_file "/etc/nginx/snippets/$name" "$rescue/$name"
+    done
     restore_nginx "$backup"
     if sudo nginx -t && sudo systemctl reload nginx; then
         touch "$backup/ROLLED_BACK"
@@ -36,32 +47,30 @@ nginx() {
     fi
 }
 app() {
-    local target version=${1:-} current service
+    local target version=${1:-} current service unit
     if [[ -z $version ]]; then
         for service in "${SERVICES[@]}"; do
             if systemctl cat "$service" >/dev/null 2>&1; then
                 sudo systemctl disable --now "$service"
             fi
         done
-        change 'Stopped/disabled DKP services; retained releases, units, corpus, database and store'
+        change 'Stopped/disabled Lab services; retained releases, units, database and store'
         return
     fi
     [[ $version =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]{0,100}$ && $version != *..* ]] || die 'Unsafe VERSION'
     target=$(sudo cat /opt/dkp-lab/PREVIOUS)
     [[ $target == "/opt/dkp-lab/releases/$version" ]] || die 'VERSION must match the release recorded in PREVIOUS'
-    sudo test -f "$target/.dkp-ready" && sudo test -f "$target/.dkp-corpus.jsonl" || die 'Previous release is incomplete'
-    # Old shared-user units are not an acceptable rollback target after isolation.
-    for service in "${SERVICES[@]}"; do
-        sudo test -f "$target/.dkp-units/$service" || die 'Previous release lacks isolated units; stop services instead'
-    done
-    sudo grep -q '^User=dkpkeeper$' "$target/.dkp-units/dkp-keeper.service" || die 'Unsafe legacy Keeper unit'
+    sudo test -f "$target/.dkp-ready" && sudo test -f "$target/lab_server/app.py" || die 'Previous release is incomplete'
     current=$(readlink -f /opt/dkp-lab/current)
     sudo systemctl stop "${SERVICES[@]}"
-    sudo install -d -o root -g dkplab -m 0750 /var/lib/dkp-corpus
-    sudo install -o root -g dkplab -m 0640 "$target/.dkp-corpus.jsonl" /var/lib/dkp-corpus/corpus.jsonl.new
-    sudo mv -f /var/lib/dkp-corpus/corpus.jsonl.new /var/lib/dkp-corpus/corpus.jsonl
+    # Lab code from any release runs under the kit's current Lab units: the Keeper-era units also mounted the
+    # retired corpus directory read-only (which no longer exists) and are never reinstalled.
     for service in "${SERVICES[@]}"; do
-        sudo install -m 0644 "$target/.dkp-units/$service" "/etc/systemd/system/$service"
+        unit=$KIT_DIR/units/$service
+        if sudo test -f "$target/.dkp-units/$service" && ! sudo grep -q 'dkp-corpus\|dkp-keeper' "$target/.dkp-units/$service"; then
+            unit=$target/.dkp-units/$service
+        fi
+        sudo install -m 0644 "$unit" "/etc/systemd/system/$service"
     done
     sudo systemctl daemon-reload
     atomic_link "$target" /opt/dkp-lab/current
@@ -69,27 +78,12 @@ app() {
     sudo mv -f /opt/dkp-lab/PREVIOUS.new /opt/dkp-lab/PREVIOUS
     sudo systemctl enable "${SERVICES[@]}"
     sudo systemctl restart "${SERVICES[@]}"
-    change "Restored release $version and matching corpus; previous is now $current"
-    health 8720 lab && health 8721 keeper
+    change "Restored Lab release $version; previous is now $current"
+    health 8720 lab
     for service in "${SERVICES[@]}"; do
         sudo systemctl is-active --quiet "$service"
     done
-    check_ports loopback 8720 8721
-}
-ollama() {
-    if systemctl cat ollama.service >/dev/null 2>&1; then sudo systemctl disable --now ollama.service; fi
-    change 'Stopped/disabled Ollama; kept binaries, unit, user, and model files'
-    cat <<'EOF'
-Optional full removal after reviewing paths (NOT executed):
-  sudo rm -f /etc/systemd/system/ollama.service
-  sudo rm -rf /etc/systemd/system/ollama.service.d
-  sudo systemctl daemon-reload
-  command -v ollama  # inspect the installed binary path, then remove that exact file
-  sudo rm -rf /usr/local/lib/ollama /usr/lib/ollama
-  sudo rm -rf /usr/share/ollama  # destroys model files
-  sudo userdel ollama
-  sudo groupdel ollama  # only if still present and unused
-EOF
+    check_ports loopback 8720
 }
 swap() {
     [[ -f $STATE/swap-owned ]] || die 'No kit-owned swap; refusing to remove unrelated swap'
@@ -105,7 +99,7 @@ swap() {
     change 'Removed kit-owned swapfile/fstab entry and restored previous swappiness configuration'
 }
 case $what in
-    all) site; nginx; app; ollama ;;
+    all) site; nginx; app ;;
     app) app "${2:-}" ;;
     *) "$what" ;;
 esac

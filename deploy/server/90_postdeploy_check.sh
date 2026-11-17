@@ -23,25 +23,28 @@ note "Checking $base"
 for path in /PRIVATE_DO_NOT_PUBLISH/ /PRIVATE_DO_NOT_PUBLISH/corpus.jsonl \
     /search_ru /ru-sources/ /keeper/corpus.jsonl /corpus.jsonl \
     /keeper/search_ru /keeper/PRIVATE_DO_NOT_PUBLISH/ /keeper/ru-sources/ \
-    /audit%20rt/ /keeper/corpus.json /var/lib/dkp-corpus/corpus.jsonl; do
+    /audit%20rt/ /var/lib/dkp-corpus/corpus.jsonl; do
     status=$(curl --noproxy '*' -sS --connect-timeout 10 --max-time 30 \
         "$base$path" -o "$work/private-probe" -w '%{http_code}')
-    case $status in 403|404) ;; *) die "Private path reachable or inconclusive: $path ($status)" ;; esac
+    case $status in 403|404|410) ;; *) die "Private path reachable or inconclusive: $path ($status)" ;; esac
 done
-sudo -u dkpkeeper test -r /var/lib/dkp-corpus/corpus.jsonl || die 'Keeper cannot read corpus'
-for path in /var/lib/dkp-corpus /var/lib/dkp-corpus/corpus.jsonl /opt/dkp-lab /opt/dkp-lab/current; do
-    if sudo -u dkpkeeper test -w "$path"; then die "Keeper can modify $path"; fi
+# The Lab runtime account must not modify its code or read deployment state.
+for path in /opt/dkp-lab /opt/dkp-lab/current; do
+    if sudo -u dkplab test -w "$path"; then die "Lab runtime can modify $path"; fi
 done
-for path in /var/lib/dkp-lab/lab /var/lib/dkp-lab/lab/jobs.sqlite3 /var/lib/dkp-lab/lab/store/.secret; do
-    if sudo -u dkpkeeper test -r "$path"; then die 'Keeper can read Lab private state'; fi
-done
-sudo -u dkpkeeper test -w /var/lib/dkp-keeper/log || die 'Keeper log directory is not writable'
 get() { curl --noproxy '*' -fsS --connect-timeout 10 --max-time 65 "$@"; }
-for component in lab keeper; do
-    get "$base/api/$component/v1/health" -o "$work/health.json"
-    python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); assert x.get("ok") is True, "health ok is not true"' "$work/health.json"
-    note "$component health passed"
+get "$base/api/lab/v1/health" -o "$work/health.json"
+python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); assert x.get("ok") is True, "health ok is not true"' "$work/health.json"
+note 'lab health passed'
+# Retired Keeper (2026-11-17): API and widget prefixes answer 410 Gone.
+for path in /api/keeper/v1/health /api/keeper/v1/ask /keeper/keeper-loader.js /keeper/panel.html; do
+    status=$(curl --noproxy '*' -sS --connect-timeout 10 --max-time 30 "$base$path" -o "$work/retired" -w '%{http_code}')
+    [[ $status == 410 ]] || die "Retired Keeper path $path answered $status, expected 410"
 done
+note 'Retired Keeper paths answer 410'
+get "$base/projects/protocol-lab/" -o "$work/labpage.html"
+if grep -q 'keeper-loader' "$work/labpage.html"; then die 'Lab page still loads the retired Keeper widget'; fi
+note 'Lab page served without the Keeper loader'
 get "$base/api/lab/v1/scenarios/work_cycle" -o "$work/scenario.json"
 python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); assert x["module"]=="work_cycle" and x["variants"]; x["variants"]=x["variants"][:1]; json.dump(x,sys.stdout)' \
     "$work/scenario.json" >"$work/request.json"
@@ -82,19 +85,10 @@ with zipfile.ZipFile(p/"export.zip") as z:
 print("result_id:",status["result_id"])
 print("input_ids:",json.dumps(status["input_ids"],sort_keys=True))
 ' "$work"
-python3 -c 'import json; print(json.dumps({"question":"Почему восстановление обязательно в рабочем цикле?", "lang":"ru", "stream":False},ensure_ascii=False))' >"$work/ask.json"
-curl --noproxy '*' -fsS --connect-timeout 10 --max-time 180 -H 'Content-Type: application/json' \
-    --data-binary "@$work/ask.json" -o "$work/answer.json" -w 'Keeper ask: HTTP %{http_code}, total %{time_total}s\n' \
-    "$base/api/keeper/v1/ask"
-python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); print("Keeper answer: state=%s reason=%s citations=%s found=%s flags=%s" % (x.get("state"), x.get("reason"), [c.get("cite") for c in x.get("citations",[])], [c.get("cite") for c in x.get("found_sources",[])], [f.get("code") for f in x.get("flags",[])])); assert x.get("state")=="answer", "Expected a grounded answer"; assert x.get("answer"); flags=[f.get("code") for f in x.get("flags",[])]; assert x.get("citations") or (x.get("found_sources") and "uncited_answer" in flags), "Answer neither cited nor handed off to found sources"; print("Model citations present" if x.get("citations") else "Uncited model answer, labelled and handed off to found sources (citation rate is measured by the answer set)"); p=x["provenance"]; assert p.get("model_digest") and p.get("corpus_version"); print("Keeper Russian ask passed; state="+x["state"])' "$work/answer.json"
-python3 "$KIT_DIR/kit_helpers.py" routes /var/www/html/keeper/ROUTES.json >"$work/routes"
-while IFS= read -r route; do
-    get "$base$route" -o "$work/page.html"
-    python3 "$KIT_DIR/kit_helpers.py" loader "$work/page.html"
-    note "Loader present once: $route"
-done <"$work/routes"
-check_ports loopback 11434 8720 8721
-for port in 11434 8720 8721; do
+check_ports loopback 8720
+# Retired Keeper gateway (8721) and its local model runtime (11434) must not listen anywhere.
+if ss -H -ltn | awk '{print $4}' | grep -Eq ':(8721|11434)$'; then die 'A retired Keeper/Ollama port still listens'; fi
+for port in 8720; do
     # Do not use -f: any HTTP response, including a 404/500, proves exposure.
     rc=0
     connections=$(curl --noproxy '*' -sS --connect-timeout 5 --max-time 8 \
@@ -107,5 +101,4 @@ for port in 11434 8720 8721; do
 done
 note 'These public-IP probes originate on the server; repeat from an independent external host before claiming outside isolation.'
 free -h
-OLLAMA_HOST=127.0.0.1:11434 ollama ps
 change 'All scripted post-deploy checks passed; independent external-port verification is still an operator step'

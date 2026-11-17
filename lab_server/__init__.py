@@ -16,7 +16,7 @@ class Settings:
     POLL_SECONDS: float = 0.1
     RETENTION_SECONDS: float = 7 * 86400
     PURGE_EVERY: int = 100
-    CORS_ORIGINS: tuple = ("null", "https://dikenocracy.com", "https://www.dikenocracy.com")
+    CORS_ORIGINS: tuple = ("https://dikenocracy.com", "https://www.dikenocracy.com")
 
 
 def settings_from(value=None) -> Settings:

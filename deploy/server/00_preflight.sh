@@ -22,13 +22,14 @@ uptime
 ss -ltn
 available=$(awk '/MemAvailable:/ {print $2}' /proc/meminfo)
 disk=$(df -Pk / | awk 'NR==2 {print $4}')
-if (( available < 2500000 )); then note 'BLOCKER: less than 2.5 GB available RAM'; failed=1; fi
-if (( disk < 12000000 )); then note 'BLOCKER: less than 12 GB free disk'; failed=1; fi
+# Lab only (Keeper and its local model retired 2026-11-17): API 300M + worker 600M limits.
+if (( available < 1000000 )); then note 'BLOCKER: less than 1 GB available RAM'; failed=1; fi
+if (( disk < 3000000 )); then note 'BLOCKER: less than 3 GB free disk'; failed=1; fi
 if ! python3 -c 'import sys,venv,ensurepip; assert sys.version_info >= (3,12)'; then
     note 'BLOCKER: Python >=3.12 with venv/ensurepip required; install python3-venv manually'
     failed=1
 fi
-if ! check_ports free 8720 8721 11434; then failed=1; fi
+if ! check_ports free 8720; then failed=1; fi
 if ! sudo nginx -t; then failed=1; fi
 note "Summary: available RAM=${available} KiB; disk=${disk} KiB; blockers=$failed"
 note 'No swap is expected initially; step 10 adds it. Port checks intentionally fail after installation.'
