@@ -54,3 +54,21 @@ def test_numbers_from_the_sources_stay():
     flags = []
     out = strip_unsupported_numbers("1. A year has 360 days. 2. Rest for 11 hours.", "DTI-Year has 360 DTI-Days; rest 11 hours", flags)
     assert "360" in out and "11 hours" in out and not flags
+
+
+def test_weak_russian_retrieval_gets_an_english_query(setup):
+    """Live 2026-11-17 (round 4): 'Что такое Дикенократия?' retrieved ERROR/DEFENSE sections only."""
+    client, fake, app = setup([message("What is Dikenocracy"), message("Ответ [JUSTICE §1].")])
+    real = app.state.index.search
+    app.state.index.search = lambda q, **kw: [dict(f, score=1.0) for f in real(q, **kw)] if "What is" not in q else real(q, **kw)
+    data = ask(client, question="Что такое Дикенократия?", lang="en").json()
+    assert {"name": "query_translation", "ok": True} in data["provenance"]["tool_calls"]
+    assert any("Answer language (lang): Russian" in m["content"] for m in fake.chats[1]["messages"])
+
+
+def test_hebrew_question_about_the_framework_never_reaches_the_model_without_sources(setup):
+    client, fake, app = setup([message("garbage"), message("תשובה.")])
+    real = app.state.index.search
+    app.state.index.search = lambda q, **kw: real(q, **kw) if "overview" in q else []
+    data = ask(client, question="הסבר מהי דיקנוקרטיה", lang="en").json()
+    assert data["provenance"]["retrieved"], "overview sources were not supplied"

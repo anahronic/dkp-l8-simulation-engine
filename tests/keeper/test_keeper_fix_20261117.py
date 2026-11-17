@@ -65,4 +65,4 @@ def test_hebrew_is_tokenized():
 def test_russian_question_on_an_english_page_is_answered_in_russian(setup):
     client, fake, app = setup([message("Ответ [JUSTICE §1].")])
     ask(client, question="Объясни функцию справедливости", lang="en").json()
-    assert any("Answer language (lang): Russian" in m["content"] for m in fake.chats[0]["messages"])
+    assert any("Answer language (lang): Russian" in m["content"] for c in fake.chats for m in c["messages"])

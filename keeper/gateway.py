@@ -393,7 +393,8 @@ def create_app(settings=None):
             if ROLE_QUESTION.search(question):
                 query += " KEEPER ROLE"
             found = index.search(query, k=5)
-            if FOREIGN_SCRIPT.search(question) and (not found or found[0]["score"] < config.NO_SOURCE_SCORE):
+            readable_weakly = FOREIGN_SCRIPT.search(question) or body["lang"] == "ru"   # Russian: keys exist, but not for site pages
+            if readable_weakly and (not found or found[0]["score"] < config.NO_SOURCE_SCORE) and not COMPUTATIONAL.search(question):
                 # The archive is English (+ Russian keys): a Hebrew/Arabic/CJK question is first turned into an English
                 # search query by one short model call (live 2026-11-17: the 2b model did not recover on its own).
                 english = await english_query(question)
@@ -401,6 +402,10 @@ def create_app(settings=None):
                 result["provenance"]["tool_calls"].append({"name": "query_translation", "ok": bool(english)})
                 if english:
                     found = index.search(english + " " + query, k=5)
+            if not found and on_topic(question) and FOREIGN_SCRIPT.search(question):
+                # Live 2026-11-17: a Hebrew question about Dikenocracy reached the model with no fragment at all; the
+                # overview sources (home, About, Code) are the honest minimum for a question that names the framework.
+                found = index.search("What is Dikenocracy governance framework overview " + query, k=5)
             remember(fragments, found)
             weak = not found or found[0]["score"] < config.NO_SOURCE_SCORE
             # A weak retrieval can be recovered by the model's search_sources tool (instructions v1: an English query
