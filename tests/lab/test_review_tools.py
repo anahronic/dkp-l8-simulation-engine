@@ -25,3 +25,12 @@ def test_record_refuses_invalid(tmp_path, monkeypatch, args):
     with pytest.raises(SystemExit):
         review_record.main(args)
     assert not (tmp_path / "log.jsonl").exists()
+
+
+def test_review_workbook_has_protocol_dependency_and_criticality_controls(tmp_path):
+    from lab.tools import review_queue
+    n, counts = review_queue.build(tmp_path / "index.html")
+    page = (tmp_path / "index.html").read_text(encoding="utf-8")
+    assert n == sum(counts.values()) > 1700
+    assert all(f"id={x}" in page for x in ("d", "p", "o")) and "criticality, high first" in page
+    assert "data-crit=" in page and "data-deps=" in page and "DKP-8-SIMULATION-001" in page
