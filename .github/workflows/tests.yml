@@ -24,6 +24,12 @@ jobs:
         run: python -m pytest -p no:cacheprovider -q tests/
       - name: Smoke run
         run: python -m simulation.run_prevention_simulation --smoke --output-dir smoke-out
+      - name: DKP-8 gate catalogue and reproduction package (pack + re-run on this OS)
+        shell: bash
+        run: |
+          python -m dkp8 catalog
+          python -m dkp8 repro pack repro-smoke.zip
+          python -m dkp8 repro verify repro-smoke.zip --operator github-actions --level R2
       - name: Record platform and result id
         shell: bash
         run: |
