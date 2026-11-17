@@ -39,3 +39,18 @@ def test_translation_failure_does_not_break_the_answer(setup):
     client, fake, app = setup([message(""), message("תשובה.")])
     data = ask(client, question="מהי דיקנוקרטיה?", lang="he").json()
     assert data["state"] in ("answer", "no_answer") and {"name": "query_translation", "ok": False} in data["provenance"]["tool_calls"]
+
+
+def test_invented_numbers_are_removed(setup):
+    """Live 2026-11-17: 'The boiling point of mercury is 254.73 K [LAB MODEL_GAPS 12].'"""
+    client, fake, app = setup([message("The boiling point is 254.73 K [WORK-CYCLE §7]. Recovery is mandatory [WORK-CYCLE §7].")])
+    data = ask(client, question="Explain WORK-CYCLE §7 recovery invariant").json()
+    assert "254.73" not in data["answer"] and "Recovery is mandatory" in data["answer"]
+    assert any(f["code"] == "unsupported_number" for f in data["flags"])
+
+
+def test_numbers_from_the_sources_stay():
+    from keeper.guardrails import strip_unsupported_numbers
+    flags = []
+    out = strip_unsupported_numbers("1. A year has 360 days. 2. Rest for 11 hours.", "DTI-Year has 360 DTI-Days; rest 11 hours", flags)
+    assert "360" in out and "11 hours" in out and not flags

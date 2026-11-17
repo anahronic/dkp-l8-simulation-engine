@@ -234,3 +234,30 @@ def summary_answer(summary, index, lang):
             lines.append(f"{issue['status']} {issue['requirement_id']} / {issue['check']}: "
                          f"{issue['explanation']} {refs}".rstrip())
     return "\n".join(lines)
+
+
+# Live 2026-11-17: asked for the boiling point of mercury, the 2b model once invented "254.73 K" and cited a lab
+# document for it. A sentence with a multi-digit number found neither in the question nor in the supplied fragments is
+# removed (citations and list markers ignored); flag unsupported_number. Lab summaries (/explain) use their own check.
+UNSUPPORTED_NUMBER = re.compile(r"(?<![\w§.])\d+(?:[.,]\d+)?")
+
+
+def strip_unsupported_numbers(answer, context, flags):
+    known = {n.replace(",", ".") for n in UNSUPPORTED_NUMBER.findall(context)}
+    kept_lines, removed = [], 0
+    for line in answer.split("\n"):
+        sentences = re.split(r"(?<=[.!?])\s+", line)
+        kept = []
+        for sentence in sentences:
+            probe = re.sub(r"\[[^\]]*\]", " ", sentence)
+            probe = re.sub(r"^\s*(?:[-*>]|#+|\d+[.)])\s+", " ", probe)
+            numbers = [n.replace(",", ".") for n in UNSUPPORTED_NUMBER.findall(probe)]
+            if any(n not in known and len(n.replace(".", "")) >= 2 for n in numbers):
+                removed += 1
+                continue
+            kept.append(sentence)
+        if kept or not line.strip():
+            kept_lines.append(" ".join(kept))
+    if removed:
+        flag(flags, "unsupported_number", f"Removed {removed} sentence(s) with numbers not found in the sources.")
+    return "\n".join(kept_lines).strip()

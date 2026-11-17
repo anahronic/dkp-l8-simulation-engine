@@ -23,7 +23,7 @@ from starlette.exceptions import HTTPException
 from lab import api
 from lab.modules import MODULES
 from keeper.guardrails import flag, intake_work_cycle, postcheck, proposal, provisions, report_summary, safe_data
-from keeper.guardrails import summary_answer, work_cycle_questions
+from keeper.guardrails import summary_answer, work_cycle_questions, strip_unsupported_numbers
 from keeper.ollama import Ollama
 from keeper.search import Index
 from keeper.policy import (request_reason, output_reason, hostile_source, private_spans,
@@ -512,6 +512,9 @@ def create_app(settings=None):
             result["answer"] = (("Уточните параметры: " if body["lang"] == "ru" else "Please supply parameters: ")
                                 + ", ".join(result["missing"]))
         result["answer"] = postcheck(result["answer"], fragments, result["flags"], summary)
+        if result["state"] == "answer" and summary is None:
+            context = " ".join([question] + [" ".join((f.get("cite", ""), f.get("heading", ""), f.get("text", ""))) for f in fragments])
+            result["answer"] = strip_unsupported_numbers(result["answer"], context, result["flags"])
         if (result.get("proposal") or {}).get("module") == "work_cycle":
             remember(fragments, work_cycle_questions(index))
         finish(result, fragments, body["lang"], question)
