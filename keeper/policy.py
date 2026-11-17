@@ -108,6 +108,18 @@ def answer_language(question, lang):
     return lang
 
 
+def shingles(text, n=48):
+    """Normalized n-character windows (step 8) of the system instructions, for instruction_echo()."""
+    t = normalized(text)
+    return {t[i:i + n] for i in range(0, max(0, len(t) - n + 1), 8)}
+
+
+def instruction_echo(answer, instruction_shingles, n=48):
+    """True when the answer reproduces a passage of the system instructions (any n-character window)."""
+    t = normalized(answer)
+    return any(t[i:i + n] in instruction_shingles for i in range(0, max(0, len(t) - n + 1)))
+
+
 def on_topic(question):
     """The question names Dikenocracy, the Keeper, the lab or a listed protocol term."""
     return bool(TOPIC.search(normalized(question)))

@@ -27,7 +27,8 @@ from keeper.guardrails import summary_answer, work_cycle_questions
 from keeper.ollama import Ollama
 from keeper.search import Index
 from keeper.policy import (request_reason, output_reason, hostile_source, private_spans,
-                           contains_private, refuse, on_topic, answer_language, FOREIGN_SCRIPT, ROLE_QUESTION, REFUSAL)
+                           contains_private, refuse, on_topic, answer_language, shingles, instruction_echo,
+                           FOREIGN_SCRIPT, ROLE_QUESTION, REFUSAL)
 
 PREFIX = "/api/keeper/v1"
 INSTRUCTIONS = Path(__file__).with_name("instructions") / "v1.md"
@@ -245,6 +246,7 @@ def create_app(settings=None):
     config = settings_from(settings)
     raw = INSTRUCTIONS.read_bytes()
     instructions, version = raw.decode("utf-8"), "v1-" + hashlib.sha256(raw).hexdigest()[:8]
+    instruction_shingles = shingles(instructions.replace(REFUSAL, " "))   # the refusal sentence has its own handling
     index = Index.load(config.KEEPER_CORPUS) if config.KEEPER_CORPUS else Index([])
     corpus_version = hashlib.sha256(Path(config.KEEPER_CORPUS).read_bytes()).hexdigest()[:12] if config.KEEPER_CORPUS else None
     capacity, limiter, log = Capacity(config), TokenBucket(config.RATE_PER_MINUTE, config.RATE_BURST), PrivateLog(config.KEEPER_LOG)
@@ -332,6 +334,18 @@ def create_app(settings=None):
             except (httpx.HTTPError, ValueError, KeyError, TypeError):
                 raise APIError(503, "lab_unavailable", "Lab report is unavailable")
 
+    async def english_query(question):
+        """English search terms for a question the index cannot read; '' when the model is unavailable or silent."""
+        try:
+            async with ollama() as model:
+                reply = await model.chat([{"role": "system", "content": "Translate the user's question into a short English "
+                                           "search query of its key terms. Reply with the query only, no explanation."},
+                                          {"role": "user", "content": question[:500]}], [], 40)
+        except Exception:                                         # noqa: BLE001 - retrieval then proceeds without it
+            return ""
+        text = (reply.get("message") or {}).get("content") or ""
+        return " ".join(re.sub(r"[^A-Za-z0-9 .\-]", " ", text).split())[:200]
+
     async def generate(body, explain, emit, result):
         fragments, summary = [], None
         question = body.get("question", "Explain the completed lab report.")
@@ -379,6 +393,13 @@ def create_app(settings=None):
             if ROLE_QUESTION.search(question):
                 query += " KEEPER ROLE"
             found = index.search(query, k=5)
+            if FOREIGN_SCRIPT.search(question) and (not found or found[0]["score"] < config.NO_SOURCE_SCORE):
+                # The archive is English (+ Russian keys): a Hebrew/Arabic/CJK question is first turned into an English
+                # search query by one short model call (live 2026-11-17: the 2b model did not recover on its own).
+                english = await english_query(question)
+                result["provenance"]["tool_calls"].append({"name": "query_translation", "ok": bool(english)})
+                if english:
+                    found = index.search(english + " " + query, k=5)
             remember(fragments, found)
             weak = not found or found[0]["score"] < config.NO_SOURCE_SCORE
             # A weak retrieval can be recovered by the model's search_sources tool (instructions v1: an English query
@@ -479,6 +500,11 @@ def create_app(settings=None):
             if not result["answer"]:
                 refuse(result, "model_refusal")
                 return
+        # Live 2026-11-17 (Hebrew question): the model returned a passage of its own instructions instead of an answer.
+        # That is no answer; it goes the empty_model_answer way (explicit inability + found sections), never published.
+        if result["state"] == "answer" and instruction_echo(result["answer"], instruction_shingles):
+            flag(result["flags"], "instruction_echo", "The model repeated its instructions instead of answering.")
+            result["answer"] = ""
         if result["state"] == "needs_parameters":
             result["answer"] = (("Уточните параметры: " if body["lang"] == "ru" else "Please supply parameters: ")
                                 + ", ".join(result["missing"]))

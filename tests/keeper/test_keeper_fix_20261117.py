@@ -26,7 +26,7 @@ def test_definition_and_foreign_script_questions_reach_the_model(setup, question
     result = ask(client, question=question, lang=lang).json()
     assert result["state"] != "no_sources" and result["state"] != "refused"
     assert fake.chats, "the model was not asked"
-    assert any("Answer language (lang):" in m["content"] for m in fake.chats[0]["messages"])
+    assert any("Answer language (lang):" in m["content"] for c in fake.chats for m in c["messages"])
 
 
 def test_foreign_script_question_reaches_the_model_even_without_hits(setup):

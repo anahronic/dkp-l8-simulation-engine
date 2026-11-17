@@ -15,6 +15,7 @@ STOP = set("""the a an of and or to in on for is are be by with as at from that 
 и в во на не что как это для по из к ко о об от с со у же ли или а но да при до за так то его ее её их можно ли ли
 какой какая какие каков где кто когда чем""".split())
 ID = re.compile(r"\b(F-\d{3}|Q-\d{3}|H-[A-Z]{2,4}-\d+)\b")
+DOC_ID = re.compile(r"\bDKP-\d-[A-Z]+(?:-[A-Z]+)*-\d{3}(?:-PATCH)?\b")
 
 
 def stem(w: str) -> str:
@@ -70,6 +71,10 @@ class Index:
             for i, f in enumerate(self.frags):
                 if f["document_id"] == m.group(1) or m.group(1) in f["text"][:400]:
                     scores[i] += 25 if f["document_id"] == m.group(1) else 5
+        for m in DOC_ID.finditer(query.upper()):                # "DKP-0-ORACLE-001": the protocol's own text first
+            for i, f in enumerate(self.frags):                  # (live 2026-11-17: author questions Q-010/Q-005 won)
+                if f["document_id"] == m.group(0):
+                    scores[i] += 12 if f["section"] in ("title", "§0", "§1") else 6
         for name, idx in self.names.items():                    # "WORK-CYCLE §7", "work-cycle 5.3"
             if name in ql:
                 sec = re.search(re.escape(name) + r"\s*§?\s*([0-9A-Z]+(?:\.[0-9]+)*)", ql, re.I)
