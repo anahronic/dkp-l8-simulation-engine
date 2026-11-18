@@ -8,6 +8,7 @@
   repro pack OUT.zip [--config C] | repro verify ZIP --operator NAME [--level R1|R2] [--node-key FILE]
   enforceability | dependents DOC | invariants | composite
   workbench [--out DIR]          calibration workbench: every missing L8 value, per protocol, with bundle templates
+  redteam [--json FILE]          synthetic red-team models of the v3 remediation proposals T1-T7
 """
 from __future__ import annotations
 
@@ -16,7 +17,7 @@ import json
 import sys
 from pathlib import Path
 
-from dkp8 import bundle, composite, enforcement, gate, invariants, reproduction, scenarios, traceability, trust
+from dkp8 import bundle, composite, enforcement, gate, invariants, redteam, reproduction, scenarios, traceability, trust
 
 
 def _load(path):
@@ -151,6 +152,19 @@ def cmd_workbench(a):
     print(f"wrote {out / 'WORKBENCH.md'} and {len(by_doc)} templates")
 
 
+def cmd_redteam(a):
+    import json as _json
+    from fractions import Fraction
+    runs = redteam.run_all()
+    text = _json.dumps(runs, default=lambda o: str(o) if isinstance(o, Fraction) else repr(o), indent=1, ensure_ascii=False)
+    if a.json:
+        Path(a.json).write_text(text + chr(10), encoding="utf-8", newline=chr(10))
+        print(f"wrote {a.json} ({len(runs)} scenarios)")
+    else:
+        for r in runs:
+            print(f"{r['package']} {r['id']:34} {r['kind'][:38]:38} {r['outcome'][:90]}")
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="python -m dkp8", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -170,6 +184,7 @@ def main(argv=None):
     d = sub.add_parser("dependents"); d.add_argument("doc"); d.set_defaults(fn=cmd_dependents)
     sub.add_parser("invariants").set_defaults(fn=cmd_invariants)
     sub.add_parser("composite").set_defaults(fn=cmd_composite)
+    rt = sub.add_parser("redteam"); rt.add_argument("--json"); rt.set_defaults(fn=cmd_redteam)
     w = sub.add_parser("workbench"); w.add_argument("--out", default="dkp8-workbench"); w.set_defaults(fn=cmd_workbench)
     a = p.parse_args(argv)
     if a.cmd == "repro":
